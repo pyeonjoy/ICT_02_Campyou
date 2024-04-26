@@ -11,7 +11,7 @@
 <div class="header" id="header">
     <div class="header_wrap">
         <div class="header_left">
-            <a href="#"> 
+            <a href="/"> 
                 <img class="logo-03" src="/resources/img/logo-03.png" alt="CampYou" >
             </a>
             <ul>
@@ -20,7 +20,7 @@
         </div>
         <div class="header_right">
             <ul>
-                <li><a href="#">로그아웃</a></li>
+                <li><a href="logout_form.do">로그아웃</a></li>
             </ul>
        </div>
     </div>
