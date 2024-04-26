@@ -5,57 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<link href="../../../resources/css/reset.css" rel="stylesheet" />
-<style type="text/css">
-.footer a, .footer a:visited, .footer a:hover, .footer_wrap {
-	color: #FFFDDE;
-}
-
-.footer {
-	background-color: #053610; height : 250px;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 250px;
-}
-
-.footer_wrap {
-	position: absolute;
-	display: flex;
-	left: 50px;
-}
-
-.footer_wrap ul {
-	list-style: none;
-	display: flex;
-}
-
-.footer_wrap li {
-	padding: 0 15px;
-	white-space: nowrap;
-}
-
-.footer_text_container, .logo {
-	display: grid;
-	place-items: center;
-}
-
-.footer_text {
-	margin: 15px;
-}
-
-.logo-03 {
-	width: 300px;
-	padding: 20px;
-}
-</style>
+<link href="/resources/css/footer.css" rel="stylesheet" />
 </head>
 <body>
 	<div class="footer" id="footer">
 		<div class="footer_wrap">
 			<div class="logo">
-				<img class="logo-03" src="../../../resources/img/logo-03.png"
+				<img class="logo-03" src="/resources/img/logo-03.png"
 					alt="CampYou">
 			</div>
 			<div class="footer_text_container">

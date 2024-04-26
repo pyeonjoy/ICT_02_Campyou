@@ -5,34 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<link href="../../../resources/css/reset.css" rel="stylesheet" />
-<style type="text/css">
-.mypage_menu_wrap {
-	top: 180px;
-	position: absolute;
-	margin: 0 20px;
-}
-
-.mypage_menu_wrap h4 {
-	padding: 10px;
-}
-
-.mypage_menu_wrap li {
-	padding: 10px;
-	font-weight: 600;
-}
-
-.mypage_menu_wrap .side {
-	padding: 10px;
-	font-weight: 600;
-}
-
-
-</style>
+<link href="/resources/css/menu_aside.css" rel="stylesheet" />
 </head>
 <body>
 	<div class="mypage_menu_header">
-		<%@include file="header.jsp"%>
+		<%@include file="admin_header.jsp"%>
 	</div>
 	<div class="admin_menu" id="admin_menu">
 		<div class="mypage_menu_wrap">
