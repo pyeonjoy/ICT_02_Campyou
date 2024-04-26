@@ -16,6 +16,12 @@ function logIn(f) {
 	f.action="login_go_ok.do";
 	f.submit();
 }
+function kakaoLogIn() {
+	alert("Coming Soon!!")
+}
+function naverLogIn() {
+	alert("Coming Soon!!")
+}
 </script>
 <style>
 .bg-image {
@@ -51,8 +57,8 @@ function logIn(f) {
 	            <p class="small mb-5 pb-lg-2"><a class="text-muted" href="find_pwd_go.do">비밀번호 찾기</a> &nbsp;
 	           	<a class="text-muted" href="find_id_go.do">아이디 찾기</a></p>
 	            <hr class="my-4">
-	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit"><img src="${path}/resources/img/kakao_login_medium_narrow.png"/></button>
-	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit"><img src="${path}/resources/img/btnG.png" /></button>
+	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit" onclick="kakaoLogIn(this.form)"><img src="${path}/resources/img/kakao_login_medium_narrow.png"/></button>
+	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit" onclick="naverLogIn(this.form)"><img src="${path}/resources/img/btnG.png" /></button>
 			</form>
           </div>
         </div>
