@@ -38,12 +38,13 @@ public class EmailController {
 	}
 	
 	@PostMapping("email_send_ok.do")
-    public ModelAndView findUserPW(String member_id, String email, HttpServletRequest request) {
+    public ModelAndView findUserPW(MemberVO mvo2) {
         try {
-            MemberVO mvo = memberService.getMyPwd(member_id);
-            System.out.println(mvo);
-       
-            if (mvo != null) {
+        	ModelAndView mv = new ModelAndView();
+        	
+            MemberVO mvo = memberService.getMyPwd(mvo2);
+            
+            if (mvo != null && mvo.getMember_id().equals(mvo2.getMember_id()) && mvo.getMember_email().equals(mvo2.getMember_email())) {
                 Random random = new Random();
                 String randomNumber = String.valueOf(random.nextInt(1000000) % 1000000);
                 if(randomNumber.length() < 6) {
@@ -55,17 +56,19 @@ public class EmailController {
                     sb.append(randomNumber);
                     randomNumber = sb.toString();
                 }
-                System.out.println("占쌈시뱄옙호 : " + randomNumber);
+                System.out.println("임시 비밀번호 : " + randomNumber);
 
                 String pwd = passwordEncoder.encode(randomNumber);
                 mvo.setMember_pwd(pwd);
-                mvo.setMember_id(mvo.getMember_id());
-
+                //mvo.setMember_id(mvo.getMember_id());
+              
                 int result = memberService.getTempPwdUpdate(mvo);
                 System.out.println(result);
                 if(result>0) {
-                mailService.sendEmail(randomNumber, email);
-                return new ModelAndView("hu/loginForm");
+	                mailService.sendEmail(randomNumber, mvo.getMember_email());
+	                mv.addObject("msg", "임시 비밀번호가 발송되었습니다.");
+	                mv.setViewName("hu/loginForm");
+	                return mv;
                 }
             }
         } catch (Exception e) {

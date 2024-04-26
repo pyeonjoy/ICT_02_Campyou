@@ -14,37 +14,43 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int getSignUp(MemberVO vo) {
-		//ȸ������
+		
 		return memberDAO.getSignUp(vo);
 	}
 	
 	@Override
 	public String getIdChk(String member_id){
-		//���̵� �ߺ� Ȯ��
+		
 		return memberDAO.getIdChk(member_id);
 	}
 
 	@Override
 	public MemberVO getLogInOK(MemberVO vo) {
-		//�α���
+		
 		return memberDAO.getLogInOK(vo);
 	}
 
 	@Override
-	public MemberVO getMyPwd(String member_id) {
-		// ��й�ȣ ã��
-		return memberDAO.getMyPwd(member_id);
+	public MemberVO getMyPwd(MemberVO mvo2) {
+		
+		return memberDAO.getMyPwd(mvo2);
 	}
 
 	@Override
 	public int getTempPwdUpdate(MemberVO mvo) {
-		//���� �޴� �ӽ� ��й�ȣ �����ϱ�
+		
 		return memberDAO.getTempPwdUpdate(mvo);
 	}
 
 	@Override
 	public MemberVO getMyID(String member_name) {
-		//���̵� ã��
+
 		return memberDAO.getMyID(member_name);
+	}
+
+	@Override
+	public String getNickNameChk(String member_nickname) {
+		
+		return memberDAO.getNickNameChk(member_nickname);
 	}
 }

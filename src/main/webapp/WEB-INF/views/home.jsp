@@ -42,7 +42,6 @@
 				<title>Bootstrap</title>
 				
 				<span class="fs-4">임시메인 페이지</span>
-
 				<nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
 					<c:choose>
 						<c:when test="${empty memberInfo}">

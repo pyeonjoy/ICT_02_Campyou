@@ -5,7 +5,7 @@
 <mapper namespace="member">
 	<insert id="insert" parameterType="mvo">
 		insert into members(member_id, member_name, member_pwd, member_nickname, member_dob, member_phone, member_email, member_regdate)
-			values(#{member_id}, #{member_name},#{member_pwd},#{member_nickname},#{member_dob}, #{member_phone},#{member_email},sysdate())
+			values(#{member_id}, #{member_name},#{member_pwd},#{member_nickname},#{member_dob}, #{member_phone},#{member_email}, sysdate())
 	</insert>
 	
 	<select id="idchk" parameterType="String" resultType="int">
@@ -16,7 +16,7 @@
  		select * from members where member_id=#{member_id}
  	</select>
  	
- 	<select id="findPwd" parameterType="String" resultType="mvo">
+ 	<select id="findPwd" parameterType="mvo" resultType="mvo">
 		select * from members where member_id=#{member_id}
 	</select>
 	
@@ -29,4 +29,8 @@
     <select id="findId" parameterType="String" resultType="mvo">
 		select * from members where member_name=#{member_name}
 	</select>
+	
+	<select id="nickNameChk" parameterType="String" resultType="int">
+ 		select count(*) from members where member_nickname=#{member_nickname}
+ 	</select>
 </mapper>

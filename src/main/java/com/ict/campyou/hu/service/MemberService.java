@@ -3,22 +3,23 @@ package com.ict.campyou.hu.service;
 import com.ict.campyou.hu.dao.MemberVO;
 
 public interface MemberService {
-	//ȸ������
+	 //member Sing-up
 	 public int getSignUp(MemberVO vo);
 	 
-	 // ���̵� �ߺ� Ȯ��
+	 // id double check
 	 public String getIdChk(String member_id);
 	 
-	 //�α���
+	 // login 
 	 public MemberVO getLogInOK(MemberVO vo);
 	 
-	 //��й�ȣ ã��
-	 public MemberVO getMyPwd(String member_id);
+	 // find my pwd
+	 public MemberVO getMyPwd(MemberVO mvo2);
 	 
-	 //���� �޴� �ӽ� ��й�ȣ �����ϱ�
+	 // temp pwd update
 	 public int getTempPwdUpdate(MemberVO mvo);
 	 
-	 //���̵� ã��
+	 // find my id
 	 public MemberVO getMyID(String member_name);
-
+	 
+	 public String getNickNameChk(String member_nickname);
 }

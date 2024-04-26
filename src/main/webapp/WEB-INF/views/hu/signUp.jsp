@@ -65,7 +65,7 @@
 	}
 </script>
 <script type="text/javascript">
-//중복확인
+//name double check
 $(document).ready(function() {
 	$("#member_id").keyup(function() {
 		$.ajax({
@@ -76,19 +76,57 @@ $(document).ready(function() {
 			success : function(data) {
 				if(data == '1'){
 					// 사용가능
-					$("#btn1").removeAttr("disabled");
-					$("span").text("사용가능한 아이디 입니다");
+					$("#m_id").removeAttr("disabled");
+					$("#idSpan").text("(사용가능한 아이디 입니다)");
 				}else if(data == '0'){
 					// 사용불가능
-					$("#btn1").attr("disabled","disabled");
-					$("span").text("중복된 아이디 입니다");
+					$("#m_id").attr("disabled","disabled");
+					$("#idSpan").text("(중복된 아이디 입니다)");
 				}
+				
+				//중복된 이름과 별명이 하나라도 있으면 회원가입 비활성화 코드!
+				checkSignUpButton();
 			},
 			error : function() {
 				alert("읽기실패");
 			}
 		});
 	});
+	
+	$("#member_nickname").keyup(function() {
+		$.ajax({
+			url: "getNickNameChk.do",
+			data : "member_nickname="+$("#member_nickname").val(),
+			method : "post", 
+			dataType: "text",
+			success : function(data) {
+				if(data == '1'){
+					// 사용가능
+					$("#m_id").removeAttr("disabled");
+					$("#nickNameSpan").text("(사용가능한 별명 입니다)");
+				}else if(data == '0'){
+					// 사용불가능
+					$("#m_id").attr("disabled","disabled");
+					$("#nickNameSpan").text("(중복된 별명 입니다)");
+				}
+				
+				//중복된 이름과 별명이 하나라도 있으면 회원가입 비활성화 코드!
+				checkSignUpButton();
+			},
+			error : function() {
+				alert("읽기실패");
+			}
+		});
+	});
+	
+	//중복된 이름과 별명이 하나라도 있으면 회원가입 비활성화 코드
+	function checkSignUpButton() {
+       if ($("#idSpan").text() === "(중복된 아이디 입니다)" || $("#nickNameSpan").text() === "(중복된 별명 입니다)") {
+           $("#m_id").attr("disabled", "disabled");
+       } else {
+           $("#m_id").removeAttr("disabled");
+       }
+   }
 });
 </script>
 </head>
@@ -102,48 +140,48 @@ $(document).ready(function() {
           <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-5">회원가입</h2>
-              <form>
-	               	<div class="form-outline mb-2">
-	                  <input type="text" id="member_id" name="member_id" class="form-control form-control-lg" placeholder="아이디 4자이상"/>
-	                  <label class="form-label" for="member_id">아이디<sup>*</sup></label> <span id="sp"></span>
-	                </div>
-	                <div class="form-outline mb-2">
-	                  <input type="text" id="member_name" name="member_name" class="form-control form-control-lg" />
-	                  <label class="form-label" for="member_name">이름<sup>*</sup></label>
-	                </div> 
-	                <div class="form-outline mb-2">
-	                  <input type="text" id="member_nickname" name="member_nickname" class="form-control form-control-lg" />
-	                  <label class="form-label" for="member_nickname">별명<sup>*</sup></label>
-	                </div>
-	                <div class="form-outline mb-2">
-	                  <input type="text" id="member_dob" name="member_dob" class="form-control form-control-lg" placeholder="예)  yyyy-mm-dd" />
-	                  <label class="form-label" for="member_dob">생년월일<sup>*</sup></label>
-	                </div>
-	                <div class="form-outline mb-2">
-	                  <input type="email" id="member_email" name="member_email" class="form-control form-control-lg" placeholder="예) jejudo@naver.com"/>
-	                  <label class="form-label" for="member_email">이메일<sup>*</sup></label>
-	                </div>
-	                <div class="form-outline mb-2">
-	                  <input type="password" id="member_pwd" name="member_pwd" class="form-control form-control-lg" />
-	                  <label class="form-label" for="member_pwd">비밀번호<sup>*</sup></label>
-	                </div>
-	                <div class="form-outline mb-2">
-	                  <input type="password" id="member_pwdCheck" name="member_pwdCheck" class="form-control form-control-lg" />
-	                  <label class="form-label" for="member_pwdCheck">비밀번호 확인<sup>*</sup></label>
-	                </div>
-					 <div class="form-outline mb-2">
-	                  <input type="text" id="member_phone" name="member_phone" class="form-control form-control-lg" placeholder="예) 010-0000-0000"/>
-	                  <label class="form-label" for="member_phone">전화번호<sup>*</sup></label>
-	                </div>
-	             	<div class="form-check d-flex justify-content-center mb-4">
-	                  <input class="form-check-input me-2" type="checkbox" value="" id="chkbox" name="chkbox" />
-	                  <label class="form-check-label" for="chkbox"> 이용약관에 동의합니다. <a href="terms_of_use_go.do" target="_blank" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); return false;" class="text-body"><u>이용약관</u></a></label>
-	                </div> 
-	                <div class="d-flex justify-content-center">
-	                  <input type="submit" id="m_id" value="회원가입" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onclick="save_go(this.form)" />
-	                </div>
-	                <p class="text-center text-muted mt-5 mb-0">이미 회원이신가요?<a href="login_form.do"class="fw-bold text-body"><u>로그인</u></a></p>
-              </form>
+	              <form>
+		               	<div class="form-outline mb-2">
+		               	  <label class="form-label" for="member_id">아이디<sup>*</sup></label> &nbsp; <span id="idSpan"></span>
+		                  <input type="text" id="member_id" name="member_id" class="form-control form-control-lg" placeholder="아이디 4자이상"/>
+		                </div>
+		                <div class="form-outline mb-2">
+		                  <label class="form-label" for="member_name">이름<sup>*</sup></label>
+		                  <input type="text" id="member_name" name="member_name" class="form-control form-control-lg" />
+		                </div> 
+		                <div class="form-outline mb-2">
+		                  <label class="form-label" for="member_nickname">별명<sup>*</sup></label> &nbsp; <span id="nickNameSpan"></span>
+		                  <input type="text" id="member_nickname" name="member_nickname" class="form-control form-control-lg" />
+		                </div>
+		                <div class="form-outline mb-2">
+		                  <label class="form-label" for="member_dob">생년월일<sup>*</sup></label>
+		                  <input type="text" id="member_dob" name="member_dob" class="form-control form-control-lg" placeholder="예)  yyyy-mm-dd" />
+		                </div>
+		                <div class="form-outline mb-2">
+		                  <label class="form-label" for="member_email">이메일<sup>*</sup></label>
+		                  <input type="email" id="member_email" name="member_email" class="form-control form-control-lg" placeholder="예) jejudo@naver.com"/>
+		                </div>
+		                <div class="form-outline mb-2">
+		                  <label class="form-label" for="member_pwd">비밀번호<sup>*</sup></label>
+		                  <input type="password" id="member_pwd" name="member_pwd" class="form-control form-control-lg" />
+		                </div>
+		                <div class="form-outline mb-2">
+		                  <label class="form-label" for="member_pwdCheck">비밀번호 확인<sup>*</sup></label>
+		                  <input type="password" id="member_pwdCheck" name="member_pwdCheck" class="form-control form-control-lg" />
+		                </div>
+						 <div class="form-outline mb-2">
+						  <label class="form-label" for="member_phone">전화번호<sup>*</sup></label>
+		                  <input type="text" id="member_phone" name="member_phone" class="form-control form-control-lg" placeholder="예) 010-0000-0000"/>
+		                </div>
+		             	<div class="form-check d-flex justify-content-center mb-4">
+		                  <input class="form-check-input me-2" type="checkbox" value="" id="chkbox" name="chkbox" />
+		                  <label class="form-check-label" for="chkbox"> 이용약관에 동의합니다. <a href="terms_of_use_go.do" target="_blank" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); return false;" class="text-body"><u>이용약관</u></a></label>
+		                </div> 
+		                <div class="d-flex justify-content-center">
+		                  <button type="submit" id="m_id" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onclick="save_go(this.form)" >회원가입</button>
+		                </div>
+		                <p class="text-center text-muted mt-5 mb-0">이미 회원이신가요?<a href="login_form.do"class="fw-bold text-body"><u>로그인</u></a></p>
+	              </form>
             </div>
           </div>
         </div>

@@ -9,27 +9,27 @@ public class MailService {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	// Controllerï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
-	// ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
+	// Controller¿¡¼­ È£Ãâ
+	// ºñ¹ø Ã£±â
 	public void sendEmail(String randomNumber, String toMail) {
 		try {
 			MailHandler sendMail = new MailHandler(mailSender);
-			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-			sendMail.setSubject("[ICT EDU ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½]");
+			// ¸ÞÀÏ Á¦¸ñ
+			sendMail.setSubject("[ICT EDU ÀÎÁõ ¸ÞÀÏÀÔ´Ï´Ù]");
 			
-			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-			// ï¿½ï¿½ï¿½ï¿½
+			// ¸ÞÀÏ ³»¿ë
+			// ³»¿ë
 			sendMail.setText("<table><tbody>"
-					+ "<tr><td><h2>ICT EDU ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½</h2></td></tr>"
+					+ "<tr><td><h2>ICT EDU ¸ÞÀÏ ÀÎÁõ</h2></td></tr>"
 					+ "<tr><td><h3>ICT EDU</h3></td></tr>"
-					+ "<tr><td><font size='5px'>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ ï¿½È³ï¿½ï¿½Ô´Ï´ï¿½</font></td></tr>"
-					+ "<tr><td><font size='8px'>È®ï¿½Î¹ï¿½È£ : "+randomNumber +"</font></td></tr>"
+					+ "<tr><td><font size='5px'>ÀÎÁõ¹øÈ£ ¾È³»ÀÔ´Ï´Ù</font></td></tr>"
+					+ "<tr><td><font size='8px'>È®ÀÎ¹øÈ£ : "+randomNumber +"</font></td></tr>"
 					+ "</tbody></table>");
 			
-			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+			// º¸³»´Â ÀÌ
 			sendMail.setFrom("ictsamjo@gmail.com", "hchoi");
 			
-			// ï¿½Þ´ï¿½ ï¿½ï¿½
+			// ¹Þ´Â ÀÌ
 			sendMail.setTo(toMail);
 			sendMail.send();
 		} catch (Exception e) {
@@ -37,26 +37,26 @@ public class MailService {
 		}
 	}
 	
-	//ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½
+	//¾ÆÀÌµð Ã£±â
 	public void sendMyIDEmail(String userId, String toMail) {
 		try {
 			MailHandler sendMail = new MailHandler(mailSender);
-			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-			sendMail.setSubject("[ICT EDU ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½]");
+			// ¸ÞÀÏ Á¦¸ñ
+			sendMail.setSubject("[ICT EDU ÀÎÁõ ¸ÞÀÏÀÔ´Ï´Ù]");
 			
-			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-			// ï¿½ï¿½ï¿½ï¿½
+			// ¸ÞÀÏ ³»¿ë
+			// ³»¿ë
 			sendMail.setText("<table><tbody>"
-					+ "<tr><td><h2>ICT EDU ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½</h2></td></tr>"
+					+ "<tr><td><h2>ICT EDU ¸ÞÀÏ ÀÎÁõ</h2></td></tr>"
 					+ "<tr><td><h3>ICT EDU</h3></td></tr>"
-					+ "<tr><td><font size='5px'>ï¿½ï¿½ï¿½Ìµï¿½ ï¿½È³ï¿½ï¿½Ô´Ï´ï¿½</font></td></tr>"
-					+ "<tr><td><font size='8px'>È®ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ : "+userId +"</font></td></tr>"
+					+ "<tr><td><font size='5px'>¾ÆÀÌµð ¾È³»ÀÔ´Ï´Ù</font></td></tr>"
+					+ "<tr><td><font size='8px'>È®ÀÎ ¾ÆÀÌµð : "+userId +"</font></td></tr>"
 					+ "</tbody></table>");
 			
-			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+			// º¸³»´Â ÀÌ
 			sendMail.setFrom1("ictsamjo@gmail.com", "hchoi");
 			
-			// ï¿½Þ´ï¿½ ï¿½ï¿½
+			// ¹Þ´Â ÀÌ
 			sendMail.setTo1(toMail);
 			sendMail.send();
 		} catch (Exception e) {

@@ -143,12 +143,5 @@ public class MemberController {
 			System.out.println(e);
 		}
 		  return new ModelAndView("hu/error");
-	  }
-	  
-	  
-	  
-	  
-	  
-	  
-	  
+	  }  
 }
