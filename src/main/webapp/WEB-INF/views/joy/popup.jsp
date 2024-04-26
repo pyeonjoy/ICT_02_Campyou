@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <title>관리자 페이지 메인</title>
 <style>
+    body{
+    background-color: #F6FFF1;
+}
 .head{
     text-align: center;
     margin: 100px;;
@@ -18,7 +21,7 @@
     width: 1000px;
 }
 .hr{
-    width: 500px;
+    width: 400px;
 }
 .mainimg{
     width: 400px;
@@ -45,6 +48,7 @@
 }
 .inner{
     width: 450px;
+    height: 700px;
     display: grid;
     grid-template-columns: 0.5fr 0.2fr 0.8fr 0.5fr;
     grid-gap: 10px;
@@ -84,8 +88,12 @@ button{
             <hr class="hr">
             <div class="mainimg"></div>
             <hr class="hr">
-            <button>수정</button>
-            <button>추가</button>
+            <div style="margin: auto; width: 500px;">
+                <p style="text-align: center;">
+                    <button>수정</button>
+                    <button>추가</button>
+                </p>
+            </div>
         </div>
         <div class="right">
             <p style="text-align: center;">이전팝업창</p>
@@ -99,9 +107,11 @@ button{
                 <div class="subimg"></div>
                 <p class="child">이벤트 팝업</p>
                 <p class="child">2024-00-00</p>
-                <button class="b1">작성</button>
             </div>
             <hr>
+            <p style="text-align: right; margin-top: 20px;">
+                <button class="b1">작성</button>
+            </p>
         </div>
     </div>
     </body>

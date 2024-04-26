@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <title>관리자 페이지 메인</title>
 <style>
+    body{
+    background-color: #F6FFF1;
+}
 .head{
     text-align: center;
     margin: 100px;;
