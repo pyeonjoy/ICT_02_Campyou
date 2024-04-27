@@ -23,6 +23,11 @@ public class MemberServiceImpl implements MemberService {
 		
 		return memberDAO.getIdChk(member_id);
 	}
+	
+	@Override
+	public String getLogInIdChk(String member_id) {
+		return memberDAO.getLogInIdChk(member_id);
+	}
 
 	@Override
 	public MemberVO getLogInOK(MemberVO vo) {

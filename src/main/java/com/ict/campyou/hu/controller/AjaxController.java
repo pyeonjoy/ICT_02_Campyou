@@ -26,4 +26,11 @@ public class AjaxController {
 		String result = memberService.getNickNameChk(member_nickname);
 		return result;
 	}
+	
+	@RequestMapping(value="getLogInIdChk.do", produces="text/plain; charset=utf-8")
+	@ResponseBody
+	public String getLogInIdChk(String member_id) {
+		String result = memberService.getLogInIdChk(member_id);
+		return result;
+	}
 }

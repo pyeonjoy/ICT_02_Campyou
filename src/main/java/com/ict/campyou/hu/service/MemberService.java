@@ -9,6 +9,9 @@ public interface MemberService {
 	 // id double check
 	 public String getIdChk(String member_id);
 	 
+	// login id double check
+	 public String getLogInIdChk(String member_id);
+	 
 	 // login 
 	 public MemberVO getLogInOK(MemberVO vo);
 	 

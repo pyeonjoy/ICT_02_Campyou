@@ -32,6 +32,20 @@ public class MemberDAO {
 		return null;
 	}
 	
+	// login Id Check
+	public String getLogInIdChk(String member_id) {
+		try {
+		  	int result = sqlSessionTemplate.selectOne("member.loginIdchk", member_id);
+		  	if(result > 0) {
+		  		return "0";
+		  	}
+		  	return "1" ;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
 	public MemberVO getLogInOK(MemberVO vo) {
 		try {
 			return sqlSessionTemplate.selectOne("member.login", vo);
