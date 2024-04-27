@@ -1,11 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="ko">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
         * {
             margin: 0px;
             padding: 0px;
@@ -99,6 +102,7 @@
             background-color: #FAAB12;
             border: none;
             font-weight: bold;
+            cursor: pointer;
         }
         .toDetailContent2Sub1{
             padding-right: 2rem;
@@ -208,15 +212,14 @@
         }
     </style>
 </head>
-
 <body>
-    <div class="toDetailContainer">
+<div class="toDetailContainer">
         <div class="togetherUpImg">
-            <img src="tree-4.jpg" class="togetherUpImg2">
+            <img src="${path}/resources/images/tree-4.jpg" class="togetherUpImg2">
         </div>
         <form class="toDetailContent">
             <div class="toDetailContent1">
-                <div class="userImage"><img src="tree-4.jpg" class="userImage2"></div>
+                <div class="userImage"><img src="${path}/resources/images/tree-4.jpg" class="userImage2"></div>
                 <div class="toContentOne1span">
                     <strong>호야</strong>
                     <p>3일전</p>
@@ -244,7 +247,7 @@
                     <p>캠핑장소&nbsp;난지중앙캠핑장</p>
                     <p>캠핑날짜&nbsp;2024/04/25 - 2024/04/27</p>
                     <p>캠핑타입&nbsp;카라반</p>
-                    <div class="toDetailContent2Sub2ImgDiv"><img src="tree-4.jpg" class="toDetailContent2Sub2Img"></div>
+                    <div class="toDetailContent2Sub2ImgDiv"><img src="${path}/resources/images/tree-4.jpg" class="toDetailContent2Sub2Img"></div>
                 </div>
             </div>
             <div class="toDetailContent3">
@@ -254,7 +257,7 @@
                 <p class="toDetailContent4Sub1">댓글</p>
                 <form >
                     <div class="toDetailInput">
-                        <div class="userImageDiv2"><img src="tree-4.jpg" class="userImage32"></div>
+                        <div class="userImageDiv2"><img src="${path}/resources/images/tree-4.jpg" class="userImage32"></div>
                         <input type="text" value="" id="" class="toDetailInputBox">
                         <input type="submit" value="입력" id="" class="toDetailInputBox toDetailInputSubmit">
                     </div>
@@ -262,7 +265,7 @@
                         <div class="toDetailContent4Sub3">
                             <div class="toDetailContent4Sub2Sub1">
                                 <div class="toDetailContent4Sub2Sub1Div">
-                                    <div class="userImageDiv"><img src="tree-4.jpg" class="userImage3"></div>
+                                    <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div>
                                     <div>
                                         <strong>짱구</strong>
                                         <p>2024-04-23 16:53</p>
@@ -285,7 +288,7 @@
                         <div class="toDetailContent4Sub3">
                             <div class="toDetailContent4Sub2Sub1">
                                 <div class="toDetailContent4Sub2Sub1Div">
-                                    <div class="userImageDiv"><img src="tree-4.jpg" class="userImage3"></div>
+                                    <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div>
                                     <div>
                                         <strong>짱구</strong>
                                         <p>2024-04-23 16:53</p>
@@ -308,7 +311,7 @@
                         <div class="toDetailContent4Sub3">
                             <div class="toDetailContent4Sub2Sub1">
                                 <div class="toDetailContent4Sub2Sub1Div">
-                                    <div class="userImageDiv"><img src="tree-4.jpg" class="userImage3"></div>
+                                    <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div>
                                     <div>
                                         <strong>짱구</strong>
                                         <p>2024-04-23 16:53</p>
@@ -334,5 +337,4 @@
         </form>
     </div>
 </body>
-
 </html>

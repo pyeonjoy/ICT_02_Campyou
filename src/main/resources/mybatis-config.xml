@@ -10,9 +10,11 @@
 	<typeAliases>
 	
 		<typeAlias type="com.ict.campyou.hu.dao.MemberVO" alias="mvo"/>
+		<typeAlias type="com.ict.campyou.bjs.dao.TogetherVO" alias="tvo"/>
 		
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/hu-mapper.xml" />
+		<mapper resource="mappers/bjs-mapper.xml" />
 	</mappers>
 </configuration>

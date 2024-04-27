@@ -48,8 +48,10 @@
 						<c:when test="${empty memberInfo}">
 							<a class="me-3 py-2 text-dark text-decoration-none" href="sign_up_page_go.do">회원가입</a> 
 							<a class="py-2 text-dark text-decoration-none" href="login_form.do">로그인</a>
+							<a class="py-2 text-dark text-decoration-none" href="together.do">동행</a>
 						</c:when>		
 						<c:otherwise>
+						<a class="py-2 text-dark text-decoration-none" href="together.do">동행&nbsp;&nbsp;&nbsp;&nbsp;</a>
 						<div  style="line-height:41px;">
 							${memberInfo.member_name}님 환영합니다. &nbsp;
 							
