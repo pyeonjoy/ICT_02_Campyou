@@ -8,125 +8,104 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-    * {
-        margin: 0px;
-        padding: 0px;
-        box-sizing: border-box;
-    }
-    .towContainer {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .togetherh2 {
-        width: 100%;
-        text-align: right;
-        margin: 5rem auto;
-    }
-    .togetherWriteForm{
-        width: 80%;
-        display: flex;
-        justify-content: center;
-    }
-   .togetherWriteInput{
-       width: 50%;
-       display: flex;
-       flex-direction: column;
-       padding-right: 8rem;
-       align-items: center;
-   }
-   .togetherWriteInputSubmit{
-        width: 10rem;
-        height: 1.7rem;
-        border: none;
-        background-color: #032805;
-        color: white;
-        margin: 2rem 0;
-   }
-   .togetherWriteInput1{
-        border: none;
-        border-bottom: 1px solid black;
-        padding-bottom: 0.7rem;
-        width: 100%;
-   }
-   .togetherWriteInput2{
-        border: none;
-        height: 60vh;
-        margin-top: 1rem;
-        width: 100%;
-   }
-   .togetherWriteSelect{
-        border: 1px solid black;
-        border-radius: 5%;
-        padding: 3rem;
-        width: 26%;
-        margin-top: 5rem;
-   }
-   .togetherWriteSelect > *:not(:last-child){
-        margin-bottom: 1rem;
-    }
-    .togetherSub1{
-        margin-top: 1rem;
-        display: flex;
-    }
-    .togetherSub1Img{
-        max-width: 100%;
-     max-height: 100%;
-    }
-    .togetherSub1Button{
-        border: none;
-        border-radius: 50%;
-        background-color: #FFFDDE;
-        padding: 0.4rem 1.2rem;
-        cursor: pointer;
-        margin-right: 1rem;
-    }
-    .togetherSub1Button:hover{
-        background-color: #032805;
-        color: white;
-    }
-    .togetherSub1Div{
-        margin-left: 1rem;
-        align-items: center;
-    }
-    .togetherSub1DivInput{
-        height: 1.5rem;
-        margin-bottom: 0.5rem;
-    }
-    .togetherSub1DivButton{
-        height: 1.5rem;;
-        border: none;
-        background-color: #032805;
-        color: white;
-        width: 2.7rem;
-    }
-</style>
+<link rel="stylesheet" href="${path}/resources/public/css/bjs/together_write.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript">
+	function together_write_ok(f) {
+		f.action="together_Write_ok.do";
+		f.submit();
+	}
+	
+	
+// 	$(function() {
+// 		  $('input[name="datefilter"]').daterangepicker({
+// 		      autoUpdateInput: false,
+// 		      locale: {
+// 		          cancelLabel: 'Clear'
+// 		      }
+// 		  });
+// 		  $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+// 		      $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+// 		  });
+// 		  $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+// 		      $(this).val('');
+// 		  });
+
+// 		});
+	
+	$(function() {
+	  $('input[name="datetimes"]').daterangepicker({
+	    timePicker: true,
+	    startDate: moment().startOf('hour'),
+	    endDate: moment().startOf('hour').add(32, 'hour'),
+	 	locale: {
+	        "format": "YY/MM/DD hh:mm A",
+	        "separator": " ~ ",
+	        "applyLabel": "확인",
+	        "cancelLabel": "취소",
+	        "fromLabel": "From",
+	        "toLabel": "To",
+	        "customRangeLabel": "Custom",
+	        "weekLabel": "W",
+	        "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+	        "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+	    }
+	  });
+	});
+	
+	$('input[name="datetimes"]').on('apply.daterangepicker', function (ev, picker) {
+		let startDate = picker.startDate.format('YYYY/MM/DD');
+		let endDate = picker.endDate.format('YYYY/MM/DD');
+		$.ajax({
+		    type: 'GET',
+		    url: '/경로',
+		    data: {startDate: startDate, endDate: endDate},
+		    success: function (data) {
+		        if (data) {
+// 		        	$('#테이블을 감싸는 DIV ID').replaceWith(data);
+		        }
+		    }
+		})
+	})
+	
+$(document).ready(function() {
+    $('.togetherSub1Button').click(function() {
+        $('.togetherSub1Button').removeClass('active');
+        $(this).addClass('active');
+    });
+});
+</script>
 </head>
 <body>
 	<div class="towContainer">
 	    <form class="togetherWriteForm">
 	        <div class="togetherWriteInput">
 	            <div class="togetherh2">
-	                <h2>동 행 작성하기</h2>
+	                <h2>동 행 글쓰기</h2>
 	            </div>
-	            <input type="text" value="" id="" onclick="" class="togetherWriteInput1" placeholder="제목을 입력하세요" required>
-	            <textarea class="togetherWriteInput2" id="" placeholder="내용을 입력하세요" required></textarea>
-	            <input type="submit" value="작성하기" id="" class="togetherWriteInputSubmit">
+	            <input type="text" name="t_subject" value="" class="togetherWriteInput1" placeholder="제목을 입력하세요" required>
+	            <textarea class="togetherWriteInput2" name="t_content" placeholder="내용을 입력하세요" required></textarea>
+	            <input type="submit" value="작성하기" class="togetherWriteInputSubmit" onclick="together_write_ok()">
 	        </div>
 	        <div class="togetherWriteSelect">
 	            <strong>캠핑타입</strong>
 	            <div class="togetherSub1">
-	                <input type="button" value="카라반" id="" class="togetherSub1Button">
-	                <input type="button" value="글램핑" id="" class="togetherSub1Button">
-	                <input type="button" value="야영지" id="" class="togetherSub1Button">
+	            	<button type="button" value="" class="togetherSub1Button">카라반</button>
+	            	<button type="button" value="" class="togetherSub1Button">글램핑</button>
+	            	<button type="button" value="" class="togetherSub1Button">야영지</button>
 	            </div>
 	            <div class="togetherSub1">
 	                <strong>캠핑장</strong>
 	                <div class="togetherSub1Div">
-	                    <input type="text" value="" id="" placeholder="캠핑장 이름" class="togetherSub1DivInput">
-	                    <input type="button" value="검색" id="" class="togetherSub1DivButton">
+	                	<div class="searchForm">
+		                	<input type="search" class="searchbar" placeholder="캠핑장 이름">
+	        				<input type="submit" class="res" value="검색">
+        				</div>
+<!-- 	                    <input type="text" value="" id="" placeholder="캠핑장 이름" class="togetherSub1DivInput"> -->
+<!-- 	                    <input type="button" value="검색" id="" class="togetherSub1DivButton"> -->
 	                    <p>서울특별시 강서구 화곡동</p>
 	                    <p>426-85</p>
 	                </div>
@@ -138,13 +117,14 @@
 	                <strong>캠핑인원</strong>
 	                <span>&nbsp;&nbsp;4명</span>
 	            </div>
-	            <div class="togetherSub1">
+	            <div class="togetherSub2">
 	                <strong>캠핑기간</strong>
-	                <span>&nbsp;&nbsp;2024/04/23 - 2024/04/26</span>
+<!-- 	                <input type="text" name="datefilter" value="" class="datetimes" /> -->
+	                <p><input type="text" name="datetimes" value="" class="datetimes" /></p>
 	            </div>
 	            <div>
-	                <p>2024년 4월 23일 - 2024년 4월 26일</p>
-	                <img src="${path}/resources/images/tree-4.jpg" class="togetherSub1Img">
+	                
+<%-- 	                <img src="${path}/resources/images/tree-4.jpg" class="togetherSub1Img"> --%>
 	            </div>
 	        </div>
 	    </form>

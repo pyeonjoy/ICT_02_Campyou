@@ -9,6 +9,8 @@
 	<select id="to_list" resultType="tvo">
 		select b.*, m.member_nickname, m.member_dob
 		from board_with b
-		inner join members m on b.member_idx = m.member_idx;
+		inner join members m on b.member_idx = m.member_idx
+		order by b.t_idx desc
+		limit #{limit} offset #{offset}
 	</select>
 </mapper>
