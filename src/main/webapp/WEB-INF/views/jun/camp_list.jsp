@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<link href="resources/css/reset.css" rel="stylesheet" />
 <title>캠핑장리스트</title>
 <style type="text/css">
 #camp_list_show {
@@ -46,6 +45,15 @@
     top: 10px;
     right: 10px;
 }
+#camp_list_button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#camp_list_button button {
+    margin: 0 10px;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -59,15 +67,6 @@ $(document).ready(function() {
             dataType: "xml",
             success: function(data) {
                 $("#camp_list_show").empty();
-				/* 
-				doNm = "지역명(강원도)"
-				sigunguNm = "시군(춘천시)"
-				facltNm = "캠핑장 이름"
-				induty = "캠핑유형"
-				addr1 = "주소"
-				tel = "캠핑장 전화번호"
-				homepage = "홈페이지 버튼"			
-				*/
                 $(data).find("item").each(function() {
                     let firstImageUrl = $(this).find("firstImageUrl").text();
                     let doNm = $(this).find("doNm").text();
@@ -97,7 +96,7 @@ $(document).ready(function() {
             }
         });
     }
-	
+    
     function nextPage() {
         pageNo++;
         camp_all_list();
@@ -107,6 +106,50 @@ $(document).ready(function() {
         camp_all_list();
     }
 
+    function searchByKeywords() {
+        let keywordInput = $("#keyword_input").val();
+
+        $.ajax({
+            url: "camp_list_search.do",
+            method: "post",
+            data: { 
+                pageNo: pageNo,
+                keyword: keywordInput
+            },
+            dataType: "xml",
+            success: function(data) {
+                $("#camp_list_show").empty();
+                $(data).find("item").each(function() {
+                    let firstImageUrl = $(this).find("firstImageUrl").text();
+                    let doNm = $(this).find("doNm").text();
+                    let sigunguNm = $(this).find("sigunguNm").text();
+                    let facltNm = $(this).find("facltNm").text();
+                    let induty = $(this).find("induty").text();
+                    let addr1 = $(this).find("addr1").text();
+                    let tel = $(this).find("tel").text();
+                    let homepage = $(this).find("homepage").text();
+
+                    let campItem = "<div class='camp_item'>";
+                    campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
+                    campItem += "<div class='camp_info'>";
+                    campItem += "<p> ["+ doNm + sigunguNm+"] </p>";
+                    campItem += "<p><b>" + facltNm + "</b><br>" + induty + "</p>";
+                    campItem += "<p>" + addr1 + "</p>";
+                    campItem += "<p>" + tel + "</p>";
+                    campItem += "</div>";
+                    campItem += "<div class='button_container'><button onclick=\"window.open('" + homepage + "')\">홈페이지</button></div>";
+                    campItem += "</div>";
+
+                    $("#camp_list_show").append(campItem);
+                });
+            },
+            error: function() {
+                alert("검색 실패");
+            }
+        });
+    }
+
+
     camp_all_list();
 
     $(".camp_list_next").on("click", function() {
@@ -115,14 +158,31 @@ $(document).ready(function() {
     $(".camp_list_before").on("click", function() {
         beforePage();
     });
+    $("#search_button").on("click", function() {
+        searchByKeywords();
+    });
+    $("#keyword_input").keypress(function(event) {
+        if (event.which === 13) {
+            searchByKeywords();
+        }
+    });
 });
 </script>
+
 </head>
 <body>
+<jsp:include page="../hs/header.jsp" />
+<div style="height: 100px;"></div>
+<label for="keyword_input">검색어:</label>
+<input type="text" id="keyword_input" placeholder="검색어를 입력하세요">
+<button id="search_button">검색</button>
+        <button id="map_search">지도로 보기</button>
     <div id="camp_list_show"></div>
     <div id ="camp_list_button">
-    <button class="camp_list_before">이전 페이지</button>
-    <button class="camp_list_next">다음 페이지</button>
+        <button class="camp_list_before">이전 페이지</button>
+        <button class="camp_list_next">다음 페이지</button>
     </div>
+<jsp:include page="../hs/footer.jsp" />
 </body>
+
 </html>

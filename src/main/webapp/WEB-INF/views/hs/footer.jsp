@@ -5,13 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<link href="/resources/css/footer.css" rel="stylesheet" />
+<link href="resources/css/footer.css" rel="stylesheet" />
 </head>
 <body>
 	<div class="footer" id="footer">
 		<div class="footer_wrap">
 			<div class="logo">
-				<img class="logo-03" src="/resources/img/logo-03.png"
+				<img class="logo-03" src="resources/img/logo-03.png"
 					alt="CampYou">
 			</div>
 			<div class="footer_text_container">
