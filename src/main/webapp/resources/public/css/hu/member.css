@@ -4,8 +4,16 @@ sup{
 	color: red;
 }
 
-#sp{
+#idSpan{
 	color: red;
+}
+
+#nickNameSpan{
+	color: red;
+}
+
+#idSpanLogIn{
+	color:red;
 }
 
 body {

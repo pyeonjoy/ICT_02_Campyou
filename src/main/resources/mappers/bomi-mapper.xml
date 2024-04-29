@@ -3,5 +3,10 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bomi">
-
+<select id="faq_lists" resultType="fvo">
+select * from faq order by faq_idx
+</select>
+<select id="faq_lists2" resultType="fvo">
+select * from faq2 order by faq_idx
+</select>
 </mapper>

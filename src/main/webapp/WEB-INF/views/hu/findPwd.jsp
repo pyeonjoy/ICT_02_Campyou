@@ -27,7 +27,7 @@
       <br>
         <form method="post">
 	          <div data-mdb-input-init class="form-outline mb-4">
-	            <input type="email" id="email" name="email" class="form-control form-control-lg" />
+	            <input type="email" id="email" name="member_email" class="form-control form-control-lg" />
 	            <label class="form-label" for="email">이메일</label>
 	          </div>
 	          <div data-mdb-input-init class="form-outline mb-4">

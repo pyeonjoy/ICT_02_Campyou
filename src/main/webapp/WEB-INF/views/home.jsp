@@ -75,16 +75,17 @@ background-color: #FFFDDE;}
 		<header>
 			<div class="d-flex flex-column flex-md-row align-items-cent er pb-3 mb-4 border-bottom">
 				<title>Bootstrap</title>
-				
+				<a class="me-3 py-2 text-dark text-decoration-none" href="community_board.do">게시판</a> 
 				<span class="fs-4">임시메인 페이지</span>
-
 				<nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
 					<c:choose>
 						<c:when test="${empty memberInfo}">
 							<a class="me-3 py-2 text-dark text-decoration-none" href="sign_up_page_go.do">회원가입</a> 
 							<a class="py-2 text-dark text-decoration-none" href="login_form.do">로그인</a>
+							<a class="py-2 text-dark text-decoration-none" href="together_list.do">동행</a>
 						</c:when>		
 						<c:otherwise>
+						<a class="py-2 text-dark text-decoration-none" href="together_list.do">동행&nbsp;&nbsp;&nbsp;&nbsp;</a>
 						<div  style="line-height:41px;">
 							${memberInfo.member_name}님 환영합니다. &nbsp;
 							
@@ -101,7 +102,12 @@ background-color: #FFFDDE;}
 					</c:choose>
 				</nav>				
 				
-			</div>
+      </div>
+				<h1 class="display-4 fw-normal">임시 메인 페이지</h1>
+<a href="inquiry_form.do">1:1문의작성</a>
+<a href="my_info.do">내정보</a>
+<a href="my_faq.do">faq</a>
+<a href="my_main.do">마이페이지</a>
 			<div class="wrap">
 				<div class="popular">
 				<h3>Popular campsites</h3>
@@ -118,7 +124,6 @@ background-color: #FFFDDE;}
 				</div>
 				<p><button>Show More</button></p>
 			</div>
-
 		</header>
 	</div>
 	<div style="background-color: #053610; height: 500px;"></div>

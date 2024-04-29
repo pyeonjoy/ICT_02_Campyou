@@ -9,15 +9,28 @@ import com.ict.campyou.hu.service.MemberService;
 
 @RestController
 public class AjaxController {
-	
+
 	@Autowired
 	private MemberService memberService;
-	
-	@RequestMapping(value="getIdChk.do", produces="text/plain; charset=utf-8")
+
+	@RequestMapping(value = "getIdChk.do", produces = "text/plain; charset=utf-8")
 	@ResponseBody
 	public String getIdChk(String member_id) {
 		String result = memberService.getIdChk(member_id);
 		return result;
 	}
-
+	
+	@RequestMapping(value="getNickNameChk.do", produces="text/plain; charset=utf-8")
+	@ResponseBody
+	public String getNickNameChk(String member_nickname) {
+		String result = memberService.getNickNameChk(member_nickname);
+		return result;
+	}
+	
+	@RequestMapping(value="getLogInIdChk.do", produces="text/plain; charset=utf-8")
+	@ResponseBody
+	public String getLogInIdChk(String member_id) {
+		String result = memberService.getLogInIdChk(member_id);
+		return result;
+	}
 }
