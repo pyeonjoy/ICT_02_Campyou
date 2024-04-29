@@ -1,0 +1,17 @@
+package com.ict.campyou.joy.service;
+
+import java.util.List;
+
+import com.ict.campyou.joy.dao.AdminVO;
+import com.ict.campyou.joy.dao.MemberVO;
+
+public interface AdminService {
+	public List<AdminVO> getadminmainmember();
+	public List<AdminVO> getadminboard();
+	public int getadminqna();
+	public int getadminreport();
+	public int getadminmatch();
+	public int getreportall();
+	public List<MemberVO> getboardall();
+	public List<MemberVO> getadminmemberreport();
+}

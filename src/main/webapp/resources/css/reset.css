@@ -1,0 +1,125 @@
+@charset "UTF-8";
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+*{
+	box-sizing: border-box;
+	outline:none;
+}
+
+html, body, div, span, applet, object, iframe, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	text-decoration:none;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+p, h1, h2, h3, h4,button{
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+
+h1 {
+    font-size: 50px;
+    margin: 0 auto;
+}
+h2 {
+    font-size: 40px;
+    margin: 0 auto;
+}
+h3 {
+    font-size: 25px;
+    margin: 0 auto;
+    font-weight: 900;
+}
+h4{
+	font-size: 20px;
+    margin: 0 auto;
+}
+p {
+	font-size: 15px;
+    margin: 0 auto;
+    line-height: 15px;
+}
+
+a, a:visited, a:hover {
+	color: black;
+}
+@charset "UTF-8";
+
+input[type="button"], input[type="submit"], input[type="reset"], button
+	{
+	border-radius: 5px;
+	background-color: #FFFDDE;
+	color: black;
+	text-align: center;
+	height: 40px;
+	padding-left: 30px;
+	padding-right: 30px;
+	border: 0px solid black;
+}
+
+input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover,
+	button:hover {
+	border: 0px solid black;
+	padding-left: 30px;
+	padding-right: 30px;
+	border-radius: 5px;
+	height: 40px;
+	background-color: #032805;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+
+}
+
+.buttonAtype {
+	font-size: 15px;
+	background: 053610;
+	font-weight: bold;
+	border-radius: 5px;
+}

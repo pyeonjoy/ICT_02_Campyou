@@ -4,19 +4,74 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>로그인</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="${path}/resources/public/css/hu/member.css">
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#member_id").keyup(function() {
+		$.ajax({
+			url: "getLogInIdChk.do",
+			data : "member_id="+$("#member_id").val(),
+			method : "post", 
+			dataType: "text",
+			success : function(data) {
+				if(data == '0'){
+					// 존재하는 아이디
+					$("#m_id").removeAttr("disabled");
+					$("#idSpanLogIn").text("");
+				}else if(data == '1'){
+					// 존재하지 않는 아이디
+					$("#m_id").attr("disabled","disabled");
+					$("#idSpanLogIn").text("(존재하지 않는 아이디 입니다)");
+				}
+			},
+			error : function() {
+				alert("읽기실패");
+			}
+		});
+	});
+});
+</script> 
+
+<!-- <script type="text/javascript">
+	$(document).ready(function() {
+		let pwdchk = "${pwdchk}";
+		if(pwdchk.trim() === 'fail'){
+			console.log("Password check failed.");
+			alert("비밀번호틀림");
+			return;
+		}
+	});
+</script>  -->
+
 <script type="text/javascript">
 function logIn(f) {
-	const memberId = document.getElementById("member_id").value;
-	const memberPwd = document.getElementById("member_pwd").value;
-
-    if(memberId.trim() === "" || memberPwd.trim() === "") {
-        alert("아이디와 비밀번호를 입력하세요.");
-        return false; 
-    }
+	if(f.member_id.value === ""){
+		 alert("아이디를 입력하세요.");
+		 f.member_id.focus();
+		 return;
+	 }
+	 if(f.member_pwd.value === ""){
+		 alert("패스워드 확인를 입력하세요.");
+		 f.member_pwd.focus();
+		 return;
+	 }
+    
 	f.action="login_go_ok.do";
 	f.submit();
 }
+
+function kakaoLogIn() {
+	alert("Coming Soon!!")
+}
+
+function naverLogIn() {
+	alert("Coming Soon!!")
+}
 </script>
+
+
 <style>
 .bg-image {
   background-repeat: no-repeat;
@@ -38,21 +93,21 @@ function logIn(f) {
 			<form>
 	            <div data-mdb-input-init class="form-outline mb-4">
 	              <input type="text" id="member_id" name="member_id" class="form-control form-control-lg" />
-	              <label class="form-label" for="member_id">아이디</label>
+	              <label class="form-label" for="member_id">아이디</label>&nbsp;<span id="idSpanLogIn"></span>
 	            </div>
 	            <div data-mdb-input-init class="form-outline mb-4">
 	              <input type="password" id="member_pwd" name="member_pwd" class="form-control form-control-lg" />
 	              <label class="form-label" for="member_pwd">비밀번호</label>
 	            </div>
 				
-	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit" onclick="logIn(this.form)">로그인</button>
+	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit" id="m_id" onclick="logIn(this.form)">로그인</button>
 	            
 	            <br><br>
 	            <p class="small mb-5 pb-lg-2"><a class="text-muted" href="find_pwd_go.do">비밀번호 찾기</a> &nbsp;
 	           	<a class="text-muted" href="find_id_go.do">아이디 찾기</a></p>
 	            <hr class="my-4">
-	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit"><img src="${path}/resources/img/kakao_login_medium_narrow.png"/></button>
-	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit"><img src="${path}/resources/img/btnG.png" /></button>
+	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit" onclick="kakaoLogIn(this.form)"><img src="${path}/resources/img/kakao_login_medium_narrow.png"/></button>
+	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit" onclick="naverLogIn(this.form)"><img src="${path}/resources/img/btnG.png" /></button>
 			</form>
           </div>
         </div>
