@@ -52,8 +52,7 @@ function inValidEmail(email) {
 	            if (xhr.status === 200) {
 	                const response = xhr.responseText;
 	                if (response==="success") {
-	                    // 비밀번호 일치
-	                    // 여기서 처리할 작업을 추가하세요
+
 	                    alert('비밀번호가 확인되었습니다.');
 	                } else {
 	                    // 비밀번호 불일치
