@@ -65,7 +65,10 @@
 			</div>
 		
 				<h1 class="display-4 fw-normal">임시 메인 페이지</h1>
-
+<a href="inquiry_form.do">1:1문의작성</a>
+<a href="my_info.do">내정보</a>
+<a href="my_faq.do">faq</a>
+<a href="my_main.do">마이페이지</a>
 		</header>
 	</div>
 </body>

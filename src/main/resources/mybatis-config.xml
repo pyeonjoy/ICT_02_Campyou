@@ -10,9 +10,14 @@
 	<typeAliases>
 	
 		<typeAlias type="com.ict.campyou.hu.dao.MemberVO" alias="mvo"/>
+		<typeAlias type="com.ict.campyou.bm.dao.FaqVO" alias="fvo"/>
 		
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/hu-mapper.xml" />
+		<mapper resource="mappers/bomi-mapper.xml" />
 	</mappers>
+	
+
+
 </configuration>
