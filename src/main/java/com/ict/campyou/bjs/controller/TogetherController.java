@@ -2,10 +2,7 @@ package com.ict.campyou.bjs.controller;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,8 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
-import com.ict.campyou.common.Paging;
+import com.ict.campyou.common.Paging2;
 import com.ict.campyou.hu.dao.MemberVO;
+import com.ict.campyou.jun.dao.CampVO;
 
 @Controller
 public class TogetherController {
@@ -26,7 +24,7 @@ public class TogetherController {
 	private TogetherService togetherService;
 	
 	@Autowired
-	private Paging paging;
+	private Paging2 paging;
 	
 	@RequestMapping("together_list.do")
 	public ModelAndView getTogetherList(HttpServletRequest request) throws Exception{
@@ -79,14 +77,17 @@ public class TogetherController {
 	}
 	
 	@RequestMapping("together_Write.do")
-	public ModelAndView getTogetherWrite(TogetherVO tvo, HttpSession session) {
+	public ModelAndView getTogetherWrite(TogetherVO tvo, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo"); 
 		if(memberUser != null) {
 			mv.setViewName("bjs/together_write");
 		}else {
+			List<CampVO> campList = togetherService.getTogetherCampList();
+			
 			session.setAttribute("requestPage", "together_Write.do");
             mv.setViewName("redirect:login_form.do");
+            mv.addObject("campList", campList);
 		}
 		return mv;
 	}

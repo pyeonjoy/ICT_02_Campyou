@@ -15,6 +15,7 @@
 		<typeAlias type="com.ict.campyou.bjs.dao.TogetherVO" alias="tvo"/>
 		<typeAlias type="com.ict.campyou.joy.dao.AdminVO" alias="avo"/>
 		<typeAlias type="com.ict.campyou.joy.dao.MemberVO" alias="adminmvo"/>
+		<typeAlias type="com.ict.campyou.jun.dao.CampVO" alias="cvo"/>
 		
 	</typeAliases>
 	<mappers>
