@@ -100,19 +100,20 @@ public class CampAjaxController {
 	@RequestMapping(value = "camp_detail_img.do", produces="text/xml; charset=utf-8")
 	@ResponseBody
 	public String Camp_detail_img(@RequestParam() String contentid) {
+		System.out.println(contentid);
 	    BufferedReader rd = null;
 	    HttpURLConnection conn = null;
 		try {
 			// contentId  = 캠핑장 고유 번호
 		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/GoCamping/imageList"); // 이미지 리스트
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + URLEncoder.encode("X0kmMKfzM75AstLAvFpYYUYZ618haU808lrytcOmk%2BMX27oB2z1ds%2BqlA6%2FvupBqS2tNWmLuRfjricCDf%2BGZ%2Fg%3D%3D", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + URLEncoder.encode("X0kmMKfzM75AstLAvFpYYUYZ618haU808lrytcOmk+MX27oB2z1ds+qlA6/vupBqS2tNWmLuRfjricCDf+GZ/g==", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("20", "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*한 페이지 결과 수*/
-        urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("WIN", "UTF-8")); /*한 페이지 결과 수*/
-        urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("CampYou", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("contentId","UTF-8") + "=" + URLEncoder.encode(contentid, "UTF-8")); /*캠핑장고유번호*/
-        System.out.println(contentid);
         URL url = new URL(urlBuilder.toString());
+        System.out.println(url);
         conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
     

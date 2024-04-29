@@ -6,42 +6,133 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=qpvmsbuult"></script>
+
+
+<style type="text/css">
+	#detail_img img {
+		width: 300px;
+		height: 300px;
+	}
+	.camp_detail_wrap h4{
+		width : 80%;
+		height: 50px;
+		background-color: #FFBA34;
+		text-align: center;
+		line-height: 50px;
+	}
+	    #detail_img {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+    }
+    #detail_img img {
+        width: 60%;
+        height: 60%;
+    }
+    #detail_img img:first-child {
+        grid-column: 1 / span 2;
+        grid-row: 1 / span 2;
+    }
+    .camp_detail_second_title{
+    	width : 80%;
+		height: 50px;
+		background-color: #FFBA34;
+		text-align: left;
+		line-height: 50px;
+		font-size: 20px;
+    	margin: 0 auto;
+    }
+</style>
 <script>
 $(document).ready(function() {
-	let contentId = {contentid};
-	
-    $.ajax({
-        url: "camp_detail_img.do",
-        method: "post",
-        data: { contentid: contentId },
-        dataType: "xml",
-        success: function(data) {
-        	console.log(contentid);
-            $("#detail_img").empty();
-            $(data).find("item").each(function() {
-                let imageUrl = $(this).find("imageUrl").text();
-                let contentid = $(this).find("contentId").text();
-                
-                let campImg = "<div>";
-                campImg += "<img src='" + imageUrl + "' alt='이미지'>";
-                campImg += "</div>";
+    const urlParams = new URLSearchParams(window.location.search);
+    const contentId = urlParams.get('contentid');
+    
+    if (contentId) {
+        $.ajax({
+            url: "camp_detail_img.do",
+            method: "post",
+            data: { contentid: contentId },
+            dataType: "xml",
+            success: function(data) {
+                $("#detail_img").empty();
+                $(data).find("item").each(function() {
+                    let imageUrl = $(this).find("imageUrl").text();
+                    let contentId = $(this).find("contentId").text();
+                    
+                    let campImg = "<div>";
+                    campImg += "<img src='" + imageUrl + "' alt='이미지'>";
+                    campImg += "</div>";
 
-                $("#detail_img").append(campImg);
-            });
-        },
-        error: function() {
-            alert("읽기 실패");
-        }
-    });
+                    $("#detail_img").append(campImg);
+                });
+            },
+            error: function() {
+                alert("읽기 실패");
+            }
+        });
+    }
 });
 </script>
-
 <title>캠핑장 상세 페이지</title>
 </head>
 <body>
-	<h2>상세보기</h2>
-	<div id="detail_img"></div>
-    <p>주소: ${info.addr1}</p>
-    <p>유형: ${info.induty}</p>
+<jsp:include page="../hs/header.jsp" />
+<div class="camp_detail_wrap">
+<div style="height: 100px;"><!-- 헤더 너무 딱 붙어있어서 임시 거리 --></div>
+    <h4>상세보기</h4>
+    <div id="detail_img">
+    	<!-- 이미지 들어간 자리  -->
+    </div>
+    <p>${info.facltnm}</p>
+    <span>${info.lctcl}/${info.induty}</span>
+    <p>${info.addr1}</p>
+    <p>${info.tel}</p>
+    <div class="camp_detail_second_title">
+    <a href="#">소개 및 시설</a>
+    <a href="#">위치</a>
+    <a href="#">후기</a>
+    </div>
+    <p>운영기간 : ${info.operpdcl}</p>
+    <p>운영일 : ${info.operdecl}</p>
+    <p>주변이용가능 시설 : ${info.posblfcltycl}</p>
+    <p>예약방법 : ${info.resved}</p>
+    
+    <p>${info.intro }</p>
+<div id="map" style="width:100%;height:400px;"></div>
+</div>
+<jsp:include page="../hs/footer.jsp" />
+<script type="text/javascript">
+var mapDiv = document.getElementById('map');
+
+var map = new naver.maps.Map(mapDiv);
+let circle;
+let me;
+let markers;
+let infoWindows;
+let zoom;
+
+	  map = new naver.maps.Map('map',{
+	    center: new naver.maps.LatLng(${info.mapx},${info.mapy}), //좌표
+	    zoom: zoom,
+	    minZoom: 6,
+	    draggable: true,
+	    pinchZoom: true,
+	    scrollWheel: true,
+	    disableKineticPan: false, // 관성드래깅
+	    scaleControl: false, // 스케일 컨트롤러
+	    logoControl: true, // 로고 컨트롤러
+	    logoControlOptions: {
+	        position: naver.maps.Position.BOTTOM_RIGHT
+	    },
+	    mapDataControl: false, 
+	    zoomControl: true, //줌컨트롤러
+	    zoomControlOptions: {
+	        position: naver.maps.Position.TOP_LEFT
+	    },
+	    mapTypeControl: false
+	  });
+</script>
 </body>
 </html>
