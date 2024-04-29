@@ -18,9 +18,6 @@
     <div class="pwd_container">
       <label for="pwd_check" >비밀번호 확인</label><input type="password" name="pwd_check" class="input_pwd">
     </div>
-        <div class="pwd_container">
-      <label for="pwd_new" >새 비밀번호</label><input type="password" name="pwd_check" class="input_pwd">
-    </div>
     <div class="btn_container">
       <button class="btn btn_change">변경</button>
       <button class="btn btn_back">뒤로가기</button>
