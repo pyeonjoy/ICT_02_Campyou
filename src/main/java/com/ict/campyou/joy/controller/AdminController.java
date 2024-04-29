@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.joy.dao.AdminVO;
-import com.ict.campyou.joy.dao.MemberVO;
+import com.ict.campyou.joy.dao.AdminMemberVO;
 import com.ict.campyou.joy.service.AdminService;
 
 @Controller
@@ -42,8 +42,8 @@ public class AdminController {
 	public ModelAndView adminMemberDetail() {
 		ModelAndView mv = new ModelAndView("joy/admin_member_detail");
 		int report_all = adminService.getreportall();
-		List<MemberVO> board_all = adminService.getboardall();
-		List<MemberVO> member_report = adminService.getadminmemberreport();
+		List<AdminMemberVO> board_all = adminService.getboardall();
+		List<AdminMemberVO> member_report = adminService.getadminmemberreport();
 		System.out.println(board_all);
 		if (board_all != null) {
 			mv.addObject("report", report_all);

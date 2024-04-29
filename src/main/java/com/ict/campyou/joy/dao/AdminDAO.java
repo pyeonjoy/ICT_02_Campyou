@@ -52,7 +52,7 @@ public class AdminDAO {
 		return -1;
 	}
 	
-	public List<MemberVO> getboardall() {
+	public List<AdminMemberVO> getboardall() {
 		try {
 			return sqlSessionTemplate.selectList("joy.boardall");
 		} catch (Exception e) {
@@ -60,7 +60,7 @@ public class AdminDAO {
 		}
 		return null;
 	}
-	public List<MemberVO> getadminmemberreport() {
+	public List<AdminMemberVO> getadminmemberreport() {
 		try {
 			return sqlSessionTemplate.selectList("joy.adminmemberreport");
 		} catch (Exception e) {

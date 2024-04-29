@@ -98,16 +98,12 @@ input[type="button"], input[type="submit"], input[type="reset"], button
 	color: black;
 	text-align: center;
 	height: 40px;
-	padding-left: 30px;
-	padding-right: 30px;
 	border: 0px solid black;
 }
 
 input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover,
 	button:hover {
 	border: 0px solid black;
-	padding-left: 30px;
-	padding-right: 30px;
 	border-radius: 5px;
 	height: 40px;
 	background-color: #032805;

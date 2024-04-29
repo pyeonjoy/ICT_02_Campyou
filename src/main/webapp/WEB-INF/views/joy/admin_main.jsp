@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<link href="resources/css/reset.css" rel="stylesheet" />
+<link href="resources/css/reset.css" rel="stylesheet" />
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!doctype html>
 <html lang="ko">
@@ -10,17 +10,18 @@
 <meta charset="utf-8">
 <title>관리자 페이지 메인</title>
 <style>
-    body{
-    background-color: #F6FFF1;
+body{
+  background-color: #F6FFF1;
 }
-.head{
+.admhead{
     text-align: center;
-    margin: 100px;
     color: #053610;
 }
 .wrap{
-    margin: auto;
+    margin: 0 auto;
     width: 960px;
+    height: 900px;
+    padding-top: 200px;
 }
 .inner {
     text-align: center;
@@ -31,24 +32,27 @@
     border-radius: 10px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     margin: 10px;
+    margin-top: 50px;
 }
-h4{
+.inner h4{
 display:inline-block;
 background-color: #FFBA34;
 border-radius: 10px;
 padding: 10px;
 margin-bottom: 10px;
 }
-p{
-margin: 10px;
+.inner > *{
+margin: 7px;
+line-height: 15px;
 font-size: 15px;
 }
 
 </style>
 </head>
 <body>
-    <h3 class="head">관리자님 환영합니다</h3>
+<jsp:include page="../hs/header.jsp" />
     <div class="wrap">
+    <h3 class="admhead">관리자님 환영합니다</h3>
             <div class="inner">
             <c:forEach var="k" items="${member}">
                 <h4>유저 현황</h4>
@@ -79,6 +83,6 @@ font-size: 15px;
                 <p>신고 내역: ${report}</p>
             </div>
 </div>
-
+<jsp:include page="../hs/footer.jsp" />
 </body>
 </html>
