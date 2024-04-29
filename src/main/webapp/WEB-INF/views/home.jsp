@@ -112,14 +112,9 @@ background-color: #FFFDDE;}
 				<p><button>Show More</button></p>
 				<div class="find" style="margin-top: 500px;">
 				<h3>Find camping mates</h3>
-					<p>동행구함 </p>
-					<p>동행구함 </p>
-					<p>동행구함 </p>
-					<p>동행구함 </p>
-					<p>동행구함 </p>
-					<p>동행구함 </p>
-					<p>동행구함 </p>
-					<p>동행구함 </p>
+					<c:forEach var="k" items="${bwlist}" varStatus="vs">
+							<p>${k.t_content }</p>
+					</c:forEach>
 				</div>
 				<p><button>Show More</button></p>
 			</div>

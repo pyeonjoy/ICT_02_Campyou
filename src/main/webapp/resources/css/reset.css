@@ -72,7 +72,7 @@ h2 {
     margin: 0 auto;
 }
 h3 {
-    font-size: 30px;
+    font-size: 25px;
     margin: 0 auto;
     font-weight: 900;
 }
@@ -81,8 +81,9 @@ h4{
     margin: 0 auto;
 }
 p {
-	font-size: 20px;
+	font-size: 15px;
     margin: 0 auto;
+    line-height: 15px;
 }
 
 a, a:visited, a:hover {
@@ -99,11 +100,12 @@ input[type="button"], input[type="submit"], input[type="reset"], button
 	height: 40px;
 	padding-left: 30px;
 	padding-right: 30px;
+	border: 0px solid black;
 }
 
 input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover,
 	button:hover {
-	
+	border: 0px solid black;
 	padding-left: 30px;
 	padding-right: 30px;
 	border-radius: 5px;
