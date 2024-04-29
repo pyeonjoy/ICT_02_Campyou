@@ -76,8 +76,9 @@ $(document).ready(function() {
                     let addr1 = $(this).find("addr1").text();
                     let tel = $(this).find("tel").text();
                     let homepage = $(this).find("homepage").text();
+                    let contentid = $(this).find("contentId").text();
 
-                    let campItem = "<div class='camp_item'>";
+                    let campItem = "<div class='camp_item' onclick='location.href=\"camp_detail.do?contentid=" + contentid + "\"'>";
                     campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
                     campItem += "<div class='camp_info'>";
                     campItem += "<p> ["+ doNm + sigunguNm+"] </p>";
@@ -128,8 +129,9 @@ $(document).ready(function() {
                     let addr1 = $(this).find("addr1").text();
                     let tel = $(this).find("tel").text();
                     let homepage = $(this).find("homepage").text();
+                    let contentid = $(this).find("contentId").text();
 
-                    let campItem = "<div class='camp_item'>";
+                    let campItem = "<div class='camp_item' onclick='location.href=\"camp_detail.do?contentid=" + contentid + "\"'>";
                     campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
                     campItem += "<div class='camp_info'>";
                     campItem += "<p> ["+ doNm + sigunguNm+"] </p>";
@@ -168,7 +170,6 @@ $(document).ready(function() {
     });
 });
 </script>
-
 </head>
 <body>
 <jsp:include page="../hs/header.jsp" />
