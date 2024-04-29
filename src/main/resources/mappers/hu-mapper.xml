@@ -77,23 +77,17 @@
  	 	set  b_title=#{b_title}, b_content=#{b_content}, f_name=#{f_name}
  	 	where b_idx = #{b_idx}  	 
  	 </update>
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
+ 	 
+ 	 <update id="comm_lev_update" parameterType="Map">
+ 	 	update commboard set lev=lev+1 where groups=#{groups} and lev>=#{lev} 
+ 	 </update>
+ 	 
+ 	  <insert id="comm_reply_insert" parameterType="cbvo">
+ 	 	insert into commboard(member_idx, b_type, b_title, member_nickname, b_content, b_pwd, hit, groups, step, lev, regdate, f_name)
+ 			values(#{member_idx}, #{b_type}, #{b_title}, #{member_nickname}, #{b_content}, #{b_pwd}, 0, #{groups}, #{step}, #{lev}, sysdate(), #{f_name})
+ 	 </insert>
+ 	 
+ 	 <select id="comm_board_reply_detail" parameterType="cbvo" resultType="cbvo">
+ 		select * from commboard where b_idx = #{b_idx}
+ 	</select>
 </mapper>

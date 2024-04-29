@@ -1,6 +1,7 @@
 package com.ict.campyou.hu.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ict.campyou.hu.dao.CommBoardVO;
 
@@ -18,4 +19,10 @@ public interface CommBoardService {
 	public int getCommBoardDelete(CommBoardVO cbvo2);
 	
 	public int getCommBoardUpdate(CommBoardVO cbvo);
+	
+	public int getLevUpdate(Map<String, Integer> map);
+	
+	public int getReplyInsert(CommBoardVO cbvo);
+	
+	public CommBoardVO getCommBoardReplyDetail(CommBoardVO cbvo);
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +8,10 @@
 <title>Insert title here</title>
 <style type="text/css">
 tr {
-		
 	    text-align:center;
 	    padding:4px 10px;
 	    background-color: #F6F6F6;
 	}
-	
 th {
 		width:120px;
 	    text-align:center;
@@ -26,10 +24,6 @@ th {
 		f.action="community_board.do";
 		f.submit()
 	}	
-	/* function ans_write(f) {
-		f.action="ans_write.do";
-		f.submit()
-	}	 */
 	function comm_board_update(f) {
 		f.action="comm_board_update.do";
 		f.submit()
@@ -80,7 +74,6 @@ th {
      	<input type="hidden" value="${cbvo.b_idx}" name="b_idx">
      	<input type="hidden" value="${cPage}" name="cPage">
         <input type="button" value="목록" onclick="comm_board_list(this.form)" />
-        <!-- <input type="button" value="답글" onclick="ans_write(this.form)" /> -->
         <input type="button" value="수정" onclick="comm_board_update(this.form)" />
         <input type="button" value="삭제" onclick="comm_board_delete(this.form)" />
      </td>

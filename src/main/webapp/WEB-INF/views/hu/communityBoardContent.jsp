@@ -26,10 +26,10 @@ th {
 		f.action="community_board.do";
 		f.submit()
 	}	
-	/* function ans_write(f) {
-		f.action="ans_write.do";
+	function comm_reply_go(f) {
+		f.action="comm_reply_go.do";
 		f.submit()
-	}	 */
+	}	
 	function comm_board_update(f) {
 		f.action="comm_board_update.do";
 		f.submit()
@@ -77,12 +77,41 @@ th {
 	<tfoot>
 	<tr>
      <td colspan="2">
-     	<input type="hidden" value="${cbvo.b_idx}" name="b_idx">
-     	<input type="hidden" value="${cPage}" name="cPage">
-        <input type="button" value="목록" onclick="comm_board_list(this.form)" />
-        <input type="button" value="답글" onclick="ans_write(this.form)" />
-        <input type="button" value="수정" onclick="comm_board_update(this.form)" />
-        <input type="button" value="삭제" onclick="comm_board_delete(this.form)" />
+     <c:choose>
+     		<c:when test="${memberInfo.member_id == 'admin'}">
+     			<input type="hidden" value="${cbvo.b_idx}" name="b_idx">
+     			<input type="hidden" value="${cPage}" name="cPage">
+        		<input type="button" value="목록" onclick="comm_board_list(this.form)" />
+        		<input type="button" value="답글" onclick="comm_reply_go(this.form)" />
+        		<input type="button" value="수정" onclick="comm_board_update(this.form)" />
+        		<input type="button" value="삭제" onclick="comm_board_delete(this.form)" />
+     		</c:when>
+     		<c:otherwise>
+     			<c:choose>			
+     				<c:when test="${memberInfo.member_nickname == cbvo.member_nickname}">
+     					<input type="hidden" value="${cbvo.b_idx}" name="b_idx">
+     					<input type="hidden" value="${cPage}" name="cPage">
+        				<input type="button" value="목록" onclick="comm_board_list(this.form)" />
+        				<input type="button" value="답글" onclick="comm_reply_go(this.form)" />
+        				<input type="button" value="수정" onclick="comm_board_update(this.form)" />
+        				<input type="button" value="삭제" onclick="comm_board_delete(this.form)" />
+     				</c:when>
+     				<c:otherwise>
+     					<c:choose>
+     						<c:when test="${memberInfo.member_nickname == null}">
+     							<input type="button" value="목록" onclick="comm_board_list(this.form)" />
+     						</c:when>
+     						<c:otherwise>
+     							<input type="hidden" value="${cbvo.b_idx}" name="b_idx">
+     							<input type="hidden" value="${cPage}" name="cPage">
+     							<input type="button" value="목록" onclick="comm_board_list(this.form)" />
+        						<input type="button" value="답글" onclick="comm_reply_go(this.form)" />
+     						</c:otherwise>
+     					</c:choose>
+     				</c:otherwise>
+     			</c:choose>
+     		</c:otherwise>
+     	</c:choose>
      </td>
 	</tr>
 	</tfoot>

@@ -116,18 +116,7 @@ table tfoot ol.paging li a:hover {
 							    		<span style="color:lightgray">삭제된 게시물입니다</span>
 							    	</c:when>
 							    	<c:otherwise>
-							    	
-							    	
-							    		
-							    		<!-- 비회원도 볼수있게 하기!!!!! -->
 							    		<td><a href="commBoard_content.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.b_title}</a></td>
-							    		
-							    		
-							    		
-							    	
-							    		
-							    		
-							    
 									</c:otherwise>
 							    </c:choose>
 							    <c:choose>
@@ -158,21 +147,21 @@ table tfoot ol.paging li a:hover {
 						<ol class="paging">
 							<!-- 이전 버튼 -->
 							<c:choose>
-								<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
+								<c:when test="${paging.beginBlock <= paging.pagePerBlock}">
 									<li class="disable">이전으로</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="community_board.do?cPage=${paging.beginBlock - paging.pagePerBlock }">이전으로</a></li>
+									<li><a href="community_board.do?cPage=${paging.beginBlock - paging.pagePerBlock}">이전으로</a></li>
 								</c:otherwise>
 							</c:choose>
 							<!-- 페이지번호들 -->
-							<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock }" step="1" var="k">
+							<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock}" step="1" var="k">
 								<c:choose>
 									<c:when test="${k == paging.nowPage }">
 										<li class="now">${k}</li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="community_board.do?cPage=${k}">${k }</a></li>
+										<li><a href="community_board.do?cPage=${k}">${k}</a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>

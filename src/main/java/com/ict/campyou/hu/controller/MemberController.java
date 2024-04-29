@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -305,12 +308,12 @@ public class MemberController {
 				  
 				  //맴버세션 정보를 담기
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
-				  cbvo.setMember_nickname(memberInfo.getMember_nickname());
+				  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
 				  if(result > 0 && cbvo != null && cbvo.getMember_idx().equals(memberInfo.getMember_idx())) {
 					  mv.addObject("cbvo", cbvo);
 					  mv.addObject("memberInfo", memberInfo);
-					  mv.addObject("member_nickname", memberInfo.getMember_nickname());
+					  //mv.addObject("member_nickname", memberInfo.getMember_nickname());
 					  return mv;
 				  }  
 			  }
@@ -336,6 +339,60 @@ public class MemberController {
 			} catch (Exception e) {
 				System.out.println(e);
 			}
+	  }
+	  
+	  @RequestMapping("comm_reply_go.do")
+	  public ModelAndView getCommBoardReply(@ModelAttribute("cPage") String cPage, @ModelAttribute("b_idx") String b_idx) {
+		  return new ModelAndView("hu/communityBoardReply");
+	  }
+	  
+	  @RequestMapping("comm_board_reply_ok.do")
+	  public ModelAndView getCommBoardReplyOk(@ModelAttribute("cPage") String cPage, CommBoardVO cbvo,
+				                              HttpServletRequest request, HttpSession session) {
+		  try {
+			  CommBoardVO cbvo2 = commBoardService.getCommBoardDetail(cbvo.getB_idx());
+			  
+			  int groups = Integer.parseInt(cbvo2.getGroups());
+			  int step = Integer.parseInt(cbvo2.getStep());
+			  int lev = Integer.parseInt(cbvo2.getLev());
+			  
+			  step++;
+			  lev++;
+			  
+			  Map<String, Integer> map = new HashMap<String, Integer>();
+			  map.put("groups", groups);
+			  map.put("lev", lev);
+			  
+			  int result = commBoardService.getLevUpdate(map);
+			  cbvo.setGroups(String.valueOf(groups));
+			  cbvo.setStep(String.valueOf(step));
+			  cbvo.setLev(String.valueOf(lev));
+			  
+			  ModelAndView mv = new ModelAndView("redirect:community_board.do");
+			  String path = request.getSession().getServletContext().getRealPath("/resources/upload");
+			  MultipartFile file = cbvo.getFile();
+			  
+			  if (file.isEmpty()) {
+				  	cbvo.setF_name("");
+				} else {
+					UUID uuid = UUID.randomUUID();
+					String f_name = uuid.toString() + "_" + file.getOriginalFilename();
+					cbvo.setF_name(f_name);
+
+					byte[] in = file.getBytes();
+					File out = new File(path, f_name);
+					FileCopyUtils.copy(in, out);
+			  }
+			  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));	
+			  
+			  int result2 = commBoardService.getReplyInsert(cbvo);
+			  if (result2 > 0) {
+				  return mv;
+			  }
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		  return new ModelAndView("hu/error");
 	  }
 	  
 	  @RequestMapping("comm_board_delete.do")
@@ -437,18 +494,29 @@ public class MemberController {
 				  //hit 업데이트
 				  int result = commBoardService.getCommBoardHit(b_idx);
 				  
+				  //비회원 게시판 보기
+				  if(memberInfo == null) {
+					  //상세보기
+					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
+					  if(result > 0 && cbvo != null ){
+						  mv.addObject("cbvo", cbvo);
+						  return mv;
+					  } 
+					  return mv;
+				  }
+				  
 				  if(memberInfo != null) {
 					  //상세보기
 					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 					  
 					  //맴버세션 정보를 담기
 					  cbvo.setMember_idx(memberInfo.getMember_idx());
-					  cbvo.setMember_nickname(memberInfo.getMember_nickname());
+					  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
 					  if(result > 0 && cbvo != null && cbvo.getMember_idx().equals(memberInfo.getMember_idx())) {
 						  mv.addObject("cbvo", cbvo);
 						  mv.addObject("memberInfo", memberInfo);
-						  mv.addObject("member_nickname", memberInfo.getMember_nickname());
+						 // mv.addObject("member_nickname", memberInfo.getMember_nickname());
 						  return mv;
 					  }  
 				  }

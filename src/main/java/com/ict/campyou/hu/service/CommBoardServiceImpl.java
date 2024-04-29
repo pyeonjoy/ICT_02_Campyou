@@ -1,6 +1,7 @@
 package com.ict.campyou.hu.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,20 @@ public class CommBoardServiceImpl implements CommBoardService {
 	@Override
 	public int getCommBoardUpdate(CommBoardVO cbvo) {
 		return commBoardDAO.getCommBoardUpdate(cbvo);
+	}
+
+	@Override
+	public int getLevUpdate(Map<String, Integer> map) {
+		return commBoardDAO.getLevUpdate(map);
+	}
+
+	@Override
+	public int getReplyInsert(CommBoardVO cbvo) {
+		return commBoardDAO.getReplyInsert(cbvo);
+	}
+
+	@Override
+	public CommBoardVO getCommBoardReplyDetail(CommBoardVO cbvo) {
+		return commBoardDAO.getCommBoardReplyDetail(cbvo);
 	}
 }

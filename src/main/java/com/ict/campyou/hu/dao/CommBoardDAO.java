@@ -79,18 +79,31 @@ public class CommBoardDAO {
 		return 0;
 	}
 	
+	public int getLevUpdate(Map<String, Integer> map) {
+		try {
+			return sqlSessionTemplate.update("member.comm_lev_update", map);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
 	
+	public int getReplyInsert(CommBoardVO cbvo) {
+		try {
+			return sqlSessionTemplate.insert("member.comm_reply_insert", cbvo);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return 0;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public CommBoardVO getCommBoardReplyDetail(CommBoardVO cbvo) {
+		try {
+			return sqlSessionTemplate.selectOne("member.comm_board_reply_detail", cbvo);
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return cbvo;
+	}
 }
