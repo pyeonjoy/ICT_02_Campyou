@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ict.campyou.hu.dao.MemberVO;
+
 @Repository
 public class MyDAO {
 @Autowired
@@ -27,4 +29,5 @@ public List<FaqVO> getFaqs2() {
 	}
 	return null;
 }
+
 }
