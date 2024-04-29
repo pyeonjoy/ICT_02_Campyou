@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.MyDAO;
+import com.ict.campyou.hu.dao.MemberVO;
 
 @Service
 public class MyServiceImpl implements MyService{
