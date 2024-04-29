@@ -21,7 +21,7 @@
     </select>
     	
     	<select id="adminmainqna" resultType="int">
-        SELECT count(pm_idx) AS totalpm_dix 
+        SELECT count(pm_idx) AS totalpm_idx 
         FROM m_promise 
     </select>
     

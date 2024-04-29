@@ -176,26 +176,25 @@ window.addEventListener('DOMContentLoaded', function() {
 						<th>상태</th>
 					</tr>
 					<tr>
-						<%--<c:if test="${member_login == basic }">
+						<c:if test="${m.member_login == basic }">
 						<td>O</td>
 						<td>카카오</td>
 						</c:if>
-						 <c:if test="${member_login == kakao }">
+						 <c:if test="${m.member_login == kakao }">
 						<td>X</td>
 						<td>카카오</td>
 						</c:if>
-						<c:if test="${member_login == naver }">
+						<c:if test="${m.member_login == naver }">
 						<td>X</td>
 						<td>네이버</td>
 						</c:if> 
-						--%>
 						<td>${report}</td>
-						<%-- <c:if test="${m.member_status== 0}">
+						 <c:if test="${m.member_status== 0}">
 						<td>활동중</td>
 						</c:if>
 						<c:if test="${m.member_status== 1}">
 						<td>정지</td>
-						</c:if> --%>
+						</c:if> 
 					</tr>
 				</table>
 		</c:forEach>
