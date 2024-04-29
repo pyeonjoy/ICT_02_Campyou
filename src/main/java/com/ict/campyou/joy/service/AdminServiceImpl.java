@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ict.campyou.joy.dao.AdminDAO;
 import com.ict.campyou.joy.dao.AdminVO;
-import com.ict.campyou.joy.dao.MemberVO;
+import com.ict.campyou.joy.dao.AdminMemberVO;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -40,13 +40,13 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public List<MemberVO> getboardall() {
+	public List<AdminMemberVO> getboardall() {
 		System.out.println(admindao.getboardall());
 		return admindao.getboardall();
 	}
 	
 	@Override
-	public List<MemberVO> getadminmemberreport() {
+	public List<AdminMemberVO> getadminmemberreport() {
 		return admindao.getadminmemberreport();
 	}
 
