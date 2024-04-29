@@ -102,7 +102,12 @@ background-color: #FFFDDE;}
 					</c:choose>
 				</nav>				
 				
-			</div>
+      </div>
+				<h1 class="display-4 fw-normal">임시 메인 페이지</h1>
+<a href="inquiry_form.do">1:1문의작성</a>
+<a href="my_info.do">내정보</a>
+<a href="my_faq.do">faq</a>
+<a href="my_main.do">마이페이지</a>
 			<div class="wrap">
 				<div class="popular">
 				<h3>Popular campsites</h3>
@@ -119,7 +124,6 @@ background-color: #FFFDDE;}
 				</div>
 				<p><button>Show More</button></p>
 			</div>
-
 		</header>
 	</div>
 	<div style="background-color: #053610; height: 500px;"></div>
