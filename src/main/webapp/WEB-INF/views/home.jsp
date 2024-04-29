@@ -75,9 +75,8 @@ background-color: #FFFDDE;}
 		<header>
 			<div class="d-flex flex-column flex-md-row align-items-cent er pb-3 mb-4 border-bottom">
 				<title>Bootstrap</title>
-				
+				<a class="me-3 py-2 text-dark text-decoration-none" href="community_board.do">게시판</a> 
 				<span class="fs-4">임시메인 페이지</span>
-
 				<nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
 					<c:choose>
 						<c:when test="${empty memberInfo}">

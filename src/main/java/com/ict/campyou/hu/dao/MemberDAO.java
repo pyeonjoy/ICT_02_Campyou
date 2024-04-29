@@ -32,6 +32,20 @@ public class MemberDAO {
 		return null;
 	}
 	
+	// login Id Check
+	public String getLogInIdChk(String member_id) {
+		try {
+		  	int result = sqlSessionTemplate.selectOne("member.loginIdchk", member_id);
+		  	if(result > 0) {
+		  		return "0";
+		  	}
+		  	return "1" ;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
 	public MemberVO getLogInOK(MemberVO vo) {
 		try {
 			return sqlSessionTemplate.selectOne("member.login", vo);
@@ -41,9 +55,9 @@ public class MemberDAO {
 		return null;
 	}
 	
-	public MemberVO getMyPwd(String member_id) {
+	public MemberVO getMyPwd(MemberVO mvo2) {
 		try {
-			return sqlSessionTemplate.selectOne("member.findPwd", member_id);
+			return sqlSessionTemplate.selectOne("member.findPwd", mvo2);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -62,6 +76,19 @@ public class MemberDAO {
 	public MemberVO getMyID(String member_name) {
 		try {
 			return sqlSessionTemplate.selectOne("member.findId", member_name);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	public String getNickNameChk(String member_nickname) {
+		try {
+		  	int result = sqlSessionTemplate.selectOne("member.nickNameChk", member_nickname);
+		  	if(result > 0) {
+		  		return "0";
+		  	}
+		  	return "1" ;
 		} catch (Exception e) {
 			System.out.println(e);
 		}
