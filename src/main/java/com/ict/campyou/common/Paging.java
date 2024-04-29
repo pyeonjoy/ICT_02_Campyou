@@ -7,17 +7,17 @@ public class Paging {
 	private int nowPage = 1 ;
 	private int nowBlock = 1 ;
 	
-	// ÇÑ ÆäÀÌÁö´ç 10ÁÙ
+	// í•œ í˜ì´ì§€ë‹¹ 10ì¤„
 	private int numPerPage = 10 ;
-	// ÇÑ ºí·Ï´ç 3°³
+	// í•œ ë¸”ë¡ë‹¹ 3ê°œ
 	private int pagePerBlock = 5 ;
-	// DBÀÇ °Ô½Ã¹°ÀÇ ¼ö
+	// DBì˜ ê²Œì‹œë¬¼ì˜ ìˆ˜
 	private int totalRecord = 0 ;
-	// °Ô½Ã¹°ÀÇ ¼öÀ» ÀÌ¿ëÇØ¼­ ÀüÃ¼ ÆäÀÌÁöÀÇ ¼ö
+	// ê²Œì‹œë¬¼ì˜ ìˆ˜ì„ ì´ìš©í•´ì„œ ì „ì²´ í˜ì´ì§€ì˜ ìˆ˜
 	private int totalPage = 0 ;
 	private int totalBlock = 0 ;
 	
-	// ÇÑ¹ø¿¡ °¡Á®¿Ã °Ô½Ã¹°ÀÇ ½ÃÀÛ¹øÈ£¿Í ³¡¹øÈ£ 
+	// í•œë²ˆì— ê°€ì ¸ì˜¬ ê²Œì‹œë¬¼ì˜ ì‹œì‘ë²ˆí˜¸ì™€ ëë²ˆí˜¸ 
 	private int begin = 0 ;
 	private int end = 0 ;
 	
