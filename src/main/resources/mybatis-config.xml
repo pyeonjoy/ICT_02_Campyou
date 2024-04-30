@@ -14,6 +14,8 @@
 		<typeAlias type="com.ict.campyou.hu.dao.CommBoardVO" alias="cbvo"/>
 		<typeAlias type="com.ict.campyou.bjs.dao.TogetherVO" alias="tvo"/>
 		<typeAlias type="com.ict.campyou.joy.dao.AdminVO" alias="avo"/>
+		<typeAlias type="com.ict.campyou.joy.dao.MemberVO" alias="adminmvo"/>
+		<typeAlias type="com.ict.campyou.jun.dao.CampVO" alias="cvo"/>
 		<typeAlias type="com.ict.campyou.joy.dao.AdminMemberVO" alias="amvo"/>
 		
 	</typeAliases>
@@ -22,6 +24,7 @@
 		<mapper resource="mappers/bomi-mapper.xml" />
 		<mapper resource="mappers/bjs-mapper.xml" />
 		<mapper resource="mappers/joy-mapper.xml" />
+		<mapper resource="mappers/jun-mapper.xml" />
 	</mappers>
 	
 
