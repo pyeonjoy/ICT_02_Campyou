@@ -1,0 +1,102 @@
+@charset "UTF-8";
+body {
+	background-color: #F6FFF1;
+}
+
+.head {
+	text-align: center;
+	margin: 100px;;
+}
+
+.wrap {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 10px;
+	margin: 0 auto;
+	padding: 10px;
+	height: 100px;
+	width: 1000px;
+}
+
+.proimg {
+	width: 100px;
+	height: 100px;
+	margin: 30px auto;
+	border-radius: 100%;
+	background-color: gainsboro;
+}
+
+.left {
+	width: 200px;
+	height: 200px;
+}
+
+.right {
+	width: 700px;
+	height: 900px;
+}
+
+table {
+	width: 100%;
+	border-top: 1px solid #032805;
+	border-collapse: collapse;
+}
+
+th, td {
+	border-bottom: 1px solid #032805;
+	padding: 11px;
+	text-align: center;
+	width: 100%;
+}
+
+th {
+	background-color: #032805;
+	color: white;
+}
+
+.b1 button {
+	margin-top: 20px;
+	width: 140px;
+	height: 30px;
+	background-color: #032805;
+	color: white;
+	border: 0px;
+	border-radius: 3px;
+	margin: 0 auto;
+}
+.top >button:hover {
+margin-top: 20px;
+	width: 467px;
+	height: 50px;
+	background-color: #F6FFF1;
+	border: 1px solid black;
+	border-radius: 3px;
+	margin: 15px;
+	background-color: #053610;
+	color: white;
+}
+
+.b2 {
+	margin: 50 auto;
+	text-align: center;
+}
+
+.under {
+	margin-top: 200px;
+	width: 1000px;
+	margin: 200px auto;
+}
+
+.top button {
+	margin-top: 20px;
+	width: 467px;
+	height: 50px;
+	background-color: #F6FFF1;
+	border: 1px solid black;
+	border-radius: 3px;
+	margin: 15px;
+}
+
+.right input {
+	text-align: center;
+}

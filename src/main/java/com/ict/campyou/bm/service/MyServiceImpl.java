@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.MyDAO;
+import com.ict.campyou.bm.dao.UserVO;
+import com.ict.campyou.hu.dao.MemberVO;
 
 @Service
 public class MyServiceImpl implements MyService{
@@ -20,6 +22,18 @@ public class MyServiceImpl implements MyService{
 	@Override
 	public List<FaqVO> getFaqs2() {
 		return myDao.getFaqs2();
+	}
+	@Override
+	public MemberVO getMemberPwd(String memberId) {		
+		return myDao.getMemberPwd(memberId);
+	}
+	@Override
+	public int changeUserInfo(UserVO uvo) {
+		return myDao.changeUserInfo(uvo);
+	}
+	@Override
+	public int changeUserPW(UserVO uvo) {
+		return myDao.changeUserPW(uvo);
 	}
 
 }

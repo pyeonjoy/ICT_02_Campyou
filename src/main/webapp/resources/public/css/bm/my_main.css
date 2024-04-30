@@ -1,4 +1,3 @@
-@charset "UTF-8";
 :root{
   --primary-color: #032805;
   --primary-color-yellow: #FFBA34;
@@ -69,16 +68,49 @@
 }
 .list_summery{
   margin-left: .5rem;
+  font-weight: 700;
 }
-.list_image{
-  width: 180px;
-  height: 120px;
-  margin: 0 auto;
-  position: relative;
+
+.list_item {
+    position: relative;
+    width: 180px; 
 }
+
+.list_image_container {
+    position: relative;
+    width: 180px; 
+    height: 120px; 
+}
+
 .camping_img {
-  border-radius: .5rem;
+    display: block;
+    width: 100%;
+    height: auto;
+    opacity: 0.7; 
 }
+
+.list_text_overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    opacity: 1; 
+}
+
+.list_type {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px 10px;
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
+}
+
 .list_type{
 position: absolute;
 top: .3rem;
@@ -92,6 +124,26 @@ line-height: 1rem;
 font-size: .8rem;
 }
 
+.btn-container{
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+}
+
+.btn{
+  background-color: var(--text-white);
+  border: 1px solid var(--text-black);
+  width: 3rem;
+  height: 1.5rem;
+  border-radius: 2px;
+  margin: 2px;
+   transition: all .3s ease-in;
+   cursor: pointer;
+}
+
+.btn:hover{
+  background-color: var(--primary-color-light);
+}
 .type_yellow{
   background-color:var(--primary-color-yellow) ;
 }
@@ -126,13 +178,14 @@ padding: 2px;
   position: absolute;
   top: -.5rem;
  right:.5rem;
+ cursor: pointer;
 }
 .arrow{
   width: 2rem;
   position: absolute;
   top:50%;
   transform: translateY(-50%);
-   cursor: pointer;
+  cursor: pointer;
 }
 .arrow-left{
   transform: rotateY(180deg);
@@ -141,4 +194,5 @@ padding: 2px;
 .arrow-right{
   right: -30px;
    transform: translateY(0);
+   cursor: pointer;
 }

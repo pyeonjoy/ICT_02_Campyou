@@ -12,6 +12,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 const openAnswer = function(e){
     const clicked = e.target.closest('.question');
+console.log(clicked);
 
   if (!clicked) return; 
   document.querySelector(`.answer--${clicked.dataset.question}`).classList.remove('answer-active');

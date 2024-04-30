@@ -6,6 +6,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ict.campyou.hu.dao.MemberVO;
+
+
 @Repository
 public class MyDAO {
 @Autowired
@@ -26,5 +29,25 @@ public List<FaqVO> getFaqs2() {
 		System.out.println(e);
 	}
 	return null;
+}
+public MemberVO getMemberPwd(String memberId) {		
+	return sqlSessionTemplate.selectOne("bomi.getUser",memberId);
+}
+
+public int changeUserInfo(UserVO uvo) {
+	try {
+		return sqlSessionTemplate.update("bomi.updateUser", uvo);		
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return 0;
+}
+public int changeUserPW(UserVO uvo) {
+	try {
+   	return sqlSessionTemplate.update("bomi.updatePw", uvo);
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return 0;
 }
 }
