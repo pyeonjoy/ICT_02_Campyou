@@ -67,6 +67,22 @@ $(document).ready(function() {
 
                     $("#detail_img").append(campImg);
                 });
+
+                let latlng = new naver.maps.LatLng(${info.mapy}, ${info.mapx});
+                let map = new naver.maps.Map("map", {
+                    center: latlng,
+                    zoom: 16
+                });
+                let marker = new naver.maps.Marker({
+                    position: latlng,
+                    map: map
+                });
+                naver.maps.Event.addListener(marker, 'click', function(e) {
+                    let infoWindow = new naver.maps.InfoWindow({
+                        content: '<div style="padding:20px;"><b>이름 : ${info.facltnm}<br><br>주소 : ${info.addr1}<br><br>전화번호 : ${info.tel}</b></div>'
+                    });
+                    infoWindow.open(map, marker);
+                });
             },
             error: function() {
                 alert("읽기 실패");
@@ -75,6 +91,7 @@ $(document).ready(function() {
     }
 });
 </script>
+
 <title>캠핑장 상세 페이지</title>
 </head>
 <body>
