@@ -2,13 +2,7 @@ package com.ict.campyou.joy.dao;
 
 public class AdminMemberVO {
  private String report_num, member_idx, report_content,report_date, report_status, report_idx;
- public String getMember_status() {
-	return member_status;
-}
-public void setMember_status(String member_status) {
-	this.member_status = member_status;
-}
-private String member_id,member_name,member_pwd, member_nickname, member_status, member_dob, member_phone, member_email, member_regdate, member_active,member_img, member_login;
+private String member_id,member_name,member_pwd, member_nickname, member_dob, member_phone, member_email, member_regdate, member_active,member_img, member_login;
  public String getMember_img() {
 	return member_img;
 }

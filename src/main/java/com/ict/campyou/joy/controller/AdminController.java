@@ -1,6 +1,10 @@
 package com.ict.campyou.joy.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,11 +43,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping("admin_member_detail.do")
-	public ModelAndView adminMemberDetail() {
+	public ModelAndView adminMemberDetail(String member_idx) {
 		ModelAndView mv = new ModelAndView("joy/admin_member_detail");
 		int report_all = adminService.getreportall();
 		List<AdminMemberVO> board_all = adminService.getboardall();
-		List<AdminMemberVO> member_report = adminService.getadminmemberreport();
+		List<AdminMemberVO> member_report = adminService.getadminmemberreport(member_idx);
 		System.out.println(board_all);
 		if (board_all != null) {
 			mv.addObject("report", report_all);
@@ -54,5 +58,42 @@ public class AdminController {
 		return new ModelAndView("board/error");
 	}
 	
+	@RequestMapping("member_edit.do")
+	public ModelAndView adminMemberEdit(String member_idx) {
+		ModelAndView mv = new ModelAndView("joy/admin_member_edit");
+		List<AdminMemberVO> member_report = adminService.getadminmemberreport(member_idx);
+		if (member_report != null) {
+			mv.addObject("member",member_report);
+			return mv;
+		}
+		return new ModelAndView("board/error");
+	}
+	
+	@RequestMapping("member_edit_ok.do")
+	public ModelAndView adminMemberEditOk(String member_idx) {
+		ModelAndView mv = new ModelAndView();
+		int result = adminService.getmemberedit(member_idx);
+		if (result > 0 ) {
+			mv.setViewName("redirect:admin_member_detail.do");
+			return mv;
+		}
+		return new ModelAndView("board/error");
+	}
+	
 
+	@RequestMapping("member_stop.do")
+	public ModelAndView adminMemberStop(String member_idx, HttpServletResponse response) throws IOException {
+		ModelAndView mv = new ModelAndView();
+		int result =adminService.getmemberstop(member_idx);
+		if (result > 0) {
+			PrintWriter out = response.getWriter();
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html; charset=utf-8");
+            out.println("<script> alert('회원 정지되었습니다.'); </script>");
+            out.close();
+            mv.setViewName("redirect:admin_member_detail.do");
+			return mv;
+		}
+		return new ModelAndView("board/error");
+	}
 }

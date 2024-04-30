@@ -46,13 +46,28 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public List<AdminMemberVO> getadminmemberreport() {
-		return admindao.getadminmemberreport();
+	public List<AdminMemberVO> getadminmemberreport(String member_idx) {
+		return admindao.getadminmemberreport(member_idx);
 	}
 
 	@Override
 	public int getreportall() {
 		return admindao.getreportall();
+	}
+
+	@Override
+	public int getmemberstop(String member_idx) {
+		return admindao.getmemberstop(member_idx);
+	}
+
+	@Override
+	public int getmemberedit(String member_idx) {
+		return admindao.getmemberedit(member_idx);
+	}
+
+	@Override
+	public int getmemberdelete(String member_idx) {
+		return admindao.getmemberdelete(member_idx);
 	}
 
 
