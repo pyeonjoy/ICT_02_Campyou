@@ -3,7 +3,7 @@ package com.ict.campyou.joy.service;
 import java.util.List;
 
 import com.ict.campyou.joy.dao.AdminVO;
-import com.ict.campyou.joy.dao.MemberVO;
+import com.ict.campyou.joy.dao.AdminMemberVO;
 
 public interface AdminService {
 	public List<AdminVO> getadminmainmember();
@@ -12,6 +12,10 @@ public interface AdminService {
 	public int getadminreport();
 	public int getadminmatch();
 	public int getreportall();
-	public List<MemberVO> getboardall();
-	public List<MemberVO> getadminmemberreport();
+	public List<AdminMemberVO> getboardall();
+	public List<AdminMemberVO> getadminmemberreport(String member_idx);
+	public int getmemberstop(String member_idx);
+	public int getmemberedit(String member_idx);
+	public int getmemberdelete(String member_idx);
+	
 }

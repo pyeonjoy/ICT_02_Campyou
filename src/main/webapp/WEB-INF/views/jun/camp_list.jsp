@@ -172,7 +172,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<jsp:include page="../hs/header.jsp" />
+<jsp:include page="../hs/admin_header.jsp" />
 <div style="height: 100px;"></div>
 <label for="keyword_input">검색어:</label>
 <input type="text" id="keyword_input" placeholder="검색어를 입력하세요">
