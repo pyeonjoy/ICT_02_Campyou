@@ -87,11 +87,11 @@
 						                        </div>
 						                    </div>
 						                </div>
-						                <a href="together_detail.do" class="toContentOne2">
+						                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne2">
 						                    <img src="${path}/resources/images/tree-4.jpg" class="toContentOne2img">
 						                    <span class="toContentOne2sub2">${k.t_camptype }</span>
 						                </a>
-						                <a href="together_detail.do" class="toContentOne3">
+						                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne3">
 						                    <strong>${k.t_subject }</strong>
 						                    <span>${k.t_content }</span>
 						                </a>

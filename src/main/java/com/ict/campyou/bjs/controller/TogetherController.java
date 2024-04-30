@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -83,11 +84,8 @@ public class TogetherController {
 		if(memberUser != null) {
 			mv.setViewName("bjs/together_write");
 		}else {
-			List<CampVO> campList = togetherService.getTogetherCampList();
-			
 			session.setAttribute("requestPage", "together_Write.do");
             mv.setViewName("redirect:login_form.do");
-            mv.addObject("campList", campList);
 		}
 		return mv;
 	}
@@ -103,8 +101,10 @@ public class TogetherController {
 //	}
 	
 	@RequestMapping("together_detail.do")
-	public ModelAndView getTogetherDetail() {
-		return new ModelAndView("bjs/together_detail");
+	public ModelAndView getTogetherDetail(@ModelAttribute("cPage")String cPage, String t_idx, HttpSession session) {
+		ModelAndView mv = new ModelAndView("bjs/together_detail");
+		TogetherVO tvo = togetherService.getgetTogetherDetail(t_idx);
+//		return ;
 	}
 	
 }
