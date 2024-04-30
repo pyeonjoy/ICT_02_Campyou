@@ -232,7 +232,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<jsp:include page="../hs/admin_header.jsp" />
+<jsp:include page="../hs/header.jsp" />
 <div style="height: 100px;"></div>
 	<div class="camp_list_container">
 		<div class="search_wrap">
