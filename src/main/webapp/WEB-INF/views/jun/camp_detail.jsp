@@ -71,7 +71,7 @@ $(document).ready(function() {
                 let latlng = new naver.maps.LatLng(${info.mapy}, ${info.mapx});
                 let map = new naver.maps.Map("map", {
                     center: latlng,
-                    zoom: 16
+                    zoom: 18
                 });
                 let marker = new naver.maps.Marker({
                     position: latlng,
