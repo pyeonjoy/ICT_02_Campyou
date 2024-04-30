@@ -1,0 +1,124 @@
+package com.ict.campyou.bm.dao;
+
+import org.springframework.web.multipart.MultipartFile;
+
+public class UserVO {
+	private String member_idx, member_id, member_name,member_pwd, member_nickname, member_dob, member_phone,member_email, 
+	 member_active, member_regdate, member_login, member_img, old_member_img;
+
+	private MultipartFile file;
+	
+	public String getMember_idx() {
+		return member_idx;
+	}
+
+	public String getOld_member_img() {
+		return old_member_img;
+	}
+
+	public void setOld_member_img(String old_member_img) {
+		this.old_member_img = old_member_img;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
+	public void setMember_idx(String member_idx) {
+		this.member_idx = member_idx;
+	}
+
+	public String getMember_id() {
+		return member_id;
+	}
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+
+	public String getMember_name() {
+		return member_name;
+	}
+
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
+
+	public String getMember_pwd() {
+		return member_pwd;
+	}
+
+	public void setMember_pwd(String member_pwd) {
+		this.member_pwd = member_pwd;
+	}
+
+	public String getMember_nickname() {
+		return member_nickname;
+	}
+
+	public void setMember_nickname(String member_nickname) {
+		this.member_nickname = member_nickname;
+	}
+
+	public String getMember_dob() {
+		return member_dob;
+	}
+
+	public void setMember_dob(String member_dob) {
+		this.member_dob = member_dob;
+	}
+
+	public String getMember_phone() {
+		return member_phone;
+	}
+
+	public void setMember_phone(String member_phone) {
+		this.member_phone = member_phone;
+	}
+
+	public String getMember_email() {
+		return member_email;
+	}
+
+	public void setMember_email(String member_email) {
+		this.member_email = member_email;
+	}
+
+	public String getMember_active() {
+		return member_active;
+	}
+
+	public void setMember_active(String member_active) {
+		this.member_active = member_active;
+	}
+
+	public String getMember_regdate() {
+		return member_regdate;
+	}
+
+	public void setMember_regdate(String member_regdate) {
+		this.member_regdate = member_regdate;
+	}
+
+	public String getMember_login() {
+		return member_login;
+	}
+
+	public void setMember_login(String member_login) {
+		this.member_login = member_login;
+	}
+
+	public String getMember_img() {
+		return member_img;
+	}
+
+	public void setMember_img(String member_img) {
+		this.member_img = member_img;
+	}
+	
+	
+}

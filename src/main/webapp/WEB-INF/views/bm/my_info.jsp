@@ -26,26 +26,31 @@
       $("#imgInput").change(function(){
           readURL(this);
       });
-
   });
    
-  function handle_pwd(){
-	  window.location.href = "my_change_pw.do";
-  }
-  
- 
+
   </script>
 </head>
 <body>
    <h3 class="my_title">마이페이지</h3>
-  <form class="user_info">
+  <form class="user_info" method="post" enctype="multipart/form-data">
     <div class="user_img_container">
-      <div class="user_img">
-        <img src="http://via.placeholder.com/100x100" alt="user_img">
-      </div>
-      <div class="file-container">
-        <label for="user_img" class="btn btn_imgchg">변경</label> <input type="file" class="file hidden" id="user_img">
-      </div>
+    <c:choose>
+	    <c:when test="${empty mvo.member_img}">
+	     <div class="user_img">
+	        <img src="http://via.placeholder.com/100x100" alt="user_img">
+	      </div>
+	    </c:when>
+	    
+	    <c:otherwise>	
+	      <div class="user_img">
+	        <img src="${path}/resources/uploadUser_img/${mvo.member_img}" alt="user_img">
+	      </div>
+	     </c:otherwise>
+	      <div class="file-container">
+	        <label for="user_img" class="btn btn_imgchg">변경</label> <input type="file" class="file hidden" id="user_img">
+	      </div>
+      </c:choose>
     </div>
     <div class="user_info_container">
       <div class="detail name_detail">
@@ -69,10 +74,11 @@
       </div>
       <div class="btn_container">
         <input type="hidden" id="memberIdx" name="memberIdx" value="${mvo.member_idx}">
-        <button class="btn btn_change" onclick="handleChangeInfo(f)">수정</button>
-        <button class="btn btn_pwdreset" onclick="handle_pwd()">비밀번호 변경</button>
+        <button class="btn btn_change" onclick="handleChangeInfo(f)">저장</button>
+        <button class="btn btn_pwdreset" onclick="handle_pwd(${mvo.member_idx})">비밀번호 변경</button>
       </div>
     </div>
+     <a href="deleteMember.do" class="btn btn-userDelete">회원탈퇴</a>
   </form>
 </body>
 </html>
