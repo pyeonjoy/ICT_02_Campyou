@@ -103,36 +103,14 @@ $(document).ready(function() {
 <div id="map" style="width:100%;height:400px;"></div>
 </div>
 <jsp:include page="../hs/footer.jsp" />
-<script type="text/javascript">
-var mapDiv = document.getElementById('map');
-
-var map = new naver.maps.Map(mapDiv);
-let circle;
-let me;
-let markers;
-let infoWindows;
-let zoom;
-
-	  map = new naver.maps.Map('map',{
-	    center: new naver.maps.LatLng(${info.mapx},${info.mapy}), //좌표
-	    zoom: zoom,
-	    minZoom: 6,
-	    draggable: true,
-	    pinchZoom: true,
-	    scrollWheel: true,
-	    disableKineticPan: false, // 관성드래깅
-	    scaleControl: false, // 스케일 컨트롤러
-	    logoControl: true, // 로고 컨트롤러
-	    logoControlOptions: {
-	        position: naver.maps.Position.BOTTOM_RIGHT
-	    },
-	    mapDataControl: false, 
-	    zoomControl: true, //줌컨트롤러
-	    zoomControlOptions: {
-	        position: naver.maps.Position.TOP_LEFT
-	    },
-	    mapTypeControl: false
-	  });
+<script>
+let map = new naver.maps.Map("map", {
+    center: new naver.maps.LatLng(
+      37.552758094502494,
+      126.98732600494576
+    ),
+    zoom: 10,
+  });
 </script>
 </body>
 </html>
