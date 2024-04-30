@@ -53,7 +53,7 @@ table {
 	border-spacing: 0;
 }
 
-p, h1, h2, h3, h4,button{
+p, h1, h2, h3, h4, h5, button{
   font-family: "Noto Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: <weight>;
@@ -80,6 +80,11 @@ h4{
 	font-size: 20px;
     margin: 0 auto;
 }
+
+h5 {
+	margin: 0;
+}
+
 p {
 	font-size: 15px;
     margin: 0 auto;
@@ -98,16 +103,12 @@ input[type="button"], input[type="submit"], input[type="reset"], button
 	color: black;
 	text-align: center;
 	height: 40px;
-	padding-left: 30px;
-	padding-right: 30px;
 	border: 0px solid black;
 }
 
 input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover,
 	button:hover {
 	border: 0px solid black;
-	padding-left: 30px;
-	padding-right: 30px;
 	border-radius: 5px;
 	height: 40px;
 	background-color: #032805;

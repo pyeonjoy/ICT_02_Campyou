@@ -45,6 +45,7 @@ function checkPassword(e) {
     };
     const jsonData = JSON.stringify(requestData);
 
+
     xhr.open('POST', 'pwdCheck.do', true);
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.send(jsonData);

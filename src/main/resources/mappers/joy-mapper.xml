@@ -21,7 +21,7 @@
     </select>
     	
     	<select id="adminmainqna" resultType="int">
-        SELECT count(pm_idx) AS totalpm_dix 
+        SELECT count(pm_idx) AS totalpm_idx 
         FROM m_promise 
     </select>
     
@@ -36,22 +36,30 @@
         FROM admin_report 
         WHERE report_date = now()
     </select>
-    <select id="adminmemberreport" resultType="adminmvo">
+    <select id="adminmemberreport" resultType="amvo">
         SELECT * 
         FROM members
         WHERE member_idx =1
     </select>
-    <select id="boardall" resultType="adminmvo">
+    <select id="boardall" resultType="amvo">
 	    SELECT *
 	    FROM  members m
 	        inner join board_free b on m.member_idx = b.member_idx 
 	        inner join board_camp c on m.member_idx = c.member_idx 
 	    WHERE m.member_idx = 1
 	</select>
-
      <select id="reportall" resultType="int">
         SELECT count(member_idx)
         FROM admin_report
         WHERE member_idx =1
+    </select>
+     <select id="memberedit" resultType="amvo" parameterType="amvo">
+        update members
+        set member_id, member_name,member_nickname,member_bod, member_phone, member_email, member_reg_date
+        where member_idx = 1
+    </select>
+     <select id="memberstop" resultType="amvo" parameterType="String">
+        update members set active = 0 
+        where member_idx = 1
     </select>
 </mapper>
