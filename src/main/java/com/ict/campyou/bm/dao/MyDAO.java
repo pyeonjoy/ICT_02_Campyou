@@ -29,5 +29,7 @@ public List<FaqVO> getFaqs2() {
 	}
 	return null;
 }
-
+public MemberVO getMemberPwd(String memberId) {		
+	return sqlSessionTemplate.selectOne("bomi.getUser",memberId);
+}
 }

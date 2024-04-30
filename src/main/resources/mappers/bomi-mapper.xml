@@ -9,4 +9,7 @@ select * from faq order by faq_idx
 <select id="faq_lists2" resultType="fvo">
 select * from faq2 order by faq_idx
 </select>
+<select id="getUser" resultType="mvo" parameterType="String">
+select * from members where member_id=#{member_id}
+</select>
 </mapper>

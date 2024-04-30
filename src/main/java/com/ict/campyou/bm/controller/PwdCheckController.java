@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ict.campyou.bm.dao.PasswordCheckRequest;
+import com.ict.campyou.bm.service.MyService;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.hu.service.MemberService;
 
@@ -21,7 +22,7 @@ public class PwdCheckController {
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private MemberService memberService;
+	private MyService myService;
 	
 
 	@RequestMapping(value = "pwdCheck.do", produces = "application/json; charset=utf-8")
@@ -29,7 +30,7 @@ public class PwdCheckController {
 
 	    String inputPassword = request.getPassword();
 	    String memberId = request.getMemberId();
-	    MemberVO member = memberService.getMyPwd(memberId);
+	    MemberVO member = myService.getMemberPwd(memberId);
 
 	    boolean isPasswordMatch = passwordEncoder.matches(inputPassword, member.getMember_pwd());
 	   System.out.println(isPasswordMatch);

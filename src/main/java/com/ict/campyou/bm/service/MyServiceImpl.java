@@ -22,5 +22,9 @@ public class MyServiceImpl implements MyService{
 	public List<FaqVO> getFaqs2() {
 		return myDao.getFaqs2();
 	}
+	@Override
+	public MemberVO getMemberPwd(String memberId) {		
+		return myDao.getMemberPwd(memberId);
+	}
 
 }

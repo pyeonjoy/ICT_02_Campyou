@@ -10,5 +10,5 @@ public interface MyService {
 	// get faq questions
 	public List<FaqVO> getFaqs();
 	public List<FaqVO> getFaqs2();
-
+	public MemberVO getMemberPwd(String memberId);
 }

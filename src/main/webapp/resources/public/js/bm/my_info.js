@@ -55,13 +55,17 @@ function inValidEmail(email) {
 	                    // 비밀번호 일치
 	                    // 여기서 처리할 작업을 추가하세요
 	                    alert('비밀번호가 확인되었습니다.');
+	                
 	                } else {
 	                    // 비밀번호 불일치
 	                    alert('비밀번호가 일치하지 않습니다.');
+	                  
 	                }
+	                return response;
 	            } else {
 	                // 서버 오류
 	                alert('서버 오류가 발생했습니다.');
+	           return;
 	            }
 	        }
 	    };
