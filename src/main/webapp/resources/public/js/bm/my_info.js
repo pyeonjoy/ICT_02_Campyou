@@ -1,5 +1,6 @@
 'use strict'
 
+let response;
 
 function formatPhoneNumber(phoneNumber) { 
   if (phoneNumber.length < 10) alert("번호를 다시 확인해주세요") 
@@ -20,70 +21,83 @@ function inValidEmail(email) {
         alert('올바른 이메일 형식이 아닙니다.');
         return true; 
     }
-
     return false;
 }
 
-  function checkPassword(e) { 
-  e.preventDefault();
-	    const password = document.getElementById('password').value.trim();
-	    const memberId = document.getElementById('id').value;
-	    console.log(memberId, password);
-	    
-	    if (!password) {
-	        alert('비밀번호를 입력해주세요.');
-	        return;
-	    }
-	    
-	    const xhr = new XMLHttpRequest();	 
-	    const requestData = {
+
+
+function checkPassword(e) {
+    e.preventDefault();
+
+    const passwordInput = document.getElementById('password');
+    const password = passwordInput.value.trim();
+    
+    if (!password) {
+        alert('비밀번호를 입력해주세요.');
+        passwordInput.focus();
+        return;
+    }
+    
+    const xhr = new XMLHttpRequest();
+    const requestData = {
         "password": password,
-        "memberId": memberId
+        "memberId": memberId // memberId가 정의되어 있어야 함
     };
     const jsonData = JSON.stringify(requestData);
 
-	    xhr.open('POST', 'pwdCheck.do', true);
-	    xhr.setRequestHeader('Content-type', 'application/json');
-        xhr.send(jsonData)
-	    xhr.onreadystatechange = function () {
-	    console.log(xhr.readyState);
-	    
-	        if (xhr.readyState === XMLHttpRequest.DONE) {
-	            if (xhr.status === 200) {
-	                const response = xhr.responseText;
-	                if (response==="success") {
-	                    // 비밀번호 일치
-	                    // 여기서 처리할 작업을 추가하세요
-	                    alert('비밀번호가 확인되었습니다.');
-	                
-	                } else {
-	                    // 비밀번호 불일치
-	                    alert('비밀번호가 일치하지 않습니다.');
-	                  
-	                }
-	                return response;
-	            } else {
-	                // 서버 오류
-	                alert('서버 오류가 발생했습니다.');
-	           return;
-	            }
-	        }
-	    };
-	}
-    
- 
-function handleChangeInfo(f){
-	 const passwordInput = document.getElementById('password');
-	    const password = passwordInput.value.trim();
-	    if (!password) {
-	        alert('비밀번호를 입력해주세요.');
-	        passwordInput.focus(); 
-	        return;
-	    }
+    xhr.open('POST', 'pwdCheck.do', true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send(jsonData);
+
+    xhr.onreadystatechange = function () {
+        console.log(xhr.readyState);
+        
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                response = xhr.responseText; 
+                if (response === "success") {
+                    alert('비밀번호가 확인되었습니다.');
+                } else {
+                    alert('비밀번호가 일치하지 않습니다.');
+                }
+            } else {
+                // 서버 오류
+                alert('서버 오류가 발생했습니다.');
+            }
+        }
+    };
 }
 
+function handleChangeInfo(f) {
+    const passwordInput = document.getElementById('password');
+    const password = passwordInput.value.trim();
+    
+    if (!password) {
+        alert('비밀번호를 입력해주세요.');
+        passwordInput.focus();
+        return;
+    }
+    
+    if (password && response === "success") {
+        f.submit();
+        f.action = "changeInfo.do";
+    }
+}
+
+function handle_pwd(memberIdx) {
+    const passwordInput = document.getElementById('password');
+    const password = passwordInput.value.trim();
+    
+    if (!password) {
+        alert('비밀번호를 입력해주세요.');
+        passwordInput.focus();
+        return;
+    }    
+    f.action = "my_change_pw.do?member_idx"+memberIdx;
+}
 
 document.querySelector('.btn_change').addEventListener('click', handleChangeInfo);
-document.querySelector('.btn-check').addEventListener('click', checkPassword);
-  
+document.querySelector('.btn_check').addEventListener('click', checkPassword);
+document.querySelector('.btn_pwdreset').addEventListener('click', handle_pwd);
+
   

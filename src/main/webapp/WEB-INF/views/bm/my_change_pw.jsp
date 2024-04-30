@@ -27,12 +27,12 @@
     </script>
 </head>
 <body>
-<<<<<<< HEAD
+
  <form class="password">
       <h3 class="password_title">비밀번호 변경</h3>
       <div class="pwd_container">
         <label for="pwd">비밀번호</label
-        ><input type="password" name="pwd" class="input_pwd" id="pwd" />
+        ><input type="password" name="member_pwd" class="input_pwd" id="pwd" />
       </div>
       <div class="pwd_container">
         <label for="pwd_check">비밀번호 확인</label
@@ -45,26 +45,13 @@
       </div>
 
       <div class="btn_container">
+        <input type="hidden" name="member_idx" value="${member_idx}">
         <button class="btn btn_change" onclick="handlePwChange(event, form)">
           변경
         </button>
         <button class="btn btn_back">뒤로가기</button>
       </div>
     </form>
-=======
-<div class="password">
-    <h3 class="password_title">비밀번호 변경</h3>
-    <div class="pwd_container">
-      <label for="pwd" >비밀번호</label><input type="password" name="pwd"  class="input_pwd">
-    </div>
-    <div class="pwd_container">
-      <label for="pwd_check" >비밀번호 확인</label><input type="password" name="pwd_check" class="input_pwd">
-    </div>
-    <div class="btn_container">
-      <button class="btn btn_change">변경</button>
-      <button class="btn btn_back">뒤로가기</button>
-    </div>
-  </div>
->>>>>>> 34666877002463d506047ba34adbbe45a5270551
+
 </body>
 </html>

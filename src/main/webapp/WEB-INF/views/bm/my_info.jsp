@@ -26,14 +26,9 @@
       $("#imgInput").change(function(){
           readURL(this);
       });
-
   });
    
-  function handle_pwd(){
-	  window.location.href = "my_change_pw.do";
-  }
-  
- 
+
   </script>
 </head>
 <body>
@@ -80,9 +75,10 @@
       <div class="btn_container">
         <input type="hidden" id="memberIdx" name="memberIdx" value="${mvo.member_idx}">
         <button class="btn btn_change" onclick="handleChangeInfo(f)">저장</button>
-        <button class="btn btn_pwdreset" onclick="handle_pwd()">비밀번호 변경</button>
+        <button class="btn btn_pwdreset" onclick="handle_pwd(${mvo.member_idx})">비밀번호 변경</button>
       </div>
     </div>
+     <a href="deleteMember.do" class="btn btn-userDelete">회원탈퇴</a>
   </form>
 </body>
 </html>

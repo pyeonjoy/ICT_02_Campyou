@@ -3,7 +3,6 @@ package com.ict.campyou.bm.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ict.campyou.bm.dao.PasswordCheckRequest;
+import com.ict.campyou.bm.dao.UserVO;
 import com.ict.campyou.bm.service.MyService;
 import com.ict.campyou.hu.dao.MemberVO;
-import com.ict.campyou.hu.service.MemberService;
 
 @RestController
 public class PwdCheckController {
@@ -31,6 +30,7 @@ public class PwdCheckController {
 	    String inputPassword = request.getPassword();
 	    String memberId = request.getMemberId();
 	    MemberVO member = myService.getMemberPwd(memberId);
+//	    UserVO member = myService.getMemberPwd(memberId);
 
 	    boolean isPasswordMatch = passwordEncoder.matches(inputPassword, member.getMember_pwd());
 	   System.out.println(isPasswordMatch);
