@@ -108,11 +108,6 @@
 	                let map = new naver.maps.Map('map', {
 	                    center: new naver.maps.LatLng(37.552758094502494, 126.98732600494576),
 	                    zoom: 10
-	                    zoomControl: true,
-	                    zoomControlOptions: {
-	                        position: naver.maps.Position.TOP_LEFT,
-	                        style: naver.maps.ZoomControlStyle.SMALL
-	                    }
 	                });
 
 	                for (var i = 0; i < campList.length; i++) {

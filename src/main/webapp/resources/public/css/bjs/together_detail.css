@@ -25,6 +25,9 @@
     width: 50%;
     
 }
+.toDetailTContent{
+	line-height: 2rem;
+}
 .toDetailContent1{
     width: 100%;
     display: flex;

@@ -16,4 +16,10 @@
 	<select id="camp_list" resultType="cvo">
 		select * from camp_list
 	</select>
+	<select id="to_detail" parameterType="String" resultType="tvo">
+		select b.*, m.member_nickname, m.member_dob
+		from board_with b
+		left join members m on b.member_idx = m.member_idx 
+		where t_idx = #{t_idx}
+	</select>
 </mapper>

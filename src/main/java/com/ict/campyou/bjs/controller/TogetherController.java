@@ -101,10 +101,24 @@ public class TogetherController {
 //	}
 	
 	@RequestMapping("together_detail.do")
-	public ModelAndView getTogetherDetail(@ModelAttribute("cPage")String cPage, String t_idx, HttpSession session) {
-		ModelAndView mv = new ModelAndView("bjs/together_detail");
-		TogetherVO tvo = togetherService.getgetTogetherDetail(t_idx);
-//		return ;
+	public ModelAndView getTogetherDetail(@ModelAttribute("cPage")String cPage, String t_idx, HttpSession session) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo"); 
+		TogetherVO tvo = togetherService.getTogetherDetail(t_idx);
+		
+	    String dobString = tvo.getMember_dob();
+	    LocalDate dob = LocalDate.parse(dobString);
+	    LocalDate currentDate = LocalDate.now();
+	    int age = Period.between(dob, currentDate).getYears();
+	    tvo.setMember_dob(String.valueOf(age));
+		
+		if(tvo != null) {
+			mv.setViewName("bjs/together_detail");
+			mv.addObject("tvo", tvo);
+			mv.addObject("memberUser", memberUser);
+			return mv;
+		}
+		return new ModelAndView("error");
 	}
 	
 }

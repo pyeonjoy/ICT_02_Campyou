@@ -29,4 +29,8 @@ public class TogetherDAO {
 	public List<CampVO> getTogetherCampList() throws Exception {
 		return sqlSessionTemplate.selectList("bjs.camp_list");
 	}
+	
+	public TogetherVO getTogetherDetail(String t_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.to_detail", t_idx);
+	}
 }
