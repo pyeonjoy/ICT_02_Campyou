@@ -60,7 +60,7 @@ public class AdminDAO {
 		}
 		return null;
 	}
-	public List<AdminMemberVO> getadminmemberreport() {
+	public List<AdminMemberVO> getadminmemberreport(String member_idx) {
 		try {
 			return sqlSessionTemplate.selectList("joy.adminmemberreport");
 		} catch (Exception e) {
@@ -73,6 +73,41 @@ public class AdminDAO {
 	public int getreportall() {
 		try {
 			return sqlSessionTemplate.selectOne("joy.reportall");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	
+	public List<AdminMemberVO> getmember(AdminMemberVO amvo) {
+		try {
+			return sqlSessionTemplate.selectList("joy.getmember");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+
+	public int getmemberstop(String member_idx) {
+		try {
+			return sqlSessionTemplate.update("joy.memberstop");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+
+	public int getmemberedit(String member_idx) {
+		try {
+			return sqlSessionTemplate.update("joy.memberedit");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getmemberdelete(String member_idx) {
+		try {
+			return sqlSessionTemplate.delete("joy.memberdelete");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
