@@ -13,4 +13,7 @@
 		order by b.t_idx desc
 		limit #{limit} offset #{offset}
 	</select>
+	<select id="camp_list" resultType="cvo">
+		select * from camp_list
+	</select>
 </mapper>

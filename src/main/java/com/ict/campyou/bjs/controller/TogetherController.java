@@ -2,23 +2,22 @@ package com.ict.campyou.bjs.controller;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
-import com.ict.campyou.common.Paging;
+import com.ict.campyou.common.Paging2;
 import com.ict.campyou.hu.dao.MemberVO;
+import com.ict.campyou.jun.dao.CampVO;
 
 @Controller
 public class TogetherController {
@@ -26,7 +25,7 @@ public class TogetherController {
 	private TogetherService togetherService;
 	
 	@Autowired
-	private Paging paging;
+	private Paging2 paging;
 	
 	@RequestMapping("together_list.do")
 	public ModelAndView getTogetherList(HttpServletRequest request) throws Exception{
@@ -79,7 +78,7 @@ public class TogetherController {
 	}
 	
 	@RequestMapping("together_Write.do")
-	public ModelAndView getTogetherWrite(TogetherVO tvo, HttpSession session) {
+	public ModelAndView getTogetherWrite(TogetherVO tvo, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo"); 
 		if(memberUser != null) {
@@ -102,8 +101,10 @@ public class TogetherController {
 //	}
 	
 	@RequestMapping("together_detail.do")
-	public ModelAndView getTogetherDetail() {
-		return new ModelAndView("bjs/together_detail");
+	public ModelAndView getTogetherDetail(@ModelAttribute("cPage")String cPage, String t_idx, HttpSession session) {
+		ModelAndView mv = new ModelAndView("bjs/together_detail");
+		TogetherVO tvo = togetherService.getgetTogetherDetail(t_idx);
+//		return ;
 	}
 	
 }
