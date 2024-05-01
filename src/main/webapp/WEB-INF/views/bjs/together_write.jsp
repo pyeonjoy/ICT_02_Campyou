@@ -130,7 +130,7 @@
 	                    infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
 	                }
 
-	                function getClickHandler(seq, addr, imageUrl) {
+	                function getClickHandler(seq, addr, imageUrl, campName) {
 	                    return function(e) {  // 마커를 클릭하는 부분
 	                    	let marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
 	                            infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
@@ -140,6 +140,7 @@
 	                        } else {
 	                            infoWindow.open(map, marker);
 	                            $('.togetherSub1DivP').val(addr);
+	                            $('.togetherSub1DivP1').val(campName);
 	                            campImageUrl = imageUrl;
 	                        }
 	                    }
@@ -147,7 +148,7 @@
 
 	                for (var i = 0, ii = markers.length; i < ii; i++) {
 // 	                    console.log(markers[i], getClickHandler(i));
-	                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl)); // 클릭한 마커 핸들러
+	                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm)); // 클릭한 마커 핸들러
 	                }
 	            }
 	        },
@@ -218,9 +219,10 @@
 	                <strong class="togetherSub5Strong">캠핑장</strong>
 	                <div class="togetherSub1Div">
 	                	<div class="searchForm">
-		                	<input type="search" name="t_campname" class="searchbar" placeholder="캠핑장 이름">
+		                	<input type="search" name="" class="searchbar" placeholder="캠핑장 이름">
 	        				<input type="button" class="res" value="검색">
         				</div>
+        				<input type="text" name="t_campname" class="togetherSub1DivP1">
 	                    <textarea name="t_address" class="togetherSub1DivP" readonly></textarea>
 	                </div>
 	            </div>
