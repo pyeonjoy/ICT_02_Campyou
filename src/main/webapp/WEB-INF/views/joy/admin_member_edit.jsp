@@ -106,27 +106,6 @@ margin-top: 20px;
 	margin: 15px;
 }
 </style>
-<script type="text/javascript">
-window.addEventListener('DOMContentLoaded', function() {
-	  showContent('A');
-	});
-
-	function showContent(content) {
-	  var contentA = document.getElementById("contentA");
-	  var contentB = document.getElementById("contentB");
-
-	  // 내용 숨김
-	  contentA.style.display = "none";
-	  contentB.style.display = "none";
-
-	  // 선택한 내용 보이기
-	  if (content === "A") {
-	    contentA.style.display = "block";
-	  } else if (content === "B") {
-	    contentB.style.display = "block";
-	  }
-	}
-</script>
 </head>
 <body>
 	<h2 class="head">회원 관리 상세</h2>
@@ -140,9 +119,8 @@ window.addEventListener('DOMContentLoaded', function() {
 			</div>
 			<div class="right">
 		<c:forEach var="m" items="${member}"> 
-				<form method="post">
+				<form action="member_edit_ok.do" method="post">
 				<table style="table-layout: auto; width: 100%; table-layout: fixed;">
-					
 					<tr>
 						<th>NO</th>
 						<th>ID</th>
@@ -150,10 +128,10 @@ window.addEventListener('DOMContentLoaded', function() {
 						<th>닉네임</th>
 					</tr>
 					<tr>
-						<td><input type="text" value="${m.member_idx }"></td>
-						<td><input type="text" value="${m.member_id }"></td>
-						<td><input type="text" value="${m.member_name }"></td>
-						<td><input type="text" value="${m.member_nickname }"></td>
+						<td><input type="hidden" name="member_idx" value="${m.member_idx }">${m.member_idx }</td>
+						<td><input type="text" name="member_id" value="${m.member_id }"></td>
+						<td><input type="text" name="member_name" value="${m.member_name }"></td>
+						<td><input type="text" name="member_nickname" value="${m.member_nickname }"></td>
 					</tr>
 
 
@@ -164,10 +142,10 @@ window.addEventListener('DOMContentLoaded', function() {
 						<th>이메일</th>
 					</tr>
 					<tr>
-						<td><input type="text" value="${m.member_regdate }"></td>
-						<td><input type="text" value="${m.member_dob }"></td>
-						<td><input type="text" value="${m.member_phone }"></td>
-						<td><input type="text" value="${m.member_email }"></td>
+						<td><input type="text" name="member_regdate" value="${m.member_regdate }"></td>
+						<td><input type="text" name="member_dob" value="${m.member_dob }"></td>
+						<td><input type="text" name="member_phone" value="${m.member_phone }"></td>
+						<td><input type="text" name="member_email" value="${m.member_email }"></td>
 					</tr>
 
 
@@ -205,7 +183,7 @@ window.addEventListener('DOMContentLoaded', function() {
 					</tr>
 				</table>
 				<p style="text-align: center; margin-top: 50px;">
-				<button type="button" onclick="location.href='member_edit_ok.do?member_idx=${m.member_idx}'">수정완료</button>
+				 <button type="submit">수정완료</button>
 				</p>
 				</form>
 		</c:forEach>

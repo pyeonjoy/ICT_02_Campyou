@@ -1,14 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
+<%@ include file="hs/header.jsp" %>
+	
+<!doctype html>
+<html lang="ko">
 <link href="${path}/resources/css/reset.css" rel="stylesheet" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-	
-<!doctype html>
-<html lang="ko">
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -69,39 +72,76 @@ height:40px;
 line-height:40px;
 background-color: #FFFDDE;}
 </style>
+<script type="text/javascript">
+var toggleMainPopup = function() {
+	  
+	  /* 쿠키 제어 함수 정의 */
+	  var handleCookie = {
+	    // 쿠키 쓰기
+	    // 이름, 값, 만료일
+	    setCookie: function (name, val, exp) {
+	      var date = new Date();
+	      
+	      // 만료 시간 구하기(exp를 ms단위로 변경)
+	      date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+	      console.log(name + "=" + val + ";expires=" + date.toUTCString() + ";path=/");
+	      
+	      // 실제로 쿠키 작성하기
+	      document.cookie = name + "=" + val + ";expires=" + date.toUTCString() + ";";
+	    },
+	    // 쿠키 읽어오기(정규식 이용해서 가져오기)
+	    getCookie: function (name) {
+	      var value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
+	      return value ? value[2] : null;
+	    }
+	  };
+	  console.log(handleCookie.getCookie("today"));
+	  
+	  // 쿠키 읽고 화면 보이게
+	  if (handleCookie.getCookie("today") == "y") {
+	    $(".main_popup").removeClass("on");
+	  } else {
+	    $(".main_popup").addClass("on");
+	  }
+
+	  // 오늘하루 보지 않기 버튼
+	  $(".main_popup").on("click", ".btn_today_close", function () {
+	    handleCookie.setCookie("today", "y", 1);
+	    $(this).parents(".main_popup.on").removeClass("on");
+	  });
+
+	  // 일반 버튼
+	  $(".main_popup").on("click", ".btn_close", function () {
+	    $(this).parents(".main_popup.on").removeClass("on");
+	  });
+	}
+
+	$(function() {
+	  toggleMainPopup();
+	});   
+</script>
 </head>
 <body>
-	<div class="container py-3">
-		<header>
-			<div class="d-flex flex-column flex-md-row align-items-cent er pb-3 mb-4 border-bottom">
-				<title>Bootstrap</title>
-				<a class="me-3 py-2 text-dark text-decoration-none" href="community_board.do">게시판</a> 
-				<span class="fs-4">임시메인 페이지</span>
-				<nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-					<c:choose>
-						<c:when test="${empty memberInfo}">
-							<a class="me-3 py-2 text-dark text-decoration-none" href="sign_up_page_go.do">회원가입</a> 
-							<a class="py-2 text-dark text-decoration-none" href="login_form.do">로그인</a>
-						</c:when>		
-						<c:otherwise>
-						<div  style="line-height:41px;">
-							${memberInfo.member_name}님 환영합니다. &nbsp;
-							
-							<c:if test="${admin == 'ok'}">
-					    		<a href="admin_page_go.do">관리자페이지</a> &nbsp;&nbsp;
-							</c:if>	
-						</div>
-							<a class="py-2" href="logout_form.do">
-							<img src="${path}/resources/images/chat1.png"></a>
-							<a class="py-2" href="logout_form.do">
-							<img src="${path}/resources/images/user1.png"></a>
-							<a class="py-2 " href="logout_form.do">로그아웃</a>
-						</c:otherwise>
-					</c:choose>
-				</nav>				
-				
-      </div>
+	<div class="main_popup">
+  <div class="layer_cont">
+    <div class="img_wrap">
+      팝업 콘텐츠
+    </div>
+    <div class="btn_wrap">
+      <!-- 오늘 하루 보지 않기 --->
+      <button class="btn_today_close"><span>오늘 하루 보지 않기</span></button>
+      <!-- 그냥 닫기 --->
+      <button class="btn_close">close</button>
+    </div>
+  </div>
+</div>
 				<h1 class="display-4 fw-normal">임시 메인 페이지</h1>
+				<h1 class="display-4 fw-normal"><button onclick="location.href='together_list.do'">준수</button></h1>
+				<h1 class="display-4 fw-normal"><button onclick="location.href='inquiry_form.do'">보미</button></h1>
+				<h1 class="display-4 fw-normal"><button onclick="location.href='inquiry_form.do'">해성</button></h1>
+				<h1 class="display-4 fw-normal"><button onclick="location.href='sign_up_page_go.do'">한욱</button></h1>
+				<h1 class="display-4 fw-normal"><button onclick="location.href='admin_member_detail.do'">조이</button></h1>
+				<h1 class="display-4 fw-normal"><button onclick="location.href='camplist.do'">준형</button></h1>
 <a href="inquiry_form.do">1:1문의작성</a>
 <a href="my_info.do">내정보</a>
 <a href="my_faq.do">faq</a>
@@ -125,6 +165,6 @@ background-color: #FFFDDE;}
 			</div>
 		</header>
 	</div>
-	<div style="background-color: #053610; height: 500px;"></div>
+	<%@ include file="hs/footer.jsp" %>
 </body>
 </html>

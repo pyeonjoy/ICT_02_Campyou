@@ -59,15 +59,28 @@ public class AdminServiceImpl implements AdminService{
 	public int getmemberstop(String member_idx) {
 		return admindao.getmemberstop(member_idx);
 	}
+	@Override
+	public int getmemberstopcancel(String member_idx) {
+		return admindao.getmemberstopcancel(member_idx);
+	}
 
 	@Override
-	public int getmemberedit(String member_idx) {
-		return admindao.getmemberedit(member_idx);
+	public int getmemberedit(AdminMemberVO avo) {
+		return admindao.getmemberedit(avo);
 	}
 
 	@Override
 	public int getmemberdelete(String member_idx) {
 		return admindao.getmemberdelete(member_idx);
+	}
+
+	@Override
+	public int getmemberupgrade(String member_idx) {
+		return admindao.getmemberupgrade(member_idx);
+	}
+	@Override
+	public int getremoveimg(String member_idx) {
+		return admindao.getremoveimg(member_idx);
 	}
 
 
