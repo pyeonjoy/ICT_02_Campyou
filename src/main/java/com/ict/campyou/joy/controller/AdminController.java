@@ -48,7 +48,6 @@ public class AdminController {
 		int report_all = adminService.getreportall();
 		List<AdminMemberVO> board_all = adminService.getboardall();
 		List<AdminMemberVO> member_report = adminService.getadminmemberreport(member_idx);
-		System.out.println(board_all);
 		if (board_all != null) {
 			mv.addObject("report", report_all);
 			mv.addObject("board", board_all);
@@ -70,9 +69,9 @@ public class AdminController {
 	}
 	
 	@RequestMapping("member_edit_ok.do")
-	public ModelAndView adminMemberEditOk(String member_idx) {
+	public ModelAndView adminMemberEditOk(AdminMemberVO avo) {
 		ModelAndView mv = new ModelAndView();
-		int result = adminService.getmemberedit(member_idx);
+		int result = adminService.getmemberedit(avo);
 		if (result > 0 ) {
 			mv.setViewName("redirect:admin_member_detail.do");
 			return mv;
@@ -84,16 +83,51 @@ public class AdminController {
 	@RequestMapping("member_stop.do")
 	public ModelAndView adminMemberStop(String member_idx, HttpServletResponse response) throws IOException {
 		ModelAndView mv = new ModelAndView();
-		int result =adminService.getmemberstop(member_idx);
-		if (result > 0) {
-			PrintWriter out = response.getWriter();
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html; charset=utf-8");
-            out.println("<script> alert('회원 정지되었습니다.'); </script>");
-            out.close();
-            mv.setViewName("redirect:admin_member_detail.do");
-			return mv;
-		}
-		return new ModelAndView("board/error");
+	    int result = adminService.getmemberstop(member_idx);
+	    if (result > 0) {
+	        response.setCharacterEncoding("UTF-8");
+	        response.setContentType("text/html; charset=utf-8");
+	        PrintWriter out = response.getWriter();
+	        out.println("<script> alert('회원 정지되었습니다.'); window.location.href='admin_member_detail.do'; </script>");
+	        out.close();
+	        return null;
+	    } else {
+	        return new ModelAndView("board/error");
+	    }
 	}
+	@RequestMapping("member_stopcancel.do")
+	public ModelAndView adminMemberStopCancel(String member_idx, HttpServletResponse response) throws IOException {
+		ModelAndView mv = new ModelAndView();
+		int result = adminService.getmemberstopcancel(member_idx);
+		if (result > 0) {
+			mv.setViewName("redirect:admin_member_detail.do");
+			return mv;
+		} else {
+			return new ModelAndView("board/error");
+		}
+	}
+
+	@RequestMapping("member_upgrade.do")
+	public ModelAndView adminMemberUpgrade(String member_idx){
+		ModelAndView mv = new ModelAndView();
+		int result = adminService.getmemberupgrade(member_idx);
+		if (result > 0) {
+			mv.setViewName("redirect:admin_member_detail.do");
+			return mv;
+		} else {
+			return new ModelAndView("board/error");
+		}
+	}
+	@RequestMapping("removeimg.do")
+	public ModelAndView adminRemoveImg(String member_idx){
+		ModelAndView mv = new ModelAndView();
+		int result = adminService.getremoveimg(member_idx);
+		if (result > 0) {
+			mv.setViewName("redirect:admin_member_detail.do");
+			return mv;
+		} else {
+			return new ModelAndView("board/error");
+		}
+	}
+
 }

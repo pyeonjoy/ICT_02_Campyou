@@ -15,7 +15,10 @@ public interface AdminService {
 	public List<AdminMemberVO> getboardall();
 	public List<AdminMemberVO> getadminmemberreport(String member_idx);
 	public int getmemberstop(String member_idx);
-	public int getmemberedit(String member_idx);
+	public int getmemberstopcancel(String member_idx);
+	public int getmemberedit(AdminMemberVO avo);
 	public int getmemberdelete(String member_idx);
+	public int getmemberupgrade(String member_idx);
+	public int getremoveimg(String member_idx);
 	
 }

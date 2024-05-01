@@ -54,7 +54,7 @@ th {
 	color: white;
 }
 
-.b1 button {
+ button {
 	margin-top: 20px;
 	width: 140px;
 	height: 30px;
@@ -64,16 +64,15 @@ th {
 	border-radius: 3px;
 	margin: 0 auto;
 }
-.top >button:hover {
-margin-top: 20px;
-	width: 467px;
-	height: 50px;
-	background-color: #F6FFF1;
-	border: 1px solid black;
-	border-radius: 3px;
-	margin: 15px;
-	background-color: #053610;
+ button:hover {
+	margin-top: 20px;
+	width: 140px;
+	height: 30px;
+	background-color: #FFBA34;
 	color: white;
+	border: 0px;
+	border-radius: 3px;
+	margin: 0 auto;
 }
 
 .b2 {
@@ -95,6 +94,18 @@ margin-top: 20px;
 	border: 1px solid black;
 	border-radius: 3px;
 	margin: 15px;
+	color: black;
+}
+.top >button:hover {
+margin-top: 20px;
+	width: 467px;
+	height: 50px;
+	background-color: #FFBA34;
+	border: 1px solid black;
+	border-radius: 3px;
+	margin: 15px;
+	background-color: #053610;
+	color: white;
 }
 
 .right input {
