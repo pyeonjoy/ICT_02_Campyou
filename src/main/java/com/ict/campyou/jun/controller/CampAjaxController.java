@@ -6,15 +6,27 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ict.campyou.hu.dao.MemberVO;
+import com.ict.campyou.jun.dao.ReviewVO;
+import com.ict.campyou.jun.service.CampService;
+
 @RestController
 public class CampAjaxController {
 
+	@Autowired
+	private CampService campService;
+	
 	
 	@RequestMapping(value = "camp_list.do", produces="text/xml; charset=utf-8")
 	@ResponseBody
@@ -138,5 +150,24 @@ public class CampAjaxController {
 		}
         return null;
 	}
+	@RequestMapping(value = "addReview.do", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String addReview(@RequestBody ReviewVO rvo, HttpSession session) {
+		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+		rvo.setMember_idx(mvo.getMember_idx());
+		rvo.setMember_nickname(mvo.getMember_nickname());
+		int res = campService.addReview(rvo);
+		if (res > 0) {
+			return String.valueOf(res);
+		}
+			return "error";
+	}	
 	
+	@RequestMapping(value = "loadReview.do", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public List<ReviewVO> loadReview(@RequestParam() String contentid) {
+	    List<ReviewVO> res = campService.loadReview(contentid);
+	    return res;
+	}
+
 }

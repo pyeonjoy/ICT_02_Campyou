@@ -108,13 +108,73 @@
     display: block;
     margin-top: 10px;
     font-size: large;
-
 }
+#review_form fieldset{
+    display: inline-block;
+    direction: rtl;
+    border:0;
+}
+#review_form fieldset legend{
+    text-align: right;
+}
+#review_form input[type=radio]{
+    display: none;
+}
+#review_form label{
+    font-size: 3em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+}
+#review_form label:hover{
+    text-shadow: 0 0 0 #FFD700;
+}
+#review_form label:hover ~ label{
+    text-shadow: 0 0 0 #FFD700;
+}
+#review_form input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 #FFD700;
+}
+#r_comment {
+    width:1520px;
+    height: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: solid 1.5px #D3D3D3;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+}
+#review_section{
+	margin-left : 190px;
+}
+#comment_list {
+    margin-top: 20px;
+}
+
+#comment_list div {
+	width:80%;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left : 190px;
+}
+
+#comment_list p {
+    margin: 0;
+    padding: 5px 0;
+}
+
+.yellow-stars {
+    color: #FFD700;
+}
+
 </style>
 <script>
+const urlParams = new URLSearchParams(window.location.search);
+const contentId = urlParams.get('contentid');
+
 $(document).ready(function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const contentId = urlParams.get('contentid');
     
     if (contentId) {
         $.ajax({
@@ -156,10 +216,7 @@ $(document).ready(function() {
             }
         });
     }
-});
-</script>
-<script>
-$(document).ready(function() {
+
     let facilityList = "${info.sbrscl}";
 
     let facilities = facilityList.split(',');
@@ -189,7 +246,67 @@ $(document).ready(function() {
     });
     console.log(facilityIcons);
     $("#camp_item_g").append(facilityIcons);
+    
+    loadReview();
+    
+    $('#review_form').submit(function(e) {
+        e.preventDefault();
+
+        let comment = $('#r_comment').val();
+        let rating = $("input[name='rating']:checked").val();
+
+        let requestData = {
+            r_comment: comment,
+            rating: rating,
+            contentid: contentId
+        };
+
+        $.ajax({
+            url: 'addReview.do', 
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            success:function(data){
+                if(data != "error") {
+                    alert("리뷰가 정상적으로 등록되었습니다.");
+                    $('#r_comment').val('');
+                    $("input[name='rating']").prop('checked', false);
+                    loadReview();
+                } else {
+                    alert("리뷰 작성에 오류가 발생하였습니다.");
+                }
+            }
+        });
+    });	
 });
+
+function loadReview(){
+    $.ajax({
+        url: "loadReview.do",
+        type: "get",
+        data: {contentid : contentId},
+        dataType: "json",
+        success: function(data) {
+            $("#comment_list").empty();
+            $.each(data, function(index, review) {
+                let commentItem = "<div>";
+                let stars = "";
+                for (let i = 0; i < review.rating; i++) {
+                    stars += "★";
+                }
+                commentItem += "<p><b>작성자 : </b> <span>" + review.member_nickname + "</span></p>";
+                commentItem += "<p><b>별점 : </b> <span class='yellow-stars'>" + stars + "</span></p>";
+                commentItem += "<p><b>댓글 : </b> " + review.r_comment + "</p>";
+                commentItem += "</div>";
+                $("#comment_list").append(commentItem);
+            });
+        },
+        error: function() {
+            alert("리뷰를 불러오는 중 오류가 발생했습니다.");
+        }
+    });
+}
+
 </script>
 <script>
 // DB에 페이지 이동 주소가 없는 경우 
@@ -260,7 +377,27 @@ $(document).ready(function() {
 		<h4>위치</h4>
 	<div id="map"></div>
 	<h4>후기</h4>
-	</div>
+<div id="review_section">
+    <form id="review_form" class="mb-3">
+        <fieldset>
+            <span class="text-bold">별점을 선택해주세요</span>
+            <input type="radio" value="5" name ="rating" id="rate1"><label for="rate1">★</label>
+            <input type="radio" value="4" name ="rating" id="rate2"><label for="rate2">★</label>
+            <input type="radio" value="3" name ="rating" id="rate3"><label for="rate3">★</label>
+            <input type="radio" value="2" name ="rating" id="rate4"><label for="rate4">★</label>
+            <input type="radio" value="1" name ="rating" id="rate5"><label for="rate5">★</label>
+        </fieldset>
+        <div>
+            <textarea class="col-auto form-control" id="r_comment" placeholder="리뷰를 남겨주세요."></textarea>
+        </div>
+        <button type="submit">댓글 작성</button>
+    </form>
+</div>
+	
+    <div id="comment_list">
+    <!-- 댓글 보여지는 곳 -->
+    </div>
+</div>
 	<jsp:include page="../hs/footer.jsp" />
 </body>
 </html>
