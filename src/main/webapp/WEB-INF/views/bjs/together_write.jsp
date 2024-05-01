@@ -22,28 +22,6 @@
 <link rel="stylesheet" href="resources/css/summernote-lite.css">
 <script src="https://cdn.jsdelivr.net/npm/markerclustererplus/dist/markerclusterer.min.js"></script>
 <script type="text/javascript">
-	function together_write_ok(f) {
-		f.action="together_Write_ok.do";
-		f.submit();
-	}
-	
-	
-// 	$(function() {
-// 		  $('input[name="datefilter"]').daterangepicker({
-// 		      autoUpdateInput: false,
-// 		      locale: {
-// 		          cancelLabel: 'Clear'
-// 		      }
-// 		  });
-// 		  $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-// 		      $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
-// 		  });
-// 		  $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
-// 		      $(this).val('');
-// 		  });
-
-// 		});
-	
 	$(function() {
 	  $('input[name="datetimes"]').daterangepicker({
 	    timePicker: true,
@@ -64,20 +42,42 @@
 	  });
 	});
 	
-	$('input[name="datetimes"]').on('apply.daterangepicker', function (ev, picker) {
-		let startDate = picker.startDate.format('YYYY/MM/DD');
-		let endDate = picker.endDate.format('YYYY/MM/DD');
-		$.ajax({
-		    type: 'GET',
-		    url: '/경로',
-		    data: {startDate: startDate, endDate: endDate},
-		    success: function (data) {
-		        if (data) {
-// 		        	$('#테이블을 감싸는 DIV ID').replaceWith(data);
-		        }
-		    }
-		})
-	})
+	let campImageUrl;
+	
+	function together_write_ok() {
+	    let formData = new FormData(document.getElementsByClassName('togetherWriteForm')[0]);
+	    let startDate = $('input[name="datetimes"]').data('daterangepicker').startDate.format('YYYY/MM/DD HH:mm');
+	    let endDate = $('input[name="datetimes"]').data('daterangepicker').endDate.format('YYYY/MM/DD HH:mm');
+	    let selectedCampingType = $(".togetherSub1Button.active").val();
+
+	    // 캠핑 타입 선택 여부 확인
+	    if (!selectedCampingType) {
+	        alert("캠핑 타입을 선택해주세요.");
+	        return;
+	    }
+
+	    formData.append("t_camptype", selectedCampingType);
+	    formData.append("t_startdate", startDate);
+	    formData.append("t_enddate", endDate);
+	    formData.append("tf_name", campImageUrl);
+	    
+
+	    $.ajax({
+	        url: 'together_Write_ok.do',
+	        type: 'post',
+	        data: formData, 
+	        processData: false, // 폼 데이터 전송 시 데이터 처리 방식을 false로 설정
+	        contentType: false, // 폼 데이터 전송 시 컨텐츠 타입을 false로 설정
+	        async : false,
+	        success: function(response) {
+	           location.href='together_list.do';
+	        },
+	        error: function(xhr, status, error) {
+	            console.error(error);
+	        }
+	    });
+	    return false;
+	}
 	
 	$(document).ready(function() {
 	    $('.togetherSub1Button').click(function() {
@@ -87,14 +87,14 @@
 	});
 		
 	
-		
+	
 	$(function() {
 		initMap();
 	});
 
 	function initMap() {
-	    let markers = []; // 마커 정보를 담는 배열
-	    let infoWindows = []; // 정보창을 담는 배열
+	    let markers = [];
+	    let infoWindows = [];
 
 	    $.ajax({
 	        url: "together_Write2.do",
@@ -109,28 +109,28 @@
 	                    center: new naver.maps.LatLng(37.552758094502494, 126.98732600494576),
 	                    zoom: 10
 	                });
-
+						
 	                for (var i = 0; i < campList.length; i++) {
 	                	let camp = campList[i];
-	                    let position = new naver.maps.LatLng(camp.mapx, camp.mapy);
-// 	                    console.log(camp.facltnm);
+	                    let position = new naver.maps.LatLng(camp.mapy, camp.mapx);
 
 	                    let marker = new naver.maps.Marker({
 	                        map: map,
-	                        title: camp.donm, // 지역구 이름 
-	                        position: position // 지역구의 위도 경도 넣기 
+	                        title: "test", // 지역구 이름 
+	                        position: position
 	                    });
-// 	                    console.log(marker);
+// 	                    console.log(i, marker.getTitle);
 	                    /* 정보창 */
 	                    let infoWindow = new naver.maps.InfoWindow({
-	                        content: '<div style="width:200px;text-align:center;padding:10px;"><b>' + camp.facltnm + '</b><br> - ' + camp.addr1 + ' - </div>'
-	                    }); // 클릭했을 때 띄워줄 정보 HTML 작성
+	                        content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + camp.firstimageurl + '" alt="" style="width:100%;" /><b>' + camp.facltnm + '</b><br><br> ' + camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
+	                        disableAutoPan: true // 정보창열릴때 지도이동 안함
+	                    });
 
 	                    markers.push(marker); // 생성한 마커를 배열에 담는다.
 	                    infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
 	                }
 
-	                function getClickHandler(seq) {
+	                function getClickHandler(seq, addr, imageUrl) {
 	                    return function(e) {  // 마커를 클릭하는 부분
 	                    	let marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
 	                            infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
@@ -138,14 +138,16 @@
 	                        if (infoWindow.getMap()) {
 	                            infoWindow.close();
 	                        } else {
-	                            infoWindow.open(map, marker); // 표출
+	                            infoWindow.open(map, marker);
+	                            $('.togetherSub1DivP').val(addr);
+	                            campImageUrl = imageUrl;
 	                        }
 	                    }
 	                }
 
 	                for (var i = 0, ii = markers.length; i < ii; i++) {
 // 	                    console.log(markers[i], getClickHandler(i));
-	                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
+	                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl)); // 클릭한 마커 핸들러
 	                }
 	            }
 	        },
@@ -155,115 +157,13 @@
 	    });
 	}
 	
-// 	var HOME_PATH = window.HOME_PATH || '.';
-// 	var MARKER_SPRITE_X_OFFSET = 29,
-// 	    MARKER_SPRITE_Y_OFFSET = 50,
-// 	    MARKER_SPRITE_POSITION = {
-// 	        "A0": [0, 0],
-// 	        "B0": [MARKER_SPRITE_X_OFFSET, 0],
-// 	        "C0": [MARKER_SPRITE_X_OFFSET*2, 0],
-// 	        "D0": [MARKER_SPRITE_X_OFFSET*3, 0],
-// 	        "E0": [MARKER_SPRITE_X_OFFSET*4, 0],
-// 	        "F0": [MARKER_SPRITE_X_OFFSET*5, 0],
-// 	        "G0": [MARKER_SPRITE_X_OFFSET*6, 0],
-// 	        "H0": [MARKER_SPRITE_X_OFFSET*7, 0],
-// 	        "I0": [MARKER_SPRITE_X_OFFSET*8, 0],
-
-// 	        "A1": [0, MARKER_SPRITE_Y_OFFSET],
-// 	        "B1": [MARKER_SPRITE_X_OFFSET, MARKER_SPRITE_Y_OFFSET],
-// 	        "C1": [MARKER_SPRITE_X_OFFSET*2, MARKER_SPRITE_Y_OFFSET],
-// 	        "D1": [MARKER_SPRITE_X_OFFSET*3, MARKER_SPRITE_Y_OFFSET],
-// 	        "E1": [MARKER_SPRITE_X_OFFSET*4, MARKER_SPRITE_Y_OFFSET],
-// 	        "F1": [MARKER_SPRITE_X_OFFSET*5, MARKER_SPRITE_Y_OFFSET],
-// 	        "G1": [MARKER_SPRITE_X_OFFSET*6, MARKER_SPRITE_Y_OFFSET],
-// 	        "H1": [MARKER_SPRITE_X_OFFSET*7, MARKER_SPRITE_Y_OFFSET],
-// 	        "I1": [MARKER_SPRITE_X_OFFSET*8, MARKER_SPRITE_Y_OFFSET],
-
-// 	        "A2": [0, MARKER_SPRITE_Y_OFFSET*2],
-// 	        "B2": [MARKER_SPRITE_X_OFFSET, MARKER_SPRITE_Y_OFFSET*2],
-// 	        "C2": [MARKER_SPRITE_X_OFFSET*2, MARKER_SPRITE_Y_OFFSET*2],
-// 	        "D2": [MARKER_SPRITE_X_OFFSET*3, MARKER_SPRITE_Y_OFFSET*2],
-// 	        "E2": [MARKER_SPRITE_X_OFFSET*4, MARKER_SPRITE_Y_OFFSET*2],
-// 	        "F2": [MARKER_SPRITE_X_OFFSET*5, MARKER_SPRITE_Y_OFFSET*2],
-// 	        "G2": [MARKER_SPRITE_X_OFFSET*6, MARKER_SPRITE_Y_OFFSET*2],
-// 	        "H2": [MARKER_SPRITE_X_OFFSET*7, MARKER_SPRITE_Y_OFFSET*2],
-// 	        "I2": [MARKER_SPRITE_X_OFFSET*8, MARKER_SPRITE_Y_OFFSET*2]
-// 	    };
-
-// 	var map = new naver.maps.Map('map', {
-// 	    center: new naver.maps.LatLng(37.3595704, 127.105399),
-// 	    zoom: 10
-// 	});
-
-// 	var bounds = map.getBounds(),
-// 	    southWest = bounds.getSW(),
-// 	    northEast = bounds.getNE(),
-// 	    lngSpan = northEast.lng() - southWest.lng(),
-// 	    latSpan = northEast.lat() - southWest.lat();
-
-// 	var markers = [];
-
-// 	for (var key in MARKER_SPRITE_POSITION) {
-
-// 	    var position = new naver.maps.LatLng(
-// 	        southWest.lat() + latSpan * Math.random(),
-// 	        southWest.lng() + lngSpan * Math.random());
-
-// 	    var marker = new naver.maps.Marker({
-// 	        map: map,
-// 	        position: position,
-// 	        title: key,
-// 	        icon: {
-// 	            url: HOME_PATH +'/img/example/sp_pins_spot_v3.png',
-// 	            size: new naver.maps.Size(24, 37),
-// 	            anchor: new naver.maps.Point(12, 37),
-// 	            origin: new naver.maps.Point(MARKER_SPRITE_POSITION[key][0], MARKER_SPRITE_POSITION[key][1])
-// 	        },
-// 	        zIndex: 100
-// 	    });
-
-// 	    markers.push(marker);
-// 	};
-
-// 	naver.maps.Event.addListener(map, 'idle', function() {
-// 	    updateMarkers(map, markers);
-// 	});
-
-// 	function updateMarkers(map, markers) {
-
-// 	    var mapBounds = map.getBounds();
-// 	    var marker, position;
-
-// 	    for (var i = 0; i < markers.length; i++) {
-
-// 	        marker = markers[i]
-// 	        position = marker.getPosition();
-
-// 	        if (mapBounds.hasLatLng(position)) {
-// 	            showMarker(map, marker);
-// 	        } else {
-// 	            hideMarker(map, marker);
-// 	        }
-// 	    }
-// 	}
-
-// 	function showMarker(map, marker) {
-
-// 	    if (marker.getMap()) return;
-// 	    marker.setMap(map);
-// 	}
-
-// 	function hideMarker(map, marker) {
-
-// 	    if (!marker.getMap()) return;
-// 	    marker.setMap(null);
-// 	}
 	$(function() {
 		$("#t_content").summernote({
 			lang : 'ko-KR',
 			height : 300,
 			focus : true,
 			placeholder: '최대3000자까지 쓸 수 있습니다'	,
+			disableHtmlResizing: true, // <p> 태그 자동 생성 비활성화
 			callbacks : {
 				onImageUpload : function(files, editor) {
 					for (var i = 0; i < files.length; i++) {
@@ -275,6 +175,22 @@
 			  
 		});
 	});
+	
+	// 셀렉트 박스에 옵션을 동적으로 추가하는 함수
+	function selectBox() {
+	  let selectBox = document.getElementById("numberOfPeople");
+	  for (let i = 2; i <= 30; i++) {
+		  let option = document.createElement("option");
+	    option.value = i;
+	    option.text = i;
+	    selectBox.appendChild(option);
+	  }
+	}
+
+	// 페이지 로드 시 셀렉트 박스에 옵션을 추가
+	window.onload = function() {
+	  selectBox();
+	}
 </script>
 </head>
 <body>
@@ -284,47 +200,42 @@
 	            <div class="togetherh2">
 	                <h2>동 행 글쓰기</h2>
 	            </div>
-	            <input type="text" name="t_subject" value="" class="togetherWriteInput1" placeholder="제목을 입력하세요" required>
+	            <input type="text" name="t_subject" class="togetherWriteInput1" placeholder="제목을 입력하세요" required>
 	            <textarea class="togetherWriteInput2" name="t_content" id="t_content" placeholder="내용을 입력하세요" required></textarea>
-	            <input type="submit" value="작성하기" class="togetherWriteInputSubmit" onclick="together_write_ok()">
+	            <input type="button" value="작성하기" class="togetherWriteInputSubmit" onclick="together_write_ok()">
 	        </div>
 	        <div class="togetherWriteSelect">
 	            <strong>캠핑타입</strong>
 	            <div class="togetherSub1">
-	            	<button type="button" value="" class="togetherSub1Button">카라반</button>
-	            	<button type="button" value="" class="togetherSub1Button">글램핑</button>
-	            	<button type="button" value="" class="togetherSub1Button">야영지</button>
+<!-- 	            	<input type="button" name="t_camptype" value="카라반" class="togetherSub1Button"> -->
+<!-- 	            	<input type="button" name="t_camptype" value="글램핑" class="togetherSub1Button"> -->
+<!-- 	            	<input type="button" name="t_camptype" value="야영지" class="togetherSub1Button"> -->
+	            	<button type="button" name="t_camptype" value="카라반" class="togetherSub1Button">카라반</button>
+	            	<button type="button" name="t_camptype" value="글램핑" class="togetherSub1Button">글램핑</button>
+	            	<button type="button" name="t_camptype" value="야영지" class="togetherSub1Button">야영지</button>
 	            </div>
 	            <div class="togetherSub1">
-	                <strong>캠핑장</strong>
+	                <strong class="togetherSub5Strong">캠핑장</strong>
 	                <div class="togetherSub1Div">
 	                	<div class="searchForm">
-		                	<input type="search" class="searchbar" placeholder="캠핑장 이름">
-	        				<input type="submit" class="res" value="검색">
+		                	<input type="search" name="t_campname" class="searchbar" placeholder="캠핑장 이름">
+	        				<input type="button" class="res" value="검색">
         				</div>
-<!-- 	                    <input type="text" value="" id="" placeholder="캠핑장 이름" class="togetherSub1DivInput"> -->
-<!-- 	                    <input type="button" value="검색" id="" class="togetherSub1DivButton"> -->
-	                    <p class="togetherSub1DivP">서울특별시 강서구 화곡동</p>
-	                    <p>426-85</p>
+	                    <textarea name="t_address" class="togetherSub1DivP" readonly></textarea>
 	                </div>
 	            </div>
 	            <div>
-<%-- 	                <img src="${path}/resources/images/tree-4.jpg" class="togetherSub1Img"> --%>
-<!-- 	                <div id="map" class="togetherSub1Img"></div> -->
 	                <div id="map" class="togetherSub1Img"></div>
 	            </div>
-	            <div class="togetherSub1">
-	                <strong>캠핑인원</strong>
-	                <span>&nbsp;&nbsp;4명</span>
+	            <div class="togetherSub5">
+	                <strong class="togetherSub5Strong">캠핑인원&nbsp;</strong>
+	                <select name="t_numpeople" class="numberOfPeople" id="numberOfPeople"></select>
+	                <span>명</span>
 	            </div>
 	            <div class="togetherSub2">
 	                <strong>캠핑기간</strong>
 <!-- 	                <input type="text" name="datefilter" value="" class="datetimes" /> -->
 	                <p><input type="text" name="datetimes" value="" class="datetimes" /></p>
-	            </div>
-	            <div>
-	                
-<%-- 	                <img src="${path}/resources/images/tree-4.jpg" class="togetherSub1Img"> --%>
 	            </div>
 	        </div>
 	    </form>

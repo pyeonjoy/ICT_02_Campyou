@@ -1,10 +1,12 @@
 package com.ict.campyou.bjs.controller;
 
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,16 +92,6 @@ public class TogetherController {
 		return mv;
 	}
 	
-//	@RequestMapping("together_Write_ok.do")
-//	public ModelAndView getTogetherWrite(TogetherVO tvo, HttpSession session) {
-//		ModelAndView mv = new ModelAndView();
-//		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo"); 
-//		if(memberUser != null) {
-//			tvo.setMember_idx(memberUser.getMember_idx());
-//		}
-//		return new ModelAndView("bjs/together_write");
-//	}
-	
 	@RequestMapping("together_detail.do")
 	public ModelAndView getTogetherDetail(@ModelAttribute("cPage")String cPage, String t_idx, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
@@ -121,4 +113,8 @@ public class TogetherController {
 		return new ModelAndView("error");
 	}
 	
+	@RequestMapping("markertest.do")
+	public ModelAndView getmarker() {
+		return new ModelAndView("bjs/markertest");
+	}
 }

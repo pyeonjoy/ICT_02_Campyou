@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+sup{
+	color: red;
+}
+
+#idSpan{
+	color: red;
+}
+
+#nickNameSpan{
+	color: red;
+}
+
+#idSpanLogIn{
+	color:red;
+}
+
+body {
+   background-image: url('https://a.cdn-hotels.com/gdcs/production168/d1009/cccd4ec4-110b-4a60-9409-f5c2db621bf2.jpg?impolicy=fcrop&w=1600&h=1066&q=medium');
+   background-size: cover;
+   background-position: center;
+   background-repeat: repeat;
+ }

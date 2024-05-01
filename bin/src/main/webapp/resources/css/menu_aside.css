@@ -1,0 +1,23 @@
+@charset "UTF-8";
+@import url("reset.css");
+
+/* 공통 */
+.mypage_menu_wrap {
+	top: 180px;
+	position: absolute;
+	margin: 0 20px;
+}
+
+.mypage_menu_wrap h4 {
+	padding: 10px;
+}
+
+.mypage_menu_wrap li {
+	padding: 10px;
+	font-weight: 600;
+}
+
+/* admin_menu */
+.mypage_menu_wrap .side {
+	padding-bottom: 20px;
+}

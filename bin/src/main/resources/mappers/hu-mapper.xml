@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<!-- Create Account & Login & find ID and Pwd -->
+	<insert id="insert" parameterType="mvo">
+		insert into members(member_id, member_name, member_pwd, member_nickname, member_dob, member_phone, member_email, member_regdate)
+			values(#{member_id}, #{member_name},#{member_pwd},#{member_nickname},#{member_dob}, #{member_phone},#{member_email}, sysdate())
+	</insert>
+	
+	<select id="idchk" parameterType="String" resultType="int">
+ 		select count(*) from members where member_id=#{member_id}
+ 	</select>
+ 	
+ 	<select id="loginIdchk" parameterType="String" resultType="int">
+ 		select count(*) from members where member_id=#{member_id}
+ 	</select>
+ 	
+ 	<select id="login" parameterType="mvo" resultType="mvo">
+ 		select * from members where member_id=#{member_id}
+ 	</select>
+ 	
+ 	<select id="findPwd" parameterType="mvo" resultType="mvo">
+		select * from members where member_id=#{member_id}
+	</select>
+	
+	<update id="tempPwdUpdate" parameterType="mvo">
+         update members
+         set member_pwd=#{member_pwd}
+         where member_id = #{member_id}
+    </update>
+    
+    <select id="findId" parameterType="String" resultType="mvo">
+		select * from members where member_name=#{member_name}
+	</select>
+	
+	<select id="nickNameChk" parameterType="String" resultType="int">
+ 		select count(*) from members where member_nickname=#{member_nickname}
+ 	</select>
+ 	
+ 	<!-- Community Board -->
+ 	<select id="count" resultType="int">
+ 		select count(*) from commBoard
+ 	</select>
+ 	
+ 	<!-- commBoard  -->
+ 	<select id="comm_board_list" parameterType="Map" resultType="cbvo">
+ 		select * from commboard order by groups desc, lev asc  limit #{limit} offset #{offset}  
+ 	</select>
+ 	
+ 	<insert id="comm_board_insert" parameterType="cbvo">
+ 		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
+ 			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM commboard
+ 		</selectKey>
+ 		insert into commboard(member_idx, b_type, b_title, member_nickname, b_content, b_pwd, hit, groups, step, lev, regdate, f_name)
+ 			values(#{member_idx}, #{b_type}, #{b_title}, #{member_nickname}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{f_name})
+ 	</insert>
+ 	
+ 	<update id="comm_board_hit" parameterType="String">
+ 		update commboard 
+ 		set hit = hit + 1 
+ 		where b_idx = #{b_idx} 
+ 	</update>
+ 	
+ 	<select id="comm_board_detail" parameterType="String" resultType="cbvo">
+ 		select * from commboard where b_idx = #{b_idx}
+ 	</select>
+ 	
+ 	<delete id="comm_board_delete" parameterType="cbvo">
+ 	 	delete from commboard where b_idx = #{b_idx}
+ 	</delete>
+ 	
+ 	<update id="comm_board_update" parameterType="cbvo">
+ 	 	update commboard 
+ 	 	set  b_title=#{b_title}, b_content=#{b_content}, f_name=#{f_name}
+ 	 	where b_idx = #{b_idx}  	 
+ 	 </update>
+ 	 
+ 	 <update id="comm_lev_update" parameterType="Map">
+ 	 	update commboard set lev=lev+1 where groups=#{groups} and lev>=#{lev} 
+ 	 </update>
+ 	 
+ 	  <insert id="comm_reply_insert" parameterType="cbvo">
+ 	 	insert into commboard(member_idx, b_type, b_title, member_nickname, b_content, b_pwd, hit, groups, step, lev, regdate, f_name)
+ 			values(#{member_idx}, #{b_type}, #{b_title}, #{member_nickname}, #{b_content}, #{b_pwd}, 0, #{groups}, #{step}, #{lev}, sysdate(), #{f_name})
+ 	 </insert>
+ 	 
+ 	 <select id="comm_board_reply_detail" parameterType="cbvo" resultType="cbvo">
+ 		select * from commboard where b_idx = #{b_idx}
+ 	</select>
+</mapper>

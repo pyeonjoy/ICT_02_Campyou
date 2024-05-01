@@ -33,4 +33,8 @@ public class TogetherDAO {
 	public TogetherVO getTogetherDetail(String t_idx) throws Exception {
 		return sqlSessionTemplate.selectOne("bjs.to_detail", t_idx);
 	}
+	
+	public int getTogetherWriteOK(TogetherVO tvo) throws Exception {
+		return sqlSessionTemplate.insert("bjs.to_insert", tvo);
+	}
 }

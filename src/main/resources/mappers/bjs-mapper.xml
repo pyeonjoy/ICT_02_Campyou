@@ -22,4 +22,8 @@
 		left join members m on b.member_idx = m.member_idx 
 		where t_idx = #{t_idx}
 	</select>
+	<insert id="to_insert" parameterType="tvo">
+		insert into board_with(member_idx, t_subject, t_content, t_campname, t_camptype, t_address, t_startdate, t_enddate, t_numpeople, t_regdate, tf_name)
+		values(#{member_idx}, #{t_subject}, #{t_content}, #{t_campname}, #{t_camptype}, #{t_address}, #{t_startdate}, #{t_enddate}, #{t_numpeople}, sysdate(), #{tf_name})
+	</insert>
 </mapper>
