@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!doctype html>
 <html lang="ko">
 <link href="resources/css/reset.css" rel="stylesheet" />
@@ -33,15 +34,15 @@ window.addEventListener('DOMContentLoaded', function() {
 <body>
 	<h2 class="head">회원 관리 상세</h2>
 	<h3 style="text-align: center;">회원 상세 정보</h3>
+		<c:forEach var="m" items="${member}"> 
 	<div class="wrap">
 			<div class="left">
-				<div class="proimg"></div>
+				<p style="text-align: center"><img src="${path}/resources/images/${m.member_img}" class="proimg"></p>
 				<div style="margin: auto; width: 140px;">
-					<p style="text-align: center;" class="b1"><button onclick="removeimg.do">이미지 삭제</button></p>
+					<p style="text-align: center;" class="b1"><button onclick="location.href='removeimg.do?member_idx=${m.member_idx}'">이미지 삭제</button></p>
 				</div>
 			</div>
 			<div class="right">
-		<c:forEach var="m" items="${member}"> 
 				<table style="table-layout: auto; width: 100%; table-layout: fixed;">
 					<tr>
 						<th>NO</th>
@@ -78,27 +79,39 @@ window.addEventListener('DOMContentLoaded', function() {
 						<th>상태</th>
 					</tr>
 					<tr>
-						<td><button type="button" onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원정지</button></td>
-						<td>${m.member_grade== 0}</td>
+						<c:if test="${m.member_grade == 0}">
+						<td><button type="button" onclick="location.href='member_upgrade.do?member_idx=${m.member_idx}'">관리자 지정</button></td>
+						</c:if>
+						<c:if test="${m.member_grade == 1}">
+						<td>관리자</td>
+						</c:if>
+						<td>${m.member_grade}</td>
 						<td>${report}</td>
 						
-						 <c:if test="${m.member_active== 0}">
+						 <c:if test="${m.member_active== 1}">
 						<td>활동중</td>
 						</c:if>
 						
-						<c:if test="${m.member_active== 1}">
-						<td>정지(${m.admin_name})</td>
+						<c:if test="${m.member_active== 0}">
+						<td>
+							정지중
+						</td>
 						</c:if> 
 					</tr>
 				</table>
-				<p class="b2">
+				<p class="b2" style="margin-top: 15px;">
+				<c:if test="${m.member_active== 1}">
 				<button type="button" onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원정지</button>
+				</c:if>
+				<c:if test="${m.member_active== 0}">
+				<button type="button" onclick="location.href='member_stopcancel.do?member_idx=${m.member_idx}'">정지해제</button>
+				</c:if>
 				<button type="button" onclick="location.href='member_edit.do?member_idx=${m.member_idx}'">회원수정</button>
 				<button type="button" onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원삭제</button>
 			</p>
-		</c:forEach>
 			</div>
 		</div>
+		</c:forEach>
 		<div class="under">
 			<h3 style="text-align: center; margin-top: 300px;">작성한글</h3>
 			<div class="top">
@@ -109,7 +122,6 @@ window.addEventListener('DOMContentLoaded', function() {
 			<div id="contentA">
 			<table style="table-layout: auto; width: 100%; table-layout: fixed;">
 				<tr>
-					<th>선택</th>
 					<th>번호</th>
 					<th>유형</th>
 					<th>제목</th>
@@ -119,7 +131,6 @@ window.addEventListener('DOMContentLoaded', function() {
 					<th>상태</th>
 				</tr>
 				<tr>
-					<td><input type="checkbox"></td>
 					<td>${b.b_idx }</td>
 					<td>${b.b_type }</td>
 					<td>${b.b_subject }</td>
@@ -133,7 +144,6 @@ window.addEventListener('DOMContentLoaded', function() {
 			<div id="contentB">
 			<table style="table-layout: auto; width: 100%; table-layout: fixed;">
 				<tr>
-					<th>선택</th>
 					<th>번호</th>
 					<th>유형</th>
 					<th>제목</th>
@@ -143,7 +153,6 @@ window.addEventListener('DOMContentLoaded', function() {
 					<th>상태</th>
 				</tr>
 				<tr>
-					<td><input type="checkbox"></td>
 					<td>${b.cp_idx }</td>
 					<td>${b.cp_type }</td>
 					<td>${b.cpf_name }</td>
@@ -155,7 +164,6 @@ window.addEventListener('DOMContentLoaded', function() {
 			</table>
 			</div>
 			</c:forEach>
-				<button tpye="button">선택해제</button>
 		</div>
 </body>
 </html>

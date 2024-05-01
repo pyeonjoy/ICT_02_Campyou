@@ -13,7 +13,6 @@
 		<typeAlias type="com.ict.campyou.hu.dao.CommBoardVO" alias="cbvo"/>
 		<typeAlias type="com.ict.campyou.bjs.dao.TogetherVO" alias="tvo"/>
 		<typeAlias type="com.ict.campyou.joy.dao.AdminVO" alias="avo"/>
-		<typeAlias type="com.ict.campyou.joy.dao.MemberVO" alias="adminmvo"/>
 		<typeAlias type="com.ict.campyou.bm.dao.FaqVO" alias="fvo"/>
 		<typeAlias type="com.ict.campyou.bm.dao.UserVO" alias="uvo"/>
 		<typeAlias type="com.ict.campyou.jun.dao.CampVO" alias="cvo"/>

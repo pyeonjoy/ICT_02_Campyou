@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=qpvmsbuult"></script>
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=qpvmsbuult"></script>
 
 
 <style type="text/css">
@@ -71,7 +71,7 @@ $(document).ready(function() {
                 let latlng = new naver.maps.LatLng(${info.mapy}, ${info.mapx});
                 let map = new naver.maps.Map("map", {
                     center: latlng,
-                    zoom: 16
+                    zoom: 18
                 });
                 let marker = new naver.maps.Marker({
                     position: latlng,
