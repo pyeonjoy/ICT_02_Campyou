@@ -15,12 +15,14 @@
 * {
 	font-size: 18px;
 }
-#img_box{
+
+#img_box {
 	width: 80%;
 	height: 715px;
 	margin-left: 195px;
 	margin-top: 10px;
 }
+
 #detail_img img {
 	width: 370px;
 	height: 340px;
@@ -56,15 +58,57 @@
 #map {
 	width: 80%;
 	height: 600px;
-	margin: 190px;
+	margin-left: 190px;
+	margin-top: 30px;
+	margin-bottom: 30px;
 }
 
 .detail_info_1 {
 	margin-left: 190px;
 }
-.detail_button{
-	 position : relative;
-	 left : 222%;
+
+.detail_button {
+	position: relative;
+	left: 1300px;
+	top: -35px;
+}
+
+.camp_intro {
+	width: 90%;
+	height: 300px;
+}
+
+#camp_item_g {
+	width: 80%;
+	height: 670px;
+	margin-left: 190px;
+	background-color: #FFFDDE;
+	border-radius: 30px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+#camp_item_g li {
+	display: inline-block;
+	list-style-type: none;
+	margin:45px;
+	padding:57px;
+	text-align: center;
+	background-color: #FFFAA5;
+	border-radius: 55px;
+}
+
+#camp_item_g img {
+	width: 50px;
+	height: 50px;
+	background-repeat: no-repeat;
+}
+
+#camp_item_g span {
+    display: block;
+    margin-top: 10px;
+    font-size: large;
+
 }
 </style>
 <script>
@@ -115,6 +159,39 @@ $(document).ready(function() {
 });
 </script>
 <script>
+$(document).ready(function() {
+    let facilityList = "${info.sbrscl}";
+
+    let facilities = facilityList.split(',');
+
+    let iconMapping = {
+        "전기": "resources/detail_ico/ico_thunder.png",
+        "장작판매": "resources/detail_ico/ico_wood.png",
+        "트렘폴린": "resources/detail_ico/ico_tramp.png",
+        "산책로": "resources/detail_ico/ico_trail.png",
+        "수영장": "resources/detail_ico/ico_swim.png",
+        "샤워시설": "resources/detail_ico/ico_shower.png",
+        "놀이터": "resources/detail_ico/ico_playground.png",
+        "운동장": "resources/detail_ico/ico_playground_place.png",
+        "마트.편의점": "resources/detail_ico/ico_mart24.png",
+        "온수" : "resources/detail_ico/ico_hot_water.png",
+        "운동시설" : "resources/detail_ico/ico_gym.png",
+        "무선인터넷" : "resources/detail_ico/ico_wifi.png",
+    };
+
+    let facilityIcons = "";
+
+    facilities.forEach(function(facility) {
+        let iconUrl = iconMapping[facility.trim()];
+        if (iconUrl) {
+            facilityIcons += "<li><img src='" + iconUrl + "' alt='" + facility.trim() + "'><span>"+facility.trim()+"</span></li>";
+        }
+    });
+    console.log(facilityIcons);
+    $("#camp_item_g").append(facilityIcons);
+});
+</script>
+<script>
 // DB에 페이지 이동 주소가 없는 경우 
 	function resvego() {
 		let resveurl = "${info.resveurl}";
@@ -135,17 +212,18 @@ $(document).ready(function() {
 		</div>
 		<h4>상세보기</h4>
 		<div id="img_box">
-		<div id="detail_img">
-			<!-- 이미지 들어간 자리  -->
-		</div>
+			<div id="detail_img">
+				<!-- 이미지 들어간 자리  -->
+			</div>
 		</div>
 		<div style="display: inline-block;">
-			<h2 style="display: inline;margin-left: 190px;">${info.facltnm}</h2>
+			<h2 style="display: inline; margin-left: 190px;">${info.facltnm}</h2>
 			<p style="display: inline;">${info.lctcl}/${info.induty}</p>
-			<div class="detail_button" >
-				<input type="button" name ="page" value="홈페이지" onclick="window.open('${info.homepage}')">
-				<input type="button" name ="page" value="예약페이지" onclick="resvego()">
-				<input type="button" name ="page" value="♥ 관심">
+			<div class="detail_button">
+				<input type="button" name="page" value="홈페이지"
+					onclick="window.open('${info.homepage}')"> <input
+					type="button" name="page" value="예약페이지" onclick="resvego()">
+				<input type="button" name="page" value="♥ 관심">
 				<!-- onclick="window.open('${info.resveurl}')"> -->
 			</div>
 		</div>
@@ -160,15 +238,29 @@ $(document).ready(function() {
 			<p style="line-height: 30px;">운영기간 : ${info.operpdcl}</p>
 			<p style="line-height: 30px;">운영일 : ${info.operdecl}</p>
 			<p style="line-height: 30px;">주변이용가능 시설 : ${info.posblfcltycl}</p>
-			<p style="line-height: 30px;">
-				예약방법 : ${info.resved}<br>
-				<br>
-			</p>
-			<p style="line-height: 30px;">${info.intro }</p>
+			<c:choose>
+				<c:when test="${info.resved == null}">
+					<p style="line-height: 30px;">
+						예약방법 : 온라인 실시간 예약<br> <br>
+					</p>
+				</c:when>
+				<c:otherwise>
+					<p style="line-height: 30px;">
+						예약방법 : ${info.resved}<br> <br>
+					</p>
+				</c:otherwise>
+			</c:choose>
+
+			<div class="camp_intro">
+				<p style="line-height: 30px;">${info.intro }</p>
+			</div>
 		</div>
-		<h3>여기에 이제 이미지(시설정보) 들어가야함</h3>
-	</div>
+		<h4>시설</h4>
+		<div id="camp_item_g"></div>
+		<h4>위치</h4>
 	<div id="map"></div>
+	<h4>후기</h4>
+	</div>
 	<jsp:include page="../hs/footer.jsp" />
 </body>
 </html>
