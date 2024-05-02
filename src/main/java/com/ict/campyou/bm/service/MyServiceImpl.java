@@ -34,5 +34,10 @@ public class MyServiceImpl implements MyService{
 	public int changeUserPW(MemberVO mvo) {
 		return myDao.changeUserPW(mvo);
 	}
+	@Override
+	public MemberVO getMember(String member_idx) {
+		// TODO Auto-generated method stub
+		return myDao.getMember(member_idx);
+	}
 
 }

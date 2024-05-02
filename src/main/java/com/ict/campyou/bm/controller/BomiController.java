@@ -13,11 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.bm.dao.FaqVO;
+import com.ict.campyou.bm.dao.PasswordCheckRequest;
 import com.ict.campyou.bm.service.MyService;
 import com.ict.campyou.hu.dao.MemberVO;
 
@@ -42,7 +44,7 @@ public class BomiController {
 		ModelAndView mv = new ModelAndView("bm/my_main");
 		return mv;
 	}
-	@GetMapping("my_change_pw.do")
+	@RequestMapping("my_change_pw.do")
 	public ModelAndView gotoMy_changePw(@RequestParam("member_idx") String member_idx) {
 		ModelAndView mv = new ModelAndView("bm/my_change_pw");
 		mv.addObject("member_idx", member_idx);
@@ -71,7 +73,9 @@ public class BomiController {
 	public ModelAndView gotoMyinfo(HttpSession session) {
 		ModelAndView mv = new ModelAndView("bm/my_info");
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-		mv.addObject("mvo", mvo);
+		String member_idx = mvo.getMember_idx();
+		MemberVO mvo2 = myService.getMember(member_idx);
+		mv.addObject("mvo", mvo2);
 		return mv;
 	}
 // change user information and save	
@@ -112,11 +116,21 @@ public class BomiController {
 	
 	// password change 
 	@PostMapping("pwd_change.do")
-	public ModelAndView changeUserPw(MemberVO mvo) {
+	public ModelAndView changeUserPw(@RequestParam("member_idx") String member_idx, PasswordCheckRequest pwdcheck) {
 		ModelAndView mv = new ModelAndView("redirect:my_info.do");
-		mvo.setMember_pwd(passwordEncoder.encode(mvo.getMember_pwd()));
+		String newPassword = pwdcheck.getPassword();
+	
+		System.out.println(newPassword);
+		System.out.println(member_idx);
+		MemberVO mvo = myService.getMember(member_idx);
+		mvo.setMember_pwd(passwordEncoder.encode(newPassword));
 		int res = myService.changeUserPW(mvo);
-		return mv;
+		System.out.println(res);
+		if(res>0) {
+			
+			return mv;
+		}
+		return new ModelAndView("redirect:pwd_change.do");
 		
 	}
 	}

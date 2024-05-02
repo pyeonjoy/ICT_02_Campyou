@@ -38,24 +38,20 @@
 	     <div class="user_img">
 	        <img src="${path}/resources/img/cat.png" alt="user_img" id="user_img">
 	      </div>
-	      <div class="file-container">
-	      <%--
-	        <label for="user_img" class="btn btn_imgchg">변경</label> --%>
-	        <input type="file" name="file" class="file" id="user_img" onchange="setThumbnail(this, event)">
-	      </div>
-	    </c:when>
-	    
+	    </c:when>	    
 	    <c:otherwise>	
 	      <div class="user_img">
 	        <img src="${path}/resources/uploadUser_img/${mvo.member_img}" alt="user_img">
 	      </div>
-	      <div class="file-container">
-	        <%--
-	        <label for="user_img" class="btn btn_imgchg">변경</label> --%>
-	        <input type="file" name="file" class="file" id="user_img" onchange="setThumbnail(this, event)">
-	      </div>
 	     </c:otherwise>
-      </c:choose>
+      </c:choose>    
+	      <div class="file-container">
+	      <%--
+	       <label class="btn btn_imgchg hidden">변경
+        <input type="file" name="file" class="file" id="user_img" onchange="setThumbnail(this, event)">
+</label> --%>
+<input type="file" name="file" class="file" id="user_img" onchange="setThumbnail(this, event)">
+	      </div>
     </div>
     <div class="user_info_container">
       <div class="detail name_detail">
@@ -80,7 +76,7 @@
       <div class="btn_container">
         <input type="hidden" id="memberIdx" name="member_idx" value="${mvo.member_idx}">
         <button class="btn btn_change" onclick="handleChangeInfo(this.form)">저장</button>
-        <button class="btn btn_pwdreset" onclick="handle_pwd(${mvo.member_idx})">비밀번호 변경</button>
+        <button class="btn btn_pwdreset" onclick="handle_pwd(${mvo.member_idx}, this.form)">비밀번호 변경</button>
       </div>
     </div>
      <a href="deleteMember.do" class="btn btn-userDelete">회원탈퇴</a>

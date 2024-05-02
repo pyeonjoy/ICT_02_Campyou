@@ -91,7 +91,7 @@ function handleChangeInfo(f) {
     }
 }
 
-function handle_pwd(memberIdx) {
+function handle_pwd(memberIdx, f) {
     const passwordInput = document.getElementById('password');
     const password = passwordInput.value.trim();
     

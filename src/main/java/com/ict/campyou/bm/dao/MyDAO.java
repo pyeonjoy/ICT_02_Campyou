@@ -30,10 +30,24 @@ public List<FaqVO> getFaqs2() {
 	}
 	return null;
 }
-public MemberVO getMemberPwd(String memberId) {		
-	return sqlSessionTemplate.selectOne("bomi.getUser",memberId);
+public MemberVO getMemberPwd(String memberId) {	
+	try {
+		return sqlSessionTemplate.selectOne("bomi.getPw",memberId);		
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return null;
 }
 
+public MemberVO getMember(String member_idx) {
+	try {
+	
+		return sqlSessionTemplate.selectOne("bomi.getUser",member_idx);
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return null;
+}
 public int changeUserInfo(MemberVO mvo) {
 	try {
 		return sqlSessionTemplate.update("bomi.updateUser", mvo);		

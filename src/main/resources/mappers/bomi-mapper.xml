@@ -9,9 +9,14 @@ select * from faq order by faq_idx
 <select id="faq_lists2" resultType="fvo">
 select * from faq2 order by faq_idx
 </select>
-<select id="getUser" resultType="mvo" parameterType="String">
+
+<select id="getPw" resultType="mvo" parameterType="String">
 select * from members where member_id=#{member_id}
 </select>
+<select id="getUser" resultType="mvo" parameterType="String">
+select * from members where member_idx=#{member_idx}
+</select>
+
 <update id="updateUser" parameterType="mvo" >
 update members set member_nickname=#{member_nickname}, member_phone=#{member_phone}, member_email=#{member_email}, 
 	member_img=#{member_img} where member_idx= #{member_idx}

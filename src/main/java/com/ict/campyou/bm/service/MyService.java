@@ -12,6 +12,7 @@ public interface MyService {
 	public List<FaqVO> getFaqs2();
 	
 	public MemberVO getMemberPwd(String memberId);
+	public MemberVO getMember(String member_idx);
 	public int changeUserInfo(MemberVO mvo);
 	public int changeUserPW(MemberVO mvo);
 }

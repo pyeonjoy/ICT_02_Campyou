@@ -33,12 +33,13 @@
   position: relative;
   bottom: 0;
 }
+/*
 .file {
   position: absolute;
   top: 0;
   left: -20%;
 }
-
+*/
 .user_info_container {
   margin: 1rem 1.5rem;
   position: relative;
