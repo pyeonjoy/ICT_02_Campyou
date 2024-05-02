@@ -64,15 +64,29 @@ public class TogetherController {
 		
 		List<TogetherVO> togetherList = togetherService.getTogetherList(paging.getOffset(), paging.getNumPerPage());
 		
-		// member의 dob 꺼내서 나이로 환산 후 set
+		// member의 dob 꺼내서 나이로 환산 후 연령대 구해서 set
 		for (TogetherVO togetherVO : togetherList) {
-		    String dobString = togetherVO.getMember_dob();
-		    LocalDate dob = LocalDate.parse(dobString);
+		    LocalDate dob = LocalDate.parse(togetherVO.getMember_dob());
 		    LocalDate currentDate = LocalDate.now();
 		    int age = Period.between(dob, currentDate).getYears();
-		    togetherVO.setMember_dob(String.valueOf(age));
+//		    int age = dob.until(currentDate).getYears();
+
+
+		    String ageGroup;
+		    switch (age / 10) {
+		        case 0: ageGroup = "10대 미만"; break;
+		        case 1: ageGroup = "10대"; break;
+		        case 2: ageGroup = "20대"; break;
+		        case 3: ageGroup = "30대"; break;
+		        case 4: ageGroup = "40대"; break;
+		        case 5: ageGroup = "50대 이상"; break;
+		        case 6: ageGroup = "60대 이상"; break;
+		        case 7: ageGroup = "70대 이상"; break;
+		        default: ageGroup = "80대 이상"; break;
+		    }
+		    togetherVO.setMember_dob(ageGroup);
 		}
-        
+		
 		mv.setViewName("bjs/together_list");
 		mv.addObject("togetherList", togetherList);
 		mv.addObject("paging", paging);

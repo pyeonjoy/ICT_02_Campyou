@@ -24,11 +24,11 @@
 <script type="text/javascript">
 	$(function() {
 	  $('input[name="datetimes"]').daterangepicker({
-	    timePicker: true,
-	    startDate: moment().startOf('hour'),
-	    endDate: moment().startOf('hour').add(32, 'hour'),
+	    timePicker: false,
+	    startDate: moment().startOf('day'),
+	    endDate: moment().startOf('day').add(1, 'day'),
 	 	locale: {
-	        "format": "YY/MM/DD hh:mm A",
+	        "format": "YY/MM/DD",
 	        "separator": " ~ ",
 	        "applyLabel": "확인",
 	        "cancelLabel": "취소",
@@ -46,9 +46,10 @@
 	
 	function together_write_ok() {
 	    let formData = new FormData(document.getElementsByClassName('togetherWriteForm')[0]);
-	    let startDate = $('input[name="datetimes"]').data('daterangepicker').startDate.format('YYYY/MM/DD HH:mm');
-	    let endDate = $('input[name="datetimes"]').data('daterangepicker').endDate.format('YYYY/MM/DD HH:mm');
+	    let startDate = $('input[name="datetimes"]').data('daterangepicker').startDate.format('YYYY/MM/DD');
+	    let endDate = $('input[name="datetimes"]').data('daterangepicker').endDate.format('YYYY/MM/DD');
 	    let selectedCampingType = $(".togetherSub1Button.active").val();
+	    let content = $('#t_content').summernote('getText');
 
 	    // 캠핑 타입 선택 여부 확인
 	    if (!selectedCampingType) {
@@ -60,6 +61,7 @@
 	    formData.append("t_startdate", startDate);
 	    formData.append("t_enddate", endDate);
 	    formData.append("tf_name", campImageUrl);
+	    formData.append("t_content", content);
 	    
 
 	    $.ajax({
@@ -164,19 +166,22 @@
 			height : 300,
 			focus : true,
 			placeholder: '최대3000자까지 쓸 수 있습니다'	,
-			disableHtmlResizing: true, // <p> 태그 자동 생성 비활성화
+// 			disableHtmlResizing: true, // <p> 태그 자동 생성 비활성화
 			callbacks : {
 				onImageUpload : function(files, editor) {
 					for (var i = 0; i < files.length; i++) {
-						console.log("i = " , files)
-							sendImage(files[i], editor);						
+// 						console.log("i = " , files)
+						sendImage(files[i], editor);						
 					}
 				}
 			}
 			  
 		});
 	});
-	
+// 	var extract_html = content.replace(/(<([^>]+)>)/ig,"");
+// 	if (extract_html == "") {
+// 	    alert("내용없음");
+// 	}
 	// 셀렉트 박스에 옵션을 동적으로 추가하는 함수
 	function selectBox() {
 	  let selectBox = document.getElementById("numberOfPeople");
@@ -236,7 +241,6 @@
 	            </div>
 	            <div class="togetherSub2">
 	                <strong>캠핑기간</strong>
-<!-- 	                <input type="text" name="datefilter" value="" class="datetimes" /> -->
 	                <p><input type="text" name="datetimes" value="" class="datetimes" /></p>
 	            </div>
 	        </div>

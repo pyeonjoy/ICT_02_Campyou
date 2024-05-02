@@ -50,18 +50,19 @@
 						                    <div class="toContentOne1">
 						                        <div class="userImage"><img src="${path}/resources/images/tree-4.jpg" class="userImage2"></div>
 						                        <div>
-							                        <div class="toContentOne1span toContentOne1span1">
-							                            <strong>${k.member_nickname }(${k.member_dob })</strong>
+							                        <div class="toContentOne1span1">
+							                            <span class="to_member_nickname">${k.member_nickname }</span>
+							                            <span class="to_member_age">(${k.member_dob })</span>
 							                        </div>
 							                        <div class="toContentOne1span toContentOne1span2">
 							                            <span>${k.t_campname }</span>
-							                            <span>${k.t_startdate }&nbsp;-&nbsp;${k.t_enddate }</span>
+							                            <span class="to_campdate">${k.t_startdate }-${k.t_enddate }</span>
 							                        </div>
 						                        </div>
 						                    </div>
 						                </div>
 						                <a href="together_detail.do" class="toContentOne2">
-						                    <img src="${path}/resources/images/tree-4.jpg" class="toContentOne2img" style="opacity: 0.5;">
+						                	<img src="${k.tf_name }" class="toContentOne2img" style="opacity: 0.5;">
 						                    <span class="toContentOne2sub2">${k.t_camptype }</span>
 						                    <span class="toContentOne2sub2" style="align-items: center; justify-content: center;">게시 중지된 게시물입니다.</span>
 						                </a>
@@ -77,12 +78,13 @@
 						                    <div class="toContentOne1">
 						                        <div class="userImage"><img src="${path}/resources/images/tree-4.jpg" class="userImage2"></div>
 						                        <div>
-							                        <div class="toContentOne1span toContentOne1span1">
-							                            <strong>${k.member_nickname }(${k.member_dob })</strong>
+							                        <div class="toContentOne1span1">
+							                            <span class="to_member_nickname">${k.member_nickname }</span>
+							                            <span class="to_member_age">(${k.member_dob })</span>
 							                        </div>
 							                        <div class="toContentOne1span toContentOne1span2">
 							                            <span>${k.t_campname }</span>
-							                            <span>${k.t_startdate }&nbsp;-&nbsp;${k.t_enddate }</span>
+							                            <span class="to_campdate">${k.t_startdate }-${k.t_enddate }</span>
 							                        </div>
 						                        </div>
 						                    </div>
@@ -92,7 +94,7 @@
 						                    <span class="toContentOne2sub2">${k.t_camptype }</span>
 						                </a>
 						                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne3">
-						                    <strong>${k.t_subject }</strong>
+						                    <strong class="to_list_subject">${k.t_subject }</strong>
 						                    <span>${k.t_content }</span>
 						                </a>
 						            </div>
