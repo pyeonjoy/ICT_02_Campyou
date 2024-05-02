@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.MyDAO;
+import com.ict.campyou.bm.dao.QnaVO;
 import com.ict.campyou.hu.dao.MemberVO;
 
 @Service
@@ -36,8 +37,19 @@ public class MyServiceImpl implements MyService{
 	}
 	@Override
 	public MemberVO getMember(String member_idx) {
-		// TODO Auto-generated method stub
 		return myDao.getMember(member_idx);
+	}
+	@Override
+	public int uploadQna(QnaVO qvo) {
+		return myDao.uploadQna(qvo);
+	}
+	@Override
+	public int updateQna(QnaVO qvo) {
+		return myDao.updateQna(qvo);
+	}
+	@Override
+	public List<QnaVO> getMyQna(String member_idx) {
+		return myDao.getMyQna(member_idx);
 	}
 
 }

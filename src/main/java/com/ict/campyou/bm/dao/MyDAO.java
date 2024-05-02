@@ -64,4 +64,33 @@ public int changeUserPW(MemberVO mvo) {
 	}
 	return 0;
 }
+
+public int uploadQna(QnaVO qvo) {
+	try {		
+		return sqlSessionTemplate.insert("bomi.upQna",qvo);
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return 0;
+}
+
+public int updateQna(QnaVO qvo) {
+	try {
+		return sqlSessionTemplate.update("modiQna",qvo);
+		
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return 0;
+}
+
+public List<QnaVO> getMyQna(String member_idx) {
+	try {
+		return sqlSessionTemplate.selectList("getQnas",member_idx);
+		
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return null;
+}
 }

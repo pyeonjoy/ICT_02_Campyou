@@ -1,5 +1,70 @@
 package com.ict.campyou.bm.dao;
 
 public class ChatVO {
+private String msg_idx, msg_room, send_nick, reci_nick, send_date, read_date, msg_content, msg_read;
+
+public String getMsg_idx() {
+	return msg_idx;
+}
+
+public void setMsg_idx(String msg_idx) {
+	this.msg_idx = msg_idx;
+}
+
+public String getMsg_room() {
+	return msg_room;
+}
+
+public void setMsg_room(String msg_room) {
+	this.msg_room = msg_room;
+}
+
+public String getSend_nick() {
+	return send_nick;
+}
+
+public void setSend_nick(String send_nick) {
+	this.send_nick = send_nick;
+}
+
+public String getReci_nick() {
+	return reci_nick;
+}
+
+public void setReci_nick(String reci_nick) {
+	this.reci_nick = reci_nick;
+}
+
+public String getSend_date() {
+	return send_date;
+}
+
+public void setSend_date(String send_date) {
+	this.send_date = send_date;
+}
+
+public String getRead_date() {
+	return read_date;
+}
+
+public void setRead_date(String read_date) {
+	this.read_date = read_date;
+}
+
+public String getMsg_content() {
+	return msg_content;
+}
+
+public void setMsg_content(String msg_content) {
+	this.msg_content = msg_content;
+}
+
+public String getMsg_read() {
+	return msg_read;
+}
+
+public void setMsg_read(String msg_read) {
+	this.msg_read = msg_read;
+}
 
 }

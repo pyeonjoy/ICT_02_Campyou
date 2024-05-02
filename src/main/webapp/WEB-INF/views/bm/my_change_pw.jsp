@@ -32,7 +32,9 @@
     </script>
 </head>
 <body>
-
+<header>
+<%@ include file="../hs/header.jsp"%>
+</header>
  <form class="password" method="post" action="pwd_change.do">
       <h3 class="password_title">비밀번호 변경</h3>
       <div class="pwd_container">

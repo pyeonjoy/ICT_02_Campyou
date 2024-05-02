@@ -8,9 +8,6 @@
 <link href="/resources/css/menu_aside.css" rel="stylesheet" />
 </head>
 <body>
-	<div class="mypage_menu_header">
-		<%@include file="header.jsp"%>
-	</div>
 	<div class="mypage_menu" id="mypage_menu">
 		<div class="mypage_menu_wrap">
 			<h4>마이페이지</h4>

@@ -1,6 +1,7 @@
 package com.ict.campyou.bm.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,12 +15,16 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.JsonObject;
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.PasswordCheckRequest;
+import com.ict.campyou.bm.dao.QnaVO;
 import com.ict.campyou.bm.service.MyService;
 import com.ict.campyou.hu.dao.MemberVO;
 
@@ -42,6 +47,11 @@ public class BomiController {
 	@GetMapping("my_main.do")
 	public ModelAndView gotoMypage() {
 		ModelAndView mv = new ModelAndView("bm/my_main");
+		return mv;
+	}
+	@GetMapping("my_inquiry.do")
+	public ModelAndView gotoMyInquiry() {
+		ModelAndView mv = new ModelAndView("bm/my_inquiry");
 		return mv;
 	}
 	@RequestMapping("my_change_pw.do")
@@ -119,19 +129,22 @@ public class BomiController {
 	public ModelAndView changeUserPw(@RequestParam("member_idx") String member_idx, PasswordCheckRequest pwdcheck) {
 		ModelAndView mv = new ModelAndView("redirect:my_info.do");
 		String newPassword = pwdcheck.getPassword();
-	
-		System.out.println(newPassword);
-		System.out.println(member_idx);
 		MemberVO mvo = myService.getMember(member_idx);
 		mvo.setMember_pwd(passwordEncoder.encode(newPassword));
 		int res = myService.changeUserPW(mvo);
 		System.out.println(res);
-		if(res>0) {
-			
+		if(res>0) {			
 			return mv;
 		}
-		return new ModelAndView("redirect:pwd_change.do");
-		
+		return new ModelAndView("redirect:pwd_change.do");		
 	}
-	}
+	
+	 @PostMapping("QnaUpload.do")
+	    public ModelAndView qnaUpload(QnaVO qvo) {
+	        ModelAndView modelAndView = new ModelAndView("redirect:my_inquiry.do");
+	        int res = myService.uploadQna(qvo);
+			return modelAndView;
+	
+	    }
+}
 

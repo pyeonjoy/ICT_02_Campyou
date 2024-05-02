@@ -25,4 +25,10 @@ update members set member_nickname=#{member_nickname}, member_phone=#{member_pho
 update members set member_pwd = #{member_pwd} where member_idx = #{member_idx}
 </update>
 
+<insert id="upQna" parameterType="qvo">
+insert into qna(member_idx, qna_title, qna_content, qna_satus)
+values(#{member_idx},#{qna_title},#{qna_content},#{qna_satus})
+
+</insert>
+
 </mapper>

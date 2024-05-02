@@ -10,6 +10,9 @@
 <title>마이페이지</title>
 </head>
 <body>
+<header>
+<%@ include file="../hs/header.jsp"%>
+</header>
   <div class="body_mypage">
   <div class="mypage">
     

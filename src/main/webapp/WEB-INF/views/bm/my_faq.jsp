@@ -12,6 +12,9 @@
 </head>
 <body>
 <body>
+<header>
+<%@ include file="../hs/header.jsp"%>
+</header>
   <div class="faq_container">
     <h3 class="faq_title">FAQ</h3>
   	  <div class="question_box">

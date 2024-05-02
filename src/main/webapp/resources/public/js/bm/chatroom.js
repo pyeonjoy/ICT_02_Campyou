@@ -1,7 +1,6 @@
 "use strict";
 
 // chat-rooms
-const usernamePage = document.querySelector("#username-page");
 const chatLists = document.querySelector(".chatLists");
 const selectRoomList = document.querySelectorAll(".chat_list");
 
@@ -10,7 +9,7 @@ const chatPage = document.querySelector(".chatPage");
 const messageForm = document.querySelector("#messageForm");
 const messageInput = document.querySelector("#message");
 const connectingElement = document.querySelector(".connecting");
-
+const btnEnter = document.querySelector(".btn-enterChat");
 //btn
 const back = document.querySelector(".back");
 const cancel = document.querySelector(".cancel");
@@ -25,6 +24,7 @@ cancel.addEventListener("click", function () {
 
 // connecting to chat server
 let stompClient = null;
+let userNick;
 
 function onMessageRead() {
   const newBadge = document.querySelector(".new");
@@ -60,9 +60,10 @@ selectRoomList.forEach((room) => room.addEventListener("click", connect));
 function sendMessage(e) {
   // sender nickname  에따라 구분하기
   e.preventDefault();
-  const messageContent = messageInput.value.trim();
+    const messageContent = messageInput.value.trim();
+    let chatMessage;
   if (messageContent && stompClient) {
-    const chatMessage = {
+    chatMessage = {
       sender: member_nickname,
       content: messageInput.value,
     };
@@ -145,3 +146,24 @@ function onMessageReceived(payload) {
 }
 
 messageForm.addEventListener("submit", sendMessage);
+
+
+
+function getUserInfo() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'profile.do', true); 
+    
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+
+            const user = JSON.parse(xhr.responseText);
+
+        } else {
+            console.error('Request failed with status', xhr.status);
+        }
+    };   
+    // 요청 전송
+    xhr.send();
+}
+window.addEventListener('load', getUserInfo)
+btnEnter.addEventListener("click", connect)

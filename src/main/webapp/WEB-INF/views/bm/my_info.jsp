@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 정보</title>
+<%@ include file="../hs/header.jsp"%>
   <link rel="stylesheet" href="${path}/resources/public/css/bm/my_info.css">
   <script defer src="${path}/resources/public/js/bm/my_info.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
@@ -30,6 +31,7 @@
   </script>
 </head>
 <body>
+
    <h3 class="my_title">마이페이지</h3>
   <form class="user_info" method="post" enctype="multipart/form-data">
     <div class="user_img_container">

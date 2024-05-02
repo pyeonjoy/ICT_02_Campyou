@@ -13,6 +13,7 @@
 .body_mypage{
   width: 80%;
   margin: 0 auto;
+  transform: translateY(10rem);
 }
 .mypage{
   display: grid;

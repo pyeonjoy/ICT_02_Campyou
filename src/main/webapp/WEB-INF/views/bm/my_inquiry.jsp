@@ -10,8 +10,11 @@
 <title>1:1문의내역</title>
 </head>
 <body>
-<h3 class="grid_title">1:1문의 내역</h3>
+<header>
+<%@ include file="../hs/header.jsp"%>
+</header>
   <div class="grid_container">
+<h3 class="grid_title">1:1문의 내역</h3>
     <div class="grid_col grid_header">
       <div class="grid_row grid_row1">번호</div>
       <div class="grid_row grid_row2">제목</div>
