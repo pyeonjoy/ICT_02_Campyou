@@ -3,7 +3,6 @@ package com.ict.campyou.bm.service;
 import java.util.List;
 
 import com.ict.campyou.bm.dao.FaqVO;
-import com.ict.campyou.bm.dao.UserVO;
 import com.ict.campyou.hu.dao.MemberVO;
 
 public interface MyService {
@@ -13,6 +12,6 @@ public interface MyService {
 	public List<FaqVO> getFaqs2();
 	
 	public MemberVO getMemberPwd(String memberId);
-	public int changeUserInfo(UserVO uvo);
-	public int changeUserPW(UserVO uvo);
+	public int changeUserInfo(MemberVO mvo);
+	public int changeUserPW(MemberVO mvo);
 }

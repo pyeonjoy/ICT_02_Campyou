@@ -34,17 +34,17 @@ public MemberVO getMemberPwd(String memberId) {
 	return sqlSessionTemplate.selectOne("bomi.getUser",memberId);
 }
 
-public int changeUserInfo(UserVO uvo) {
+public int changeUserInfo(MemberVO mvo) {
 	try {
-		return sqlSessionTemplate.update("bomi.updateUser", uvo);		
+		return sqlSessionTemplate.update("bomi.updateUser", mvo);		
 	} catch (Exception e) {
 		System.out.println(e);
 	}
 	return 0;
 }
-public int changeUserPW(UserVO uvo) {
+public int changeUserPW(MemberVO mvo) {
 	try {
-   	return sqlSessionTemplate.update("bomi.updatePw", uvo);
+   	return sqlSessionTemplate.update("bomi.updatePw", mvo);
 	} catch (Exception e) {
 		System.out.println(e);
 	}

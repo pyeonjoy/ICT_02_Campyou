@@ -1,8 +1,36 @@
 package com.ict.campyou.hu.dao;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MemberVO {
 	private String member_idx, member_id, member_name, member_nickname, member_dob, member_email, member_pwd,
-			member_phone, member_active, member_regdate;
+			member_phone, member_img, member_active, member_regdate, member_old_img;;
+	public String getMember_old_img() {
+		return member_old_img;
+	}
+
+	public void setMember_old_img(String member_old_img) {
+		this.member_old_img = member_old_img;
+	}
+
+	private MultipartFile file;
+
+	public String getMember_img() {
+		return member_img;
+	}
+
+	public void setMember_img(String member_img) {
+		this.member_img = member_img;
+	}
+
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 
 	public String getMember_regdate() {
 		return member_regdate;

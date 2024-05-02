@@ -1,6 +1,7 @@
 'use strict'
 
 let response;
+const btnCheck = document.querySelector(".btn-check");
 
 function formatPhoneNumber(phoneNumber) { 
   if (phoneNumber.length < 10) alert("번호를 다시 확인해주세요") 
@@ -31,7 +32,7 @@ function checkPassword(e) {
 
     const passwordInput = document.getElementById('password');
     const password = passwordInput.value.trim();
-    
+    const memberId = document.getElementById('id').value;
     if (!password) {
         alert('비밀번호를 입력해주세요.');
         passwordInput.focus();
@@ -41,7 +42,7 @@ function checkPassword(e) {
     const xhr = new XMLHttpRequest();
     const requestData = {
         "password": password,
-        "memberId": memberId // memberId가 정의되어 있어야 함
+        "memberId": memberId 
     };
     const jsonData = JSON.stringify(requestData);
 
@@ -57,9 +58,14 @@ function checkPassword(e) {
             if (xhr.status === 200) {
                 response = xhr.responseText; 
                 if (response === "success") {
-                    alert('비밀번호가 확인되었습니다.');
+                     btnCheck.textContent = "확인";
+          btnCheck.style.border = "none";
+          btnCheck.style.color = "#032805";                   
+                    passwordInput.style.border="1px solid green";
+                    btnCheck.removeEventListener("click", checkPassword);
                 } else {
-                    alert('비밀번호가 일치하지 않습니다.');
+                   passwordInput.focus();
+          passwordInput.style.border = "2px solid red";
                 }
             } else {
                 // 서버 오류
@@ -94,11 +100,11 @@ function handle_pwd(memberIdx) {
         passwordInput.focus();
         return;
     }    
-    f.action = "my_change_pw.do?member_idx"+memberIdx;
+    f.action = "my_change_pw.do?member_idx="+memberIdx;
 }
 
 document.querySelector('.btn_change').addEventListener('click', handleChangeInfo);
-document.querySelector('.btn_check').addEventListener('click', checkPassword);
+btnCheck.addEventListener('click', checkPassword);
 document.querySelector('.btn_pwdreset').addEventListener('click', handle_pwd);
 
   

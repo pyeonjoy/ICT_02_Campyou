@@ -12,11 +12,11 @@ select * from faq2 order by faq_idx
 <select id="getUser" resultType="mvo" parameterType="String">
 select * from members where member_id=#{member_id}
 </select>
-<update id="updateUser" parameterType="uvo" >
+<update id="updateUser" parameterType="mvo" >
 update members set member_nickname=#{member_nickname}, member_phone=#{member_phone}, member_email=#{member_email}, 
 	member_img=#{member_img} where member_idx= #{member_idx}
 </update>
-<update id="updatePw" parameterType="uvo" >
+<update id="updatePw" parameterType="mvo" >
 update members set member_pwd = #{member_pwd} where member_idx = #{member_idx}
 </update>
 

@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.bm.dao.FaqVO;
-import com.ict.campyou.bm.dao.UserVO;
 import com.ict.campyou.bm.service.MyService;
 import com.ict.campyou.hu.dao.MemberVO;
 
@@ -77,28 +76,28 @@ public class BomiController {
 	}
 // change user information and save	
 	@PostMapping("changeInfo.do")
-	public ModelAndView changeUserInfo(UserVO uvo, HttpServletRequest req) {
+	public ModelAndView changeUserInfo(MemberVO mvo, HttpServletRequest req) {
 		try {
-			ModelAndView mv = new ModelAndView("redirect/my_info.do");
+			ModelAndView mv = new ModelAndView("redirect:my_info.do");
 			String path = req.getSession().getServletContext().getRealPath("/resources/uploadUser_img");
 
-			MultipartFile file = uvo.getFile();
-			String old_userImg = uvo.getOld_member_img();
+			MultipartFile file = mvo.getFile();
+			String old_userImg = mvo.getMember_old_img();
 			
 			if (file.isEmpty()) {
-				uvo.setMember_img(old_userImg);
+				mvo.setMember_img(old_userImg);
 
 			} else {
 				UUID uuid = UUID.randomUUID();
 				String filename = uuid.toString() + "_" + file.getOriginalFilename();
-				uvo.setMember_img(filename);
+				mvo.setMember_img(filename);
 
 				byte[] in = file.getBytes();
 				File out = new File(path, filename);
 				FileCopyUtils.copy(in, out);
 			}
 
-			int res = myService.changeUserInfo(uvo);
+			int res = myService.changeUserInfo(mvo);
 			
 			if (res > 0) {
 				return mv;
@@ -113,10 +112,10 @@ public class BomiController {
 	
 	// password change 
 	@PostMapping("pwd_change.do")
-	public ModelAndView changeUserPw(UserVO uvo) {
-		ModelAndView mv = new ModelAndView("redirect/my_info.do");
-		uvo.setMember_pwd(passwordEncoder.encode(uvo.getMember_pwd()));
-		int res = myService.changeUserPW(uvo);
+	public ModelAndView changeUserPw(MemberVO mvo) {
+		ModelAndView mv = new ModelAndView("redirect:my_info.do");
+		mvo.setMember_pwd(passwordEncoder.encode(mvo.getMember_pwd()));
+		int res = myService.changeUserPW(mvo);
 		return mv;
 		
 	}
