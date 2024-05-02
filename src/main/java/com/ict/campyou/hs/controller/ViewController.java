@@ -57,5 +57,15 @@ public class ViewController {
 		}
 		return null;
 	}
+	@RequestMapping("camp_list_map.do")
+	public ModelAndView camp_map_search() {
+		try {
+			ModelAndView mv = new ModelAndView("hs/camp_list_map");
+			return mv;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 
 }
