@@ -1,9 +1,17 @@
 package com.ict.campyou.jun.service;
 
+import java.util.List;
+
 import com.ict.campyou.jun.dao.CampVO;
+import com.ict.campyou.jun.dao.ReviewVO;
 
 public interface CampService {
 
 	CampVO getCampInfo(CampVO cvo, String contentid);
+
+	int addReview(ReviewVO rvo);
+
+	public List<ReviewVO> loadReview(String contentid);
+
 
 }
