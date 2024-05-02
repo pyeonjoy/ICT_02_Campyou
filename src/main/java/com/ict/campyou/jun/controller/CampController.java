@@ -27,9 +27,15 @@ public class CampController {
 	  @RequestMapping("camp_detail.do")
 	  public ModelAndView getCampDetail(@RequestParam()String contentid,CampVO cvo) {
 		  ModelAndView mv = new ModelAndView("jun/camp_detail");
-		  CampVO info = campService.getCampInfo(cvo,contentid); // DB에서 값 가져오기
-		  mv.addObject("info", info); // JSP에 넣기
-		  return mv;
+		  CampVO info = campService.getCampInfo(cvo,contentid); // DB에 저장된 캠핑리스트 정보 받아오기 
+		  if (info != null) {
+			  int hit = campService.updateHit(contentid); // 조회수 늘려주는거
+			  mv.addObject("info", info); // JSP에 넣기
+			  return mv;
+		}else {
+			return null;
+		}
+		  
 	  }
 	  
 }

@@ -34,5 +34,10 @@ public class CampServiceImpl implements CampService{
 		return reviewDAO.loadReview(contentid);
 	}
 
+	@Override
+	public int updateHit(String contentid) {
+		return campDAO.updateHit(contentid);
+	}
+
 
 }

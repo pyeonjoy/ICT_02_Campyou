@@ -13,5 +13,7 @@ public interface CampService {
 
 	public List<ReviewVO> loadReview(String contentid);
 
+	int updateHit(String contentid);
+
 
 }

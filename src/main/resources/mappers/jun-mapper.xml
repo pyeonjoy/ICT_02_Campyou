@@ -13,4 +13,7 @@
 	<select id="loadReview" resultType="rvo">
 		select * from camp_review where contentid = #{contentid}
 	</select>
+	<update id="updateHit" parameterType="cvo">
+		update camp_list set hit= hit+1 where contentid = #{contentid}
+	</update>
 </mapper>

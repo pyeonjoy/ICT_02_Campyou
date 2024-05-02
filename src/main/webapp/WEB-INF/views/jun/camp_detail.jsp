@@ -69,8 +69,10 @@
 }
 
 .detail_button {
+	padding-left: 30px;
+	padding-right: 30px;
 	position: relative;
-	left: 1300px;
+	left: 1410px;
 	top: -35px;
 }
 
@@ -169,6 +171,27 @@
 .yellow-stars {
     color: #FFD700;
 }
+.modal {
+    display: none;
+    position: fixed; 
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  	height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); 
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: auto;
+    max-width: 80%;
+    max-height: 80%;
+    height: 500px;
+    margin-top : 180px;
+}
+
 
 </style>
 <script>
@@ -280,7 +303,32 @@ $(document).ready(function() {
         });
     });	
 });
+$(document).on("click", "#detail_img img", function() {
+    let imageUrl = $(this).attr("src");
+    let modalContent = '<div id="myModal" class="modal">' +
+                       '<span class="close"></span>' +
+                       '<img class="modal-content" src="' + imageUrl + '">' +
+                       '</div>';
 
+    $("#modal_show").append(modalContent);
+
+    let modal = document.getElementById("myModal");
+    let span = document.getElementsByClassName("close")[0];
+
+    modal.style.display = "block";
+
+    span.onclick = function() {
+        modal.style.display = "none";
+        $("#myModal").remove();
+    }
+
+    window.onclick = function(e) {
+        if (e.target == modal) {
+            modal.style.display = "none";
+            $("#myModal").remove();
+        }
+    }
+});
 function loadReview(){
     $.ajax({
         url: "loadReview.do",
@@ -323,6 +371,7 @@ function loadReview(){
 <title>캠핑장 상세 페이지</title>
 </head>
 <body>
+	<div id = "modal_show"></div>
 	<jsp:include page="../hs/header.jsp" />
 	<div class="camp_detail_wrap">
 		<div style="height: 100px;">
