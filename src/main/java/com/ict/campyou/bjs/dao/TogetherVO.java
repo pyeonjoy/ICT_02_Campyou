@@ -1,7 +1,7 @@
 package com.ict.campyou.bjs.dao;
 
 public class TogetherVO {
-	private String t_idx, member_idx, t_subject, t_content, t_campname, t_camptype, t_postcode, t_address, t_address_detail, t_startdate, t_enddate, tf_name, t_regdate, t_hit, t_active, t_notice, member_dob, member_nickname;
+	private String t_idx, member_idx, t_subject, t_content, t_campname, t_camptype, t_postcode, t_address, t_address_detail, t_startdate, t_enddate, tf_name, t_regdate, t_hit, t_active, t_notice, member_dob, member_nickname, t_numpeople;
 
 	public String getT_idx() {
 		return t_idx;
@@ -146,6 +146,13 @@ public class TogetherVO {
 	public void setMember_nickname(String member_nickname) {
 		this.member_nickname = member_nickname;
 	}
-	
+
+	public String getT_numpeople() {
+		return t_numpeople;
+	}
+
+	public void setT_numpeople(String t_numpeople) {
+		this.t_numpeople = t_numpeople;
+	}
 	
 }

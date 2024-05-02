@@ -29,5 +29,15 @@ public class TogetherServiceImpl implements TogetherService{
 		return togetherDAO.getTogetherCampList();
 	}
 
+	@Override
+	public TogetherVO getTogetherDetail(String t_idx) throws Exception {
+		return togetherDAO.getTogetherDetail(t_idx);
+	}
+
+	@Override
+	public int getTogetherWriteOK(TogetherVO tvo) throws Exception {
+		return togetherDAO.getTogetherWriteOK(tvo);
+	}
+
 
 }

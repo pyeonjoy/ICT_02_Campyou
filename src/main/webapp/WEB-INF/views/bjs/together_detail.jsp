@@ -8,47 +8,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${path}/resources/public/css/bjs/together_detail.css">
 <%@ include file="../hs/header.jsp" %>
 </head>
 <body>
 <div class="toDetailContainer">
         <div class="togetherUpImg">
-            <img src="${path}/resources/images/tree-4.jpg" class="togetherUpImg2">
+            <img src="${tvo.tf_name }" class="togetherUpImg2">
         </div>
         <form class="toDetailContent">
             <div class="toDetailContent1">
                 <div class="userImage"><img src="${path}/resources/images/tree-4.jpg" class="userImage2"></div>
                 <div class="toContentOne1span">
-                    <strong>호야</strong>
-                    <p>3일전</p>
+                    <span class="to_member_nickname">${tvo.member_nickname }</span>
+					<span class="to_member_age">(${tvo.member_dob })</span>
                 </div>
                 <input type="button" value="1:1 채팅하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1">
                 <input type="button" value="참가 신청하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button2">
+                <span>${tvo.t_regdate }</span>
                 <!-- <input type="button" value="참가 취소하기" id="" onclick=""> -->
             </div>
             <div class="toDetailContent2">
                 <div class="toDetailContent2Sub1">
+                	<img src="${tvo.tf_name }" class="togetherUpImg2">
                     <div class="toDetailContent2Sub1Div">
-                        <h2>같이 캠핑 가실분</h2>
-                        <span>조회수&nbsp;55</span>
-                        <span>참여자&nbsp;5/20명</span>
+                        <h3>${tvo.t_subject }</h3>
+                        <span>조회수&nbsp;${tvo.t_hit }</span>
+                        <span>참여자&nbsp;1/${tvo.t_numpeople }명</span>
                     </div>
-                    <p>
-                        같이 캠핑 가실분 구합니다 편하게 연락주세요 장소에 모여 차타고 같이 출발해요 같이 캠핑 가실분 구합니다 편하게 연락주세요 장소에 모여 차타고 같이 출발해요
-                        같이 캠핑 가실분 구합니다 편하게 연락주세요 장소에 모여 차타고 같이 출발해요 같이 캠핑 가실분 구합니다 편하게 연락주세요 장소에 모여 차타고 같이 출발해요 
-                        같이 캠핑 가실분 구합니다 편하게 연락주세요 장소에 모여 차타고 같이 출발해요 같이 캠핑 가실분 구합니다 편하게 연락주세요 장소에 모여 차타고 같이 출발해요
-                        같이 캠핑 가실분 구합니다 편하게 연락주세요 장소에 모여 차타고 같이 출발해요 같이 캠핑 가실분 구합니다 편하게 연락주세요 장소에 모여 차타고 같이 출발해요
-                    </p>
+                    <p class="toDetailTContent">${tvo.t_content }</p>
                 </div>
                 <div class="toDetailContent2Sub2">
-                    <h2>캠핑 일정</h2>
-                    <p>캠핑장소&nbsp;난지중앙캠핑장</p>
-                    <p>캠핑날짜&nbsp;2024/04/25 - 2024/04/27</p>
-                    <p>캠핑타입&nbsp;카라반</p>
+                    <h3>캠핑 일정</h3>
+                    <p>캠핑장소&nbsp;${tvo.t_campname }</p>
+                    <p>캠핑날짜&nbsp;${tvo.t_startdate } - ${tvo.t_enddate }</p>
+                    <p>캠핑타입&nbsp;${tvo.t_camptype }</p>
                     <div class="toDetailContent2Sub2ImgDiv"><img src="${path}/resources/images/tree-4.jpg" class="toDetailContent2Sub2Img"></div>
                 </div>
             </div>
             <div class="toDetailContent3">
+            	<c:choose>
+            		<c:when test="${memberUser.member_idx eq tvo.member_idx }">
+		                <input type="button" value="수정하기" id="" onclick="" class="toDetailContent3Button">
+            		</c:when>
+            		<c:otherwise>
+						            		
+            		</c:otherwise>
+            	</c:choose>
                 <input type="button" value="목록보기" id="" onclick="" class="toDetailContent3Button">
             </div>
             <div class="toDetailContent4">

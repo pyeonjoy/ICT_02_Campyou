@@ -16,21 +16,26 @@
     width: 100%;
 }
 .togetherUpImg2{
-    max-width: 100%;
-    max-height: 30vh;
+/*     max-width: 100%; */
+    max-height: 50vh;
     object-fit: cover;
     width: 100%;
 }
 .toDetailContent{
     width: 50%;
-    
+}
+.toDetailTContent{
+	line-height: 2rem;
+/* 	min-height: 10rem; */
 }
 .toDetailContent1{
     width: 100%;
+    height: 4rem;
     display: flex;
     border-bottom: 1px solid black;
     padding: 0.8rem 0;
     margin-bottom: 2.5rem;
+    align-items: center;
 }
 .toDetailContent1 > * {
     margin-right: 2rem;
@@ -44,16 +49,23 @@
     position:absolute;
     /* top: 11.5rem;
     left: 23rem; */
-    top: 9.9vw;
-    left: 42vh;
+    top: 19.5vw;
+    left: 42.5vh;
 }
 .userImage2{
     max-width: 100%;
- max-height: 100%;
+ 	max-height: 100%;
     width: 10rem;
     height: 10rem;
     border-radius: 50%;
     position: relative;
+}
+.to_member_nickname{
+	font-weight: bold;
+}
+.to_member_age{
+	color: #FAAB12;
+	font-size: 14px;
 }
 .toDetailContent1Button{
     min-width: 7rem;
@@ -67,10 +79,10 @@
 .toDetailContent1Button2{
     background-color: #032805;
     color: white;
+    margin-right: 11rem;
 }
 .toContentOne1span{
     display: flex;
-    flex-direction: column;
     margin-left: 5.5rem;
 }
 .toDetailContent2{
@@ -100,7 +112,7 @@
 }
 .toDetailContent2Sub1Div{
     line-height: 2.3rem;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
 }
 .toDetailContent2Sub2{
     border: 1px solid black;
@@ -127,6 +139,7 @@
     background-color: #032805;
     color: white;
     cursor: pointer;
+    margin-left: 1rem;
 }
 .toDetailContent4{
     margin: 3rem 0;

@@ -1,10 +1,12 @@
 package com.ict.campyou.bjs.controller;
 
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,15 +64,29 @@ public class TogetherController {
 		
 		List<TogetherVO> togetherList = togetherService.getTogetherList(paging.getOffset(), paging.getNumPerPage());
 		
-		// member의 dob 꺼내서 나이로 환산 후 set
+		// member의 dob 꺼내서 나이로 환산 후 연령대 구해서 set
 		for (TogetherVO togetherVO : togetherList) {
-		    String dobString = togetherVO.getMember_dob();
-		    LocalDate dob = LocalDate.parse(dobString);
+		    LocalDate dob = LocalDate.parse(togetherVO.getMember_dob());
 		    LocalDate currentDate = LocalDate.now();
 		    int age = Period.between(dob, currentDate).getYears();
-		    togetherVO.setMember_dob(String.valueOf(age));
+//		    int age = dob.until(currentDate).getYears();
+
+
+		    String ageGroup;
+		    switch (age / 10) {
+		        case 0: ageGroup = "10대 미만"; break;
+		        case 1: ageGroup = "10대"; break;
+		        case 2: ageGroup = "20대"; break;
+		        case 3: ageGroup = "30대"; break;
+		        case 4: ageGroup = "40대"; break;
+		        case 5: ageGroup = "50대 이상"; break;
+		        case 6: ageGroup = "60대 이상"; break;
+		        case 7: ageGroup = "70대 이상"; break;
+		        default: ageGroup = "80대 이상"; break;
+		    }
+		    togetherVO.setMember_dob(ageGroup);
 		}
-        
+		
 		mv.setViewName("bjs/together_list");
 		mv.addObject("togetherList", togetherList);
 		mv.addObject("paging", paging);
@@ -90,21 +106,43 @@ public class TogetherController {
 		return mv;
 	}
 	
-//	@RequestMapping("together_Write_ok.do")
-//	public ModelAndView getTogetherWrite(TogetherVO tvo, HttpSession session) {
-//		ModelAndView mv = new ModelAndView();
-//		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo"); 
-//		if(memberUser != null) {
-//			tvo.setMember_idx(memberUser.getMember_idx());
-//		}
-//		return new ModelAndView("bjs/together_write");
-//	}
-	
 	@RequestMapping("together_detail.do")
-	public ModelAndView getTogetherDetail(@ModelAttribute("cPage")String cPage, String t_idx, HttpSession session) {
-		ModelAndView mv = new ModelAndView("bjs/together_detail");
-		TogetherVO tvo = togetherService.getgetTogetherDetail(t_idx);
-//		return ;
+	public ModelAndView getTogetherDetail(@ModelAttribute("cPage")String cPage, String t_idx, HttpSession session) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo"); 
+		TogetherVO tvo = togetherService.getTogetherDetail(t_idx);
+		
+		// member의 dob 꺼내서 나이로 환산 후 연령대 구해서 set
+	    LocalDate dob = LocalDate.parse(tvo.getMember_dob());
+	    LocalDate currentDate = LocalDate.now();
+	    int age = Period.between(dob, currentDate).getYears();
+//	    int age = dob.until(currentDate).getYears();
+
+	    String ageGroup;
+	    switch (age / 10) {
+	        case 0: ageGroup = "10대 미만"; break;
+	        case 1: ageGroup = "10대"; break;
+	        case 2: ageGroup = "20대"; break;
+	        case 3: ageGroup = "30대"; break;
+	        case 4: ageGroup = "40대"; break;
+	        case 5: ageGroup = "50대 이상"; break;
+	        case 6: ageGroup = "60대 이상"; break;
+	        case 7: ageGroup = "70대 이상"; break;
+	        default: ageGroup = "80대 이상"; break;
+	    }
+	    tvo.setMember_dob(ageGroup);
+		
+		if(tvo != null) {
+			mv.setViewName("bjs/together_detail");
+			mv.addObject("tvo", tvo);
+			mv.addObject("memberUser", memberUser);
+			return mv;
+		}
+		return new ModelAndView("error");
 	}
 	
+	@RequestMapping("markertest.do")
+	public ModelAndView getmarker() {
+		return new ModelAndView("bjs/markertest");
+	}
 }
