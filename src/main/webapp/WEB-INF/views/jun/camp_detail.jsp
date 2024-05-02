@@ -355,6 +355,13 @@ function loadReview(){
         }
     });
 }
+function addHeart(){
+	$.ajax({
+		url: "addHeart.do",
+		type:"post",
+		data
+	});
+}
 
 </script>
 <script>
