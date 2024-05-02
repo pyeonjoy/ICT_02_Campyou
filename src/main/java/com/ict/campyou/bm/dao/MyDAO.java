@@ -30,21 +30,35 @@ public List<FaqVO> getFaqs2() {
 	}
 	return null;
 }
-public MemberVO getMemberPwd(String memberId) {		
-	return sqlSessionTemplate.selectOne("bomi.getUser",memberId);
+public MemberVO getMemberPwd(String memberId) {	
+	try {
+		return sqlSessionTemplate.selectOne("bomi.getPw",memberId);		
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return null;
 }
 
-public int changeUserInfo(UserVO uvo) {
+public MemberVO getMember(String member_idx) {
 	try {
-		return sqlSessionTemplate.update("bomi.updateUser", uvo);		
+	
+		return sqlSessionTemplate.selectOne("bomi.getUser",member_idx);
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return null;
+}
+public int changeUserInfo(MemberVO mvo) {
+	try {
+		return sqlSessionTemplate.update("bomi.updateUser", mvo);		
 	} catch (Exception e) {
 		System.out.println(e);
 	}
 	return 0;
 }
-public int changeUserPW(UserVO uvo) {
+public int changeUserPW(MemberVO mvo) {
 	try {
-   	return sqlSessionTemplate.update("bomi.updatePw", uvo);
+   	return sqlSessionTemplate.update("bomi.updatePw", mvo);
 	} catch (Exception e) {
 		System.out.println(e);
 	}

@@ -36,7 +36,7 @@ function connect(e) {
   chatPage.classList.remove("hidden");
   chatLists.classList.add("hidden");
 
-  const socket = new SockJS("/ws");
+  const socket = new SockJS("/chat");
   stompClient = Stomp.over(socket);
 
   stompClient.connect({}, onConnected, onError);
