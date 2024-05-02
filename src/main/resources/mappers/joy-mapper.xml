@@ -58,7 +58,6 @@
 		set member_id = #{member_id}, member_name = #{member_name}, member_nickname = #{member_nickname}, member_dob = #{member_dob},
 		 member_phone = #{member_phone}, member_email = #{member_email}, member_regdate = #{member_regdate}
 		where member_idx = 1
-
     </select>
      <select id="memberstop" resultType="amvo" parameterType="String">
         update members set member_active = 0 
@@ -75,5 +74,17 @@
      <select id="removeimg" parameterType="String">
 		    update members set member_img = DEFAULT
 		    where member_idx = 1
-		</select>
+	</select>
+	<select id="getwithboard" resultType="avo">
+     SELECT *
+		FROM board_with
+		ORDER BY t_hit DESC
+		LIMIT 10;
+	</select>
+   <select id="camphit" resultType="cvo">
+     SELECT *
+		FROM camp_list
+		ORDER BY hit DESC
+		LIMIT 3;
+	</select>
 </mapper>

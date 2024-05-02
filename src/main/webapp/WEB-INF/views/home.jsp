@@ -1,170 +1,229 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="UTF-8"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
-<%@ include file="hs/header.jsp" %>
-	
+<%-- <%@ include file="hs/header.jsp"%> --%>
 <!doctype html>
 <html lang="ko">
 <link href="${path}/resources/css/reset.css" rel="stylesheet" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author"
-	content="Mark Otto, Jacob Thornton, 그리고 Bootstrap 기여자들">
+    content="Mark Otto, Jacob Thornton, 그리고 Bootstrap 기여자들">
 <meta name="generator" content="Hugo 0.88.1">
 <title>임시 메인페이지</title>
-
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-	crossorigin="anonymous">
-
 <style>
-
 .bd-placeholder-img {
-	font-size: 1.125rem;
-	text-anchor: middle;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	user-select: none;
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
-body {background-image : url(${path}/resources/images/back.png);
-width: 100%}
+
+body {
+    background-image: url(${path}/resources/images/back.png);
+    width: 100%
+}
 
 @media ( min-width : 768px) {
-	.bd-placeholder-img-lg {
-		font-size: 3.5rem;
-	}
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
 }
-.py-2 img{
-width: 30px;
+
+.py-2 img {
+    width: 30px;
 }
+
 .py-2 {
-color: #FFFDDE;
+    color: #FFFDDE;
 }
-.wrap{
-margin: auto;
-margin-top: 1000px;
-margin-bottom: 500px;
-width: 1200px;
-text-align: center;
-font-weight: bold;
-color: #FFFDDE;
 
+.wrap {
+    margin: auto;
+    margin-top: 1000px;
+    margin-bottom: 500px;
+    width: 1200px;
+    text-align: center;
+    font-weight: bold;
+    color: #FFFDDE;
 }
-.popular img{
-	width: 300px;
-	height: 500px;
-	margin: 30px;
+
+.popular img {
+    width: 300px;
+    height: 500px;
+    margin: 30px;
 }
-.find>p{
-margin: 50px;
-color: black;
-height:40px;
-line-height:40px;
-background-color: #FFFDDE;}
+
+button {
+    height: 40px;
+}
+
+.find {
+    margin: 50px;
+    color: black;
+    height: 40px;
+    line-height: 40px;
+    background-color: #FFFDDE;
+}
+
+.authorId_btn { /* 작가 선택 css 설정 */
+    margin-left: 20px;
+    width: 14%;
+    height: 38px;
+    font-weight: 600;
+    background-color: #dfe8f5;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#authorName_input {
+    width: 80%;
+    text-align: center;
+}
+
+.layer_popup {
+    display: none; 
+    position: fixed;
+    background-color: white;
+    display: inline-block;
+    width: 400px;
+    height: 500px;
+    z-index: 9999;
+    padding: 10px;
+}
+
+.popup_image {
+    display: block;
+    margin: 0 auto; 
+    max-width: 100%; 
+    max-height: 100%; 
+}
+#check1 {
+	background-color: red;
+    position: absolute;
+    left: 50%;
+    width:100%;
+    transform: translateX(-50%);
+}
+
+
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
-var toggleMainPopup = function() {
-	  
-	  /* 쿠키 제어 함수 정의 */
-	  var handleCookie = {
-	    // 쿠키 쓰기
-	    // 이름, 값, 만료일
-	    setCookie: function (name, val, exp) {
-	      var date = new Date();
-	      
-	      // 만료 시간 구하기(exp를 ms단위로 변경)
-	      date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
-	      console.log(name + "=" + val + ";expires=" + date.toUTCString() + ";path=/");
-	      
-	      // 실제로 쿠키 작성하기
-	      document.cookie = name + "=" + val + ";expires=" + date.toUTCString() + ";";
-	    },
-	    // 쿠키 읽어오기(정규식 이용해서 가져오기)
-	    getCookie: function (name) {
-	      var value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
-	      return value ? value[2] : null;
-	    }
-	  };
-	  console.log(handleCookie.getCookie("today"));
-	  
-	  // 쿠키 읽고 화면 보이게
-	  if (handleCookie.getCookie("today") == "y") {
-	    $(".main_popup").removeClass("on");
-	  } else {
-	    $(".main_popup").addClass("on");
-	  }
-
-	  // 오늘하루 보지 않기 버튼
-	  $(".main_popup").on("click", ".btn_today_close", function () {
-	    handleCookie.setCookie("today", "y", 1);
-	    $(this).parents(".main_popup.on").removeClass("on");
-	  });
-
-	  // 일반 버튼
-	  $(".main_popup").on("click", ".btn_close", function () {
-	    $(this).parents(".main_popup.on").removeClass("on");
-	  });
+	function setCookie(name, value, exDay) {
+		var todayDate = new Date();
+		todayDate.setDate(todayDate.getDate() + exDay);
+		document.cookie = name + "=" + escape(value) + ";expires="
+				+ todayDate.toGMTString() + ";path=/";
 	}
 
-	$(function() {
-	  toggleMainPopup();
-	});   
+	function getCookie(name) {
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(';');
+		for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ')
+				c = c.substring(1, c.length);
+			if (c.indexOf(nameEQ) == 0)
+				return c.substring(nameEQ.length, c.length);
+		}
+		return null;
+	}
+
+	function closePop(popId) {
+		var cookiedata = document.cookie;
+		if (document.getElementById('chkbox' + popId).checked) {
+			setCookie("popup" + popId, "done", 1);
+		}
+		document.getElementById('layer_popup' + popId).style.display = "none";
+	}
+
+	document.addEventListener("DOMContentLoaded", function() {
+		checkPopup();
+	});
+	function checkPopup() {
+		for (var i = 1; i <= 5; i++) {
+			if (getCookie("popup" + i) === "done") {
+				document.getElementById('layer_popup' + i).style.display = "none";
+			} else {
+				document.getElementById('layer_popup' + i).style.display = "block";
+			}
+		}
+	}
 </script>
+
 </head>
 <body>
-	<div class="main_popup">
-  <div class="layer_cont">
-    <div class="img_wrap">
-      팝업 콘텐츠
-    </div>
-    <div class="btn_wrap">
-      <!-- 오늘 하루 보지 않기 --->
-      <button class="btn_today_close"><span>오늘 하루 보지 않기</span></button>
-      <!-- 그냥 닫기 --->
-      <button class="btn_close">close</button>
-    </div>
-  </div>
-</div>
-				<h1 class="display-4 fw-normal">임시 메인 페이지</h1>
-				<h1 class="display-4 fw-normal"><button onclick="location.href='together_list.do'">준수</button></h1>
-				<h1 class="display-4 fw-normal"><button onclick="location.href='inquiry_form.do'">보미</button></h1>
-				<h1 class="display-4 fw-normal"><button onclick="location.href='inquiry_form.do'">해성</button></h1>
-				<h1 class="display-4 fw-normal"><button onclick="location.href='sign_up_page_go.do'">한욱</button></h1>
-				<h1 class="display-4 fw-normal"><button onclick="location.href='admin_member_detail.do'">조이</button></h1>
-				<h1 class="display-4 fw-normal"><button onclick="location.href='camplist.do'">준형</button></h1>
-<a href="inquiry_form.do">1:1문의작성</a>
-<a href="my_info.do">내정보</a>
-<a href="my_faq.do">faq</a>
-<a href="my_main.do">마이페이지</a>
-<a href="together_list.do">동행</a>
-			<div class="wrap">
-				<div class="popular">
-				<h3>Popular campsites</h3>
-					<img src="${path}/resources/images/2.jpg">
-					<img src="${path}/resources/images/2.jpg">
-					<img src="${path}/resources/images/2.jpg">
-				</div>
-				<p><button>Show More</button></p>
-				<div class="find" style="margin-top: 500px;">
-				<h3>Find camping mates</h3>
-					<c:forEach var="k" items="${bwlist}" varStatus="vs">
-							<p>${k.t_content }</p>
-					</c:forEach>
-				</div>
-				<p><button>Show More</button></p>
-			</div>
-		</header>
+   
+	<div id="layer_popup1" class="layer_popup"
+		style="top: 50px; left: 50px; width: 500px; height: 500px; background-color: white;">
+		<img src="resources/images/2.jpg" alt="Popup Image"
+			class="popup_image">
+		<div id="check1">
+			<input type="checkbox" id="chkbox1"> 
+			<label for="chkbox1">&nbsp;오늘 하루동안 안 보기</label>
+			<a href="javascript:closePop(1);">닫기</a>
+		</div>
 	</div>
-	<%@ include file="hs/footer.jsp" %>
+
+
+
+    <h1 class="display-4 fw-normal">임시 메인 페이지</h1>
+    <h1 class="display-4 fw-normal">
+        <button onclick="location.href='together_list.do'">준수</button>
+    </h1>
+    <h1 class="display-4 fw-normal">
+        <button onclick="location.href='inquiry_form.do'">보미</button>
+    </h1>
+    <h1 class="display-4 fw-normal">
+        <button onclick="location.href='inquiry_form.do'">해성</button>
+    </h1>
+    <h1 class="display-4 fw-normal">
+        <button onclick="location.href='sign_up_page_go.do'">한욱</button>
+    </h1>
+    <h1 class="display-4 fw-normal">
+        <button onclick="location.href='admin_main.do'">조이</button>
+    </h1>
+    <h1 class="display-4 fw-normal">
+        <button onclick="location.href='camplist.do'">준형</button>
+    </h1>
+    <a href="inquiry_form.do">1:1문의작성</a>
+    <a href="my_info.do">내정보</a>
+    <a href="my_faq.do">faq</a>
+    <a href="my_main.do">마이페이지</a>
+    <a href="together_list.do">동행</a>
+    <div class="wrap">
+        <div class="popular">
+            <h3>Popular campsites</h3>
+            <c:forEach var="c" items="${camphit}">
+                <a href="camp_detail.do?contentid=${c.contentid}"><img
+                    style="object-fit: cover;" src="${c.firstimageurl}"></a>
+            </c:forEach>
+        </div>
+        <p>
+            <button onclick="location.href='camplist.do'">Show More</button>
+        </p>
+        <div style="margin-top: 500px;">
+            <h3>Find camping mates</h3>
+            <c:forEach var="k" items="${board}" varStatus="vs">
+                <a href="together_detail.do?t_idx=${k.t_idx}"><p class="find">${k.t_content }</p></a>
+            </c:forEach>
+        </div>
+        <p>
+            <button onclick="location.href='together_list.do'">Show More</button>
+        </p>
+    </div>
+    <%@ include file="hs/footer.jsp"%>
 </body>
 </html>

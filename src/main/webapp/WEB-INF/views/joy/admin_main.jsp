@@ -1,11 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link href="resources/css/reset.css" rel="stylesheet" />
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!doctype html>
 <html lang="ko">
-
+<link href="resources/css/reset.css" rel="stylesheet" />
+<%@ include file="../hs/admin_menu.jsp" %>
 <head>
 <meta charset="utf-8">
 <title>관리자 페이지 메인</title>
@@ -50,7 +50,6 @@ font-size: 15px;
 </style>
 </head>
 <body>
-<jsp:include page="../hs/header.jsp" />
     <div class="wrap">
     <h3 class="admhead">관리자님 환영합니다</h3>
             <div class="inner">

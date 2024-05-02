@@ -4,8 +4,8 @@ body {
 }
 
 .head {
+	padding-top: 250px;
 	text-align: center;
-	margin: 100px;;
 }
 
 .wrap {
@@ -14,7 +14,6 @@ body {
 	grid-gap: 10px;
 	margin: 0 auto;
 	padding: 10px;
-	height: 100px;
 	width: 1000px;
 }
 
@@ -47,13 +46,13 @@ th, td {
 	padding: 11px;
 	text-align: center;
 	width: 100%;
+	height: 40px;
 }
 
 th {
 	background-color: #032805;
 	color: white;
 }
-
  button {
 	margin-top: 20px;
 	width: 140px;

@@ -44,10 +44,10 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-	  @RequestMapping("/")
+	/*  @RequestMapping("/")
 	  public ModelAndView getMain() {
 		  return new ModelAndView("home");
-	  }
+	  }*/
 	
 	  @RequestMapping("sign_up_page_go.do") 
 	  public ModelAndView getSignUpPage() { 
@@ -174,23 +174,23 @@ public class MemberController {
 		  try {
 			  ModelAndView mv = new ModelAndView("hu/communityBoard");
 			  
-			  //ÆäÀÌÂ¡ ±â¹ý & ÀüÃ¼ °Ô½Ã¹° ¼ö
+			  //ï¿½ï¿½ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ & ï¿½ï¿½Ã¼ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½
 			  int count = commBoardService.getTotalCount();
 			  paging.setTotalRecord(count);
 			  
-			  //ÀüÃ¼ ÆäÀÌÁö ¼ö
+			  //ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 			  if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 				  paging.setTotalPage(1);
 			  }else {
-				  //ÀüÃ¼ ÆäÀÌÁö ¼ö (DB°Ô½Ã¹° ¼ö / ÇÑÆäÀÌÁö´ç 10ÁÙ)
+				  //ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (DBï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 10ï¿½ï¿½)
 				  paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-				  // (DB°Ô½Ã¹° ¼ö % ÇÑÆäÀÌÁö´ç 10ÁÙ != 0) ÀÌ¸é 1pg¸¦ ´õÇÑ´Ù.
+				  // (DBï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 10ï¿½ï¿½ != 0) ï¿½Ì¸ï¿½ 1pgï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
 				  if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
 					  paging.setTotalPage(paging.getTotalPage() + 1);
 				  }
 			  }
 			  
-			  //ÇöÀç ÆäÀÌÁö ±¸ÇÔ
+			  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			  String cPage = request.getParameter("cPage");
 			  if(cPage == null) {
 				  paging.setNowPage(1);
@@ -198,12 +198,12 @@ public class MemberController {
 				  paging.setNowPage(Integer.parseInt(cPage));
 			  }
 			  
-			  // begin, end ±¸ÇÏ±â (Oracle)
-			  // offset ±¸ÇÏ±â
-			  // offset = limit * (ÇöÀçÆäÀÌÁö-1);
+			  // begin, end ï¿½ï¿½ï¿½Ï±ï¿½ (Oracle)
+			  // offset ï¿½ï¿½ï¿½Ï±ï¿½
+			  // offset = limit * (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-1);
 			  paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
 			  
-			  //½ÃÀÛ ºí·Ï // ³¡ºí·Ï
+			  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ // ï¿½ï¿½ï¿½ï¿½ï¿½
 			  paging.setBeginBlock(
 						(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
 				paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
@@ -214,12 +214,12 @@ public class MemberController {
 			  
 			  List<CommBoardVO> commBoard_list = commBoardService.getCommBoardList(paging.getOffset(), paging.getNumPerPage());
 			  
-			  //¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
+			  //ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ï¿½
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  CommBoardVO cbvo = new CommBoardVO();
 			  
 			  if(memberInfo != null) {
-				  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
+				  //ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 			  }
 			  
@@ -258,14 +258,14 @@ public class MemberController {
 		  try {
 			  ModelAndView mv = new ModelAndView("redirect:community_board.do");
 			  
-			  //¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
+			  //ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ï¿½
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  
 			  String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 			  MultipartFile file = cbvo.getFile();
 			  
 			  if(memberInfo != null) {
-				  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
+				  //ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 				  
 				  if(file.isEmpty()) {
@@ -296,17 +296,17 @@ public class MemberController {
 		  try {
 			  ModelAndView mv = new ModelAndView("hu/communityBoardDetail");
 			  
-			  //¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
+			  //ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ï¿½
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  
-			  //hit ¾÷µ¥ÀÌÆ®
+			  //hit ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 			  int result = commBoardService.getCommBoardHit(b_idx);
 			  
 			  if(memberInfo != null) {
-				  //»ó¼¼º¸±â
+				  //ï¿½ó¼¼ºï¿½ï¿½ï¿½
 				  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 				  
-				  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
+				  //ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 				  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
@@ -411,7 +411,7 @@ public class MemberController {
 				                           @ModelAttribute("b_idx")String b_idx, CommBoardVO cbvo) {
 		  ModelAndView mv = new ModelAndView();
 
-		  // ºñ¹Ð¹øÈ£ Ã¼Å©
+		  // ï¿½ï¿½Ð¹ï¿½È£ Ã¼Å©
 		  CommBoardVO cbvo2 = commBoardService.getCommBoardDetail(cbvo.getB_idx());
 		  	
 		    String dpwd = cbvo2.getB_pwd();
@@ -421,7 +421,7 @@ public class MemberController {
 				mv.addObject("pwdchk", "fail");
 				return mv;
 			} else {
-				// active ÄÃ·³ÀÇ °ªÀ» 1·Î º¯°æÇÏÀÚ.
+				// active ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 				int result = commBoardService.getCommBoardDelete(cbvo2);
 				if (result > 0) {
 					mv.setViewName("redirect:community_board.do");
@@ -488,15 +488,15 @@ public class MemberController {
 	  	public ModelAndView getCommBoardContent(@ModelAttribute("cPage") String cPage, String b_idx, HttpSession session) {
 	  		try {
 	  			ModelAndView mv = new ModelAndView("hu/communityBoardContent");
-	  			//¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
+	  			//ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ï¿½
 				MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 				  
-				  //hit ¾÷µ¥ÀÌÆ®
+				  //hit ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 				  int result = commBoardService.getCommBoardHit(b_idx);
 				  
-				  //ºñÈ¸¿ø °Ô½ÃÆÇ º¸±â
+				  //ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				  if(memberInfo == null) {
-					  //»ó¼¼º¸±â
+					  //ï¿½ó¼¼ºï¿½ï¿½ï¿½
 					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 					  if(result > 0 && cbvo != null ){
 						  mv.addObject("cbvo", cbvo);
@@ -506,10 +506,10 @@ public class MemberController {
 				  }
 				  
 				  if(memberInfo != null) {
-					  //»ó¼¼º¸±â
+					  //ï¿½ó¼¼ºï¿½ï¿½ï¿½
 					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 					  
-					  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
+					  //ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 					  cbvo.setMember_idx(memberInfo.getMember_idx());
 					  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
