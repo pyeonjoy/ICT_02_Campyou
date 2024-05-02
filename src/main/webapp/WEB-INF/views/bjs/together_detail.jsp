@@ -14,25 +14,27 @@
 <body>
 <div class="toDetailContainer">
         <div class="togetherUpImg">
-            <img src="${path}/resources/images/tree-4.jpg" class="togetherUpImg2">
+            <img src="${tvo.tf_name }" class="togetherUpImg2">
         </div>
         <form class="toDetailContent">
             <div class="toDetailContent1">
                 <div class="userImage"><img src="${path}/resources/images/tree-4.jpg" class="userImage2"></div>
                 <div class="toContentOne1span">
-                    <strong>${tvo.member_nickname }(${tvo.member_dob })</strong>
-                    <p>${tvo.t_regdate }</p>
+                    <span class="to_member_nickname">${tvo.member_nickname }</span>
+					<span class="to_member_age">(${tvo.member_dob })</span>
                 </div>
                 <input type="button" value="1:1 채팅하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1">
                 <input type="button" value="참가 신청하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button2">
+                <span>${tvo.t_regdate }</span>
                 <!-- <input type="button" value="참가 취소하기" id="" onclick=""> -->
             </div>
             <div class="toDetailContent2">
                 <div class="toDetailContent2Sub1">
+                	<img src="${tvo.tf_name }" class="togetherUpImg2">
                     <div class="toDetailContent2Sub1Div">
                         <h3>${tvo.t_subject }</h3>
-                        <span>조회수&nbsp;${t_hit }</span>
-                        <span>참여자&nbsp;5/20명</span>
+                        <span>조회수&nbsp;${tvo.t_hit }</span>
+                        <span>참여자&nbsp;1/${tvo.t_numpeople }명</span>
                     </div>
                     <p class="toDetailTContent">${tvo.t_content }</p>
                 </div>
@@ -45,6 +47,14 @@
                 </div>
             </div>
             <div class="toDetailContent3">
+            	<c:choose>
+            		<c:when test="${memberUser.member_idx eq tvo.member_idx }">
+		                <input type="button" value="수정하기" id="" onclick="" class="toDetailContent3Button">
+            		</c:when>
+            		<c:otherwise>
+						            		
+            		</c:otherwise>
+            	</c:choose>
                 <input type="button" value="목록보기" id="" onclick="" class="toDetailContent3Button">
             </div>
             <div class="toDetailContent4">

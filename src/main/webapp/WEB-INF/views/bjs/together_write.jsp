@@ -22,13 +22,33 @@
 <link rel="stylesheet" href="resources/css/summernote-lite.css">
 <script src="https://cdn.jsdelivr.net/npm/markerclustererplus/dist/markerclusterer.min.js"></script>
 <script type="text/javascript">
+	$(document).ready(function() {
+		$("#t_content").summernote({
+			lang : 'ko-KR',
+			height : 300,
+			focus : true,
+			placeholder: '최대3000자까지 쓸 수 있습니다'	,
+	//			disableHtmlResizing: true, // <p> 태그 자동 생성 비활성화
+			callbacks : {
+				onImageUpload : function(files, editor) {
+					for (var i = 0; i < files.length; i++) {
+						sendImage(files[i], editor);						
+					}
+				}
+			}
+		});
+	});
+	//	var extract_html = content.replace(/(<([^>]+)>)/ig,"");
+	//	if (extract_html == "") {
+	//	    alert("내용없음");
+	//	}
 	$(function() {
 	  $('input[name="datetimes"]').daterangepicker({
 	    timePicker: false,
 	    startDate: moment().startOf('day'),
 	    endDate: moment().startOf('day').add(1, 'day'),
 	 	locale: {
-	        "format": "YY/MM/DD",
+	        "format": "YYYY/MM/DD",
 	        "separator": " ~ ",
 	        "applyLabel": "확인",
 	        "cancelLabel": "취소",
@@ -49,7 +69,7 @@
 	    let startDate = $('input[name="datetimes"]').data('daterangepicker').startDate.format('YYYY/MM/DD');
 	    let endDate = $('input[name="datetimes"]').data('daterangepicker').endDate.format('YYYY/MM/DD');
 	    let selectedCampingType = $(".togetherSub1Button.active").val();
-	    let content = $('#t_content').summernote('getText');
+// 	    let content = $('#t_content').summernote('getText');
 
 	    // 캠핑 타입 선택 여부 확인
 	    if (!selectedCampingType) {
@@ -61,7 +81,7 @@
 	    formData.append("t_startdate", startDate);
 	    formData.append("t_enddate", endDate);
 	    formData.append("tf_name", campImageUrl);
-	    formData.append("t_content", content);
+// 	    formData.append("t_content", content);
 	    
 
 	    $.ajax({
@@ -160,28 +180,7 @@
 	    });
 	}
 	
-	$(function() {
-		$("#t_content").summernote({
-			lang : 'ko-KR',
-			height : 300,
-			focus : true,
-			placeholder: '최대3000자까지 쓸 수 있습니다'	,
-// 			disableHtmlResizing: true, // <p> 태그 자동 생성 비활성화
-			callbacks : {
-				onImageUpload : function(files, editor) {
-					for (var i = 0; i < files.length; i++) {
-// 						console.log("i = " , files)
-						sendImage(files[i], editor);						
-					}
-				}
-			}
-			  
-		});
-	});
-// 	var extract_html = content.replace(/(<([^>]+)>)/ig,"");
-// 	if (extract_html == "") {
-// 	    alert("내용없음");
-// 	}
+
 	// 셀렉트 박스에 옵션을 동적으로 추가하는 함수
 	function selectBox() {
 	  let selectBox = document.getElementById("numberOfPeople");

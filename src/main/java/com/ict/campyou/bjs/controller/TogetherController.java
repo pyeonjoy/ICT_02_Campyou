@@ -112,11 +112,25 @@ public class TogetherController {
 		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo"); 
 		TogetherVO tvo = togetherService.getTogetherDetail(t_idx);
 		
-	    String dobString = tvo.getMember_dob();
-	    LocalDate dob = LocalDate.parse(dobString);
+		// member의 dob 꺼내서 나이로 환산 후 연령대 구해서 set
+	    LocalDate dob = LocalDate.parse(tvo.getMember_dob());
 	    LocalDate currentDate = LocalDate.now();
 	    int age = Period.between(dob, currentDate).getYears();
-	    tvo.setMember_dob(String.valueOf(age));
+//	    int age = dob.until(currentDate).getYears();
+
+	    String ageGroup;
+	    switch (age / 10) {
+	        case 0: ageGroup = "10대 미만"; break;
+	        case 1: ageGroup = "10대"; break;
+	        case 2: ageGroup = "20대"; break;
+	        case 3: ageGroup = "30대"; break;
+	        case 4: ageGroup = "40대"; break;
+	        case 5: ageGroup = "50대 이상"; break;
+	        case 6: ageGroup = "60대 이상"; break;
+	        case 7: ageGroup = "70대 이상"; break;
+	        default: ageGroup = "80대 이상"; break;
+	    }
+	    tvo.setMember_dob(ageGroup);
 		
 		if(tvo != null) {
 			mv.setViewName("bjs/together_detail");
