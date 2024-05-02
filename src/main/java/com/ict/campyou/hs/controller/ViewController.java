@@ -46,5 +46,16 @@ public class ViewController {
 		}
 		return null;
 	}
+	
+	@RequestMapping("profile_small_info.do")
+	public ModelAndView profile_small_info() {
+		try {
+			ModelAndView mv = new ModelAndView("hs/profile_small_info");
+			return mv;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 
 }
