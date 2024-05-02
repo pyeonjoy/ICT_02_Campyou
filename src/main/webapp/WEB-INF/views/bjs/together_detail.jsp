@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_detail.css">
 <%@ include file="../hs/header.jsp" %>
 </head>
@@ -18,7 +19,7 @@
         </div>
         <form class="toDetailContent">
             <div class="toDetailContent1">
-                <div class="userImage"><img src="${path}/resources/images/tree-4.jpg" class="userImage2"></div>
+                <div class="userImage"><img src="${path}/resources/images/${tvo.member_img }" class="userImage2"></div>
                 <div class="toContentOne1span">
                     <span class="to_member_nickname">${tvo.member_nickname }</span>
 					<span class="to_member_age">(${tvo.member_dob })</span>
@@ -36,14 +37,14 @@
                         <span>조회수&nbsp;${tvo.t_hit }</span>
                         <span>참여자&nbsp;1/${tvo.t_numpeople }명</span>
                     </div>
-                    <p class="toDetailTContent">${tvo.t_content }</p>
+                    <pre class="toDetailTContent">${tvo.t_content }</pre>
                 </div>
                 <div class="toDetailContent2Sub2">
                     <h3>캠핑 일정</h3>
                     <p>캠핑장소&nbsp;${tvo.t_campname }</p>
                     <p>캠핑날짜&nbsp;${tvo.t_startdate } - ${tvo.t_enddate }</p>
                     <p>캠핑타입&nbsp;${tvo.t_camptype }</p>
-                    <div class="toDetailContent2Sub2ImgDiv"><img src="${path}/resources/images/tree-4.jpg" class="toDetailContent2Sub2Img"></div>
+                    <div class="toDetailContent2Sub2ImgDiv"><div id="map" class="toDetailContent2Sub2Img"></div></div>
                 </div>
             </div>
             <div class="toDetailContent3">

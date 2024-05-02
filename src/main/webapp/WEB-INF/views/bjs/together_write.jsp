@@ -28,7 +28,7 @@
 			height : 300,
 			focus : true,
 			placeholder: '최대3000자까지 쓸 수 있습니다'	,
-	//			disableHtmlResizing: true, // <p> 태그 자동 생성 비활성화
+// 				disableHtmlResizing: true, // <p> 태그 자동 생성 비활성화
 			callbacks : {
 				onImageUpload : function(files, editor) {
 					for (var i = 0; i < files.length; i++) {
@@ -44,21 +44,21 @@
 	//	}
 	$(function() {
 	  $('input[name="datetimes"]').daterangepicker({
-	    timePicker: false,
-	    startDate: moment().startOf('day'),
-	    endDate: moment().startOf('day').add(1, 'day'),
-	 	locale: {
-	        "format": "YYYY/MM/DD",
-	        "separator": " ~ ",
-	        "applyLabel": "확인",
-	        "cancelLabel": "취소",
-	        "fromLabel": "From",
-	        "toLabel": "To",
-	        "customRangeLabel": "Custom",
-	        "weekLabel": "W",
-	        "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
-	        "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-	    }
+		    "locale": {
+		        "format": "YYYY/MM/DD",
+		        "separator": " ~ ",
+		        "applyLabel": "확인",
+		        "cancelLabel": "취소",
+		        "fromLabel": "From",
+		        "toLabel": "To",
+		        "customRangeLabel": "Custom",
+		        "weekLabel": "W",
+		        "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+		        "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+		    },
+		    "startDate": new Date(),
+		    "endDate": new Date(),
+		    "drops": "auto"
 	  });
 	});
 	
@@ -69,8 +69,9 @@
 	    let startDate = $('input[name="datetimes"]').data('daterangepicker').startDate.format('YYYY/MM/DD');
 	    let endDate = $('input[name="datetimes"]').data('daterangepicker').endDate.format('YYYY/MM/DD');
 	    let selectedCampingType = $(".togetherSub1Button.active").val();
-// 	    let content = $('#t_content').summernote('getText');
 
+// 	    text = text.replace(/<br\/>/ig, "\n"); text = text.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+	    
 	    // 캠핑 타입 선택 여부 확인
 	    if (!selectedCampingType) {
 	        alert("캠핑 타입을 선택해주세요.");
@@ -80,10 +81,12 @@
 	    formData.append("t_camptype", selectedCampingType);
 	    formData.append("t_startdate", startDate);
 	    formData.append("t_enddate", endDate);
-	    formData.append("tf_name", campImageUrl);
-// 	    formData.append("t_content", content);
+	    if (!campImageUrl) {
+	        formData.append("tf_name", '${path}/resources/images/to_camp.jpg');
+	    } else {
+	        formData.append("tf_name", campImageUrl);
+	    }
 	    
-
 	    $.ajax({
 	        url: 'together_Write_ok.do',
 	        type: 'post',

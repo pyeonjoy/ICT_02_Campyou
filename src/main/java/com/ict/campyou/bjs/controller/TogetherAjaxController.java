@@ -38,6 +38,7 @@ public class TogetherAjaxController {
 	@ResponseBody
 	public String getTogetherWriteOK(TogetherVO tvo, HttpSession session, HttpServletResponse response) throws Exception{
 		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
+		System.out.println(tvo.getT_content());
 		if(memberUser != null) {
 			tvo.setMember_idx(memberUser.getMember_idx());
 			int result = togetherService.getTogetherWriteOK(tvo);

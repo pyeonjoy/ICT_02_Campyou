@@ -48,7 +48,7 @@
 		        					<div class="toContentOne" style="background-color: rgba(128, 128, 128, 0.1);">
 						                <div>
 						                    <div class="toContentOne1">
-						                        <div class="userImage"><img src="${path}/resources/images/tree-4.jpg" class="userImage2"></div>
+						                        <div class="userImage"><img src="${path}/resources/images/${k.member_img }" class="userImage2"></div>
 						                        <div>
 							                        <div class="toContentOne1span1">
 							                            <span class="to_member_nickname">${k.member_nickname }</span>
@@ -76,7 +76,7 @@
 						            <div class="toContentOne">
 						                <div>
 						                    <div class="toContentOne1">
-						                        <div class="userImage"><img src="${path}/resources/images/tree-4.jpg" class="userImage2"></div>
+						                        <div class="userImage"><img src="${path}/resources/images/${k.member_img }" class="userImage2"></div>
 						                        <div>
 							                        <div class="toContentOne1span1">
 							                            <span class="to_member_nickname">${k.member_nickname }</span>

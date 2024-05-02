@@ -7,7 +7,7 @@
 		select count(*) from board_with
 	</select>
 	<select id="to_list" resultType="tvo">
-		select b.*, m.member_nickname, m.member_dob
+		select b.*, m.member_nickname, m.member_dob, m.member_img
 		from board_with b
 		inner join members m on b.member_idx = m.member_idx
 		order by b.t_idx desc
@@ -17,11 +17,14 @@
 		select * from camp_list
 	</select>
 	<select id="to_detail" parameterType="String" resultType="tvo">
-		select b.*, m.member_nickname, m.member_dob
+		select b.*, m.member_nickname, m.member_dob, m.member_img
 		from board_with b
 		left join members m on b.member_idx = m.member_idx 
 		where t_idx = #{t_idx}
 	</select>
+	<update id="to_hit" parameterType="String">
+		update board_with set t_hit = t_hit + 1 where t_idx = #{t_idx}
+	</update>
 	<insert id="to_insert" parameterType="tvo">
 		insert into board_with(member_idx, t_subject, t_content, t_campname, t_camptype, t_address, t_startdate, t_enddate, t_numpeople, t_regdate, tf_name)
 		values(#{member_idx}, #{t_subject}, #{t_content}, #{t_campname}, #{t_camptype}, #{t_address}, #{t_startdate}, #{t_enddate}, #{t_numpeople}, sysdate(), #{tf_name})

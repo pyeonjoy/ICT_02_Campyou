@@ -31,6 +31,7 @@ public class TogetherDAO {
 	}
 	
 	public TogetherVO getTogetherDetail(String t_idx) throws Exception {
+		sqlSessionTemplate.update("bjs.to_hit", t_idx);
 		return sqlSessionTemplate.selectOne("bjs.to_detail", t_idx);
 	}
 	
