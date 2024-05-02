@@ -16,6 +16,7 @@ public class CampDAO {
 	public int updateHit(String contentid) {
 		return sqlSessionTemplate.update("jun.updateHit",contentid);
 	}
+
 	
 	
 }

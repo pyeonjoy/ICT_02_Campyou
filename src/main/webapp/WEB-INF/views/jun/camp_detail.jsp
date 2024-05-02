@@ -191,6 +191,9 @@
     height: 500px;
     margin-top : 180px;
 }
+.fullheart {
+    color: red;
+}
 
 
 </style>
@@ -199,7 +202,6 @@ const urlParams = new URLSearchParams(window.location.search);
 const contentId = urlParams.get('contentid');
 
 $(document).ready(function() {
-    
     if (contentId) {
         $.ajax({
             url: "camp_detail_img.do",
@@ -303,6 +305,24 @@ $(document).ready(function() {
         });
     });	
 });
+function Heart() {
+    $.ajax({
+        url: "addHeart.do",
+        method: "post",
+        data: { contentid: contentId },
+        success: function(data) {
+            if(data != "error") {
+                alert("찜 등록");
+            } else {
+                alert("이미 찜한 상품입니다.");
+            }
+        },
+        error: function() {
+            alert("찜 추가에 실패했습니다.");
+        }
+    });
+}
+
 $(document).on("click", "#detail_img img", function() {
     let imageUrl = $(this).attr("src");
     let modalContent = '<div id="myModal" class="modal">' +
@@ -355,14 +375,6 @@ function loadReview(){
         }
     });
 }
-function addHeart(){
-	$.ajax({
-		url: "addHeart.do",
-		type:"post",
-		data
-	});
-}
-
 </script>
 <script>
 // DB에 페이지 이동 주소가 없는 경우 
@@ -397,7 +409,7 @@ function addHeart(){
 				<input type="button" name="page" value="홈페이지"
 					onclick="window.open('${info.homepage}')"> <input
 					type="button" name="page" value="예약페이지" onclick="resvego()">
-				<input type="button" name="page" value="♥ 관심">
+				<input type="button" name="page" value="♥ 관심" onclick="Heart()">
 				<!-- onclick="window.open('${info.resveurl}')"> -->
 			</div>
 		</div>
