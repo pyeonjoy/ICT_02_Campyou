@@ -49,7 +49,7 @@
     position:absolute;
     /* top: 11.5rem;
     left: 23rem; */
-    top: 19.5vw;
+    top: 18.9vw;
     left: 42.5vh;
 }
 .userImage2{
@@ -121,6 +121,14 @@
 }
 .toDetailContent2Sub2 > *:not(:last-child){
     margin-bottom: 1rem;
+}
+.toDetailContent2Sub2flex{
+	display: flex;
+	width: 100%;
+}
+.toDetailContent2Sub2flexP{
+	margin: 0;
+	min-width: 4.1rem;
 }
 .toDetailContent2Sub2Img{
     max-width: 100%;

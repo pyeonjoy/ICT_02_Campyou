@@ -62,7 +62,14 @@
 						                    </div>
 						                </div>
 						                <a href="together_detail.do" class="toContentOne2">
-						                	<img src="${k.tf_name }" class="toContentOne2img" style="opacity: 0.5;">
+						                	<c:choose>
+						                		<c:when test="${empty k.tf_name }">
+						                			<img src="${path}${k.tf_name }" class="toContentOne2img">
+						                		</c:when>
+						                		<c:otherwise>
+								                    <img src="${k.tf_name }" class="toContentOne2img">
+						                		</c:otherwise>
+						                	</c:choose>
 						                    <span class="toContentOne2sub2">${k.t_camptype }</span>
 						                    <span class="toContentOne2sub2" style="align-items: center; justify-content: center;">게시 중지된 게시물입니다.</span>
 						                </a>
@@ -90,7 +97,14 @@
 						                    </div>
 						                </div>
 						                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne2">
-						                    <img src="${k.tf_name }" class="toContentOne2img">
+						                	<c:choose>
+						                		<c:when test="${empty k.tf_name }">
+						                			<img src="${path}/resources/images/to_camp.jpg" class="toContentOne2img">
+						                		</c:when>
+						                		<c:otherwise>
+								                    <img src="${k.tf_name }" class="toContentOne2img">
+						                		</c:otherwise>
+						                	</c:choose>
 						                    <span class="toContentOne2sub2">${k.t_camptype }</span>
 						                </a>
 						                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne3">

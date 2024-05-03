@@ -63,6 +63,11 @@
 	});
 	
 	let campImageUrl;
+	let t_mapx;
+	let t_mapy;
+	let t_induty;
+	let t_facltdivnm;
+	let t_mangedivnm;
 	
 	function together_write_ok() {
 	    let formData = new FormData(document.getElementsByClassName('togetherWriteForm')[0]);
@@ -70,7 +75,12 @@
 	    let endDate = $('input[name="datetimes"]').data('daterangepicker').endDate.format('YYYY/MM/DD');
 	    let selectedCampingType = $(".togetherSub1Button.active").val();
 
-// 	    text = text.replace(/<br\/>/ig, "\n"); text = text.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+	    if (!t_mapx && !t_mapy) {
+	        alert("동행할 캠핑장 위치를 선택해주세요.");
+	        return;
+	    } else {
+	    	
+	    }
 	    
 	    // 캠핑 타입 선택 여부 확인
 	    if (!selectedCampingType) {
@@ -81,11 +91,16 @@
 	    formData.append("t_camptype", selectedCampingType);
 	    formData.append("t_startdate", startDate);
 	    formData.append("t_enddate", endDate);
-	    if (!campImageUrl) {
-	        formData.append("tf_name", '${path}/resources/images/to_camp.jpg');
-	    } else {
-	        formData.append("tf_name", campImageUrl);
-	    }
+	    formData.append("t_mapx", t_mapx);
+	    formData.append("t_mapy", t_mapy);
+// 	    if (!campImageUrl) {
+// 	        formData.append("tf_name", '${path}/resources/images/to_camp.jpg');
+// 	    } else {
+        formData.append("tf_name", campImageUrl);
+        formData.append("t_induty", t_induty);
+        formData.append("t_facltdivnm", t_facltdivnm);
+        formData.append("t_mangedivnm", t_mangedivnm);
+// 	    }
 	    
 	    $.ajax({
 	        url: 'together_Write_ok.do',
@@ -141,7 +156,7 @@
 
 	                    let marker = new naver.maps.Marker({
 	                        map: map,
-	                        title: "test", // 지역구 이름 
+	                        title: camp.facltnm, // 지역구 이름 
 	                        position: position
 	                    });
 // 	                    console.log(i, marker.getTitle);
@@ -151,12 +166,12 @@
 	                        disableAutoPan: true // 정보창열릴때 지도이동 안함
 	                    });
 
-	                    markers.push(marker); // 생성한 마커를 배열에 담는다.
-	                    infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
+	                    markers.push(marker);
+	                    infoWindows.push(infoWindow);
 	                }
 
-	                function getClickHandler(seq, addr, imageUrl, campName) {
-	                    return function(e) {  // 마커를 클릭하는 부분
+	                function getClickHandler(seq, addr, imageUrl, campName, mapx, mapy, induty, facltdivnm, mangedivnm) {
+	                    return function(e) { 
 	                    	let marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
 	                            infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
 
@@ -167,13 +182,17 @@
 	                            $('.togetherSub1DivP').val(addr);
 	                            $('.togetherSub1DivP1').val(campName);
 	                            campImageUrl = imageUrl;
+	                            t_mapx = mapx;
+	                            t_mapy = mapy;
+	                            t_induty = induty;
+	                            t_facltdivnm = facltdivnm;
+	                            t_mangedivnm = mangedivnm;
 	                        }
 	                    }
 	                }
 
 	                for (var i = 0, ii = markers.length; i < ii; i++) {
-// 	                    console.log(markers[i], getClickHandler(i));
-	                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm)); // 클릭한 마커 핸들러
+	                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm, campList[i].mapx, campList[i].mapy, campList[i].induty, campList[i].facltdivnm, campList[i].mangedivnm)); // 클릭한 마커 핸들러
 	                }
 	            }
 	        },
