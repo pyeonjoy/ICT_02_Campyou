@@ -23,7 +23,7 @@ $(document).ready(function() {
 				}else if(data == '1'){
 					// 존재하지 않는 아이디
 					$("#m_id").attr("disabled","disabled");
-					$("#idSpanLogIn").text("(존재하지 않는 아이디 입니다)");
+					$("#idSpanLogIn").text("");
 				}
 			},
 			error : function() {
@@ -93,11 +93,11 @@ function naverLogIn() {
 			<form>
 	            <div data-mdb-input-init class="form-outline mb-4">
 	              <input type="text" id="member_id" name="member_id" class="form-control form-control-lg" />
-	              <label class="form-label" for="member_id">아이디</label>&nbsp;<span id="idSpanLogIn"></span>
+	              <label class="form-label" for="member_id"><b>아이디</b></label>&nbsp;<span id="idSpanLogIn"></span>
 	            </div>
 	            <div data-mdb-input-init class="form-outline mb-4">
 	              <input type="password" id="member_pwd" name="member_pwd" class="form-control form-control-lg" />
-	              <label class="form-label" for="member_pwd">비밀번호</label>
+	              <label class="form-label" for="member_pwd"><b>비밀번호</b></label>
 	            </div>
 				
 	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit" id="m_id" onclick="logIn(this.form)">로그인</button>
@@ -105,9 +105,10 @@ function naverLogIn() {
 	            <br><br>
 	            <p class="small mb-5 pb-lg-2"><a class="text-muted" href="find_pwd_go.do">비밀번호 찾기</a> &nbsp;
 	           	<a class="text-muted" href="find_id_go.do">아이디 찾기</a></p>
+	           	<p class="text-center text-muted mt-5 mb-2">회원이 아니신가요?&nbsp;<a href="sign_up_page_go.do"class="fw-bold text-body">회원가입</a></p>
 	            <hr class="my-4">
-	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit" onclick="kakaoLogIn(this.form)"><img src="${path}/resources/img/kakao_login_medium_narrow.png"/></button>
-	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit" onclick="naverLogIn(this.form)"><img src="${path}/resources/img/btnG.png" /></button>
+	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit" onclick="kakaoLogIn(this.form)"><img src="${path}/resources/images/kakao_login_medium_narrow.png"/></button>
+	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit" onclick="naverLogIn(this.form)"><img src="${path}/resources/images/btnG.png" /></button>
 			</form>
           </div>
         </div>

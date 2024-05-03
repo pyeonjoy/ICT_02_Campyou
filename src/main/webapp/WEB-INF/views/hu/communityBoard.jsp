@@ -6,75 +6,7 @@
 <head>
 <meta charset=UTF-8>
 <title>Insert title here</title>
-<style type="text/css">
-#bbs table {
-	width:800px;
-	margin:0 auto;
-	margin-top:20px;
-	border: 1px solid black;
-	border-collapse: collapse;
-	font-size: 14px;
-}
-
-#bbs table caption {
-	font-size: 20px;
-	font-weight: bold;
-	margin-bottom: 10px;
-}
-
-#bbs table th, #bbs table td {
-	text-align: center;
-	border: 1px solid black;
-	padding: 4px 10px;
-}
-
-.no { width: 10% }
-.story{ width: 10%}
-.subject { 	width: 35% }
-.writer {	width: 15% }
-.reg {	width: 20% }
-.hit {	width: 10% }
-.title {	background: #003300; color:white}
-.odd {	background: silver }
-
-/* paging */
-table tfoot ol.paging {
-	list-style: none;
-}
-
-table tfoot ol.paging li {
-	float: left;
-	margin-right: 8px;
-}
-
-table tfoot ol.paging li a {
-	display: block;
-	padding: 3px 7px;
-	border: 1px solid #00B3DC;
-	color: #2f313e;
-	font-weight: bold;
-}
-
-table tfoot ol.paging li a:hover {
-	background: #00B3DC;
-	color: white;
-	font-weight: bold;
-}
-
-.disable {
-	padding: 3px 7px;
-	border: 1px solid silver;
-	color: silver;
-}
-
-.now {
-	padding: 3px 7px;
-	border: 1px solid #ff4aa5;
-	background: #ff4aa5;
-	color: white;
-	font-weight: bold;
-}
-</style>
+<link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoard.css">
 <script type="text/javascript">
 	function commBoard_write() {
 		location.href = "comm_board_write.do";
@@ -82,13 +14,24 @@ table tfoot ol.paging li a:hover {
 	function commBoard_write_alert(){
 		alert("회원님만 글쓰기 하실수 있습니다.\n회원가입이나 로그인 해주세요");
 	}
+	
+	
+	
+	
+	function board_free_list_go(f) {
+		f.action="board_free_list_go.do";
+		f.submit();
+	}
+	function board_free_search(f) {
+		f.action="board_free_search.do";
+		f.submit();
+	}
 </script>
 </head>
 <body>
 	<div id="bbs" align="center">
 		<table summary="게시판 목록">
-			<caption>게시판 목록</caption>
-			<a href="/">메인페이지</a>
+			<!-- <a href="/">메인페이지</a> -->
 			<thead>
 				<tr class="title">
 					<th class="no">번호</th>
@@ -107,48 +50,120 @@ table tfoot ol.paging li a:hover {
 					<c:otherwise>
 						<c:forEach var="k" items="${commBoard_list}" varStatus="vs">
 							<tr>
-							    <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>
-							    <td>${k.b_type}</td>
-							    <!-- <td style="text-align: left; " /> -->
-							    <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach>
 							    <c:choose>
-							    	<c:when test="${k.active == 1}">
-							    		<span style="color:lightgray">삭제된 게시물입니다</span>
-							    	</c:when>
-							    	<c:otherwise>
-							    		<td><a href="commBoard_content.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.b_title}</a></td>
-									</c:otherwise>
+							        <c:when test="${k.b_type == '공지사항'}">
+							        <td class="admin-write-color" style="background-color: lightyellow;">공지</td>
+							          <%--   <td class="admin-write-color" style="background-color: lightyellow;">${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td> --%>
+							            <td class="admin-write-color" style="background-color: lightyellow;">${k.b_type}</td>
+							            <td class="admin-write-color" style="background-color: lightyellow;">
+							                <!-- <td style="text-align: left; " /> -->
+							                <%-- <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
+							                <c:choose>
+							                    <c:when test="${k.active == 1}">
+							                        <span style="color:lightgray">삭제된 게시물입니다</span>
+							                    </c:when>
+							                    <c:otherwise>
+							                        <a href="commBoard_content.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.b_title}</a>
+							                    </c:otherwise>
+							                </c:choose>
+							            </td>
+							            <td class="admin-write-color" style="background-color: lightyellow;">
+							                <c:choose>
+							                    <c:when test="${memberInfo.member_id == 'admin'}">
+							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname}</a>
+							                    </c:when>
+							                    <c:otherwise>
+							                        <c:choose>
+							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}">
+							                                <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname}</a>
+							                            </c:when>
+							                            <c:otherwise>
+							                                <span style="color: black;">${k.member_nickname}</span>
+							                            </c:otherwise>
+							                        </c:choose>
+							                    </c:otherwise>
+							                </c:choose>
+							            </td>
+							            <td class="admin-write-color" style="background-color: lightyellow;">${k.regdate.substring(0,10)}</td>
+							            <td class="admin-write-color" style="background-color: lightyellow;">${k.hit}</td>
+							        </c:when>						        
+							        <c:otherwise>
+							            <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>
+							            <td>${k.b_type}</td>
+							            <td>
+							                <!-- <td style="text-align: left; " /> -->
+							                <%-- <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
+							                <c:choose>
+							                    <c:when test="${k.active == 1}">
+							                        <span style="color:lightgray">삭제된 게시물입니다</span>
+							                    </c:when>
+							                    <c:otherwise>
+							                        <a href="commBoard_content.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.b_title}</a>
+							                    </c:otherwise>
+							                </c:choose>
+							            </td>
+							            <td>
+							                <c:choose>
+							                    <c:when test="${memberInfo.member_id == 'admin'}">
+							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                    </c:when>
+							                    <c:otherwise>
+							                        <c:choose>
+							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}">
+							                                <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                            </c:when>
+							                            <c:otherwise>
+							                                ${k.member_nickname}
+							                            </c:otherwise>
+							                        </c:choose>
+							                    </c:otherwise>
+							                </c:choose>
+							            </td>
+							            <td>${k.regdate.substring(0,10)}</td>
+							            <td>${k.hit}</td>
+							        </c:otherwise>
 							    </c:choose>
-							    <c:choose>
-									<c:when test="${memberInfo.member_id == 'admin'}">
-										<td><a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a></td>
-									</c:when>
-									<c:otherwise>
-									    <c:choose>
-									        <c:when test="${memberInfo.member_nickname == k.member_nickname}">
-									            <td><a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a></td>
-									        </c:when>
-									        <c:otherwise>
-									            <td>${k.member_nickname}</td>
-									        </c:otherwise>
-									    </c:choose>
-									</c:otherwise>
-								</c:choose>
-							    <td>${k.regdate.substring(0,10)}</td>
-							    <td>${k.hit}</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
 			</tbody>
 			<tfoot>
-				<tr>
-					<td colspan="4">
+			
+			
+			
+			
+			
+			
+			
+			
+				<tr id="foot-tr">
+				
+					<td>
+						<form method="post">
+							<p><input type="hidden" onclick="board_free_list_go(this.form)"> </p>
+							<p>
+		   						<select name="b_idx">
+		   							<option value="1">제목</option>
+		   							<option value="2">내용</option>
+		   							<option value="3">작성자</option>
+		   							<option value="4">날짜</option>
+		  						 </select>
+		   					<input type="text" name="keyword">
+		   					<input type="button" value="검색" onclick="board_free_search(this.form)">
+							</p>
+						</form>
+				     </td>
+					
+					
+					
+					<!-- <td colspan="3"> --> <!-- 원래는 4 -->
+					<td colspan="3">
 						<ol class="paging">
 							<!-- 이전 버튼 -->
 							<c:choose>
 								<c:when test="${paging.beginBlock <= paging.pagePerBlock}">
-									<li class="disable">이전으로</li>
+									<li class="disable">이전</li>
 								</c:when>
 								<c:otherwise>
 									<li><a href="community_board.do?cPage=${paging.beginBlock - paging.pagePerBlock}">이전으로</a></li>
@@ -169,7 +184,7 @@ table tfoot ol.paging li a:hover {
 							<!-- 이후 버튼 -->
 							<c:choose>
 								<c:when test="${paging.endBlock >= paging.totalPage }">
-									<li class="disable">다음으로</li>
+									<li class="disable">다음</li>
 								</c:when>
 								<c:otherwise>
 									<li><a href="community_board.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
@@ -180,10 +195,10 @@ table tfoot ol.paging li a:hover {
 					<td>
 						<c:choose>
 							<c:when test="${memberInfo != null}">
-								<input type="button" value="글쓰기" onclick="commBoard_write()">
+								<input type="button" id="btnWrite" value="글쓰기" onclick="commBoard_write()">
 							</c:when>
 							<c:otherwise>
-								<input type="button" value="글쓰기" onclick="commBoard_write_alert()">
+								<input type="button" id="btnWrite" value="글쓰기" onclick="commBoard_write_alert()">
 							</c:otherwise>
 						</c:choose>
 					</td>

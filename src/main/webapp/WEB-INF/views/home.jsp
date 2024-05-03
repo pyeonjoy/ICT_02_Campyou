@@ -122,6 +122,35 @@ var toggleMainPopup = function() {
 </script>
 </head>
 <body>
+	<div class="container py-3">
+		<header>
+			<div class="d-flex flex-column flex-md-row align-items-cent er pb-3 mb-4 border-bottom">
+				<title>Bootstrap</title>
+				<a class="me-3 py-2 text-dark text-decoration-none" href="community_board.do">게시판</a> 
+				<span class="fs-4">임시메인 페이지</span>
+				<nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+					<c:choose>
+						<c:when test="${empty memberInfo}">
+							<a class="me-3 py-2 text-dark text-decoration-none" href="sign_up_page_go.do"><span style="color:white">회원가입</span></a> 
+							<a class="py-2 text-dark text-decoration-none" style="color:white" href="login_form.do"><span style="color:white">로그인</span></a>&nbsp;&nbsp;
+							<a class="py-2 text-dark text-decoration-none" style="color:white" href="together_list.do"><span style="color:white">동행</span></a>
+						</c:when>		
+						<c:otherwise>
+						<div  style="line-height:41px;">
+							<span style="color:white"><b>${memberInfo.member_name}님 환영합니다.</b></span> &nbsp;
+							
+							<c:if test="${admin == 'ok'}">
+					    		<a href="admin_page_go.do"><span style="color:white"><b>관리자페이지</b></span></a> &nbsp;&nbsp;
+							</c:if>	
+						</div>
+							<a class="py-2 " href="logout_form.do"><span style="color:white"><b>로그아웃</b></span></a> &nbsp;&nbsp;
+							<a class="py-2" href="#"><img src="${path}/resources/images/chat1.png"></a> &nbsp;&nbsp;
+							<a class="py-2" href="#"><img src="${path}/resources/images/user1.png"></a> &nbsp;&nbsp;
+							<a class="py-2 text-dark text-decoration-none" href="together_list.do"><span style="color:white"><b>동행</b></span></a>
+						</c:otherwise>
+					</c:choose>
+				</nav>				
+			</div>
 	<div class="main_popup">
   <div class="layer_cont">
     <div class="img_wrap">

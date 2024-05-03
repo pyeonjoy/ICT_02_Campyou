@@ -1,5 +1,7 @@
 package com.ict.campyou.hu.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -89,6 +91,15 @@ public class MemberDAO {
 		  		return "0";
 		  	}
 		  	return "1" ;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	public List<CommentVO> getCommBoardList2(String b_idx) {
+		try {
+			return sqlSessionTemplate.selectList("member.commBoardList2", b_idx);
 		} catch (Exception e) {
 			System.out.println(e);
 		}

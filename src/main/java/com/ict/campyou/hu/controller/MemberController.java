@@ -25,9 +25,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.common.Paging;
+import com.ict.campyou.hu.dao.BoardFreeVO;
 import com.ict.campyou.hu.dao.CommBoardVO;
+import com.ict.campyou.hu.dao.CommentVO;
 import com.ict.campyou.hu.dao.MemberVO;
+import com.ict.campyou.hu.service.BoardFreeService;
 import com.ict.campyou.hu.service.CommBoardService;
+import com.ict.campyou.hu.service.CommentReplyService;
 import com.ict.campyou.hu.service.MemberService;
 
 @Controller
@@ -37,6 +41,12 @@ public class MemberController {
 	
 	@Autowired
 	private CommBoardService commBoardService;
+	
+	@Autowired
+	private CommentReplyService comReplyService;
+	
+	@Autowired
+	private BoardFreeService boardFreeService;
 	
 	@Autowired
 	private Paging paging;
@@ -346,64 +356,91 @@ public class MemberController {
 		  return new ModelAndView("hu/communityBoardReply");
 	  }
 	  
-	  @RequestMapping("comm_board_reply_ok.do")
-	  public ModelAndView getCommBoardReplyOk(@ModelAttribute("cPage") String cPage, CommBoardVO cbvo,
-				                              HttpServletRequest request, HttpSession session) {
-		  try {
-			  CommBoardVO cbvo2 = commBoardService.getCommBoardDetail(cbvo.getB_idx());
-			  
-			  int groups = Integer.parseInt(cbvo2.getGroups());
-			  int step = Integer.parseInt(cbvo2.getStep());
-			  int lev = Integer.parseInt(cbvo2.getLev());
-			  
-			  step++;
-			  lev++;
-			  
-			  Map<String, Integer> map = new HashMap<String, Integer>();
-			  map.put("groups", groups);
-			  map.put("lev", lev);
-			  
-			  int result = commBoardService.getLevUpdate(map);
-			  cbvo.setGroups(String.valueOf(groups));
-			  cbvo.setStep(String.valueOf(step));
-			  cbvo.setLev(String.valueOf(lev));
-			  
-			  ModelAndView mv = new ModelAndView("redirect:community_board.do");
-			  String path = request.getSession().getServletContext().getRealPath("/resources/upload");
-			  MultipartFile file = cbvo.getFile();
-			  
-			  if (file.isEmpty()) {
-				  	cbvo.setF_name("");
-				} else {
-					UUID uuid = UUID.randomUUID();
-					String f_name = uuid.toString() + "_" + file.getOriginalFilename();
-					cbvo.setF_name(f_name);
-
-					byte[] in = file.getBytes();
-					File out = new File(path, f_name);
-					FileCopyUtils.copy(in, out);
-			  }
-			  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));	
-			  
-			  int result2 = commBoardService.getReplyInsert(cbvo);
-			  if (result2 > 0) {
-				  return mv;
-			  }
-		} catch (Exception e) {
-			System.out.println(e);
+	  
+	   @RequestMapping("comm_board_reply_ok.do")
+	   public ModelAndView getBbsDetail(String b_idx, String cPage, HttpSession session) {
+		  
+		   ModelAndView mv = new ModelAndView("hu/communityBoardContent");
+		  
+		   MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+		  
+		   //hit 업데이트
+		   int result = commBoardService.getCommBoardHit(b_idx);
+		  
+		   // 상세보기 
+		   CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
+			
+		   if(result>0 && cbvo != null) {
+			   // 댓글 가져오기 
+			   List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
+			   mv.addObject("commBoard_list2", commBoard_list2);
+			   mv.addObject("memberInfo", memberInfo);
+			   mv.addObject("cbvo", cbvo);
+			   mv.addObject("cPage", cPage);
+		 	   return mv;
+		   }
+		   return new ModelAndView("hu/error");
+	   }
+	  
+	  	@RequestMapping("comment_insert.do")
+		public ModelAndView getCommentInsert(CommentVO cvo, String cPage, @ModelAttribute("b_idx")String b_idx) {
+			ModelAndView mv = new ModelAndView("redirect:comm_board_reply_ok.do");
+			
+			int result = commBoardService.getCommentInsert(cvo);
+			if(result > 0) {
+				mv.addObject("cPage", cPage);
+				return mv;
+			}
+			return new ModelAndView("hu/error");
 		}
-		  return new ModelAndView("hu/error");
-	  }
+	  
+		@RequestMapping("comment_delete.do")
+		public ModelAndView getCommentDelete(String c_idx, String cPage, @ModelAttribute("b_idx")String b_idx) {
+			ModelAndView mv =  new ModelAndView("redirect:comm_board_reply_ok.do");
+			int result = commBoardService.getCommentDelete(c_idx);
+			if(result > 0) {
+				mv.addObject("cPage", cPage);
+				return mv;
+			}
+			return mv;
+		}
+		
+		
+		@RequestMapping("comment_update.do")
+		public ModelAndView getCommentUpdate(CommentVO cvo, String c_idx, String cPage, String content, @ModelAttribute("b_idx")String b_idx) {
+			ModelAndView mv =  new ModelAndView("redirect:comm_board_reply_ok.do");
+			
+			int result = commBoardService.getCommentUpdate(cvo);
+			if(result > 0) {
+				mv.addObject("cPage", cPage);
+				return mv;
+			}
+			return new ModelAndView("hu/error");
+		}
+	  
 	  
 	  @RequestMapping("comm_board_delete.do")
 	  public ModelAndView getBoardDelete(@ModelAttribute("cPage") String cPage, @ModelAttribute("b_idx") String b_idx) {
 		  try {
 			  ModelAndView mv = new ModelAndView("hu/communityBoardDelete");
+			  mv.addObject("cPage", cPage);
 			  return mv;
 		  } catch (Exception e) {
 			  System.out.println(e);
 		  }
 		  return new ModelAndView("hu/error");
+	  }
+	  
+	  //관리자 강제 삭제
+	  @RequestMapping("comm_board_admin_delete.do")
+	  public ModelAndView getCommBoardAdminDelete(String c_idx, String cPage, @ModelAttribute("b_idx") String b_idx) {
+		  ModelAndView mv =  new ModelAndView("redirect:community_board.do");
+		  int result = commBoardService.getCommBoardAdminDelete(b_idx);
+		  if(result > 0) {
+			  mv.addObject("cPage", cPage);
+			  return mv;
+		  }
+		  return mv;
 	  }
 	  
 	  @RequestMapping("comm_board_delete_ok.do")
@@ -414,17 +451,17 @@ public class MemberController {
 		  // 비밀번호 체크
 		  CommBoardVO cbvo2 = commBoardService.getCommBoardDetail(cbvo.getB_idx());
 		  	
-		    String dpwd = cbvo2.getB_pwd();
+		  String dpwd = cbvo2.getB_pwd();
 
-			if (!passwordEncoder.matches(cbvo.getB_pwd(), dpwd)) {
-				mv.setViewName("hu/communityBoardDelete");
-				mv.addObject("pwdchk", "fail");
-				return mv;
-			} else {
-				// active 컬럼의 값을 1로 변경하자.
-				int result = commBoardService.getCommBoardDelete(cbvo2);
-				if (result > 0) {
-					mv.setViewName("redirect:community_board.do");
+		  if (!passwordEncoder.matches(cbvo.getB_pwd(), dpwd)) { 
+		       mv.setViewName("hu/communityBoardDelete");
+			   mv.addObject("pwdchk", "fail");
+			   return mv;
+		   } else {
+			   // active 컬럼의 값을 1로 변경하자.
+			   int result = commBoardService.getCommBoardDelete(cbvo2);
+			   if (result > 0) {
+				   mv.setViewName("redirect:community_board.do");
 					return mv;
 				}
 			}
@@ -494,17 +531,20 @@ public class MemberController {
 				  //hit 업데이트
 				  int result = commBoardService.getCommBoardHit(b_idx);
 				  
-				  //비회원 게시판 보기
+				  //비회원 게시판 보기 & 댓글보기
 				  if(memberInfo == null) {
 					  //상세보기
 					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
+					  //댓글 리스트
+					  List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
+					 
 					  if(result > 0 && cbvo != null ){
+						  mv.addObject("commBoard_list2", commBoard_list2);
 						  mv.addObject("cbvo", cbvo);
 						  return mv;
 					  } 
 					  return mv;
 				  }
-				  
 				  if(memberInfo != null) {
 					  //상세보기
 					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
@@ -514,6 +554,8 @@ public class MemberController {
 					  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
 					  if(result > 0 && cbvo != null && cbvo.getMember_idx().equals(memberInfo.getMember_idx())) {
+						  List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
+						  mv.addObject("commBoard_list2", commBoard_list2);
 						  mv.addObject("cbvo", cbvo);
 						  mv.addObject("memberInfo", memberInfo);
 						 // mv.addObject("member_nickname", memberInfo.getMember_nickname());
@@ -524,20 +566,125 @@ public class MemberController {
 				System.out.println(e);
 			  }
 			  return new ModelAndView("hu/error");
-	  	}	  
+	  	}
+
+	  	@RequestMapping("comment_reply_ok.do")
+		public ModelAndView getBoardAnsWrite(CommentVO cvo3, @ModelAttribute("cPage") String cPage, @ModelAttribute("bo_idx") String b_idx) {
+	    	try {
+	    		CommentVO cvo = comReplyService.getCommentReplyDetail(b_idx);
+	    		
+	    		int groups = Integer.parseInt(cvo.getGroups());
+	    		int step = Integer.parseInt(cvo.getStep());
+				int lev = Integer.parseInt(cvo.getLev());
+	    		
+				step++;
+				lev++;
+	    		
+				Map<String, Integer> map = new HashMap<String, Integer>();
+				map.put("groups", groups);
+				map.put("lev", lev);
+				
+				int result = comReplyService.getLevUpdate(map);
+				
+				cvo3.setGroups(String.valueOf(groups));
+				cvo3.setStep(String.valueOf(step));
+				cvo3.setLev(String.valueOf(lev));
+	    		
+				//ModelAndView mv = new ModelAndView("redirect:commBoard_content.do");
+				ModelAndView mv = new ModelAndView("hu/communityBoardContent");
+				
+				int result2 = comReplyService.getAnsInsert(cvo3);
+				if(result2 > 0) {
+					mv.addObject("cvo", cvo);
+					return mv;
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+	    	return new ModelAndView("hu/error");
+		}
+	  		
+	  	// 댓글의 댓글
+		@RequestMapping("comment_reply_insert.do")
+		public ModelAndView getCommentReplyInsert(CommentVO cvo, String cPage, @ModelAttribute("b_idx")String b_idx) {
+			ModelAndView mv = new ModelAndView("redirect:comm_board_reply_ok.do");
+			
+			int result = comReplyService.getCommentReplyInsert(cvo);
+			if(result > 0) {
+				mv.addObject("cPage", cPage);
+				return mv;
+			}
+			return new ModelAndView("hu/error");
+		}
+	  	
+		//게시판 검색
+	   @RequestMapping("board_free_list_go.do")
+	   public ModelAndView getEmpList() {
+		 try {
+			ModelAndView mv = new ModelAndView("hu/boardFreeList");
+			
+		    List<BoardFreeVO> boardFreeList = boardFreeService.getBoardFreeList();
+		    
+		    if(boardFreeList != null) {
+		    	mv.addObject("empList", boardFreeList);
+		    	return mv;
+		    }
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		   return new ModelAndView("hu/error");
+	   }
+	   
+	   //게시판 검색
+	   @RequestMapping("board_free_search.do")
+	   public ModelAndView getEmpSearchList(@ModelAttribute("b_idx")String b_idx, String keyword) {
+		   try {
+				ModelAndView mv = new ModelAndView("hu/boardFreeSearchlist");
+				List<BoardFreeVO> searchlist = boardFreeService.getBoardFreeSearchList(b_idx, keyword);
+				if(searchlist != null) {
+					mv.addObject("searchlist", searchlist);
+					return mv;
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		   return new ModelAndView("hu/error");
+	   }
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	  	
 	  	
 	  	
-	  	
-	  	
-	  	
-	  	
-	  	
-	  	
-	  	
-	  	
-	  	
-	  	
-	  	
-	  	
+	  	  	
 }

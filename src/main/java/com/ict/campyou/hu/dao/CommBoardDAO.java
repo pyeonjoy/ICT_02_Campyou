@@ -100,10 +100,55 @@ public class CommBoardDAO {
 	public CommBoardVO getCommBoardReplyDetail(CommBoardVO cbvo) {
 		try {
 			return sqlSessionTemplate.selectOne("member.comm_board_reply_detail", cbvo);
-			
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return cbvo;
+	}
+	
+	public List<CommentVO> getCommBoardList2(String b_idx) {
+		try {
+			return sqlSessionTemplate.selectList("member.comment_list", b_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	public int getCommentInsert(CommentVO cvo) {
+		try {
+			return sqlSessionTemplate.insert("member.comment_insert", cvo);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+
+	public int getCommentDelete(String c_idx) {
+		try {
+			return sqlSessionTemplate.delete("member.comment_delete", c_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	
+	public int getCommentUpdate(CommentVO cvo) {
+		try {
+			return sqlSessionTemplate.update("member.comment_update", cvo);
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return 0;
+	}
+	
+	public int getCommBoardAdminDelete(String b_idx) {
+		try {
+			return sqlSessionTemplate.delete("member.comm_board_admin_delete", b_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return 0;
 	}
 }
