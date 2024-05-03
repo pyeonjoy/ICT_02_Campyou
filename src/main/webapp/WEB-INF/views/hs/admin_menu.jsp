@@ -16,7 +16,7 @@
 			<div class="side site_menu">
 				<h4>사이트 관리</h4>
 				<ul>
-					<li><a href="#popup.do">팝업창</a></li>
+					<li><a href="popup.do">팝업창</a></li>
 				</ul>
 			</div>
 			<div class="side board_menu">

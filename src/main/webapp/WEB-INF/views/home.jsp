@@ -110,7 +110,8 @@ button {
     max-height: 100%; 
 }
 #check1 {
-	background-color: red;
+	background-color: #FFBA34;
+	text-align: center;
     position: absolute;
     left: 50%;
     width:100%;
@@ -168,12 +169,14 @@ button {
    
 	<div id="layer_popup1" class="layer_popup"
 		style="top: 50px; left: 50px; width: 500px; height: 500px; background-color: white;">
+		<%-- <img style="object-fit: cover;" src="${c.firstimageurl}"> --%>
 		<img src="resources/images/2.jpg" alt="Popup Image"
 			class="popup_image">
 		<div id="check1">
 			<input type="checkbox" id="chkbox1"> 
-			<label for="chkbox1">&nbsp;오늘 하루동안 안 보기</label>
-			<a href="javascript:closePop(1);">닫기</a>
+			<label for="chkbox1">오늘 하루동안 안 보기</label>
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+			<a href="javascript:closePop(1);" class="x">닫기</a>
 		</div>
 	</div>
 
@@ -207,8 +210,15 @@ button {
         <div class="popular">
             <h3>Popular campsites</h3>
             <c:forEach var="c" items="${camphit}">
-                <a href="camp_detail.do?contentid=${c.contentid}"><img
+                <a href="camp_detail.do?contentid=${c.contentid}">
+                
+                <img
                     style="object-fit: cover;" src="${c.firstimageurl}"></a>
+           	D:\joy\project02\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Campyou\resources\popup
+           
+           
+           
+           
             </c:forEach>
         </div>
         <p>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -80,6 +81,9 @@ button{
 .b1{
     float: right;
 }
+li{
+list-style: none;
+}
 </style>
 </head>
 <body>
@@ -89,8 +93,6 @@ button{
             <hr class="hr">
             <div class="mainimg"></div>
             <hr class="hr">
-            <button>수정</button>
-            <button>추가</button>
         </div>
         <div class="right">
             <p style="text-align: center;">이전팝업창</p>
@@ -99,14 +101,61 @@ button{
                 <p class="child">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목</p>
                 <p class="child">작성 날짜</p>
             </div>
+            	<c:forEach var="p" items="${pop}">
             <div class="inner">
-                <p class="child">번호</p>
-                <div class="subimg"></div>
-                <p class="child">이벤트 팝업</p>
-                <p class="child">2024-00-00</p>
-                <button class="b1">작성</button>
+            	<input type="checkbox">
+                <p>${p.popidx }</p>
+                <img style="object-fit: cover;" class="subimg" src="resources/popup/${p.f_name}">
+                <p class="child">${p.title }</p>
+                <p class="child">${p.writer }</p>
+                <p class="child">${p.regdate }</p>
             </div>
+            <button class="b1" onclick="location.href='popup_write.do'">추가</button>
+                </c:forEach>
+            <button class="b1" onclick="location.href='popup_delete.do'">삭제</button>
             <hr>
+						<input type="button" value="글쓰기" onclick="board_write()">
+            <table>
+            <tr>
+					<td colspan="4">
+						<ol class="paging">
+							<!-- 이전 버튼 -->
+							<c:choose>
+								<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
+									<li class="disable">이전으로</li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="board_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }">이전으로</a></li>
+								</c:otherwise>
+							</c:choose>
+							<!-- 페이지번호들 -->
+							<c:forEach begin="${paging.beginBlock}" end="${paging.endBlock}" step="1" var="k">
+							    <c:choose>
+							        <c:when test="${k == paging.nowPage}">
+							            <li class="now">${k}</li>
+							        </c:when>
+							        <c:otherwise>
+							            <li><a href="board_list.do?cPage=${k}">${k}</a></li>
+							        </c:otherwise>
+							    </c:choose>
+							</c:forEach>
+							
+							<!-- 이후 버튼 -->
+								<c:choose>
+								<c:when test="${paging.endBlock >= paging.totalPage }">
+									<li class="disable">다음으로</li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="board_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
+								</c:otherwise>
+							</c:choose>
+						</ol>	
+					</td>
+					<td>
+					</td>
+				</tr>
+            </table>
+            
         </div>
     </div>
     </body>

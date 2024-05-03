@@ -1,8 +1,102 @@
 package com.ict.campyou.joy.dao;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class AdminVO {
 	private String report_date, cp_regdate, bf_regdate, t__regdate, member_regdate,  
-	member_active, qna_status, totalMembers, todayMembers, hit;
+	member_active, qna_status, totalMembers, todayMembers, hit, f_name, title, writer,regdate,
+	groups, step, lev;
+	
+	public String getGroups() {
+		return groups;
+	}
+
+
+	public void setGroups(String groups) {
+		this.groups = groups;
+	}
+
+
+	public String getStep() {
+		return step;
+	}
+
+
+	public void setStep(String step) {
+		this.step = step;
+	}
+
+
+	public String getLev() {
+		return lev;
+	}
+
+
+	public void setLev(String lev) {
+		this.lev = lev;
+	}
+
+
+	public String getF_name() {
+		return f_name;
+	}
+
+
+	public void setF_name(String f_name) {
+		this.f_name = f_name;
+	}
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
+	public String getWriter() {
+		return writer;
+	}
+
+
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+
+
+	public String getRegdate() {
+		return regdate;
+	}
+
+
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
+	}
+
+	int popidx;
+	private MultipartFile file;
+	public MultipartFile getFile() {
+		return file;
+	}
+
+
+	public int getPopidx() {
+		return popidx;
+	}
+
+
+	public void setPopidx(int popidx) {
+		this.popidx = popidx;
+	}
+
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
 	public String getHit() {
 		return hit;
 	}
