@@ -52,5 +52,10 @@ public class CampServiceImpl implements CampService{
 		return heartDAO.checkHeart(contentid,member_idx);
 	}
 
+	@Override
+	public int delHeart(String contentid, String member_idx) {
+		return heartDAO.delHeart(contentid,member_idx);
+	}
+
 
 }

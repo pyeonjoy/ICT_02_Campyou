@@ -241,6 +241,19 @@ $(document).ready(function() {
                 alert("읽기 실패");
             }
         });
+        $.ajax({
+            url: "checkHeart.do",
+            method: "post",
+            data: { contentid: contentId },
+            success: function(data) {
+                if (data === "true") {
+                    $(".detail_button input[value='❤️ 찜']").addClass("fullheart");
+                }
+            },
+            error: function() {
+                alert("찜 상태를 확인하는 중 오류가 발생했습니다.");
+            }
+        });
     }
 
     let facilityList = "${info.sbrscl}";
@@ -306,15 +319,24 @@ $(document).ready(function() {
     });	
 });
 function Heart() {
+    if ($(".detail_button input[value='❤️ 찜']").hasClass("fullheart")) {
+        delHeart();
+    } else {
+        addHeart();
+    }
+}
+
+function addHeart() {
     $.ajax({
         url: "addHeart.do",
         method: "post",
         data: { contentid: contentId },
         success: function(data) {
-            if(data != "error") {
-                alert("찜 등록");
+            if (data != "error") {
+                $(".detail_button input[value='❤️ 찜']").addClass("fullheart");
+                alert("관심 캠핑장에 등록되었습니다.");
             } else {
-                alert("이미 찜한 상품입니다.");
+                alert("찜 추가에 실패했습니다.(추가에서 오류)");
             }
         },
         error: function() {
@@ -323,6 +345,24 @@ function Heart() {
     });
 }
 
+function delHeart() {
+    $.ajax({
+        url: "delHeart.do",
+        method: "post",
+        data: { contentid: contentId },
+        success: function(data) {
+            if (data != "error") {
+                $(".detail_button input[value='❤️ 찜']").removeClass("fullheart");
+                alert("관심 캠핑장에서 제거하였습니다.");
+            } else {
+                alert("찜 제거에 실패했습니다.");
+            }
+        },
+        error: function() {
+            alert("찜 제거에 실패했습니다.");
+        }
+    });
+}
 $(document).on("click", "#detail_img img", function() {
     let imageUrl = $(this).attr("src");
     let modalContent = '<div id="myModal" class="modal">' +
@@ -409,7 +449,7 @@ function loadReview(){
 				<input type="button" name="page" value="홈페이지"
 					onclick="window.open('${info.homepage}')"> <input
 					type="button" name="page" value="예약페이지" onclick="resvego()">
-				<input type="button" name="page" value="♥ 관심" onclick="Heart()">
+				<input type="button" name="page" value="&#9829; 찜" onclick="Heart()">
 				<!-- onclick="window.open('${info.resveurl}')"> -->
 			</div>
 		</div>

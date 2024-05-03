@@ -195,6 +195,22 @@ public class CampAjaxController {
 		return res;
 	}
 
+	@RequestMapping(value = "checkHeart.do", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String checkHeart(@RequestParam()String contentid, HttpSession session) {
+		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+	    String member_idx = mvo.getMember_idx();
+	    String chkHeart = campService.checkHeart(contentid, member_idx);
+	    System.out.println(chkHeart);
+	    if (chkHeart != null) {
+			return "true";
+		}else {
+			return "error";
+		}
+	}
+	
+	
+	
 	@RequestMapping(value = "addHeart.do", produces = "text/plain; charset=utf-8")
 	@ResponseBody
 	public String addHeart(@RequestParam() String contentid, HttpSession session) {
@@ -207,6 +223,18 @@ public class CampAjaxController {
 	    } else {
 	    	return "error";
 	    }
+	}
+	
+	@RequestMapping(value = "delHeart.do", produces = "text/plain; charset=utf-8")
+	@ResponseBody
+	public String delHeart(@RequestParam()String contentid, HttpSession session) {
+		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+		String member_idx = mvo.getMember_idx();
+		int delHeart = campService.delHeart(contentid,member_idx);
+		if (delHeart > 0) {
+			return String.valueOf(delHeart);
+		}
+		return "error";
 	}
 
 }

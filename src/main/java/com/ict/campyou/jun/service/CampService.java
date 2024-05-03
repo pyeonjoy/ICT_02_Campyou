@@ -19,5 +19,7 @@ public interface CampService {
 
 	String checkHeart(String contentid, String member_idx);
 
+	int delHeart(String contentid, String member_idx);
+
 
 }

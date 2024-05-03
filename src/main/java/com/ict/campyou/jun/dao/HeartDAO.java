@@ -32,5 +32,12 @@ public class HeartDAO {
 			map.put("member_idx", member_idx);
 			return sqlSessionTemplate.selectOne("jun.checkHeart",map);
 	}
+
+	public int delHeart(String contentid, String member_idx) {
+		Map<String, String> map = new HashMap<>();
+		map.put("contentid",contentid);
+		map.put("member_idx",member_idx);
+		return sqlSessionTemplate.delete("jun.delHeart",map);
+	}
 	
 }
