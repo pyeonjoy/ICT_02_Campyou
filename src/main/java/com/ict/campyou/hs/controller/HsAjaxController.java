@@ -74,10 +74,9 @@ public class HsAjaxController {
 			urlBuilder.append("?" + URLEncoder.encode("service", "UTF-8") + "=" + URLEncoder.encode("data", "UTF-8"));
 			urlBuilder.append("&" + URLEncoder.encode("request", "UTF-8") + "=" + URLEncoder.encode("GetFeature", "UTF-8"));
 			urlBuilder.append("&" + URLEncoder.encode("format", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("errorformat", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); // 수정된 부분
 			urlBuilder.append("&" + URLEncoder.encode("size", "UTF-8") + "=" + URLEncoder.encode("50", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("data", "UTF-8") + "=" + URLEncoder.encode("LT_C_ADSIDO_INFO", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("attrFilter", "UTF-8") + "=" + URLEncoder.encode("full_nm:like:" + sido_selected, "UTF-8"));
+			urlBuilder.append("&" + URLEncoder.encode("data", "UTF-8") + "=" + URLEncoder.encode("LT_C_ADSIGG_INFO", "UTF-8"));
+			urlBuilder.append("&" + URLEncoder.encode("attrFilter", "UTF-8") + "=" + URLEncoder.encode("full_nm:like:", "UTF-8") + URLEncoder.encode(sido_selected, "UTF-8"));
 			urlBuilder.append("&" + URLEncoder.encode("geometry", "UTF-8") + "=" + URLEncoder.encode("false", "UTF-8"));
 			urlBuilder.append("&" + URLEncoder.encode("domain", "UTF-8") + "=" + URLEncoder.encode("http://localhost:8090", "UTF-8"));
 			urlBuilder.append("&" + URLEncoder.encode("key", "UTF-8") + "=" + URLEncoder.encode("A4DEB3AF-CF6C-3C1F-A621-6F1447049467", "UTF-8"));

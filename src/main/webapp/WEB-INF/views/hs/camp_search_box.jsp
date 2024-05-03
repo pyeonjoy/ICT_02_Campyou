@@ -69,6 +69,10 @@
     overflow: hidden;
     float: left;
 }
+
+.search_button_option{
+	display: none;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -92,7 +96,7 @@ $(document).ready(function() {
 	    }
 	});
 	/*  */
-	$("#sigungu_search").on("click", function() {
+	$("#sido_search").on("change", function() {
 		let sido_selected = $("#sido_search option:selected").val();
 		console.log(sido_selected)
 		$("#sigungu_search").empty();
