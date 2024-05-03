@@ -10,16 +10,31 @@
 <title>Insert title here</title>
 <script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_list.css">
+<%@ include file="../hs/header.jsp" %>
 <script type="text/javascript">
 	function together_Write() {
 		location.href = "together_Write.do";
 	}
+	
+	document.addEventListener("DOMContentLoaded", function() {
+	    var toContentOne = document.querySelectorAll('.toContentOne');
+
+	    toContentOne.forEach(function(item) {
+	        item.addEventListener('mouseover', function() {
+	            item.classList.add('hover-effect');
+	        });
+
+	        item.addEventListener('mouseout', function() {
+	            item.classList.remove('hover-effect');
+	        });
+	    });
+	});
 </script>
 </head>
 <body>
     <div class="toContainer">
         <div class="togetherh2">
-            <h2>동 행</h2>
+            <h3>동 행</h3>
         </div>
         <c:choose>
         	<c:when test="${empty togetherList }">
@@ -30,25 +45,26 @@
 	        		<c:forEach var="k" items="${togetherList }" varStatus="vs">
 		        			<c:choose>
 		        				<c:when test="${k.t_active == 1 }">
-		        					<div class="toContentOne" style="background-color: rgba(128, 128, 128, 0.5);">
-		        						<p style="align-items: center; justify-content: center;">게시 중지된 게시물입니다</p>
+		        					<div class="toContentOne" style="background-color: rgba(128, 128, 128, 0.1);">
 						                <div>
 						                    <div class="toContentOne1">
 						                        <div class="userImage"><img src="${path}/resources/images/tree-4.jpg" class="userImage2"></div>
 						                        <div>
-							                        <div class="toContentOne1span toContentOne1span1">
-							                            <strong>${k.member_nickname }(${k.member_dob })</strong>
+							                        <div class="toContentOne1span1">
+							                            <span class="to_member_nickname">${k.member_nickname }</span>
+							                            <span class="to_member_age">(${k.member_dob })</span>
 							                        </div>
 							                        <div class="toContentOne1span toContentOne1span2">
 							                            <span>${k.t_campname }</span>
-							                            <span>${k.t_startdate }&nbsp;-&nbsp;${k.t_enddate }</span>
+							                            <span class="to_campdate">${k.t_startdate }-${k.t_enddate }</span>
 							                        </div>
 						                        </div>
 						                    </div>
 						                </div>
 						                <a href="together_detail.do" class="toContentOne2">
-						                    <img src="${path}/resources/images/tree-4.jpg" class="toContentOne2img">
+						                	<img src="${k.tf_name }" class="toContentOne2img" style="opacity: 0.5;">
 						                    <span class="toContentOne2sub2">${k.t_camptype }</span>
+						                    <span class="toContentOne2sub2" style="align-items: center; justify-content: center;">게시 중지된 게시물입니다.</span>
 						                </a>
 						                <a href="together_detail.do" class="toContentOne3">
 						                    <strong>${k.t_subject }</strong>
@@ -62,22 +78,23 @@
 						                    <div class="toContentOne1">
 						                        <div class="userImage"><img src="${path}/resources/images/tree-4.jpg" class="userImage2"></div>
 						                        <div>
-							                        <div class="toContentOne1span toContentOne1span1">
-							                            <strong>${k.member_nickname }(${k.member_dob })</strong>
+							                        <div class="toContentOne1span1">
+							                            <span class="to_member_nickname">${k.member_nickname }</span>
+							                            <span class="to_member_age">(${k.member_dob })</span>
 							                        </div>
 							                        <div class="toContentOne1span toContentOne1span2">
 							                            <span>${k.t_campname }</span>
-							                            <span>${k.t_startdate }&nbsp;-&nbsp;${k.t_enddate }</span>
+							                            <span class="to_campdate">${k.t_startdate }-${k.t_enddate }</span>
 							                        </div>
 						                        </div>
 						                    </div>
 						                </div>
-						                <a href="together_detail.do" class="toContentOne2">
-						                    <img src="${path}/resources/images/tree-4.jpg" class="toContentOne2img">
+						                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne2">
+						                    <img src="${k.tf_name }" class="toContentOne2img">
 						                    <span class="toContentOne2sub2">${k.t_camptype }</span>
 						                </a>
-						                <a href="together_detail.do" class="toContentOne3">
-						                    <strong>${k.t_subject }</strong>
+						                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne3">
+						                    <strong class="to_list_subject">${k.t_subject }</strong>
 						                    <span>${k.t_content }</span>
 						                </a>
 						            </div>
@@ -108,10 +125,10 @@
 						</c:when>
 						<c:otherwise>
 							<li>
-								<a href="together.do?cPage=1" class="to_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+								<a href="together_list.do?cPage=1" class="to_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
 							</li>
 							<li>
-								<a href="together.do?cPage=${paging.beginBlock - paging.pagePerBlock }" class="to_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+								<a href="together_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }" class="to_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
 							</li>
 						</c:otherwise>
 					</c:choose>
@@ -123,7 +140,7 @@
 								<li class="nowpagecolor">${k }</li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="together.do?cPage=${k }" class="nowpage">${k }</a></li>
+								<li><a href="together_list.do?cPage=${k }" class="nowpage">${k }</a></li>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -136,10 +153,10 @@
 						</c:when>
 						<c:otherwise>
 							<li>
-								<a href="together.do?cPage=${paging.beginBlock + paging.pagePerBlock }" class="to_able"><i class="fa-solid fa-chevron-right" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+								<a href="together_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }" class="to_able"><i class="fa-solid fa-chevron-right" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
 							</li>
 							<li>
-								<a href="together.do?cPage=${paging.totalPage}" class="to_able"><i class="fa-solid fa-angles-right" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+								<a href="together_list.do?cPage=${paging.totalPage}" class="to_able"><i class="fa-solid fa-angles-right" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
 							</li>
 						</c:otherwise>
 					</c:choose>
@@ -150,5 +167,6 @@
 	        </div>
         </div>
     </div>
+<%@ include file="../hs/footer.jsp" %>
 </body>
 </html>

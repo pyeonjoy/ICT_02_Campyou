@@ -1,111 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link href="resources/css/reset.css" rel="stylesheet" />
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!doctype html>
 <html lang="ko">
+<link href="resources/css/reset.css" rel="stylesheet" />
+<link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
 <head>
 <meta charset="utf-8">
 <title>회원관리 상세</title>
-<style>
-body {
-	background-color: #F6FFF1;
-}
-
-.head {
-	text-align: center;
-	margin: 100px;;
-}
-
-.wrap {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-gap: 10px;
-	margin: 0 auto;
-	padding: 10px;
-	height: 100px;
-	width: 1000px;
-}
-
-.proimg {
-	width: 100px;
-	height: 100px;
-	margin: 30px auto;
-	border-radius: 100%;
-	background-color: gainsboro;
-}
-
-.left {
-	width: 200px;
-	height: 200px;
-}
-
-.right {
-	width: 700px;
-	height: 900px;
-}
-
-table {
-	width: 100%;
-	border-top: 1px solid #032805;
-	border-collapse: collapse;
-}
-
-th, td {
-	border-bottom: 1px solid #032805;
-	padding: 10px;
-	text-align: center;
-	width: 100%;
-}
-
-th {
-	background-color: #032805;
-	color: white;
-}
-
-.b1 button {
-	margin-top: 20px;
-	width: 140px;
-	height: 30px;
-	background-color: #032805;
-	color: white;
-	border: 0px;
-	border-radius: 3px;
-	margin: 0 auto;
-}
-.top >button:hover {
-margin-top: 20px;
-	width: 467px;
-	height: 50px;
-	background-color: #F6FFF1;
-	border: 1px solid black;
-	border-radius: 3px;
-	margin: 15px;
-	background-color: #053610;
-	color: white;
-}
-
-.b2 {
-	margin: 50 auto;
-	text-align: center;
-}
-
-.under {
-	margin-top: 200px;
-	width: 1000px;
-	margin: 200px auto;
-}
-
-.top button {
-	margin-top: 20px;
-	width: 467px;
-	height: 50px;
-	background-color: #F6FFF1;
-	border: 1px solid black;
-	border-radius: 3px;
-	margin: 15px;
-}
-</style>
 <script type="text/javascript">
 window.addEventListener('DOMContentLoaded', function() {
 	  showContent('A');
@@ -131,15 +34,15 @@ window.addEventListener('DOMContentLoaded', function() {
 <body>
 	<h2 class="head">회원 관리 상세</h2>
 	<h3 style="text-align: center;">회원 상세 정보</h3>
+		<c:forEach var="m" items="${member}"> 
 	<div class="wrap">
 			<div class="left">
-				<div class="proimg"></div>
+				<p style="text-align: center"><img src="${path}/resources/images/${m.member_img}" class="proimg"></p>
 				<div style="margin: auto; width: 140px;">
-					<p style="text-align: center;" class="b1"><button onclick="removeimg.do">이미지 삭제</button></p>
+					<p style="text-align: center;" class="b1"><button onclick="location.href='removeimg.do?member_idx=${m.member_idx}'">이미지 삭제</button></p>
 				</div>
 			</div>
 			<div class="right">
-		<c:forEach var="m" items="${member}"> 
 				<table style="table-layout: auto; width: 100%; table-layout: fixed;">
 					<tr>
 						<th>NO</th>
@@ -170,39 +73,47 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 					<tr>
-						<th>일반가입</th>
-						<th>SNS</th>
+						<th>관리자 권한</th>
+						<th>등급</th>
 						<th>신고</th>
 						<th>상태</th>
 					</tr>
 					<tr>
-						<%--<c:if test="${member_login == basic }">
-						<td>O</td>
-						<td>카카오</td>
+						<c:if test="${m.member_grade == 0}">
+						<td><button type="button" onclick="location.href='member_upgrade.do?member_idx=${m.member_idx}'">관리자 지정</button></td>
 						</c:if>
-						 <c:if test="${member_login == kakao }">
-						<td>X</td>
-						<td>카카오</td>
+						<c:if test="${m.member_grade == 1}">
+						<td>관리자</td>
 						</c:if>
-						<c:if test="${member_login == naver }">
-						<td>X</td>
-						<td>네이버</td>
-						</c:if> 
-						--%>
+						<td>${m.member_grade}</td>
 						<td>${report}</td>
-						<%-- <c:if test="${m.member_status== 0}">
+						
+						 <c:if test="${m.member_active== 1}">
 						<td>활동중</td>
 						</c:if>
-						<c:if test="${m.member_status== 1}">
-						<td>정지</td>
-						</c:if> --%>
+						
+						<c:if test="${m.member_active== 0}">
+						<td>
+							정지중
+						</td>
+						</c:if> 
 					</tr>
 				</table>
-		</c:forEach>
+				<p class="b2" style="margin-top: 15px;">
+				<c:if test="${m.member_active== 1}">
+				<button type="button" onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원정지</button>
+				</c:if>
+				<c:if test="${m.member_active== 0}">
+				<button type="button" onclick="location.href='member_stopcancel.do?member_idx=${m.member_idx}'">정지해제</button>
+				</c:if>
+				<button type="button" onclick="location.href='member_edit.do?member_idx=${m.member_idx}'">회원수정</button>
+				<button type="button" onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원삭제</button>
+			</p>
 			</div>
 		</div>
+		</c:forEach>
 		<div class="under">
-			<h3 style="text-align: center;">작성한글</h3>
+			<h3 style="text-align: center; margin-top: 300px;">작성한글</h3>
 			<div class="top">
 				<button id="buttonA"  onclick="showContent('A')">자유게시판</button>
 				<button id="buttonB" onclick="showContent('B')">캠핑제품추천</button>
@@ -211,7 +122,6 @@ window.addEventListener('DOMContentLoaded', function() {
 			<div id="contentA">
 			<table style="table-layout: auto; width: 100%; table-layout: fixed;">
 				<tr>
-					<th>선택</th>
 					<th>번호</th>
 					<th>유형</th>
 					<th>제목</th>
@@ -221,7 +131,6 @@ window.addEventListener('DOMContentLoaded', function() {
 					<th>상태</th>
 				</tr>
 				<tr>
-					<td><input type="checkbox"></td>
 					<td>${b.b_idx }</td>
 					<td>${b.b_type }</td>
 					<td>${b.b_subject }</td>
@@ -235,7 +144,6 @@ window.addEventListener('DOMContentLoaded', function() {
 			<div id="contentB">
 			<table style="table-layout: auto; width: 100%; table-layout: fixed;">
 				<tr>
-					<th>선택</th>
 					<th>번호</th>
 					<th>유형</th>
 					<th>제목</th>
@@ -245,7 +153,6 @@ window.addEventListener('DOMContentLoaded', function() {
 					<th>상태</th>
 				</tr>
 				<tr>
-					<td><input type="checkbox"></td>
 					<td>${b.cp_idx }</td>
 					<td>${b.cp_type }</td>
 					<td>${b.cpf_name }</td>
@@ -257,12 +164,6 @@ window.addEventListener('DOMContentLoaded', function() {
 			</table>
 			</div>
 			</c:forEach>
-			<p class="b2">
-				<button tpye="button" onclick="member_stop.do">회원정지</button>
-				<button tpye="button" onclick="member_edit.do">회원수정</button>
-				<button tpye="button" onclick="member_remove.do">회원삭제</button>
-				<button tpye="button">선택해제</button>
-			</p>
 		</div>
 </body>
 </html>

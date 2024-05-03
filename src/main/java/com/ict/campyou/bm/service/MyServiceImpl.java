@@ -1,0 +1,43 @@
+package com.ict.campyou.bm.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ict.campyou.bm.dao.FaqVO;
+import com.ict.campyou.bm.dao.MyDAO;
+import com.ict.campyou.hu.dao.MemberVO;
+
+@Service
+public class MyServiceImpl implements MyService{
+
+	@Autowired
+	private MyDAO myDao; 
+	@Override
+	public List<FaqVO> getFaqs() {
+		return myDao.getFaqs();
+	}
+	@Override
+	public List<FaqVO> getFaqs2() {
+		return myDao.getFaqs2();
+	}
+	@Override
+	public MemberVO getMemberPwd(String memberId) {		
+		return myDao.getMemberPwd(memberId);
+	}
+	@Override
+	public int changeUserInfo(MemberVO mvo) {
+		return myDao.changeUserInfo(mvo);
+	}
+	@Override
+	public int changeUserPW(MemberVO mvo) {
+		return myDao.changeUserPW(mvo);
+	}
+	@Override
+	public MemberVO getMember(String member_idx) {
+		// TODO Auto-generated method stub
+		return myDao.getMember(member_idx);
+	}
+
+}

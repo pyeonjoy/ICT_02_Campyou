@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ict.campyou.joy.dao.AdminDAO;
 import com.ict.campyou.joy.dao.AdminVO;
-import com.ict.campyou.joy.dao.MemberVO;
+import com.ict.campyou.joy.dao.AdminMemberVO;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -40,19 +40,47 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public List<MemberVO> getboardall() {
+	public List<AdminMemberVO> getboardall() {
 		System.out.println(admindao.getboardall());
 		return admindao.getboardall();
 	}
 	
 	@Override
-	public List<MemberVO> getadminmemberreport() {
-		return admindao.getadminmemberreport();
+	public List<AdminMemberVO> getadminmemberreport(String member_idx) {
+		return admindao.getadminmemberreport(member_idx);
 	}
 
 	@Override
 	public int getreportall() {
 		return admindao.getreportall();
+	}
+
+	@Override
+	public int getmemberstop(String member_idx) {
+		return admindao.getmemberstop(member_idx);
+	}
+	@Override
+	public int getmemberstopcancel(String member_idx) {
+		return admindao.getmemberstopcancel(member_idx);
+	}
+
+	@Override
+	public int getmemberedit(AdminMemberVO avo) {
+		return admindao.getmemberedit(avo);
+	}
+
+	@Override
+	public int getmemberdelete(String member_idx) {
+		return admindao.getmemberdelete(member_idx);
+	}
+
+	@Override
+	public int getmemberupgrade(String member_idx) {
+		return admindao.getmemberupgrade(member_idx);
+	}
+	@Override
+	public int getremoveimg(String member_idx) {
+		return admindao.getremoveimg(member_idx);
 	}
 
 

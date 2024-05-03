@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ict.campyou.jun.dao.CampVO;
+
 @Repository
 public class TogetherDAO {
 	@Autowired
@@ -22,5 +24,17 @@ public class TogetherDAO {
 		map.put("offset", offset);
 		map.put("limit", limit);
 		return sqlSessionTemplate.selectList("bjs.to_list", map);
+	}
+	
+	public List<CampVO> getTogetherCampList() throws Exception {
+		return sqlSessionTemplate.selectList("bjs.camp_list");
+	}
+	
+	public TogetherVO getTogetherDetail(String t_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.to_detail", t_idx);
+	}
+	
+	public int getTogetherWriteOK(TogetherVO tvo) throws Exception {
+		return sqlSessionTemplate.insert("bjs.to_insert", tvo);
 	}
 }

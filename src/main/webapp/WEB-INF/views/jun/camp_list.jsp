@@ -7,6 +7,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>캠핑장리스트</title>
 <style type="text/css">
+.camp_list_container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 #camp_list_show {
     display: flex;
     justify-content: center;
@@ -23,6 +29,7 @@
     border: 1px solid black;
     box-sizing: border-box;
     margin-right: 4%;
+    
 }
 
 .camp_item img {
@@ -54,6 +61,7 @@
 #camp_list_button button {
     margin: 0 10px;
 }
+
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -76,12 +84,13 @@ $(document).ready(function() {
                     let addr1 = $(this).find("addr1").text();
                     let tel = $(this).find("tel").text();
                     let homepage = $(this).find("homepage").text();
+                    let contentid = $(this).find("contentId").text();
 
-                    let campItem = "<div class='camp_item'>";
+                    let campItem = "<div class='camp_item' onclick='location.href=\"camp_detail.do?contentid=" + contentid + "\"'>";
                     campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
                     campItem += "<div class='camp_info'>";
                     campItem += "<p> ["+ doNm + sigunguNm+"] </p>";
-                    campItem += "<p><b>" + facltNm + "</b><br>" + induty + "</p>";
+                    campItem += "<h4>" + facltNm + "</h4>" + induty + "</p>";
                     campItem += "<p>" + addr1 + "</p>";
                     campItem += "<p>" + tel + "</p>";
                     campItem += "</div>";
@@ -128,8 +137,9 @@ $(document).ready(function() {
                     let addr1 = $(this).find("addr1").text();
                     let tel = $(this).find("tel").text();
                     let homepage = $(this).find("homepage").text();
+                    let contentid = $(this).find("contentId").text();
 
-                    let campItem = "<div class='camp_item'>";
+                    let campItem = "<div class='camp_item' onclick='location.href=\"camp_detail.do?contentid=" + contentid + "\"'>";
                     campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
                     campItem += "<div class='camp_info'>";
                     campItem += "<p> ["+ doNm + sigunguNm+"] </p>";
@@ -168,19 +178,17 @@ $(document).ready(function() {
     });
 });
 </script>
-
 </head>
 <body>
 <jsp:include page="../hs/header.jsp" />
 <div style="height: 100px;"></div>
-<label for="keyword_input">검색어:</label>
-<input type="text" id="keyword_input" placeholder="검색어를 입력하세요">
-<button id="search_button">검색</button>
-        <button id="map_search">지도로 보기</button>
-    <div id="camp_list_show"></div>
-    <div id ="camp_list_button">
-        <button class="camp_list_before">이전 페이지</button>
-        <button class="camp_list_next">다음 페이지</button>
+	<div class="camp_list_container">
+		<jsp:include page="../hs/camp_search_box.jsp" />
+	   	<div id="camp_list_show"></div>
+	   	<div id ="camp_list_button">
+	       <button class="camp_list_before">이전 페이지</button>
+	       <button class="camp_list_next">다음 페이지</button>
+	   	</div>
     </div>
 <jsp:include page="../hs/footer.jsp" />
 </body>

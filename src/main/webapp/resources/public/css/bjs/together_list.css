@@ -3,6 +3,8 @@
 *{margin: 0px; padding: 0px; box-sizing: border-box;}
     .toContainer{
         width: 100%;
+        padding-top: 100px;
+        margin-bottom: 4rem;
     }
     .togetherh2{
         width: 100%;
@@ -22,28 +24,40 @@
     .userImage{
         border: 1px solid black;
         border-radius: 50%;
-        width: 3rem;
-        height: 3rem;
+/*         width: 3rem; */
+/*         height: 3rem; */
         margin-right: 1rem;
     }
     .userImage2{
-        max-width: 100%;
-     	max-height: 100%;
+/*         width: 100%; */
+/*      	height: 100%; */
         width: 3rem;
         height: 3rem;
         border-radius: 50%;
     }
+    .to_member_nickname{
+    	font-weight: bold;
+    	font-size: 14px;
+    }
+    .to_member_age{
+    	color: #FAAB12;
+    	font-size: 13px;
+    }
     .toContentOne > div {
-        margin-bottom: 1rem; /* 자식 요소들 간의 간격 설정 */
+        margin-bottom: 1rem;
     }
     .toContentOne{
     	width:100%;
         display: grid;
-        grid-template-rows: 4rem 13rem 5rem;
+        grid-template-rows: 4rem 13rem 4rem;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
         border-radius: 10%;
         padding: 1rem;
+        transition: transform 0.3s ease;
     }
+    .hover-effect {
+    	transform: translate(5px, -10px);
+	}
     .toContentOne1{
         display: flex;
         align-items: center;
@@ -58,6 +72,7 @@
     }
     .toContentOne1span2{
     	padding-top: 0.3rem;
+    	line-height: 1.3rem;
     }
     .toContentOne2{
         border: 1px solid black;
@@ -97,6 +112,21 @@
         bottom: 1;
         left: 1rem;
     }
+    .toContentOne2sub3{
+        padding: 0.2rem;
+        margin-top: 1rem;
+        position:absolute;
+        bottom: 3rem;
+        left: auto;
+    }
+    .to_campdate{
+    	font-size: 14px;
+    	color: #37cd64;
+    }
+    .to_list_subject{
+    	font-weight: bold;
+    	margin-bottom: 0.5rem;
+    }
     
 .searchForm{
 	grid-column: 2;
@@ -123,6 +153,7 @@
 	margin-right: 1rem;
 	background-color: #041601;
 	color: white;
+	text-align: center;
 } 
 .towrapper{
 	grid-column: 3;
@@ -175,7 +206,7 @@
 }
 .toPagingContainer{
 	display: grid;
-	grid-template-columns: repeat(5, 1fr); /* 5개의 열로 나눔 */
+	grid-template-columns: repeat(5, 1fr);
     align-items: center;
 }
 .togetherWriteButton{

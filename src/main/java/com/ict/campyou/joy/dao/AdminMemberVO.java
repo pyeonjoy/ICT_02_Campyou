@@ -1,9 +1,15 @@
 package com.ict.campyou.joy.dao;
 
-public class MemberVO {
+public class AdminMemberVO {
  private String report_num, member_idx, report_content,report_date, report_status, report_idx;
- private String member_id,member_name,member_pwd, member_nickname, member_dob, member_phone, member_email, member_regdate, member_active,member_img, member_login;
- public String getMember_img() {
+private String member_id,member_name,member_pwd, member_grade, member_nickname, member_dob, member_phone, member_email, member_regdate, member_active,member_img, member_login;
+ public String getMember_grade() {
+	return member_grade;
+}
+public void setMember_grade(String member_grade) {
+	this.member_grade = member_grade;
+}
+public String getMember_img() {
 	return member_img;
 }
 public void setMember_img(String member_img) {

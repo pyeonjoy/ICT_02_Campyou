@@ -52,7 +52,7 @@ public class AdminDAO {
 		return -1;
 	}
 	
-	public List<MemberVO> getboardall() {
+	public List<AdminMemberVO> getboardall() {
 		try {
 			return sqlSessionTemplate.selectList("joy.boardall");
 		} catch (Exception e) {
@@ -60,9 +60,9 @@ public class AdminDAO {
 		}
 		return null;
 	}
-	public List<MemberVO> getadminmemberreport() {
+	public List<AdminMemberVO> getadminmemberreport(String member_idx) {
 		try {
-			return sqlSessionTemplate.selectList("joy.adminmemberreport");
+			return sqlSessionTemplate.selectList("joy.adminmemberreport",member_idx);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -73,6 +73,57 @@ public class AdminDAO {
 	public int getreportall() {
 		try {
 			return sqlSessionTemplate.selectOne("joy.reportall");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	
+
+	public int getmemberstop(String member_idx) {
+		try {
+			return sqlSessionTemplate.update("joy.memberstop",member_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getmemberstopcancel(String member_idx) {
+		try {
+			return sqlSessionTemplate.update("joy.memberstopcancel",member_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+
+	public int getmemberedit(AdminMemberVO avo) {
+		try {
+			return sqlSessionTemplate.update("joy.memberedit",avo);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getmemberdelete(String member_idx) {
+		try {
+			return sqlSessionTemplate.delete("joy.memberdelete",member_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getmemberupgrade(String member_idx) {
+		try {
+			return sqlSessionTemplate.update("joy.memberupgrade",member_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getremoveimg(String member_idx) {
+		try {
+			return sqlSessionTemplate.delete("joy.removeimg",member_idx);
 		} catch (Exception e) {
 			System.out.println(e);
 		}

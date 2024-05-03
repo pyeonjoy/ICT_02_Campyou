@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ict.campyou.bjs.dao.TogetherDAO;
 import com.ict.campyou.bjs.dao.TogetherVO;
+import com.ict.campyou.jun.dao.CampVO;
 
 @Service
 public class TogetherServiceImpl implements TogetherService{
@@ -21,6 +22,21 @@ public class TogetherServiceImpl implements TogetherService{
 	@Override
 	public List<TogetherVO> getTogetherList(int offset, int limit) throws Exception {
 		return togetherDAO.getTogetherList(offset, limit);
+	}
+
+	@Override
+	public List<CampVO> getTogetherCampList() throws Exception {
+		return togetherDAO.getTogetherCampList();
+	}
+
+	@Override
+	public TogetherVO getTogetherDetail(String t_idx) throws Exception {
+		return togetherDAO.getTogetherDetail(t_idx);
+	}
+
+	@Override
+	public int getTogetherWriteOK(TogetherVO tvo) throws Exception {
+		return togetherDAO.getTogetherWriteOK(tvo);
 	}
 
 

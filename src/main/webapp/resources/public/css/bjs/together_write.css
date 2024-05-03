@@ -10,6 +10,8 @@
      display: flex;
      flex-direction: column;
      align-items: center;
+     padding-top: 100px;
+     margin-bottom: 4rem;
  }
  .togetherh2 {
      width: 100%;
@@ -22,7 +24,7 @@
      justify-content: center;
  }
 .togetherWriteInput{
-    width: 50%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     padding-right: 8rem;
@@ -39,8 +41,9 @@
 .togetherWriteInput1{
      border: none;
      border-bottom: 1px solid black;
-     padding-bottom: 0.7rem;
-     width: 100%;
+     padding-bottom: 0.4rem;
+     width: 96%;
+     margin-bottom: 1rem;
 }
 .togetherWriteInput2{
      border: none;
@@ -61,13 +64,22 @@
 .togetherSub1{
     margin-top: 1rem;
     display: flex;
+    width: 100%;
+}
+.togetherSub5{
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 .togetherSub2{
 	margin-top: 1rem;
 }
 .togetherSub1Img{
     max-width: 100%;
- max-height: 100%;
+	max-height: 100%;
+	width: 100%;
+	height: 300px;
 }
 .togetherSub1Button{
     border: none;
@@ -80,6 +92,11 @@
 .togetherSub1Button:hover{
     background-color: #032805;
     color: white;
+    border: none;
+    border-radius: 20%;
+    padding: 0.4rem 1.2rem;
+    cursor: pointer;
+    margin-right: 1rem;
 }
 .togetherSub1Button.active{
 	background-color: #032805;
@@ -93,6 +110,7 @@
 	display: flex;
 	padding-left: 0;
 	height: 1.8rem;
+	margin-bottom: 0.5rem;
 }
 .searchbar{
 	width: 10rem;
@@ -103,14 +121,29 @@
 	border: 1px solid lightgray;
 /* 	border-bottom-left-radius: 10%; */
 }
+.togetherSub1DivP{
+	margin-bottom: 0.3rem;
+	border: none;
+	width: 100%;
+	pointer-events: none;
+	resize: none;
+}
+.togetherSub1DivP1{
+	margin-bottom: 0.3rem;
+	border: none;
+	width: 100%;
+	pointer-events: none;
+	font-weight: bold;
+}
 .res{
 	width: 2.7rem;
 	height: 100%;
-/* 	border: 1px solid black; */
 	border: none;
-/* 	margin-right: 1rem; */
 	background-color: #041601;
 	color: white;
+	display: flex;
+	text-align: center;
+	margin: 0px;
 } 
 .datetimes{
 	width: 80%;
@@ -118,6 +151,13 @@
 	margin-top: 0.3rem;
 	border: none;
 	border-bottom: 1px solid lightgray;
+}
+.togetherSub5Strong{
+	min-width:17%;
+}
+.numberOfPeople{
+	margin-right: 1rem;
+	width: 2.5rem;
 }
 /* .togetherSub1DivInput{ */
 /*     height: 1.5rem; */

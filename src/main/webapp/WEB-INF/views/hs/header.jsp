@@ -30,7 +30,7 @@
 
 						</c:when>
 						<c:otherwise>
-							<li><a href="#"><img class="icon chat"
+							<li><a href="chatroom.do"><img class="icon chat"
 									src="resources/img/icon_chat.png" alt="CampYou"></a></li>
 							<li><a href="#"><img class="icon user"
 									src="resources/img/icon_user.png" alt="mypage"></a></li>
