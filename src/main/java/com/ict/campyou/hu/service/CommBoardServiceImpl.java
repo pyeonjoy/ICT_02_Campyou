@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ict.campyou.hu.dao.CommBoardDAO;
 import com.ict.campyou.hu.dao.CommBoardVO;
+import com.ict.campyou.hu.dao.CommentVO;
 
 @Service
 public class CommBoardServiceImpl implements CommBoardService {
@@ -49,10 +50,7 @@ public class CommBoardServiceImpl implements CommBoardService {
 		return commBoardDAO.getCommBoardUpdate(cbvo);
 	}
 
-	@Override
-	public int getLevUpdate(Map<String, Integer> map) {
-		return commBoardDAO.getLevUpdate(map);
-	}
+	
 
 	@Override
 	public int getReplyInsert(CommBoardVO cbvo) {
@@ -62,5 +60,35 @@ public class CommBoardServiceImpl implements CommBoardService {
 	@Override
 	public CommBoardVO getCommBoardReplyDetail(CommBoardVO cbvo) {
 		return commBoardDAO.getCommBoardReplyDetail(cbvo);
+	}
+
+	@Override
+	public List<CommentVO> getCommBoardList2(String b_idx) {
+		
+		return commBoardDAO.getCommBoardList2(b_idx);
+	}
+	
+	@Override
+	public int getCommentInsert(CommentVO cvo) {
+	
+		return commBoardDAO.getCommentInsert(cvo);
+	}
+
+	@Override
+	public int getCommentDelete(String c_idx) {
+
+		return commBoardDAO.getCommentDelete(c_idx);
+	}
+
+	@Override
+	public int getCommentUpdate(CommentVO cvo) {
+	
+		return commBoardDAO.getCommentUpdate(cvo);
+	}
+
+	@Override
+	public int getCommBoardAdminDelete(String b_idx) {
+		
+		return commBoardDAO.getCommBoardAdminDelete(b_idx);
 	}
 }

@@ -42,52 +42,142 @@
  	
  	<!-- Community Board -->
  	<select id="count" resultType="int">
- 		select count(*) from commBoard
+ 		select count(*) from board_free
  	</select>
  	
  	<!-- commBoard  -->
+ 	<!-- <select id="comm_board_list" parameterType="Map" resultType="cbvo">
+ 		select * from board_free order by groups member_grade  limit #{limit} offset #{offset}
+		select * from board_free order by groups desc, lev asc  limit #{limit} offset #{offset} 
+ 	</select> -->
+ 	
  	<select id="comm_board_list" parameterType="Map" resultType="cbvo">
- 		select * from commboard order by groups desc, lev asc  limit #{limit} offset #{offset}  
- 	</select>
+	    select * from board_free 
+	    where b_type = '공지사항'
+	    union 
+	    select * from board_free 
+	    where b_type != '공지사항' 
+	    order by b_type = '공지사항' desc, groups desc, lev asc 
+	    limit #{limit} offset #{offset}
+	</select>
  	
  	<insert id="comm_board_insert" parameterType="cbvo">
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
- 			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM commboard
+ 			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM board_free
  		</selectKey>
- 		insert into commboard(member_idx, b_type, b_title, member_nickname, b_content, b_pwd, hit, groups, step, lev, regdate, f_name)
+ 		insert into board_free(member_idx, b_type, b_title, member_nickname, b_content, b_pwd, hit, groups, step, lev, regdate, f_name)
  			values(#{member_idx}, #{b_type}, #{b_title}, #{member_nickname}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{f_name})
  	</insert>
  	
  	<update id="comm_board_hit" parameterType="String">
- 		update commboard 
+ 		update board_free 
  		set hit = hit + 1 
  		where b_idx = #{b_idx} 
  	</update>
  	
  	<select id="comm_board_detail" parameterType="String" resultType="cbvo">
- 		select * from commboard where b_idx = #{b_idx}
+ 		select * from board_free where b_idx = #{b_idx}
  	</select>
  	
  	<delete id="comm_board_delete" parameterType="cbvo">
- 	 	delete from commboard where b_idx = #{b_idx}
+ 	 	delete from board_free where b_idx = #{b_idx}
  	</delete>
  	
  	<update id="comm_board_update" parameterType="cbvo">
- 	 	update commboard 
+ 	 	update board_free 
  	 	set  b_title=#{b_title}, b_content=#{b_content}, f_name=#{f_name}
  	 	where b_idx = #{b_idx}  	 
  	 </update>
  	 
- 	 <update id="comm_lev_update" parameterType="Map">
- 	 	update commboard set lev=lev+1 where groups=#{groups} and lev>=#{lev} 
- 	 </update>
+ 	 <delete id="comm_board_admin_delete" parameterType="cbvo">
+ 	 	delete from board_free where b_idx = #{b_idx}
+ 	 </delete>
  	 
  	  <insert id="comm_reply_insert" parameterType="cbvo">
- 	 	insert into commboard(member_idx, b_type, b_title, member_nickname, b_content, b_pwd, hit, groups, step, lev, regdate, f_name)
+ 	 	insert into board_free(member_idx, b_type, b_title, member_nickname, b_content, b_pwd, hit, groups, step, lev, regdate, f_name)
  			values(#{member_idx}, #{b_type}, #{b_title}, #{member_nickname}, #{b_content}, #{b_pwd}, 0, #{groups}, #{step}, #{lev}, sysdate(), #{f_name})
- 	 </insert>
+ 	  </insert>
  	 
  	 <select id="comm_board_reply_detail" parameterType="cbvo" resultType="cbvo">
- 		select * from commboard where b_idx = #{b_idx}
+ 		select * from board_free where b_idx = #{b_idx}
+ 	 </select>
+ 	
+ 	<!-- commet-rely -->
+ 	<select id="comment_list" parameterType="String" resultType="cvo">
+ 		select * from comment_t where b_idx = #{b_idx}
  	</select>
+ 	
+ 	<insert id="comment_insert" parameterType="cvo">
+ 		insert into comment_t(member_nickname, content, write_date, b_idx)
+ 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx})
+ 	</insert>
+ 	
+ 	<delete id="comment_delete" parameterType="String">
+ 		delete from comment_t where c_idx = #{c_idx}
+ 	</delete>
+ 	
+ 	<update id="comment_update" parameterType="cvo">
+ 		update comment_t 
+ 		set content = #{content}, write_date = sysdate()
+ 	    where b_idx=#{b_idx} and c_idx = #{c_idx}
+ 	</update>
+ 	
+ 	<select id="comment_reply_list" parameterType="String" resultType="cvo">
+ 		select * from comment_t where b_idx = #{b_idx}
+ 	</select>
+ 	
+ 	<update id="lev_update" parameterType="cvo">
+ 	 	update comment_t set lev=lev+1 where groups=#{groups} and lev>=#{lev} 
+ 	 </update>
+ 	
+ 	<insert id="ans_insert" parameterType="cvo">
+ 	 	insert into comment_t(member_nickname, content, write_date, b_idx, step, lev)
+ 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{step}, #{lev})
+ 	 </insert>
+ 	 
+ 	 <insert id="comment_reply_insert" parameterType="cvo">
+ 	 	insert into comment_t(member_nickname, content, write_date, b_idx, step, lev)
+ 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{step}, #{lev})
+ 	 </insert>
+ 	 
+ 	 
+ 	 
+ 	<select id="board_free_list" resultType="bfvo">
+ 		select * from board_free where bf_no &gt;= 1 and bf_no &lt;= 100  order by bf_no
+ 	</select>
+ 	
+ 	<select id="board_free_search_list" parameterType="Map" resultType="bfvo">
+ 		select * from board_free where 
+ 		<choose>
+ 			<!-- <when test="searchType == 1"> Lower(b_title) = Lower(#{searchValue})</when> -->
+ 			
+ 			<when test="searchType == 1"> Lower(b_title) like concat('%', Lower(#{searchValue}),'%')</when>
+ 			<when test="searchType == 2"> Lower(b_content) like concat('%', Lower(#{searchValue}), '%')</when>
+ 			<when test="searchType == 3"> Lower(member_nickname) = Lower(#{searchValue})</when>
+ 			<when test="searchType == 4"> Lower(regdate) like concat( Lower(#{searchValue}), '%')</when>
+ 		</choose>
+ 		
+ 	</select>
+ 		
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
 </mapper>
