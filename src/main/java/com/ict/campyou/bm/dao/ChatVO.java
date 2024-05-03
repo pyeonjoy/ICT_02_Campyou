@@ -1,7 +1,8 @@
 package com.ict.campyou.bm.dao;
 
 public class ChatVO {
-private String msg_idx, msg_room, send_nick, reci_nick, send_date, read_date, msg_content, msg_read;
+
+ private String msg_idx, msg_room, send_nick, reci_nick, send_date, read_date, msg_content, msg_read;
 
 public String getMsg_idx() {
 	return msg_idx;
@@ -66,5 +67,5 @@ public String getMsg_read() {
 public void setMsg_read(String msg_read) {
 	this.msg_read = msg_read;
 }
-
+ 
 }

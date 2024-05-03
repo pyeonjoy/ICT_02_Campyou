@@ -35,12 +35,12 @@ public void setQna_content(String qna_content) {
 	this.qna_content = qna_content;
 }
 
-public String getQan_date() {
+public String getQna_date() {
 	return qna_date;
 }
 
-public void setQan_date(String qan_date) {
-	this.qna_date = qan_date;
+public void setQna_date(String qna_date) {
+	this.qna_date = qna_date;
 }
 
 public String getQna_status() {

@@ -13,6 +13,7 @@ select * from faq2 order by faq_idx
 <select id="getPw" resultType="mvo" parameterType="String">
 select * from members where member_id=#{member_id}
 </select>
+
 <select id="getUser" resultType="mvo" parameterType="String">
 select * from members where member_idx=#{member_idx}
 </select>
@@ -26,9 +27,15 @@ update members set member_pwd = #{member_pwd} where member_idx = #{member_idx}
 </update>
 
 <insert id="upQna" parameterType="qvo">
-insert into qna(member_idx, qna_title, qna_content, qna_satus)
-values(#{member_idx},#{qna_title},#{qna_content},#{qna_satus})
-
+insert into qna(member_idx, qna_title, qna_content, qna_date, qna_status)
+values(#{member_idx},#{qna_title},#{qna_content}, sysdate(), 0)
 </insert>
 
+<select id="getQnas" resultType="qvo" parameterType="String">
+select * from qna where member_idx=#{member_idx}
+</select>
+
+<select id="count" resultType="int" parameterType="String">
+select count(*) from qna where member_idx=#{member_idx}
+</select>
 </mapper>

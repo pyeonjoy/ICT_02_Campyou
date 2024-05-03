@@ -30,6 +30,7 @@ public List<FaqVO> getFaqs2() {
 	}
 	return null;
 }
+
 public MemberVO getMemberPwd(String memberId) {	
 	try {
 		return sqlSessionTemplate.selectOne("bomi.getPw",memberId);		
@@ -50,6 +51,7 @@ public MemberVO getMember(String member_idx) {
 }
 public int changeUserInfo(MemberVO mvo) {
 	try {
+
 		return sqlSessionTemplate.update("bomi.updateUser", mvo);		
 	} catch (Exception e) {
 		System.out.println(e);
@@ -66,7 +68,8 @@ public int changeUserPW(MemberVO mvo) {
 }
 
 public int uploadQna(QnaVO qvo) {
-	try {		
+	try {	
+		System.out.println("dao: "+qvo.getMember_idx());
 		return sqlSessionTemplate.insert("bomi.upQna",qvo);
 	} catch (Exception e) {
 		System.out.println(e);
@@ -86,11 +89,17 @@ public int updateQna(QnaVO qvo) {
 
 public List<QnaVO> getMyQna(String member_idx) {
 	try {
-		return sqlSessionTemplate.selectList("getQnas",member_idx);
+	
+		return sqlSessionTemplate.selectList("bomi.getQnas",member_idx);
 		
 	} catch (Exception e) {
 		System.out.println(e);
 	}
 	return null;
 }
+public int getTotalCount(String member_idx) {
+
+	return sqlSessionTemplate.selectOne("bomi.count", member_idx);
+}
+
 }

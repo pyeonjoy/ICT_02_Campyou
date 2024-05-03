@@ -14,10 +14,13 @@ public interface MyService {
 	
 	public MemberVO getMemberPwd(String memberId);
 	public MemberVO getMember(String member_idx);
+
 	public int changeUserInfo(MemberVO mvo);
 	public int changeUserPW(MemberVO mvo);
+	
 	
 	 public int uploadQna(QnaVO qvo);
 	 public int updateQna(QnaVO qvo);
 	 public List<QnaVO> getMyQna(String member_idx);
+	 public int getTotalCount(String member_idx);
 }

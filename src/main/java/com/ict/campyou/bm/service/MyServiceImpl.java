@@ -51,5 +51,8 @@ public class MyServiceImpl implements MyService{
 	public List<QnaVO> getMyQna(String member_idx) {
 		return myDao.getMyQna(member_idx);
 	}
-
+	@Override
+	public int getTotalCount(String member_idx) {	
+		return myDao.getTotalCount(member_idx);
+	}
 }

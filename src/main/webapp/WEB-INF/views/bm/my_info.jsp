@@ -7,8 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 정보</title>
-<%@ include file="../hs/header.jsp"%>
   <link rel="stylesheet" href="${path}/resources/public/css/bm/my_info.css">
+  <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
   <script defer src="${path}/resources/public/js/bm/my_info.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
  <script>
@@ -31,6 +31,8 @@
   </script>
 </head>
 <body>
+
+<%@ include file="../hs/mypage_menu.jsp"%>
 
    <h3 class="my_title">마이페이지</h3>
   <form class="user_info" method="post" enctype="multipart/form-data">
@@ -62,6 +64,17 @@
       <div class="detail id_detail">
         <label for="id" >아이디</label> <input type="text" id="id" name="member_id" class="input input_id" disabled value="${mvo.member_id }">
       </div>
+       <div class="detail dob_detail">
+          <label for="dob">생년월일</label>
+          <input
+            type="text"
+            id="dob"
+            name="dob"
+            class="input input_dob"
+            disabled
+            value="${mvo.member_dob }"
+          />
+        </div>
       <div class="detail pw_detail">
         <label for="password" >비밀번호</label> <input type="password" id="password" name="member_pwd" class="input input_pw" >
       </div>
