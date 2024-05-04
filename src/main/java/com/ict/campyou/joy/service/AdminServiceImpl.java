@@ -83,5 +83,20 @@ public class AdminServiceImpl implements AdminService{
 		return admindao.getremoveimg(member_idx);
 	}
 
+	@Override
+	public int getPopUPWrite(AdminVO avo) {
+		return admindao.getPopUPWrite(avo);
+	}
+
+	@Override
+	public List<AdminVO> getPopList(int offset, int limit) {
+		return admindao.getPopList(offset, limit);
+	}
+
+	@Override
+	public int getTotalCount() {
+		return admindao.getTotalCount();
+	}
+
 
 }

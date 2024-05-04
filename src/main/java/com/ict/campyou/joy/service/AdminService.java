@@ -20,5 +20,8 @@ public interface AdminService {
 	public int getmemberdelete(String member_idx);
 	public int getmemberupgrade(String member_idx);
 	public int getremoveimg(String member_idx);
+	public int getPopUPWrite(AdminVO avo);
+	public List<AdminVO> getPopList(int offset, int limit);
+	public int getTotalCount();
 	
 }

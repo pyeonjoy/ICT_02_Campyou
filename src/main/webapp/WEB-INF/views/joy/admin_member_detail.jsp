@@ -6,6 +6,7 @@
 <html lang="ko">
 <link href="resources/css/reset.css" rel="stylesheet" />
 <link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
+<%@ include file="../hs/admin_menu.jsp" %>
 <head>
 <meta charset="utf-8">
 <title>회원관리 상세</title>
@@ -165,5 +166,6 @@ window.addEventListener('DOMContentLoaded', function() {
 			</div>
 			</c:forEach>
 		</div>
+		<jsp:include page="../hs/footer.jsp" />
 </body>
 </html>

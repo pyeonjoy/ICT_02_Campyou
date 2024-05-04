@@ -1,10 +1,14 @@
 package com.ict.campyou.joy.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.ict.campyou.jun.dao.CampVO;
 
 @Repository
 public class AdminDAO {
@@ -129,4 +133,33 @@ public class AdminDAO {
 		}
 		return -1;
 	}
+	public int getPopUPWrite(AdminVO avo) {
+		try {
+			return sqlSessionTemplate.delete("joy.popUPWrite",avo);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getTotalCount() {
+		try {
+		 return sqlSessionTemplate.selectOne("joy.count");	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	
+	public List<AdminVO> getPopList(int offset, int limit) {
+		try {
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("offset", offset);
+			map.put("limit", limit);
+			return sqlSessionTemplate.selectList("joy.popUPlist",map);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
 }

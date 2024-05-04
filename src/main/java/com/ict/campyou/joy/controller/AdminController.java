@@ -20,9 +20,6 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	
-	
-	
 	@RequestMapping("admin_main.do")
 	public ModelAndView boardList() {
 		ModelAndView mv = new ModelAndView("joy/admin_main");
