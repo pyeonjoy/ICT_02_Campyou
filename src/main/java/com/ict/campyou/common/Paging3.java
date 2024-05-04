@@ -8,9 +8,9 @@ public class Paging3 {
 	private int nowBlock = 1 ;
 	
 	// 한 페이지당 10줄
-	private int numPerPage = 4 ;
+	private int numPerPage = 3 ;
 	// 한 블록당 3개
-	private int pagePerBlock = 2 ;
+	private int pagePerBlock = 5 ;
 	// DB의 게시물의 수
 	private int totalRecord = 0 ;
 	// 게시물의 수을 이용해서 전체 페이지의 수

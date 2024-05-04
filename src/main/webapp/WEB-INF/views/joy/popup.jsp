@@ -37,34 +37,12 @@ body {
     height: 500px;
 }
 .right {
-    width: 500px;
-    height: 500px;
-}
-.category{
-    width: 450px;
-    background-color: #053610;
-    display: grid;
-    grid-template-columns: 0.5fr 1fr 0.5fr;
-    grid-gap: 10px;
-    height: 50px;
-    padding-left: 50px;
-}
-.inner{
-    width: 450px;
-    display: grid;
-    grid-template-columns: 0.5fr 0.2fr 0.8fr 0.5fr;
-    grid-gap: 10px;
-    height: 50px;
-    padding-left: 50px;
-    padding-top: 10px;
-}
-.child {
-width: 100px;
-height: 50px;
+    width: 1000px;
+    height: 800px;
 }
 .subimg{
-    width: 50px;
-    height: 50px;
+    width: 150px;
+    height: 150px;
     background-color: gainsboro;
 }
 button{
@@ -84,6 +62,83 @@ button{
 li{
 list-style: none;
 }
+
+
+
+table {
+	width:800px;
+	margin:0 auto;
+	margin-top:20px;
+	font-size: 14px;
+	border-collapse: collapse;
+}
+
+table caption {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+table th, #bbs table td {
+	text-align: center;
+	padding: 4px 10px;
+	border-collapse: collapse;
+	border-bottom: 1px solid black;
+	padding: 10px;
+}
+
+.no { width: 15% }
+.subject { 	width: 30% }
+.writer {	width: 20% }
+.reg {	width: 20% }
+.hit {	width: 15% }
+.title {	background: #041601; 
+color: white}
+.odd {	background: silver }
+
+/* paging */
+table tfoot ol.paging {
+	list-style: none;
+}
+
+table tfoot ol.paging li {
+	float: left;
+	margin-right: 8px;
+}
+
+table tfoot ol.paging li a {
+	display: block;
+	padding: 3px 7px;
+	border: 1px solid #041601;
+	color: #FFBA34;
+	font-weight: bold;
+}
+
+table tfoot ol.paging li a:hover {
+	background: #00B3DC;
+	color: white;
+	font-weight: bold;
+}
+
+.disable {
+	padding: 3px 7px;
+	border: 1px solid silver;
+	color: silver;
+}
+
+.now {
+	padding: 3px 7px;
+	border: 1px solid #041601;
+	background: #041601;
+	color: white;
+	font-weight: bold;
+}
+.paging{
+margin: 20px auto;
+ width: 247px;}
+.bottom{
+text-align: center;
+}
 </style>
 </head>
 <body>
@@ -95,29 +150,43 @@ list-style: none;
             <hr class="hr">
         </div>
         <div class="right">
-            <p style="text-align: center;">이전팝업창</p>
-            <div class="category">
-                <p class="child">번호</p>
-                <p class="child">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목</p>
-                <p class="child">작성 날짜</p>
-            </div>
-            	<c:forEach var="p" items="${pop}">
-            <div class="inner">
-            	<input type="checkbox">
-                <p>${p.popidx }</p>
-                <img style="object-fit: cover;" class="subimg" src="resources/popup/${p.f_name}">
-                <p class="child">${p.title }</p>
-                <p class="child">${p.writer }</p>
-                <p class="child">${p.regdate }</p>
-            </div>
-            <button class="b1" onclick="location.href='popup_write.do'">추가</button>
-                </c:forEach>
-            <button class="b1" onclick="location.href='popup_delete.do'">삭제</button>
-            <hr>
-						<input type="button" value="글쓰기" onclick="board_write()">
-            <table>
-            <tr>
-					<td colspan="4">
+        <div id="bbs" align="center">
+		<table summary="팝업 목록">
+			<caption>팝업 목록</caption>
+			<thead>
+				<tr class="title">
+		                <th class="child">선택</th>
+		                <th class="child">번호</th>
+		                <th class="child">미리보기</th>
+		                <th class="child">제목</th>
+		                <th class="child">작성자</th>
+		                <th class="child">작성 날짜</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:choose>
+					<c:when test="${empty pop }">
+						<tr><td colspan="5"><h3>게시물이 존재하지 않습니다.</h3></td></tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="k" items="${pop}" varStatus="vs">
+							<tr>
+								<td><input type="checkbox"/></td>
+							    <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index )}</td>
+                				<td><img style="object-fit: cover;" class="subimg" src="resources/popup/${p.f_name}"></td>
+							    <td style="text-align: left; ">
+							    <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach>
+							    <a href="board_detail.do?bo_idx=${k.popidx}&cPage=${paging.nowPage}">${k.title }</a></td>
+				                <td class="child">${k.writer }</td>
+							    <td>${k.regdate.substring(0,10)}</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="6">
 						<ol class="paging">
 							<!-- 이전 버튼 -->
 							<c:choose>
@@ -129,15 +198,15 @@ list-style: none;
 								</c:otherwise>
 							</c:choose>
 							<!-- 페이지번호들 -->
-							<c:forEach begin="${paging.beginBlock}" end="${paging.endBlock}" step="1" var="k">
-							    <c:choose>
-							        <c:when test="${k == paging.nowPage}">
-							            <li class="now">${k}</li>
-							        </c:when>
-							        <c:otherwise>
-							            <li><a href="board_list.do?cPage=${k}">${k}</a></li>
-							        </c:otherwise>
-							    </c:choose>
+							<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock }" step="1" var="k">
+								<c:choose>
+									<c:when test="${k == paging.nowPage }">
+										<li class="now">${k}</li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="popup.do?cPage=${k}">${k }</a></li>
+									</c:otherwise>
+								</c:choose>
 							</c:forEach>
 							
 							<!-- 이후 버튼 -->
@@ -146,16 +215,22 @@ list-style: none;
 									<li class="disable">다음으로</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="board_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
+									<li><a href="popup.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
 								</c:otherwise>
 							</c:choose>
 						</ol>	
 					</td>
-					<td>
-					</td>
 				</tr>
-            </table>
-            
+			</tfoot>	
+		</table>
+        <div class="bottom">
+        <p>
+						<input type="button" value="글쓰기" onclick="board_write()">
+						<input type="button" value="삭제" onclick="board_write()">
+						<input type="button" value="변경" onclick="board_write()">
+        </p>
+        </div>
+        </div>
         </div>
     </div>
     </body>

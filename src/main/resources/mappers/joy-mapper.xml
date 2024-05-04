@@ -99,8 +99,7 @@
 		select count(*) from popup
 	</select>
 	<select id="popUPlist" parameterType="Map" resultType="avo">
-		SELECT *
-		FROM popup
-		order by popidx desc
+		SELECT * FROM popup ORDER BY popidx DESC LIMIT  #{limit} OFFSET #{offset} 
+		
 	</select>
 </mapper>

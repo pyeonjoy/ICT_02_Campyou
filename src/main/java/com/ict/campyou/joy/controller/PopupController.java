@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +30,14 @@ public class PopupController {
 		
 	
 	@RequestMapping("popup.do")
-	public ModelAndView popup(HttpServletRequest request){
+	public ModelAndView boardList(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("joy/popup");
-		
+
 		// 페이징 기법
 		// 전체 게시물의 수
 		int count = adminService.getTotalCount();
-		System.out.println("count: " + count);
 		paging.setTotalRecord(count);
-		System.out.println("count2: " + count);
+		
 		// 전체 페이지의 수
 		if (paging.getTotalRecord() <= paging.getNumPerPage()) {
 			paging.setTotalPage(1);
