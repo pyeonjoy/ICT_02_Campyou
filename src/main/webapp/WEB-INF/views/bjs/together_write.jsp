@@ -70,18 +70,17 @@
 	let t_mangedivnm;
 	
 	function together_write_ok() {
-	    let formData = new FormData(document.getElementsByClassName('togetherWriteForm')[0]);
+		let formData = new FormData(document.getElementsByClassName('togetherWriteForm')[0]);
 	    let startDate = $('input[name="datetimes"]').data('daterangepicker').startDate.format('YYYY/MM/DD');
 	    let endDate = $('input[name="datetimes"]').data('daterangepicker').endDate.format('YYYY/MM/DD');
 	    let selectedCampingType = $(".togetherSub1Button.active").val();
 
+	    // 캠핑장 선택 여부 확인
 	    if (!t_mapx && !t_mapy) {
 	        alert("동행할 캠핑장 위치를 선택해주세요.");
 	        return;
-	    } else {
-	    	
 	    }
-	    
+
 	    // 캠핑 타입 선택 여부 확인
 	    if (!selectedCampingType) {
 	        alert("캠핑 타입을 선택해주세요.");
@@ -93,22 +92,18 @@
 	    formData.append("t_enddate", endDate);
 	    formData.append("t_mapx", t_mapx);
 	    formData.append("t_mapy", t_mapy);
-// 	    if (!campImageUrl) {
-// 	        formData.append("tf_name", '${path}/resources/images/to_camp.jpg');
-// 	    } else {
-        formData.append("tf_name", campImageUrl);
-        formData.append("t_induty", t_induty);
-        formData.append("t_facltdivnm", t_facltdivnm);
-        formData.append("t_mangedivnm", t_mangedivnm);
-// 	    }
-	    
+	    formData.append("tf_name", campImageUrl);
+	    formData.append("t_induty", t_induty);
+	    formData.append("t_facltdivnm", t_facltdivnm);
+	    formData.append("t_mangedivnm", t_mangedivnm);
+
 	    $.ajax({
 	        url: 'together_Write_ok.do',
 	        type: 'post',
-	        data: formData, 
-	        processData: false, // 폼 데이터 전송 시 데이터 처리 방식을 false로 설정
-	        contentType: false, // 폼 데이터 전송 시 컨텐츠 타입을 false로 설정
-	        async : false,
+	        data: formData,
+	        processData: false,
+	        contentType: false,
+	        async: false,
 	        success: function(response) {
 	           location.href='together_list.do';
 	        },
@@ -128,10 +123,63 @@
 		
 	
 	
-	$(function() {
-		initMap();
-	});
-
+	let map;
+	
+	$(document).ready(function() {
+	    initMap();
+	    $(".res").click(function() {
+	        searchCamp();
+	    });
+	    // 엔터 키를 눌렀을 때 검색 실행
+	    $(".searchbar").keydown(function(e) {
+	        if (e.keyCode === 13) {
+	            e.preventDefault();
+	            searchCamp();
+	        }
+	    });
+	});   
+	
+	function searchCamp() {
+        let campName = $(".searchbar").val();
+        $.ajax({
+            url: 'searchCamp.do',
+            type: 'post',
+            data: {
+                campName: campName
+            },
+            dataType: 'json',
+            success: function(data) {
+                if (data !== "fail") {
+                    let camp = data;
+                    let position = new naver.maps.LatLng(camp.mapy, camp.mapx);
+                    
+                    map.setCenter(position);
+                    map.setZoom(17);
+                    
+                    let infoWindow = new naver.maps.InfoWindow({
+                        content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + camp.firstimageurl + '" alt="" style="width:100%;" /><b>' + camp.facltnm + '</b><br><br> ' + camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
+                        disableAutoPan: true
+                    });
+                    infoWindow.open(map, position);
+                    
+                    $('.togetherSub1DivP').val(camp.addr1);
+                    $('.togetherSub1DivP1').val(camp.facltnm);
+                    campImageUrl = camp.firstimageurl;
+                    t_mapx = camp.mapx;
+                    t_mapy = camp.mapy;
+                    t_induty = camp.induty;
+                	t_facltdivnm = camp.facltdivnm;
+                	t_mangedivnm = camp.mangedivnm;
+                	
+                	$(".searchbar").val("");
+                } 
+            },
+            error: function(xhr, status, error) {
+            	alert("검색 결과가 없습니다.");
+            }
+        });
+    };
+	    
 	function initMap() {
 	    let markers = [];
 	    let infoWindows = [];
@@ -145,7 +193,7 @@
 	                let campList = data;
 
 	                // 지도 시작지점
-	                let map = new naver.maps.Map('map', {
+                	map = new naver.maps.Map('map', {
 	                    center: new naver.maps.LatLng(37.552758094502494, 126.98732600494576),
 	                    zoom: 10
 	                });
@@ -202,7 +250,7 @@
 	    });
 	}
 	
-
+	
 	// 셀렉트 박스에 옵션을 동적으로 추가하는 함수
 	function selectBox() {
 	  let selectBox = document.getElementById("numberOfPeople");

@@ -39,5 +39,20 @@ public class TogetherServiceImpl implements TogetherService{
 		return togetherDAO.getTogetherWriteOK(tvo);
 	}
 
+	@Override
+	public String getSearchCamp(String campName) throws Exception {
+		return togetherDAO.getSearchCamp(campName);
+	}
+
+	@Override
+	public CampVO getSearchCampDetail(String campName) {
+		return togetherDAO.getSearchCampDetail(campName);
+	}
+
+	@Override
+	public List<TogetherVO> getTogetherListSearch(String searchType, String searchKeyword) {
+		return togetherDAO.getTogetherListSearch(searchType, searchKeyword);
+	}
+
 
 }

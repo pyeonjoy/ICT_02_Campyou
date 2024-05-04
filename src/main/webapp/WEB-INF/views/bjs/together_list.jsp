@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_list.css">
 <%@ include file="../hs/header.jsp" %>
@@ -23,12 +24,94 @@
 	        item.addEventListener('mouseover', function() {
 	            item.classList.add('hover-effect');
 	        });
-
 	        item.addEventListener('mouseout', function() {
 	            item.classList.remove('hover-effect');
 	        });
 	    });
 	});
+	
+	$(document).ready(function() {
+	    $(".res").click(function() {
+	        to_search();
+	    });
+	    // 엔터 키를 눌렀을 때 검색 실행
+	    $(".searchbar").keypress(function(e) {
+	        // 엔터 키의 keyCode는 13
+	        if (e.keyCode === 13) {
+	            e.preventDefault();
+	            to_search();
+	        }
+	    });
+	});
+	
+	function to_search() {
+	    let searchType = document.getElementById("searchType").value;
+	    let searchKeyword = document.getElementById("searchbar").value;
+	    if (searchKeyword.trim() === "") {
+	        alert("검색어를 입력해주세요.");
+	        return;
+	    }
+	    
+	    $.ajax({
+	        url: 'together_list_search.do',
+	        type: 'post',
+	        data: {
+	            searchType: searchType,
+	            searchKeyword: searchKeyword
+	        },
+	        dataType: 'html',
+	        success: function(data) {
+	            var searchResults = JSON.parse(data);
+	            var contentHTML = '';
+	            if (searchResults.length > 0) {
+	                searchResults.forEach(function(item) {
+	                	contentHTML += '<div class="toContentOne">';
+	                    contentHTML += '<div>';
+	                    contentHTML += '<div class="toContentOne1">';
+	                    if (item.member_img === null || item.member_img === '' || item.member_img === 'user2.png') {
+	                    	contentHTML += '<div class="userImage"><img src="${path}/resources/images/' + item.member_img + '" class="userImage2"></div>';
+	                    } else {
+	                    	contentHTML += '<div class="userImage"><img src="' + item.member_img + '" class="userImage2"></div>';
+	                    }
+	                    contentHTML += '<div>';
+	                    contentHTML += '<div class="toContentOne1span1">';
+	                    contentHTML += '<span class="to_member_nickname">' + item.member_nickname + '</span>';
+	                    contentHTML += '<span class="to_member_age">(' + item.member_dob + ')</span>';
+	                    contentHTML += '</div>';
+	                    contentHTML += '<div class="toContentOne1span toContentOne1span2">';
+	                    contentHTML += '<span>' + item.t_campname + '</span>';
+	                    contentHTML += '<span class="to_campdate">' + item.t_startdate + '-' + item.t_enddate + '</span>';
+	                    contentHTML += '</div>';
+	                    contentHTML += '</div>';
+	                    contentHTML += '</div>';
+	                    contentHTML += '</div>';
+	                    contentHTML += '<a href="together_detail.do?t_idx=' + item.t_idx +  '" class="toContentOne2">';
+	                    if (item.tf_name === null || item.tf_name === '') {
+	                        contentHTML += '<img src="${path}/resources/images/to_camp.jpg" class="toContentOne2img">';
+	                    } else {
+	                        contentHTML += '<img src="' + item.tf_name + '" class="toContentOne2img">';
+	                    }
+	                    contentHTML += '<span class="toContentOne2sub2">' + item.t_camptype + '</span>';
+	                    contentHTML += '</a>';
+	                    contentHTML += '<a href="together_detail.do?t_idx=' + item.t_idx +  '" class="toContentOne3">';
+	                    contentHTML += '<strong class="to_list_subject">' + item.t_subject + '</strong>';
+	                    contentHTML += '<span>' + item.t_content + '</span>';
+	                    contentHTML += '</a>';
+	                    contentHTML += '</div>';
+	                });
+	            } else {
+	                contentHTML = '<h2>검색 결과가 없습니다</h2>';
+	            }
+
+	            $(".toContent").html(contentHTML);
+	            
+	            $(".searchbar").val("");
+	        },
+	        error: function(xhr, status, error) {
+	            console.error(error);
+	        }
+	    });
+	}
 </script>
 </head>
 <body>
@@ -119,15 +202,14 @@
         	</c:otherwise>
         </c:choose>
         <div class="toPagingContainer">
-        	<form class="searchForm" onsubmit="">
-        		<select name="searchType" class="searchSelect" id="">
+        	<form class="searchForm" onsubmit="return false;">
+        		<select name="searchType" class="searchSelect" id="searchType">
         			<option value="제목" ${param.searchType eq 'latest' ? 'selected' : ''}>제목</option>
         			<option value="내용" ${param.searchType eq 'latest' ? 'selected' : ''}>내용</option>
         			<option value="캠핑지" ${param.searchType eq 'latest' ? 'selected' : ''}>캠핑지</option>
         		</select>
-        		<input type="search" class="searchbar">
-        		<input type="submit" class="res" value="검색">
-<!-- 				<button class="res">검색</button> -->
+        		<input type="search" class="searchbar" id="searchbar">
+        		<button type="button" class="res" >검색</button>
 			</form>
 	        <div class="towrapper">
 				<ul class="to_paging">

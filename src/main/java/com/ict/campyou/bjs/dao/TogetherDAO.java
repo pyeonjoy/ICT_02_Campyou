@@ -38,4 +38,23 @@ public class TogetherDAO {
 	public int getTogetherWriteOK(TogetherVO tvo) throws Exception {
 		return sqlSessionTemplate.insert("bjs.to_insert", tvo);
 	}
+	
+	public String getSearchCamp(String campName) throws Exception {
+		int result = sqlSessionTemplate.selectOne("bjs.camp_chk", campName);
+		if(result > 0) {
+			return "ok";
+		}
+		return "fail";
+	}
+	
+	public CampVO getSearchCampDetail(String campName) {
+		return sqlSessionTemplate.selectOne("bjs.camp_detail", campName);
+	}
+	
+	public List<TogetherVO> getTogetherListSearch(String searchType, String searchKeyword) {
+		Map<String, String> map = new HashMap<String, String>();  
+		map.put("searchType", searchType);
+		map.put("searchKeyword", searchKeyword);
+		return sqlSessionTemplate.selectList("bjs.to_list_search", map);
+	}
 }

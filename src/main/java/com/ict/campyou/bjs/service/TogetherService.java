@@ -11,4 +11,7 @@ public interface TogetherService {
 	public List<CampVO> getTogetherCampList() throws Exception;
 	public TogetherVO getTogetherDetail(String t_idx) throws Exception;
 	public int getTogetherWriteOK(TogetherVO tvo) throws Exception;
+	public String getSearchCamp(String campName) throws Exception;
+	public CampVO getSearchCampDetail(String campName);
+	public List<TogetherVO> getTogetherListSearch(String searchType, String searchKeyword);
 }

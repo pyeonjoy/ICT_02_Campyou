@@ -138,6 +138,7 @@ function to_application() {
             		</c:otherwise>
             	</c:choose>
                 <input type="button" value="목 록" id="" onclick="to_list_go()" class="toDetailContent3Button">
+                <input type="hidden" name="cPage" value="${cPage }" >
             </div>
             <div class="toDetailContent4">
                 <p class="toDetailContent4Sub1">댓글</p>
