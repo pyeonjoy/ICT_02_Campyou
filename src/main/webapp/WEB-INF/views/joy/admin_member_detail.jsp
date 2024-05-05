@@ -131,13 +131,21 @@ window.addEventListener('DOMContentLoaded', function() {
 					<th>상태</th>
 				</tr>
 				<tr>
-					<td>${b.b_idx }</td>
+					<%-- <td>${b.b_idx }</td>
 					<td>${b.b_type }</td>
 					<td>${b.b_subject }</td>
 					<td>${b.bf_name }</td>
 					<td>${b.b_regdate }</td>
 					<td>${b.b_hit }</td>
-					<td>${b.b_active }</td>
+					<td>${b.b_active }</td> --%>
+					
+					<td>${b.b_idx }</td>
+					<td>${b.b_type }</td>
+					<td>${b.b_title }</td>
+					<td>${b.f_name }</td>
+					<td>${b.regdate }</td>
+					<td>${b.hit }</td>
+					<td>${b.active }</td>
 				</tr>
 			</table>
 			</div>
@@ -145,7 +153,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			<table style="table-layout: auto; width: 100%; table-layout: fixed;">
 				<tr>
 					<th>번호</th>
-					<th>유형</th>
+					<!-- <th>유형</th> -->
 					<th>제목</th>
 					<th>닉네임</th>
 					<th>작성일</th>
@@ -154,12 +162,12 @@ window.addEventListener('DOMContentLoaded', function() {
 				</tr>
 				<tr>
 					<td>${b.cp_idx }</td>
-					<td>${b.cp_type }</td>
+					<%-- <td>${b.cp_type }</td> --%>
 					<td>${b.cpf_name }</td>
 					<td>${b.cp_regdate }</td>
 					<td>${b.cp_hit }</td>
 					<td>${b.cp_active }</td>
-					<td>${b.cp_active }</td>
+					<%-- <td>${b.cp_active }</td> --%>
 				</tr>
 			</table>
 			</div>

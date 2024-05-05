@@ -31,7 +31,7 @@
 				<tbody>
 					<tr>
 						<th bgcolor="#003300" style="color: white;">제목</th>
-						<td>${cbvo.b_title} </td>
+						<td>${cbvo.b_subject} </td>
 					</tr>
 					<tr>
 						<th bgcolor="#003300" style="color: white;">닉네임</th>
@@ -39,17 +39,17 @@
 					</tr>
 					<tr>
 						<th bgcolor="#003300" style="color: white;">날짜</th>
-						<td>${cbvo.regdate.substring(0,10)} </td>
+						<td>${cbvo.b_regdate.substring(0,10)} </td>
 					</tr>
 					<tr>
 						<th bgcolor="#003300" style="color: white;">첨부파일</th>
 						<c:choose>
-							<c:when test="${empty cbvo.f_name}">
+							<c:when test="${empty cbvo.bf_name}">
 								<td><b>첨부파일없음</b></td>
 							</c:when>
 							<c:otherwise>
 								<td>
-									<a href="comm_board_down.do?f_name=${cbvo.f_name}"><img src="resources/upload/${cbvo.f_name}" style="width: 80px"> </a>
+									<a href="comm_board_down.do?f_name=${cbvo.bf_name}"><img src="resources/upload/${cbvo.bf_name}" style="width: 80px"> </a>
 								</td>
 							</c:otherwise>
 						</c:choose>

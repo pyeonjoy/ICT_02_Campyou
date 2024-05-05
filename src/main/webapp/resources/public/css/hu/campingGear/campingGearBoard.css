@@ -75,15 +75,11 @@ body {
 }
 
 .no{
-	width: 10%;
-}
-
-.story{
-	width: 12%
+	width: 15%;
 }
 
 .subject{
-	width: 33% 
+	width: 35% 
 }
 
 .writer{
@@ -91,7 +87,7 @@ body {
 }
 
 .reg {
-	width: 20% 
+	width: 15% 
 }
 
 .hit {

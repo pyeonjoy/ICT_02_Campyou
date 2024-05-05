@@ -61,17 +61,9 @@
 	    limit #{limit} offset #{offset}
 	</select>
  	
- 	<insert id="comm_board_insert" parameterType="cbvo">
- 		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
- 			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM board_free
- 		</selectKey>
- 		insert into board_free(member_idx, b_type, b_title, member_nickname, b_content, b_pwd, hit, groups, step, lev, regdate, f_name)
- 			values(#{member_idx}, #{b_type}, #{b_title}, #{member_nickname}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{f_name})
- 	</insert>
- 	
  	<update id="comm_board_hit" parameterType="String">
  		update board_free 
- 		set hit = hit + 1 
+ 		set b_hit = b_hit + 1 
  		where b_idx = #{b_idx} 
  	</update>
  	
@@ -85,7 +77,7 @@
  	
  	<update id="comm_board_update" parameterType="cbvo">
  	 	update board_free 
- 	 	set  b_title=#{b_title}, b_content=#{b_content}, f_name=#{f_name}
+ 	 	set  b_subject=#{b_subject}, b_content=#{b_content}, bf_name=#{bf_name}
  	 	where b_idx = #{b_idx}  	 
  	 </update>
  	 
@@ -94,8 +86,8 @@
  	 </delete>
  	 
  	  <insert id="comm_reply_insert" parameterType="cbvo">
- 	 	insert into board_free(member_idx, b_type, b_title, member_nickname, b_content, b_pwd, hit, groups, step, lev, regdate, f_name)
- 			values(#{member_idx}, #{b_type}, #{b_title}, #{member_nickname}, #{b_content}, #{b_pwd}, 0, #{groups}, #{step}, #{lev}, sysdate(), #{f_name})
+ 	 	insert into board_free(member_idx, b_type, b_subject, member_nickname, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name)
+ 			values(#{member_idx}, #{b_type}, #{b_subject}, #{member_nickname}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{bf_name})
  	  </insert>
  	 
  	 <select id="comm_board_reply_detail" parameterType="cbvo" resultType="cbvo">
@@ -103,39 +95,73 @@
  	 </select>
  	
  	<!-- commet-rely -->
- 	<select id="comment_list" parameterType="String" resultType="cvo">
+ 	<select id="comment_list" parameterType="String" resultType="covo">
  		select * from comment_t where b_idx = #{b_idx}
  	</select>
  	
- 	<insert id="comment_insert" parameterType="cvo">
+ 	<!-- <insert id="comment_insert" parameterType="covo">
  		insert into comment_t(member_nickname, content, write_date, b_idx)
  			values(#{member_nickname}, #{content}, sysdate(), #{b_idx})
+ 	</insert> -->
+ 	
+ <!-- 	<insert id="comment_insert" parameterType="covo">
+ 		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
+ 			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM board_free
+ 		</selectKey>
+ 		insert into board_free(member_idx, b_type, b_subject, member_nickname, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name)
+ 			values(#{member_idx}, #{b_type}, #{b_subject}, #{member_nickname}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{bf_name})
  	</insert>
+ 	 -->
+ 	 
+ 	 
+ 	 
+ 	 
+ 	<insert id="comment_insert" parameterType="covo">
+ 		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
+ 			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM comment_t
+ 		</selectKey>
+ 		insert into comment_t(member_nickname, content, write_date, b_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, 0, 0)
+ 	</insert>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
  	
  	<delete id="comment_delete" parameterType="String">
  		delete from comment_t where c_idx = #{c_idx}
  	</delete>
  	
- 	<update id="comment_update" parameterType="cvo">
+ 	<update id="comment_update" parameterType="covo">
  		update comment_t 
  		set content = #{content}, write_date = sysdate()
  	    where b_idx=#{b_idx} and c_idx = #{c_idx}
  	</update>
  	
- 	<select id="comment_reply_list" parameterType="String" resultType="cvo">
+ 	<select id="comment_reply_list" parameterType="String" resultType="covo">
  		select * from comment_t where b_idx = #{b_idx}
  	</select>
  	
- 	<update id="lev_update" parameterType="cvo">
+ 	
+ 	
+ 	
+ 	
+ 	<update id="comm_lev_update" parameterType="Map">
  	 	update comment_t set lev=lev+1 where groups=#{groups} and lev>=#{lev} 
  	 </update>
  	
- 	<insert id="ans_insert" parameterType="cvo">
- 	 	insert into comment_t(member_nickname, content, write_date, b_idx, step, lev)
- 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{step}, #{lev})
- 	 </insert>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+
  	 
- 	 <insert id="comment_reply_insert" parameterType="cvo">
+ 	 <insert id="comment_reply_insert" parameterType="covo">
  	 	insert into comment_t(member_nickname, content, write_date, b_idx, step, lev)
  			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{step}, #{lev})
  	 </insert>
@@ -151,20 +177,34 @@
  		<choose>
  			<!-- <when test="searchType == 1"> Lower(b_title) = Lower(#{searchValue})</when> -->
  			
- 			<when test="searchType == 1"> Lower(b_title) like concat('%', Lower(#{searchValue}),'%')</when>
+ 			<when test="searchType == 1"> Lower(b_subject) like concat('%', Lower(#{searchValue}),'%')</when>
  			<when test="searchType == 2"> Lower(b_content) like concat('%', Lower(#{searchValue}), '%')</when>
  			<when test="searchType == 3"> Lower(member_nickname) = Lower(#{searchValue})</when>
- 			<when test="searchType == 4"> Lower(regdate) like concat( Lower(#{searchValue}), '%')</when>
+ 			<when test="searchType == 4"> Lower(b_regdate) like concat( Lower(#{searchValue}), '%')</when>
  		</choose>
  		
  	</select>
+ 	
+ 	<select id="member" parameterType="String" resultType="covo">
+ 		select * from comment_t where b_idx=#{b_idx}
+ 	</select>
  		
  	
+ 	 <insert id="ans_insert1" parameterType="covo">
+ 	 	insert into comment_t(member_nickname, content, write_date, b_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, #{step}, #{lev})
+ 	 </insert>
+ 	 
+ 	<!--  <insert id="ans_insert" parameterType="covo">
+ 	 	insert into comment_t(member_nickname, content, write_date, b_idx, step, lev)
+ 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{step}, #{lev})
+ 	 </insert> -->
  	
  	
  	
- 	
- 	
+ 	<select id="commet_reply_detail" parameterType="String" resultType="covo">
+ 		select * from comment_t where c_idx = #{c_idx}
+ 	</select>
  	
  	
  	

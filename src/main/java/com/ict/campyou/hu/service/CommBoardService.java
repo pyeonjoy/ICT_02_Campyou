@@ -39,4 +39,13 @@ public interface CommBoardService {
 	
 	//°ü¸®ÀÚ »èÁ¦
 	public int getCommBoardAdminDelete(String b_idx);
+	
+	//´ñ±Û´ñ±Û
+	public List<CommentVO> getCommentReplyList(String b_idx);
+	
+	public int getLevUpdate(Map<String, Integer> map);
+	
+	public int getAnsInsert(CommentVO cvo);
+	
+	public CommentVO getCommentReplyDetail(String c_idx);
 }

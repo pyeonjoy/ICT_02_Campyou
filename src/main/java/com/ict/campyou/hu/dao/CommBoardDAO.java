@@ -151,4 +151,24 @@ public class CommBoardDAO {
 		}
 		return 0;
 	}
+	
+	public List<CommentVO> getCommentReplyList(String b_idx) {
+		
+		return sqlSessionTemplate.selectList("member", b_idx);
+	}
+	
+	public int getAnsInsert(CommentVO cvo) {
+		try {
+			return sqlSessionTemplate.insert("member.ans_insert1", cvo);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	
+	public CommentVO getCommentReplyDetail(String c_idx) {
+		
+		return sqlSessionTemplate.selectOne("member.commet_reply_detail", c_idx);
+	}
+
 }

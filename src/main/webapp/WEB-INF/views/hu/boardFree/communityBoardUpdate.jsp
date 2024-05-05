@@ -81,7 +81,7 @@
 					</tr>
 					<tr align="center">
 						<td bgcolor="#003300" style="color: white;">제목</td>
-						<td align="left"> <input type="text" name="b_title" value="${cbvo.b_title}"></td>
+						<td align="left"> <input type="text" name="b_subject" value="${cbvo.b_subject}"></td>
 					</tr>
 					<tr align="center">
 						<td bgcolor="#003300" style="color: white;">별명</td>
@@ -134,7 +134,6 @@
 					}
 				}
 			}
-			  
 		});
 		// $("#content").summernote("lineHeight",.7);
 	});
