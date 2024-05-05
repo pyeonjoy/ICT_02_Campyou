@@ -68,11 +68,9 @@
 	margin-left: 190px;
 }
 
-.detail_button {
-	padding-left: 30px;
-	padding-right: 30px;
+#detail_button {
 	position: relative;
-	left: 1410px;
+	left: 1282px;
 	top: -35px;
 }
 
@@ -194,6 +192,11 @@
 .fullheart {
     color: red;
 }
+#detail_button input[type="button"]{
+	height: 40px;
+	padding-left: 30px;
+	padding-right: 30px;
+}
 
 
 </style>
@@ -241,19 +244,6 @@ $(document).ready(function() {
                 alert("읽기 실패");
             }
         });
-        $.ajax({
-            url: "checkHeart.do",
-            method: "post",
-            data: { contentid: contentId },
-            success: function(data) {
-                if (data === "true") {
-                    $(".detail_button input[value='❤️ 찜']").addClass("fullheart");
-                }
-            },
-            error: function() {
-                alert("찜 상태를 확인하는 중 오류가 발생했습니다.");
-            }
-        });
     }
 
     let facilityList = "${info.sbrscl}";
@@ -287,7 +277,7 @@ $(document).ready(function() {
     $("#camp_item_g").append(facilityIcons);
     
     loadReview();
-    
+    loadHeart();
     $('#review_form').submit(function(e) {
         e.preventDefault();
 
@@ -319,24 +309,17 @@ $(document).ready(function() {
     });	
 });
 function Heart() {
-    if ($(".detail_button input[value='❤️ 찜']").hasClass("fullheart")) {
-        delHeart();
-    } else {
-        addHeart();
-    }
-}
-
-function addHeart() {
     $.ajax({
         url: "addHeart.do",
         method: "post",
         data: { contentid: contentId },
         success: function(data) {
-            if (data != "error") {
-                $(".detail_button input[value='❤️ 찜']").addClass("fullheart");
-                alert("관심 캠핑장에 등록되었습니다.");
+            if(data != "error") {
+                alert("관심 캠핑장에 등록이 되었습니다.");
+                loadHeart();
             } else {
-                alert("찜 추가에 실패했습니다.(추가에서 오류)");
+            	delHeart();
+            	loadHeart();
             }
         },
         error: function() {
@@ -344,24 +327,18 @@ function addHeart() {
         }
     });
 }
-
 function delHeart() {
-    $.ajax({
-        url: "delHeart.do",
-        method: "post",
-        data: { contentid: contentId },
-        success: function(data) {
-            if (data != "error") {
-                $(".detail_button input[value='❤️ 찜']").removeClass("fullheart");
-                alert("관심 캠핑장에서 제거하였습니다.");
-            } else {
-                alert("찜 제거에 실패했습니다.");
-            }
-        },
-        error: function() {
-            alert("찜 제거에 실패했습니다.");
-        }
-    });
+	$.ajax({
+		url:"delHeart.do",
+		method: "post",
+		data: {contentid: contentId},
+		success: function(data){
+			if (data != "error") {
+				alert("관심캠핑장에서 제거하였습니다.");
+				loadHeart();
+			}
+		}
+	});
 }
 $(document).on("click", "#detail_img img", function() {
     let imageUrl = $(this).attr("src");
@@ -415,6 +392,44 @@ function loadReview(){
         }
     });
 }
+function loadHeart() {
+    $.ajax({
+        url: "checkHeart.do",
+        type: "get",
+        data: { contentid: contentId },
+        dataType: "json",
+        success: function(data) {
+            $("#detail_button").empty();
+            console.log(data);
+            if (data === true) {
+                let detailButton = "<div>";
+                detailButton += "<input type='button' name='page' value='홈페이지' onclick=\"window.open('${info.homepage}')\">";
+                detailButton += "<input type='button' name='page' value='예약페이지' onclick='resvego()'>";
+                detailButton += "<input type='button' id='Heart' name='page' value='❤️ 찜하기' onclick='Heart()'>";
+                detailButton += "</div>";
+                $("#detail_button").append(detailButton);
+            } else if (data === false) {
+                let detailButton = "<div>";
+                detailButton += "<input type='button' name='page' value='홈페이지' onclick=\"window.open('${info.homepage}')\">";
+                detailButton += "<input type='button' name='page' value='예약페이지' onclick='resvego()'>";
+                detailButton += "<input type='button' id='Heart' name='page' value='❤️ 찜 해제' onclick='delHeart()'>";
+                detailButton += "</div>";
+                $("#detail_button").append(detailButton);
+            } else {
+                alert("찜 여부를 확인하는 중 오류가 발생했습니다.");
+            }
+        },
+        error: function() {
+            let detailButton = "<div>";
+            detailButton += "<input type='button' name='page' value='홈페이지' onclick=\"window.open('${info.homepage}')\">";
+            detailButton += "<input type='button' name='page' value='예약페이지' onclick='resvego()'>";
+            detailButton += "<input type='button' id='Heart' name='page' value='❤️ 찜하기' onclick='Heart()'>";
+            detailButton += "</div>";
+            $("#detail_button").append(detailButton);
+        }
+    });
+}
+
 </script>
 <script>
 // DB에 페이지 이동 주소가 없는 경우 
@@ -445,12 +460,7 @@ function loadReview(){
 		<div style="display: inline-block;">
 			<h2 style="display: inline; margin-left: 190px;">${info.facltnm}</h2>
 			<p style="display: inline;">${info.lctcl}/${info.induty}</p>
-			<div class="detail_button">
-				<input type="button" name="page" value="홈페이지"
-					onclick="window.open('${info.homepage}')"> <input
-					type="button" name="page" value="예약페이지" onclick="resvego()">
-				<input type="button" name="page" value="&#9829; 찜" onclick="Heart()">
-				<!-- onclick="window.open('${info.resveurl}')"> -->
+			<div id="detail_button">
 			</div>
 		</div>
 		<div class="detail_info_1">

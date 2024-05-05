@@ -198,16 +198,20 @@ public class CampAjaxController {
 	@RequestMapping(value = "checkHeart.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String checkHeart(@RequestParam()String contentid, HttpSession session) {
-		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-	    String member_idx = mvo.getMember_idx();
-	    String chkHeart = campService.checkHeart(contentid, member_idx);
-	    System.out.println(chkHeart);
-	    if (chkHeart != null) {
-			return "true";
-		}else {
-			return "error";
-		}
+	    MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+	    if (mvo == null) {
+	        return ("hu/loginForm");
+	    } else {
+	        String member_idx = mvo.getMember_idx();
+	        String chkHeart = campService.checkHeart(contentid, member_idx);
+	        if (chkHeart != null) {
+	            return "false";
+	        } else {
+	        	return "true";
+	        }
+	    }
 	}
+
 	
 	
 	
