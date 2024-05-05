@@ -99,8 +99,26 @@ function handle_pwd(memberIdx, f) {
         alert('비밀번호를 입력해주세요.');
         passwordInput.focus();
         return;
-    }    
-    f.action = "my_change_pw.do?member_idx="+memberIdx;
+    } 
+     if (password && response === "success") {
+        f.submit();
+        f.action = "my_change_pw.do?member_idx="+memberIdx;
+    }   
+}
+
+function handle_delete(memberIdx) {
+	 const passwordInput = document.getElementById('password');
+    const password = passwordInput.value.trim();
+    
+    if (!password) {
+        alert('비밀번호를 입력해주세요.');
+        passwordInput.focus();
+        return;
+    }  
+     if (password && response === "success") {
+
+    href.location = "deleteUser.do?member_idx="+memberIdx; 
+    }   
 }
 
 document.querySelector('.btn_change').addEventListener('click', handleChangeInfo);

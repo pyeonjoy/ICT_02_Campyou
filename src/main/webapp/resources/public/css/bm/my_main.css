@@ -173,12 +173,14 @@ padding: 2px;
   font-size: .9rem;
 }
 .more_list{
-  font-size: 2rem;
+ border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
   font-weight: 800;
   position: absolute;
-  top: -.5rem;
- right:.5rem;
- cursor: pointer;
+  top: -0.1rem;
+  right: 0.5rem;
+  cursor: pointer;
 }
 .arrow{
   width: 2rem;

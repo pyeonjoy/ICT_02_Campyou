@@ -12,20 +12,32 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script defer src="${path}/resources/public/js/bm/lang/summernote-ko-KR.js"></script>
 <script defer src="${path}/resources/public/js/bm/summernote-lite.js"></script>
-<script>
-
-</script>
+ <script>
+      function handleModiUp(qna_idx) {
+        href.location = "QnaUpdate.do";
+      }
+    </script>
 </head>
 <body>
  <div class="form_container">
   <h1 class="inquiry_title">1:1문의</h1>
   <form class="form_inquiry" method="post" enctype="multipart/form-data">
     <div class="title_box">
-      <input type="text" placeholder="글제목" class="input_title" name="qna_title">
-    </div>
-    <textarea class="text_area" id="summernote" name="qna_content">
-    </textarea>
-  
+          <input
+            type="text"
+            placeholder="글제목"
+            class="input_title"
+            name="qna_title"
+            value="${qvo.qna_title}"
+          />
+        </div>
+        <textarea
+          class="text_area summernote"
+          id="summernote"
+          name="qna_content"
+        >
+          ${qvo.qna_content}
+        </textarea>
       <div class="form_btn">
        <input
               type="hidden"
@@ -33,10 +45,16 @@
               name="member_idx"
               value="${qvo.member_idx}"
             />
-        <button class="btn btn-modi">수정</button>
+     <input
+              type="hidden"
+              id="memberIdx"
+              name="member_idx"
+              value="${qvo.qna_idx}"
+            />
+        <button class="btn btn-modi"onclick="handleModiUp()">저장 </button>
         <button class="btn btn-cancel">취소</button>
       </div>
-
+    </div>
   </form>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
@@ -47,7 +65,10 @@
     	    lang : 'ko-KR',
         	height : 300,
         	focus : true,
-    	   
+    	    callbacks: {
+    	        onFileUpload: function(file) {
+    	            myOwnCallBack(file[0]);
+    	        },
     	    },
     	});
     });
