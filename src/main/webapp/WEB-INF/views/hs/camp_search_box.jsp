@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style type="text/css">
 #detail_search, #search_button {
 	padding: 10px;
@@ -68,37 +69,73 @@
     overflow: hidden;
     float: left;
 }
+
+.search_button_option{
+	display: none;
+}
 </style>
 <script type="text/javascript">
+$(document).ready(function() {
+	$("#sido_search").empty();
+	$.ajax({
+	    url: "camp_search_box_SiDo_json.do",
+	    method: "post",
+	    dataType: "json",
+	    success: function(data) {
+		    let option = "<option>전체</option>";
+	        $.each(data.response.result.featureCollection.features, function(index, feature) {
+	            let ctp_kor_nm =  feature.properties.ctp_kor_nm;
+	            
+		    	option += "<option value=\""+ ctp_kor_nm +"\">"+ ctp_kor_nm + "</option>";
+	            
+	        });
+	        $("#sido_search").append(option);
+	    },
+	    error: function() {
+	    	console.log("읽기 실패");
+	    }
+	});
+	/*  */
+	$("#sido_search").on("change", function() {
+		let sido_selected = $("#sido_search option:selected").val();
+		console.log(sido_selected)
+		$("#sigungu_search").empty();
+		$.ajax({
+		    url: "camp_search_box_SiGunGu_json.do",
+		    method: "post",
+		    dataType: "json",
+		    data: { sido_selected: sido_selected },
+		    success: function(data) {
+			    let option = "<option>전체</option>";
+		        $.each(data.response.result.featureCollection.features, function(index, feature) {
+		            let sig_kor_nm = feature.properties.sig_kor_nm;
+		            console.log("sss" + sig_kor_nm)
+			    	option += "<option value=\""+ sig_kor_nm +"\">"+ sig_kor_nm + "</option>";
+		            
+		        });
+		        $("#sigungu_search").append(option);
+		    },
+		    error: function() {
+		    	console.log("읽기 실패");
+		    }
+		});
+	});
+});
 
 </script>
 </head>
 <body>
 	<div>
 		<div class="search_wrap">
-			<select name="local_search">
+			<select id="sido_search" name="sido_search">
 				<option>전체</option>
-				<option value="1">서울시</option>
-				<option value="2">부산시</option>
-				<option value="3">대구시</option>
-				<option value="4">인천시</option>
-				<option value="5">광주시</option>
-				<option value="6">대전시</option>
-				<option value="7">울산시</option>
-				<option value="8">세종시</option>
-				<option value="9">세종시</option>
-				<option value="10">경기도</option>
-				<option value="11">충청북도</option>
-				<option value="12">충청남도</option>
-				<option value="13">전라북도</option>
-				<option value="14">전라남도</option>
-				<option value="15">경상북도</option>
-				<option value="16">경상남도</option>
-				<option value="17">제주도</option>
 			</select> 
-			<select>
+			
+			<select id="sigungu_search" name="sigungu_search">
 				<option>전체</option>
-			</select><input type="text" id="keyword_input" placeholder="검색어를 입력하세요">
+			</select>
+			
+			<input type="text" id="keyword_input" placeholder="검색어를 입력하세요">
 			<input type="button" value="상세조건+" id="detail_search">
 			<button id="search_button">검색</button>
 		</div>
