@@ -76,6 +76,7 @@ public int uploadQna(QnaVO qvo) {
 		System.out.println(e);
 	}
 	return 0;
+
 }
 
 public int updateQna(QnaVO qvo) {
@@ -98,6 +99,7 @@ public List<QnaVO> getMyQna(String member_idx) {
 	}
 	return null;
 }
+
 public int getTotalCount(String member_idx) {
 
 	return sqlSessionTemplate.selectOne("bomi.count", member_idx);

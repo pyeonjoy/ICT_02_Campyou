@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper SYSTEM "file:///Users/meekim/Downloads/mybatis-3-mapper.dtd">
+<!-- <!DOCTYPE mapper SYSTEM "file:///Users/meekim/Downloads/mybatis-3-mapper.dtd"> -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="bomi">
 <select id="faq_lists" resultType="fvo">
@@ -12,6 +15,7 @@ select * from faq2 order by faq_idx
 <select id="getPw" resultType="mvo" parameterType="String">
 select * from members where member_id=#{member_id}
 </select>
+
 <select id="getUser" resultType="mvo" parameterType="String">
 select * from members where member_idx=#{member_idx}
 </select>
@@ -30,6 +34,7 @@ update members set member_pwd = #{member_pwd} where member_idx = #{member_idx}
 select * from qna where qna_idx=#{qna_idx}
 </select>
 
+
 <update id="modiQna" parameterType="String" >
 update qna set qna_title=#{qna_title}, qna_content=#{qna_content} where qna_idx=#{qna_idx}
 </update>
@@ -37,5 +42,18 @@ update qna set qna_title=#{qna_title}, qna_content=#{qna_content} where qna_idx=
 
 <select id="getlist" resultType="tvo" parameterType="String">
 select * from board_with where member_idx=#{member_idx} order by t_idx desc LIMIT 4
+</select>
+<insert id="upQna" parameterType="qvo">
+insert into qna(member_idx, qna_title, qna_content, qna_date, qna_status)
+values(#{member_idx},#{qna_title},#{qna_content}, sysdate(), 0)
+</insert>
+
+<select id="getQnas" resultType="qvo" parameterType="String">
+select * from qna where member_idx=#{member_idx}
+</select>
+
+<select id="count" resultType="int" parameterType="String">
+select count(*) from qna where member_idx=#{member_idx}
+>>>>>>> bomi
 </select>
 </mapper>

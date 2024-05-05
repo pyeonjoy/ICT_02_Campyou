@@ -60,6 +60,7 @@ public class MyServiceImpl implements MyService{
 	public int getTotalCount(String member_idx) {	
 		return myDao.getTotalCount(member_idx);
 	}
+
 	@Override
 	public QnaVO getMyOneQna(String qna_idx) {		
 		return myDao.getMyOneQna(qna_idx);

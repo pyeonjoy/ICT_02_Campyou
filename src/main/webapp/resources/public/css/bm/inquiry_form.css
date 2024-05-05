@@ -12,22 +12,26 @@
   margin: 0;
   padding: 0;
 }
+
 .form_container{
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
+  transform: translateY(10rem);
 }
 .inquiry_title{
   text-align: center;
-  margin: 2rem;
   margin-bottom: 3rem;
   color: var(--primary-color);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 .title_box{
   border-bottom: 1px solid var(--text-black);
+  height: 2rem;
+  margin-bottom: 1rem;
 }
 .input_title{
   border: none;
+  font-size: 1.5rem;
 }
 .text_area{
   width: 100%;

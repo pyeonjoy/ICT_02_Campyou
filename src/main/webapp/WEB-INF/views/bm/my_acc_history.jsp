@@ -7,11 +7,15 @@
 <head>
 <meta charset="UTF-8">
  <link rel="stylesheet" href="${path}/resources/public/css/bm/grid.css">
+   <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
 <title>동행내역</title>
 </head>
 <body>
- <h3 class="grid_title">동행내역</h3>
+
+		<%@ include file="../hs/mypage_menu.jsp"%>
+
   <div class="grid_container">
+ <h3 class="grid_title">동행내역</h3>
     <div class="grid_col grid_header">
       <div class="grid_row grid_row1">이미지</div>
       <div class="grid_row grid_row2">캠핑장</div>

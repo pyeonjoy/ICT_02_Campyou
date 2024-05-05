@@ -11,14 +11,17 @@
 
 .my_title {
   text-align: center;
-  margin: 2rem;
   margin-bottom: 6rem;
   color: var(--primary-color);
+   transform: translateY(10rem);
 }
 .user_info {
+width: 70%;
+margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translateY(10rem);
 }
 .user_img_container {
   display: inline-flex;
@@ -35,7 +38,7 @@
 }
 /*
 .file {
-  position: absolute;
+ /* position: absolute; */
   top: 0;
   left: -20%;
 }
@@ -43,6 +46,7 @@
 .user_info_container {
   margin: 1rem 1.5rem;
   position: relative;
+
 }
 .user_img {
   width: 99px;
@@ -50,9 +54,9 @@
   border: 1px solid var(--text-black);
   border-radius: 50%;
   overflow: hidden;
-   display: flex;
-  justify-content: center; 
-  align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
 }
 
 #user_img {
@@ -83,8 +87,9 @@
 }
 .btn-check {
   position: absolute;
-  right: -2.5rem;
-  top: 6.7rem;
+right: 12rem;
+    top: 8.6rem;
+
 }
 .btn_container {
   margin-left: 7rem;
@@ -97,7 +102,7 @@
   font-size: 0.8rem;
   font-weight: 100;
   position: absolute;
-  bottom: 1rem;
+  bottom: -7rem;
   right: 1rem;
 }
 .hidden {

@@ -18,6 +18,7 @@ public interface MyService {
 
 	public int changeUserInfo(MemberVO mvo);
 	public int changeUserPW(MemberVO mvo);
+
 	public int deletMember(String member_idx);
 	
 	 public int uploadQna(QnaVO qvo);
@@ -28,3 +29,6 @@ public interface MyService {
 	 
 	public List<TogetherVO> getMyAcc_List(String member_idx);
 }
+
+	
+

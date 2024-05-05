@@ -38,14 +38,14 @@ public class BomiController {
 	
 	@Autowired
 	Paging paging;
-	
+
 //	Simple page router	
 	@GetMapping("home.do")
 	public ModelAndView gotoMainPage() {
 		ModelAndView mv = new ModelAndView("home");
 		return mv;
 	}
-	
+
 	@GetMapping("my_main.do")
 	public ModelAndView gotoMypage(HttpSession session) {
 		ModelAndView mv = new ModelAndView("bm/my_main");
@@ -80,6 +80,7 @@ public class BomiController {
 	
 
 	///////////////////////////////////////USER INFORMATION///////////////////////////////////////////////////////////
+
 //	check my information  
 	@GetMapping("my_info.do")
 	public ModelAndView gotoMyinfo(HttpSession session) {
@@ -87,6 +88,7 @@ public class BomiController {
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
 		String member_idx = mvo.getMember_idx();
 		MemberVO mvo2 = myService.getMember(member_idx);
+
 		mv.addObject("mvo", mvo2);
 		return mv;
 	}
@@ -141,6 +143,7 @@ public class BomiController {
 				
 				return mv;
 			}
+
 			return new ModelAndView("redirect:pwd_change.do");			
 		}
 		// Delete User
@@ -165,10 +168,9 @@ public class BomiController {
 		//After User complete writing 
 		 @PostMapping("QnaUpload.do")
 		    public ModelAndView qnaUpload(QnaVO qvo, @RequestParam("member_idx") String member_idx) {
-		        ModelAndView mv = new ModelAndView("redirect:my_inquiry_list.do?member_idx="+member_idx);
+		        ModelAndView mv = new ModelAndView("redirect:my_inquiry.do?member_idx="+member_idx);
 		        int res = myService.uploadQna(qvo);
-		        if(res>0) {
-					
+		        if(res>0) {					
 					return mv;
 				}
 				return new ModelAndView("error");
@@ -293,6 +295,7 @@ public class BomiController {
 			return mv;			 
 					 
 		 }
+
 		}
 
 	

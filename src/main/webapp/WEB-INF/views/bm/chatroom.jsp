@@ -6,11 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>chat room</title>
+<title>chatroom</title>
 <link rel="stylesheet" href="${path}/resources/public/css/bm/chatroom.css">
 </head>
 <body>
-  <button class="btn-enterChat" onclick="handleChatEnter(event)">
+  <button class="btn-enterChat" onclick="connect(event)">
       chatroom 채팅방 처음입성
     </button>
     <button class="btn-chatList" onclick="handleChatList()">
@@ -87,6 +87,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script src="${path}/resources/public/css/bm/chat.js"></script>
+    <script src="${path}/resources/public/js/bm/chatroom.js"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${path}/resources/public/css/bm/my_main.css">
   <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
-  <script defer src="${path}/resources/public/js/bm/menu_side.js"></script>
+  <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
 <title>마이페이지</title>
 <script>
 function handleMyBoardList(member_idx){
