@@ -35,7 +35,7 @@
 			<c:otherwise>
 				<c:forEach var="list" items="${list }" varStatus="vs" begin="1">
 				      <div class="grid_row grid_row_content">${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage+ vs.index)}</div>
-				      <div class="grid_row grid_row_content">${list.qna_title }</div>
+				      <a href="my_inquiry.do?qna_idx=${list.qna_idx}"><div class="grid_row grid_row_content">${list.qna_title }</div></a>
 				      <div class="grid_row grid_row_content">${nickname }</div>
 				      <div class="grid_row grid_row_content">${list.qna_date}</div>
 						      <c:choose>
