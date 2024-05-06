@@ -13,12 +13,14 @@
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
 <%@ include file="../hs/header.jsp" %>
 <script type="text/javascript">
-function to_list_go() {
-	location.href="together_list.do";
+function to_list_go(f) {
+	f.action="together_list.do";
+	f.submit();
 }
 
 $(function() {
 	initMap();
+	toggleApplyButton();
 });
 function initMap() {
     let markers = [];
@@ -48,8 +50,10 @@ function initMap() {
         
         let infoWindow = new naver.maps.InfoWindow({
             content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + tf_name + '" alt="" style="width:100%;" /><b>' + t_campname + '</b><br><br> ' + t_induty + '<br>(' + t_facltdivnm + '/' + t_mangedivnm + ') <br><br></div>',
-            disableAutoPan: true // 정보창열릴때 지도이동 안함
+            disableAutoPan: true
         });
+        
+        infoWindow.open(map, marker);
         
         naver.maps.Event.addListener(marker, 'click', function() {
         	if (infoWindow.getMap()) {
@@ -62,8 +66,110 @@ function initMap() {
 	}
 }
 
-function to_application() {
+function toggleApplyButton() {
+    let applyButton = document.getElementById('toDetailContent1Button2');
+    let cancelButton = document.getElementById('toDetailContent1Button3');
+    let tMemberIdx = document.getElementById('t_member_idx').value;
+    let tIdx = document.getElementById('t_idx').value;
+    
+    $.ajax({
+        type: "POST",
+        url: "to_promise_chk.do",
+        data: {
+            member_idx: tMemberIdx,
+            t_idx: tIdx
+        },
+        success: function(response) {
+        	if(response === "me") {
+        		applyButton.style.display = "none";
+                cancelButton.style.display = "none";
+        	} else if (response === "ok") {
+                applyButton.style.display = "none";
+                cancelButton.style.display = "block";
+            } else {
+                applyButton.style.display = "block";
+                cancelButton.style.display = "none";
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+function to_apply() {
+	let memberIdx = document.getElementById('member_idx').value;
+	let tIdx = document.getElementById('t_idx').value;
+	let applyNumPeople = parseInt($('.toDetailContent1Num').text().split('/')[0]);
+	let totalNumPeople = parseInt($('.toDetailContent1Num').text().split('/')[1]);
+
+	if (applyNumPeople >= totalNumPeople) {
+        alert("동행 인원이 초과되었습니다.");
+        return;
+	}
 	
+	$.ajax({
+        type: "POST",
+        url: "to_promise.do",
+        data: {
+            member_idx: memberIdx,
+            t_idx: tIdx
+        },
+        success: function(response) {
+        	if (response > 0) {
+                alert("신청이 완료되었습니다.");
+                $('.toDetailContent1Num').text(response + '/' + totalNumPeople + '명');
+            } else {
+	            alert(response);
+            }
+        	toggleApplyButton();
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+function to_cancel() {
+	let memberIdx = document.getElementById('member_idx').value;
+    let tIdx = document.getElementById('t_idx').value;
+    let applyNumPeople = parseInt($('.toDetailContent1Num').text().split('/')[0]);
+	let totalNumPeople = parseInt($('.toDetailContent1Num').text().split('/')[1]);
+    
+    $.ajax({
+        type: "POST",
+        url: "to_promise_cancel.do",
+        data: {
+            member_idx: memberIdx,
+            t_idx: tIdx
+        },
+        success: function(response) {
+        	if (response > 0) {
+                alert("신청이 취소되었습니다.");
+                $('.toDetailContent1Num').text(response + '/' + totalNumPeople + '명');
+            } 
+        	toggleApplyButton();
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+function to_update_go(f) {
+	f.action="to_update.do";
+	f.submit();
+}
+function to_delete_go(f, t_idx) {
+	setTimeout(function(){
+	    let result = confirm("정말 삭제하시겠습니까?");
+	    if (result) {
+	        f.action="to_delete_ok.do";
+	        f.submit();
+	    }else{
+	    	return;
+	    }
+	 }, 150);
 }
 </script>
 </head>
@@ -79,17 +185,24 @@ function to_application() {
         		</c:otherwise>
         	</c:choose>
         </div>
-        <form class="toDetailContent">
+        <form class="toDetailContent" method="post">
             <div class="toDetailContent1">
                 <div class="userImage"><img src="${path}/resources/images/${tvo.member_img }" class="userImage2"></div>
                 <div class="toContentOne1span">
                     <span class="to_member_nickname">${tvo.member_nickname }</span>
 					<span class="to_member_age">(${tvo.member_dob })</span>
                 </div>
-                <input type="button" value="1:1 채팅하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1">
-                <input type="button" value="참가 신청하기" id="" onclick="to_application()" class="toDetailContent1Button toDetailContent1Button2">
+<!--                 <input type="button" value="1:1 채팅하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1"> -->
+<!--                 <input type="button" value="참가 신청하기" id="" onclick="to_application()" class="toDetailContent1Button toDetailContent1Button2"> -->
+                <button type="button" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1">1:1 채팅하기</button>
+                <button type="button" id="toDetailContent1Button2" onclick="to_apply()" class="toDetailContent1Button toDetailContent1Button2">참가신청하기</button>
+                <button type="button" id="toDetailContent1Button3" onclick="to_cancel()" class="toDetailContent1Button toDetailContent1Button2">참가신청취소</button>
+<!--                 <input type="button" value="참가 취소하기" id="" onclick=""> -->
+                <input type="hidden" id="t_member_idx" value="${tvo.member_idx }">
+                <input type="hidden" name="t_idx" id="t_idx" value="${tvo.t_idx }">
+                <input type="hidden" id="member_idx" value="${memberUser.member_idx }">
+                <span class="toDetailContent1Num">${appluNum }/${tvo.t_numpeople }명</span>
                 <span>${tvo.t_regdate }</span>
-                <!-- <input type="button" value="참가 취소하기" id="" onclick=""> -->
             </div>
             <div class="toDetailContent2">
                 <div class="toDetailContent2Sub1">
@@ -104,7 +217,6 @@ function to_application() {
                     <div class="toDetailContent2Sub1Div">
                         <h3>${tvo.t_subject }</h3>
                         <span>조회수&nbsp;${tvo.t_hit }</span>
-                        <span>참여자&nbsp;1/${tvo.t_numpeople }명</span>
                     </div>
                     <pre class="toDetailTContent">${tvo.t_content }</pre>
                 </div>
@@ -131,18 +243,19 @@ function to_application() {
             <div class="toDetailContent3">
             	<c:choose>
             		<c:when test="${memberUser.member_idx eq tvo.member_idx }">
-		                <input type="button" value="수정하기" id="" onclick="" class="toDetailContent3Button">
+		                <input type="button" value="수정하기" onclick="to_update_go(this.form)" class="toDetailContent3Button">
+		                <input type="button" value="삭제하기" onclick="to_delete_go(this.form, ${tvo.t_idx})" class="toDetailContent3Button">
             		</c:when>
             		<c:otherwise>
 						            		
             		</c:otherwise>
             	</c:choose>
-                <input type="button" value="목 록" id="" onclick="to_list_go()" class="toDetailContent3Button">
+                <input type="button" value="목 록" id="" onclick="to_list_go(this.form)" class="toDetailContent3Button">
                 <input type="hidden" name="cPage" value="${cPage }" >
             </div>
             <div class="toDetailContent4">
                 <p class="toDetailContent4Sub1">댓글</p>
-                <form >
+                <form method="post">
                     <div class="toDetailInput">
                         <div class="userImageDiv2"><img src="${path}/resources/images/tree-4.jpg" class="userImage32"></div>
                         <input type="text" value="" id="" class="toDetailInputBox">

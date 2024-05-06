@@ -79,11 +79,15 @@
 .toDetailContent1Button2{
     background-color: #032805;
     color: white;
-    margin-right: 11rem;
+    margin-right: 1rem;
+}
+.toDetailContent1Num{
+	margin-right: 10rem;
 }
 .toContentOne1span{
     display: flex;
     margin-left: 5.5rem;
+    align-items: center;
 }
 .toDetailContent2{
     display: grid;
