@@ -113,6 +113,8 @@ background-color: #FFFDDE;}
 
 #footer{
 width: 100%;
+position: absolute;
+left: 0px;
 }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
