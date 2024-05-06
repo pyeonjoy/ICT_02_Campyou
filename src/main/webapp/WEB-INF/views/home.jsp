@@ -206,7 +206,7 @@ function initMap(campList) {
                 title: "남산타워",
                 position: position,
                 icon: {
-                    content: '<img src="/resources/images/marker.png" alt="" style="margin: 0px; padding: 0px; width:30px; height:30px;">'
+                    content: '<img src="/resources/images/markerex.png" alt="" style="margin: 0px; padding: 0px; width:30px; height:30px;">'
                 }
             });
             console.log("Marker title:", marker.getTitle());
