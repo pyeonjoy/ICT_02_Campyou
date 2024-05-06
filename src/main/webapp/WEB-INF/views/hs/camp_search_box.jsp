@@ -26,7 +26,7 @@
 }
 
 .search_wrap select {
-	width: 100px;
+	width: 120px;
 }
 
 #keyword_input {
@@ -76,17 +76,14 @@
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#sido_search").empty();
 	$.ajax({
-	    url: "camp_search_box_SiDo_json.do",
+	    url: "camp_search_box_sido.do",
 	    method: "post",
-	    dataType: "json",
+	    dataType: "xml",
 	    success: function(data) {
-		    let option = "<option>전체</option>";
-	        $.each(data.response.result.featureCollection.features, function(index, feature) {
-	            let ctp_kor_nm =  feature.properties.ctp_kor_nm;
-	            
-		    	option += "<option value=\""+ ctp_kor_nm +"\">"+ ctp_kor_nm + "</option>";
+	    	let option = "";
+	        $(data).find("sido").each(function() {
+		    	option += "<option value=\""+ $(this).text() +"\">"+ $(this).text() + "</option>";
 	            
 	        });
 	        $("#sido_search").append(option);
@@ -95,30 +92,29 @@ $(document).ready(function() {
 	    	console.log("읽기 실패");
 	    }
 	});
-	/*  */
-	$("#sido_search").on("change", function() {
-		let sido_selected = $("#sido_search option:selected").val();
-		console.log(sido_selected)
+	
+	$("#sido_search").change(function(){
+		let selectSido= $(this).val();
 		$("#sigungu_search").empty();
 		$.ajax({
-		    url: "camp_search_box_SiGunGu_json.do",
+		    url: "camp_search_box_sigungu.do",
 		    method: "post",
-		    dataType: "json",
-		    data: { sido_selected: sido_selected },
+		    dataType: "xml",
 		    success: function(data) {
-			    let option = "<option>전체</option>";
-		        $.each(data.response.result.featureCollection.features, function(index, feature) {
-		            let sig_kor_nm = feature.properties.sig_kor_nm;
-		            console.log("sss" + sig_kor_nm)
-			    	option += "<option value=\""+ sig_kor_nm +"\">"+ sig_kor_nm + "</option>";
+		    	let option = "<option>전체</option>";
+		        $(data).find(selectSido).each(function() {
+		        	$(this).find("sigungu").each(function() {
+			        	let sigungu = $(this).text();
+				    	option += "<option value=\""+ sigungu +"\">"+ sigungu + "</option>";
 		            
+			        });
 		        });
 		        $("#sigungu_search").append(option);
 		    },
 		    error: function() {
 		    	console.log("읽기 실패");
 		    }
-		});
+		});		
 	});
 });
 

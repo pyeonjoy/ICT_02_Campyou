@@ -1,117 +1,69 @@
 package com.ict.campyou.hs.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ict.campyou.hs.service.HsService;
+import com.ict.campyou.jun.dao.CampVO;
 
 @Controller
 public class HsAjaxController {
+	@Autowired
+	private HsService hsService;
 
-	@RequestMapping(value="camp_search_box_SiDo_json.do", produces="application/json; charset=utf-8")
+	@RequestMapping(value = "camp_search_box_sido.do", produces = "text/xml; charset=utf-8")
 	@ResponseBody
-	public String campSearchBoxLocalSiDo() {
-		BufferedReader rd = null;
-		HttpURLConnection conn = null;
-		try {
-			
-			StringBuilder urlBuilder = new StringBuilder("https://api.vworld.kr/req/data");
-			urlBuilder.append("?" + URLEncoder.encode("service", "UTF-8") + "=" + URLEncoder.encode("data", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("request", "UTF-8") + "=" + URLEncoder.encode("GetFeature", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("format", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("errorformat", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); // 수정된 부분
-			urlBuilder.append("&" + URLEncoder.encode("size", "UTF-8") + "=" + URLEncoder.encode("17", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("data", "UTF-8") + "=" + URLEncoder.encode("LT_C_ADSIDO_INFO", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("geomfilter", "UTF-8") + "=" + URLEncoder.encode("BOX(124,33,132,43)", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("geometry", "UTF-8") + "=" + URLEncoder.encode("false", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("attribute", "UTF-8") + "=" + URLEncoder.encode("true", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("domain", "UTF-8") + "=" + URLEncoder.encode("http://localhost:8090", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("key", "UTF-8") + "=" + URLEncoder.encode("A4DEB3AF-CF6C-3C1F-A621-6F1447049467", "UTF-8"));
-			URL url = new URL(urlBuilder.toString());
-			conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("POST");
-
-			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			} else {
-				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-			}
-			StringBuilder sb = new StringBuilder();
-			String line;
-			while ((line = rd.readLine()) != null) {
-				sb.append(line);
-			}
-			return sb.toString();
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
-			try {
-				rd.close();
-				conn.disconnect();
-			} catch (IOException e) {
-				e.printStackTrace();
+	public String campSearchBoxLocalSido() {
+		List<CampVO> local = hsService.getLocalKeyword();
+		List<String> sidolist = new ArrayList<String>();
+		for (CampVO i : local) {
+			if (!sidolist.contains(i.getDonm())) {
+				sidolist.add(i.getDonm());
 			}
 		}
-		return null;
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		sb.append("<sidolist>");
+		for (String i : sidolist) {
+			sb.append("<sido>" + i + "</sido>");
+		}
+		sb.append("</sidolist>");
+		return sb.toString();
+		
 	}
 	
-	
-	@RequestMapping(value="camp_search_box_SiGunGu_json.do", produces="application/json; charset=utf-8")
+	@RequestMapping(value = "camp_search_box_sigungu.do", produces = "text/xml; charset=utf-8")
 	@ResponseBody
-	public String campSearchBoxLocalSiGunGu(String sido_selected) {
-		BufferedReader rd = null;
-		HttpURLConnection conn = null;
-		try {
-			System.out.println("11" + sido_selected);
-			StringBuilder urlBuilder = new StringBuilder("https://api.vworld.kr/req/data");
-			urlBuilder.append("?" + URLEncoder.encode("service", "UTF-8") + "=" + URLEncoder.encode("data", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("request", "UTF-8") + "=" + URLEncoder.encode("GetFeature", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("format", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("size", "UTF-8") + "=" + URLEncoder.encode("50", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("data", "UTF-8") + "=" + URLEncoder.encode("LT_C_ADSIGG_INFO", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("attrFilter", "UTF-8") + "=" + URLEncoder.encode("full_nm:like:", "UTF-8") + URLEncoder.encode(sido_selected, "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("geometry", "UTF-8") + "=" + URLEncoder.encode("false", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("domain", "UTF-8") + "=" + URLEncoder.encode("http://localhost:8090", "UTF-8"));
-			urlBuilder.append("&" + URLEncoder.encode("key", "UTF-8") + "=" + URLEncoder.encode("A4DEB3AF-CF6C-3C1F-A621-6F1447049467", "UTF-8"));
-			URL url = new URL(urlBuilder.toString());
-			conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("POST");
-			
-			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			} else {
-				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-			}
-			StringBuilder sb = new StringBuilder();
-			String line;
-			while ((line = rd.readLine()) != null) {
-				sb.append(line);
-			}
-			
-			System.out.println(urlBuilder);
-			System.out.println(sb);
-			
-			return sb.toString();
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
-			try {
-				rd.close();
-				conn.disconnect();
-			} catch (IOException e) {
-				e.printStackTrace();
+	public String campSearchBoxLocalSigungu() {
+		List<CampVO> local = hsService.getLocalKeyword();
+		List<String> sidolist = new ArrayList<String>();
+		
+		StringBuffer sb = new StringBuffer();
+		for (CampVO i : local) {
+			if (!sidolist.contains(i.getDonm())) {
+				sidolist.add(i.getDonm());
 			}
 		}
-		return null;
+		
+		sb.append("<locallist>");
+		for (String k : sidolist) {
+			sb.append("<"+ k +">");
+			for (CampVO i : local) {
+				if (k.equals(i.getDonm())) {
+					sb.append("<sigungu>" +i.getSigungunm()+ "</sigungu>");
+				}
+			}
+			sb.append("</"+ k +">");
+		}
+		sb.append("</locallist>");
+		return sb.toString();
+		
 	}
-	
-	
-	
+
 }

@@ -24,7 +24,7 @@ $(document).ready(function() {
                     campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
                     campItem += "<div class='camp_info'>";
                     campItem += "<p> ["+ doNm + sigunguNm+"] </p>";
-                    campItem += "<h4>" + facltNm + "</h4>" + induty + "</p>";
+                    campItem += "<h4>" + facltNm + "</h4><span>" + induty + "</span>";
                     campItem += "<p>" + addr1 + "</p>";
                     campItem += "<p>" + tel + "</p>";
                     campItem += "</div>";

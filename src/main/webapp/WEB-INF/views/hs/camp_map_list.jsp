@@ -7,7 +7,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=qpvmsbuult"></script>
 
-<script src="/resources/js/jun/camp_list.js"></script>
+<script src="/resources/public/js/jun/camp_list.js"></script>
 <title>CAMPYOU:지도로 검색</title>
 <style type="text/css">
 .camp_list_container {
@@ -16,29 +16,49 @@
 	align-items: center;
 }
 
+.camp_map_list_wrap {
+	width: 90vw;
+	height: 740px;
+	margin-bottom: 100px;
+	position: relative;
+	border: 1px solid #ccc;
+}
+
+
+.camp_list_wrap{
+	border-left: 1px solid #ccc;
+	float:left;
+    width: 40%;
+    height: 100%;
+    overflow-y: scroll;
+    flex-direction: column;
+}
+
+
 #camp_list_show {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    height: 100%;
     flex-wrap: wrap;
+    float:left;
 }
 
 .camp_item {
     position: relative;
     display: flex;
-    width: 45%;
-    margin-bottom: 40px;
-    padding: 20px;
-    border: 1px solid black;
+    border-bottom: 1px solid #ccc;
     box-sizing: border-box;
-    margin-right: 4%;
+    padding: 10px;
+    width: 100%;
     
 }
 
 .camp_item img {
-    width: 220px;
-    height: 180px;
+    width: 180px;
+    height: 120px;
+    object-fit: cover;
+    overflow: hidden;
     margin-right: 20px;
+    border-radius: 5px;
 }
 
 .camp_info {
@@ -46,18 +66,10 @@
 }
 
 .camp_item p {
-    margin: 0;
-    margin-bottom: 10px;
+    margin: 6px 0;
 }
-
-.camp_map_list_wrap {
-	border: 1px solid #ccc;
-	width: 80vw;
-	height: 740px;
-	margin-bottom: 100px;
-	position: relative;
-	overflow:hidden;
-	overflow-y: scroll;
+.camp_info span{
+	font-size: 12px;
 }
 
 .map_show{
@@ -71,19 +83,20 @@
 	width: 100%;
 	height: 100%;
 }
-
-.camp_list_wrap{
-	float:left;
-    width: 40%;
-    height: 100%;
+.page_button_space {
+	padding: 20px;
+	display: inline-block;
+	text-align: center;
 }
 
-#camp_list_show {
- 	display:inline;
+.camp_item .button_container{
 	position: absolute;
+	right: 10px;
 }
-.camp_item {
-	width: 100%;
+
+.camp_item button{
+	width: 80px;
+	padding: 5px;
 }
 </style>
 <script type="text/javascript">
@@ -106,7 +119,15 @@ $(document).ready(function() {
 	    	<div id="map"></div>
 	    </div>
 	   	<div class="camp_list_wrap">
-	   		<div id="camp_list_show"></div>
+	   		<div class="camp_list_inner">
+		   		<div id="camp_list_show"></div>
+	   			<div class="page_button_space">
+	   				<div class="page_button">
+				   		<input type="button" class="camp_list_before" value="이전">
+				   		<input type="button" class="camp_list_next" value="다음">
+			   		</div>
+	   			</div>
+   			</div>
 	   	</div>
    	</div>
 </div>
