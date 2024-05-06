@@ -3,6 +3,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="joy">
+<!--관리자페이지 메인 -->
 	<select id="getMemberCounts" resultType="avo">
 		SELECT
 		(SELECT count(member_idx) FROM members) AS totalMembers,
@@ -24,7 +25,7 @@
 
 	<select id="adminmainqna" resultType="int">
 		SELECT count(pm_idx) AS totalpm_idx
-		FROM m_promise
+		FROM with_promise
 	</select>
 
 	<select id="adminmainmatch" resultType="int">
@@ -43,12 +44,15 @@
 		FROM members
 		WHERE member_idx =#{member_idx}
 	</select>
-	<select id="boardall" resultType="amvo">
-		SELECT *
-		FROM members m
-		inner join board_free b on m.member_idx = b.member_idx
-		inner join board_camp c on m.member_idx = c.member_idx
-		WHERE m.member_idx =#{member_idx}
+
+<!-- 회원정보 -->
+
+	<select id="boardall" resultType="amvo" parameterType="String">
+	    SELECT *
+	    FROM members m
+	    INNER JOIN board_free b ON m.member_idx = b.member_idx
+	    INNER JOIN board_camp c ON m.member_idx = c.member_idx
+	    WHERE m.member_idx = #{member_idx}
 	</select>
 	<select id="reportall" resultType="int">
 		SELECT count(member_idx)
@@ -91,12 +95,17 @@
 		ORDER BY hit DESC
 		LIMIT 3;
 	</select>
+	
+<!-- 팝업  -->
 	<insert id="popUPWrite" parameterType="avo">
 		insert into popup(writer,title, regdate, f_name)
 		values(#{writer},#{title},sysdate(), #{f_name})
 	</insert>
 	<select id="count" resultType="int">
 		select count(*) from popup
+	</select>
+	<select id="count2" resultType="int">
+		select count(*) from members
 	</select>
 	<select id="popUPlist" parameterType="Map" resultType="avo">
 		SELECT * FROM popup ORDER BY popidx DESC LIMIT  #{limit} OFFSET #{offset} 
@@ -117,4 +126,7 @@
 		FROM members
 		ORDER BY member_idx DESC LIMIT  #{limit} OFFSET #{offset}
 	</select>
+	<delete id="popdelete" parameterType="String">
+	DELETE FROM popup WHERE popidx = #{popidx}
+	</delete>
 </mapper>

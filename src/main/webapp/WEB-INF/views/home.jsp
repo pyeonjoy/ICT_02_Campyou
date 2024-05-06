@@ -104,6 +104,12 @@ button {
 object-fit: cover;
 border-radius: 10px;
 }
+.find{
+margin: 50px;
+color: black;
+height:40px;
+line-height:40px;
+background-color: #FFFDDE;}
 
 #footer{
 width: 100%;

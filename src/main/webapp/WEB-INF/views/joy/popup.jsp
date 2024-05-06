@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../hs/admin_header.jsp" %>
 <%@ include file="../hs/admin_menu.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -179,7 +180,9 @@ text-align: center;
 						        <form action="popup_update.do" method="post">
 						            <input type="hidden" name="popidx" value="${k.popidx}">
 						            <input type="hidden" name="active" value="${k.active}">
-						            <td><input type="submit" value="선택"></td>
+						            <td><input type="submit" value="선택">
+									<input type="button" value="삭제" onclick="location.href='popup_delete.do?popidx=${k.popidx}'">
+						            </td>
 						            <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index )}</td>
 						            <td><img style="object-fit: cover;" class="subimg" src="resources/popup/${k.f_name}"></td>
 						            <td>${k.title }</a>
@@ -228,14 +231,14 @@ text-align: center;
 								</c:otherwise>
 							</c:choose>
 						</ol>	
-					</td>
-				</tr>
-			</tfoot>	
-		</table>
         <div class="bottom">
         <p>
 						<input type="button" value="글쓰기" onclick="location.href='popup_write.do'">
         </p>
+					</td>
+				</tr>
+			</tfoot>	
+		</table>
         </div>
         </div>
         </div>

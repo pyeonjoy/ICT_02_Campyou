@@ -10,7 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.joy.dao.AdminVO;
@@ -28,7 +30,7 @@ public class AdminController {
 	
 	
 	@Autowired
-	private Paging2 paging;
+	private Paging paging;
 	
 	
 	@RequestMapping("admin_main.do")
@@ -60,9 +62,11 @@ public class AdminController {
 		mvo.setMember_idx(mvo.getMember_idx());
 		// 페이징 기법
 				// 전체 게시물의 수
-				int count = adminService.getTotalCount();
+				int count = adminService.getTotalCount2();
 				paging.setTotalRecord(count);
-				System.out.println("ccount"+count);
+				System.out.println("전체게시글"+paging.getTotalRecord());
+				System.out.println("paging.getBeginBlock()"+paging.getBeginBlock());
+				System.out.println("paging.getPagePerBlock()"+paging.getPagePerBlock());
 				
 				// 전체 페이지의 수
 				if (paging.getTotalRecord() <= paging.getNumPerPage()) {
@@ -112,6 +116,9 @@ public class AdminController {
 		int report_all = adminService.getreportall(member_idx);
 		List<AdminMemberVO> board_all = adminService.getboardall(member_idx);
 		List<AdminMemberVO> member_report = adminService.getadminmemberreport(member_idx);
+		System.out.println(report_all);
+		System.out.println(board_all);
+		System.out.println(member_report);
 		if (board_all != null) {
 			mv.addObject("report", report_all);
 			mv.addObject("board", board_all);
@@ -128,6 +135,7 @@ public class AdminController {
 		mvo.setMember_idx(mvo.getMember_idx());
 		ModelAndView mv = new ModelAndView("joy/admin_member_edit");
 		List<AdminMemberVO> member_report = adminService.getadminmemberreport(member_idx);
+
 		if (member_report != null) {
 			mv.addObject("member",member_report);
 			return mv;
@@ -136,76 +144,85 @@ public class AdminController {
 	}
 	
 	@RequestMapping("member_edit_ok.do")
-	public ModelAndView adminMemberEditOk(AdminMemberVO avo,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-		mvo.setMember_idx(mvo.getMember_idx());
-		ModelAndView mv = new ModelAndView();
-		int result = adminService.getmemberedit(avo);
-		if (result > 0 ) {
-			mv.setViewName("redirect:admin_member_detail.do");
-			return mv;
-		}
-		return new ModelAndView("board/error");
+	public ModelAndView adminMemberEditOk(@RequestParam("member_idx") String member_idx, AdminMemberVO avo, HttpServletRequest request) {
+	    HttpSession session = request.getSession();
+	    MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+	    mvo.setMember_idx(mvo.getMember_idx());
+	    ModelAndView mv = new ModelAndView();
+	    int result = adminService.getmemberedit(avo);
+	    if (result > 0) {
+	        mv.setViewName("redirect:admin_member_detail.do?member_idx=" + member_idx);
+	        return mv;
+	    }
+	    return new ModelAndView("board/error");
 	}
+
 	
 
 	@RequestMapping("member_stop.do")
-	public ModelAndView adminMemberStop(String member_idx, HttpServletResponse response,HttpServletRequest request) throws IOException {
-		ModelAndView mv = new ModelAndView();
-		HttpSession session = request.getSession();
-		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-		mvo.setMember_idx(mvo.getMember_idx());
+	public ModelAndView adminMemberStop(@RequestParam("member_idx") String member_idx, HttpServletResponse response, HttpServletRequest request) throws IOException {
+	    ModelAndView mv = new ModelAndView();
+	    HttpSession session = request.getSession();
+	    MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+	    mvo.setMember_idx(mvo.getMember_idx());
 	    int result = adminService.getmemberstop(member_idx);
 	    if (result > 0) {
 	        response.setCharacterEncoding("UTF-8");
 	        response.setContentType("text/html; charset=utf-8");
 	        PrintWriter out = response.getWriter();
-	        out.println("<script> alert('회원 정지되었습니다.'); window.location.href='admin_member_detail.do'; </script>");
+	        out.println("<script> alert('회원 정지 되었습니다.'); window.location.href='admin_member_detail.do?member_idx=" + member_idx + "'; </script>");
 	        out.close();
 	        return null;
 	    } else {
 	        return new ModelAndView("board/error");
 	    }
 	}
+
 	@RequestMapping("member_stopcancel.do")
-	public ModelAndView adminMemberStopCancel(String member_idx, HttpServletResponse response,HttpServletRequest request) throws IOException {
-		ModelAndView mv = new ModelAndView();
-		HttpSession session = request.getSession();
-		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-		mvo.setMember_idx(mvo.getMember_idx());
-		int result = adminService.getmemberstopcancel(member_idx);
-		if (result > 0) {
-			mv.setViewName("redirect:admin_member_detail.do");
-			return mv;
-		} else {
-			return new ModelAndView("board/error");
-		}
+	public ModelAndView adminMemberStopCancel(@RequestParam("member_idx") String member_idx, HttpServletResponse response, HttpServletRequest request) throws IOException {
+	    ModelAndView mv = new ModelAndView();
+	    HttpSession session = request.getSession();
+	    MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+	    mvo.setMember_idx(mvo.getMember_idx());
+	    int result = adminService.getmemberstopcancel(member_idx);
+	    if (result > 0) {
+	        response.setCharacterEncoding("UTF-8");
+	        response.setContentType("text/html; charset=utf-8");
+	        PrintWriter out = response.getWriter();
+	        out.println("<script> alert('회원 정지해제 되었습니다.'); window.location.href='admin_member_detail.do?member_idx=" + member_idx + "'; </script>");
+	        out.close();
+	        mv.setViewName("redirect:admin_member_detail.do");
+	        return mv;
+	    } else {
+	        return new ModelAndView("board/error");
+	    }
 	}
 
+
 	@RequestMapping("member_upgrade.do")
-	public ModelAndView adminMemberUpgrade(String member_idx,HttpServletRequest request){
-		ModelAndView mv = new ModelAndView();
-		HttpSession session = request.getSession();
-		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-		mvo.setMember_idx(mvo.getMember_idx());
-		int result = adminService.getmemberupgrade(member_idx);
-		if (result > 0) {
-			mv.setViewName("redirect:admin_member_detail.do");
-			return mv;
-		} else {
-			return new ModelAndView("board/error");
-		}
+	public ModelAndView adminMemberUpgrade(@RequestParam("member_idx") String member_idx, HttpServletRequest request) {
+	    ModelAndView mv = new ModelAndView();
+	    HttpSession session = request.getSession();
+	    MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+	    mvo.setMember_idx(mvo.getMember_idx());
+	    int result = adminService.getmemberupgrade(member_idx);
+	    if (result > 0) {
+	        mv.setViewName("redirect:admin_member_detail.do?member_idx=" + member_idx);
+	        return mv;
+	    } else {
+	        return new ModelAndView("board/error");
+	    }
 	}
+
 	@RequestMapping("removeimg.do")
-	public ModelAndView adminRemoveImg(String member_idx,HttpServletRequest request){
+	public ModelAndView adminRemoveImg(@RequestParam("member_idx") String member_idx,HttpServletRequest request){
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
 		mvo.setMember_idx(mvo.getMember_idx());
 		int result = adminService.getremoveimg(member_idx);
 		if (result > 0) {
-			mv.setViewName("redirect:admin_member_detail.do");
+			mv.setViewName("redirect:admin_member_detail.do?member_idx=" + member_idx);
 			return mv;
 		} else {
 			return new ModelAndView("board/error");

@@ -8,6 +8,9 @@
 <link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
 <%@ include file="../hs/admin_menu.jsp" %>
 <style type="text/css">
+#bbs{
+padding-top: 300px;
+}
 #bbs table {
 	width:800px;
 	margin:0 auto;
@@ -75,11 +78,6 @@ table tfoot ol.paging li a:hover {
 	font-weight: bold;
 }
 </style>
-<script type="text/javascript">
-	function board_write() {
-		location.href = "board_write.do";
-	}
-</script>
 </head>
 <body>
 	<div id="bbs" align="center">
@@ -97,8 +95,8 @@ table tfoot ol.paging li a:hover {
 					<th class="hit">번호</th>
 					<th class="hit">이메일</th>
 					<th class="hit">가입일</th>
+					<th class="subject">관리자</th>
 					<th class="hit">등급</th>
-					<th class="hit">활동</th>
 					<th class="hit">로그인</th>
 				</tr>
 			</thead>
@@ -132,15 +130,15 @@ table tfoot ol.paging li a:hover {
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="4">
-						<ol class="paging">
+					<td colspan="13">
+						<ol class="paging" style="margin: 0 auto; width: 175px;">
 							<!-- 이전 버튼 -->
 							<c:choose>
 								<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
 									<li class="disable">이전으로</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="board_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }">이전으로</a></li>
+									<li><a href="admin_member_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }">이전으로</a></li>
 								</c:otherwise>
 							</c:choose>
 							<!-- 페이지번호들 -->
@@ -150,7 +148,7 @@ table tfoot ol.paging li a:hover {
 										<li class="now">${k}</li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="board_list.do?cPage=${k}">${k }</a></li>
+										<li><a href="admin_member_list.do?cPage=${k}">${k}</a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
@@ -161,13 +159,10 @@ table tfoot ol.paging li a:hover {
 									<li class="disable">다음으로</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="board_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
+									<li><a href="admin_member_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
 								</c:otherwise>
 							</c:choose>
 						</ol>	
-					</td>
-					<td>
-						<input type="button" value="글쓰기" onclick="board_write()">
 					</td>
 				</tr>
 			</tfoot>	

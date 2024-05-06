@@ -109,6 +109,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				</c:if>
 				<button type="button" onclick="location.href='member_edit.do?member_idx=${m.member_idx}'">회원수정</button>
 				<button type="button" onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원삭제</button>
+				<button type="button" onclick="location.href='admin_member_list.do'">목록으로</button>
 			</p>
 			</div>
 		</div>

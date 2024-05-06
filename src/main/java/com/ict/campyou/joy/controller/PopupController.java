@@ -124,12 +124,17 @@ public class PopupController {
 		return new ModelAndView("board/error");
 	}
 	@RequestMapping("popup_delete.do")
-	public ModelAndView popupdelete(HttpServletRequest request){
-		ModelAndView mv = new ModelAndView("joy/popup_write");
+	public ModelAndView popupdelete(HttpServletRequest request,String popidx){
+		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
 		mvo.setMember_idx(mvo.getMember_idx());
-		return mv;
+		int result = adminService.getPopDelete(popidx);
+		if (result > 0) {
+			mv.setViewName("redirect:popup.do");
+			return mv;
+		}
+		return new ModelAndView("board/error");
 		}
 	
 	@RequestMapping("popup_update.do")
@@ -139,12 +144,11 @@ public class PopupController {
 		mvo.setMember_idx(mvo.getMember_idx());
 		ModelAndView mv = new ModelAndView();
 		int result = adminService.getpopupdate(avo);
-		System.out.println(avo);
 		System.out.println(result);
 		if (result > 0) {
 			mv.setViewName("redirect:popup.do");
 			return mv;
 		}
-		return new ModelAndView("redirect:popup.do");
+		return new ModelAndView("board/error");
 	}
 }

@@ -16,6 +16,7 @@ public class AdminDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
+// 관리자페이지 메인 
 	public List<AdminVO> getadminmainmember() {
 		try {
 			return sqlSessionTemplate.selectList("joy.getMemberCounts");
@@ -59,6 +60,7 @@ public class AdminDAO {
 	
 	public List<AdminMemberVO> getboardall(String member_idx) {
 		try {
+			System.out.println("오나?"+member_idx);
 			return sqlSessionTemplate.selectList("joy.boardall",member_idx);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -84,7 +86,7 @@ public class AdminDAO {
 		return -1;
 	}
 	
-
+//회원관리 
 	public int getmemberstop(String member_idx) {
 		try {
 			return sqlSessionTemplate.update("joy.memberstop",member_idx);
@@ -134,6 +136,18 @@ public class AdminDAO {
 		}
 		return -1;
 	}
+	public List<MemberVO> allmember(int offset, int limit) {
+		try {
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("offset", offset);
+			map.put("limit", limit);
+			return sqlSessionTemplate.selectList("joy.allmember",map);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	//팝업 
 	public int getPopUPWrite(AdminVO avo) {
 		try {
 			return sqlSessionTemplate.delete("joy.popUPWrite",avo);
@@ -145,6 +159,14 @@ public class AdminDAO {
 	public int getTotalCount() {
 		try {
 		 return sqlSessionTemplate.selectOne("joy.count");	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getTotalCount2() {
+		try {
+			return sqlSessionTemplate.selectOne("joy.count2");	
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -178,16 +200,14 @@ public class AdminDAO {
 		}
 		return null;
 	}
-	public List<MemberVO> allmember(int offset, int limit) {
+
+	public int getpopdelete(String popidx) {
 		try {
-			Map<String, Integer> map = new HashMap<String, Integer>();
-			map.put("offset", offset);
-			map.put("limit", limit);
-			return sqlSessionTemplate.selectList("joy.allmember",map);
+			return sqlSessionTemplate.delete("joy.popdelete",popidx);	
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return null;
+		return -1;
 	}
 	
 }

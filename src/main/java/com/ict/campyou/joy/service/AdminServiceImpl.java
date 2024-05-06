@@ -15,7 +15,7 @@ import com.ict.campyou.joy.dao.AdminMemberVO;
 public class AdminServiceImpl implements AdminService{
 	@Autowired
 	private AdminDAO admindao;
-	
+//관리자페이지메인 =================================================================
 	@Override
 	public List<AdminVO> getadminmainmember() {
 		return admindao.getadminmainmember();
@@ -56,6 +56,7 @@ public class AdminServiceImpl implements AdminService{
 		return admindao.getreportall(member_idx);
 	}
 
+	//회원관리 ========================================================================
 	@Override
 	public int getmemberstop(String member_idx) {
 		return admindao.getmemberstop(member_idx);
@@ -85,6 +86,12 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
+	public List<MemberVO> allmember(int offset, int limit) {
+		return admindao.allmember(offset, limit);
+	}
+
+//팝업===================================================================================		
+	@Override
 	public int getPopUPWrite(AdminVO avo) {
 		return admindao.getPopUPWrite(avo);
 	}
@@ -98,6 +105,10 @@ public class AdminServiceImpl implements AdminService{
 	public int getTotalCount() {
 		return admindao.getTotalCount();
 	}
+	@Override
+	public int getTotalCount2() {
+		return admindao.getTotalCount2();
+	}
 
 	
 	@Transactional
@@ -105,16 +116,18 @@ public class AdminServiceImpl implements AdminService{
 	public int getpopupdate(AdminVO avo) {
 		int result1 = admindao.getpopupdate2(avo); 
 		int result2 = admindao.getpopupdate(avo); 
-		if (result1 > 1 && result2 > 1) {
+		System.out.println("1:"+ result1);
+		System.out.println("2:"+ result2);
+		if (result1 > 0 && result2 > 0) {
+		System.out.println("오나?");
 			return 1; // 성공
 		} else {
 			return -1; // 실패
 		}
 	}
-
 	@Override
-	public List<MemberVO> allmember(int offset, int limit) {
-		return admindao.allmember(offset, limit);
+	public int getPopDelete(String popidx) {
+		return admindao.getpopdelete(popidx);
 	}
 	
 	
