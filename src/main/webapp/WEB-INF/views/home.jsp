@@ -118,6 +118,8 @@ left: 0px;
 }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=n9r058oxzq&submodules=geocoder"></script>
+<!-- 팝업  -->
 <script type="text/javascript">
 	function setCookie(name, value, exDay) {
 		var todayDate = new Date();
@@ -160,6 +162,7 @@ left: 0px;
 		}
 	}
 </script>
+<!-- 이펙트  -->
 <script type="text/javascript">
 $(document).ready(function() {
     $(window).scroll( function(){
@@ -175,6 +178,78 @@ $(document).ready(function() {
         }); 
     });
 });
+
+</script>
+<!-- 현재 위치 좌표찍기  -->
+<script type="text/javascript">
+$(function () {
+    initMap(${campList});
+});
+
+function initMap(campList) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        var map = new naver.maps.Map('map', {
+            center: new naver.maps.LatLng(lat, lng),
+            zoom: 15
+        });
+        var markers = [];
+        var infoWindows = [];
+
+        for (var i = 0; i < campList.length; i++) {
+            var camp = campList[i];
+            var position = new naver.maps.LatLng(camp.mapy, camp.mapx);
+
+            var marker = new naver.maps.Marker({
+                map: map,
+                title: "남산타워",
+                position: position,
+                icon: {
+                    content: '<img src="/resources/images/marker.png" alt="" style="margin: 0px; padding: 0px; width:30px; height:30px;">'
+                }
+            });
+            console.log("Marker title:", marker.getTitle());
+            var infoWindow = new naver.maps.InfoWindow({
+                content: '<div style="width:220px; height:100px; text-align:center;padding:10px; color:black; margin: 0 auto;"><img src="' +
+                    camp.firstimageurl + '" alt="" style="width:140px; height:80px;" /><b>' + camp.facltnm + '</b><br><br> ' +
+                    camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
+                disableAutoPan: true
+            });
+
+            markers.push(marker);
+            infoWindows.push(infoWindow);
+        }
+
+        function getClickHandler(seq, addr, imageUrl, campName) {
+            return function (e) {
+                var marker = markers[seq],
+                    infoWindow = infoWindows[seq];
+
+                if (infoWindow.getMap()) {
+                    infoWindow.close();
+                } else {
+                    infoWindow.open(map, marker);
+                    $('.togetherSub1DivP').val(addr);
+                    $('.togetherSub1DivP1').val(campName);
+                    campImageUrl = imageUrl;
+                }
+            }
+        }
+
+        for (var i = 0, ii = markers.length; i < ii; i++) {
+            naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm));
+        }
+    });
+}
+
+</script>
+
+<!-- 내 위치를 중심으로 지도 만들기  -->
+<script type="text/javascript">
+</script>
+<!--  -->
+<script type="text/javascript">
 
 </script>
 </head>
@@ -246,6 +321,7 @@ $(document).ready(function() {
             <button onclick="location.href='together_list.do'">Show More</button>
         </p>
     </div>
+    <div id="map" style="width:100%; height:75vh; margin: 0 auto;"></div>
     </div>
 </body>
     <%@ include file="hs/footer.jsp"%>
