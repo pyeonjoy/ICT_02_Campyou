@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 
 @Repository
@@ -56,9 +57,9 @@ public class AdminDAO {
 		return -1;
 	}
 	
-	public List<AdminMemberVO> getboardall() {
+	public List<AdminMemberVO> getboardall(String member_idx) {
 		try {
-			return sqlSessionTemplate.selectList("joy.boardall");
+			return sqlSessionTemplate.selectList("joy.boardall",member_idx);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -74,9 +75,9 @@ public class AdminDAO {
 		
 		
 	}
-	public int getreportall() {
+	public int getreportall(String member_idx) {
 		try {
-			return sqlSessionTemplate.selectOne("joy.reportall");
+			return sqlSessionTemplate.selectOne("joy.reportall",member_idx);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -149,6 +150,22 @@ public class AdminDAO {
 		}
 		return -1;
 	}
+	public int getpopupdate(AdminVO avo) {
+		try {
+			return sqlSessionTemplate.update("joy.popupdate",avo);	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getpopupdate2(AdminVO avo) {
+		try {
+			return sqlSessionTemplate.update("joy.popupdate2",avo);	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
 	
 	public List<AdminVO> getPopList(int offset, int limit) {
 		try {
@@ -156,6 +173,17 @@ public class AdminDAO {
 			map.put("offset", offset);
 			map.put("limit", limit);
 			return sqlSessionTemplate.selectList("joy.popUPlist",map);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	public List<MemberVO> allmember(int offset, int limit) {
+		try {
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("offset", offset);
+			map.put("limit", limit);
+			return sqlSessionTemplate.selectList("joy.allmember",map);
 		} catch (Exception e) {
 			System.out.println(e);
 		}

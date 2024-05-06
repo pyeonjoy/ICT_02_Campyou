@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.joy.dao.AdminVO;
+import com.ict.campyou.common.Paging3;
 import com.ict.campyou.joy.dao.AdminMemberVO;
 import com.ict.campyou.joy.service.AdminService;
 import com.ict.campyou.joy.service.MainService;
@@ -21,13 +22,20 @@ import com.ict.campyou.jun.dao.CampVO;
 public class MainController {
 	@Autowired
 	private MainService mainService;
+	@Autowired
+	private AdminService adminService;
+
+	@Autowired
+	private Paging3 paging;
 	
 	@RequestMapping("/")
 	public ModelAndView mainwithboard() {
 		ModelAndView mv = new ModelAndView("home");
 		List<AdminVO> with_board = mainService.getwithboard();
 		List<CampVO> camphit = mainService.getcamphit();
+		List<AdminVO> pop_list = adminService.getPopList(paging.getOffset(), paging.getNumPerPage());
 		if (with_board != null) {
+			mv.addObject("pop", pop_list);
 			mv.addObject("camphit", camphit);
 			mv.addObject("board", with_board);
 			return mv;

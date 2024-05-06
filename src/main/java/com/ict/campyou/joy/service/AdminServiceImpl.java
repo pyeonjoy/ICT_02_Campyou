@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.joy.dao.AdminDAO;
 import com.ict.campyou.joy.dao.AdminVO;
 import com.ict.campyou.joy.dao.AdminMemberVO;
@@ -40,9 +42,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public List<AdminMemberVO> getboardall() {
-		System.out.println(admindao.getboardall());
-		return admindao.getboardall();
+	public List<AdminMemberVO> getboardall(String member_idx) {
+		return admindao.getboardall(member_idx);
 	}
 	
 	@Override
@@ -51,8 +52,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int getreportall() {
-		return admindao.getreportall();
+	public int getreportall(String member_idx) {
+		return admindao.getreportall(member_idx);
 	}
 
 	@Override
@@ -98,5 +99,24 @@ public class AdminServiceImpl implements AdminService{
 		return admindao.getTotalCount();
 	}
 
+	
+	@Transactional
+	@Override
+	public int getpopupdate(AdminVO avo) {
+		int result1 = admindao.getpopupdate2(avo); 
+		int result2 = admindao.getpopupdate(avo); 
+		if (result1 > 1 && result2 > 1) {
+			return 1; // 성공
+		} else {
+			return -1; // 실패
+		}
+	}
+
+	@Override
+	public List<MemberVO> allmember(int offset, int limit) {
+		return admindao.allmember(offset, limit);
+	}
+	
+	
 
 }

@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
-<%-- <%@ include file="hs/header.jsp"%> --%>
+<%@ include file="hs/header.jsp"%>
 <!doctype html>
 <html lang="ko">
 <link href="${path}/resources/css/reset.css" rel="stylesheet" />
@@ -64,46 +64,22 @@ body {
     height: 500px;
     margin: 30px;
 }
-
 button {
     height: 40px;
 }
-
-.find {
-    margin: 50px;
-    color: black;
-    height: 40px;
-    line-height: 40px;
-    background-color: #FFFDDE;
-}
-
-.authorId_btn { /* 작가 선택 css 설정 */
-    margin-left: 20px;
-    width: 14%;
-    height: 38px;
-    font-weight: 600;
-    background-color: #dfe8f5;
-    font-size: 15px;
-    cursor: pointer;
-}
-
-#authorName_input {
-    width: 80%;
-    text-align: center;
-}
-
 .layer_popup {
     display: none; 
     position: fixed;
-    background-color: white;
+    background-color: black;
     display: inline-block;
-    width: 400px;
+    width: 500px;
     height: 500px;
     z-index: 9999;
     padding: 10px;
+    margin:165px;
 }
 
-.popup_image {
+.popimg {
     display: block;
     margin: 0 auto; 
     max-width: 100%; 
@@ -118,7 +94,20 @@ button {
     transform: translateX(-50%);
 }
 
+.popular{ 
+  opacity:0;
+    margin-top:-150px;    
+    max-width:100%;
+    margin-bottom: 400px;
+}
+.popularimg{
+object-fit: cover;
+border-radius: 10px;
+}
 
+#footer{
+width: 100%;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -163,15 +152,33 @@ button {
 		}
 	}
 </script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(window).scroll( function(){
+        $('.popular').each( function(i){
+            
+            var bottom_of_element = $(this).offset().top + $(this).outerHeight();
+            var bottom_of_window = $(window).scrollTop() + $(window).height();
+            
+            if( bottom_of_window > bottom_of_element ){
+                $(this).animate({'opacity':'1','margin-top':'0px'},1000);
+            }
+            
+        }); 
+    });
+});
 
+</script>
 </head>
 <body>
    
 	<div id="layer_popup1" class="layer_popup"
 		style="top: 50px; left: 50px; width: 500px; height: 500px; background-color: white;">
-		<%-- <img style="object-fit: cover;" src="${c.firstimageurl}"> --%>
-		<img src="resources/images/2.jpg" alt="Popup Image"
-			class="popup_image">
+		<c:forEach var="k" items="${pop}" varStatus="vs">
+		    <c:if test="${k.active == 1}">
+		        <img class="popimg" style="object-fit: cover;" src="resources/popup/${k.f_name}">
+		    </c:if>
+		</c:forEach>
 		<div id="check1">
 			<input type="checkbox" id="chkbox1"> 
 			<label for="chkbox1">오늘 하루동안 안 보기</label>
@@ -209,26 +216,29 @@ button {
     <div class="wrap">
         <div class="popular">
             <h3>Popular campsites</h3>
+           
             <c:forEach var="c" items="${camphit}">
                 <a href="camp_detail.do?contentid=${c.contentid}">
                 
-                <img
-                    style="object-fit: cover;" src="${c.firstimageurl}"></a>
+                <img class="popularimg" src="${c.firstimageurl}"></a>
             </c:forEach>
-        </div>
         <p>
             <button onclick="location.href='camplist.do'">Show More</button>
         </p>
+        </div>
+        <div class="popular">
+        <div class="popular">
         <div style="margin-top: 500px;">
             <h3>Find camping mates</h3>
             <c:forEach var="k" items="${board}" varStatus="vs">
-                <a href="together_detail.do?t_idx=${k.t_idx}"><p class="find">${k.t_content }</p></a>
+                <a href="together_detail.do?t_idx=${k.t_idx}"><p class="find">${k.t_subject }</p></a>
             </c:forEach>
         </div>
         <p>
             <button onclick="location.href='together_list.do'">Show More</button>
         </p>
     </div>
-    <%@ include file="hs/footer.jsp"%>
+    </div>
 </body>
+    <%@ include file="hs/footer.jsp"%>
 </html>

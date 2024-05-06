@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../hs/admin_menu.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -27,10 +28,10 @@ body {
     width: 500px;
 }
 .mainimg{
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     margin: 30px auto;
-    background-color: gainsboro;
+    object-fit: cover;
 }
 .left {
     width: 500px;
@@ -145,9 +146,13 @@ text-align: center;
     <h2 class="head">팝업 관리</h2>
     <div class="wrap">
         <div class="left">
-            <hr class="hr">
-            <div class="mainimg"></div>
-            <hr class="hr">
+						<c:forEach var="k" items="${pop}" varStatus="vs">
+            <div>
+            <c:if test="${k.active == 1}">
+            <img  class="mainimg"  src="resources/popup/${k.f_name}">
+            </c:if>
+            </div>
+            </c:forEach>
         </div>
         <div class="right">
         <div id="bbs" align="center">
@@ -170,17 +175,21 @@ text-align: center;
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="k" items="${pop}" varStatus="vs">
-							<tr>
-								<td><input type="checkbox"/></td>
-							    <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index )}</td>
-                				<td><img style="object-fit: cover;" class="subimg" src="resources/popup/${p.f_name}"></td>
-							    <td style="text-align: left; ">
-							    <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach>
-							    <a href="board_detail.do?bo_idx=${k.popidx}&cPage=${paging.nowPage}">${k.title }</a></td>
-				                <td class="child">${k.writer }</td>
-							    <td>${k.regdate.substring(0,10)}</td>
-							</tr>
-						</c:forEach>
+						    <tr>
+						        <form action="popup_update.do" method="post">
+						            <input type="hidden" name="popidx" value="${k.popidx}">
+						            <input type="hidden" name="active" value="${k.active}">
+						            <td><input type="submit" value="선택"></td>
+						            <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index )}</td>
+						            <td><img style="object-fit: cover;" class="subimg" src="resources/popup/${k.f_name}"></td>
+						            <td>${k.title }</a>
+						            </td>
+						            <td class="child">${k.writer }</td>
+						            <td>${k.regdate.substring(0,10)}</td>
+						        </form>
+						    </tr>
+</c:forEach>
+
 					</c:otherwise>
 				</c:choose>
 			</tbody>
@@ -225,9 +234,7 @@ text-align: center;
 		</table>
         <div class="bottom">
         <p>
-						<input type="button" value="글쓰기" onclick="board_write()">
-						<input type="button" value="삭제" onclick="board_write()">
-						<input type="button" value="변경" onclick="board_write()">
+						<input type="button" value="글쓰기" onclick="location.href='popup_write.do'">
         </p>
         </div>
         </div>

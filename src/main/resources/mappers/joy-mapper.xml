@@ -41,19 +41,19 @@
 	<select id="adminmemberreport" resultType="amvo">
 		SELECT *
 		FROM members
-		WHERE member_idx =1
+		WHERE member_idx =#{member_idx}
 	</select>
 	<select id="boardall" resultType="amvo">
 		SELECT *
 		FROM members m
 		inner join board_free b on m.member_idx = b.member_idx
 		inner join board_camp c on m.member_idx = c.member_idx
-		WHERE m.member_idx = 1
+		WHERE m.member_idx =#{member_idx}
 	</select>
 	<select id="reportall" resultType="int">
 		SELECT count(member_idx)
 		FROM admin_report
-		WHERE member_idx =1
+		WHERE member_idx =#{member_idx}
 	</select>
 	<select id="memberedit" resultType="amvo" parameterType="amvo">
 		update members
@@ -61,29 +61,29 @@
 		member_nickname = #{member_nickname}, member_dob = #{member_dob},
 		member_phone = #{member_phone}, member_email = #{member_email},
 		member_regdate = #{member_regdate}
-		where member_idx = 1
+		where member_idx =#{member_idx}
 	</select>
 	<select id="memberstop" resultType="amvo" parameterType="String">
 		update members set member_active = 0
-		where member_idx = 1
+		where member_idx =#{member_idx}
 	</select>
 	<update id="memberstopcancel" parameterType="String">
 		update members set member_active = 1
-		where member_idx = 1
+		where member_idx =#{member_idx}
 	</update>
 	<update id="memberupgrade" parameterType="String">
 		update members set member_grade = 1
-		where member_idx = 1
+		where member_idx =#{member_idx}
 	</update>
 	<select id="removeimg" parameterType="String">
 		update members set member_img = DEFAULT
-		where member_idx = 1
+		where member_idx =#{member_idx}
 	</select>
 	<select id="getwithboard" resultType="avo">
 		SELECT *
 		FROM board_with
 		ORDER BY t_hit DESC
-		LIMIT 10;
+		LIMIT 5;
 	</select>
 	<select id="camphit" resultType="cvo">
 		SELECT *
@@ -101,5 +101,20 @@
 	<select id="popUPlist" parameterType="Map" resultType="avo">
 		SELECT * FROM popup ORDER BY popidx DESC LIMIT  #{limit} OFFSET #{offset} 
 		
+	</select>
+	<update id="popupdate" parameterType="avo">
+    UPDATE popup 
+	SET active = 1 
+	WHERE popidx = #{popidx}
+	</update>
+	<update id="popupdate2" parameterType="avo">
+    UPDATE popup 
+	SET active = 0 
+	WHERE popidx != #{popidx}
+	</update>
+	<select id="allmember" resultType="mvo">
+		SELECT *
+		FROM members
+		ORDER BY member_idx DESC LIMIT  #{limit} OFFSET #{offset}
 	</select>
 </mapper>

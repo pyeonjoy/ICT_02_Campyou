@@ -4,9 +4,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class AdminVO {
 	private String report_date, cp_regdate, bf_regdate, t__regdate, member_regdate,  
-	member_active, qna_status, totalMembers, todayMembers, hit, f_name, title, writer,regdate,
+	member_active, qna_status, totalMembers, todayMembers, hit, f_name, title, writer,regdate, t_subject, active,
 	groups, step, lev;
 	
+
+	public String getActive() {
+		return active;
+	}
+
+
+	public void setActive(String active) {
+		this.active = active;
+	}
+
+
 	public String getGroups() {
 		return groups;
 	}
@@ -105,7 +116,7 @@ public class AdminVO {
 		this.hit = hit;
 	}
 
-	private String t_idx, member_idx, t_subject, t_content, t_campname, t_camptype, t_postcode, t_address, t_address_detail, t_startdate, t_enddate, tf_name, t_regdate, t_hit, t_active, t_notice, member_dob, member_nickname;
+	private String t_idx, member_idx, t_content, t_campname, t_camptype, t_postcode, t_address, t_address_detail, t_startdate, t_enddate, tf_name, t_regdate, t_hit, t_active, t_notice, member_dob, member_nickname;
 
 	public String getT_idx() {
 		return t_idx;
