@@ -11,8 +11,11 @@
 	
 		<typeAlias type="com.ict.campyou.hu.dao.MemberVO" alias="mvo"/>
 		<typeAlias type="com.ict.campyou.hu.dao.CommBoardVO" alias="cbvo"/>
-
+		<typeAlias type="com.ict.campyou.hu.dao.CommentVO" alias="covo"/>
 		<typeAlias type="com.ict.campyou.hu.dao.BoardFreeVO" alias="bfvo"/>
+		<typeAlias type="com.ict.campyou.hu.dao.CampingGearBoardVO" alias="cgbvo"/>
+		<typeAlias type="com.ict.campyou.hu.dao.CampingGearBoardCommentVO" alias="cgbcvo"/>
+		<typeAlias type="com.ict.campyou.hu.dao.CampingGearSearchVO" alias="cgsvo"/>
 		<typeAlias type="com.ict.campyou.bjs.dao.TogetherVO" alias="tvo"/>
 		<typeAlias type="com.ict.campyou.joy.dao.AdminVO" alias="avo"/>
 		<typeAlias type="com.ict.campyou.bm.dao.FaqVO" alias="fvo"/>
@@ -21,11 +24,14 @@
 		<typeAlias type="com.ict.campyou.jun.dao.CampVO" alias="cvo"/>
 		<typeAlias type="com.ict.campyou.joy.dao.AdminMemberVO" alias="amvo"/>
 		<typeAlias type="com.ict.campyou.jun.dao.ReviewVO" alias="rvo"/>
+		<typeAlias type="com.ict.campyou.jun.dao.HeartVO" alias="hvo"/>
+		<typeAlias type="com.ict.campyou.bjs.dao.PromiseVO" alias="pvo"/>
 		
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/hu-mapper.xml" />
 		<mapper resource="mappers/bomi-mapper.xml" />
+		<mapper resource="mappers/has-mapper.xml" />
 		<mapper resource="mappers/bjs-mapper.xml" />
 		<mapper resource="mappers/joy-mapper.xml" />
 		<mapper resource="mappers/jun-mapper.xml" />

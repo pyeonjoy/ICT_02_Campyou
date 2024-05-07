@@ -20,22 +20,22 @@
 	});
 </script>
 <script type="text/javascript">
-	function comm_board_list(f) {
-		f.action="community_board.do";
+	function camping_gear_list(f) {
+		f.action="camping_gear_board.do";
 		f.submit();
 	}
 
-	function comm_board_update_ok(f) {
+	function camping_gear_update_ok(f) {
 		for (var i = 0; i < f.elements.length; i++) {
 			if (f.elements[i].value == "") {
-				if (i == 3) continue;
-				if(i == 6) break;
+				if (i == 2) continue;
+				if(i == 5) break;
 				alert(f.elements[i].name + "를 입력하세요");
 				f.elements[i].focus();
 				return;//수행 중단
 			}
 		}
-		f.action="comm_board_update_ok.do";
+		f.action="camping_gear_update_ok.do";
 		f.submit();
 	}
 </script>
@@ -49,44 +49,16 @@
 	<div>
 		<h2>게시글 수정</h2>
 		<hr><br><br>
-		<form action="comm_board_update_ok.do" method="post" enctype="multipart/form-data">
+		<form action="camping_gear_update_ok.do" method="post" enctype="multipart/form-data">
 			<table>
 					<tr align="center">
-						<td bgcolor="#003300" style="color: white;">유형</td>
-						<c:choose>
-							<c:when test="${cbvo.member_nickname == 'admin'}">
-								<td>
-									<select name="b_type">
-										<option value="공지사항">공지사항</option>
-										<option value="날씨정보">날씨정보</option>
-										<option value="주의사항">주의사항</option>
-									</select>
-								<!-- <td align="left"><input type="hidden" name="b_type"></td>  -->
-								</td>
-							</c:when>
-							<c:otherwise>
-								<td>
-									<select name="b_type">
-										<option value="정보공유">정보공유</option>
-										<option value="경험담">경험담</option>
-										<option value="썰">썰</option>
-										<option value="유머">유머</option>
-										<option value="후기">후기</option>
-										<option value="불평">불평</option>
-									</select>
-								<!-- <td align="left"><input type="hidden" name="b_type"></td>  -->
-								</td>		
-							</c:otherwise>
-						</c:choose>
-					</tr>
-					<tr align="center">
 						<td bgcolor="#003300" style="color: white;">제목</td>
-						<td align="left"> <input type="text" name="b_title" value="${cbvo.b_title}"></td>
+						<td align="left"> <input type="text" name="cp_subject" value="${cgbvo.cp_subject}"></td>
 					</tr>
 					<tr align="center">
 						<td bgcolor="#003300" style="color: white;">별명</td>
-						<td align="left">${cbvo.member_nickname}
-						<input type="hidden" name="member_nickname" value="${cbvo.member_nickname}">
+						<td align="left">${cgbvo.member_nickname}
+						<input type="hidden" name="member_nickname" value="${cgbvo.member_nickname}">
 						</td>
 					</tr>
 					<tr>
@@ -95,20 +67,20 @@
 					</tr>
 					<tr>
 						<th bgcolor="#003300" style="color: white;">비밀번호</th>
-						<td align="left"><input type="password" name="b_pwd"></td>
+						<td align="left"><input type="password" name="cp_pwd"></td>
 					</tr>
 					<tr align="center">
 						<td colspan="2">
-							<textarea rows="10" cols="60" id="b_content" name="b_content">${cbvo.b_content}</textarea>
+							<textarea rows="10" cols="60" id="cp_content" name="cp_content">${cgbvo.cp_content}</textarea>
 						</td>
 					</tr>
 					<tfoot>
 						<tr align="center">
 							<td colspan="2">
-								<input type="hidden" name="b_idx" value="${cbvo.b_idx}">
+								<input type="hidden" name="cp_idx" value="${cgbvo.cp_idx}">
 								<input type="hidden" name="cPage" value="${cPage}">
-								<input id="listId" type="button" value="목록" onclick="comm_board_list(this.form)" /> 
-								<input id="inputId" type="button" value="수정" onclick="comm_board_update_ok(this.form)" /> 
+								<input id="listId" type="button" value="목록" onclick="camping_gear_list(this.form)" /> 
+								<input id="inputId" type="button" value="수정" onclick="camping_gear_update_ok(this.form)" /> 
 								<input id="cancelId" type="reset" value="취소" />
 							</td>
 						</tr>
@@ -121,7 +93,7 @@
 <script src="resources/js/lang/summernote-ko-KR.js" ></script>
 <script type="text/javascript">
 	$(function() {
-		$("#b_content").summernote({
+		$("#cp_content").summernote({
 			lang : 'ko-KR',
 			height : 300,
 			focus : true,
@@ -134,7 +106,6 @@
 					}
 				}
 			}
-			  
 		});
 		// $("#content").summernote("lineHeight",.7);
 	});

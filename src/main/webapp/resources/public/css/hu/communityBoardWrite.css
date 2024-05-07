@@ -41,6 +41,19 @@ div{
 input[type="button"]:hover, input[type="reset"]:hover {
     background-color: #005500;
 }
+
+a:link {
+  color:black;
+}
+a:visited {
+  color:black;
+}
+a:hover {
+  color:black;
+}
+a:active {
+  color:black;
+}
 	
 /*summernote toolbar 수정*/
 .note-btn-group{width: auto;}

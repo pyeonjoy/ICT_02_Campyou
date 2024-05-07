@@ -7,6 +7,7 @@
 <meta charset=UTF-8>
 <title>Insert title here</title>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoard.css">
+<%@ include file="../../hs/header.jsp" %>
 <script type="text/javascript">
 	function commBoard_write() {
 		location.href = "comm_board_write.do";
@@ -14,9 +15,6 @@
 	function commBoard_write_alert(){
 		alert("회원님만 글쓰기 하실수 있습니다.\n회원가입이나 로그인 해주세요");
 	}
-	
-	
-	
 	
 	function board_free_list_go(f) {
 		f.action="board_free_list_go.do";
@@ -29,9 +27,9 @@
 </script>
 </head>
 <body>
-	<div id="bbs" align="center">
-		<table summary="게시판 목록">
-			<!-- <a href="/">메인페이지</a> -->
+	<div id="board-free" align="center">
+		<table id="table1">
+		<caption>자유게시판</caption>
 			<thead>
 				<tr class="title">
 					<th class="no">번호</th>
@@ -59,11 +57,11 @@
 							                <!-- <td style="text-align: left; " /> -->
 							                <%-- <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
 							                <c:choose>
-							                    <c:when test="${k.active == 1}">
+							                    <c:when test="${k.b_active == 1}">
 							                        <span style="color:lightgray">삭제된 게시물입니다</span>
 							                    </c:when>
 							                    <c:otherwise>
-							                        <a href="commBoard_content.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.b_title}</a>
+							                        <a href="commBoard_content.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.b_subject}</a>
 							                    </c:otherwise>
 							                </c:choose>
 							            </td>
@@ -84,8 +82,8 @@
 							                    </c:otherwise>
 							                </c:choose>
 							            </td>
-							            <td class="admin-write-color" style="background-color: lightyellow;">${k.regdate.substring(0,10)}</td>
-							            <td class="admin-write-color" style="background-color: lightyellow;">${k.hit}</td>
+							            <td class="admin-write-color" style="background-color: lightyellow;">${k.b_regdate.substring(0,10)}</td>
+							            <td class="admin-write-color" style="background-color: lightyellow;">${k.b_hit}</td>
 							        </c:when>						        
 							        <c:otherwise>
 							            <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>
@@ -94,11 +92,11 @@
 							                <!-- <td style="text-align: left; " /> -->
 							                <%-- <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
 							                <c:choose>
-							                    <c:when test="${k.active == 1}">
+							                    <c:when test="${k.b_active == 1}">
 							                        <span style="color:lightgray">삭제된 게시물입니다</span>
 							                    </c:when>
 							                    <c:otherwise>
-							                        <a href="commBoard_content.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.b_title}</a>
+							                        <a href="commBoard_content.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.b_subject}</a>
 							                    </c:otherwise>
 							                </c:choose>
 							            </td>
@@ -119,8 +117,8 @@
 							                    </c:otherwise>
 							                </c:choose>
 							            </td>
-							            <td>${k.regdate.substring(0,10)}</td>
-							            <td>${k.hit}</td>
+							            <td>${k.b_regdate.substring(0,10)}</td>
+							            <td>${k.b_hit}</td>
 							        </c:otherwise>
 							    </c:choose>
 							</tr>
@@ -128,19 +126,14 @@
 					</c:otherwise>
 				</c:choose>
 			</tbody>
-			<tfoot>
-			
-			
-			
-			
-			
-			
-			
-			
-				<tr id="foot-tr">
-				
-					<td>
-						<form method="post">
+		</table>
+		
+		
+		<table id="table2">
+		<tfoot id="aaa">
+			<tr id="foot-tr">
+				<td id="select-option" colspan="6">
+					<form method="post">
 							<p><input type="hidden" onclick="board_free_list_go(this.form)"> </p>
 							<p>
 		   						<select name="b_idx">
@@ -152,59 +145,59 @@
 		   					<input type="text" name="keyword">
 		   					<input type="button" value="검색" onclick="board_free_search(this.form)">
 							</p>
-						</form>
-				     </td>
-					
-					
-					
-					<!-- <td colspan="3"> --> <!-- 원래는 4 -->
-					<td colspan="3">
-						<ol class="paging">
-							<!-- 이전 버튼 -->
-							<c:choose>
-								<c:when test="${paging.beginBlock <= paging.pagePerBlock}">
-									<li class="disable">이전</li>
-								</c:when>
-								<c:otherwise>
-									<li><a href="community_board.do?cPage=${paging.beginBlock - paging.pagePerBlock}">이전으로</a></li>
-								</c:otherwise>
-							</c:choose>
-							<!-- 페이지번호들 -->
-							<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock}" step="1" var="k">
-								<c:choose>
-									<c:when test="${k == paging.nowPage }">
-										<li class="now">${k}</li>
-									</c:when>
-									<c:otherwise>
-										<li><a href="community_board.do?cPage=${k}">${k}</a></li>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-							
-							<!-- 이후 버튼 -->
-							<c:choose>
-								<c:when test="${paging.endBlock >= paging.totalPage }">
-									<li class="disable">다음</li>
-								</c:when>
-								<c:otherwise>
-									<li><a href="community_board.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
-								</c:otherwise>
-							</c:choose>
-						</ol>	
-					</td>
-					<td>
+					</form>
+			     </td>
+				<!-- <td colspan="2"> --> <!-- 원래는 4 -->
+				<td id="paging-pre-next">
+					<ol class="paging">
+						<!-- 이전 버튼 -->
 						<c:choose>
-							<c:when test="${memberInfo != null}">
-								<input type="button" id="btnWrite" value="글쓰기" onclick="commBoard_write()">
+							<c:when test="${paging.beginBlock <= paging.pagePerBlock}">
+								<li class="disable">이전</li>
 							</c:when>
 							<c:otherwise>
-								<input type="button" id="btnWrite" value="글쓰기" onclick="commBoard_write_alert()">
+								<li><a href="community_board.do?cPage=${paging.beginBlock - paging.pagePerBlock}">이전으로</a></li>
 							</c:otherwise>
 						</c:choose>
-					</td>
+						<!-- 페이지번호들 -->
+						<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock}" step="1" var="k">
+							<c:choose>
+								<c:when test="${k == paging.nowPage }">
+									<li class="now">${k}</li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="community_board.do?cPage=${k}">${k}</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						
+						<!-- 이후 버튼 -->
+						<c:choose>
+							<c:when test="${paging.endBlock >= paging.totalPage }">
+								<li class="disable">다음</li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="community_board.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
+							</c:otherwise>
+						</c:choose>
+					</ol>	
+				</td>
+				<td>
+					<c:choose>
+						<c:when test="${memberInfo != null}">
+							<input type="button" id="btnWrite" value="글쓰기" onclick="commBoard_write()">
+						</c:when>
+						<c:otherwise>
+							<input type="button" id="btnWrite" value="글쓰기" onclick="commBoard_write_alert()">
+						</c:otherwise>
+					</c:choose>
+				</td>
 				</tr>
 			</tfoot>	
 		</table>
+		
+		
 	</div>
+<%@ include file="../../hs/footer.jsp" %>
 </body>
 </html>
