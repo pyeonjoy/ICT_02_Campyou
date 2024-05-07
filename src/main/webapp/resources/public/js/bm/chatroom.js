@@ -1,8 +1,7 @@
 "use strict";
 
 // chat-rooms
-const usernamePage = document.querySelector("#username-page");
-const chatLists = document.querySelector(".chatLists");
+const chatLists = document.querySelector(".chat_lists");
 const selectRoomList = document.querySelectorAll(".chat_list");
 
 // chat-page
@@ -10,7 +9,7 @@ const chatPage = document.querySelector(".chatPage");
 const messageForm = document.querySelector("#messageForm");
 const messageInput = document.querySelector("#message");
 const connectingElement = document.querySelector(".connecting");
-
+const btnEnter = document.querySelector(".btn-enterChat");
 //btn
 const back = document.querySelector(".back");
 const cancel = document.querySelector(".cancel");
@@ -24,29 +23,8 @@ cancel.addEventListener("click", function () {
 });
 
 // connecting to chat server
-
 let stompClient = null;
-let send_nick = null;
-
-function getUserInfo() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'profile.do', true); 
-    
-    xhr.onload = function () {
-        if (xhr.status >= 200 && xhr.status < 300) {
-            const user = JSON.parse(xhr.responseText);
-       		send_nick = user.nickname;
-         	stompClient.send("/app/chat/join", {}, userInfo);
-
-        } else {
-            console.error('Request failed with status', xhr.status);
-        }
-    };   
-    // 요청 전송
-    xhr.send();
-}
-
-
+let userNick;
 
 function onMessageRead() {
   const newBadge = document.querySelector(".new");
@@ -58,20 +36,17 @@ function connect(e) {
   chatPage.classList.remove("hidden");
   chatLists.classList.add("hidden");
 
-  const socket = new SockJS("/ws");
-
+  const socket = new SockJS("/chat-ws2.do");
   stompClient = Stomp.over(socket);
-  console.log("web socket connection");
+
   stompClient.connect({}, onConnected, onError);
-   stompClient.send("/app/chat/join", {}, "");
 }
 
-
 function onConnected() {
-  stompClient.subscribe("/app/topic/", onMessageReceived);
+  stompClient.subscribe("/topic/public", onMessageReceived);
 
   connectingElement.classList.add("hidden");
-  onMessageRead();  
+  onMessageRead();
 }
 
 function onError(error) {
@@ -82,20 +57,15 @@ function onError(error) {
 
 selectRoomList.forEach((room) => room.addEventListener("click", connect));
 
-function sendMessage(e) {  
+function sendMessage(e) {
+  // sender nickname  에따라 구분하기
   e.preventDefault();
-  if (!stompClient || !stompClient.connected) {
-        console.error('WebSocket connection is not established yet.');
-        return;
-    }
-    
-	getUserInfo();
-  
-  const messageContent = messageInput.value.trim();
+    const messageContent = messageInput.value.trim();
+    let chatMessage;
   if (messageContent && stompClient) {
-    const chatMessage = {
-      send_nick: send_nick,
-      msg_content: messageInput.value,
+    chatMessage = {
+      sender: member_nickname,
+      content: messageInput.value,
     };
     stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
     messageInput.value = "";
@@ -175,7 +145,25 @@ function onMessageReceived(payload) {
   //   chatLists.insertAdjacentHTML("afterbegin", chatList);
 }
 
-
-window.addEventListener('load', getUserInfo);
 messageForm.addEventListener("submit", sendMessage);
 
+
+
+function getUserInfo() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'profile.do', true); 
+    
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+
+            const user = JSON.parse(xhr.responseText);
+
+        } else {
+            console.error('Request failed with status', xhr.status);
+        }
+    };   
+    // 요청 전송
+    xhr.send();
+}
+window.addEventListener('load', getUserInfo)
+btnEnter.addEventListener("click", connect)

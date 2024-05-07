@@ -2,7 +2,7 @@ package com.ict.campyou.bm.dao;
 
 public class ChatVO {
 
- private String msg_idx, msg_room, send_nick, reci_nick, send_date, read_date, msg_content, msg_read;
+ private String msg_idx, msg_room, send_nick, reci_nick, send_date, msg_content, msg_read;
 
 public String getMsg_idx() {
 	return msg_idx;
@@ -44,13 +44,7 @@ public void setSend_date(String send_date) {
 	this.send_date = send_date;
 }
 
-public String getRead_date() {
-	return read_date;
-}
 
-public void setRead_date(String read_date) {
-	this.read_date = read_date;
-}
 
 public String getMsg_content() {
 	return msg_content;

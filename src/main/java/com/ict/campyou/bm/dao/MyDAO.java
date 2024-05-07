@@ -133,5 +133,7 @@ public int deletMember(String member_idx) {
 		}
 		return 0;
 }
-
+public int addChatMsg(ChatVO chvo) {
+	return sqlSessionTemplate.insert("bomi.addChat",chvo);
+}
 }

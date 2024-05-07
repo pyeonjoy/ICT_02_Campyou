@@ -3,6 +3,7 @@ package com.ict.campyou.bm.service;
 import java.util.List;
 
 import com.ict.campyou.bjs.dao.TogetherVO;
+import com.ict.campyou.bm.dao.ChatVO;
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.QnaVO;
 import com.ict.campyou.hu.dao.MemberVO;
@@ -28,6 +29,8 @@ public interface MyService {
 	 public int getTotalCount(String member_idx);
 	 
 	public List<TogetherVO> getMyAcc_List(String member_idx);
+	
+	 public int addChatMsg(ChatVO chvo);
 }
 
 	

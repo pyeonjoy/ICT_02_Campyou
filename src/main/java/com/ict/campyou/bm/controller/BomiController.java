@@ -62,8 +62,11 @@ public class BomiController {
 	}
 	
 	@GetMapping("chatroom.do")
-	public ModelAndView gotoChatRoom() {
+	public ModelAndView gotoChatRoom(HttpSession session) {
 		ModelAndView mv = new ModelAndView("bm/chatroom");
+		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+		String send_nick = mvo.getMember_nickname();
+		mv.addObject("send_nick", send_nick);
 		return mv;
 	}
 	
@@ -117,7 +120,7 @@ public class BomiController {
 				}
 
 				int res = myService.changeUserInfo(mvo);
-				
+				System.out.println(res);
 				if (res > 0) {
 					return mv;
 				}			
@@ -147,10 +150,11 @@ public class BomiController {
 			return new ModelAndView("redirect:pwd_change.do");			
 		}
 		// Delete User
-		@RequestMapping("deleteUser.do")
+		@GetMapping("deleteUser.do")
 		public ModelAndView changeUserPw(@RequestParam("member_idx") String member_idx) {
 			ModelAndView mv = new ModelAndView("redirect:home.do");
 			int res = myService.deletMember(member_idx);
+			System.out.println(res);
 			return mv;
 		}
 		

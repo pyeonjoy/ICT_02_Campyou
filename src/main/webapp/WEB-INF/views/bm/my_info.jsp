@@ -95,7 +95,7 @@
         <button class="btn btn_pwdreset" onclick="handle_pwd(${mvo.member_idx}, this.form)">비밀번호 변경</button>
       </div>
     </div>
-     <button href="deleteMember.do" class="btn btn-userDelete" onclick="handle_delete(${mvo.member_idx}">회원탈퇴</button>
+     <button class="btn btn-userDelete" onclick="handle_delete(${mvo.member_idx}, this.form)">회원탈퇴</button>
   </form>
 </body>
 </html>

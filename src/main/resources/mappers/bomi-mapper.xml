@@ -56,4 +56,9 @@ select * from qna where member_idx=#{member_idx}
 select count(*) from qna where member_idx=#{member_idx}
 
 </select>
+
+<insert id="addChat" parameterType="chvo">
+insert into m_chat(msg_room, send_nick, reci_nick, send_date, msg_content, msg_read)
+values(#{msg_room},#{send_nick},#{reci_nick}, #{send_date},#{msg_content}, 1)
+</insert>
 </mapper>
