@@ -31,9 +31,9 @@
 							<c:forEach items="${searchlist}" var="k">
 								<tr>
 									<td>${k.member_nickname}</td>
-									<td>${k.b_title}</td>
+									<td>${k.b_subject}</td>
 									<td>${k.b_content}</td>
-									<td>${k.regdate.substring(0,10)}</td>
+									<td>${k.b_regdate.substring(0,10)}</td>
 								</tr>
 							</c:forEach>
 						</c:otherwise>

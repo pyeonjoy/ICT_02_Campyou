@@ -8,16 +8,16 @@
 <title>게시판 회원 상세정보</title>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardDetail.css">
 <script type="text/javascript">
-	function comm_board_list(f) {
-		f.action="community_board.do";
+	function camping_gear_board_list(f) {
+		f.action="camping_gear_board.do";
 		f.submit()
 	}	
-	function comm_board_update(f) {
-		f.action="comm_board_update.do";
+	function camping_gear_update(f) {
+		f.action="camping_gear_update.do";
 		f.submit()
 	}	
-	function comm_board_delete(f) {
-		f.action="comm_board_delete.do";
+	function camping_gear_delete(f) {
+		f.action="camping_gear_delete.do";
 		f.submit()
 	}	
 </script>
@@ -31,42 +31,42 @@
 				<tbody>
 					<tr>
 						<th bgcolor="#003300" style="color: white;">제목</th>
-						<td>${cbvo.b_title} </td>
+						<td>${cgbvo.cp_subject} </td>
 					</tr>
 					<tr>
 						<th bgcolor="#003300" style="color: white;">닉네임</th>
-						<td> ${cbvo.member_nickname}</td>
+						<td> ${cgbvo.member_nickname}</td>
 					</tr>
 					<tr>
 						<th bgcolor="#003300" style="color: white;">날짜</th>
-						<td>${cbvo.regdate.substring(0,10)} </td>
+						<td>${cgbvo.cp_regdate.substring(0,10)} </td>
 					</tr>
 					<tr>
 						<th bgcolor="#003300" style="color: white;">첨부파일</th>
 						<c:choose>
-							<c:when test="${empty cbvo.f_name}">
+							<c:when test="${empty cgbvo.cpf_name}">
 								<td><b>첨부파일없음</b></td>
 							</c:when>
 							<c:otherwise>
 								<td>
-									<a href="comm_board_down.do?f_name=${cbvo.f_name}"><img src="resources/upload/${cbvo.f_name}" style="width: 80px"> </a>
+									<a href="camping_gear_pics_down.do?f_name=${cgbvo.cpf_name}"><img src="resources/upload/${cgbvo.cpf_name}" style="width: 80px"> </a>
 								</td>
 							</c:otherwise>
 						</c:choose>
 					</tr>
 					<tr>
 						<th bgcolor="#003300" style="color: white;">내용</th>
-						<td><pre>${cbvo.b_content}</pre></td>
+						<td><pre>${cgbvo.cp_content}</pre></td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr id="foot-tr">
 					     <td colspan="2">
-					     	<input type="hidden" value="${cbvo.b_idx}" name="b_idx">
+					     	<input type="hidden" value="${cgbvo.cp_idx}" name="cp_idx">
 					     	<input type="hidden" value="${cPage}" name="cPage">
-					        <input type="button" class="board-member-info" value="목록" onclick="comm_board_list(this.form)" />
-					        <input type="button" class="board-member-info" value="수정" onclick="comm_board_update(this.form)" />
-					        <input type="button" class="board-member-info" value="삭제" onclick="comm_board_delete(this.form)" />
+					        <input type="button" class="board-member-info" value="목록" onclick="camping_gear_board_list(this.form)" />
+					        <input type="button" class="board-member-info" value="수정" onclick="camping_gear_update(this.form)" />
+					        <input type="button" class="board-member-info" value="삭제" onclick="camping_gear_delete(this.form)" />
 					     </td>
 					</tr>
 				</tfoot>
