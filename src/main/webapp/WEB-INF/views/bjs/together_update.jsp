@@ -69,7 +69,7 @@
 	let t_facltdivnm;
 	let t_mangedivnm;
 	
-	function together_write_ok() {
+	function together_update_ok() {
 		let formData = new FormData(document.getElementsByClassName('togetherWriteForm')[0]);
 	    let startDate = $('input[name="datetimes"]').data('daterangepicker').startDate.format('YYYY/MM/DD');
 	    let endDate = $('input[name="datetimes"]').data('daterangepicker').endDate.format('YYYY/MM/DD');
@@ -95,14 +95,14 @@
 	    formData.append("t_mangedivnm", t_mangedivnm);
 
 	    $.ajax({
-	        url: 'together_Write_ok.do',
+	        url: 'together_update_ok.do',
 	        type: 'post',
 	        data: formData,
 	        processData: false,
 	        contentType: false,
 	        async: false,
 	        success: function(response) {
-	           location.href='together_list.do';
+	           location.href='together_detail.do?t_idx=' + response;
 	        },
 	        error: function(xhr, status, error) {
 	            console.error(error);
@@ -180,7 +180,14 @@
 	function initMap() {
 	    let markers = [];
 	    let infoWindows = [];
-
+	    let selectedMapx = $('input[name="t_mapx"]').val();
+	    let selectedMapy = $('input[name="t_mapy"]').val();
+// 	    let selectedImage = $('input[name="tf_name"]').val();
+// 	    let selectedCampname = $('input[name="t_campname"]').val();
+// 	    let selectedInduty = $('input[name="t_induty"]').val();
+// 	    let selectedFacltdivnm = $('input[name="t_facltdivnm"]').val();
+// 	    let selectedMangedivnm = $('input[name="t_mangedivnm"]').val();
+	    
 	    $.ajax({
 	        url: "together_Write2.do",
 	        type: "post",
@@ -189,27 +196,29 @@
 	            if(data !== "fail") {
 	                let campList = data;
 
-	                // 지도 시작지점
                 	map = new naver.maps.Map('map', {
-	                    center: new naver.maps.LatLng(37.552758094502494, 126.98732600494576),
-	                    zoom: 10
+	                    center: new naver.maps.LatLng(selectedMapy, selectedMapx),
+	                    zoom: 15
 	                });
-						
+
 	                for (var i = 0; i < campList.length; i++) {
 	                	let camp = campList[i];
 	                    let position = new naver.maps.LatLng(camp.mapy, camp.mapx);
 
 	                    let marker = new naver.maps.Marker({
 	                        map: map,
-	                        title: camp.facltnm, // 지역구 이름 
+	                        title: camp.facltnm,
 	                        position: position
 	                    });
-// 	                    console.log(i, marker.getTitle);
-	                    /* 정보창 */
+	                    
 	                    let infoWindow = new naver.maps.InfoWindow({
 	                        content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + camp.firstimageurl + '" alt="" style="width:100%;" /><b>' + camp.facltnm + '</b><br><br> ' + camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
 	                        disableAutoPan: true // 정보창열릴때 지도이동 안함
 	                    });
+// 	                    let infoWindow2 = new naver.maps.InfoWindow({
+// 	                        content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + selectedImage + '" alt="" style="width:100%;" /><b>' + selectedCampname + '</b><br><br> ' + selectedInduty + '<br>(' + selectedFacltdivnm + '/' + selectedMangedivnm + ') <br><br></div>',
+// 	                        disableAutoPan: true // 정보창열릴때 지도이동 안함
+// 	                    });
 
 	                    markers.push(marker);
 	                    infoWindows.push(infoWindow);
@@ -248,20 +257,22 @@
 	}
 	
 	
-	// 셀렉트 박스에 옵션을 동적으로 추가하는 함수
-	function selectBox() {
-	  let selectBox = document.getElementById("numberOfPeople");
-	  for (let i = 2; i <= 30; i++) {
-		  let option = document.createElement("option");
-	    option.value = i;
-	    option.text = i;
-	    selectBox.appendChild(option);
-	  }
-	}
-
-	// 페이지 로드 시 셀렉트 박스에 옵션을 추가
+	// 페이지 로드 시 셀렉트 박스에 옵션을 추가하고 기본값 설정
 	window.onload = function() {
-	  selectBox();
+		let t_numpeople2 = document.querySelector('input[name="t_numpeople2"]').value;
+		let selectBox = document.getElementById("numberOfPeople");
+		
+		for (let i = 2; i <= 30; i++) {
+		  let option = document.createElement("option");
+		  option.value = i;
+		  option.text = i;
+		  selectBox.appendChild(option);
+		}
+		  
+		let optionToSelect = document.querySelector('#numberOfPeople option[value="' + t_numpeople2 + '"]');
+		  if (optionToSelect) {
+		    optionToSelect.selected = true;
+		  }
 	}
 </script>
 </head>
@@ -270,11 +281,13 @@
 	    <form class="togetherWriteForm">
 	        <div class="togetherWriteInput">
 	            <div class="togetherh2">
-	                <h2>동 행 글쓰기</h2>
+	                <h2>동 행 수정하기</h2>
 	            </div>
-	            <input type="text" name="t_subject" class="togetherWriteInput1" placeholder="제목을 입력하세요" required>
-	            <textarea class="togetherWriteInput2" name="t_content" id="t_content" placeholder="내용을 입력하세요" required></textarea>
-	            <input type="button" value="작성하기" class="togetherWriteInputSubmit" onclick="together_write_ok()">
+	            <input type="text" name="t_subject" class="togetherWriteInput1" value="${tvo.t_subject }" placeholder="제목을 입력하세요" required>
+	            <textarea class="togetherWriteInput2" name="t_content" id="t_content" placeholder="내용을 입력하세요" required>${tvo.t_content }</textarea>
+	            <input type="button" value="수정하기" class="togetherWriteInputSubmit" onclick="together_update_ok()">
+	            <input type="hidden" name="t_idx" id="t_idx" value="${tvo.t_idx }">
+	            <input type="hidden" name="cPage" id="cPage" value="${cPage }" > 
 	        </div>
 	        <div class="togetherWriteSelect">
 	            <strong>캠핑타입</strong>
@@ -282,9 +295,9 @@
 <!-- 	            	<input type="button" name="t_camptype" value="카라반" class="togetherSub1Button"> -->
 <!-- 	            	<input type="button" name="t_camptype" value="글램핑" class="togetherSub1Button"> -->
 <!-- 	            	<input type="button" name="t_camptype" value="야영지" class="togetherSub1Button"> -->
-	            	<button type="button" name="카라반" value="카라반" class="togetherSub1Button">카라반</button>
-	            	<button type="button" name="글램핑" value="글램핑" class="togetherSub1Button">글램핑</button>
-	            	<button type="button" name="야영지" value="야영지" class="togetherSub1Button">야영지</button>
+	            	<button type="button" name="카라반" value="카라반" class="togetherSub1Button ${tvo.t_camptype == '카라반' ? 'active' : ''}">카라반</button>
+					<button type="button" name="글램핑" value="글램핑" class="togetherSub1Button ${tvo.t_camptype == '글램핑' ? 'active' : ''}">글램핑</button>
+					<button type="button" name="야영지" value="야영지" class="togetherSub1Button ${tvo.t_camptype == '야영지' ? 'active' : ''}">야영지</button>
 	            </div>
 	            <div class="togetherSub1">
 	                <strong class="togetherSub5Strong">캠핑장</strong>
@@ -293,17 +306,25 @@
 		                	<input type="search" name="" class="searchbar" placeholder="캠핑장 이름">
 	        				<input type="button" class="res" value="검색">
         				</div>
-        				<input type="text" name="t_campname" class="togetherSub1DivP1">
-	                    <textarea name="t_address" class="togetherSub1DivP" readonly></textarea>
+        				<input type="text" name="t_campname" value="${tvo.t_campname }" class="togetherSub1DivP1">
+	                    <textarea name="t_address" class="togetherSub1DivP" readonly>${tvo.t_address }</textarea>
 	                </div>
 	            </div>
 	            <div>
 	                <div id="map" class="togetherSub1Img"></div>
+	                <input type="hidden" name="t_mapx" value="${tvo.t_mapx }">
+	                <input type="hidden" name="t_mapy" value="${tvo.t_mapy }">
+<%-- 	                <input type="hidden" name="tf_name" value="${tvo.tf_name }"> --%>
+<%-- 	                <input type="hidden" name="t_campname" value="${tvo.t_campname }"> --%>
+<%-- 	                <input type="hidden" name="t_induty" value="${tvo.t_induty }"> --%>
+<%-- 	                <input type="hidden" name="t_facltdivnm" value="${tvo.t_facltdivnm }"> --%>
+<%-- 	                <input type="hidden" name="t_mangedivnm" value="${tvo.t_mangedivnm }"> --%>
 	            </div>
 	            <div class="togetherSub5">
 	                <strong class="togetherSub5Strong">캠핑인원&nbsp;</strong>
 	                <select name="t_numpeople" class="numberOfPeople" id="numberOfPeople"></select>
 	                <span>명</span>
+	                <input type="hidden" name="t_numpeople2" value="${tvo.t_numpeople }">
 	            </div>
 	            <div class="togetherSub2">
 	                <strong>캠핑기간</strong>

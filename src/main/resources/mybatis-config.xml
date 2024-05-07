@@ -20,6 +20,7 @@
 		<typeAlias type="com.ict.campyou.jun.dao.CampVO" alias="cvo"/>
 		<typeAlias type="com.ict.campyou.joy.dao.AdminMemberVO" alias="amvo"/>
 		<typeAlias type="com.ict.campyou.jun.dao.ReviewVO" alias="rvo"/>
+		<typeAlias type="com.ict.campyou.bjs.dao.PromiseVO" alias="pvo"/>
 		
 	</typeAliases>
 	<mappers>
