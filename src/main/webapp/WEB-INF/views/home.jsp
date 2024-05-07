@@ -2,8 +2,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.google.gson.Gson"%>
+
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <%@ include file="hs/header.jsp"%>
+
 <!doctype html>
 <html lang="ko">
 <link href="${path}/resources/css/reset.css" rel="stylesheet" />
@@ -123,10 +126,8 @@ button {
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=n9r058oxzq"></script>
-<script type="text/javascript"
-	src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=n9r058oxzq&submodules=geocoder"></script>
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb&submodules=geocoder"></script>
 
 <!-- 이펙트  -->
 <script type="text/javascript">
@@ -143,76 +144,73 @@ $(document).ready(function() {
             
         }); 
     });
+
+// 	$(function() {
+		initMap();
+// 	});
+
+	function initMap() {
+	    let markers = [];
+	    let infoWindows = [];
+
+	    $.ajax({
+	        url: "together_Write2.do",
+	        type: "post",
+	        dataType: "json",
+	        success: function(data) {
+	            if(data !== "fail") {
+	                let campList = data;
+
+	                // 지도 시작지점
+	                let map = new naver.maps.Map('map', {
+	                    center: new naver.maps.LatLng(37.552758094502494, 126.98732600494576),
+	                    zoom: 10
+	                });
+						
+	                for (var i = 0; i < campList.length; i++) {
+	                	let camp = campList[i];
+	                    let position = new naver.maps.LatLng(camp.mapy, camp.mapx);
+
+	                    let marker = new naver.maps.Marker({
+	                        map: map,
+	                        title: "test", // 지역구 이름 
+	                        position: position
+	                    });
+	                    let infoWindow = new naver.maps.InfoWindow({
+	                        content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + camp.firstimageurl + '" alt="" style="width:100%;" /><b>' + camp.facltnm + '</b><br><br> ' + camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
+	                        disableAutoPan: true // 정보창열릴때 지도이동 안함
+	                    });
+
+	                    markers.push(marker); // 생성한 마커를 배열에 담는다.
+	                    infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
+	                }
+
+	                function getClickHandler(seq, addr, imageUrl, campName) {
+	                    return function(e) {  // 마커를 클릭하는 부분
+	                    	let marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
+	                            infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
+
+	                        if (infoWindow.getMap()) {
+	                            infoWindow.close();
+	                        } else {
+	                            infoWindow.open(map, marker);
+	                        }
+	                    }
+	                }
+
+	                for (var i = 0, ii = markers.length; i < ii; i++) {
+//	                    console.log(markers[i], getClickHandler(i));
+	                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm)); // 클릭한 마커 핸들러
+	                }
+	            }
+	        }, // success function 종료
+
+	        error: function(xhr, status, error) {
+	            console.error("AJAX Error: ", status, error);
+	        }
+	        });
+	}
 });
-
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
-   	console.log(1)
-    let campList = ${campList};
-   	console.log(2)
-    
-    initMap(campList);
-});
-
-function initMap(campList) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-    	
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-        let map = new naver.maps.Map('map', {
-            center: new naver.maps.LatLng(lat, lng),
-            zoom: 15
-        });
-        let markers = [];
-        let infoWindows = [];
-        for (let i = 0; i < campList.length; i++) {
-            console.log(i, marker.getTitle); // marker.getTitle 대신에 campList[i].facltnm 를 넣어야 합니다.
-            let camp = campList[i];
-            let position = new naver.maps.LatLng(camp.mapy, camp.mapx);
-
-            let marker = new naver.maps.Marker({
-                map: map,
-                title: "남산타워",
-                position: position,
-                icon: {
-                    content: '<img src="/resources/images/marker.png" alt="" style="margin: 0px; padding: 0px; width:30px; height:30px;">'
-                }
-            });
-            console.log("Marker title:", marker.getTitle());
-            let infoWindow = new naver.maps.InfoWindow({
-                content: '<div style="width:220px; height:100px; text-align:center;padding:10px; color:black; margin: 0 auto;"><img src="' +
-                    camp.firstimageurl + '" alt="" style="width:140px; height:80px;" /><b>' + camp.facltnm + '</b><br><br> ' +
-                    camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
-                disableAutoPan: true
-            });
-
-            markers.push(marker);
-            infoWindows.push(infoWindow);
-        }
-
-        function getClickHandler(seq, addr, imageUrl, campName) {
-            return function (e) {
-                let marker = markers[seq];
-                let infoWindow = infoWindows[seq];
-
-                if (infoWindow.getMap()) {
-                    infoWindow.close();
-                } else {
-                    infoWindow.open(map, marker);
-                    $(".togetherSub1DivP").text(addr);
-                    $(".togetherSub1DivP1").text(campName);
-                    campImageUrl = imageUrl;
-                }
-            };
-        }
-
-
-        for (let i = 0, ii = markers.length; i < ii; i++) {
-            naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm));
-        }
-    });
-}
 </script>
 
 </head>
@@ -280,13 +278,15 @@ function initMap(campList) {
 				</c:forEach>
 			</div>
 			<p>
-				<button onclick="location.href='together_list.do'">Show More</button>
+				<button onclick="location.href='together_list.do'">Show
+					More</button>
 			</p>
 		</div>
 	</div>
-			<div id="map" style="width: 100%; height: 75vh; margin: 0 auto;"></div>
+	<div id="map" style="width: 100%; height: 75vh; margin: 0 auto;"></div>
 </body>
-	<script type="text/javascript">
+
+<script type="text/javascript">
 	function setCookie(name, value, exDay) {
 		var todayDate = new Date();
 		todayDate.setDate(todayDate.getDate() + exDay);
