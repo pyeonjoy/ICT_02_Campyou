@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="${path}/resources/public/css/bm/faq.css">
   <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
  <script defer src="${path}/resources/public/js/bm/faq.js"></script>
+   <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
 </head>
 <body>
 <body>

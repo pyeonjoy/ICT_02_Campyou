@@ -12,7 +12,7 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script defer src="${path}/resources/public/js/bm/lang/summernote-ko-KR.js"></script>
 <script defer src="${path}/resources/public/js/bm/summernote-lite.js"></script>
-
+  <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
 </head>
 <body>
 
@@ -25,27 +25,12 @@
       <input type="text" placeholder="글제목" class="input_title" name="qna_title">
     </div>
     <textarea class="text_area summernote" id="summernote" name="qna_content">
-    </textarea>
-<<<<<<< HEAD
-  
-      <div class="form_btn">
-       <input
-              type="hidden"
-              id="memberIdx"
-              name="member_idx"
-              value="${qvo.member_idx}"
-            />
-        <button class="btn btn-modi">수정</button>
-=======
-    <div class="form_bottom">
+    </textarea> 
     <div class="form_btn">
-    <input type="hidden" id="memberIdx" name="member_idx" value="${member_idx}">
-        <button class="btn btn-modi" type="submit" onclick="handleUp(this.form)">저장</button>
-        
->>>>>>> bomi
-        <button class="btn btn-cancel">취소</button>
-      </div>
-
+        <input type="hidden" id="memberIdx" name="member_idx" value="${member_idx}">
+        <button class="btn btn-modi" type="submit" onclick="handleUp(this.form)">저장</button>       
+        <button class="btn btn-cancel" onclick="history.back()">취소</button>
+    </div>
   </form>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
@@ -55,16 +40,10 @@
     	    lang : 'ko-KR',
         	height : 300,
         	focus : true,
-<<<<<<< HEAD
-    	   
-    	    },
-    	});
-    });
-=======
-    
+
+    	    })
     	})
-    })
->>>>>>> bomi
+
        
     function progressHandlingFunction(e) {
         if (e.lengthComputable) {
@@ -84,6 +63,6 @@
 	  f.action="QnaUpload.do";
   }
   </script>
-  </div>
+ 
 </body>
 </html>

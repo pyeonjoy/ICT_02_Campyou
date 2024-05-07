@@ -12,6 +12,7 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script defer src="${path}/resources/public/js/bm/lang/summernote-ko-KR.js"></script>
 <script defer src="${path}/resources/public/js/bm/summernote-lite.js"></script>
+  <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
 
 </head>
 <body>

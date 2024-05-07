@@ -172,6 +172,7 @@ font-size: .8rem;
   display: inline;
 border-bottom: 2px solid var(--text-black);
 padding: 2px;
+font-size:1rem;
 }
 .my_list_summery{
   padding-top: 1rem;
@@ -179,7 +180,7 @@ padding: 2px;
   font-size: .9rem;
 }
 .more_list{
- border: none;
+  border: none;
   background-color: transparent;
   font-size: 1.5rem;
   font-weight: 800;
@@ -187,6 +188,9 @@ padding: 2px;
   top: -0.1rem;
   right: 0.5rem;
   cursor: pointer;
+}
+.nolist{
+	font-size:1rem;
 }
 .arrow{
   width: 2rem;

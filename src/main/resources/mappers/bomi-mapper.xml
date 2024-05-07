@@ -54,6 +54,6 @@ select * from qna where member_idx=#{member_idx}
 
 <select id="count" resultType="int" parameterType="String">
 select count(*) from qna where member_idx=#{member_idx}
->>>>>>> bomi
+
 </select>
 </mapper>

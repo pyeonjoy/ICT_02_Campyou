@@ -147,7 +147,7 @@ public class BomiController {
 			return new ModelAndView("redirect:pwd_change.do");			
 		}
 		// Delete User
-		@PostMapping("deleteUser.do")
+		@RequestMapping("deleteUser.do")
 		public ModelAndView changeUserPw(@RequestParam("member_idx") String member_idx) {
 			ModelAndView mv = new ModelAndView("redirect:home.do");
 			int res = myService.deletMember(member_idx);
@@ -168,8 +168,9 @@ public class BomiController {
 		//After User complete writing 
 		 @PostMapping("QnaUpload.do")
 		    public ModelAndView qnaUpload(QnaVO qvo, @RequestParam("member_idx") String member_idx) {
-		        ModelAndView mv = new ModelAndView("redirect:my_inquiry.do?member_idx="+member_idx);
+		        ModelAndView mv = new ModelAndView("redirect:my_inquiry_list.do?member_idx="+member_idx);
 		        int res = myService.uploadQna(qvo);
+		        System.out.println(res);
 		        if(res>0) {					
 					return mv;
 				}
@@ -184,7 +185,7 @@ public class BomiController {
 			
 			int count = myService.getTotalCount(member_idx);
 			paging.setTotalRecord(count);
-			
+			System.out.println(count);
 			if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 				paging.setTotalPage(1);
 			}else {
@@ -228,16 +229,16 @@ public class BomiController {
 		// my qna : select one
 		@GetMapping("my_inquiry.do")
 		public ModelAndView getMyOneQna(@RequestParam("qna_idx") String qna_idx) {
-			ModelAndView mv = new ModelAndView("my_inquiry");
+			ModelAndView mv = new ModelAndView("bm/my_inquiry");
 			QnaVO qvo = myService.getMyOneQna(qna_idx);
 			mv.addObject("qvo", qvo);
 			return mv;
 		}		 
 		 
 		//  request the page where user can modify the form 
-		 @GetMapping("QnaUpdateForm.do")
+		 @RequestMapping("QnaUpdateForm.do")
 		 public ModelAndView qnaUpdateForm(@RequestParam("qna_idx") String qna_idx) {
-			 ModelAndView mv = new ModelAndView("my_inquiry_update");
+			 ModelAndView mv = new ModelAndView("bm/my_inquiry_update");
 			 QnaVO qvo = myService.getMyOneQna(qna_idx);
 				mv.addObject("qvo", qvo);
 				return mv;

@@ -22,6 +22,13 @@ function handleMyFavList(member_idx){
 </head>
 <body>
 		<%@ include file="../hs/mypage_menu.jsp"%>
+		  <input
+              type="hidden"
+              id="memberIdx"
+              name="member_idx"
+              value="${mvo.member_idx}"
+            />
+   
   <div class="mypage">   
     <div class="welcome"> 
      <div class="user_img">   
@@ -76,7 +83,7 @@ function handleMyFavList(member_idx){
     
     <c:choose>
     <c:when test="${empty list }">
-     <h3 class="nolist"> 작 내역이 없습니다. </h3> 
+     <h4 class="nolist"> 작성 내역이 없습니다. </h4> 
     </c:when>
 			<c:otherwise>
 				<c:forEach var="list" items="${list }">

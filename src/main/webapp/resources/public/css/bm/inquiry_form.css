@@ -18,6 +18,10 @@
   margin: 0 auto;
   transform: translateY(10rem);
 }
+.form_inquiry{
+	    width: 70%;
+    margin: 0 auto;
+}
 .inquiry_title{
   text-align: center;
   margin-bottom: 3rem;

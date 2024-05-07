@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${path}/resources/public/css/bm/grid.css">
   <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
+    <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
   <script>
   function handleWrite(member_idx){
 	  location.href="inquiry_form.do?member_idx="+member_idx;
@@ -32,22 +33,22 @@
     <c:when test="${empty list }">
      <h3 class="nolist"> 문의 내역이 없습니다. </h3> 
     </c:when>
-			<c:otherwise>
-				<c:forEach var="list" items="${list }" varStatus="vs" begin="1">
-				      <div class="grid_row grid_row_content">${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage+ vs.index)}</div>
-				      <a href="my_inquiry.do?qna_idx=${list.qna_idx}"><div class="grid_row grid_row_content">${list.qna_title }</div></a>
-				      <div class="grid_row grid_row_content">${nickname }</div>
-				      <div class="grid_row grid_row_content">${list.qna_date}</div>
-						      <c:choose>
-						      <c:when test="${list.qna_status==0}">
-						      <div class="grid_row grid_row_content">처리중</div>     
-						      </c:when>
-						      <c:otherwise>
-						      <div class="grid_row grid_row_content">처리완료</div> 
-						      </c:otherwise>
-						      </c:choose>
-				</c:forEach>
-			</c:otherwise>
+	<c:otherwise>
+			<c:forEach var="list" items="${list }" varStatus="vs" begin="1">
+			      <div class="grid_row grid_row_content">${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage+ vs.index)}</div>
+			      <div class="grid_row grid_row_content"><a href="my_inquiry.do?qna_idx=${list.qna_idx}">${list.qna_title }</a></div>
+			      <div class="grid_row grid_row_content">${nickname }</div>
+			      <div class="grid_row grid_row_content">${list.qna_date}</div>
+					      <c:choose>
+					      <c:when test="${list.qna_status==0}">
+					      <div class="grid_row grid_row_content">처리중</div>     
+					      </c:when>
+					      <c:otherwise>
+					      <div class="grid_row grid_row_content">처리완료</div> 
+					      </c:otherwise>
+					      </c:choose>
+			</c:forEach>
+	</c:otherwise>
 	</c:choose>
     </div>
     <div class="grid_last_row">
@@ -95,7 +96,13 @@
        -->
       </div>
       <button class="btn btn-inquiry" onclick="handleWrite(${member_idx})">문의글 작성하기</button>
-
+  <input
+              type="hidden"
+              id="memberIdx"
+              name="member_idx"
+              value="${qvo.member_idx}"
+            />
+ 
     </div>
   </div>
 </body>

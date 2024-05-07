@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
  <link rel="stylesheet" href="${path}/resources/public/css/bm/grid.css">
    <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
+     <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
 <title>동행내역</title>
 </head>
 <body>

@@ -8,7 +8,6 @@
 <link href="/resources/css/menu_aside.css" rel="stylesheet" />
 </head>
 <body>
-<input type="hidden" id="memberIdx" name="member_idx" value="${mvo.member_idx}">
 	<div class="mypage_menu_header">
 		<%@include file="header.jsp"%>
 	</div>

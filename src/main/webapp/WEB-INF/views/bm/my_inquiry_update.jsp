@@ -12,9 +12,11 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script defer src="${path}/resources/public/js/bm/lang/summernote-ko-KR.js"></script>
 <script defer src="${path}/resources/public/js/bm/summernote-lite.js"></script>
+  <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
  <script>
-      function handleModiUp(qna_idx) {
-        href.location = "QnaUpdate.do";
+      function handleModiUp(f) {
+    	  f.submit();
+    	  f.action = "QnaUpdate.do";
       }
     </script>
 </head>
@@ -30,33 +32,32 @@
             name="qna_title"
             value="${qvo.qna_title}"
           />
-        </div>
-        <textarea
+      </div>
+      <textarea
           class="text_area summernote"
           id="summernote"
           name="qna_content"
         >
           ${qvo.qna_content}
-        </textarea>
+       </textarea>
       <div class="form_btn">
-       <input
+       		<input
               type="hidden"
               id="memberIdx"
               name="member_idx"
               value="${qvo.member_idx}"
             />
-     <input
+    		 <input
               type="hidden"
-              id="memberIdx"
-              name="member_idx"
+              id="qnaIdx"
+              name="qna_idx"
               value="${qvo.qna_idx}"
             />
-        <button class="btn btn-modi"onclick="handleModiUp()">저장 </button>
-        <button class="btn btn-cancel">취소</button>
+        <button class="btn btn-modi" onclick="handleModiUp(this.form)">저장 </button>
+        <button class="btn btn-cancel" onclick="history.back()">취소</button>
       </div>
-    </div>
   </form>
-  
+  </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
    <script>
     $(document).ready(function() {
@@ -65,103 +66,10 @@
     	    lang : 'ko-KR',
         	height : 300,
         	focus : true,
-    	    callbacks: {
-    	        onFileUpload: function(file) {
-    	            myOwnCallBack(file[0]);
-    	        },
-    	    },
+    	 
+    	    })
     	});
-    });
-       
-    function myOwnCallBack(file) {
-        let data = new FormData();
-        data.append("file", file);
-        $.ajax({
-            data: data,
-            type: "POST",
-            url: "file-uploader.do",
-            cache: false,
-            contentType: false,
-            processData: false,
-            xhr: function() { 
-                let myXhr = $.ajaxSettings.xhr();
-                if (myXhr.upload) myXhr.upload.addEventListener('progress', progressHandlingFunction, false);
-                return myXhr;
-            },
-            success: function(reponse) {
-                if(reponse.status === true) {
-                    let listMimeImg = ['image/png', 'image/jpeg', 'image/webp', 'image/gif', 'image/svg'];
-                    let listMimeAudio = ['audio/mpeg', 'audio/ogg'];
-                    let listMimeVideo = ['video/mpeg', 'video/mp4', 'video/webm'];
-                    let elem;
-
-                    if (listMimeImg.indexOf(file.type) > -1) {
-                        //Picture
-                        $('.summernote').summernote('editor.insertImage', reponse.filename);
-                    } else if (listMimeAudio.indexOf(file.type) > -1) {
-                        //Audio
-                        elem = document.createElement("audio");
-                        elem.setAttribute("src", reponse.filename);
-                        elem.setAttribute("controls", "controls");
-                        elem.setAttribute("preload", "metadata");
-                        $('.summernote').summernote('editor.insertNode', elem);
-                    } else if (listMimeVideo.indexOf(file.type) > -1) {
-                        //Video
-                        elem = document.createElement("video");
-                        elem.setAttribute("src", reponse.filename);
-                        elem.setAttribute("controls", "controls");
-                        elem.setAttribute("preload", "metadata");
-                        $('.summernote').summernote('editor.insertNode', elem);
-                    } else {
-                        //Other file type
-                        elem = document.createElement("a");
-                        let linkText = document.createTextNode(file.name);
-                        elem.appendChild(linkText);
-                        elem.title = file.name;
-                        elem.href = reponse.filename;
-                        $('.summernote').summernote('editor.insertNode', elem);
-                    }
-                }
-            }
-        });
-    }
-
-    function uploadFileAndContent() {
-        const content = $('.summernote').summernote('code');
-
-        const file = document.querySelector('input[type=file]').files[0];
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('content', content);
-
-        $.ajax({
-            url: 'upload.do', 
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                console.log('파일 및 게시물 내용 업로드 완료');
-            },
-            error: function(xhr, status, error) {
-                console.error('파일 및 게시물 내용 업로드 실패:', status, error);
-            }
-        });
-    }
-    
-    
-    function progressHandlingFunction(e) {
-        if (e.lengthComputable) {
-            //Log current progress
-            console.log((e.loaded / e.total * 100) + '%');
-
-            //Reset progress on complete
-            if (e.loaded === e.total) {
-                console.log("Upload finished.");
-            }
-        }
-    }
-  </script>
-  </div>
+ 
+   </script>
 </body>
 </html>
