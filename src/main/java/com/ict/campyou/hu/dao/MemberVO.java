@@ -4,7 +4,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class MemberVO {
 	private String member_idx, member_id, member_name, member_nickname, member_dob, member_email, member_pwd,
-			member_phone, member_img, member_active, member_regdate, member_old_img;;
+			member_phone, member_img, member_active, member_regdate, member_old_img,member_grade, member_login ;
+	public String getMember_login() {
+		return member_login;
+	}
+
+	public void setMember_login(String member_login) {
+		this.member_login = member_login;
+	}
+
+	public String getMember_grade() {
+		return member_grade;
+	}
+
+	public void setMember_grade(String member_grade) {
+		this.member_grade = member_grade;
+	}
+
 	public String getMember_old_img() {
 		return member_old_img;
 	}

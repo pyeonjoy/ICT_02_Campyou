@@ -6,6 +6,7 @@
 <html lang="ko">
 <link href="resources/css/reset.css" rel="stylesheet" />
 <link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
+<%@ include file="../hs/admin_menu.jsp" %>
 <head>
 <meta charset="utf-8">
 <title>회원관리 상세</title>
@@ -108,6 +109,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				</c:if>
 				<button type="button" onclick="location.href='member_edit.do?member_idx=${m.member_idx}'">회원수정</button>
 				<button type="button" onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원삭제</button>
+				<button type="button" onclick="location.href='admin_member_list.do'">목록으로</button>
 			</p>
 			</div>
 		</div>
@@ -165,5 +167,6 @@ window.addEventListener('DOMContentLoaded', function() {
 			</div>
 			</c:forEach>
 		</div>
+		<jsp:include page="../hs/footer.jsp" />
 </body>
 </html>

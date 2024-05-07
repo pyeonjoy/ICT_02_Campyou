@@ -13,4 +13,17 @@
 	<select id="loadReview" resultType="rvo">
 		select * from camp_review where contentid = #{contentid}
 	</select>
+	<update id="updateHit" parameterType="cvo">
+		update camp_list set hit= hit+1 where contentid = #{contentid}
+	</update>
+	<insert id="addHeart" parameterType="Map">
+		insert into camp_heart (member_idx,contentid)
+		values(#{member_idx},#{contentid})
+	</insert>
+	<select id="checkHeart" parameterType="Map" resultType="String">
+		select * from camp_heart where member_idx=#{member_idx} and contentid = #{contentid}	
+	</select>
+	<delete id="delHeart" parameterType="Map">
+		delete from camp_heart where member_idx=#{member_idx} and contentid = #{contentid}
+	</delete>
 </mapper>
