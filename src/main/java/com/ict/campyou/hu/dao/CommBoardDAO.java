@@ -152,9 +152,10 @@ public class CommBoardDAO {
 		return 0;
 	}
 	
+	//¡÷¿« ø‰∏¡~~~
 	public List<CommentVO> getCommentReplyList(String b_idx) {
 		
-		return sqlSessionTemplate.selectList("member", b_idx);
+		return sqlSessionTemplate.selectList("member.comment_reply_list", b_idx);
 	}
 	
 	public int getAnsInsert(CommentVO cvo) {

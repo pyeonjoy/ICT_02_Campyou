@@ -67,6 +67,14 @@
  		where b_idx = #{b_idx} 
  	</update>
  	
+ 	<insert id="comm_board_insert" parameterType="cbvo">
+ 		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
+ 			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM board_free
+ 		</selectKey>
+ 		insert into board_free(member_idx, b_type, b_subject, member_nickname, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name)
+ 			values(#{member_idx}, #{b_type}, #{b_subject}, #{member_nickname}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{bf_name})
+ 	</insert>
+ 	
  	<select id="comm_board_detail" parameterType="String" resultType="cbvo">
  		select * from board_free where b_idx = #{b_idx}
  	</select>
@@ -167,7 +175,6 @@
  	 </insert>
  	 
  	 
- 	 
  	<select id="board_free_list" resultType="bfvo">
  		select * from board_free where bf_no &gt;= 1 and bf_no &lt;= 100  order by bf_no
  	</select>
@@ -205,6 +212,129 @@
  	<select id="commet_reply_detail" parameterType="String" resultType="covo">
  		select * from comment_t where c_idx = #{c_idx}
  	</select>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	<!-- 캠핑제품추천게시판  -->
+ 	
+ 	<!-- 전체 게시물수  -->
+ 	<select id="cgb_count" resultType="int">
+ 		select count(*) from board_camp
+ 	</select>
+ 	
+ 	<!-- 리스트 -->
+ 	<select id="cgb_list" parameterType="Map" resultType="cgbvo">
+ 		select * from board_camp order by groups desc, lev asc  limit #{limit} offset #{offset}  
+ 	</select>
+ 	
+ 	<!-- 게시판 글쓰기 삽입  -->
+ 	<insert id="camping_gear_write_insert" parameterType="cgbvo">
+ 		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
+ 			SELECT (IFNULL(MAX(cp_idx),0)+1) as groups FROM board_camp
+ 		</selectKey>
+ 		insert into board_camp(member_idx, cp_subject, member_nickname, cp_content, cp_pwd, cpf_name, cp_regdate, cp_hit, cp_active, cp_notice, groups, step, lev)
+ 			values(#{member_idx}, #{cp_subject}, #{member_nickname}, #{cp_content},#{cp_pwd},#{cpf_name}, sysdate(), 0, 0, 0, #{groups}, 0, 0)
+ 	</insert>
+ 	
+ 	
+ 	<!-- 게시판 조회수 -->
+ 	<update id="camping_gear_hit" parameterType="String">
+ 		update board_camp 
+ 		set cp_hit = cp_hit + 1 
+ 		where cp_idx = #{cp_idx} 
+ 	</update>
+ 
+ 	<!-- 게시판 개인정보 상세보기 -->
+ 	<select id="camping_gear_detail" parameterType="String" resultType="cgbvo">
+ 		select * from board_camp where cp_idx = #{cp_idx}
+ 	</select>
+ 	
+ 	<!-- 게시판 수정 -->
+ 	<update id="camping_gear_update" parameterType="cgbvo">
+ 	 	update board_camp 
+ 	 	set  cp_subject=#{cp_subject}, cp_content=#{cp_content}, cpf_name=#{cpf_name}
+ 	 	where cp_idx = #{cp_idx}  	 
+ 	 </update>
+ 	 
+ 	 <!-- 게시판 삭제 -->
+ 	 <delete id="camping_gear_delete" parameterType="cgbvo">
+ 	 	delete from board_camp where cp_idx = #{cp_idx}
+ 	 </delete>
+ 	 
+ 	 <!-- 관리자 게시판 강제 삭제 -->
+ 	 <delete id="camping_gear_admin_delete" parameterType="cgbvo">
+ 	 	delete from board_camp where cp_idx = #{cp_idx}
+ 	 </delete>
+ 	 
+ 	 
+ 	 
+ 	 
+ 	 
+ 	 
+ 	 <!-- 캠핑추천게시판 댓글 목록 가져오기 -->
+ 	 <select id="camping_gear_comment_list" parameterType="String" resultType="cgbcvo">
+ 		select * from cgb_comment where cp_idx = #{cp_idx}
+ 	 </select>
+ 	 
+ 	 
+ 	 <!-- 댓글 삽입 -->
+ 	 <insert id="camping_gear_comment_insert" parameterType="cgbcvo">
+ 		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
+ 			SELECT (IFNULL(MAX(cp_idx),0)+1) as groups FROM cgb_comment
+ 		</selectKey>
+ 		insert into cgb_comment(member_nickname, content, write_date, cp_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, 0, 0)
+ 	</insert>
+ 	
+ 	<!-- 댓글 삭제 -->
+ 	<delete id="camping_gear_comment_delete" parameterType="String">
+ 		delete from cgb_comment where c_idx = #{c_idx}
+ 	</delete>
+ 	
+ 	<!-- 댓글 수정 -->
+ 	<update id="camping_gear_comment_update" parameterType="cgbcvo">
+ 		update cgb_comment 
+ 		set content = #{content}, write_date = sysdate()
+ 	    where cp_idx=#{cp_idx} and c_idx = #{c_idx}
+ 	</update>
+ 	
+ 	<!-- 댓글댓글 -->
+ 	<select id="camping_gear_comment_reply_list" parameterType="String" resultType="cgbcvo">
+ 		select * from cgb_comment where cp_idx = #{cp_idx}
+ 	</select>
+ 	
+ 	<!-- 댓글댓글 -->
+ 	<update id="camping_gear_comm_lev_update" parameterType="Map">
+ 	 	update cgb_comment set lev=lev+1 where groups=#{groups} and lev>=#{lev} 
+ 	 </update>
+ 	 
+ 	 <!-- 댓글댓글 -->
+ 	 <insert id="camping_gear_ans_insert" parameterType="cgbcvo">
+ 	 	insert into cgb_comment(member_nickname, content, write_date, cp_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, #{step}, #{lev})
+ 	 </insert>
+ 	 
+ 	 <select id="camping_gear_reply_detail" parameterType="String" resultType="cgbcvo">
+ 		select * from cgb_comment where c_idx = #{c_idx}
+ 	</select>
+ 	
+ 
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
  	
  	
  	

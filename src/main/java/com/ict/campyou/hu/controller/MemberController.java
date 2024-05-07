@@ -469,7 +469,7 @@ public class MemberController {
 			String dpwd = cbvo2.getB_pwd();
 			
 			if(! passwordEncoder.matches(cbvo.getB_pwd(), dpwd)) {
-				cbvo.setBf_name(dpwd);
+				cbvo.setBf_name(cbvo.getOld_f_name());
 				mv.addObject("pwchk", "fail");
 				mv.addObject("cbvo", cbvo);
 				mv.setViewName("hu/boardFree/communityBoardUpdate");
@@ -701,96 +701,7 @@ public class MemberController {
 	   }
 		
 	   
-	   
-	 
-	   
-	   ///////////////////////////////////////
-	   //////////////   캠핑 제품   ////////////
-	   //////////////////////////////////////
-	   /*
-	   @RequestMapping("camping_gear_board.do") 
-	   public ModelAndView getCampingGearBoardPage() { 
-			try {
-				 ModelAndView mv = new ModelAndView("hu/campingGearBoard/campingGearBoard"); 
-				 return mv; 
-			}
-			catch (Exception e) { 
-				System.out.println(e); 
-			} 
-			return new ModelAndView("error"); 
-		}
-	   */
-	   /*
-	   @RequestMapping("camping_gear_board.do")
-		  public ModelAndView getCampingGearBoard(HttpServletRequest request, HttpSession session) {
-			  try {
-				  ModelAndView mv = new ModelAndView("hu/campingGearBoard/campingGearBoard");
-				  
-				  //페이징 기법 & 전체 게시물 수
-				  int count = commBoardService.getTotalCount();
-				  paging.setTotalRecord(count);
-				  
-				  //전체 페이지 수
-				  if(paging.getTotalRecord() <= paging.getNumPerPage()) {
-					  paging.setTotalPage(1);
-				  }else {
-					  //전체 페이지 수 (DB게시물 수 / 한페이지당 10줄)
-					  paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-					  // (DB게시물 수 % 한페이지당 10줄 != 0) 이면 1pg를 더한다.
-					  if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
-						  paging.setTotalPage(paging.getTotalPage() + 1);
-					  }
-				  }
-				  
-				  //현재 페이지 구함
-				  String cPage = request.getParameter("cPage");
-				  if(cPage == null) {
-					  paging.setNowPage(1);
-				  }else {
-					  paging.setNowPage(Integer.parseInt(cPage));
-				  }
-				  
-				  // begin, end 구하기 (Oracle)
-				  // offset 구하기
-				  // offset = limit * (현재페이지-1);
-				  paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
-				  
-				  //시작 블록 // 끝블록
-				  paging.setBeginBlock(
-							(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
-					paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
-					
-				  if (paging.getEndBlock() > paging.getTotalPage()) {
-					  paging.setEndBlock(paging.getTotalPage());
-				  }
-				  
-				  List<CampingGearVO> camping_gear_list = campingGearService.getCampingGearList(paging.getOffset(), paging.getNumPerPage());
-				  
-				  //맴버정보 세선 부르기
-				  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
-				  CommBoardVO cbvo = new CommBoardVO();
-				  
-				  if(memberInfo != null) {
-					  //맴버세션 정보를 담기
-					  cbvo.setMember_idx(memberInfo.getMember_idx());
-				  }
-				  
-				  if (commBoard_list != null) {
-						mv.addObject("commBoard_list", commBoard_list);
-						mv.addObject("paging", paging);
-						mv.addObject("memberInfo", memberInfo);
-						return mv;
-					}
-					return new ModelAndView("hu/boardFree/error");
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-			return new ModelAndView("hu/boardFree/error");
-		  }
-	   */
-	   
-		
-		
+	  
 		
 		
 		
