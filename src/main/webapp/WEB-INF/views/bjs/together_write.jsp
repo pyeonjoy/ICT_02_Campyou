@@ -28,7 +28,7 @@
 			height : 300,
 			focus : true,
 			placeholder: '최대3000자까지 쓸 수 있습니다'	,
-	//			disableHtmlResizing: true, // <p> 태그 자동 생성 비활성화
+// 				disableHtmlResizing: true, // <p> 태그 자동 생성 비활성화
 			callbacks : {
 				onImageUpload : function(files, editor) {
 					for (var i = 0; i < files.length; i++) {
@@ -44,53 +44,63 @@
 	//	}
 	$(function() {
 	  $('input[name="datetimes"]').daterangepicker({
-	    timePicker: false,
-	    startDate: moment().startOf('day'),
-	    endDate: moment().startOf('day').add(1, 'day'),
-	 	locale: {
-	        "format": "YYYY/MM/DD",
-	        "separator": " ~ ",
-	        "applyLabel": "확인",
-	        "cancelLabel": "취소",
-	        "fromLabel": "From",
-	        "toLabel": "To",
-	        "customRangeLabel": "Custom",
-	        "weekLabel": "W",
-	        "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
-	        "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-	    }
+		    "locale": {
+		        "format": "YYYY/MM/DD",
+		        "separator": " ~ ",
+		        "applyLabel": "확인",
+		        "cancelLabel": "취소",
+		        "fromLabel": "From",
+		        "toLabel": "To",
+		        "customRangeLabel": "Custom",
+		        "weekLabel": "W",
+		        "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+		        "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+		    },
+		    "startDate": new Date(),
+		    "endDate": new Date(),
+		    "drops": "auto"
 	  });
 	});
 	
 	let campImageUrl;
+	let t_mapx;
+	let t_mapy;
+	let t_induty;
+	let t_facltdivnm;
+	let t_mangedivnm;
 	
 	function together_write_ok() {
-	    let formData = new FormData(document.getElementsByClassName('togetherWriteForm')[0]);
+		let formData = new FormData(document.getElementsByClassName('togetherWriteForm')[0]);
 	    let startDate = $('input[name="datetimes"]').data('daterangepicker').startDate.format('YYYY/MM/DD');
 	    let endDate = $('input[name="datetimes"]').data('daterangepicker').endDate.format('YYYY/MM/DD');
-	    let selectedCampingType = $(".togetherSub1Button.active").val();
-// 	    let content = $('#t_content').summernote('getText');
+	    let selectedCampingType = $(".togetherSub1Button.active").attr("name");
 
-	    // 캠핑 타입 선택 여부 확인
 	    if (!selectedCampingType) {
 	        alert("캠핑 타입을 선택해주세요.");
+	        return;
+	    }
+	    if (!t_mapx && !t_mapy) {
+	        alert("동행할 캠핑장 위치를 선택해주세요.");
 	        return;
 	    }
 
 	    formData.append("t_camptype", selectedCampingType);
 	    formData.append("t_startdate", startDate);
 	    formData.append("t_enddate", endDate);
+	    formData.append("t_mapx", t_mapx);
+	    formData.append("t_mapy", t_mapy);
 	    formData.append("tf_name", campImageUrl);
-// 	    formData.append("t_content", content);
-	    
+	    formData.append("t_induty", t_induty);
+	    formData.append("t_facltdivnm", t_facltdivnm);
+	    formData.append("t_mangedivnm", t_mangedivnm);
 
 	    $.ajax({
 	        url: 'together_Write_ok.do',
 	        type: 'post',
-	        data: formData, 
-	        processData: false, // 폼 데이터 전송 시 데이터 처리 방식을 false로 설정
-	        contentType: false, // 폼 데이터 전송 시 컨텐츠 타입을 false로 설정
-	        async : false,
+	        data: formData,
+	        processData: false,
+	        contentType: false,
+	        async: false,
 	        success: function(response) {
 	           location.href='together_list.do';
 	        },
@@ -110,10 +120,63 @@
 		
 	
 	
-	$(function() {
-		initMap();
-	});
-
+	let map;
+	
+	$(document).ready(function() {
+	    initMap();
+	    $(".res").click(function() {
+	        searchCamp();
+	    });
+	    // 엔터 키를 눌렀을 때 검색 실행
+	    $(".searchbar").keydown(function(e) {
+	        if (e.keyCode === 13) {
+	            e.preventDefault();
+	            searchCamp();
+	        }
+	    });
+	});   
+	
+	function searchCamp() {
+        let campName = $(".searchbar").val();
+        $.ajax({
+            url: 'searchCamp.do',
+            type: 'post',
+            data: {
+                campName: campName
+            },
+            dataType: 'json',
+            success: function(data) {
+                if (data !== "fail") {
+                    let camp = data;
+                    let position = new naver.maps.LatLng(camp.mapy, camp.mapx);
+                    
+                    map.setCenter(position);
+                    map.setZoom(17);
+                    
+                    let infoWindow = new naver.maps.InfoWindow({
+                        content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + camp.firstimageurl + '" alt="" style="width:100%;" /><b>' + camp.facltnm + '</b><br><br> ' + camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
+                        disableAutoPan: true
+                    });
+                    infoWindow.open(map, position);
+                    
+                    $('.togetherSub1DivP').val(camp.addr1);
+                    $('.togetherSub1DivP1').val(camp.facltnm);
+                    campImageUrl = camp.firstimageurl;
+                    t_mapx = camp.mapx;
+                    t_mapy = camp.mapy;
+                    t_induty = camp.induty;
+                	t_facltdivnm = camp.facltdivnm;
+                	t_mangedivnm = camp.mangedivnm;
+                	
+                	$(".searchbar").val("");
+                } 
+            },
+            error: function(xhr, status, error) {
+            	alert("검색 결과가 없습니다.");
+            }
+        });
+    };
+	    
 	function initMap() {
 	    let markers = [];
 	    let infoWindows = [];
@@ -127,7 +190,7 @@
 	                let campList = data;
 
 	                // 지도 시작지점
-	                let map = new naver.maps.Map('map', {
+                	map = new naver.maps.Map('map', {
 	                    center: new naver.maps.LatLng(37.552758094502494, 126.98732600494576),
 	                    zoom: 10
 	                });
@@ -138,7 +201,7 @@
 
 	                    let marker = new naver.maps.Marker({
 	                        map: map,
-	                        title: "test", // 지역구 이름 
+	                        title: camp.facltnm, // 지역구 이름 
 	                        position: position
 	                    });
 // 	                    console.log(i, marker.getTitle);
@@ -148,12 +211,12 @@
 	                        disableAutoPan: true // 정보창열릴때 지도이동 안함
 	                    });
 
-	                    markers.push(marker); // 생성한 마커를 배열에 담는다.
-	                    infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
+	                    markers.push(marker);
+	                    infoWindows.push(infoWindow);
 	                }
 
-	                function getClickHandler(seq, addr, imageUrl, campName) {
-	                    return function(e) {  // 마커를 클릭하는 부분
+	                function getClickHandler(seq, addr, imageUrl, campName, mapx, mapy, induty, facltdivnm, mangedivnm) {
+	                    return function(e) { 
 	                    	let marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
 	                            infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
 
@@ -164,13 +227,17 @@
 	                            $('.togetherSub1DivP').val(addr);
 	                            $('.togetherSub1DivP1').val(campName);
 	                            campImageUrl = imageUrl;
+	                            t_mapx = mapx;
+	                            t_mapy = mapy;
+	                            t_induty = induty;
+	                            t_facltdivnm = facltdivnm;
+	                            t_mangedivnm = mangedivnm;
 	                        }
 	                    }
 	                }
 
 	                for (var i = 0, ii = markers.length; i < ii; i++) {
-// 	                    console.log(markers[i], getClickHandler(i));
-	                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm)); // 클릭한 마커 핸들러
+	                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm, campList[i].mapx, campList[i].mapy, campList[i].induty, campList[i].facltdivnm, campList[i].mangedivnm)); // 클릭한 마커 핸들러
 	                }
 	            }
 	        },
@@ -180,7 +247,7 @@
 	    });
 	}
 	
-
+	
 	// 셀렉트 박스에 옵션을 동적으로 추가하는 함수
 	function selectBox() {
 	  let selectBox = document.getElementById("numberOfPeople");
@@ -215,9 +282,9 @@
 <!-- 	            	<input type="button" name="t_camptype" value="카라반" class="togetherSub1Button"> -->
 <!-- 	            	<input type="button" name="t_camptype" value="글램핑" class="togetherSub1Button"> -->
 <!-- 	            	<input type="button" name="t_camptype" value="야영지" class="togetherSub1Button"> -->
-	            	<button type="button" name="t_camptype" value="카라반" class="togetherSub1Button">카라반</button>
-	            	<button type="button" name="t_camptype" value="글램핑" class="togetherSub1Button">글램핑</button>
-	            	<button type="button" name="t_camptype" value="야영지" class="togetherSub1Button">야영지</button>
+	            	<button type="button" name="카라반" value="카라반" class="togetherSub1Button">카라반</button>
+	            	<button type="button" name="글램핑" value="글램핑" class="togetherSub1Button">글램핑</button>
+	            	<button type="button" name="야영지" value="야영지" class="togetherSub1Button">야영지</button>
 	            </div>
 	            <div class="togetherSub1">
 	                <strong class="togetherSub5Strong">캠핑장</strong>

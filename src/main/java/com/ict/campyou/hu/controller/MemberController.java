@@ -190,23 +190,23 @@ public class MemberController {
 		  try {
 			  ModelAndView mv = new ModelAndView("hu/boardFree/communityBoard");
 			  
-			  //ÆäÀÌÂ¡ ±â¹ı & ÀüÃ¼ °Ô½Ã¹° ¼ö
+			  //í˜ì´ì§• ê¸°ë²• & ì „ì²´ ê²Œì‹œë¬¼ ìˆ˜
 			  int count = commBoardService.getTotalCount();
 			  paging.setTotalRecord(count);
 			  
-			  //ÀüÃ¼ ÆäÀÌÁö ¼ö
+			  //ì „ì²´ í˜ì´ì§€ ìˆ˜
 			  if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 				  paging.setTotalPage(1);
 			  }else {
-				  //ÀüÃ¼ ÆäÀÌÁö ¼ö (DB°Ô½Ã¹° ¼ö / ÇÑÆäÀÌÁö´ç 10ÁÙ)
+				  //ì „ì²´ í˜ì´ì§€ ìˆ˜ (DBê²Œì‹œë¬¼ ìˆ˜ / í•œí˜ì´ì§€ë‹¹ 10ì¤„)
 				  paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-				  // (DB°Ô½Ã¹° ¼ö % ÇÑÆäÀÌÁö´ç 10ÁÙ != 0) ÀÌ¸é 1pg¸¦ ´õÇÑ´Ù.
+				  // (DBê²Œì‹œë¬¼ ìˆ˜ % í•œí˜ì´ì§€ë‹¹ 10ì¤„ != 0) ì´ë©´ 1pgë¥¼ ë”í•œë‹¤.
 				  if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
 					  paging.setTotalPage(paging.getTotalPage() + 1);
 				  }
 			  }
 			  
-			  //ÇöÀç ÆäÀÌÁö ±¸ÇÔ
+			  //í˜„ì¬ í˜ì´ì§€ êµ¬í•¨
 			  String cPage = request.getParameter("cPage");
 			  if(cPage == null) {
 				  paging.setNowPage(1);
@@ -214,12 +214,12 @@ public class MemberController {
 				  paging.setNowPage(Integer.parseInt(cPage));
 			  }
 			  
-			  // begin, end ±¸ÇÏ±â (Oracle)
-			  // offset ±¸ÇÏ±â
-			  // offset = limit * (ÇöÀçÆäÀÌÁö-1);
+			  // begin, end êµ¬í•˜ê¸° (Oracle)
+			  // offset êµ¬í•˜ê¸°
+			  // offset = limit * (í˜„ì¬í˜ì´ì§€-1);
 			  paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
 			  
-			  //½ÃÀÛ ºí·Ï // ³¡ºí·Ï
+			  //ì‹œì‘ ë¸”ë¡ // ëë¸”ë¡
 			  paging.setBeginBlock(
 						(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
 				paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
@@ -230,12 +230,12 @@ public class MemberController {
 			  
 			  List<CommBoardVO> commBoard_list = commBoardService.getCommBoardList(paging.getOffset(), paging.getNumPerPage());
 			  
-			  //¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
+			  //ë§´ë²„ì •ë³´ ì„¸ì„  ë¶€ë¥´ê¸°
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  CommBoardVO cbvo = new CommBoardVO();
 			  
 			  if(memberInfo != null) {
-				  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
+				  //ë§´ë²„ì„¸ì…˜ ì •ë³´ë¥¼ ë‹´ê¸°
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 			  }
 			  
@@ -274,18 +274,18 @@ public class MemberController {
 		  try {
 			  ModelAndView mv = new ModelAndView("redirect:community_board.do");
 			  
-			  //¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
+			  //ë§´ë²„ì •ë³´ ì„¸ì„  ë¶€ë¥´ê¸°
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  
 			  String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 			  MultipartFile file = cbvo.getFile();
 			  
 			  if(memberInfo != null) {
-				  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
+				  //ë§´ë²„ì„¸ì…˜ ì •ë³´ë¥¼ ë‹´ê¸°
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 				  
 				  if(file.isEmpty()) {
-					  cbvo.setBf_name(""); // "" ¾È¿¡ path ³ÖÀ¸¸é °æ·Î°¡ ³ª¿Â´Ù.
+					  cbvo.setBf_name(""); // "" ì•ˆì— path ë„£ìœ¼ë©´ ê²½ë¡œê°€ ë‚˜ì˜¨ë‹¤.
 				  }else {
 					  UUID uuid = UUID.randomUUID();
 					  String f_name = uuid.toString() + "_" + file.getOriginalFilename();
@@ -312,17 +312,17 @@ public class MemberController {
 		  try {
 			  ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardDetail");
 			  
-			  //¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
+			  //ë§´ë²„ì •ë³´ ì„¸ì„  ë¶€ë¥´ê¸°
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  
-			  //hit ¾÷µ¥ÀÌÆ®
+			  //hit ì—…ë°ì´íŠ¸
 			  int result = commBoardService.getCommBoardHit(b_idx);
 			  
 			  if(memberInfo != null) {
-				  //»ó¼¼º¸±â
+				  //ìƒì„¸ë³´ê¸°
 				  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 				  
-				  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
+				  //ë§´ë²„ì„¸ì…˜ ì •ë³´ë¥¼ ë‹´ê¸°
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 				  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
@@ -362,7 +362,7 @@ public class MemberController {
 		  return new ModelAndView("hu/boardFree/communityBoardReply");
 	  }
 	  
-	  	//´ä±Û ÀÔ·Â »ğÀÔ
+	  	//ë‹µê¸€ ì…ë ¥ ì‚½ì…
 	  	@RequestMapping("comment_insert.do")
 		public ModelAndView getCommentInsert(CommentVO cvo, String cPage, @ModelAttribute("b_idx")String b_idx) {
 			ModelAndView mv = new ModelAndView("redirect:comm_board_reply_ok.do");
@@ -412,7 +412,7 @@ public class MemberController {
 		  return new ModelAndView("hu/boardFree/error");
 	  }
 	  
-	  //°ü¸®ÀÚ °­Á¦ »èÁ¦
+	  //ê´€ë¦¬ì ê°•ì œ ì‚­ì œ
 	  @RequestMapping("comm_board_admin_delete.do")
 	  public ModelAndView getCommBoardAdminDelete(String c_idx, String cPage, @ModelAttribute("b_idx") String b_idx) {
 		  ModelAndView mv =  new ModelAndView("redirect:community_board.do");
@@ -429,7 +429,7 @@ public class MemberController {
 				                           @ModelAttribute("b_idx")String b_idx, CommBoardVO cbvo) {
 		  ModelAndView mv = new ModelAndView();
 
-		  // ºñ¹Ğ¹øÈ£ Ã¼Å©
+		  // ë¹„ë°€ë²ˆí˜¸ ì²´í¬
 		  CommBoardVO cbvo2 = commBoardService.getCommBoardDetail(cbvo.getB_idx());
 		  	
 		  String dpwd = cbvo2.getB_pwd();
@@ -439,7 +439,7 @@ public class MemberController {
 			   mv.addObject("pwdchk", "fail");
 			   return mv;
 		   } else {
-			   // active ÄÃ·³ÀÇ °ªÀ» 1·Î º¯°æÇÏÀÚ.
+			   // active ì»¬ëŸ¼ì˜ ê°’ì„ 1ë¡œ ë³€ê²½í•˜ì.
 			   int result = commBoardService.getCommBoardDelete(cbvo2);
 			   if (result > 0) {
 				   mv.setViewName("redirect:community_board.do");
@@ -506,17 +506,17 @@ public class MemberController {
 	  	public ModelAndView getCommBoardContent(@ModelAttribute("cPage") String cPage, String b_idx, HttpSession session) {
 	  		try {
 	  			ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardContent");
-	  			//¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
+	  			//ë§´ë²„ì •ë³´ ì„¸ì„  ë¶€ë¥´ê¸°
 				MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 				  
-				  //hit ¾÷µ¥ÀÌÆ®
+				  //hit ì—…ë°ì´íŠ¸
 				  int result = commBoardService.getCommBoardHit(b_idx);
 				  
-				  //ºñÈ¸¿ø °Ô½ÃÆÇ º¸±â & ´ñ±Ûº¸±â
+				  //ë¹„íšŒì› ê²Œì‹œíŒ ë³´ê¸° & ëŒ“ê¸€ë³´ê¸°
 				  if(memberInfo == null) {
-					  //»ó¼¼º¸±â
+					  //ìƒì„¸ë³´ê¸°
 					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
-					  //´ñ±Û ¸®½ºÆ®
+					  //ëŒ“ê¸€ ë¦¬ìŠ¤íŠ¸
 					  List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
 					 
 					  if(result > 0 && cbvo != null ){
@@ -527,10 +527,10 @@ public class MemberController {
 					  return mv;
 				  }
 				  if(memberInfo != null) {
-					  //»ó¼¼º¸±â
+					  //ìƒì„¸ë³´ê¸°
 					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 					  
-					  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
+					  //ë§´ë²„ì„¸ì…˜ ì •ë³´ë¥¼ ë‹´ê¸°
 					  cbvo.setMember_idx(memberInfo.getMember_idx());
 					  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
@@ -550,7 +550,7 @@ public class MemberController {
 	  	}
 	  	
 	  	
-	  	//´ñ±Û Ãâ·Â
+	  	//ëŒ“ê¸€ ì¶œë ¥
 	  	 @RequestMapping("comm_board_reply_ok.do")
 		   public ModelAndView getBbsDetail(String b_idx, String cPage, HttpSession session) {
 			  
@@ -558,15 +558,15 @@ public class MemberController {
 			  
 			   MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  
-			   //hit ¾÷µ¥ÀÌÆ®
+			   //hit ì—…ë°ì´íŠ¸
 			   int result = commBoardService.getCommBoardHit(b_idx);
 			  
-			   // »ó¼¼º¸±â 
+			   // ìƒì„¸ë³´ê¸° 
 			   CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 			  
 				
 			   if(result>0 && cbvo != null) {
-				   // ´ñ±Û °¡Á®¿À±â 
+				   // ëŒ“ê¸€ ê°€ì ¸ì˜¤ê¸° 
 				   List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
 				   mv.addObject("commBoard_list2", commBoard_list2);
 				   mv.addObject("memberInfo", memberInfo);
@@ -618,7 +618,7 @@ public class MemberController {
 	  		*/
 	  	
 	  	
-	  	// ´ñ±ÛÀÇ ´ñ±Û »ğÀÔ 
+	  	// ëŒ“ê¸€ì˜ ëŒ“ê¸€ ì‚½ì… 
 	
 		@RequestMapping("comment_reply_insert.do")
 		public ModelAndView getCommentReplyInsert(CommentVO cvo, String cPage, @ModelAttribute("b_idx")String b_idx, HttpSession session) {
@@ -658,7 +658,7 @@ public class MemberController {
 			return new ModelAndView("hu/boardFree/error");
 		}
 	  	
-		//°Ô½ÃÆÇ °Ë»ö
+		//ê²Œì‹œíŒ ê²€ìƒ‰
 	   @RequestMapping("board_free_list_go.do")
 	   public ModelAndView getBoardFreeSearch() {
 		 try {
@@ -676,7 +676,7 @@ public class MemberController {
 		   return new ModelAndView("hu/boardFree/error");
 	   }
 	   
-	   //°Ô½ÃÆÇ °Ë»ö
+	   //ê²Œì‹œíŒ ê²€ìƒ‰
 	   @RequestMapping("board_free_search.do")
 	   public ModelAndView getBoardFreeSearchList(@ModelAttribute("b_idx")String b_idx, String keyword) {
 		   try {

@@ -2,7 +2,15 @@ package com.ict.campyou.jun.dao;
 
 public class CampVO {
 	private String contentid, facltnm, lineintro, intro, induty, lctcl, donm, sigungunm, zipcode, addr1, mapx, mapy,
-			tel, homepage, resveurl, resvecl, glampinnerfclty, caravinnerfclty, posblfcltycl, firstimageurl ,animalCmgCl ,trlerAcmpnyAt ,caravAcmpnyAt,operpdcl,operdecl,resved, facltdivnm, mangedivnm,sbrscl;
+			tel, homepage, resveurl, resvecl, glampinnerfclty, caravinnerfclty, posblfcltycl, firstimageurl ,animalCmgCl ,trlerAcmpnyAt ,caravAcmpnyAt,operpdcl,operdecl,resved, facltdivnm, mangedivnm,sbrscl,hit;
+
+	public String getHit() {
+		return hit;
+	}
+
+	public void setHit(String hit) {
+		this.hit = hit;
+	}
 
 	public String getSbrscl() {
 		return sbrscl;

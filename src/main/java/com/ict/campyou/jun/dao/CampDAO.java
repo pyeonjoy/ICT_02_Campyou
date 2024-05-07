@@ -12,6 +12,11 @@ public class CampDAO {
 	public CampVO getCampInfo(CampVO cvo,String contentid) {
 		return sqlSessionTemplate.selectOne("jun.getCampInfo",contentid);
 	}
+
+	public int updateHit(String contentid) {
+		return sqlSessionTemplate.update("jun.updateHit",contentid);
+	}
+
 	
 	
 }

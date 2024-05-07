@@ -13,5 +13,13 @@ public interface CampService {
 
 	public List<ReviewVO> loadReview(String contentid);
 
+	int updateHit(String contentid);
+
+	int addHeart(String contentid, String member_idx);
+
+	String checkHeart(String contentid, String member_idx);
+
+	int delHeart(String contentid, String member_idx);
+
 
 }
