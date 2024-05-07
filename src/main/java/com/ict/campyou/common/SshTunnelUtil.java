@@ -12,7 +12,7 @@ public class SshTunnelUtil {
         // 안에 꼭 넣고 하이디로 연결 후 서버실행하기 !!!!!!!
         jsch.addIdentity("C:\\key\\test.ppk");
 
-        Session session = jsch.getSession("ubuntu", "138.2.116.2", 22);
+        Session session = jsch.getSession("ubuntu", "13.125.238.101", 22);
         session.setConfig("StrictHostKeyChecking", "no");
         session.connect();
         session.setPortForwardingL(3307, "127.0.0.1", 3306);
