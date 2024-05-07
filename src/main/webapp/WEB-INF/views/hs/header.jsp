@@ -34,7 +34,7 @@
 						<c:otherwise>
 							<li><a href="chatroom.do"><img class="icon chat"
 									src="resources/img/icon_chat.png" alt="CampYou"></a></li>
-							<li><a href="#"><img class="icon user"
+							<li><a href="my_main.do"><img class="icon user"
 									src="resources/img/icon_user.png" alt="mypage"></a></li>
 							<c:if test="${admin == 'ok'}">
 								<li><a href="#"><img class="icon admin" src="resources/img/icon_admin.png" alt="management"></a></li>

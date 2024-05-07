@@ -8,7 +8,9 @@
 <meta charset="UTF-8">
 <title>회원 정보</title>
   <link rel="stylesheet" href="${path}/resources/public/css/bm/my_info.css">
+  <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
   <script defer src="${path}/resources/public/js/bm/my_info.js"></script>
+    <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
  <script>
       function setThumbnail(input, e) {
@@ -30,6 +32,9 @@
   </script>
 </head>
 <body>
+
+<%@ include file="../hs/mypage_menu.jsp"%>
+
    <h3 class="my_title">마이페이지</h3>
   <form class="user_info" method="post" enctype="multipart/form-data">
     <div class="user_img_container">
@@ -60,6 +65,17 @@
       <div class="detail id_detail">
         <label for="id" >아이디</label> <input type="text" id="id" name="member_id" class="input input_id" disabled value="${mvo.member_id }">
       </div>
+       <div class="detail dob_detail">
+          <label for="dob">생년월일</label>
+          <input
+            type="text"
+            id="dob"
+            name="dob"
+            class="input input_dob"
+            disabled
+            value="${mvo.member_dob }"
+          />
+        </div>
       <div class="detail pw_detail">
         <label for="password" >비밀번호</label> <input type="password" id="password" name="member_pwd" class="input input_pw" >
       </div>
@@ -79,7 +95,7 @@
         <button class="btn btn_pwdreset" onclick="handle_pwd(${mvo.member_idx}, this.form)">비밀번호 변경</button>
       </div>
     </div>
-     <a href="deleteMember.do" class="btn btn-userDelete">회원탈퇴</a>
+     <button href="deleteMember.do" class="btn btn-userDelete" onclick="handle_delete(${mvo.member_idx}">회원탈퇴</button>
   </form>
 </body>
 </html>

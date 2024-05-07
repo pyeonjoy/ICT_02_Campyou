@@ -13,6 +13,7 @@
 <script defer src="${path}/resources/public/js/bm/lang/summernote-ko-KR.js"></script>
 <script defer src="${path}/resources/public/js/bm/summernote-lite.js"></script>
   <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
+
 </head>
 <body>
 
@@ -25,14 +26,17 @@
       <input type="text" placeholder="글제목" class="input_title" name="qna_title">
     </div>
     <textarea class="text_area summernote" id="summernote" name="qna_content">
-    </textarea> 
+    </textarea>
+    <div class="form_bottom">
     <div class="form_btn">
-        <input type="hidden" id="memberIdx" name="member_idx" value="${member_idx}">
-        <button class="btn btn-modi" type="submit" onclick="handleUp(this.form)">저장</button>       
-        <button class="btn btn-cancel" onclick="history.back()">취소</button>
+    <input type="hidden" id="memberIdx" name="member_idx" value="${mvo.member_idx}">
+        <button class="btn btn-modi" type="submit" onclick="handleUp(this.form)">저장</button>
+        
+        <button class="btn btn-cancel">취소</button>
+      </div>
     </div>
   </form>
-  </div>
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
    <script>
     $(document).ready(function() {
@@ -40,10 +44,9 @@
     	    lang : 'ko-KR',
         	height : 300,
         	focus : true,
-
-    	    })
+    
     	})
-
+    })
        
     function progressHandlingFunction(e) {
         if (e.lengthComputable) {
@@ -63,6 +66,6 @@
 	  f.action="QnaUpload.do";
   }
   </script>
- 
+  </div>
 </body>
 </html>

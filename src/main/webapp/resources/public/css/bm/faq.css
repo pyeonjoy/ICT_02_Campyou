@@ -11,12 +11,11 @@
 }
 
 .faq_container{
-  width: 80%;
-  margin: 0 auto;
+  width: 70%;
+  transform: translate(15rem,10rem);
 }
 .faq_title{
   text-align: center;
-  margin: 2rem;
   margin-bottom: 2rem;
   color: var(--primary-color);
 }

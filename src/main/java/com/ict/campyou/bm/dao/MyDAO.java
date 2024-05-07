@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.hu.dao.MemberVO;
 
 
@@ -30,6 +31,7 @@ public List<FaqVO> getFaqs2() {
 	}
 	return null;
 }
+
 public MemberVO getMemberPwd(String memberId) {	
 	try {
 		return sqlSessionTemplate.selectOne("bomi.getPw",memberId);		
@@ -50,6 +52,7 @@ public MemberVO getMember(String member_idx) {
 }
 public int changeUserInfo(MemberVO mvo) {
 	try {
+
 		return sqlSessionTemplate.update("bomi.updateUser", mvo);		
 	} catch (Exception e) {
 		System.out.println(e);
@@ -64,4 +67,71 @@ public int changeUserPW(MemberVO mvo) {
 	}
 	return 0;
 }
+
+public int uploadQna(QnaVO qvo) {
+	try {	
+		System.out.println("dao: "+qvo.getMember_idx());
+		return sqlSessionTemplate.insert("bomi.upQna",qvo);
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return 0;
+
+}
+
+public int updateQna(QnaVO qvo) {
+	try {
+		return sqlSessionTemplate.update("bomi.modiQna",qvo);
+		
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return 0;
+}
+
+public List<QnaVO> getMyQna(String member_idx) {
+	try {
+	
+		return sqlSessionTemplate.selectList("bomi.getQnas",member_idx);
+		
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return null;
+}
+
+public int getTotalCount(String member_idx) {
+
+	return sqlSessionTemplate.selectOne("bomi.count", member_idx);
+}
+
+public QnaVO getMyOneQna(String qna_idx) {
+	try {
+		
+		return sqlSessionTemplate.selectOne("bomi.getOne",qna_idx);
+		
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+	return null;
+}
+
+public List<TogetherVO> getMyAcc_List(String member_idx) {	
+	try {
+	return sqlSessionTemplate.selectList("bomi.getList", member_idx);
+	}catch  (Exception e) {
+		System.out.println(e);
+	}
+	return null;
+}
+public int deletMember(String member_idx) {
+	try {
+		return sqlSessionTemplate.delete("bomi.getDeleteUser",member_idx);
+	
+		}catch  (Exception e) {
+			System.out.println(e);
+		}
+		return 0;
+}
+
 }
