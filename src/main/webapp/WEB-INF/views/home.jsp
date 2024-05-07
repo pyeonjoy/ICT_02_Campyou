@@ -128,7 +128,7 @@ button {
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb&submodules=geocoder"></script>
-
+<script type="text/javascript" src="../joy/MarkerClustering.js"></script>
 <!-- 이펙트  -->
 <script type="text/javascript">
 $(document).ready(function() {
@@ -149,67 +149,148 @@ $(document).ready(function() {
 		initMap();
 // 	});
 
-	function initMap() {
-	    let markers = [];
-	    let infoWindows = [];
+		function initMap() {
+		    let markers = [];
+		    let infoWindows = [];
 
-	    $.ajax({
-	        url: "together_Write2.do",
-	        type: "post",
-	        dataType: "json",
-	        success: function(data) {
-	            if(data !== "fail") {
-	                let campList = data;
-
-	                // 지도 시작지점
-	                let map = new naver.maps.Map('map', {
-	                    center: new naver.maps.LatLng(37.552758094502494, 126.98732600494576),
-	                    zoom: 10
-	                });
+		    $.ajax({
+		        url: "together_Write2.do",
+		        type: "post",
+		        dataType: "json",
+		        success: function(data) {
+		            if (data !== "fail") {
+		                let campList = data;
 						
-	                for (var i = 0; i < campList.length; i++) {
-	                	let camp = campList[i];
-	                    let position = new naver.maps.LatLng(camp.mapy, camp.mapx);
+		                // 브라우저의 Geolocation API를 사용하여 사용자의 현재 위치를 가져옵니다.
+		                if (navigator.geolocation) {
+		                    navigator.geolocation.getCurrentPosition(function(position) {
+		                        const lat = position.coords.latitude;
+		                        const lng = position.coords.longitude;
 
-	                    let marker = new naver.maps.Marker({
-	                        map: map,
-	                        title: "test", // 지역구 이름 
-	                        position: position
-	                    });
-	                    let infoWindow = new naver.maps.InfoWindow({
-	                        content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + camp.firstimageurl + '" alt="" style="width:100%;" /><b>' + camp.facltnm + '</b><br><br> ' + camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
-	                        disableAutoPan: true // 정보창열릴때 지도이동 안함
-	                    });
+		                        // 지도 시작지점
+		                        let map = new naver.maps.Map('map', {
+		                            center: new naver.maps.LatLng(lat, lng),
+		                            zoom: 6,
+		                            zoomControl: true,
+		                            zoomControlOptions: {
+		                                position: naver.maps.Position.TOP_LEFT,
+		                                style: naver.maps.ZoomControlStyle.SMALL
+		                            }
+		                        });
+		                        
+		                        var markers = data;
+		                        
+		                        var htmlMarker1 = {
+		                                content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(../resources/images/marker.png);background-size:contain;"></div>',
+		                                size: N.Size(40, 40),
+		                                anchor: N.Point(20, 20)
+		                            },
+		                            htmlMarker2 = {
+		                                content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(../resources/images/marker.png);background-size:contain;"></div>',
+		                                size: N.Size(40, 40),
+		                                anchor: N.Point(20, 20)
+		                            },
+		                            htmlMarker3 = {
+		                                content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(../resources/images/marker.png);background-size:contain;"></div>',
+		                                size: N.Size(40, 40),
+		                                anchor: N.Point(20, 20)
+		                            },
+		                            htmlMarker4 = {
+		                                content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(../resources/images/marker.png);background-size:contain;"></div>',
+		                                size: N.Size(40, 40),
+		                                anchor: N.Point(20, 20)
+		                            },
+		                            htmlMarker5 = {
+		                                content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(../resources/images/marker.png);background-size:contain;"></div>',
+		                                size: N.Size(40, 40),
+		                                anchor: N.Point(20, 20)
+		                            };
+		                        
+		                        function onLoad() {
+		                            var data = accidentDeath.searchResult.accidentDeath;
 
-	                    markers.push(marker); // 생성한 마커를 배열에 담는다.
-	                    infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
-	                }
+		                            for (var i = 0; i < campList.length; i++) {
+			                            let camp = campList[i];
+			                            let markerPosition = new naver.maps.LatLng(camp.mapy, camp.mapx);
+			                            let marker1 = new naver.maps.Marker({
+			                                map: map,
+			                                position: markerPosition
+			                                icon: {
+			                                    content: '<img src="'+ HOME_PATH +'/img/example/pin_default.png" alt="" ' +
+			                                             'style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; ' +
+			                                             '-webkit-user-select: none; position: absolute; width: 22px; height: 35px; left: 0px; top: 0px;">',
+			                                    size: new naver.maps.Size(22, 35),
+			                                    anchor: new naver.maps.Point(11, 35)
+			                                }
+			                            });
+			                            let marker1 = new naver.maps.Marker({
+			                                map: map,
+			                                position: markerPosition
+			                                icon: {
+			                                    content: [
+			                                                '<div class="cs_mapbridge">',
+			                                                    '<div class="map_group _map_group crs">',
+			                                                        '<div class="map_marker _marker num1 num1_big"> ',
+			                                                            '<span class="ico _icon"></span>',
+			                                                            '<span class="shd"></span>',
+			                                                        '</div>',
+			                                                    '</div>',
+			                                                '</div>'
+			                                            ].join(''),
+			                                    size: new naver.maps.Size(38, 58),
+			                                    anchor: new naver.maps.Point(19, 58),
+			                                },
+			                                draggable: true
+			                            });
+		                            var markerClustering = new MarkerClustering({
+		                                minClusterSize: 2,
+		                                maxZoom: 8,
+		                                map: map,
+		                                markers: markers,
+		                                disableClickZoom: false,
+		                                gridSize: 120,
+		                                icons: [htmlMarker1, htmlMarker2, htmlMarker3, htmlMarker4, htmlMarker5],
+		                                indexGenerator: [10, 100, 200, 500, 1000],
+		                                stylingFunction: function(clusterMarker, count) {
+		                                    $(clusterMarker.getElement()).find('div:first-child').text(count);
+		                                }
+		                            });
+		                        }
+		                            let infoWindow = new naver.maps.InfoWindow({
+		                                content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + camp.firstimageurl + '" alt="" style="width:100%;" /><b>' + camp.facltnm + '</b><br><br> ' + camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
+		                                disableAutoPan: true // 정보창열릴때 지도이동 안함
+		                            });
+		                            markers.push(marker);
+		                            infoWindows.push(infoWindow);
+		                            naver.maps.Event.addListener(marker, 'click', getClickHandler(i));
 
-	                function getClickHandler(seq, addr, imageUrl, campName) {
-	                    return function(e) {  // 마커를 클릭하는 부분
-	                    	let marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
-	                            infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
+		                            }
 
-	                        if (infoWindow.getMap()) {
-	                            infoWindow.close();
-	                        } else {
-	                            infoWindow.open(map, marker);
-	                        }
-	                    }
-	                }
+		                        })
+		                    };
+		                } else {
+		                    console.error("Geolocation is not supported by this browser.");
+		                }
+		            }
+		        },
+		        error: function(xhr, status, error) {
+		            console.error("AJAX Error: ", status, error);
+		        } 
+		    );
 
-	                for (var i = 0, ii = markers.length; i < ii; i++) {
-//	                    console.log(markers[i], getClickHandler(i));
-	                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm)); // 클릭한 마커 핸들러
-	                }
-	            }
-	        }, // success function 종료
+		    function getClickHandler(seq) {
+		        return function(e) {
+		            let marker = markers[seq],
+		                infoWindow = infoWindows[seq];
 
-	        error: function(xhr, status, error) {
-	            console.error("AJAX Error: ", status, error);
-	        }
-	        });
-	}
+		            if (infoWindow.getMap()) {
+		                infoWindow.close();
+		            } else {
+		                infoWindow.open(map, marker);
+		            }
+		        }
+		    }
+		}
 });
 </script>
 
