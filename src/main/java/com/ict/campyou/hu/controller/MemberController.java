@@ -1,7 +1,6 @@
 package com.ict.campyou.hu.controller;
 
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -18,21 +17,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.common.Paging;
 import com.ict.campyou.hu.dao.BoardFreeVO;
-
 import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.CommentVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.hu.service.BoardFreeService;
-
 import com.ict.campyou.hu.service.CommBoardService;
 import com.ict.campyou.hu.service.CommentReplyService;
 import com.ict.campyou.hu.service.MemberService;
@@ -60,10 +55,6 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-	  @RequestMapping("/")
-	  public ModelAndView getMain() {
-		  return new ModelAndView("home");
-	  }
 	
 	  @RequestMapping("sign_up_page_go.do") 
 	  public ModelAndView getSignUpPage() { 
