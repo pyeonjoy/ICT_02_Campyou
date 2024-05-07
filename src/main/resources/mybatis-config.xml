@@ -27,6 +27,7 @@
 	<mappers>
 		<mapper resource="mappers/hu-mapper.xml" />
 		<mapper resource="mappers/bomi-mapper.xml" />
+		<mapper resource="mappers/has-mapper.xml" />
 		<mapper resource="mappers/bjs-mapper.xml" />
 		<mapper resource="mappers/joy-mapper.xml" />
 		<mapper resource="mappers/jun-mapper.xml" />
