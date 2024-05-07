@@ -24,20 +24,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.common.Paging;
 import com.ict.campyou.hu.dao.CampingGearBoardVO;
+import com.ict.campyou.hu.dao.CampingGearSearchVO;
+import com.ict.campyou.hu.dao.BoardFreeVO;
 import com.ict.campyou.hu.dao.CampingGearBoardCommentVO;
 import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.CommentVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.hu.service.CampingGearBoardService;
+import com.ict.campyou.hu.service.CampingGearSearchService;
 import com.ict.campyou.hu.service.MemberService;
 
 @Controller
 public class CampingGearBoardController {
 	@Autowired
-	private MemberService memberService;
+	private CampingGearBoardService campingGearBoardService;
 	
 	@Autowired
-	private CampingGearBoardService campingGearBoardService;
+	private CampingGearSearchService campingGearSearchService;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -378,16 +381,7 @@ public class CampingGearBoardController {
 			  return new ModelAndView("hu/campingGearBoard/error");
 	  	}
 	  	
-	  	
-	  	
-	  	
-	  	
-	  	
-	  	
-	  	////////////////////////
-	  	////////////////////////
-	  	//내일 여기서부터 확인
-	  	
+	  	// 여기서부터 댓글
 	  	
 	    //답글 입력 삽입
 	  	@RequestMapping("cgb_comment_insert.do")
@@ -427,9 +421,6 @@ public class CampingGearBoardController {
 			return new ModelAndView("hu/campingGearBoard/error");
 		}
 		
-		
-		
-		
 		//댓글 출력
 	  	 @RequestMapping("cgb_board_reply_ok.do")
 		   public ModelAndView getBbsDetail(String cp_idx, String cPage, HttpSession session) {
@@ -458,8 +449,7 @@ public class CampingGearBoardController {
 			   }
 			   return new ModelAndView("hu/campingGearBoard/error");
 		   }
-		
-	  	
+
 		    // 댓글의 댓글 삽입 
 			@RequestMapping("cgb_comment_reply_insert.do")
 			public ModelAndView getCommentReplyInsert(CampingGearBoardCommentVO cgbvo, String cPage, @ModelAttribute("cp_idx")String cp_idx, HttpSession session) {
@@ -476,7 +466,6 @@ public class CampingGearBoardController {
 	    		int step = Integer.parseInt(cgbvo2.getStep());
 				int lev = Integer.parseInt(cgbvo2.getLev());
 				
-			
 				step++;
 				lev++;
 			
@@ -499,36 +488,38 @@ public class CampingGearBoardController {
 				}
 				return new ModelAndView("hu/campingGearBoard/error");
 			}
-	 
-	  
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
- 
-
-	
+			
+			//게시판 검색
+		   @RequestMapping("camping_gear_list_go.do")
+		   public ModelAndView getCampingGearSearch() {
+			 try {
+				ModelAndView mv = new ModelAndView("hu/campingGearBoard/campingGearList");
+				
+			    List<CampingGearSearchVO> CampingGearList = campingGearSearchService.getCampingGearSearchList();
+			    
+			    if(CampingGearList != null) {
+			    	mv.addObject("CampingGearList", CampingGearList);
+			    	return mv;
+			    }
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			   return new ModelAndView("hu/campingGearBoard/error");
+		   }
+		   
+		   //게시판 검색
+		   @RequestMapping("camping_gear_search.do")
+		   public ModelAndView getCampingGearSearchList(@ModelAttribute("cp_idx")String cp_idx, String keyword) {
+			   try {
+					ModelAndView mv = new ModelAndView("hu/campingGearBoard/campingGearSearchList");
+					List<CampingGearSearchVO> searchlist = campingGearSearchService.getCampingGearSearchListOk(cp_idx, keyword);
+					if(searchlist != null) {
+						mv.addObject("searchlist", searchlist);
+						return mv;
+					}
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			   return new ModelAndView("hu/campingGearBoard/error");
+		   }
 }

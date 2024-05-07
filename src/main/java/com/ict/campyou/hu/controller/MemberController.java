@@ -658,19 +658,11 @@ public class MemberController {
 			return new ModelAndView("hu/boardFree/error");
 		}
 	  	
-		
-		
-		
-		
-		
-		
-		
-		
 		//게시판 검색
 	   @RequestMapping("board_free_list_go.do")
 	   public ModelAndView getBoardFreeSearch() {
 		 try {
-			ModelAndView mv = new ModelAndView("hu//boardFree/boardFreeList");
+			ModelAndView mv = new ModelAndView("hu/boardFree/boardFreeList");
 			
 		    List<BoardFreeVO> boardFreeList = boardFreeService.getBoardFreeList();
 		    
@@ -698,41 +690,5 @@ public class MemberController {
 				System.out.println(e);
 			}
 		   return new ModelAndView("hu/boardFree/error");
-	   }
-		
-	   
-	  
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	  	
-	  	
-	  	
-	  	  	
+	   }	  	  	
 }

@@ -15,6 +15,7 @@
 		<typeAlias type="com.ict.campyou.hu.dao.BoardFreeVO" alias="bfvo"/>
 		<typeAlias type="com.ict.campyou.hu.dao.CampingGearBoardVO" alias="cgbvo"/>
 		<typeAlias type="com.ict.campyou.hu.dao.CampingGearBoardCommentVO" alias="cgbcvo"/>
+		<typeAlias type="com.ict.campyou.hu.dao.CampingGearSearchVO" alias="cgsvo"/>
 		<typeAlias type="com.ict.campyou.bjs.dao.TogetherVO" alias="tvo"/>
 		<typeAlias type="com.ict.campyou.joy.dao.AdminVO" alias="avo"/>
 		<typeAlias type="com.ict.campyou.bm.dao.FaqVO" alias="fvo"/>

@@ -16,12 +16,12 @@
 		alert("회원님만 글쓰기 하실수 있습니다.\n회원가입이나 로그인 해주세요");
 	}
 	
-	function board_free_list_go(f) {
-		f.action="board_free_list_go.do";
+	function camping_gear_list_go(f) {
+		f.action="camping_gear_list_go.do";
 		f.submit();
 	}
-	function board_free_search(f) {
-		f.action="board_free_search.do";
+	function camping_gear_search(f) {
+		f.action="camping_gear_search.do";
 		f.submit();
 	}
 </script>
@@ -29,7 +29,7 @@
 <body>
 	<div id="board-free" align="center">
 		<table id="table1">
-		<caption>자유게시판</caption>
+		<caption>캠핑제품추천</caption>
 			<thead>
 				<tr class="title">
 					<th class="no">번호</th>
@@ -90,7 +90,7 @@
 			<tr id="foot-tr">
 				<td id="select-option" colspan="6">
 					<form method="post">
-							<p><input type="hidden" onclick="board_free_list_go(this.form)"> </p>
+							<p><input type="hidden" onclick="camping_gear_list_go(this.form)"> </p>
 							<p>
 		   						<select name="cp_idx">
 		   							<option value="1">제목</option>
@@ -99,7 +99,7 @@
 		   							<option value="4">날짜</option>
 		  						 </select>
 		   					<input type="text" name="keyword">
-		   					<input type="button" value="검색" onclick="board_free_search(this.form)">
+		   					<input type="button" value="검색" onclick="camping_gear_search(this.form)">
 							</p>
 					</form>
 			     </td>
@@ -111,7 +111,7 @@
 								<li class="disable">이전</li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="community_board.do?cPage=${paging.beginBlock - paging.pagePerBlock}">이전으로</a></li>
+								<li><a href="camping_gear_board.do?cPage=${paging.beginBlock - paging.pagePerBlock}">이전으로</a></li>
 							</c:otherwise>
 						</c:choose>
 						<!-- 페이지번호들 -->
@@ -121,7 +121,7 @@
 									<li class="now">${k}</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="community_board.do?cPage=${k}">${k}</a></li>
+									<li><a href="camping_gear_board.do?cPage=${k}">${k}</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -132,7 +132,7 @@
 								<li class="disable">다음</li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="community_board.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
+								<li><a href="camping_gear_board.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
 							</c:otherwise>
 						</c:choose>
 					</ol>	
