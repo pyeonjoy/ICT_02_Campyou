@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <%@ include file="hs/header.jsp"%>
 <!doctype html>
@@ -10,117 +10,283 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+	rel="stylesheet">
 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author"
-    content="Mark Otto, Jacob Thornton, 그리고 Bootstrap 기여자들">
+	content="Mark Otto, Jacob Thornton, 그리고 Bootstrap 기여자들">
 <meta name="generator" content="Hugo 0.88.1">
 <title>임시 메인페이지</title>
 <style>
 .bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
 }
 
 body {
-    background-image: url(${path}/resources/images/back.png);
-    width: 100%
+	background-image: url(${path}/resources/images/back.png);
+	width: 100%
 }
 
 @media ( min-width : 768px) {
-    .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-    }
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
 }
 
 .py-2 img {
-    width: 30px;
+	width: 30px;
 }
 
 .py-2 {
-    color: #FFFDDE;
+	color: #FFFDDE;
 }
 
 .wrap {
-    margin: auto;
-    margin-top: 1000px;
-    margin-bottom: 500px;
-    width: 1200px;
-    text-align: center;
-    font-weight: bold;
-    color: #FFFDDE;
+	margin: auto;
+	width: 1200px;
+	text-align: center;
+	font-weight: bold;
+	color: #FFFDDE;
 }
 
 .popular img {
-    width: 300px;
-    height: 500px;
-    margin: 30px;
+	width: 300px;
+	height: 500px;
+	margin: 30px;
 }
+
 button {
-    height: 40px;
+	height: 40px;
 }
+
 .layer_popup {
-    display: none; 
-    position: fixed;
-    background-color: black;
-    display: inline-block;
-    width: 500px;
-    height: 500px;
-    z-index: 9999;
-    padding: 10px;
-    margin:165px;
+	display: none;
+	position: fixed;
+	background-color: black;
+	display: inline-block;
+	width: 500px;
+	height: 500px;
+	z-index: 9999;
+	padding: 10px;
+	margin: 165px;
 }
 
 .popimg {
-    display: block;
-    margin: 0 auto; 
-    max-width: 100%; 
-    max-height: 100%; 
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+	max-height: 100%;
 }
+
 #check1 {
 	background-color: #FFBA34;
 	text-align: center;
-    position: absolute;
-    left: 50%;
-    width:100%;
-    transform: translateX(-50%);
+	position: absolute;
+	left: 50%;
+	width: 100%;
+	transform: translateX(-50%);
 }
 
-.popular{ 
-  opacity:0;
-    margin-top:-150px;    
-    max-width:100%;
-    margin-bottom: 400px;
+.popular {
+	opacity: 0;
+	margin-top: 100px;
+	max-width: 100%;
+	height: 700px;
 }
-.popularimg{
-object-fit: cover;
-border-radius: 10px;
-}
-.find{
-margin: 50px;
-color: black;
-height:40px;
-line-height:40px;
-background-color: #FFFDDE;}
 
-#footer{
-width: 100%;
-position: absolute;
-left: 0px;
+.popularimg {
+	object-fit: cover;
+	border-radius: 10px;
+}
+
+.find {
+	margin: 50px;
+	color: black;
+	height: 40px;
+	line-height: 40px;
+	background-color: #FFFDDE;
+}
+
+#footer {
+	width: 100%;
+	position: absolute;
+	left: 0px;
 }
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=n9r058oxzq&submodules=geocoder"></script>
-<!-- 팝업  -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=n9r058oxzq"></script>
+<script type="text/javascript"
+	src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=n9r058oxzq&submodules=geocoder"></script>
+
+<!-- 이펙트  -->
 <script type="text/javascript">
+$(document).ready(function() {
+    $(window).scroll( function(){
+        $('.popular').each( function(i){
+            
+            var bottom_of_element = $(this).offset().top + $(this).outerHeight();
+            var bottom_of_window = $(window).scrollTop() + $(window).height();
+            
+            if( bottom_of_window > bottom_of_element ){
+                $(this).animate({'opacity':'1','margin-top':'200px'},1000);
+            }
+            
+        }); 
+    });
+});
+
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+   	console.log(1)
+    let campList = ${campList};
+   	console.log(2)
+    
+    initMap(campList);
+});
+
+function initMap(campList) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+    	
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        let map = new naver.maps.Map('map', {
+            center: new naver.maps.LatLng(lat, lng),
+            zoom: 15
+        });
+        let markers = [];
+        let infoWindows = [];
+        for (let i = 0; i < campList.length; i++) {
+            console.log(i, marker.getTitle); // marker.getTitle 대신에 campList[i].facltnm 를 넣어야 합니다.
+            let camp = campList[i];
+            let position = new naver.maps.LatLng(camp.mapy, camp.mapx);
+
+            let marker = new naver.maps.Marker({
+                map: map,
+                title: "남산타워",
+                position: position,
+                icon: {
+                    content: '<img src="/resources/images/marker.png" alt="" style="margin: 0px; padding: 0px; width:30px; height:30px;">'
+                }
+            });
+            console.log("Marker title:", marker.getTitle());
+            let infoWindow = new naver.maps.InfoWindow({
+                content: '<div style="width:220px; height:100px; text-align:center;padding:10px; color:black; margin: 0 auto;"><img src="' +
+                    camp.firstimageurl + '" alt="" style="width:140px; height:80px;" /><b>' + camp.facltnm + '</b><br><br> ' +
+                    camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
+                disableAutoPan: true
+            });
+
+            markers.push(marker);
+            infoWindows.push(infoWindow);
+        }
+
+        function getClickHandler(seq, addr, imageUrl, campName) {
+            return function (e) {
+                let marker = markers[seq];
+                let infoWindow = infoWindows[seq];
+
+                if (infoWindow.getMap()) {
+                    infoWindow.close();
+                } else {
+                    infoWindow.open(map, marker);
+                    $(".togetherSub1DivP").text(addr);
+                    $(".togetherSub1DivP1").text(campName);
+                    campImageUrl = imageUrl;
+                }
+            };
+        }
+
+
+        for (let i = 0, ii = markers.length; i < ii; i++) {
+            naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm));
+        }
+    });
+}
+</script>
+
+</head>
+<body>
+
+	<div id="layer_popup1" class="layer_popup"
+		style="top: 50px; left: 50px; width: 500px; height: 500px; background-color: white;">
+		<c:forEach var="k" items="${pop}" varStatus="vs">
+			<c:if test="${k.active == 1}">
+				<img class="popimg" style="object-fit: cover;"
+					src="resources/popup/${k.f_name}">
+			</c:if>
+		</c:forEach>
+		<div id="check1">
+			<input type="checkbox" id="chkbox1"> <label for="chkbox1">오늘
+				하루동안 안 보기</label>
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+			<a href="javascript:closePop(1);" class="x">닫기</a>
+		</div>
+	</div>
+
+
+
+	<h1 class="display-4 fw-normal">임시 메인 페이지</h1>
+	<h1 class="display-4 fw-normal">
+		<button onclick="location.href='together_list.do'">준수</button>
+	</h1>
+	<h1 class="display-4 fw-normal">
+		<button onclick="location.href='inquiry_form.do'">보미</button>
+	</h1>
+	<h1 class="display-4 fw-normal">
+		<button onclick="location.href='inquiry_form.do'">해성</button>
+	</h1>
+	<h1 class="display-4 fw-normal">
+		<button onclick="location.href='sign_up_page_go.do'">한욱</button>
+	</h1>
+	<h1 class="display-4 fw-normal">
+		<button onclick="location.href='admin_main.do'">조이</button>
+	</h1>
+	<h1 class="display-4 fw-normal">
+		<button onclick="location.href='camplist.do'">준형</button>
+	</h1>
+	<a href="inquiry_form.do">1:1문의작성</a>
+	<a href="my_info.do">내정보</a>
+	<a href="my_faq.do">faq</a>
+	<a href="my_main.do">마이페이지</a>
+	<a href="together_list.do">동행</a>
+	<div class="wrap">
+		<div class="popular">
+			<h3>Popular campsites</h3>
+
+			<c:forEach var="c" items="${camphit}">
+				<a href="camp_detail.do?contentid=${c.contentid}"> <img
+					class="popularimg" src="${c.firstimageurl}"></a>
+			</c:forEach>
+			<p>
+				<button onclick="location.href='camplist.do'">Show More</button>
+			</p>
+		</div>
+		<div class="popular">
+			<div style="paddig-top: 500px;">
+				<h3>Find camping mates</h3>
+				<c:forEach var="k" items="${board}" varStatus="vs">
+					<a href="together_detail.do?t_idx=${k.t_idx}"><p class="find">${k.t_subject }</p></a>
+				</c:forEach>
+			</div>
+			<p>
+				<button onclick="location.href='together_list.do'">Show More</button>
+			</p>
+		</div>
+	</div>
+			<div id="map" style="width: 100%; height: 75vh; margin: 0 auto;"></div>
+</body>
+	<script type="text/javascript">
 	function setCookie(name, value, exDay) {
 		var todayDate = new Date();
 		todayDate.setDate(todayDate.getDate() + exDay);
@@ -153,176 +319,21 @@ left: 0px;
 		checkPopup();
 	});
 	function checkPopup() {
-		for (var i = 1; i <= 5; i++) {
-			if (getCookie("popup" + i) === "done") {
-				document.getElementById('layer_popup' + i).style.display = "none";
-			} else {
-				document.getElementById('layer_popup' + i).style.display = "block";
-			}
-		}
+	    for (var i = 1; i <= 5; i++) {
+	        if (getCookie("popup" + i) === "done") {
+	            var popup = document.getElementById('layer_popup' + i);
+	            if (popup) {
+	                popup.style.display = "none";
+	            }
+	        } else {
+	            var popup = document.getElementById('layer_popup' + i);
+	            if (popup) {
+	                popup.style.display = "block";
+	            }
+	        }
+	    }
 	}
 </script>
-<!-- 이펙트  -->
-<script type="text/javascript">
-$(document).ready(function() {
-    $(window).scroll( function(){
-        $('.popular').each( function(i){
-            
-            var bottom_of_element = $(this).offset().top + $(this).outerHeight();
-            var bottom_of_window = $(window).scrollTop() + $(window).height();
-            
-            if( bottom_of_window > bottom_of_element ){
-                $(this).animate({'opacity':'1','margin-top':'0px'},1000);
-            }
-            
-        }); 
-    });
-});
 
-</script>
-<!-- 현재 위치 좌표찍기  -->
-<script type="text/javascript">
-$(function () {
-    initMap(${campList});
-});
-
-function initMap(campList) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-        var map = new naver.maps.Map('map', {
-            center: new naver.maps.LatLng(lat, lng),
-            zoom: 15
-        });
-        var markers = [];
-        var infoWindows = [];
-
-        for (var i = 0; i < campList.length; i++) {
-            var camp = campList[i];
-            var position = new naver.maps.LatLng(camp.mapy, camp.mapx);
-
-            var marker = new naver.maps.Marker({
-                map: map,
-                title: "남산타워",
-                position: position,
-                icon: {
-                    content: '<img src="/resources/images/markerex.png" alt="" style="margin: 0px; padding: 0px; width:30px; height:30px;">'
-                }
-            });
-            console.log("Marker title:", marker.getTitle());
-            var infoWindow = new naver.maps.InfoWindow({
-                content: '<div style="width:220px; height:100px; text-align:center;padding:10px; color:black; margin: 0 auto;"><img src="' +
-                    camp.firstimageurl + '" alt="" style="width:140px; height:80px;" /><b>' + camp.facltnm + '</b><br><br> ' +
-                    camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
-                disableAutoPan: true
-            });
-
-            markers.push(marker);
-            infoWindows.push(infoWindow);
-        }
-
-        function getClickHandler(seq, addr, imageUrl, campName) {
-            return function (e) {
-                var marker = markers[seq],
-                    infoWindow = infoWindows[seq];
-
-                if (infoWindow.getMap()) {
-                    infoWindow.close();
-                } else {
-                    infoWindow.open(map, marker);
-                    $('.togetherSub1DivP').val(addr);
-                    $('.togetherSub1DivP1').val(campName);
-                    campImageUrl = imageUrl;
-                }
-            }
-        }
-
-        for (var i = 0, ii = markers.length; i < ii; i++) {
-            naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm));
-        }
-    });
-}
-
-</script>
-
-<!-- 내 위치를 중심으로 지도 만들기  -->
-<script type="text/javascript">
-</script>
-<!--  -->
-<script type="text/javascript">
-
-</script>
-</head>
-<body>
-   
-	<div id="layer_popup1" class="layer_popup"
-		style="top: 50px; left: 50px; width: 500px; height: 500px; background-color: white;">
-		<c:forEach var="k" items="${pop}" varStatus="vs">
-		    <c:if test="${k.active == 1}">
-		        <img class="popimg" style="object-fit: cover;" src="resources/popup/${k.f_name}">
-		    </c:if>
-		</c:forEach>
-		<div id="check1">
-			<input type="checkbox" id="chkbox1"> 
-			<label for="chkbox1">오늘 하루동안 안 보기</label>
-			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-			<a href="javascript:closePop(1);" class="x">닫기</a>
-		</div>
-	</div>
-
-
-
-    <h1 class="display-4 fw-normal">임시 메인 페이지</h1>
-    <h1 class="display-4 fw-normal">
-        <button onclick="location.href='together_list.do'">준수</button>
-    </h1>
-    <h1 class="display-4 fw-normal">
-        <button onclick="location.href='inquiry_form.do'">보미</button>
-    </h1>
-    <h1 class="display-4 fw-normal">
-        <button onclick="location.href='inquiry_form.do'">해성</button>
-    </h1>
-    <h1 class="display-4 fw-normal">
-        <button onclick="location.href='sign_up_page_go.do'">한욱</button>
-    </h1>
-    <h1 class="display-4 fw-normal">
-        <button onclick="location.href='admin_main.do'">조이</button>
-    </h1>
-    <h1 class="display-4 fw-normal">
-        <button onclick="location.href='camplist.do'">준형</button>
-    </h1>
-    <a href="inquiry_form.do">1:1문의작성</a>
-    <a href="my_info.do">내정보</a>
-    <a href="my_faq.do">faq</a>
-    <a href="my_main.do">마이페이지</a>
-    <a href="together_list.do">동행</a>
-    <div class="wrap">
-        <div class="popular">
-            <h3>Popular campsites</h3>
-           
-            <c:forEach var="c" items="${camphit}">
-                <a href="camp_detail.do?contentid=${c.contentid}">
-                
-                <img class="popularimg" src="${c.firstimageurl}"></a>
-            </c:forEach>
-        <p>
-            <button onclick="location.href='camplist.do'">Show More</button>
-        </p>
-        </div>
-        <div class="popular">
-        <div class="popular">
-        <div style="margin-top: 500px;">
-            <h3>Find camping mates</h3>
-            <c:forEach var="k" items="${board}" varStatus="vs">
-                <a href="together_detail.do?t_idx=${k.t_idx}"><p class="find">${k.t_subject }</p></a>
-            </c:forEach>
-        </div>
-        <p>
-            <button onclick="location.href='together_list.do'">Show More</button>
-        </p>
-    </div>
-    <div id="map" style="width:100%; height:75vh; margin: 0 auto;"></div>
-    </div>
-</body>
-    <%@ include file="hs/footer.jsp"%>
+<%@ include file="hs/footer.jsp"%>
 </html>
