@@ -188,7 +188,7 @@
 								                    <img src="${k.tf_name }" class="toContentOne2img">
 						                		</c:otherwise>
 						                	</c:choose>
-						                    <span class="toContentOne2sub2">${k.t_camptype }</span>
+						                    <span class="toContentOne2sub2">${k.t_induty }</span>
 						                </a>
 						                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne3">
 						                    <strong class="to_list_subject">${k.t_subject }</strong>

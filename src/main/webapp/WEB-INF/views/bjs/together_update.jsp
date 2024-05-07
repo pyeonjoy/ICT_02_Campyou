@@ -73,18 +73,16 @@
 		let formData = new FormData(document.getElementsByClassName('togetherWriteForm')[0]);
 	    let startDate = $('input[name="datetimes"]').data('daterangepicker').startDate.format('YYYY/MM/DD');
 	    let endDate = $('input[name="datetimes"]').data('daterangepicker').endDate.format('YYYY/MM/DD');
-	    let selectedCampingType = $(".togetherSub1Button.active").attr("name");
 
-	    if (!selectedCampingType) {
-	        alert("캠핑 타입을 선택해주세요.");
-	        return;
-	    }
+// 	    if (!t_induty) {
+// 	        alert("캠핑 타입을 선택해주세요.");
+// 	        return;
+// 	    }
 	    if (!t_mapx && !t_mapy) {
 	        alert("동행할 캠핑장 위치를 선택해주세요.");
 	        return;
 	    }
 
-	    formData.append("t_camptype", selectedCampingType);
 	    formData.append("t_startdate", startDate);
 	    formData.append("t_enddate", endDate);
 	    formData.append("t_mapx", t_mapx);
@@ -102,7 +100,8 @@
 	        contentType: false,
 	        async: false,
 	        success: function(response) {
-	           location.href='together_detail.do?t_idx=' + response;
+	        	let cPage = $('#cPage').val();
+	        	location.href='together_detail.do?t_idx=' + response + '&cPage=' + cPage;
 	        },
 	        error: function(xhr, status, error) {
 	            console.error(error);
@@ -159,14 +158,15 @@
                     });
                     infoWindow.open(map, position);
                     
-                    $('.togetherSub1DivP').val(camp.addr1);
-                    $('.togetherSub1DivP1').val(camp.facltnm);
-                    campImageUrl = camp.firstimageurl;
-                    t_mapx = camp.mapx;
-                    t_mapy = camp.mapy;
-                    t_induty = camp.induty;
-                	t_facltdivnm = camp.facltdivnm;
-                	t_mangedivnm = camp.mangedivnm;
+                    $('.togetherSub1DivP').val(addr);
+                    $('.togetherSub1DivP1').val(campName);
+                    t_induty = $('.togetherCampType').text(induty);
+                    campImageUrl = imageUrl;
+                    t_mapx = mapx;
+                    t_mapy = mapy;
+                    t_induty = induty;
+                    t_facltdivnm = facltdivnm;
+                    t_mangedivnm = mangedivnm;
                 	
                 	$(".searchbar").val("");
                 } 
@@ -176,17 +176,17 @@
             }
         });
     };
-	    
+	
 	function initMap() {
 	    let markers = [];
 	    let infoWindows = [];
-	    let selectedMapx = $('input[name="t_mapx"]').val();
-	    let selectedMapy = $('input[name="t_mapy"]').val();
-// 	    let selectedImage = $('input[name="tf_name"]').val();
+	    t_mapx = $('input[name="t_mapxh"]').val();
+	    t_mapy = $('input[name="t_mapyh"]').val();
+	    campImageUrl = $('input[name="tf_nameh"]').val();
 // 	    let selectedCampname = $('input[name="t_campname"]').val();
-// 	    let selectedInduty = $('input[name="t_induty"]').val();
-// 	    let selectedFacltdivnm = $('input[name="t_facltdivnm"]').val();
-// 	    let selectedMangedivnm = $('input[name="t_mangedivnm"]').val();
+	    t_induty = document.querySelector('.togetherCampType').innerText;
+	    t_facltdivnm = $('input[name="t_facltdivnmh"]').val();
+	    t_mangedivnm = $('input[name="t_mangedivnmh"]').val();
 	    
 	    $.ajax({
 	        url: "together_Write2.do",
@@ -197,11 +197,11 @@
 	                let campList = data;
 
                 	map = new naver.maps.Map('map', {
-	                    center: new naver.maps.LatLng(selectedMapy, selectedMapx),
+	                    center: new naver.maps.LatLng(t_mapy, t_mapx),
 	                    zoom: 15
 	                });
 
-	                for (var i = 0; i < campList.length; i++) {
+	                for (let i = 0; i < campList.length; i++) {
 	                	let camp = campList[i];
 	                    let position = new naver.maps.LatLng(camp.mapy, camp.mapx);
 
@@ -222,6 +222,10 @@
 
 	                    markers.push(marker);
 	                    infoWindows.push(infoWindow);
+	                    
+	                    if (t_mapx == camp.mapx && t_mapy == camp.mapy) {
+	                        infoWindow.open(map, marker);
+	                    }
 	                }
 
 	                function getClickHandler(seq, addr, imageUrl, campName, mapx, mapy, induty, facltdivnm, mangedivnm) {
@@ -231,10 +235,20 @@
 
 	                        if (infoWindow.getMap()) {
 	                            infoWindow.close();
+	                            $('.togetherSub1DivP').val("");
+	                            $('.togetherSub1DivP1').val("");
+	                            $('.togetherCampType').text("");
+	                            campImageUrl = "";
+	                            t_mapx = "";
+	                            t_mapy = "";
+	                            t_induty = "";
+	                            t_facltdivnm = "";
+	                            t_mangedivnm = "";
 	                        } else {
 	                            infoWindow.open(map, marker);
 	                            $('.togetherSub1DivP').val(addr);
 	                            $('.togetherSub1DivP1').val(campName);
+	                            t_induty = $('.togetherCampType').text(induty);
 	                            campImageUrl = imageUrl;
 	                            t_mapx = mapx;
 	                            t_mapy = mapy;
@@ -287,18 +301,16 @@
 	            <textarea class="togetherWriteInput2" name="t_content" id="t_content" placeholder="내용을 입력하세요" required>${tvo.t_content }</textarea>
 	            <input type="button" value="수정하기" class="togetherWriteInputSubmit" onclick="together_update_ok()">
 	            <input type="hidden" name="t_idx" id="t_idx" value="${tvo.t_idx }">
-	            <input type="hidden" name="cPage" id="cPage" value="${cPage }" > 
+	            <input type="hidden" name="cPage" id="cPage" value="${cPage }" >
 	        </div>
 	        <div class="togetherWriteSelect">
-	            <strong>캠핑타입</strong>
-	            <div class="togetherSub1">
-<!-- 	            	<input type="button" name="t_camptype" value="카라반" class="togetherSub1Button"> -->
-<!-- 	            	<input type="button" name="t_camptype" value="글램핑" class="togetherSub1Button"> -->
-<!-- 	            	<input type="button" name="t_camptype" value="야영지" class="togetherSub1Button"> -->
-	            	<button type="button" name="카라반" value="카라반" class="togetherSub1Button ${tvo.t_camptype == '카라반' ? 'active' : ''}">카라반</button>
-					<button type="button" name="글램핑" value="글램핑" class="togetherSub1Button ${tvo.t_camptype == '글램핑' ? 'active' : ''}">글램핑</button>
-					<button type="button" name="야영지" value="야영지" class="togetherSub1Button ${tvo.t_camptype == '야영지' ? 'active' : ''}">야영지</button>
-	            </div>
+	            <span class="togetherSub5Strong">캠핑타입</span>
+				<span class="togetherCampType">${tvo.t_induty }</span>
+<!-- 	            <div class="togetherSub1"> -->
+<!-- 	            	<button type="button" name="카라반" value="카라반" class="togetherSub1Button">카라반</button> -->
+<!-- 	            	<button type="button" name="글램핑" value="글램핑" class="togetherSub1Button">글램핑</button> -->
+<!-- 	            	<button type="button" name="야영지" value="야영지" class="togetherSub1Button">야영지</button> -->
+<!-- 	            </div> -->
 	            <div class="togetherSub1">
 	                <strong class="togetherSub5Strong">캠핑장</strong>
 	                <div class="togetherSub1Div">
@@ -312,13 +324,13 @@
 	            </div>
 	            <div>
 	                <div id="map" class="togetherSub1Img"></div>
-	                <input type="hidden" name="t_mapx" value="${tvo.t_mapx }">
-	                <input type="hidden" name="t_mapy" value="${tvo.t_mapy }">
-<%-- 	                <input type="hidden" name="tf_name" value="${tvo.tf_name }"> --%>
+	                <input type="hidden" name="t_mapxh" value="${tvo.t_mapx }">
+	                <input type="hidden" name="t_mapyh" value="${tvo.t_mapy }">
+	                <input type="hidden" name="tf_nameh" value="${tvo.tf_name }">
 <%-- 	                <input type="hidden" name="t_campname" value="${tvo.t_campname }"> --%>
-<%-- 	                <input type="hidden" name="t_induty" value="${tvo.t_induty }"> --%>
-<%-- 	                <input type="hidden" name="t_facltdivnm" value="${tvo.t_facltdivnm }"> --%>
-<%-- 	                <input type="hidden" name="t_mangedivnm" value="${tvo.t_mangedivnm }"> --%>
+<%-- 	                <input type="hidden" name="t_indutyh" value="${tvo.t_induty }"> --%>
+	                <input type="hidden" name="t_facltdivnmh" value="${tvo.t_facltdivnm }">
+	                <input type="hidden" name="t_mangedivnmh" value="${tvo.t_mangedivnm }">
 	            </div>
 	            <div class="togetherSub5">
 	                <strong class="togetherSub5Strong">캠핑인원&nbsp;</strong>

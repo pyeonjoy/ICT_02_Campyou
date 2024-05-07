@@ -30,8 +30,8 @@
 		update board_with set t_hit = t_hit + 1 where t_idx = #{t_idx}
 	</update>
 	<insert id="to_insert" parameterType="tvo">
-		insert into board_with(member_idx, t_subject, t_content, t_campname, t_camptype, t_address, t_startdate, t_enddate, t_numpeople, t_regdate, tf_name, t_mapx, t_mapy, t_induty, t_facltdivnm, t_mangedivnm)
-		values(#{member_idx}, #{t_subject}, #{t_content}, #{t_campname}, #{t_camptype}, #{t_address}, #{t_startdate}, #{t_enddate}, #{t_numpeople}, sysdate(), #{tf_name}, #{t_mapx}, #{t_mapy}, #{t_induty}, #{t_facltdivnm}, #{t_mangedivnm})
+		insert into board_with(member_idx, t_subject, t_content, t_campname, t_address, t_startdate, t_enddate, t_numpeople, t_regdate, tf_name, t_mapx, t_mapy, t_induty, t_facltdivnm, t_mangedivnm)
+		values(#{member_idx}, #{t_subject}, #{t_content}, #{t_campname}, #{t_address}, #{t_startdate}, #{t_enddate}, #{t_numpeople}, sysdate(), #{tf_name}, #{t_mapx}, #{t_mapy}, #{t_induty}, #{t_facltdivnm}, #{t_mangedivnm})
 	</insert>
 	<select id="write_t_idx" resultType="int">
 		select LAST_INSERT_ID() AS t_idx
@@ -95,7 +95,7 @@
 		delete from with_promise where t_idx = #{t_idx} and member_idx = #{member_idx}
 	</delete>
 	<update id="to_update" parameterType="tvo">
-		update board_with set t_subject = #{t_subject}, t_content = #{t_content}, t_campname = #{t_campname}, t_camptype = #{t_camptype}, t_address = #{t_address}, t_startdate = #{t_startdate}, t_enddate = #{t_enddate}, t_numpeople = #{t_numpeople}, tf_name = #{tf_name}, t_mapx = #{t_mapx}, t_mapy = #{t_mapy}, t_induty = #{t_induty}, t_facltdivnm = #{t_facltdivnm}, t_mangedivnm = #{t_mangedivnm} where t_idx = #{t_idx}
+		update board_with set t_subject = #{t_subject}, t_content = #{t_content}, t_campname = #{t_campname}, t_address = #{t_address}, t_startdate = #{t_startdate}, t_enddate = #{t_enddate}, t_numpeople = #{t_numpeople}, tf_name = #{tf_name}, t_mapx = #{t_mapx}, t_mapy = #{t_mapy}, t_induty = #{t_induty}, t_facltdivnm = #{t_facltdivnm}, t_mangedivnm = #{t_mangedivnm} where t_idx = #{t_idx}
 	</update>
 	<update id="to_delete" parameterType="String">
 		update board_with set t_active = 1 where t_idx = #{t_idx}

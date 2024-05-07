@@ -133,7 +133,6 @@ public class TogetherController {
 			mv.setViewName("bjs/together_detail");
 			mv.addObject("tvo", tvo);
 			mv.addObject("memberUser", memberUser);
-//			mv.addObject("cPage", cPage);
 			mv.addObject("appluNum", pvo);
 			return mv;
 		}
