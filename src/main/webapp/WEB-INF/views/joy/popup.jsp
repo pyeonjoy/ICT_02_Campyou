@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../hs/admin_header.jsp" %>
+<%@ include file="../hs/admin_menu.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -26,44 +29,22 @@ body {
     width: 500px;
 }
 .mainimg{
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     margin: 30px auto;
-    background-color: gainsboro;
+    object-fit: cover;
 }
 .left {
     width: 500px;
     height: 500px;
 }
 .right {
-    width: 500px;
-    height: 500px;
-}
-.category{
-    width: 450px;
-    background-color: #053610;
-    display: grid;
-    grid-template-columns: 0.5fr 1fr 0.5fr;
-    grid-gap: 10px;
-    height: 50px;
-    padding-left: 50px;
-}
-.inner{
-    width: 450px;
-    display: grid;
-    grid-template-columns: 0.5fr 0.2fr 0.8fr 0.5fr;
-    grid-gap: 10px;
-    height: 50px;
-    padding-left: 50px;
-    padding-top: 10px;
-}
-.child {
-width: 100px;
-height: 50px;
+    width: 1000px;
+    height: 800px;
 }
 .subimg{
-    width: 50px;
-    height: 50px;
+    width: 150px;
+    height: 150px;
     background-color: gainsboro;
 }
 button{
@@ -80,33 +61,186 @@ button{
 .b1{
     float: right;
 }
+li{
+list-style: none;
+}
+
+
+
+table {
+	width:800px;
+	margin:0 auto;
+	margin-top:20px;
+	font-size: 14px;
+	border-collapse: collapse;
+}
+
+table caption {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+table th, #bbs table td {
+	text-align: center;
+	padding: 4px 10px;
+	border-collapse: collapse;
+	border-bottom: 1px solid black;
+	padding: 10px;
+}
+
+.no { width: 15% }
+.subject { 	width: 30% }
+.writer {	width: 20% }
+.reg {	width: 20% }
+.hit {	width: 15% }
+.title {	background: #041601; 
+color: white}
+.odd {	background: silver }
+
+/* paging */
+table tfoot ol.paging {
+	list-style: none;
+}
+
+table tfoot ol.paging li {
+	float: left;
+	margin-right: 8px;
+}
+
+table tfoot ol.paging li a {
+	display: block;
+	padding: 3px 7px;
+	border: 1px solid #041601;
+	color: #FFBA34;
+	font-weight: bold;
+}
+
+table tfoot ol.paging li a:hover {
+	background: #00B3DC;
+	color: white;
+	font-weight: bold;
+}
+
+.disable {
+	padding: 3px 7px;
+	border: 1px solid silver;
+	color: silver;
+}
+
+.now {
+	padding: 3px 7px;
+	border: 1px solid #041601;
+	background: #041601;
+	color: white;
+	font-weight: bold;
+}
+.paging{
+margin: 20px auto;
+ width: 247px;}
+.bottom{
+text-align: center;
+}
 </style>
 </head>
 <body>
     <h2 class="head">팝업 관리</h2>
     <div class="wrap">
         <div class="left">
-            <hr class="hr">
-            <div class="mainimg"></div>
-            <hr class="hr">
-            <button>수정</button>
-            <button>추가</button>
+						<c:forEach var="k" items="${pop}" varStatus="vs">
+            <div>
+            <c:if test="${k.active == 1}">
+            <img  class="mainimg"  src="resources/popup/${k.f_name}">
+            </c:if>
+            </div>
+            </c:forEach>
         </div>
         <div class="right">
-            <p style="text-align: center;">이전팝업창</p>
-            <div class="category">
-                <p class="child">번호</p>
-                <p class="child">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목</p>
-                <p class="child">작성 날짜</p>
-            </div>
-            <div class="inner">
-                <p class="child">번호</p>
-                <div class="subimg"></div>
-                <p class="child">이벤트 팝업</p>
-                <p class="child">2024-00-00</p>
-                <button class="b1">작성</button>
-            </div>
-            <hr>
+        <div id="bbs" align="center">
+		<table summary="팝업 목록">
+			<caption>팝업 목록</caption>
+			<thead>
+				<tr class="title">
+		                <th class="child">선택</th>
+		                <th class="child">번호</th>
+		                <th class="child">미리보기</th>
+		                <th class="child">제목</th>
+		                <th class="child">작성자</th>
+		                <th class="child">작성 날짜</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:choose>
+					<c:when test="${empty pop }">
+						<tr><td colspan="5"><h3>게시물이 존재하지 않습니다.</h3></td></tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="k" items="${pop}" varStatus="vs">
+						    <tr>
+						        <form action="popup_update.do" method="post">
+						            <input type="hidden" name="popidx" value="${k.popidx}">
+						            <input type="hidden" name="active" value="${k.active}">
+						            <td><input type="submit" value="선택">
+									<input type="button" value="삭제" onclick="location.href='popup_delete.do?popidx=${k.popidx}'">
+						            </td>
+						            <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index )}</td>
+						            <td><img style="object-fit: cover;" class="subimg" src="resources/popup/${k.f_name}"></td>
+						            <td>${k.title }</a>
+						            </td>
+						            <td class="child">${k.writer }</td>
+						            <td>${k.regdate.substring(0,10)}</td>
+						        </form>
+						    </tr>
+</c:forEach>
+
+					</c:otherwise>
+				</c:choose>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="6">
+						<ol class="paging">
+							<!-- 이전 버튼 -->
+							<c:choose>
+								<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
+									<li class="disable">이전으로</li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="board_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }">이전으로</a></li>
+								</c:otherwise>
+							</c:choose>
+							<!-- 페이지번호들 -->
+							<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock }" step="1" var="k">
+								<c:choose>
+									<c:when test="${k == paging.nowPage }">
+										<li class="now">${k}</li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="popup.do?cPage=${k}">${k }</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							
+							<!-- 이후 버튼 -->
+								<c:choose>
+								<c:when test="${paging.endBlock >= paging.totalPage }">
+									<li class="disable">다음으로</li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="popup.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
+								</c:otherwise>
+							</c:choose>
+						</ol>	
+        <div class="bottom">
+        <p>
+						<input type="button" value="글쓰기" onclick="location.href='popup_write.do'">
+        </p>
+					</td>
+				</tr>
+			</tfoot>	
+		</table>
+        </div>
+        </div>
         </div>
     </div>
     </body>

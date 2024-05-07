@@ -5,20 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-tr {
-	    text-align:center;
-	    padding:4px 10px;
-	    background-color: #F6F6F6;
-	}
-	
-th {
-		width:120px;
-	    text-align:center;
-	    padding:4px 10px;
-	    background-color: #B2CCFF;
-	}
-</style>
+<link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardDelete.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -38,27 +25,30 @@ th {
 		f.action ="comm_board_delete_ok.do"
 		f.submit();
 	}
+	function comm_board_admin_delete_ok(f){
+		f.action ="comm_board_admin_delete_ok.do"
+		f.submit();
+	}
 </script>
 </head>
 <body>
+<section>
 	<form method="post" >
-		<table width="700">
-		<tbody>
-			<tr>
-				<th>비밀번호</th>
-				<td align="left"><input type="password" name="b_pwd"></td>
-			</tr>
-			<tr>
-				<td colspan="2">
+		
+			<div>
+				<div id="pwdDiv" bgcolor="#003300">비밀번호</div>
+				<div align="left"><input type="password" name="b_pwd"></div>
+			</div>
+			<div>
 				<input type="hidden" name="b_idx" value="${b_idx}">
 				<input type="hidden" name="cPage" value="${cPage}">
-				<input type="button" value="목록" onclick="comm_board_list(this.form)" /> 
-				<input type="button" value="삭제" onclick="comm_board_delete_ok(this.form)" /> 
-				<input type="reset" value="취소" />
-				</td>
-			</tr>
-            </tbody>
-		</table>
+				<input id="listId" type="button" value="목록" onclick="comm_board_list(this.form)" /> 
+				<input id="inputId" type="button" value="삭제" onclick="comm_board_delete_ok(this.form)" />
+				<input id="cancelId" type="reset" value="취소" />
+			
+			</div>
+		
 	</form>
+	</section>
 </body>
 </html>

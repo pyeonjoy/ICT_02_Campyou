@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+table {
+    width: 800px;
+    margin: 0px auto; 
+    margin-top: 90px; 
+    padding-bottom: 300px;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 10px;
+    border-bottom: none;
+}
+
+table, th, #foot-tr:last-child td {
+    border-left: none;
+    border-right: none;
+}
+
+h2 {
+    margin-top: 100px; 
+}
+
+div {
+    width: 800px;
+    margin: auto;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.board-member-info{
+	border-radius: 5px;
+	padding: 0.5rem 0.9rem;
+	background: #003300;
+	font-weight: bold;
+	color: white;
+}
+

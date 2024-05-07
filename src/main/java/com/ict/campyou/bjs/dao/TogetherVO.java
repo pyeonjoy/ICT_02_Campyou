@@ -1,7 +1,7 @@
 package com.ict.campyou.bjs.dao;
 
 public class TogetherVO {
-	private String t_idx, member_idx, t_subject, t_content, t_campname, t_camptype, t_postcode, t_address, t_address_detail, t_startdate, t_enddate, tf_name, t_regdate, t_hit, t_active, t_notice, member_dob, member_nickname, t_numpeople;
+	private String t_idx, member_idx, t_subject, t_content, t_campname, t_camptype, t_postcode, t_address, t_address_detail, t_startdate, t_enddate, tf_name, t_regdate, t_hit, t_active, t_notice, member_dob, member_nickname, t_numpeople, member_img, t_mapx, t_mapy, t_induty, t_facltdivnm, t_mangedivnm;
 
 	public String getT_idx() {
 		return t_idx;
@@ -153,6 +153,54 @@ public class TogetherVO {
 
 	public void setT_numpeople(String t_numpeople) {
 		this.t_numpeople = t_numpeople;
+	}
+
+	public String getMember_img() {
+		return member_img;
+	}
+
+	public void setMember_img(String member_img) {
+		this.member_img = member_img;
+	}
+
+	public String getT_mapx() {
+		return t_mapx;
+	}
+
+	public void setT_mapx(String t_mapx) {
+		this.t_mapx = t_mapx;
+	}
+
+	public String getT_mapy() {
+		return t_mapy;
+	}
+
+	public void setT_mapy(String t_mapy) {
+		this.t_mapy = t_mapy;
+	}
+
+	public String getT_induty() {
+		return t_induty;
+	}
+
+	public void setT_induty(String t_induty) {
+		this.t_induty = t_induty;
+	}
+
+	public String getT_facltdivnm() {
+		return t_facltdivnm;
+	}
+
+	public void setT_facltdivnm(String t_facltdivnm) {
+		this.t_facltdivnm = t_facltdivnm;
+	}
+
+	public String getT_mangedivnm() {
+		return t_mangedivnm;
+	}
+
+	public void setT_mangedivnm(String t_mangedivnm) {
+		this.t_mangedivnm = t_mangedivnm;
 	}
 	
 }

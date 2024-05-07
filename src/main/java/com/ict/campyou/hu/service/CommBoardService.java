@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ict.campyou.hu.dao.CommBoardVO;
+import com.ict.campyou.hu.dao.CommentVO;
 
 public interface CommBoardService {
 	public int getTotalCount();
@@ -20,9 +21,22 @@ public interface CommBoardService {
 	
 	public int getCommBoardUpdate(CommBoardVO cbvo);
 	
-	public int getLevUpdate(Map<String, Integer> map);
-	
 	public int getReplyInsert(CommBoardVO cbvo);
 	
 	public CommBoardVO getCommBoardReplyDetail(CommBoardVO cbvo);
+
+	// ´ñ±Û °¡Á®¿À±â
+	public List<CommentVO> getCommBoardList2(String b_idx);
+	
+	// ´ñ±Û »ðÀÔ
+	public int getCommentInsert(CommentVO cvo);
+		 
+	// ´ñ±Û »èÁ¦
+	public int getCommentDelete(String c_idx);
+	
+	//´ñ±Û ¼öÁ¤
+	public int getCommentUpdate(CommentVO cvo);
+	
+	//°ü¸®ÀÚ »èÁ¦
+	public int getCommBoardAdminDelete(String b_idx);
 }

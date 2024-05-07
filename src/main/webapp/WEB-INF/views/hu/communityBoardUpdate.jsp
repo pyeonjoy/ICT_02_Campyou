@@ -6,21 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-tr {
-	    text-align:center;
-	    padding:4px 10px;
-	    background-color: #F6F6F6;
-	}
-	
-th {
-		width:120px;
-	    text-align:center;
-	    padding:4px 10px;
-	    background-color: #B2CCFF;
-	}
-</style>
-
+<!-- summer note -->
+<link rel="stylesheet" href="resources/css/summernote-lite.css">
+<link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardUpdate.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -31,7 +19,6 @@ th {
 		}
 	});
 </script>
-
 <script type="text/javascript">
 	function comm_board_list(f) {
 		f.action="community_board.do";
@@ -41,7 +28,8 @@ th {
 	function comm_board_update_ok(f) {
 		for (var i = 0; i < f.elements.length; i++) {
 			if (f.elements[i].value == "") {
-				if (i == 3 || i ==4) continue;
+				if (i == 3) continue;
+				if(i == 6) break;
 				alert(f.elements[i].name + "를 입력하세요");
 				f.elements[i].focus();
 				return;//수행 중단
@@ -51,53 +39,105 @@ th {
 		f.submit();
 	}
 </script>
+<style>
+    select {
+        float: left;
+    }
+</style>
 </head>
 <body>
-	<form  method="post" enctype="multipart/form-data">
-		<table width="700">
-		<tbody>
-			<tr>
-				<th>제목</th>
-				<td align="left"> <input type="text" name="b_title" value="${cbvo.b_title}"></td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td align="left"><input type="text" name="member_nickname" value="${cbvo.member_nickname}"></td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td align="left"><textarea rows="10" cols="60" name="b_content">${cbvo.b_content}</textarea>
-				</td>
-			</tr>
-			<tr>
-				<th>첨부파일</th>
-				<c:choose>
-					<c:when test="${empty cbvo.f_name}">
-						<td><input type="file" name="file"><b>이전파일없음</b></td>
-						 <input type="hidden" name="old_f_name" value="">	
-					</c:when>
-					<c:otherwise>
-					<td><input type="file" name="file"><b>${cbvo.f_name}</b></td>
-						 <input type="hidden" name="old_f_name" value="${cbvo.f_name}">
-					</c:otherwise>
-				</c:choose>
-			
-			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td align="left"><input type="password" name="b_pwd"></td>
-			</tr>
-			<tr>
-				<td colspan="2">
-				<input type="hidden" name="b_idx" value="${cbvo.b_idx}">
-				<input type="hidden" name="cPage" value="${cPage}">
-				<input type="button" value="목록" onclick="comm_board_list(this.form)" /> 
-				<input type="button" value="수정" onclick="comm_board_update_ok(this.form)" /> 
-				<input type="reset" value="취소" />
-				</td>
-			</tr>
-            </tbody>
-		</table>
-	</form>
+	<div>
+		<h2>게시글 수정</h2>
+		<hr><br><br>
+		<form action="comm_board_update_ok.do" method="post" enctype="multipart/form-data">
+			<table>
+					<tr align="center">
+						<td bgcolor="#003300" style="color: white;">유형</td>
+						<c:choose>
+							<c:when test="${cbvo.member_nickname == 'admin'}">
+								<td>
+									<select name="b_type">
+										<option value="공지사항">공지사항</option>
+										<option value="날씨정보">날씨정보</option>
+										<option value="주의사항">주의사항</option>
+									</select>
+								<!-- <td align="left"><input type="hidden" name="b_type"></td>  -->
+								</td>
+							</c:when>
+							<c:otherwise>
+								<td>
+									<select name="b_type">
+										<option value="정보공유">정보공유</option>
+										<option value="경험담">경험담</option>
+										<option value="썰">썰</option>
+										<option value="유머">유머</option>
+										<option value="후기">후기</option>
+										<option value="불평">불평</option>
+									</select>
+								<!-- <td align="left"><input type="hidden" name="b_type"></td>  -->
+								</td>		
+							</c:otherwise>
+						</c:choose>
+					</tr>
+					<tr align="center">
+						<td bgcolor="#003300" style="color: white;">제목</td>
+						<td align="left"> <input type="text" name="b_title" value="${cbvo.b_title}"></td>
+					</tr>
+					<tr align="center">
+						<td bgcolor="#003300" style="color: white;">별명</td>
+						<td align="left">${cbvo.member_nickname}
+						<input type="hidden" name="member_nickname" value="${cbvo.member_nickname}">
+						</td>
+					</tr>
+					<tr>
+						<th bgcolor="#003300" style="color: white;">첨부파일</th>
+						<td align="left"><input type="file" name="file"></td>
+					</tr>
+					<tr>
+						<th bgcolor="#003300" style="color: white;">비밀번호</th>
+						<td align="left"><input type="password" name="b_pwd"></td>
+					</tr>
+					<tr align="center">
+						<td colspan="2">
+							<textarea rows="10" cols="60" id="b_content" name="b_content">${cbvo.b_content}</textarea>
+						</td>
+					</tr>
+					<tfoot>
+						<tr align="center">
+							<td colspan="2">
+								<input type="hidden" name="b_idx" value="${cbvo.b_idx}">
+								<input type="hidden" name="cPage" value="${cPage}">
+								<input id="listId" type="button" value="목록" onclick="comm_board_list(this.form)" /> 
+								<input id="inputId" type="button" value="수정" onclick="comm_board_update_ok(this.form)" /> 
+								<input id="cancelId" type="reset" value="취소" />
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+		</form>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
+<script src="resources/js/summernote-lite.js" ></script>
+<script src="resources/js/lang/summernote-ko-KR.js" ></script>
+<script type="text/javascript">
+	$(function() {
+		$("#b_content").summernote({
+			lang : 'ko-KR',
+			height : 300,
+			focus : true,
+			placeholder: '최대3000자까지 쓸 수 있습니다'	, //placeholder 설정
+			callbacks : {
+				onImageUpload : function(files, editor) {
+					for (var i = 0; i < files.length; i++) {
+						console.log("i = " , files)
+							sendImage(files[i], editor);						
+					}
+				}
+			}
+			  
+		});
+		// $("#content").summernote("lineHeight",.7);
+	});
+</script>	
 </body>
 </html>

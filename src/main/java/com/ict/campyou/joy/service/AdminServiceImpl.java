@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.joy.dao.AdminDAO;
 import com.ict.campyou.joy.dao.AdminVO;
 import com.ict.campyou.joy.dao.AdminMemberVO;
@@ -13,7 +15,7 @@ import com.ict.campyou.joy.dao.AdminMemberVO;
 public class AdminServiceImpl implements AdminService{
 	@Autowired
 	private AdminDAO admindao;
-	
+//관리자페이지메인 =================================================================
 	@Override
 	public List<AdminVO> getadminmainmember() {
 		return admindao.getadminmainmember();
@@ -40,9 +42,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public List<AdminMemberVO> getboardall() {
-		System.out.println(admindao.getboardall());
-		return admindao.getboardall();
+	public List<AdminMemberVO> getboardall(String member_idx) {
+		return admindao.getboardall(member_idx);
 	}
 	
 	@Override
@@ -51,10 +52,11 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int getreportall() {
-		return admindao.getreportall();
+	public int getreportall(String member_idx) {
+		return admindao.getreportall(member_idx);
 	}
 
+	//회원관리 ========================================================================
 	@Override
 	public int getmemberstop(String member_idx) {
 		return admindao.getmemberstop(member_idx);
@@ -83,5 +85,51 @@ public class AdminServiceImpl implements AdminService{
 		return admindao.getremoveimg(member_idx);
 	}
 
+	@Override
+	public List<MemberVO> allmember(int offset, int limit) {
+		return admindao.allmember(offset, limit);
+	}
+
+//팝업===================================================================================		
+	@Override
+	public int getPopUPWrite(AdminVO avo) {
+		return admindao.getPopUPWrite(avo);
+	}
+
+	@Override
+	public List<AdminVO> getPopList(int offset, int limit) {
+		return admindao.getPopList(offset, limit);
+	}
+
+	@Override
+	public int getTotalCount() {
+		return admindao.getTotalCount();
+	}
+	@Override
+	public int getTotalCount2() {
+		return admindao.getTotalCount2();
+	}
+
+	
+	@Transactional
+	@Override
+	public int getpopupdate(AdminVO avo) {
+		int result1 = admindao.getpopupdate2(avo); 
+		int result2 = admindao.getpopupdate(avo); 
+		System.out.println("1:"+ result1);
+		System.out.println("2:"+ result2);
+		if (result1 > 0 && result2 > 0) {
+		System.out.println("오나?");
+			return 1; // 성공
+		} else {
+			return -1; // 실패
+		}
+	}
+	@Override
+	public int getPopDelete(String popidx) {
+		return admindao.getpopdelete(popidx);
+	}
+	
+	
 
 }
