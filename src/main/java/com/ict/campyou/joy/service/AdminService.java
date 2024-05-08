@@ -17,6 +17,7 @@ public interface AdminService {
 //회원관리페이지
 	public List<AdminMemberVO> getboardall(String member_idx);
 	public List<AdminMemberVO> getadminmemberreport(String member_idx);
+	public List<AdminMemberVO> getradmineporteach(String member_idx);
 	public int getmemberstop(String member_idx);
 	public int getmemberstopcancel(String member_idx);
 	public int getmemberedit(AdminMemberVO avo);

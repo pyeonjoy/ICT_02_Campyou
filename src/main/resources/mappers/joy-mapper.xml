@@ -132,4 +132,9 @@
 	<delete id="popdelete" parameterType="String">
 	DELETE FROM popup WHERE popidx = #{popidx}
 	</delete>
+	<select id="getradmineporteach" resultType="amvo" parameterType="String">
+		SELECT *
+		FROM admin_report
+		where member_idx =#{member_idx}
+	</select>
 </mapper>

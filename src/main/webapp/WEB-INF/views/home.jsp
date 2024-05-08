@@ -75,11 +75,10 @@ button {
 	position: fixed;
 	background-color: black;
 	display: inline-block;
-	width: 500px;
-	height: 500px;
 	z-index: 9999;
 	padding: 10px;
-	margin: 165px;
+	top: 130px;
+	left:130px;
 }
 
 .popimg {
@@ -144,6 +143,8 @@ $(document).ready(function() {
             
         }); 
     });
+/*  
+ 
 
 // 	$(function() {
 		initMap();
@@ -254,14 +255,14 @@ $(document).ready(function() {
 	    });
 	}
 });
-	    
+     */
 </script>
 
 </head>
 <body>
 
 	<div id="layer_popup1" class="layer_popup"
-		style="top: 50px; left: 50px; width: 500px; height: 500px; background-color: white;">
+		style=" background-color: white;">
 		<c:forEach var="k" items="${pop}" varStatus="vs">
 			<c:if test="${k.active == 1}">
 				<img class="popimg" style="object-fit: cover;"

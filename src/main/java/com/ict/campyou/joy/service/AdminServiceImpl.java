@@ -134,6 +134,11 @@ public class AdminServiceImpl implements AdminService{
 	public String getPopmain() {
 		return admindao.getPopmain();
 	}
+
+	@Override
+	public List<AdminMemberVO> getradmineporteach(String member_idx) {
+		return admindao.getradmineporteach(member_idx);
+	}
 	
 	
 
