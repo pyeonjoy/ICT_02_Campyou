@@ -10,16 +10,11 @@
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=qpvmsbuult"></script>
 <link href="resources/public/css/hs/camp_map_list.css" rel="stylesheet" />
 <link rel="stylesheet" href="resources/public/css/bjs/together_list.css">
-<script src="resources/public/js/jun/camp_list.js" ></script>
 <script src="resources/public/js/hs/camp_map_list.js" ></script>
 <title>CAMPYOU:지도로 검색</title>
 <script type="text/javascript">
 $(document).ready(function() {
-	//지도를 삽입할 HTML 요소 또는 HTML 요소의 id를 지정합니다.
-	let mapDiv = document.querySelector('.map_show #map'); // 'map'으로 선언해도 동일
 	
-	//옵션 없이 지도 객체를 생성하면 서울 시청을 중심으로 하는 16 레벨의 지도가 생성됩니다.
-	let map = new naver.maps.Map(mapDiv);
 });
 </script>
 </head>

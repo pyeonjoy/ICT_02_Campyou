@@ -36,7 +36,6 @@
 .search_button_option .option {
 	height: auto;
 	text-align: center;
-	float: left;
 	border-top: 10px;
 	border-radius: 10px;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -116,8 +115,12 @@ $(document).ready(function() {
 		    }
 		});		
 	});
+	
+	$("#detail_search").click(function(){
+		console.log("클릭")
+      	$(".search_button_option").toggle();
+    });
 });
-
 </script>
 </head>
 <body>
