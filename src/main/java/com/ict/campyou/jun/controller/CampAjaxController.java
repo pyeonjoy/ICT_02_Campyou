@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -191,9 +192,14 @@ public class CampAjaxController {
 	@RequestMapping(value = "loadReview.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public List<ReviewVO> loadReview(@RequestParam() String contentid) {
-		List<ReviewVO> res = campService.loadReview(contentid);
-		return res;
+	    List<ReviewVO> res = campService.loadReview(contentid);
+	    if (res == null) {
+	        return Collections.emptyList();
+	    } else {
+	        return res;
+	    }
 	}
+
 
 	@RequestMapping(value = "checkHeart.do", produces = "application/json; charset=utf-8")
 	@ResponseBody

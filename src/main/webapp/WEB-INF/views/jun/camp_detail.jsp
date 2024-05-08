@@ -70,7 +70,7 @@
 
 #detail_button {
 	position: relative;
-	left: 1282px;
+	left: 1268px;
 	top: -35px;
 }
 
@@ -91,12 +91,14 @@
 
 #camp_item_g li {
 	display: inline-block;
-	list-style-type: none;
-	margin:45px;
-	padding:57px;
-	text-align: center;
-	background-color: #FFFAA5;
-	border-radius: 55px;
+    list-style-type: none;
+    margin: 20px;
+    padding: 52px;
+    text-align: center;
+    background-color: #FFFAA5;
+    border-radius: 60px;
+    width: 260px;
+    height: 220px;
 }
 
 #camp_item_g img {
@@ -163,12 +165,18 @@
 
 #comment_list p {
     margin: 0;
-    padding: 5px 0;
+    padding: 2px 40px 35px;
+    line-height: 30px;
 }
 
-.yellow-stars {
-    color: #FFD700;
+#comment_list img {
+	border : 2px solid black;
+	border-radius: 100px;
+	width: 65px;
+	height: 65px;
+	float: left;
 }
+
 .modal {
     display: none;
     position: fixed; 
@@ -189,15 +197,18 @@
     height: 500px;
     margin-top : 180px;
 }
-.fullheart {
-    color: red;
-}
 #detail_button input[type="button"]{
 	height: 40px;
 	padding-left: 30px;
 	padding-right: 30px;
 }
-
+.review_submit{
+	height: 40px;
+	padding-left: 30px;
+	padding-right: 30px;
+	position: relative;
+    left: 1380px;
+}
 
 </style>
 <script>
@@ -233,11 +244,17 @@ $(document).ready(function() {
                     position: latlng,
                     map: map
                 });
+                let infoWindow = new naver.maps.InfoWindow({
+                    content: '<div style="padding:20px;"><b>이름 : ${info.facltnm}<br><br>주소 : ${info.addr1}<br><br>전화번호 : ${info.tel}</b></div>'
+                });
+                infoWindow.open(map, marker);
+                
                 naver.maps.Event.addListener(marker, 'click', function(e) {
-                    let infoWindow = new naver.maps.InfoWindow({
-                        content: '<div style="padding:20px;"><b>이름 : ${info.facltnm}<br><br>주소 : ${info.addr1}<br><br>전화번호 : ${info.tel}</b></div>'
-                    });
                     infoWindow.open(map, marker);
+                });
+
+                naver.maps.Event.addListener(map, 'click', function(e) {
+                    infoWindow.close();
                 });
             },
             error: function() {
@@ -273,7 +290,6 @@ $(document).ready(function() {
             facilityIcons += "<li><img src='" + iconUrl + "' alt='" + facility.trim() + "'><span>"+facility.trim()+"</span></li>";
         }
     });
-    console.log(facilityIcons);
     $("#camp_item_g").append(facilityIcons);
     
     loadReview();
@@ -283,11 +299,14 @@ $(document).ready(function() {
 
         let comment = $('#r_comment').val();
         let rating = $("input[name='rating']:checked").val();
-
+		let member_img = "${mvo.member_img}";
+		let member_idx = "${mvo.member_idx}";
         let requestData = {
             r_comment: comment,
             rating: rating,
-            contentid: contentId
+            contentid: contentId,
+            member_img: member_img,
+            member_idx: member_idx
         };
 
         $.ajax({
@@ -296,7 +315,10 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(requestData),
             success:function(data){
-                if(data != "error") {
+            	 if (member_idx === "" || member_idx === null) {
+            		alert("로그인 후 이용 부탁드립니다.");
+            		location.href="login_form.do";
+				}else if(data != "error") {
                     alert("리뷰가 정상적으로 등록되었습니다.");
                     $('#r_comment').val('');
                     $("input[name='rating']").prop('checked', false);
@@ -373,19 +395,38 @@ function loadReview(){
         data: {contentid : contentId},
         dataType: "json",
         success: function(data) {
+        	console.log(data.length);
+        	if (Array.isArray(data) && data.length === 0) {
+        		$("#comment_list").empty();
+				let commentItem = "<div>"
+				commentItem += "<p style='text-align:center; font-size:25px;'>작성된 리뷰가 없습니다. 리뷰를 작성해주세요 !</p>"
+				commentItem += "</div>"
+				$("#comment_list").append(commentItem);
+			}else{
             $("#comment_list").empty();
             $.each(data, function(index, review) {
                 let commentItem = "<div>";
                 let stars = "";
+                let member_profile_img = "/resources/images/"
                 for (let i = 0; i < review.rating; i++) {
-                    stars += "★";
+                    stars += "⭐";
                 }
-                commentItem += "<p><b>작성자 : </b> <span>" + review.member_nickname + "</span></p>";
-                commentItem += "<p><b>별점 : </b> <span class='yellow-stars'>" + stars + "</span></p>";
-                commentItem += "<p><b>댓글 : </b> " + review.r_comment + "</p>";
+                commentItem += "<img src="+member_profile_img+review.member_img+">";
+                commentItem += "<p><b>작성자 : </b>" +review.member_nickname +"<br>";
+                commentItem += "<b>별점 : </b>" + stars + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+                let regDate = new Date(review.r_regdate);
+                let formattedDate = regDate.getFullYear() + "년 " +
+                					(regDate.getMonth() + 1).toString().padStart(2, '0') + "월 " +
+                					regDate.getDate().toString().padStart(2, '0') + "일 " +
+                					regDate.getHours().toString().padStart(2, '0') + "시 " +
+                					regDate.getMinutes().toString().padStart(2, '0') + "분";
+                commentItem += ""+formattedDate+"</p>";
+                commentItem += "<p> " + review.r_comment + "</p>";
                 commentItem += "</div>";
                 $("#comment_list").append(commentItem);
+            
             });
+			}
         },
         error: function() {
             alert("리뷰를 불러오는 중 오류가 발생했습니다.");
@@ -400,19 +441,18 @@ function loadHeart() {
         dataType: "json",
         success: function(data) {
             $("#detail_button").empty();
-            console.log(data);
             if (data === true) {
                 let detailButton = "<div>";
                 detailButton += "<input type='button' name='page' value='홈페이지' onclick=\"window.open('${info.homepage}')\">";
                 detailButton += "<input type='button' name='page' value='예약페이지' onclick='resvego()'>";
-                detailButton += "<input type='button' id='Heart' name='page' value='❤️ 찜하기' onclick='Heart()'>";
+                detailButton += "<input type='button' name='page' value='🤍관심등록' onclick='Heart()'>";
                 detailButton += "</div>";
                 $("#detail_button").append(detailButton);
             } else if (data === false) {
                 let detailButton = "<div>";
                 detailButton += "<input type='button' name='page' value='홈페이지' onclick=\"window.open('${info.homepage}')\">";
                 detailButton += "<input type='button' name='page' value='예약페이지' onclick='resvego()'>";
-                detailButton += "<input type='button' id='Heart' name='page' value='❤️ 찜 해제' onclick='delHeart()'>";
+                detailButton += "<input type='button' id='Heart' name='page' value='❤️관심해제' onclick='delHeart()'>";
                 detailButton += "</div>";
                 $("#detail_button").append(detailButton);
             } else {
@@ -423,7 +463,7 @@ function loadHeart() {
             let detailButton = "<div>";
             detailButton += "<input type='button' name='page' value='홈페이지' onclick=\"window.open('${info.homepage}')\">";
             detailButton += "<input type='button' name='page' value='예약페이지' onclick='resvego()'>";
-            detailButton += "<input type='button' id='Heart' name='page' value='❤️ 찜하기' onclick='Heart()'>";
+            detailButton += "<input type='button' id='Heart' name='page' value='🤍관심등록' onclick='Heart()'>";
             detailButton += "</div>";
             $("#detail_button").append(detailButton);
         }
@@ -445,7 +485,7 @@ function loadHeart() {
 <title>캠핑장 상세 페이지</title>
 </head>
 <body>
-	<div id = "modal_show"></div>
+	<div id="modal_show"></div>
 	<jsp:include page="../hs/header.jsp" />
 	<div class="camp_detail_wrap">
 		<div style="height: 100px;">
@@ -460,22 +500,29 @@ function loadHeart() {
 		<div style="display: inline-block;">
 			<h2 style="display: inline; margin-left: 190px;">${info.facltnm}</h2>
 			<p style="display: inline;">${info.lctcl}/${info.induty}</p>
-			<div id="detail_button">
-			</div>
+			<div id="detail_button"></div>
 		</div>
 		<div class="detail_info_1">
 			<p style="line-height: 30px;">${info.addr1}</p>
-			<p style="line-height: 30px;">${info.tel}</p>
+			<c:choose>
+				<c:when test="${info.tel == null }">
+					<p style="line-height: 30px;">전화번호가 없는 사업장입니다.</p>
+				</c:when>
+				<c:otherwise>
+					<p style="line-height: 30px;">${info.tel}</p>
+				</c:otherwise>
+			</c:choose>
 		</div>
-		<div class="camp_detail_second_title">
-			<b><a href="#">소개 및 시설</a> | <a href="#">위치</a> | <a href="#">후기</a></b>
+		<div class="camp_detail_second_title" id="intro_title">
+			<b><a href="#intro_title">소개 및 시설</a> | <a
+				href="#map_go">위치</a> | <a href="#review_section">후기</a></b>
 		</div>
 		<div class="detail_info_1">
 			<p style="line-height: 30px;">운영기간 : ${info.operpdcl}</p>
 			<p style="line-height: 30px;">운영일 : ${info.operdecl}</p>
 			<p style="line-height: 30px;">주변이용가능 시설 : ${info.posblfcltycl}</p>
 			<c:choose>
-				<c:when test="${info.resved == null}">
+				<c:when test="${info.resved == null }">
 					<p style="line-height: 30px;">
 						예약방법 : 온라인 실시간 예약<br> <br>
 					</p>
@@ -486,37 +533,48 @@ function loadHeart() {
 					</p>
 				</c:otherwise>
 			</c:choose>
-
-			<div class="camp_intro">
-				<p style="line-height: 30px;">${info.intro }</p>
-			</div>
+			<c:choose>
+				<c:when test="${empty info.intro}">
+					<div class="camp_intro">
+						<p style="line-height: 30px;">자연 속에서의 힐링을 찾는 이들을 위한 최적의 휴식처, 우리의 캠핑장은 새로운 모험과 즐거움이 가득한 곳입니다. 푸르른 숲속에서의 캠핑 생활은 일상의 모든 스트레스를 잊게 해주며, 여러분을 자유롭고 행복한 시간으로 안내합니다. 친구, 가족, 연인과 함께하는 특별한 순간들을 만들고 싶다면, 우리의 캠핑장을 방문해보세요. 새로운 경험과 아름다운 자연을 만나며, 소중한 추억을 만들어보실 수 있습니다.</p>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="camp_intro">
+						<p style="line-height: 30px;">${info.intro }</p>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<h4>시설</h4>
 		<div id="camp_item_g"></div>
-		<h4>위치</h4>
-	<div id="map"></div>
-	<h4>후기</h4>
-<div id="review_section">
-    <form id="review_form" class="mb-3">
-        <fieldset>
-            <span class="text-bold">별점을 선택해주세요</span>
-            <input type="radio" value="5" name ="rating" id="rate1"><label for="rate1">★</label>
-            <input type="radio" value="4" name ="rating" id="rate2"><label for="rate2">★</label>
-            <input type="radio" value="3" name ="rating" id="rate3"><label for="rate3">★</label>
-            <input type="radio" value="2" name ="rating" id="rate4"><label for="rate4">★</label>
-            <input type="radio" value="1" name ="rating" id="rate5"><label for="rate5">★</label>
-        </fieldset>
-        <div>
-            <textarea class="col-auto form-control" id="r_comment" placeholder="리뷰를 남겨주세요."></textarea>
-        </div>
-        <button type="submit">댓글 작성</button>
-    </form>
-</div>
-	
-    <div id="comment_list">
-    <!-- 댓글 보여지는 곳 -->
-    </div>
-</div>
+		<h4 id="map_go">위치</h4>
+		<div id="map"></div>
+		<h4>후기</h4>
+		<div id="review_section">
+			<form id="review_form" class="mb-3">
+				<fieldset>
+					<span class="text-bold">별점을 선택해주세요</span> <input type="radio"
+						value="5" name="rating" id="rate1"><label for="rate1">★</label>
+					<input type="radio" value="4" name="rating" id="rate2"><label
+						for="rate2">★</label> <input type="radio" value="3" name="rating"
+						id="rate3"><label for="rate3">★</label> <input
+						type="radio" value="2" name="rating" id="rate4"><label
+						for="rate4">★</label> <input type="radio" value="1" name="rating"
+						id="rate5"><label for="rate5">★</label>
+				</fieldset>
+				<div>
+					<textarea class="col-auto form-control" id="r_comment"
+						placeholder="리뷰를 남겨주세요."></textarea>
+				</div>
+				<button class="review_submit" type="submit">리뷰 작성</button>
+			</form>
+		</div>
+
+		<div id="comment_list">
+			<!-- 댓글 보여지는 곳 -->
+		</div>
+	</div>
 	<jsp:include page="../hs/footer.jsp" />
 </body>
 </html>

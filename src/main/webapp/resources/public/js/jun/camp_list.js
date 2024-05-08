@@ -21,7 +21,11 @@ $(document).ready(function() {
                     let contentid = $(this).find("contentId").text();
 
                     let campItem = "<div class='camp_item' onclick='location.href=\"camp_detail.do?contentid=" + contentid + "\"'>";
+                    if(firstImageUrl != null && firstImageUrl !== ""){
                     campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
+              		} else {
+                    campItem += "<img src='/resources/images/2.jpg' alt='대체 이미지'>";
+               		}
                     campItem += "<div class='camp_info'>";
                     campItem += "<p> ["+ doNm + sigunguNm+"] </p>";
                     campItem += "<h4>" + facltNm + "</h4><span>" + induty + "</span>";
