@@ -69,10 +69,6 @@ public class TogetherServiceImpl implements TogetherService{
 	public List<TogetherVO> getTogetherListSearch(int offset, int limit, String searchType, String searchKeyword) throws Exception{
 		return togetherDAO.getTogetherListSearch(offset, limit, searchType, searchKeyword);
 	}
-//	@Override
-//	public List<TogetherVO> getTogetherListSearch(int offset, int limit, String searchType, String searchKeyword) throws Exception{
-//		return togetherDAO.getTogetherListSearch(offset, limit, searchType, searchKeyword);
-//	}
 
 	@Override
 	public int getPromiseChk(PromiseVO pvo) {
@@ -95,9 +91,18 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 
 	@Override
-	public int getTogetherDeleteOK(String t_idx) {
+	public int getTogetherDeleteOK(String t_idx) throws Exception {
 		return togetherDAO.getTogetherDeleteOK(t_idx);
 	}
 
+	@Override
+	public List<String> getTIdxList(String member_idx) throws Exception {
+		return togetherDAO.getTIdxList(member_idx);
+	}
+
+	@Override
+	public List<PromiseVO> getPromiseApplyList(String tIdx) throws Exception {
+		return togetherDAO.getPromiseApplyList(tIdx);
+	}
 
 }

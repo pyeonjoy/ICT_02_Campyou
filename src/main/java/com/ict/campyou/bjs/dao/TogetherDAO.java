@@ -93,7 +93,16 @@ public class TogetherDAO {
 		return sqlSessionTemplate.update("bjs.to_update", tvo);
 	}
 	
-	public int getTogetherDeleteOK(String t_idx) {
+	public int getTogetherDeleteOK(String t_idx) throws Exception {
 		return sqlSessionTemplate.update("bjs.to_delete", t_idx);
 	}
+	
+	public List<String> getTIdxList(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectList("bjs.together_idxList", member_idx);
+	}
+	
+	public List<PromiseVO> getPromiseApplyList(String tIdx) throws Exception {
+		return sqlSessionTemplate.selectList("bjs.promise_apply_list", tIdx);
+	}
+	
 }

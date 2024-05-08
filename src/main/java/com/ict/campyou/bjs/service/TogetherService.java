@@ -22,6 +22,7 @@ public interface TogetherService {
 	public int getToPomise(PromiseVO pvo) throws Exception;
 	public int getToPomiseCancel(PromiseVO pvo) throws Exception;
 	public int getTogetherUpdateOK(TogetherVO tvo) throws Exception;
-	public int getTogetherDeleteOK(String t_idx);
-//	public List<PromiseVO> getPromiseList();
+	public int getTogetherDeleteOK(String t_idx) throws Exception;
+	public List<String> getTIdxList(String member_idx) throws Exception;
+	public List<PromiseVO> getPromiseApplyList(String tIdx) throws Exception;
 }

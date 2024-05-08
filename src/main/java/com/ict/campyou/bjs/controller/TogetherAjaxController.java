@@ -1,5 +1,6 @@
 package com.ict.campyou.bjs.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -136,4 +137,21 @@ public class TogetherAjaxController {
 		}
 		return "error" ;
 	}
+	
+	@RequestMapping(value = "promiseApplyList.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public List<List<PromiseVO>> getPromiseApplyList(String member_idx) throws Exception {
+        List<List<PromiseVO>> result = new ArrayList<>();
+
+        // 해당 멤버가 작성한 모든 동행글들의 t_idx 목록을 가져옴
+        List<String> tIdxList = togetherService.getTIdxList(member_idx);
+
+        // 각 동행글의 t_idx에 대한 동행 신청 기록을 가져와서 결과 리스트에 추가
+        for (String tIdx : tIdxList) {
+            List<PromiseVO> applyList = togetherService.getPromiseApplyList(tIdx);
+            result.add(applyList);
+        }
+
+        return result;
+    }
 }
