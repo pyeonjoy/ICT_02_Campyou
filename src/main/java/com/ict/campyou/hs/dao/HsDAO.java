@@ -13,13 +13,8 @@ public class HsDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	public List<CampVO> getLocalKeyword() {
-		try {
-			return sqlSessionTemplate.selectList("has.local_keyword");
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
+	public List<CampVO> getLocalKeyword() throws Exception {
+		return sqlSessionTemplate.selectList("has.local_keyword");
 	}
 
 }

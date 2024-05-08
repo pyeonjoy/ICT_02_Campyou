@@ -6,6 +6,6 @@ import com.ict.campyou.jun.dao.CampVO;
 
 public interface HsService {
 
-	public List<CampVO> getLocalKeyword();
+	public List<CampVO> getLocalKeyword() throws Exception;
 
 }
