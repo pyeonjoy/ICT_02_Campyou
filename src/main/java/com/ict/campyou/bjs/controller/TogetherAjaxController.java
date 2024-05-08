@@ -1,14 +1,11 @@
 package com.ict.campyou.bjs.controller;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +16,7 @@ import com.google.gson.Gson;
 import com.ict.campyou.bjs.dao.PromiseVO;
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
+import com.ict.campyou.common.Paging2;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 
@@ -26,6 +24,8 @@ import com.ict.campyou.jun.dao.CampVO;
 public class TogetherAjaxController {
 	@Autowired
 	private TogetherService togetherService;
+	@Autowired
+	private Paging2 paging;
 
 	@RequestMapping(value = "together_Write2.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
@@ -76,108 +76,6 @@ public class TogetherAjaxController {
 		}
 		return result;
 	}
-	
-	@RequestMapping(value = "together_list_search.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
-	@ResponseBody
-	public String getTogetherListSearch(@RequestParam("searchType") String searchType, @RequestParam("searchKeyword") String searchKeyword) throws Exception{
-		String result = "";
-		if (searchType != null && searchKeyword != null) {
-	        List<TogetherVO> toListSearch = togetherService.getTogetherListSearch(searchType, searchKeyword);
-	        
-	        if (toListSearch != null) {
-	        	 for (TogetherVO tvo : toListSearch) {
-	                 LocalDate dob = LocalDate.parse(tvo.getMember_dob());
-	                 LocalDate currentDate = LocalDate.now();
-	                 int age = Period.between(dob, currentDate).getYears();
-	                 String ageGroup;
-	                 switch (age / 10) {
-	                     case 0: ageGroup = "10대 미만"; break;
-	                     case 1: ageGroup = "10대"; break;
-	                     case 2: ageGroup = "20대"; break;
-	                     case 3: ageGroup = "30대"; break;
-	                     case 4: ageGroup = "40대"; break;
-	                     case 5: ageGroup = "50대 이상"; break;
-	                     case 6: ageGroup = "60대 이상"; break;
-	                     case 7: ageGroup = "70대 이상"; break;
-	                     default: ageGroup = "80대 이상"; break;
-	                 }
-	                 tvo.setMember_dob(ageGroup);
-	             }
-	            Gson gson = new Gson();
-	            String jsontoListSearch = gson.toJson(toListSearch);
-	            return jsontoListSearch;
-	        }
-	    }
-	    return result;
-	}
-	
-//	@RequestMapping(value = "together_list_search.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
-//	@ResponseBody
-//	public String getTogetherListSearch(@RequestParam("searchType") String searchType, @RequestParam("searchKeyword") String searchKeyword, HttpServletRequest request) throws Exception{
-//		int count = togetherService.getToTotalCount();
-//		paging.setTotalRecord(count);
-//		
-//		// 전체 페이지의 수
-//		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
-//			paging.setTotalPage(1);
-//		}else {
-//			paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-//			if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
-//				paging.setTotalPage(paging.getTotalPage() +1);
-//			}
-//		}
-//		
-//		String cPage = request.getParameter("cPage");
-//		if(cPage == null) {
-//			paging.setNowPage(1);
-//		}else {
-//			paging.setNowPage(Integer.parseInt(cPage));
-//		}
-//		
-//		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
-//		
-//		paging.setBeginBlock((int)((paging.getNowPage() -1) / paging.getPagePerBlock()) * paging.getPagePerBlock() +1);
-//		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() -1);
-//		
-//		if(paging.getEndBlock() > paging.getTotalPage()) {
-//			paging.setEndBlock(paging.getTotalPage());
-//		}
-//		
-//		String result = "";
-//		if (searchType != null && searchKeyword != null) {
-//			Map<String, Object> resultMap = new HashMap<>();
-//	        List<TogetherVO> toListSearch = togetherService.getTogetherListSearch(paging.getOffset(), paging.getNumPerPage(), searchType, searchKeyword);
-//	        
-//	        if (toListSearch != null) {
-//	        	 for (TogetherVO tvo : toListSearch) {
-//	                 LocalDate dob = LocalDate.parse(tvo.getMember_dob());
-//	                 LocalDate currentDate = LocalDate.now();
-//	                 int age = Period.between(dob, currentDate).getYears();
-//	                 String ageGroup;
-//	                 switch (age / 10) {
-//	                     case 0: ageGroup = "10대 미만"; break;
-//	                     case 1: ageGroup = "10대"; break;
-//	                     case 2: ageGroup = "20대"; break;
-//	                     case 3: ageGroup = "30대"; break;
-//	                     case 4: ageGroup = "40대"; break;
-//	                     case 5: ageGroup = "50대 이상"; break;
-//	                     case 6: ageGroup = "60대 이상"; break;
-//	                     case 7: ageGroup = "70대 이상"; break;
-//	                     default: ageGroup = "80대 이상"; break;
-//	                 }
-//	                 tvo.setMember_dob(ageGroup);
-//	             }
-//	        	 
-//	        	resultMap.put("toListSearch", toListSearch);
-//	            resultMap.put("paging", paging);
-//	            Gson gson = new Gson();
-//	            result = gson.toJson(resultMap);
-////	            String jsontoListSearch = gson.toJson(toListSearch);
-////	            return jsontoListSearch;
-//	        }
-//	    }
-//	    return result;
-//	}
 	
 	@RequestMapping(value = "to_promise_chk.do", produces = "application/plain; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody

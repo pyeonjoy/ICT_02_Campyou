@@ -18,6 +18,52 @@ function handleMyBoardList(member_idx){
 function handleMyFavList(member_idx){
 	
 }
+
+$(document).ready(function() {
+    promiseApplyList();
+});
+
+function promiseApplyList() {
+	let memberIdx = document.getElementById("memberIdx").value;
+    $.ajax({
+        url: 'promiseApplyList.do',
+        type: 'post',
+        data: {
+            member_idx: memberIdx
+        },
+        dataType: 'json',
+        success: function(data) {
+//             if (data !== "fail") {
+//                 let camp = data;
+//                 let position = new naver.maps.LatLng(camp.mapy, camp.mapx);
+                
+//                 map.setCenter(position);
+//                 map.setZoom(17);
+                
+//                 let infoWindow = new naver.maps.InfoWindow({
+//                     content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + camp.firstimageurl + '" alt="" style="width:100%;" /><b>' + camp.facltnm + '</b><br><br> ' + camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
+//                     disableAutoPan: true
+//                 });
+//                 infoWindow.open(map, position);
+                
+//                 $('.togetherSub1DivP').val(addr);
+//                 $('.togetherSub1DivP1').val(campName);
+//                 t_induty = $('.togetherCampType').text(induty);
+//                 campImageUrl = imageUrl;
+//                 t_mapx = mapx;
+//                 t_mapy = mapy;
+//                 t_induty = induty;
+//                 t_facltdivnm = facltdivnm;
+//                 t_mangedivnm = mangedivnm;
+            	
+//             	$(".searchbar").val("");
+//             } 
+        },
+        error: function(xhr, status, error) {
+        	alert("신청이 없습니다.");
+        }
+    });
+};
 </script>
 </head>
 <body>

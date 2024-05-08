@@ -19,6 +19,13 @@ public class TogetherDAO {
 		return sqlSessionTemplate.selectOne("bjs.count");
 	}
 	
+	public int getToTotalCount2(String searchType, String searchKeyword) throws Exception {
+		Map<String, String> map = new HashMap<String, String>(); 
+		map.put("searchType", searchType);
+		map.put("searchKeyword", searchKeyword);
+		return sqlSessionTemplate.selectOne("bjs.count2", map);
+	}
+	
 	public List<TogetherVO> getTogetherList(int offset, int limit) throws Exception {
 		Map<String, Integer> map = new HashMap<String, Integer>();  
 		map.put("offset", offset);
@@ -61,20 +68,14 @@ public class TogetherDAO {
 		return sqlSessionTemplate.selectOne("bjs.camp_detail", campName);
 	}
 	
-	public List<TogetherVO> getTogetherListSearch(String searchType, String searchKeyword) throws Exception {
-		Map<String, String> map = new HashMap<String, String>();  
+	public List<TogetherVO> getTogetherListSearch(int offset, int limit, String searchType, String searchKeyword) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();  
+		map.put("offset", offset);
+		map.put("limit", limit);
 		map.put("searchType", searchType);
 		map.put("searchKeyword", searchKeyword);
 		return sqlSessionTemplate.selectList("bjs.to_list_search", map);
 	}
-//	public List<TogetherVO> getTogetherListSearch(int offset, int limit, String searchType, String searchKeyword) throws Exception {
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("offset", offset);
-//		map.put("limit", limit);
-//		map.put("searchType", searchType);
-//		map.put("searchKeyword", searchKeyword);
-//		return sqlSessionTemplate.selectList("bjs.to_list_search", map);
-//	}
 	
 	public int getPromiseChk(PromiseVO pvo) {
 		return sqlSessionTemplate.selectOne("bjs.promise_chk", pvo);

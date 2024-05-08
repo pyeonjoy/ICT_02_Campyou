@@ -121,4 +121,18 @@ public class Paging2 {
 	public void setOffset(int offset) {
 		this.offset = offset;
 	}
+	
+	// 검색 결과에 따라 총 페이지 수를 계산하는 메서드
+    public void calculateTotalPage() {
+        if (totalRecord <= numPerPage) {
+            totalPage = 1;
+        } else {
+            totalPage = (totalRecord / numPerPage) + (totalRecord % numPerPage > 0 ? 1 : 0);
+        }
+    }
+
+    // 현재 페이지에 따라 오프셋 값을 계산하는 메서드
+    public void calculateOffset() {
+        offset = (nowPage - 1) * numPerPage;
+    }
 }

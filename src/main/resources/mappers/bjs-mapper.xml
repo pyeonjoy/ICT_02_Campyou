@@ -6,6 +6,21 @@
 	<select id="count" resultType="int">
 		select count(*) from board_with
 	</select>
+	<select id="count2" parameterType="Map" resultType="int">
+		select count(*) from board_with b 
+		where 
+	    <choose>
+	        <when test="searchType == '제목'">
+	            b.t_subject like concat('%', #{searchKeyword}, '%')
+	        </when>
+	        <when test="searchType == '내용'">
+	            b.t_content like concat('%', #{searchKeyword}, '%')
+	        </when>
+	        <when test="searchType == '캠핑지'">
+	            b.t_campname like concat('%', #{searchKeyword}, '%')
+	        </when>
+	    </choose>
+	</select>
 	<select id="to_list" resultType="tvo">
 		select b.*, m.member_nickname, m.member_dob, m.member_img
 		from board_with b
@@ -18,7 +33,7 @@
 		select * from camp_list
 	</select>
 	<select id="promiseCount" resultType="int">
-		select count(*) from with_promise where t_idx = #{t_idx} and pm_state != -1
+		select count(*) from with_promise where t_idx = #{t_idx} and pm_state != -1 and	pm_state != 0
 	</select>
 	<select id="to_detail" parameterType="String" resultType="tvo">
 		select b.*, m.member_nickname, m.member_dob, m.member_img
@@ -47,7 +62,7 @@
 		select * from camp_list where replace(facltnm, ' ', '') = #{campName}
 	</select>
 	<select id="to_list_search" parameterType="Map" resultType="tvo">
-	   select b.*, m.member_nickname, m.member_dob, m.member_img
+	    select b.*, m.member_nickname, m.member_dob, m.member_img
 	    from board_with b
 	    join members m on b.member_idx = m.member_idx
 	    where 
@@ -63,27 +78,9 @@
 	        </when>
 	    </choose>
 	    and b.t_active != 1
+	    order by b.t_idx desc
+		limit #{limit} offset #{offset}
 	</select>
-<!-- 	<select id="to_list_search" parameterType="Map" resultType="tvo"> -->
-<!-- 	   select b.*, m.member_nickname, m.member_dob, m.member_img -->
-<!-- 	    from board_with b -->
-<!-- 	    join members m on b.member_idx = m.member_idx -->
-<!-- 	    where  -->
-<!-- 	    <choose> -->
-<!-- 	        <when test="searchType == '제목'"> -->
-<!-- 	            b.t_subject like concat('%', #{searchKeyword}, '%') -->
-<!-- 	        </when> -->
-<!-- 	        <when test="searchType == '내용'"> -->
-<!-- 	            b.t_content like concat('%', #{searchKeyword}, '%') -->
-<!-- 	        </when> -->
-<!-- 	        <when test="searchType == '캠핑지'"> -->
-<!-- 	            b.t_campname like concat('%', #{searchKeyword}, '%') -->
-<!-- 	        </when> -->
-<!-- 	    </choose> -->
-<!-- 	    and b.t_active != 1 -->
-<!-- 	    order by b.t_idx desc -->
-<!-- 		limit #{limit} offset #{offset} -->
-<!-- 	</select> -->
 	<select id="promise_chk" parameterType="pvo" resultType="int">
 		select count(*) from with_promise where t_idx = #{t_idx} and member_idx = #{member_idx}
 	</select>

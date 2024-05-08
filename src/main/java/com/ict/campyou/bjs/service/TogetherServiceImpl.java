@@ -21,6 +21,11 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 
 	@Override
+	public int getToTotalCount2(String searchType, String searchKeyword) throws Exception {
+		return togetherDAO.getToTotalCount2(searchType, searchKeyword);
+	}
+
+	@Override
 	public List<TogetherVO> getTogetherList(int offset, int limit) throws Exception {
 		return togetherDAO.getTogetherList(offset, limit);
 	}
@@ -61,8 +66,8 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 
 	@Override
-	public List<TogetherVO> getTogetherListSearch(String searchType, String searchKeyword) throws Exception{
-		return togetherDAO.getTogetherListSearch(searchType, searchKeyword);
+	public List<TogetherVO> getTogetherListSearch(int offset, int limit, String searchType, String searchKeyword) throws Exception{
+		return togetherDAO.getTogetherListSearch(offset, limit, searchType, searchKeyword);
 	}
 //	@Override
 //	public List<TogetherVO> getTogetherListSearch(int offset, int limit, String searchType, String searchKeyword) throws Exception{
@@ -93,5 +98,6 @@ public class TogetherServiceImpl implements TogetherService{
 	public int getTogetherDeleteOK(String t_idx) {
 		return togetherDAO.getTogetherDeleteOK(t_idx);
 	}
+
 
 }
