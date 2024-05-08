@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+ <c:set var="path" value="${pageContext.request.contextPath}" />  
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,40 +21,16 @@
 		f.action="comm_board_delete.do";
 		f.submit()
 	}
-	
 	//댓글 삽입
 	function comment_insert(f){
 		f.action="comment_insert.do";
 		f.submit();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	///////////////////////////////////////////////////////////////////////
 	//댓글의 댓글
 	function comment_reply_insert(f) {
-	  
 	    f.action = "comment_reply_insert.do"; 
-
-	
 	    f.submit();
-	 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	function comment_delete(f) {
 		f.action="comment_delete.do";
 		f.submit();
@@ -141,6 +118,19 @@ function comment_reply(f) {
     f.parentNode.appendChild(replyDiv); 
 } 
 </script>
+<style type="text/css">
+textarea {
+    resize: none;
+    width: 600px; 
+    height: 50px;
+}
+#textarea1{
+	resize: none;
+}
+#textarea2{
+	resize: none;
+}
+</style>
 </head>
 <body>
 <div>
@@ -230,7 +220,7 @@ function comment_reply(f) {
 					<p>별명 : <input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
 								${memberInfo.member_nickname}
 					</p>
-					<p>내용 : <textarea rows="3" cols="40" name="content"></textarea>
+					<p><textarea id="textarea1" rows="3" cols="40" name="content"></textarea>
 					<input style="margin-left: 20px" type="button" value="댓글저장" onclick="comment_insert(this.form)">
 					</p>
 					<!-- 댓글 저장시 어떤 원글의 댓글인지 저장해야 한다. -->
@@ -239,22 +229,6 @@ function comment_reply(f) {
 				</fieldset>
 			</form>
 		</div>
-		
-		
-		
-		
-		
-		
-		
-
-
-
-
-		
-		
-		
-		
-		
 <%-- 댓글 출력 --%>
 <div class="reply-output">
     <c:forEach var="k" items="${commBoard_list2}">
@@ -263,12 +237,10 @@ function comment_reply(f) {
                 <span>별명 : ${k.member_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>날짜 : ${k.write_date.substring(0,10)}</span>
                 <p>${k.content}</p>
-                <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach>
                 
                 
-                <div class="reply-output3">
-                
-                </div>
+               <%--  <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
+               
         
                 <!-- 답글의 답글 입력창 -->
                 <textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요!"></textarea>
@@ -276,7 +248,7 @@ function comment_reply(f) {
                 
                 <input type="button" value="댓글삭제" onclick="comment_delete(this.form)">
                 <input type="button" id="updateGo" value="댓글수정" onclick="comment_update(this.form)">
-                <input type="button" value="답글답글" onclick="comment_reply_insert(this.form)">
+                <!-- <input type="button" value="답글답글" onclick="comment_reply_insert(this.form)"> -->
                 <input type="hidden" value="${cPage}" name="cPage">
                 <input type="hidden" name="c_idx" value="${k.c_idx}">
                 <input type="hidden" name="b_idx" value="${k.b_idx}">
@@ -284,13 +256,6 @@ function comment_reply(f) {
         </div>
     </c:forEach>
 </div>
-
-
-
-
-
-
-
 	</c:when>
 	<c:otherwise>
 		<c:choose>
@@ -302,7 +267,7 @@ function comment_reply(f) {
 							<p>별명 : <input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
 									${memberInfo.member_nickname}
 							</p>
-							<p>내용 <textarea rows="3" cols="40" name="content"></textarea>
+							<p><textarea id="textarea2" rows="3" cols="40" name="content"></textarea>
 							<input style="margin-left: 20px" type="button" value="댓글저장" onclick="comment_insert(this.form)"></p>
 							<!-- 댓글 저장시 어떤 원글의 댓글인지 저장해야 한다. -->
 							<input type="hidden" name ="b_idx" value="${cbvo.b_idx}" >
@@ -310,8 +275,6 @@ function comment_reply(f) {
 						</fieldset>
 					</form>
 				</div>
-				
-				
 				<%-- 회원 댓글 출력 --%>
 				<div class="reply-output">
 					<c:forEach var="k" items="${commBoard_list2}">
@@ -325,8 +288,8 @@ function comment_reply(f) {
 								<c:choose>
 									<c:when test="${memberInfo.member_nickname != k.member_nickname}">
 									 	<!-- 답글의 답글 입력창 -->
-                						<textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요"></textarea><hr>
-										<input type="button" value="답글답글" onclick="comment_reply_insert(this.form)">
+                						<!-- <textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요"></textarea><hr> -->
+										<!-- <input type="button" value="답글답글" onclick="comment_reply_insert(this.form)"> -->
 										<input type="hidden" value="${cPage}" name="cPage">
 						                <input type="hidden" name="c_idx" value="${k.c_idx}">
 						                <input type="hidden" name="b_idx" value="${k.b_idx}">
@@ -339,7 +302,7 @@ function comment_reply(f) {
 						                
 						                <input type="button" value="댓글삭제" onclick="comment_delete(this.form)">
 						                <input type="button" id="updateGo" value="댓글수정" onclick="comment_update(this.form)">
-						                <input type="button" value="답글답글" onclick="comment_reply_insert(this.form)"> 
+						                <!-- <input type="button" value="답글답글" onclick="comment_reply_insert(this.form)">  -->
 						                <input type="hidden" value="${cPage}" name="cPage">
 						                <input type="hidden" name="c_idx" value="${k.c_idx}">
 						                <input type="hidden" name="b_idx" value="${k.b_idx}">

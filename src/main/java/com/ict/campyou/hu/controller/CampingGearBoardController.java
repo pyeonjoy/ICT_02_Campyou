@@ -507,7 +507,20 @@ public class CampingGearBoardController {
 			   return new ModelAndView("hu/campingGearBoard/error");
 		   }
 		   
-		   //게시판 검색
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   //게시판 검색 
 		   @RequestMapping("camping_gear_search.do")
 		   public ModelAndView getCampingGearSearchList(@ModelAttribute("cp_idx")String cp_idx, String keyword) {
 			   try {
@@ -522,4 +535,95 @@ public class CampingGearBoardController {
 				}
 			   return new ModelAndView("hu/campingGearBoard/error");
 		   }
+		   
+		    
+		   /*
+		      @RequestMapping("camping_gear_search.do")
+			  public ModelAndView getCampingGearSearchList(HttpServletRequest request, HttpSession session, @ModelAttribute("cp_idx")String cp_idx, String keyword) {
+				  try {
+					  ModelAndView mv = new ModelAndView("hu/campingGearBoard/campingGearSearchList");
+					  
+					  //페이징 기법 & 전체 게시물 수
+					  int count = campingGearBoardService.getTotalCount();
+					  paging.setTotalRecord(count);
+					  
+					  //전체 페이지 수
+					  if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+						  paging.setTotalPage(1);
+					  }else {
+						  //전체 페이지 수 (DB게시물 수 / 한페이지당 10줄)
+						  paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+						  // (DB게시물 수 % 한페이지당 10줄 != 0) 이면 1pg를 더한다.
+						  if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+							  paging.setTotalPage(paging.getTotalPage() + 1);
+						  }
+					  }
+					  
+					  //현재 페이지 구함
+					  String cPage = request.getParameter("cPage");
+					  if(cPage == null) {
+						  paging.setNowPage(1);
+					  }else {
+						  paging.setNowPage(Integer.parseInt(cPage));
+					  }
+					  
+					  // begin, end 구하기 (Oracle)
+					  // offset 구하기
+					  // offset = limit * (현재페이지-1);
+					  paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
+					  
+					  //시작 블록 // 끝블록
+					  paging.setBeginBlock(
+								(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
+						paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+						
+					  if (paging.getEndBlock() > paging.getTotalPage()) {
+						  paging.setEndBlock(paging.getTotalPage());
+					  }
+					  
+					  List<CampingGearBoardVO> camping_gear_list = campingGearBoardService.getCampingGearList(paging.getOffset(), paging.getNumPerPage());
+					  
+					  List<CampingGearSearchVO> searchlist = campingGearSearchService.getCampingGearSearchListOk(cp_idx, keyword);
+					  
+					  //맴버정보 세선 부르기
+					  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+					  //CampingGearBoardVO cgbvo = new CampingGearBoardVO();
+					  
+					  //if(memberInfo != null) {
+						  //맴버세션 정보를 담기
+					//	  cgbvo.setMember_idx(memberInfo.getMember_idx());
+					 // }
+					  
+					  if (camping_gear_list != null) {
+							mv.addObject("camping_gear_list", camping_gear_list);
+							mv.addObject("searchlist", searchlist);
+							mv.addObject("paging", paging);
+							mv.addObject("memberInfo", memberInfo);
+							return mv;
+						}
+						return new ModelAndView("hu/campingGearBoard/error");
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+				return new ModelAndView("hu/campingGearBoard/error");
+			  }
+		   
+		   */
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
 }

@@ -7,32 +7,36 @@
 <title>로그인</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/member.css">
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(document).ready(function() {
-	$("#member_id").keyup(function() {
-		$.ajax({
-			url: "getLogInIdChk.do",
-			data : "member_id="+$("#member_id").val(),
-			method : "post", 
-			dataType: "text",
-			success : function(data) {
-				if(data == '0'){
-					// 존재하는 아이디
-					$("#m_id").removeAttr("disabled");
-					$("#idSpanLogIn").text("");
-				}else if(data == '1'){
-					// 존재하지 않는 아이디
-					$("#m_id").attr("disabled","disabled");
-					$("#idSpanLogIn").text("");
-				}
-			},
-			error : function() {
-				alert("읽기실패");
-			}
-		});
-	});
+    $("#member_id").keyup(function() {
+        $.ajax({
+            url: "getLogInIdChk.do",
+            data : "member_id="+$("#member_id").val(),
+            method : "post", 
+            dataType: "text",
+            success : function(data) {
+                if(data == '0'){
+                    // 존재하는 아이디
+                    $("#m_id").removeAttr("disabled");
+                    $("#idSpanLogIn").text("");
+                    // 버튼 색상 변경
+                    $("#m_id").removeClass("btn-secondary").addClass("btn-primary");
+                } else if(data == '1'){
+                    // 존재하지 않는 아이디
+                    $("#m_id").attr("disabled","disabled");
+                    $("#idSpanLogIn").text("");
+                    // 버튼 색상 변경
+                    $("#m_id").removeClass("btn-primary").addClass("btn-primary");
+                }
+            },
+            error : function() {
+                alert("읽기실패");
+            }
+        });
+    });
 });
-</script> 
+</script>  -->
 
 <!-- <script type="text/javascript">
 	$(document).ready(function() {
