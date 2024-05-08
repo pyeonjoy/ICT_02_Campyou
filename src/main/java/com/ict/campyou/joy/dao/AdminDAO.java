@@ -87,6 +87,14 @@ public class AdminDAO {
 	}
 	
 //회원관리 
+	public List<AdminMemberVO> getradmineporteach(String member_idx) {
+		try {
+			return sqlSessionTemplate.selectList("joy.getradmineporteach",member_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 	public int getmemberstop(String member_idx) {
 		try {
 			return sqlSessionTemplate.update("joy.memberstop",member_idx);

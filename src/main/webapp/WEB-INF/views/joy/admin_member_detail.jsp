@@ -113,7 +113,30 @@ window.addEventListener('DOMContentLoaded', function() {
 			</p>
 			</div>
 		</div>
+		<div class=under>
 		</c:forEach>
+			<table style="table-layout: auto; width: 100%; table-layout: fixed;">
+				<c:forEach var="r" items="${reporteach}"> 
+				<tr>
+					<th>신고번호</th>
+					<th>신고 내용</th>
+					<th>신고 날짜</th>
+					<th>신고 처리 날짜</th>
+					<th>신고 처리 관리자</th>
+					<th>신고 상태</th>
+				</tr>
+				<tr>
+					<td>${r.report_idx }</td>
+					<td>${r.report_content }</td>
+					<td>${r.report_date }</td>
+					<td>${r.report_ok_date }</td>
+					<td>${r.member_idx }</td>
+					<td>${r.report_status }</td>
+				</tr>
+				</c:forEach>
+			</table>
+		</div>
+			
 		<%-- <div class="under">
 			<h3 style="text-align: center; margin-top: 300px;">작성한글</h3>
 			<div class="top">

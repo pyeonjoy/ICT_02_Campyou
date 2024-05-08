@@ -112,14 +112,13 @@ public class AdminController {
 	@RequestMapping("admin_member_detail.do")
 	public ModelAndView adminMemberDetail(String member_idx) {
 		ModelAndView mv = new ModelAndView("joy/admin_member_detail");
-		System.out.println(member_idx);
 		int report_all = adminService.getreportall(member_idx);
 		List<AdminMemberVO> board_all = adminService.getboardall(member_idx);
 		List<AdminMemberVO> member_report = adminService.getadminmemberreport(member_idx);
-		System.out.println(report_all);
-		System.out.println(board_all);
-		System.out.println(member_report);
+		List<AdminMemberVO> admin_report = adminService.getradmineporteach(member_idx);
+		System.out.println(admin_report);
 		if (board_all != null) {
+			mv.addObject("reporteach", admin_report);
 			mv.addObject("report", report_all);
 			mv.addObject("board", board_all);
 			mv.addObject("member", member_report);
