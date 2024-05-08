@@ -98,7 +98,7 @@ button{
 </script>
 </head>
 <body>
-    <h2 class="head">팝업 관리</h2>
+    <h2 class="head">팝업창 글 작성하기</h2>
     <div class="wrap">
         <div class="left">
             <form action="popup_write_ok.do" method="post" enctype="multipart/form-data">
@@ -106,7 +106,7 @@ button{
 				<tbody>
 					<tr>
 						<th>작성자</th>
-						<td align="left"><input type="text" name="writer" value="나중에 세션 id 받아올예정"></td>
+						<td align="left"><input type="text" name="writer" value="${mvo}" readonly></td>
 					</tr>
 					<tr>
 						<th>이름</th>
@@ -124,7 +124,8 @@ button{
 					<tr>
 						<td colspan="2">
 						<input type="button" value="입력" onclick="popup_write_ok(this.form)" /> 
-						<input type="reset" value="취소" />
+						<input type="button" value="취소" onclick="history.go(-1)" />
+
 						</td>
 					</tr>
 		            </tbody>

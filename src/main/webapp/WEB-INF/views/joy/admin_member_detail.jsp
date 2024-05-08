@@ -10,7 +10,7 @@
 <head>
 <meta charset="utf-8">
 <title>회원관리 상세</title>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 window.addEventListener('DOMContentLoaded', function() {
 	  showContent('A');
 	});
@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', function() {
 	    contentB.style.display = "block";
 	  }
 	}
-</script>
+</script> -->
 </head>
 <body>
 	<h2 class="head">회원 관리 상세</h2>
@@ -114,7 +114,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			</div>
 		</div>
 		</c:forEach>
-		<div class="under">
+		<%-- <div class="under">
 			<h3 style="text-align: center; margin-top: 300px;">작성한글</h3>
 			<div class="top">
 				<button id="buttonA"  onclick="showContent('A')">자유게시판</button>
@@ -133,21 +133,14 @@ window.addEventListener('DOMContentLoaded', function() {
 					<th>상태</th>
 				</tr>
 				<tr>
-					<%-- <td>${b.b_idx }</td>
-					<td>${b.b_type }</td>
-					<td>${b.b_subject }</td>
-					<td>${b.bf_name }</td>
-					<td>${b.b_regdate }</td>
-					<td>${b.b_hit }</td>
-					<td>${b.b_active }</td> --%>
 					
 					<td>${b.b_idx }</td>
 					<td>${b.b_type }</td>
-					<td>${b.b_title }</td>
-					<td>${b.f_name }</td>
-					<td>${b.regdate }</td>
-					<td>${b.hit }</td>
-					<td>${b.active }</td>
+					<td>${b.b_subject }</td>
+					<td>${b.member_nickname }</td>
+					<td>${b.b_regdate }</td>
+					<td>${b.b_hit }</td>
+					<td>${b.b_active }</td>
 				</tr>
 			</table>
 			</div>
@@ -155,26 +148,22 @@ window.addEventListener('DOMContentLoaded', function() {
 			<table style="table-layout: auto; width: 100%; table-layout: fixed;">
 				<tr>
 					<th>번호</th>
-					<!-- <th>유형</th> -->
 					<th>제목</th>
 					<th>닉네임</th>
 					<th>작성일</th>
 					<th>조회수</th>
-					<th>상태</th>
 				</tr>
 				<tr>
 					<td>${b.cp_idx }</td>
-					<%-- <td>${b.cp_type }</td> --%>
 					<td>${b.cpf_name }</td>
 					<td>${b.cp_regdate }</td>
 					<td>${b.cp_hit }</td>
 					<td>${b.cp_active }</td>
-					<%-- <td>${b.cp_active }</td> --%>
 				</tr>
 			</table>
 			</div>
 			</c:forEach>
-		</div>
+		</div> --%>
 		<jsp:include page="../hs/footer.jsp" />
 </body>
 </html>

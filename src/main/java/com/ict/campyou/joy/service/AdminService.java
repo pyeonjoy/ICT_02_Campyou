@@ -31,5 +31,6 @@ public interface AdminService {
 	public int getTotalCount();
 	public int getpopupdate(AdminVO avo);
 	public int getPopDelete(String popidx);
+	public String getPopmain();
 	
 }

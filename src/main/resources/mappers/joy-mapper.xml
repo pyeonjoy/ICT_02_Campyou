@@ -52,7 +52,7 @@
 	    FROM members m
 	    INNER JOIN board_free b ON m.member_idx = b.member_idx
 	    INNER JOIN board_camp c ON m.member_idx = c.member_idx
-	    WHERE m.member_idx = #{member_idx}
+	   <!--  WHERE m.member_idx = #{member_idx} -->
 	</select>
 	<select id="reportall" resultType="int">
 		SELECT count(member_idx)
@@ -110,6 +110,9 @@
 	<select id="popUPlist" parameterType="Map" resultType="avo">
 		SELECT * FROM popup ORDER BY popidx DESC LIMIT  #{limit} OFFSET #{offset} 
 		
+	</select>
+	<select id="popmain" parameterType="String" resultType="String">
+		SELECT * FROM popup where active=1
 	</select>
 	<update id="popupdate" parameterType="avo">
     UPDATE popup 

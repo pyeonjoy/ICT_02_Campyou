@@ -21,8 +21,14 @@ public String getMember_login() {
 public void setMember_login(String member_login) {
 	this.member_login = member_login;
 }
-private String b_idx, b_subject, b_content, bf_name, b_type,b_regdate, b_hit,b_active, b_notice;
- private String cp_idx, cp_subject, cp_content, cpf_name, cp_type,cp_regdate, cp_hit,cp_active, cp_notice;
+private String b_idx, b_subject, b_content, bf_name, b_type,b_regdate, b_hit,b_active, b_notice, f_name;
+ public String getF_name() {
+	return f_name;
+}
+public void setF_name(String f_name) {
+	this.f_name = f_name;
+}
+private String cp_idx, cp_subject, cp_content, cpf_name, cp_type,cp_regdate, cp_hit,cp_active, cp_notice;
  public String getReport_num() {
 	return report_num;
 }

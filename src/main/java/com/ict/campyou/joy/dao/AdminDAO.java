@@ -209,5 +209,13 @@ public class AdminDAO {
 		}
 		return -1;
 	}
+	public String getPopmain() {
+		try {
+			return sqlSessionTemplate.selectOne("joy.popmain");	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 	
 }
