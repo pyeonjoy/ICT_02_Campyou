@@ -128,7 +128,7 @@ button {
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb&submodules=geocoder"></script>
-
+<script  type="text/javascript" src="resources/js/MarkerClustering.js"></script>
 <!-- 이펙트  -->
 <script type="text/javascript">
 $(document).ready(function() {
@@ -152,21 +152,21 @@ $(document).ready(function() {
 	function initMap() {
 	    let markers = [];
 	    let infoWindows = [];
-
+	    navigator.geolocation.getCurrentPosition(function(position) {
 	    $.ajax({
 	        url: "together_Write2.do",
 	        type: "post",
 	        dataType: "json",
 	        success: function(data) {
-	            if(data !== "fail") {
-	                let campList = data;
+	        	if (data !== "fail") {
+					let campList = data;
+					 const lat = position.coords.latitude;
+				        const lng = position.coords.longitude;
+				        let map = new naver.maps.Map('map', {
+				            center: new naver.maps.LatLng(lat, lng),
+				            zoom: 15
+				        });
 
-	                // 지도 시작지점
-	                let map = new naver.maps.Map('map', {
-	                    center: new naver.maps.LatLng(37.552758094502494, 126.98732600494576),
-	                    zoom: 10
-	                });
-						
 	                for (var i = 0; i < campList.length; i++) {
 	                	let camp = campList[i];
 	                    let position = new naver.maps.LatLng(camp.mapy, camp.mapx);
@@ -184,7 +184,34 @@ $(document).ready(function() {
 	                    markers.push(marker); // 생성한 마커를 배열에 담는다.
 	                    infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
 	                }
+	                
 
+	                var htmlMarker1 = {
+	        	            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/resources/images/cluster-marker-1.png);background-size:contain;"></div>',
+	        	            size: N.Size(40, 40),
+	        	            anchor: N.Point(20, 20)
+	        	        },
+	        	        htmlMarker2 = {
+	        	            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/resources/images/cluster-marker-2.png);background-size:contain;"></div>',
+	        	            size: N.Size(40, 40),
+	        	            anchor: N.Point(20, 20)
+	        	        },
+	        	        htmlMarker3 = {
+	        	            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/resources/images/cluster-marker-3.png);background-size:contain;"></div>',
+	        	            size: N.Size(40, 40),
+	        	            anchor: N.Point(20, 20)
+	        	        },
+	        	        htmlMarker4 = {
+	        	            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/resources/images/cluster-marker-4.png);background-size:contain;"></div>',
+	        	            size: N.Size(40, 40),
+	        	            anchor: N.Point(20, 20)
+	        	        },
+	        	        htmlMarker5 = {
+	        	            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/resources/images/cluster-marker-5.png);background-size:contain;"></div>',
+	        	            size: N.Size(40, 40),
+	        	            anchor: N.Point(20, 20)
+	        	        };
+	                
 	                function getClickHandler(seq, addr, imageUrl, campName) {
 	                    return function(e) {  // 마커를 클릭하는 부분
 	                    	let marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
@@ -198,19 +225,36 @@ $(document).ready(function() {
 	                    }
 	                }
 
+	                var markerClustering = new MarkerClustering({
+	        	        minClusterSize: 2,
+	        	        maxZoom: 13,
+	        	        map: map,
+	        	        markers: markers,
+	        	        disableClickZoom: false,
+	        	        gridSize: 120,
+	        	        icons: [htmlMarker1, htmlMarker2, htmlMarker3, htmlMarker4, htmlMarker5],
+	        	        indexGenerator: [10, 100, 200, 500, 1000],
+	        	        stylingFunction: function(clusterMarker, count) {
+	        	            $(clusterMarker.getElement()).find('div:first-child').text(count);
+	        	        }
+	        	    });
+
 	                for (var i = 0, ii = markers.length; i < ii; i++) {
 //	                    console.log(markers[i], getClickHandler(i));
 	                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm)); // 클릭한 마커 핸들러
 	                }
 	            }
+	            
 	        }, // success function 종료
 
 	        error: function(xhr, status, error) {
 	            console.error("AJAX Error: ", status, error);
 	        }
 	        });
+	    });
 	}
 });
+	    
 </script>
 
 </head>
