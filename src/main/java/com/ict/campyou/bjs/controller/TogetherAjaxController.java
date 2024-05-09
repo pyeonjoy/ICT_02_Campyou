@@ -1,5 +1,7 @@
 package com.ict.campyou.bjs.controller;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +27,6 @@ import com.ict.campyou.jun.dao.CampVO;
 public class TogetherAjaxController {
 	@Autowired
 	private TogetherService togetherService;
-	@Autowired
-	private Paging2 paging;
 
 	@RequestMapping(value = "together_Write2.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
@@ -140,18 +140,57 @@ public class TogetherAjaxController {
 	
 	@RequestMapping(value = "promiseApplyList.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
-	public List<List<PromiseVO>> getPromiseApplyList(String member_idx) throws Exception {
-        List<List<PromiseVO>> result = new ArrayList<>();
-
-        // 해당 멤버가 작성한 모든 동행글들의 t_idx 목록을 가져옴
-        List<String> tIdxList = togetherService.getTIdxList(member_idx);
-
-        // 각 동행글의 t_idx에 대한 동행 신청 기록을 가져와서 결과 리스트에 추가
-        for (String tIdx : tIdxList) {
-            List<PromiseVO> applyList = togetherService.getPromiseApplyList(tIdx);
-            result.add(applyList);
-        }
-
-        return result;
+	public List<PromiseVO> getPromiseApplyList(String member_idx) throws Exception {
+		List<PromiseVO> result = togetherService.getPromiseList(member_idx);
+		if(result != null) {
+			for (PromiseVO list : result) {
+				System.out.println("Promise: " + list.getT_idx()); 
+				System.out.println("Promise: " + list.getMember_nickname());
+				System.out.println("Promise: " + list.getPm_idx()); 
+				System.out.println("Promise: " + list.getTf_name());
+				LocalDate dob = LocalDate.parse(list.getMember_dob());
+				LocalDate currentDate = LocalDate.now();
+				int age = Period.between(dob, currentDate).getYears();
+				
+				String ageGroup;
+				switch (age / 10) {
+				case 0: ageGroup = "10대 미만"; break;
+				case 1: ageGroup = "10대"; break;
+				case 2: ageGroup = "20대"; break;
+				case 3: ageGroup = "30대"; break;
+				case 4: ageGroup = "40대"; break;
+				case 5: ageGroup = "50대 이상"; break;
+				case 6: ageGroup = "60대 이상"; break;
+				case 7: ageGroup = "70대 이상"; break;
+				default: ageGroup = "80대 이상"; break;
+				}
+				list.setMember_dob(ageGroup);
+				int promiseCount = togetherService.getPromiseCount(list.getMember_idx());
+				System.out.println(promiseCount);
+				list.setPromise_count(promiseCount);
+			}
+		}
+		return result;
     }
+	
+	@RequestMapping(value = "acceptPromise.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getAcceptPromise(String pm_idx) throws Exception {
+		int result = togetherService.getAcceptPromise(pm_idx);
+		if(result > 0) {
+			return result;
+		}
+		return -1;
+	}
+	
+	@RequestMapping(value = "declinePromise.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getDeclinePromise(String pm_idx) throws Exception {
+		int result = togetherService.getDeclinePromise(pm_idx);
+		if(result > 0) {
+			return result;
+		}
+		return -1;
+	}
+	
 }

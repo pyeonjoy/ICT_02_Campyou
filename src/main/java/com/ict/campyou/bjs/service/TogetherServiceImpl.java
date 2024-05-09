@@ -94,15 +94,29 @@ public class TogetherServiceImpl implements TogetherService{
 	public int getTogetherDeleteOK(String t_idx) throws Exception {
 		return togetherDAO.getTogetherDeleteOK(t_idx);
 	}
-
+	
 	@Override
-	public List<String> getTIdxList(String member_idx) throws Exception {
-		return togetherDAO.getTIdxList(member_idx);
+	public List<PromiseVO> getPromiseList(String member_idx) throws Exception {
+		return togetherDAO.getPromiseList(member_idx);
 	}
-
+	
 	@Override
-	public List<PromiseVO> getPromiseApplyList(String tIdx) throws Exception {
-		return togetherDAO.getPromiseApplyList(tIdx);
+	public int getAcceptPromise(String pm_idx) throws Exception {
+		return togetherDAO.getAcceptPromise(pm_idx);
 	}
-
+	
+	@Override
+	public int getPromiseCount(String member_idx) throws Exception {
+		return togetherDAO.getPromiseCount(member_idx);
+	}
+	
+	@Override
+	public int getDeclinePromise(String pm_idx) throws Exception {
+		return togetherDAO.getDeclinePromise(pm_idx);
+	}
+	
+@Override
+	public List<PromiseVO> getTogetherHistory() throws Exception {
+		return togetherDAO.getTogetherHistory();
+	}
 }

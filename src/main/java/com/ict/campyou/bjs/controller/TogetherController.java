@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.ict.campyou.bjs.dao.PromiseVO;
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
 import com.ict.campyou.common.Paging2;
@@ -183,8 +184,13 @@ public class TogetherController {
 		return new ModelAndView("error");
 	}
 	
-	@RequestMapping("markertest.do")
-	public ModelAndView getmarker() {
-		return new ModelAndView("bjs/markertest");
+	@RequestMapping("together_history.do.do")
+	public ModelAndView getTogetherHistory() throws Exception {
+		ModelAndView mv = new ModelAndView("bjs/together_history");
+		List<PromiseVO> toHistory = togetherService.getTogetherHistory();
+		mv.addObject(toHistory);
+		return mv;
 	}
+	
+	
 }
