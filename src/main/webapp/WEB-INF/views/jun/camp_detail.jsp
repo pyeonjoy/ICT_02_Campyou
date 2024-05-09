@@ -6,215 +6,12 @@
 <head>
 <meta charset="UTF-8">
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=qpvmsbuult"></script>
-
-
-<style type="text/css">
-* {
-	font-size: 18px;
-}
-
-#img_box {
-	width: 80%;
-	height: 715px;
-	margin-left: 195px;
-	margin-top: 10px;
-}
-
-#detail_img img {
-	width: 370px;
-	height: 340px;
-}
-
-.camp_detail_wrap h4 {
-	width: 80%;
-	height: 50px;
-	background-color: #FFBA34;
-	text-align: center;
-	line-height: 50px;
-}
-
-#detail_img {
-	width: 300px;
-	height: 300px;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-gap: 10px;
-	justify-items: center;
-}
-
-.camp_detail_second_title {
-	width: 80%;
-	height: 50px;
-	background-color: #FFBA34;
-	text-align: left;
-	line-height: 50px;
-	font-size: 20px;
-	margin: 0 auto;
-}
-
-#map {
-	width: 80%;
-	height: 600px;
-	margin-left: 190px;
-	margin-top: 30px;
-	margin-bottom: 30px;
-}
-
-.detail_info_1 {
-	margin-left: 190px;
-}
-
-#detail_button {
-	position: relative;
-	left: 1268px;
-	top: -35px;
-}
-
-.camp_intro {
-	width: 90%;
-	height: 300px;
-}
-
-#camp_item_g {
-	width: 80%;
-	height: 670px;
-	margin-left: 190px;
-	background-color: #FFFDDE;
-	border-radius: 30px;
-	margin-top: 30px;
-	margin-bottom: 30px;
-}
-
-#camp_item_g li {
-	display: inline-block;
-    list-style-type: none;
-    margin: 20px;
-    padding: 52px;
-    text-align: center;
-    background-color: #FFFAA5;
-    border-radius: 60px;
-    width: 260px;
-    height: 220px;
-}
-
-#camp_item_g img {
-	width: 50px;
-	height: 50px;
-	background-repeat: no-repeat;
-}
-
-#camp_item_g span {
-    display: block;
-    margin-top: 10px;
-    font-size: large;
-}
-#review_form fieldset{
-    display: inline-block;
-    direction: rtl;
-    border:0;
-}
-#review_form fieldset legend{
-    text-align: right;
-}
-#review_form input[type=radio]{
-    display: none;
-}
-#review_form label{
-    font-size: 3em;
-    color: transparent;
-    text-shadow: 0 0 0 #f0f0f0;
-}
-#review_form label:hover{
-    text-shadow: 0 0 0 #FFD700;
-}
-#review_form label:hover ~ label{
-    text-shadow: 0 0 0 #FFD700;
-}
-#review_form input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 #FFD700;
-}
-#r_comment {
-    width:1520px;
-    height: 150px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: solid 1.5px #D3D3D3;
-    border-radius: 5px;
-    font-size: 16px;
-    resize: none;
-}
-#review_section{
-	margin-left : 190px;
-}
-#comment_list {
-    margin-top: 20px;
-}
-
-#comment_list div {
-	width:80%;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    margin-left : 190px;
-}
-
-#comment_list p {
-    margin: 0;
-    padding: 2px 40px 35px;
-    line-height: 30px;
-}
-
-#comment_list img {
-	border : 2px solid black;
-	border-radius: 100px;
-	width: 65px;
-	height: 65px;
-	float: left;
-}
-
-.modal {
-    display: none;
-    position: fixed; 
-    z-index: 1000;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  	height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); 
-}
-
-.modal-content {
-    margin: auto;
-    display: block;
-    width: auto;
-    max-width: 80%;
-    max-height: 80%;
-    height: 500px;
-    margin-top : 180px;
-}
-#detail_button input[type="button"]{
-	height: 40px;
-	padding-left: 30px;
-	padding-right: 30px;
-}
-.review_submit{
-	height: 40px;
-	padding-left: 30px;
-	padding-right: 30px;
-	position: relative;
-    left: 1380px;
-}
-
-</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=qpvmsbuult"></script>
+<link rel="stylesheet" href="/resources/public/css/jun/camp_detail.css">
 <script>
 const urlParams = new URLSearchParams(window.location.search);
 const contentId = urlParams.get('contentid');
-
 $(document).ready(function() {
     if (contentId) {
         $.ajax({
@@ -300,13 +97,11 @@ $(document).ready(function() {
         let comment = $('#r_comment').val();
         let rating = $("input[name='rating']:checked").val();
 		let member_img = "${mvo.member_img}";
-		let member_idx = "${mvo.member_idx}";
         let requestData = {
             r_comment: comment,
             rating: rating,
             contentid: contentId,
             member_img: member_img,
-            member_idx: member_idx
         };
 
         $.ajax({
@@ -315,10 +110,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(requestData),
             success:function(data){
-            	 if (member_idx === "" || member_idx === null) {
-            		alert("로그인 후 이용 부탁드립니다.");
-            		location.href="login_form.do";
-				}else if(data != "error") {
+				if(data != "error") {
                     alert("리뷰가 정상적으로 등록되었습니다.");
                     $('#r_comment').val('');
                     $("input[name='rating']").prop('checked', false);
@@ -326,6 +118,10 @@ $(document).ready(function() {
                 } else {
                     alert("리뷰 작성에 오류가 발생하였습니다.");
                 }
+            },
+            error: function() {
+                alert("로그인 후 이용 부탁드립니다.");
+                location.href='login_form.do';
             }
         });
     });	
@@ -345,7 +141,8 @@ function Heart() {
             }
         },
         error: function() {
-            alert("찜 추가에 실패했습니다.");
+            alert("로그인 후 이용 부탁드립니다.");
+            location.href='login_form.do';
         }
     });
 }
@@ -367,24 +164,29 @@ $(document).on("click", "#detail_img img", function() {
     let modalContent = '<div id="myModal" class="modal">' +
                        '<span class="close"></span>' +
                        '<img class="modal-content" src="' + imageUrl + '">' +
+                       '<img class="left_button" src="/resources/images/left.png">' +
+                       '<img class="right_button" src="/resources/images/right_.png">' +
                        '</div>';
 
     $("#modal_show").append(modalContent);
-
     let modal = document.getElementById("myModal");
     let span = document.getElementsByClassName("close")[0];
 
     modal.style.display = "block";
-
+    
+    $("body").css("overflow", "hidden");
+    
     span.onclick = function() {
         modal.style.display = "none";
         $("#myModal").remove();
+        $("body").css("overflow", "auto");
     }
 
     window.onclick = function(e) {
         if (e.target == modal) {
             modal.style.display = "none";
             $("#myModal").remove();
+            $("body").css("overflow", "auto");
         }
     }
 });
@@ -399,7 +201,7 @@ function loadReview(){
         	if (Array.isArray(data) && data.length === 0) {
         		$("#comment_list").empty();
 				let commentItem = "<div>"
-				commentItem += "<p style='text-align:center; font-size:25px;'>작성된 리뷰가 없습니다. 리뷰를 작성해주세요 !</p>"
+				commentItem += "<p style='text-ali gn:center; font-size:25px;'>작성된 리뷰가 없습니다. 리뷰를 작성해주세요 !</p>"
 				commentItem += "</div>"
 				$("#comment_list").append(commentItem);
 			}else{
@@ -469,10 +271,6 @@ function loadHeart() {
         }
     });
 }
-
-</script>
-<script>
-// DB에 페이지 이동 주소가 없는 경우 
 	function resvego() {
 		let resveurl = "${info.resveurl}";
 		if (resveurl == "") {
