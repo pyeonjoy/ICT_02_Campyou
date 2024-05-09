@@ -162,8 +162,6 @@ public class TogetherController {
 	@RequestMapping("to_update.do")
 	public ModelAndView getTogetherUpdate(@ModelAttribute("cPage")String cPage, @ModelAttribute("t_idx")String t_idx) throws Exception {
 		ModelAndView mv = new ModelAndView("bjs/together_update");
-//		System.out.println("t_idx : " + t_idx);
-//		System.out.println("cpage : " + cPage);
 		TogetherVO tvo = togetherService.getTogetherDetail(t_idx);
 		if(tvo != null) {
 			mv.addObject("tvo", tvo);
