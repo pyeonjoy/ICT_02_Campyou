@@ -32,30 +32,8 @@ $(document).ready(function() {
 		   		<div id="camp_list_show"></div>
    				<div class="page_button_space">
 	   				<div class="page_button">
-						<ul class="to_paging">
-							<!-- 이전 버튼 -->
-							<li class="to_disable "><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; color: 041601; font-size: 1.2rem;"></i></li>
-							<li class="to_disable camp_list_before"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; color: 041601; font-size: 1.2rem;"></i></li>
-				
-							<!-- 페이지번호들 -->
-							<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock }" step="1" var="k">
-								<c:choose>
-									<c:when test="${k == paging.nowPage }">
-										<li class="nowpagecolor">${k }</li>
-									</c:when>
-									<c:otherwise>
-										<li><a href="together_list.do?cPage=${k }" class="nowpage">${k }</a></li>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
+						<ul class="to_paging campe_list_page">
 							
-							<!-- 이후 버튼 -->
-							<li>
-								<i class="fa-solid fa-chevron-right to_able camp_list_next" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i>
-							</li>
-							<li>
-								<i class="fa-solid fa-angles-right to_able" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i>
-							</li>
 						</ul>
 			   		</div>
 	   			</div>
