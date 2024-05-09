@@ -225,5 +225,35 @@ public class AdminDAO {
 		}
 		return null;
 	}
+	public int getadminreport(String report_day,String report_idx) {
+		try {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("report_day", report_day);
+			map.put("report_idx", report_idx);
+			return sqlSessionTemplate.update("joy.adminreport",map);	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getadminreportadd(String report_day,String report_idx) {
+		try {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("report_day", report_day);
+			map.put("report_idx", report_idx);
+			return sqlSessionTemplate.update("joy.adminreportadd",map);	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getstatusupdate(String member_idx) {
+		try {
+			return sqlSessionTemplate.update("joy.statusupdate",member_idx);	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
 	
 }
