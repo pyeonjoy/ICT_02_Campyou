@@ -106,8 +106,8 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 	
 	@Override
-	public int getPromiseCount(String member_idx) throws Exception {
-		return togetherDAO.getPromiseCount(member_idx);
+	public int getPromiseMyCount(String member_idx) throws Exception {
+		return togetherDAO.getPromiseMyCount(member_idx);
 	}
 	
 	@Override
@@ -115,8 +115,8 @@ public class TogetherServiceImpl implements TogetherService{
 		return togetherDAO.getDeclinePromise(pm_idx);
 	}
 	
-@Override
-	public List<PromiseVO> getTogetherHistory() throws Exception {
-		return togetherDAO.getTogetherHistory();
+	@Override
+	public List<PromiseVO> getTogetherHistoryGet(String member_idx) throws Exception {
+		return togetherDAO.getTogetherHistoryGet(member_idx);
 	}
 }

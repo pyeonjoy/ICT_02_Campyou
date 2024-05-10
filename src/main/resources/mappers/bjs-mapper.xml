@@ -107,14 +107,14 @@
 	<update id="accept_promise" parameterType="String">
 		update with_promise set pm_state = 1 where pm_idx = #{pm_idx}
 	</update>
-	<select id="promise_count" parameterType="String" resultType="int">
+	<select id="promise_Mycount" parameterType="String" resultType="int">
 		select count(*) from with_promise where member_idx = #{member_idx} and pm_state = 2
 	</select>
 	<update id="decline_promise" parameterType="String">
 		update with_promise set pm_state = 2 where pm_idx = #{pm_idx}
 	</update>
-	<select id="together_history" resultType="pvo">
-		select b.tf_name, b.t_startdate, b.t_enddate, b.t_campname, b.t_numpeople, p.*, m.member_img, m.member_dob, m.member_nickname
+	<select id="together_history" parameterType="String" resultType="pvo">
+		select b.t_startdate, b.t_enddate, b.t_campname, b.t_numpeople, p.*, m.member_img, m.member_dob, m.member_nickname
 	    from with_promise p
 	    join board_with b on p.t_idx = b.t_idx
 	    join members m on p.member_idx = m.member_idx

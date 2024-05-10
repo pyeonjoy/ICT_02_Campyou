@@ -3,7 +3,9 @@ package com.ict.campyou.bjs.controller;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.ict.campyou.bjs.dao.PromiseVO;
@@ -144,10 +147,10 @@ public class TogetherAjaxController {
 		List<PromiseVO> result = togetherService.getPromiseList(member_idx);
 		if(result != null) {
 			for (PromiseVO list : result) {
-				System.out.println("Promise: " + list.getT_idx()); 
-				System.out.println("Promise: " + list.getMember_nickname());
-				System.out.println("Promise: " + list.getPm_idx()); 
-				System.out.println("Promise: " + list.getTf_name());
+//				System.out.println("Promise: " + list.getT_idx()); 
+//				System.out.println("Promise: " + list.getMember_nickname());
+//				System.out.println("Promise: " + list.getPm_idx()); 
+//				System.out.println("Promise: " + list.getTf_name());
 				LocalDate dob = LocalDate.parse(list.getMember_dob());
 				LocalDate currentDate = LocalDate.now();
 				int age = Period.between(dob, currentDate).getYears();
@@ -165,7 +168,7 @@ public class TogetherAjaxController {
 				default: ageGroup = "80대 이상"; break;
 				}
 				list.setMember_dob(ageGroup);
-				int promiseCount = togetherService.getPromiseCount(list.getMember_idx());
+				int promiseCount = togetherService.getPromiseMyCount(list.getMember_idx());
 				System.out.println(promiseCount);
 				list.setPromise_count(promiseCount);
 			}
@@ -191,6 +194,41 @@ public class TogetherAjaxController {
 			return result;
 		}
 		return -1;
+	}
+	
+	@RequestMapping(value = "get_together_history.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public List<PromiseVO> getTogetherHistoryGet(@RequestParam("member_idx")String member_idx) throws Exception {
+		System.out.println("hi.do");
+		List<PromiseVO> toHistory = togetherService.getTogetherHistoryGet(member_idx);
+		
+		if(toHistory != null) {
+			for (PromiseVO pvo : toHistory) {
+				LocalDate dob = LocalDate.parse(pvo.getMember_dob());
+				LocalDate currentDate = LocalDate.now();
+				int age = Period.between(dob, currentDate).getYears();
+				
+				String ageGroup;
+				switch (age / 10) {
+				case 0: ageGroup = "10대 미만"; break;
+				case 1: ageGroup = "10대"; break;
+				case 2: ageGroup = "20대"; break;
+				case 3: ageGroup = "30대"; break;
+				case 4: ageGroup = "40대"; break;
+				case 5: ageGroup = "50대 이상"; break;
+				case 6: ageGroup = "60대 이상"; break;
+				case 7: ageGroup = "70대 이상"; break;
+				default: ageGroup = "80대 이상"; break;
+				}
+				pvo.setMember_dob(ageGroup);
+				
+				int promiseCount = togetherService.getPomiseCount(pvo.getT_idx());
+				int promiseMyCount = togetherService.getPromiseMyCount(pvo.getMember_idx());
+				pvo.setPromise_count(promiseCount);
+				pvo.setPromise_my_count(promiseMyCount);
+			}
+		}
+	    return toHistory;
 	}
 	
 }

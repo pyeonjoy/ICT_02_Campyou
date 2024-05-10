@@ -105,15 +105,15 @@ public class TogetherDAO {
 		return sqlSessionTemplate.update("bjs.accept_promise", pm_idx);
 	}
 	
-	public int getPromiseCount(String member_idx) throws Exception {
-		return sqlSessionTemplate.selectOne("bjs.promise_count", member_idx);
+	public int getPromiseMyCount(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.promise_Mycount", member_idx);
 	}
 	
 	public int getDeclinePromise(String pm_idx) throws Exception {
 		return sqlSessionTemplate.update("bjs.decline_promise", pm_idx);
 	}
 	
-	public List<PromiseVO> getTogetherHistory() throws Exception {
-		return sqlSessionTemplate.selectList("bjs.together_history");
+	public List<PromiseVO> getTogetherHistoryGet(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectList("bjs.together_history", member_idx);
 	}
 }
