@@ -67,13 +67,14 @@ public class HsAjaxController {
 			for (String k : sidolist) {
 				sb.append("<" + k + ">");
 				for (CampVO i : local) {
-					if (k.equals(i.getDonm())) {
+					if (k.equals(i.getDonm()) && !i.getSigungunm().isEmpty()) {
 						sb.append("<sigungu>" + i.getSigungunm() + "</sigungu>");
 					}
 				}
 				sb.append("</" + k + ">");
 			}
 			sb.append("</locallist>");
+			System.out.println(sb);
 			return sb.toString();
 		} catch (Exception e) {
 			System.out.println(e);

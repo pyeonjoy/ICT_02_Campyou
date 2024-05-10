@@ -5,74 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<style type="text/css">
-#detail_search, #search_button {
-	padding: 10px;
-	width: 100px;
-}
-
-.search_wrap {
-	display: flex;
-	justify-content: center;
-	gap: 10px;
-	margin: 20px;
-}
-
-.search_button_option {
-	display: flex;
-	text-align: center;
-	flex-direction: column;
-	max-width: 800px;
-}
-
-.search_wrap select {
-	width: 120px;
-}
-
-#keyword_input {
-	width: 300px;
-}
-
-.search_button_option .option {
-	height: auto;
-	text-align: center;
-	border-top: 10px;
-	border-radius: 10px;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-	margin-bottom: 20px;
-}
-
-.search_button_option .option_title {
-	width: 100%;
-	height: 36px;
-	background-color: #FFBA34;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	text-align: center;
-	padding: 10px;
-}
-
-.option_title h5 {
-	font-size: 16px;
-}
-
-
-.option_checkbox{
-    list-style: none;
-    margin: 10px;
-    display: flex;
-}
-
-.option li {
-    padding: 10px;
-    overflow: hidden;
-    float: left;
-}
-
-.search_button_option{
-	display: none;
-}
-</style>
+<link rel="stylesheet" href="resources/public/css/hs/camp_search_box.css">
 <script type="text/javascript">
 $(document).ready(function() {
 	$.ajax({
