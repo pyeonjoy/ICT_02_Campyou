@@ -147,8 +147,10 @@ $(document).ready(function() {
 		$(".campe_list_page").empty();
 	    c_Pages = Math.floor((pageNo - 1) / page_count) * page_count; 
 	    
-	    let pageShow = '<li class="to_disable "><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
-		pageShow += '<li class="to_disable camp_list_before"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+	    let pageShow = (pageNo <= page_count) ? '<li class="to_disable ">' : '<li class="to_able ">';
+	    pageShow += '<i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+		pageShow += (pageNo <= page_count) ? '<li class="to_disable ' : '<li class="to_able ';
+		pageShow +=	' camp_list_before"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
 	    
 	    for (i = c_Pages; i < c_Pages + page_count ; i++){
 	    	pageNm = i + 1;
@@ -163,17 +165,20 @@ $(document).ready(function() {
     }
 	pageNumbers();
 	   
-	$(document).on("click", ".camp_list_next, .camp_list_before", function() {
+	$(document).on("click", ".camp_list_next, .camp_list_before, .nowpage", function() {
 		$(".camp_list_wrap").scrollTop(0); 
 		if ($(this).hasClass("camp_list_next")) {
         	pageNo = Math.floor(pageNo / page_count + 1) * page_count + 1;
 	    } else if ($(this).hasClass("camp_list_before")) {
+	    	console.log("aa");
 	    	if (pageNo <= 1) {
 	    		return false; 
 	    	} else { 
-	    		pageNo = Math.floor(pageNo / page_count ) * page_count - page_count + 1; 
-	    		console.log(pageNo);
+	    		pageNo = Math.floor((pageNo - 1)  / page_count) * page_count; 
 	    	}
+	    } else if ($(this).hasClass("nowpage")) {
+	    	pageNo = $(this).text();
+	    	console.log(pageNo);
 	    } 
 		pageNumbers();
         camp_all_list();
