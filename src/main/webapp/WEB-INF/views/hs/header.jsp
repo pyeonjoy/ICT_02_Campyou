@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title></title>
 <link href="resources/css/header.css" rel="stylesheet" />
+<link rel="stylesheet" href="${path}/resources/public/css/bm/chatroom.css" />
+<script defer src="${path}/resources/public/js/bm/header_chat.js"></script>
 </head>
 <body>
 	<div class="header" id="header">
@@ -30,7 +32,7 @@
 
 						</c:when>
 						<c:otherwise>
-							<li><a href="chatroom.do"><img class="icon chat"
+							<li><a href="javascript:void(0)" onclick="openChat()"><img class="icon chat"
 									src="resources/img/icon_chat.png" alt="CampYou"></a></li>
 							<li><a href="my_main.do"><img class="icon user"
 									src="resources/img/icon_user.png" alt="mypage"></a></li>

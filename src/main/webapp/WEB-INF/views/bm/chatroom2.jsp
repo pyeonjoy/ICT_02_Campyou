@@ -12,7 +12,6 @@
 <script defer src="${path}/resources/public/js/bm/header_chat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
  <input type="hidden" id="send_nick" name="send_nick" value="${sender.member_nickname}" />
@@ -28,7 +27,24 @@
      		 <span class="chatroom">채팅방</span>
         </div>
         <div class="message-container"> 
-                       
+        <c:forEach var="chat" items="${chatList}">
+        <c:if test="${sender.member_idx != member_idx }">
+			<div class="li-msg li-msg--1">
+            <img
+              src="${path}/resources/img/cat.png"
+              alt="user_img"
+              class="img_for_user1"
+            />
+            <%--src="${path}/resources/uploadUser_img/${sender.member_img}" --%>
+            <span class="user-message user--1-message">${chat.msg_content}</span>
+          </div>
+          </c:if> 
+ 		<c:if test="${sender.member_idx == member_idx}"> 
+          <div class="li-msg li-msg--2">
+            <span class="user-message user--2-message">${chat.msg_content}</span>
+          </div>
+		</c:if>  
+        </c:forEach>             
         </div>
 
         <form id="messageForm" name="messageForm">
@@ -41,7 +57,7 @@
                 autocomplete="off"
                 class="form-control"
               />
-              <button id="send" class="btn-send" onclick="sendMessage(messageForm,event)">
+              <button id="send" class="btn-send" onclick="showMessage(this.form)">
                 <img
                   src="${path}/resources/img/send.png"
                   alt="send-img"

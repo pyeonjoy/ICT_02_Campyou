@@ -10,6 +10,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_detail.css">
 <%@ include file="../hs/header.jsp" %>
+<script>
+function enterChatRoom(member_idx){
+	 const popup = window.open("chatroom.do?member_idx="+member_idx, "new", 
+	    "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=400, height=670, right=0, top=0, location=no, titlebar=no");
+}
+</script>
 </head>
 <body>
 <div class="toDetailContainer">
@@ -23,7 +29,7 @@
                     <span class="to_member_nickname">${tvo.member_nickname }</span>
 					<span class="to_member_age">(${tvo.member_dob })</span>
                 </div>
-                <input type="button" value="1:1 채팅하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1">
+                <input type="button" value="1:1 채팅하기" id="" onclick="enterChatRoom(${tvo.member_idx })" class="toDetailContent1Button toDetailContent1Button1">
                 <input type="button" value="참가 신청하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button2">
                 <span>${tvo.t_regdate }</span>
                 <!-- <input type="button" value="참가 취소하기" id="" onclick=""> -->

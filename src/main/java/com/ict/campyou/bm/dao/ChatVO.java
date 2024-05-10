@@ -61,5 +61,7 @@ public String getMsg_read() {
 public void setMsg_read(String msg_read) {
 	this.msg_read = msg_read;
 }
+
+
  
 }

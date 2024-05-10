@@ -31,13 +31,13 @@ function handleMyFavList(member_idx){
    
   <div class="mypage">   
     <div class="welcome"> 
-     <div class="user_img">   
+     <div class="my_img">   
      <c:choose>
 	    <c:when test="${empty mvo.member_img}"> 
-	    <img src="${path}/resources/img/cat.png" alt="user_img" class="user_img"> 
+	    <img src="${path}/resources/img/cat.png" alt="user_img" class="my_img"> 
 	    </c:when>	    
 	    <c:otherwise>   
-          <img src="${path}/resources/uploadUser_img/${mvo.member_img}" alt="user_img" class="user_img">
+          <img src="${path}/resources/uploadUser_img/${mvo.member_img}" alt="user_img" class="my_img">
      </c:otherwise>
      </c:choose>  
      </div>

@@ -1,6 +1,7 @@
 package com.ict.campyou.bm.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.bjs.dao.TogetherVO;
+import com.ict.campyou.bm.dao.ChatVO;
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.PasswordCheckRequest;
 import com.ict.campyou.bm.dao.QnaVO;
@@ -61,12 +64,55 @@ public class BomiController {
 		return mv;
 	}
 	
+	@GetMapping("chat-list.do")
+	public ModelAndView showChatList(HttpSession session) {
+		  ModelAndView mv = new ModelAndView();
+		  MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+		  String member_idx = mvo.getMember_idx();
+			 List <ChatVO> list = myService.getChatList(member_idx);
+		    mv.setViewName("bm/chat_list"); 
+			mv.addObject("list", list);
+		    return mv;
+	}
+	
+	@GetMapping("selectOneRoom.do")
+	public ModelAndView selectOneRoom(@RequestParam("msg_room") String msg_room, HttpSession session) {
+		ModelAndView mv = new ModelAndView("bm/chatroom2");
+		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");// 내정보
+		String member_idx = mvo.getMember_idx();//내 idx
+		String [] array = msg_room.split("-");
+		String receiver_idx = array[0];
+		String sender_idx = array[1];  //sender_idx = member_idx
+		List <ChatVO> chatList = myService.getOneRoom(msg_room);
+		MemberVO sender = myService.getMember(sender_idx);  // sender = 나
+		MemberVO receiver = myService.getMember(receiver_idx); //receiver = 상대방
+		mv.addObject("chatList", chatList);
+		mv.addObject("msg_room", msg_room);
+		mv.addObject("sender", sender);
+		mv.addObject("receiver", receiver);
+		mv.addObject("member_idx", member_idx); // 내 idx가져가기
+		return mv;
+	}
 	@GetMapping("chatroom.do")
-	public ModelAndView gotoChatRoom(HttpSession session) {
-		ModelAndView mv = new ModelAndView("bm/chatroom");
-		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-		String send_nick = mvo.getMember_nickname();
-		mv.addObject("send_nick", send_nick);
+	public ModelAndView gotoChatRoom(@RequestParam("member_idx") String member_idx, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		MemberVO sender = (MemberVO) session.getAttribute("memberInfo"); //내정보
+		String sender_idx = sender.getMember_idx();
+		MemberVO receiver = myService.getMember(member_idx); //상대방정보
+		String msg_room = member_idx+'-'+sender.getMember_idx();   //동행구하는사람의 idx-채팅보내는사람의 idx
+		List <ChatVO> chatList = myService.getOneRoom(msg_room);
+		mv.addObject("sender", sender);
+		mv.addObject("receiver", receiver);
+		mv.addObject("msg_room", msg_room);
+		if(chatList != null) {
+			mv.addObject("chatList", chatList);
+			mv.addObject("member_idx", sender_idx); // 내 idx가져가기
+			mv.setViewName("bm/chatroom2");
+		}
+		else {
+			mv.setViewName("bm/chatroom");
+		}
+
 		return mv;
 	}
 	
@@ -104,8 +150,17 @@ public class BomiController {
 				String path = req.getSession().getServletContext().getRealPath("/resources/uploadUser_img");
 
 				MultipartFile file = mvo.getFile();
-				String old_userImg = mvo.getMember_old_img();
 				
+				File uploadFolder = new File(path);
+
+		        if (!uploadFolder.exists()) {
+		            boolean created = uploadFolder.mkdirs();
+		            if (!created) {
+		                System.out.println("폴더 생성에 실패했습니다.");
+		            }
+		        }
+				String old_userImg = mvo.getMember_old_img();
+				System.out.println(file);
 				if (file.isEmpty()) {
 					mvo.setMember_img(old_userImg);
 
@@ -124,8 +179,6 @@ public class BomiController {
 				if (res > 0) {
 					return mv;
 				}			
-				return mv;
-				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

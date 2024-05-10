@@ -1,10 +1,8 @@
 package com.ict.campyou.bm.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bm.dao.ChatVO;
 import com.ict.campyou.bm.dao.FaqVO;
@@ -73,6 +71,15 @@ public class MyServiceImpl implements MyService{
 	@Override
 	public int addChatMsg(ChatVO chvo) {
 		return myDao.addChatMsg(chvo);
+	}
+	@Override
+	public List<ChatVO> getChatList(String member_idx) {
+	
+		return myDao.getChatList(member_idx);
+	}
+	@Override
+	public List<ChatVO> getOneRoom(String msg_room) {
+		return myDao.getOneRoom(msg_room);
 	}
 
 }
