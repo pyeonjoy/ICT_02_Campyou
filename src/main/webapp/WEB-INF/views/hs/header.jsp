@@ -18,7 +18,7 @@
 					<li><a href="camplist.do">캠핑장 검색</a></li>
 					<li><a href="camp_map_list.do">지도로 검색</a></li>
 					<li><a href="#">커뮤니티</a></li>
-					<li><a href="#">동행 구하기</a></li>
+					<li><a href="together_list.do">동행 구하기</a></li>
 					<li><a href="community_board.do">자유게시판</a></li>
 					<li><a href="camping_gear_board.do">캠핑제품추천게시판</a></li>
 				</ul>
@@ -34,7 +34,7 @@
 						<c:otherwise>
 							<li><a href="chatroom.do"><img class="icon chat"
 									src="resources/img/icon_chat.png" alt="CampYou"></a></li>
-							<li><a href="#"><img class="icon user"
+							<li><a href="my_main.do"><img class="icon user"
 									src="resources/img/icon_user.png" alt="mypage"></a></li>
 							<c:if test="${admin == 'ok'}">
 								<li><a href="#"><img class="icon admin" src="resources/img/icon_admin.png" alt="management"></a></li>

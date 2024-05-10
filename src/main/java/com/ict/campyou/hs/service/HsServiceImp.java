@@ -14,7 +14,7 @@ public class HsServiceImp implements HsService {
 	private HsDAO hsDAO;
 	
 	@Override
-	public List<CampVO> getLocalKeyword() {
+	public List<CampVO> getLocalKeyword() throws Exception {
 		return hsDAO.getLocalKeyword();
 	}
 }

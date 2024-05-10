@@ -24,7 +24,29 @@ cancel.addEventListener("click", function () {
 });
 
 // connecting to chat server
+
 let stompClient = null;
+let send_nick = null;
+
+function getUserInfo() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'profile.do', true); 
+    
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            const user = JSON.parse(xhr.responseText);
+       		send_nick = user.nickname;
+         	stompClient.send("/app/chat/join", {}, userInfo);
+
+        } else {
+            console.error('Request failed with status', xhr.status);
+        }
+    };   
+    // 요청 전송
+    xhr.send();
+}
+
+
 
 function onMessageRead() {
   const newBadge = document.querySelector(".new");
@@ -36,17 +58,20 @@ function connect(e) {
   chatPage.classList.remove("hidden");
   chatLists.classList.add("hidden");
 
-  const socket = new SockJS("/chat");
-  stompClient = Stomp.over(socket);
+  const socket = new SockJS("/ws");
 
+  stompClient = Stomp.over(socket);
+  console.log("web socket connection");
   stompClient.connect({}, onConnected, onError);
+   stompClient.send("/app/chat/join", {}, "");
 }
 
+
 function onConnected() {
-  stompClient.subscribe("/topic/public", onMessageReceived);
+  stompClient.subscribe("/app/topic/", onMessageReceived);
 
   connectingElement.classList.add("hidden");
-  onMessageRead();
+  onMessageRead();  
 }
 
 function onError(error) {
@@ -57,14 +82,20 @@ function onError(error) {
 
 selectRoomList.forEach((room) => room.addEventListener("click", connect));
 
-function sendMessage(e) {
-  // sender nickname  에따라 구분하기
+function sendMessage(e) {  
   e.preventDefault();
+  if (!stompClient || !stompClient.connected) {
+        console.error('WebSocket connection is not established yet.');
+        return;
+    }
+    
+	getUserInfo();
+  
   const messageContent = messageInput.value.trim();
   if (messageContent && stompClient) {
     const chatMessage = {
-      sender: member_nickname,
-      content: messageInput.value,
+      send_nick: send_nick,
+      msg_content: messageInput.value,
     };
     stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
     messageInput.value = "";
@@ -144,4 +175,7 @@ function onMessageReceived(payload) {
   //   chatLists.insertAdjacentHTML("afterbegin", chatList);
 }
 
+
+window.addEventListener('load', getUserInfo);
 messageForm.addEventListener("submit", sendMessage);
+

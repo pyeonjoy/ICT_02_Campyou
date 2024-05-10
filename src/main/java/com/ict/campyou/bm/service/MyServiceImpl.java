@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.MyDAO;
+import com.ict.campyou.bm.dao.QnaVO;
 import com.ict.campyou.hu.dao.MemberVO;
 
 @Service
@@ -35,9 +37,37 @@ public class MyServiceImpl implements MyService{
 		return myDao.changeUserPW(mvo);
 	}
 	@Override
+	public int deletMember(String member_idx) {
+		return myDao.deletMember(member_idx);
+	}
+	@Override
 	public MemberVO getMember(String member_idx) {
-		// TODO Auto-generated method stub
 		return myDao.getMember(member_idx);
+	}
+	@Override
+	public int uploadQna(QnaVO qvo) {
+		return myDao.uploadQna(qvo);
+	}
+	@Override
+	public int updateQna(QnaVO qvo) {
+		return myDao.updateQna(qvo);
+	}
+	@Override
+	public List<QnaVO> getMyQna(String member_idx) {
+		return myDao.getMyQna(member_idx);
+	}
+	@Override
+	public int getTotalCount(String member_idx) {	
+		return myDao.getTotalCount(member_idx);
+	}
+
+	@Override
+	public QnaVO getMyOneQna(String qna_idx) {		
+		return myDao.getMyOneQna(qna_idx);
+	}
+	@Override
+	public List<TogetherVO> getMyAcc_List(String member_idx) {	
+		return myDao.getMyAcc_List(member_idx);
 	}
 
 }

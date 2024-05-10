@@ -8,10 +8,15 @@
 <meta charset="UTF-8">
 <title>FAQ</title>
 <link rel="stylesheet" href="${path}/resources/public/css/bm/faq.css">
+  <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
  <script defer src="${path}/resources/public/js/bm/faq.js"></script>
+   <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
 </head>
 <body>
 <body>
+
+		<%@ include file="../hs/mypage_menu.jsp"%>
+
   <div class="faq_container">
     <h3 class="faq_title">FAQ</h3>
   	  <div class="question_box">

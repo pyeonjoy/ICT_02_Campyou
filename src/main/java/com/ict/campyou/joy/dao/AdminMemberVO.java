@@ -1,7 +1,13 @@
 package com.ict.campyou.joy.dao;
 
 public class AdminMemberVO {
- private String report_num, member_idx, report_content,report_date, report_status, report_idx;
+ private String  member_idx, report_content,report_date,report_ok_date, report_status, report_idx;
+public String getReport_ok_date() {
+	return report_ok_date;
+}
+public void setReport_ok_date(String report_ok_date) {
+	this.report_ok_date = report_ok_date;
+}
 private String member_id,member_name,member_pwd, member_grade, member_nickname, member_dob, member_phone, member_email, member_regdate, member_active,member_img, member_login;
  public String getMember_grade() {
 	return member_grade;
@@ -21,19 +27,19 @@ public String getMember_login() {
 public void setMember_login(String member_login) {
 	this.member_login = member_login;
 }
-private String b_idx, b_subject, b_content, bf_name, b_type,b_regdate, b_hit,b_active, b_notice;
- private String cp_idx, cp_subject, cp_content, cpf_name, cp_type,cp_regdate, cp_hit,cp_active, cp_notice;
- public String getReport_num() {
-	return report_num;
+private String b_idx, b_subject, b_content, bf_name, b_type,b_regdate, b_hit,b_active, b_notice, f_name;
+ public String getF_name() {
+	return f_name;
 }
+public void setF_name(String f_name) {
+	this.f_name = f_name;
+}
+private String cp_idx, cp_subject, cp_content, cpf_name, cp_type,cp_regdate, cp_hit,cp_active, cp_notice;
 public String getCp_type() {
 	return cp_type;
 }
 public void setCp_type(String cp_type) {
 	this.cp_type = cp_type;
-}
-public void setReport_num(String report_num) {
-	this.report_num = report_num;
 }
 public String getMember_idx() {
 	return member_idx;

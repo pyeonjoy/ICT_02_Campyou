@@ -129,6 +129,16 @@ public class AdminServiceImpl implements AdminService{
 	public int getPopDelete(String popidx) {
 		return admindao.getpopdelete(popidx);
 	}
+
+	@Override
+	public String getPopmain() {
+		return admindao.getPopmain();
+	}
+
+	@Override
+	public List<AdminMemberVO> getradmineporteach(String member_idx) {
+		return admindao.getradmineporteach(member_idx);
+	}
 	
 	
 

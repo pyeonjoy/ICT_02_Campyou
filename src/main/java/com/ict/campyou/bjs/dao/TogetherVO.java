@@ -1,7 +1,7 @@
 package com.ict.campyou.bjs.dao;
 
 public class TogetherVO {
-	private String t_idx, member_idx, t_subject, t_content, t_campname, t_camptype, t_postcode, t_address, t_address_detail, t_startdate, t_enddate, tf_name, t_regdate, t_hit, t_active, t_notice, member_dob, member_nickname, t_numpeople, member_img, t_mapx, t_mapy, t_induty, t_facltdivnm, t_mangedivnm;
+	private String t_idx, member_idx, t_subject, t_content, t_campname, t_postcode, t_address, t_address_detail, t_startdate, t_enddate, tf_name, t_regdate, t_hit, t_active, t_notice, member_dob, member_nickname, t_numpeople, member_img, t_mapx, t_mapy, t_induty, t_facltdivnm, t_mangedivnm;
 
 	public String getT_idx() {
 		return t_idx;
@@ -43,14 +43,6 @@ public class TogetherVO {
 		this.t_campname = t_campname;
 	}
 	
-	public String getT_camptype() {
-		return t_camptype;
-	}
-
-	public void setT_camptype(String t_camptype) {
-		this.t_camptype = t_camptype;
-	}
-
 	public String getT_postcode() {
 		return t_postcode;
 	}

@@ -17,6 +17,7 @@ public interface AdminService {
 //회원관리페이지
 	public List<AdminMemberVO> getboardall(String member_idx);
 	public List<AdminMemberVO> getadminmemberreport(String member_idx);
+	public List<AdminMemberVO> getradmineporteach(String member_idx);
 	public int getmemberstop(String member_idx);
 	public int getmemberstopcancel(String member_idx);
 	public int getmemberedit(AdminMemberVO avo);
@@ -31,5 +32,6 @@ public interface AdminService {
 	public int getTotalCount();
 	public int getpopupdate(AdminVO avo);
 	public int getPopDelete(String popidx);
+	public String getPopmain();
 	
 }

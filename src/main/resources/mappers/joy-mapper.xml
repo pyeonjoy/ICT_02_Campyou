@@ -52,7 +52,7 @@
 	    FROM members m
 	    INNER JOIN board_free b ON m.member_idx = b.member_idx
 	    INNER JOIN board_camp c ON m.member_idx = c.member_idx
-	    WHERE m.member_idx = #{member_idx}
+	   <!--  WHERE m.member_idx = #{member_idx} -->
 	</select>
 	<select id="reportall" resultType="int">
 		SELECT count(member_idx)
@@ -111,6 +111,9 @@
 		SELECT * FROM popup ORDER BY popidx DESC LIMIT  #{limit} OFFSET #{offset} 
 		
 	</select>
+	<select id="popmain" parameterType="String" resultType="String">
+		SELECT * FROM popup where active=1
+	</select>
 	<update id="popupdate" parameterType="avo">
     UPDATE popup 
 	SET active = 1 
@@ -129,4 +132,9 @@
 	<delete id="popdelete" parameterType="String">
 	DELETE FROM popup WHERE popidx = #{popidx}
 	</delete>
+	<select id="getradmineporteach" resultType="amvo" parameterType="String">
+		SELECT *
+		FROM admin_report
+		where member_idx =#{member_idx}
+	</select>
 </mapper>
