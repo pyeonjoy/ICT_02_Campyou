@@ -162,5 +162,8 @@ public List<ChatVO> getChatList(String member_idx) {
 public List<ChatVO> getOneRoom(String msg_room) {
 	return sqlSessionTemplate.selectList("bomi.getRoom", msg_room);
 }
+public int updateMsgRead(String msg_idx) {
+	return sqlSessionTemplate.update("bomi.msgRead",msg_idx);
+}
 
 }

@@ -42,6 +42,8 @@ public interface MyService {
 	public List<ChatVO> getChatList(String member_idx);
 
 	public List<ChatVO> getOneRoom(String msg_room);
+	
+	public int updateMsgRead(String msg_idx);
 
 }
 

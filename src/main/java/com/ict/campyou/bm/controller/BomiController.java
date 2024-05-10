@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.bjs.dao.TogetherVO;
+import com.ict.campyou.bjs.service.TogetherService;
 import com.ict.campyou.bm.dao.ChatVO;
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.PasswordCheckRequest;
@@ -36,6 +37,9 @@ public class BomiController {
 	@Autowired
 	private MyService myService;
 
+	@Autowired
+	private TogetherService togetherService;
+	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
@@ -67,8 +71,8 @@ public class BomiController {
 	@GetMapping("chat-list.do")
 	public ModelAndView showChatList(HttpSession session) {
 		  ModelAndView mv = new ModelAndView();
-		  MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-		  String member_idx = mvo.getMember_idx();
+		  MemberVO mvo = (MemberVO) session.getAttribute("memberInfo"); //내정보
+		  String member_idx = mvo.getMember_idx(); // 내 idx
 			 List <ChatVO> list = myService.getChatList(member_idx);
 		    mv.setViewName("bm/chat_list"); 
 			mv.addObject("list", list);
@@ -79,40 +83,59 @@ public class BomiController {
 	public ModelAndView selectOneRoom(@RequestParam("msg_room") String msg_room, HttpSession session) {
 		ModelAndView mv = new ModelAndView("bm/chatroom2");
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");// 내정보
-		String member_idx = mvo.getMember_idx();//내 idx
+		String my_idx = mvo.getMember_idx();
 		String [] array = msg_room.split("-");
-		String receiver_idx = array[0];
-		String sender_idx = array[1];  //sender_idx = member_idx
+		String open_idx = array[0];
+		String join_idx = array[1];  //sender_idx = member_idx
 		List <ChatVO> chatList = myService.getOneRoom(msg_room);
-		MemberVO sender = myService.getMember(sender_idx);  // sender = 나
-		MemberVO receiver = myService.getMember(receiver_idx); //receiver = 상대방
+		MemberVO joiner = myService.getMember(join_idx);  // 나
+		MemberVO opener = myService.getMember(open_idx); //상대방
+		
+		for (ChatVO chat : chatList) {
+		    if (!chat.getSend_idx().equals(my_idx)) { 
+		        chat.setMsg_read("0");
+		      int res = myService.updateMsgRead(chat.getMsg_idx());
+		    }
+		}
+		
 		mv.addObject("chatList", chatList);
 		mv.addObject("msg_room", msg_room);
-		mv.addObject("sender", sender);
-		mv.addObject("receiver", receiver);
-		mv.addObject("member_idx", member_idx); // 내 idx가져가기
+		mv.addObject("joiner", joiner);
+		mv.addObject("opener", opener);
+		mv.addObject("my_idx", my_idx); // 내 idx가져가기
+
 		return mv;
 	}
 	@GetMapping("chatroom.do")
-	public ModelAndView gotoChatRoom(@RequestParam("member_idx") String member_idx, HttpSession session) {
+	public ModelAndView gotoChatRoom(@RequestParam("t_idx") String t_idx, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		MemberVO sender = (MemberVO) session.getAttribute("memberInfo"); //내정보
-		String sender_idx = sender.getMember_idx();
-		MemberVO receiver = myService.getMember(member_idx); //상대방정보
-		String msg_room = member_idx+'-'+sender.getMember_idx();   //동행구하는사람의 idx-채팅보내는사람의 idx
-		List <ChatVO> chatList = myService.getOneRoom(msg_room);
-		mv.addObject("sender", sender);
-		mv.addObject("receiver", receiver);
-		mv.addObject("msg_room", msg_room);
-		if(chatList != null) {
+		try {
+			MemberVO joiner = (MemberVO) session.getAttribute("memberInfo"); //내정보
+			String my_idx = joiner.getMember_idx(); // 내 idx
+			TogetherVO tvo = togetherService.getTogetherDetail(t_idx); //채팅방의 캠핑정보
+			String opener_idx = tvo.getMember_idx(); // 동행 올린 사람의 idx
+			String room_name = tvo.getT_campname()+" "+tvo.getT_startdate()+"-"+tvo.getT_enddate();
+			MemberVO opener = myService.getMember(opener_idx); //상대방정보
+			String msg_room = opener_idx+'-'+ my_idx;   //동행구하는사람의 idx-채팅보내는사람의 idx
+			List <ChatVO> chatList = myService.getOneRoom(msg_room);
+			
 			mv.addObject("chatList", chatList);
-			mv.addObject("member_idx", sender_idx); // 내 idx가져가기
-			mv.setViewName("bm/chatroom2");
+			mv.addObject("msg_room", msg_room);
+			mv.addObject("joiner", joiner);
+			mv.addObject("opener", opener);
+			mv.addObject("my_idx", my_idx); // 내 idx가져가기
+			mv.addObject("msg_room", msg_room);
+			mv.addObject("room_name", room_name);
+			if(chatList != null) {
+				mv.addObject("chatList", chatList);
+				mv.setViewName("bm/chatroom2");
+			}
+			else {
+				mv.setViewName("bm/chatroom");
+			}			
+		} catch (Exception e) {
+			System.out.println(e);
 		}
-		else {
-			mv.setViewName("bm/chatroom");
-		}
-
 		return mv;
 	}
 	
@@ -127,7 +150,6 @@ public class BomiController {
 		return mv;
 	}
 	
-
 	///////////////////////////////////////USER INFORMATION///////////////////////////////////////////////////////////
 
 //	check my information  

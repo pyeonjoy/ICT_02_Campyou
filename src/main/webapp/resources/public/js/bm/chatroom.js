@@ -1,28 +1,33 @@
 'use strict';
 
 const path = "${path}";
-const chatLists = document.querySelector(".chatLists");
-const selectRoomList = document.querySelectorAll(".chat_list");
 
-// chat-page
 const chatPage = document.querySelector(".chatPage");
 const messageForm = document.querySelector("#messageForm");
-const messageInput = document.querySelector("#message");
-const connectingElement = document.querySelector(".connecting");
-const btnEnter = document.querySelector(".btn-enterChat");
 const msgContainer = document.querySelector(".message-container");
 //btn
 const back = document.querySelector(".back");
 
 let stompClient = null;
 
-//Receiver info
-const reci_nick = document.getElementById("reci_nick").value;
-const send_nick = document.getElementById("send_nick").value;
-const reci_img = document.getElementById("reci_img").value;
-//Room info
+//members info
+const joiner_nick = document.getElementById("joiner_nick").value;
+const opener_nick = document.getElementById("opener_nick").value;
+const opposite_idx = document.getElementById("opposite_idx").value;
+
 const msg_room = document.getElementById("msg_room").value;
-const queueName = '/queue/' + msg_room;
+const room_name = document.getElementById("room_name").value;
+
+const my_idx = document.getElementById("my_idx").value;
+const joiner_img = document.getElementById("joiner_img").value;
+const opener_img = document.getElementById("opener_img").value;
+const queueName = '/user/queue/' + msg_room;
+
+const send_nick = my_idx === opposite_idx ? opener_nick : joiner_nick;
+const reci_nick = my_idx === opposite_idx ? joiner_nick : opener_nick;
+const reci_img = my_idx === opposite_idx ? joiner_img : opener_img;
+//Room info
+
 
 connect();
 messageForm.addEventListener('submit', function (e) {
@@ -56,10 +61,12 @@ function sendMessage(form, e) {
   const formattedDate = currentDate.toISOString();
   const chatMessage = {
     'msg_content': message,
+    'send_idx': my_idx,
     'send_nick': send_nick,
     'send_date': formattedDate,
     'reci_nick': reci_nick,
     'msg_room': msg_room,
+    'room_name': room_name
   };
   stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
 
@@ -68,21 +75,13 @@ function sendMessage(form, e) {
 }
 
 function showMessageOutput(chvo) {
-  const isOwnMessage = chvo.send_nick === send_nick; 
+  const isOwnMessage = chvo.send_idx === my_idx;
   const messageClass = isOwnMessage ? "user--2-message" : "user--1-message";
   const messageHTML = `
     <div class="li-msg ${isOwnMessage ? 'li-msg--2' : 'li-msg--1'}">
       <span class="user-message ${messageClass}">${chvo.msg_content}</span>
     </div>
   `;
-  msgContainer.insertAdjacentHTML("beforeend", messageHTML);
-}
-
-function showMessage(form){
-  const message = form.elements["msg_content"].value;
-  console.log(message);
-  const html = `<div class="li-msg li-msg--2">
-    <span class="user-message user--2-message">${message}</span>
-  </div>`;
-  msgContainer.insertAdjacentHTML("beforeend", html);
+  msgContainer.insertAdjacentHTML("afterbegin", messageHTML);
+  msgContainer.scrollTop = msgContainer.scrollHeight;
 }

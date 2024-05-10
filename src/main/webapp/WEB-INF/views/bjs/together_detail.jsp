@@ -12,13 +12,12 @@
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_detail.css">
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
 <%@ include file="../hs/header.jsp" %>
-<<<<<<< HEAD
+
 <script>
-function enterChatRoom(member_idx){
-	 const popup = window.open("chatroom.do?member_idx="+member_idx, "new", 
+function enterChatRoom(t_idx){
+	 const popup = window.open("chatroom.do?t_idx="+t_idx, "new", 
 	    "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=400, height=670, right=0, top=0, location=no, titlebar=no");
-=======
-<script type="text/javascript">
+}
 function to_list_go(f) {
 	f.action="together_list.do";
 	f.submit();
@@ -31,8 +30,6 @@ $(function() {
 function initMap() {
     let markers = [];
     let infoWindows = [];
-
-
     let t_mapx = document.getElementById('t_mapx').value;
     let t_mapy = document.getElementById('t_mapy').value;
     let tf_name = document.getElementById('tf_name').value;
@@ -176,7 +173,6 @@ function to_delete_go(f, t_idx) {
 	    	return;
 	    }
 	 }, 150);
->>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 }
 </script>
 </head>
@@ -199,10 +195,10 @@ function to_delete_go(f, t_idx) {
                     <span class="to_member_nickname">${tvo.member_nickname }</span>
 					<span class="to_member_age">(${tvo.member_dob })</span>
                 </div>
-<<<<<<< HEAD
-                <input type="button" value="1:1 채팅하기" id="" onclick="enterChatRoom(${tvo.member_idx })" class="toDetailContent1Button toDetailContent1Button1">
+
+                <input type="button" value="1:1 채팅하기" id="" onclick="enterChatRoom(${tvo.t_idx})" class="toDetailContent1Button toDetailContent1Button1">
                 <input type="button" value="참가 신청하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button2">
-=======
+
 <!--                 <input type="button" value="1:1 채팅하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1"> -->
 <!--                 <input type="button" value="참가 신청하기" id="" onclick="to_application()" class="toDetailContent1Button toDetailContent1Button2"> -->
                 <button type="button" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1">1:1 채팅하기</button>
@@ -213,7 +209,7 @@ function to_delete_go(f, t_idx) {
                 <input type="hidden" name="t_idx" id="t_idx" value="${tvo.t_idx }">
                 <input type="hidden" id="member_idx" value="${memberUser.member_idx }">
                 <span class="toDetailContent1Num">${appluNum }/${tvo.t_numpeople }명</span>
->>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
+
                 <span>${tvo.t_regdate }</span>
             </div>
             <div class="toDetailContent2">

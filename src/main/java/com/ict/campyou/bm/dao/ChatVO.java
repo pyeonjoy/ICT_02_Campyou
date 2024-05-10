@@ -2,7 +2,7 @@ package com.ict.campyou.bm.dao;
 
 public class ChatVO {
 
- private String msg_idx, msg_room, send_nick, reci_nick, send_date, msg_content, msg_read;
+ private String msg_idx, msg_room, room_name, send_idx, send_nick, reci_nick, send_date, msg_content, msg_read;
 
 public String getMsg_idx() {
 	return msg_idx;
@@ -14,6 +14,14 @@ public void setMsg_idx(String msg_idx) {
 
 public String getMsg_room() {
 	return msg_room;
+}
+
+public String getRoom_name() {
+	return room_name;
+}
+
+public void setRoom_name(String room_name) {
+	this.room_name = room_name;
 }
 
 public void setMsg_room(String msg_room) {
@@ -60,6 +68,14 @@ public String getMsg_read() {
 
 public void setMsg_read(String msg_read) {
 	this.msg_read = msg_read;
+}
+
+public String getSend_idx() {
+	return send_idx;
+}
+
+public void setSend_idx(String send_idx) {
+	this.send_idx = send_idx;
 }
 
 

@@ -81,5 +81,9 @@ public class MyServiceImpl implements MyService{
 	public List<ChatVO> getOneRoom(String msg_room) {
 		return myDao.getOneRoom(msg_room);
 	}
+	@Override
+	public int updateMsgRead(String msg_idx) {
+		return myDao.updateMsgRead(msg_idx);
+	}
 
 }

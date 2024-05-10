@@ -38,7 +38,7 @@
 							</div>
 
 							<div class="chat_detail">
-								<p class="nick_name">${chat.reci_nick}</p>
+								<p class="nick_name">${chat.room_name}</p>
 								<p class="chat_content">${chat.msg_content}</p>
 							</div>
 						</div>
