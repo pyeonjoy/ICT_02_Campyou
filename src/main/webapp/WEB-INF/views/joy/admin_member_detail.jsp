@@ -11,10 +11,9 @@
 <meta charset="utf-8">
 <title>회원관리 상세</title>
 <script type="text/javascript">
-window.addEventListener('DOMContentLoaded', function() {
+   window.addEventListener('DOMContentLoaded', function() {
 	  showContent('A');
 	});
-
 	function showContent(content) {
 	  var contentA = document.getElementById("contentA");
 	  var contentB = document.getElementById("contentB");
@@ -27,7 +26,8 @@ window.addEventListener('DOMContentLoaded', function() {
 	  if (content === "A") {
 	    contentA.style.display = "block";
 	  } else if (content === "B") {
-	    contentB.style.display = "block";
+	   contentB.style.display = "block";
+	   //  
 	  }
 	}
 </script>
@@ -120,7 +120,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				<button id="buttonA"  onclick="showContent('A')">자유게시판</button>
 				<button id="buttonB" onclick="showContent('B')">캠핑제품추천</button>
 			</div>
-			<c:forEach var="b" items="${board}"> 
+			<c:forEach var="b" items="${commBoard_list}"> 
 			<div id="contentA">
 			<table style="table-layout: auto; width: 100%; table-layout: fixed;">
 				<tr>
@@ -133,21 +133,13 @@ window.addEventListener('DOMContentLoaded', function() {
 					<th>상태</th>
 				</tr>
 				<tr>
-					<%-- <td>${b.b_idx }</td>
+					<td>${b.b_idx }</td>
 					<td>${b.b_type }</td>
 					<td>${b.b_subject }</td>
 					<td>${b.bf_name }</td>
 					<td>${b.b_regdate }</td>
 					<td>${b.b_hit }</td>
-					<td>${b.b_active }</td> --%>
-					
-					<td>${b.b_idx }</td>
-					<td>${b.b_type }</td>
-					<td>${b.b_title }</td>
-					<td>${b.f_name }</td>
-					<td>${b.regdate }</td>
-					<td>${b.hit }</td>
-					<td>${b.active }</td>
+					<td>${b.b_active }</td> 
 				</tr>
 			</table>
 			</div>

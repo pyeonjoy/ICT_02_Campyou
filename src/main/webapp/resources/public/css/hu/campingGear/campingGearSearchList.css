@@ -74,7 +74,17 @@ table td:nth-child(4) {
 }
 
 /* 버튼 스타일 */
-button.pagination-button {
+button.pagination-button  {
+    margin: 0 5px; /* 각 버튼 사이의 여백 */
+    padding: 8px 16px;
+    background-color: #003300;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button {
     margin: 0 5px; /* 각 버튼 사이의 여백 */
     padding: 8px 16px;
     background-color: #003300;

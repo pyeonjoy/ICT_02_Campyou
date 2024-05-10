@@ -81,6 +81,10 @@ function naverLogIn() {
   background-repeat: no-repeat;
   background-size: cover; /* 배경 이미지를 화면에 꽉 차게 설정 */
 }
+
+#a-color{
+	color: white;
+}
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
@@ -110,10 +114,14 @@ function naverLogIn() {
 	            <p class="small mb-5 pb-lg-2"><a class="text-muted" href="find_pwd_go.do">비밀번호 찾기</a> &nbsp;
 	           	<a class="text-muted" href="find_id_go.do">아이디 찾기</a></p>
 	           	<p class="text-center text-muted mt-5 mb-2">회원이 아니신가요?&nbsp;<a href="sign_up_page_go.do"class="fw-bold text-body">회원가입</a></p>
-	            <hr class="my-4">
-	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit" onclick="kakaoLogIn(this.form)"><img src="${path}/resources/images/kakao_login_medium_narrow.png"/></button>
-	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-lg btn-block" type="submit" onclick="naverLogIn(this.form)"><img src="${path}/resources/images/btnG.png" /></button>
+	            <hr class="my-4">  
 			</form>
+				<a id="a-color" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=4a601447a1662d2919cfc432b342bc38&redirect_uri=http://localhost:8090/kakaologin.do">
+					<img src="resources/images/kakao_login_medium_narrow.png" width="160px">
+				</a>
+				<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=Yg5gbW0JV9cs8cbMiejA&redirect_uri=http://localhost:8090/naverlogin.do&state=test">
+				 	<img src="resources/images/btnG.png" width="160px">
+				</a> 
           </div>
         </div>
       </div>

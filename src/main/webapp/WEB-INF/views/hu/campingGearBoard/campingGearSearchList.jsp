@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>캠핑추천검색정보</title>
-<%-- <%@ include file="../../hs/header.jsp" %>  --%>
-<link rel="stylesheet" href="${path}/resources/public/css/hu/campingGear/campingGearSearchList.css">
+<title>Insert title here</title>
+<link rel="stylesheet" href="${path}/resources/public/css/hu/boardFreeSearchlist.css">
 <script type="text/javascript">
     // 전체 페이지를 계산하는 함수
     function calculateTotalPages(totalItems, pageSize) {
@@ -16,18 +15,38 @@
     }
 
     // 페이지 버튼 생성 함수
-    function generatePaginationButtons(totalPages) {
+    function generatePaginationButtons(totalPages, currentPage) {
         const paginationDiv = document.querySelector(".pagination");
         paginationDiv.innerHTML = ''; // Clear existing buttons
-        
-        for (let i = 1; i <= totalPages; i++) {
+
+        // Previous button
+        const prevButton = document.createElement("button");
+        prevButton.classList.add("prev");
+        prevButton.textContent = "이전";
+        prevButton.onclick = prevPage;
+        paginationDiv.appendChild(prevButton);
+
+        // Page buttons
+        let startPage = Math.max(1, currentPage - 1);
+        let endPage = Math.min(totalPages, startPage + 2);
+        for (let i = startPage; i <= endPage; i++) {
             const button = document.createElement("button");
             button.classList.add("pagination-button");
             button.setAttribute("id", "page" + i);
             button.setAttribute("data-page", i);
             button.textContent = i;
+            button.onclick = function() {
+                goToPage(i, pageSize);
+            };
             paginationDiv.appendChild(button);
         }
+
+        // Next button
+        const nextButton = document.createElement("button");
+        nextButton.classList.add("next");
+        nextButton.textContent = "다음";
+        nextButton.onclick = nextPage;
+        paginationDiv.appendChild(nextButton);
     }
 
     // 페이지버튼 클릭할때 조정하는 함수
@@ -52,34 +71,43 @@
         document.getElementById("page" + pageNumber).classList.add("active");
     }
 
-    // 5개글당 한 페이지
-    const pageSize = 5; 
+    // 3개글당 한 페이지
+    const pageSize = 2; 
+    let currentPage = 1;
+    let totalPages;
     window.onload = function() {
         let rows = document.querySelectorAll("tbody tr");
         let totalItems = rows.length;
-        let totalPages = calculateTotalPages(totalItems, pageSize);
+        totalPages = calculateTotalPages(totalItems, pageSize);
 
         // 페이지 버튼 생성
-        generatePaginationButtons(totalPages);
+        generatePaginationButtons(totalPages, currentPage);
 
         // 첫번째 페이지 구현
-        goToPage(1, pageSize);
-
-        //페이지 버튼에 클릭이벤트 추가하기!
-        const paginationButtons = document.querySelectorAll(".pagination-button");
-        paginationButtons.forEach(function(button) {
-            button.addEventListener("click", function() {
-                let pageNumber = parseInt(this.getAttribute("data-page"));
-                goToPage(pageNumber, pageSize);
-            });
-        });
+        goToPage(currentPage, pageSize);
     };
-</script>
-<script type="text/javascript">
-	function camping_gear_board(f) {
-		f.action="camping_gear_board.do";
-		f.submit()
-	}
+
+    // Function to navigate to the next block of page buttons
+    function nextPage() {
+        let paginationDiv = document.querySelector(".pagination");
+        if (currentPage + 3 <= totalPages) {
+            currentPage += 3;
+            paginationDiv.innerHTML = '';
+            generatePaginationButtons(totalPages, currentPage);
+            goToPage(currentPage, pageSize);
+        }
+    }
+
+    // Function to navigate to the previous block of page buttons
+    function prevPage() {
+        let paginationDiv = document.querySelector(".pagination");
+        if (currentPage - 3 > 0) {
+            currentPage -= 3;
+            paginationDiv.innerHTML = '';
+            generatePaginationButtons(totalPages, currentPage);
+            goToPage(currentPage, pageSize);
+        }
+    }
 </script>
 </head>
 <body>

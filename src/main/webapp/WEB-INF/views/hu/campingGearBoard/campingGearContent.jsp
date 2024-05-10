@@ -258,8 +258,8 @@ textarea {
                 <textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요!"></textarea>
                 <!-- <input type="button" value="답글 작성" onclick="reply_reply_insert(this.form)"> <hr> --><hr>
                 
-                <input type="button" value="댓글삭제" onclick="cgb_comment_delete(this.form)">
-                <input type="button" id="updateGo" value="댓글수정" onclick="cgb_comment_update(this.form)">
+                <input class="btn-color" type="button" value="댓글삭제" onclick="cgb_comment_delete(this.form)">
+                <input class="btn-color" type="button" id="updateGo" value="댓글수정" onclick="cgb_comment_update(this.form)">
                 <!-- <input type="button" value="답글답글" onclick="cgb_comment_reply_insert(this.form)"> -->
                 <input type="hidden" value="${cPage}" name="cPage">
                 <input type="hidden" name="c_idx" value="${k.c_idx}">
@@ -312,8 +312,8 @@ textarea {
 						                <textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요!"></textarea>
 						                <!-- <input type="button" value="답글 작성" onclick="reply_reply_insert(this.form)"> <hr> --><hr>
 						                
-						                <input type="button" value="댓글삭제" onclick="cgb_comment_delete(this.form)">
-						                <input type="button" id="updateGo" value="댓글수정" onclick="cgb_comment_update(this.form)">
+						                <input class="btn-color" type="button" value="댓글삭제" onclick="cgb_comment_delete(this.form)">
+						                <input class="btn-color" type="button" id="updateGo" value="댓글수정" onclick="cgb_comment_update(this.form)">
 						                <!-- <input type="button" value="답글답글" onclick="cgb_comment_reply_insert(this.form)">  -->
 						                <input type="hidden" value="${cPage}" name="cPage">
 						                <input type="hidden" name="c_idx" value="${k.c_idx}">

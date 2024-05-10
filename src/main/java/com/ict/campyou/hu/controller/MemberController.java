@@ -152,6 +152,36 @@ public class MemberController {
 		  return new ModelAndView("hu/error");
 	  }
 	  
+
+	  /*
+	  @RequestMapping("kakaologin3.do")
+	  public ModelAndView getKakaoLogin(HttpServletRequest request, MemberVO vo) {
+		  try {
+			  HttpSession session = request.getSession();
+	          ModelAndView mv = new ModelAndView();
+	          
+	          MemberVO vo2 = memberService.getLogInOK(vo);
+	          
+	          
+	          if(vo2 == null || !passwordEncoder.matches(vo.getMember_pwd(), vo2.getMember_pwd()) && (vo.getMember_id() != vo2.getMember_id()) ) {
+	        	  mv.setViewName("redirect:login_form.do");
+	        	  //mv.addObject("pwdchk", "fail");
+	              return mv;
+	          }else {
+	        	  if(vo2 != null && vo2.getMember_active().equals("1")){
+	        		  session.setAttribute("admin", "ok"); 
+				  }		 
+				  session.setAttribute("memberInfo", vo2);
+				  mv.setViewName("redirect:/");
+				  return mv;  
+	          }
+		  }catch (Exception e) {
+			System.out.println(e);
+		}
+		  return new ModelAndView("hu/error");
+	  }
+	  */
+	  
 	   @RequestMapping("logout_form.do")
 	   public ModelAndView getLogOut(HttpSession session) {
 		   try {
