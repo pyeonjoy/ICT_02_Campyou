@@ -35,7 +35,7 @@
 	</select>
 
 	<select id="adminmainreport" resultType="int">
-		SELECT count(report_num) AS totalreport
+		SELECT count(report_idx) AS totalreport
 		FROM admin_report
 		WHERE report_date = now()
 	</select>
@@ -137,4 +137,41 @@
 		FROM admin_report
 		where member_idx =#{member_idx}
 	</select>
+	<update id="adminreport" parameterType="map">
+    UPDATE admin_report
+	SET report_day = #{report_day} 
+	WHERE report_idx = #{report_idx}
+	</update>
+	<update id="adminreportadd"  parameterType="map">
+	UPDATE admin_report a
+			INNER JOIN members m ON a.member_idx = m.member_idx
+			SET a.report_ok_date = CASE 
+			                        WHEN a.report_day = #{report_day} THEN DATE_ADD(NOW(), INTERVAL #{report_day} DAY)
+			                        ELSE a.report_ok_date
+			                      END,
+			    m.member_active = 1,
+			    a.report_status = 1,
+			    a.report_ok_date = CURDATE()
+			WHERE a.report_idx = #{report_idx};
+
+	</update>
+	<update id="statusupdate"  parameterType="String">
+	UPDATE admin_report a
+	INNER JOIN members m ON a.member_idx = m.member_idx
+	SET a.report_status = 2, m.member_active = 0
+	WHERE DATE(a.report_ok_date)&lt;= CURDATE() AND m.member_idx = #{member_idx};
+	</update>
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

@@ -113,10 +113,10 @@ public class AdminController {
 	public ModelAndView adminMemberDetail(String member_idx) {
 		ModelAndView mv = new ModelAndView("joy/admin_member_detail");
 		int report_all = adminService.getreportall(member_idx);
+		int statusupdate = adminService.getstatusupdate(member_idx);
 		List<AdminMemberVO> board_all = adminService.getboardall(member_idx);
 		List<AdminMemberVO> member_report = adminService.getadminmemberreport(member_idx);
 		List<AdminMemberVO> admin_report = adminService.getradmineporteach(member_idx);
-		System.out.println(admin_report);
 		if (board_all != null) {
 			mv.addObject("reporteach", admin_report);
 			mv.addObject("report", report_all);
@@ -126,6 +126,23 @@ public class AdminController {
 		}
 		return new ModelAndView("board/error");
 	}
+	
+	@RequestMapping("admin_report.do")
+	public ModelAndView adminReport(@RequestParam("member_idx") String member_idx,
+	                                 @RequestParam("report_idx") String report_idx,
+	                                 @RequestParam("report_day") String report_day) {
+	    ModelAndView mv = new ModelAndView();
+	    System.out.println("리포트idx" + report_idx);
+	    System.out.println("멤버idx" + member_idx);
+	    int result = adminService.getadminreport(report_day, report_idx);
+	    if (result > 0) {
+	        mv.setViewName("redirect:admin_member_detail.do?member_idx=" + member_idx);
+	        return mv;
+	    } else {
+	        return new ModelAndView("board/error");
+	    }
+	}
+
 	
 	@RequestMapping("member_edit.do")
 	public ModelAndView adminMemberEdit(String member_idx,HttpServletRequest request) {
@@ -227,5 +244,6 @@ public class AdminController {
 			return new ModelAndView("board/error");
 		}
 	}
+	
 
 }
