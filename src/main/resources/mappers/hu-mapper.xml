@@ -104,7 +104,7 @@
  	
  	<!-- commet-rely -->
  	<select id="comment_list" parameterType="String" resultType="covo">
- 		select * from comment_t where b_idx = #{b_idx}
+ 		select * from f_comment where b_idx = #{b_idx}
  	</select>
  	
  	<!-- <insert id="comment_insert" parameterType="covo">
@@ -123,33 +123,34 @@
  	 
  	<insert id="comment_insert" parameterType="covo">
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
- 			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM comment_t
+ 			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM f_comment
  		</selectKey>
- 		insert into comment_t(member_nickname, content, write_date, b_idx, groups, step, lev)
+ 		insert into f_comment(member_nickname, content, write_date, b_idx, groups, step, lev)
  			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, 0, 0)
  	</insert>
  	
  	<delete id="comment_delete" parameterType="String">
- 		delete from comment_t where c_idx = #{c_idx}
+ 		delete from f_comment where c_idx = #{c_idx}
  	</delete>
  	
  	<update id="comment_update" parameterType="covo">
- 		update comment_t 
+ 		update f_comment 
  		set content = #{content}, write_date = sysdate()
  	    where b_idx=#{b_idx} and c_idx = #{c_idx}
  	</update>
  	
  	<select id="comment_reply_list" parameterType="String" resultType="covo">
- 		select * from comment_t where b_idx = #{b_idx}
+ 		select * from f_comment where b_idx = #{b_idx}
  	</select>
  	
  	<update id="comm_lev_update" parameterType="Map">
- 	 	update comment_t set lev=lev+1 where groups=#{groups} and lev>=#{lev} 
+ 	 	update f_comment set lev=lev+1 where groups=#{groups} and lev>=#{lev} 
  	 </update>
  	
+ 	 <!-- 수정했음 -->
  	 <insert id="comment_reply_insert" parameterType="covo">
- 	 	insert into comment_t(member_nickname, content, write_date, b_idx, step, lev)
- 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{step}, #{lev})
+ 	 	insert into f_comment(member_nickname, content, write_date, b_idx, group, step, lev)
+ 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{group}, #{step}, #{lev})
  	 </insert>
  	 
  	 
@@ -170,12 +171,12 @@
  	</select>
  	
  	<select id="member" parameterType="String" resultType="covo">
- 		select * from comment_t where b_idx=#{b_idx}
+ 		select * from f_comment where b_idx=#{b_idx}
  	</select>
  		
  	
  	 <insert id="ans_insert1" parameterType="covo">
- 	 	insert into comment_t(member_nickname, content, write_date, b_idx, groups, step, lev)
+ 	 	insert into f_comment(member_nickname, content, write_date, b_idx, groups, step, lev)
  			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, #{step}, #{lev})
  	 </insert>
  	 
@@ -187,7 +188,7 @@
  	
  	
  	<select id="commet_reply_detail" parameterType="String" resultType="covo">
- 		select * from comment_t where c_idx = #{c_idx}
+ 		select * from f_comment where c_idx = #{c_idx}
  	</select>
  	
  	
@@ -199,9 +200,20 @@
  	</select>
  	
  	<!-- 리스트 -->
+ 	<!-- <select id="cgb_list" parameterType="Map" resultType="cgbvo">
+ 		select * from board_camp order by groups desc, lev asc  limit #{limit} offset #{offset} 
+ 	</select> -->
+ 	
+ 	<!-- 캠핑게시판 공지사항 위로 올리는 코드  -->
  	<select id="cgb_list" parameterType="Map" resultType="cgbvo">
- 		select * from board_camp order by groups desc, lev asc  limit #{limit} offset #{offset}  
- 	</select>
+		    select * from board_camp 
+		    where member_nickname = '관리자'
+		    union 
+		    select * from board_camp 
+		    where member_nickname != '관리자' 
+		    order by member_nickname = '관리자' desc, groups desc, lev asc 
+	    limit #{limit} offset #{offset}
+	</select> 
  	
  	<!-- 게시판 글쓰기 삽입  -->
  	<insert id="camping_gear_write_insert" parameterType="cgbvo">
@@ -242,52 +254,56 @@
  	 	delete from board_camp where cp_idx = #{cp_idx}
  	 </delete>
  	 
- 	 <!-- 캠핑추천게시판 댓글 목록 가져오기 -->
+ 	 <!-- 캠핑추천게시판 댓글 목록 가져오기 --> <!-- c_comment == cgb_comment -->
  	 <select id="camping_gear_comment_list" parameterType="String" resultType="cgbcvo">
- 		select * from cgb_comment where cp_idx = #{cp_idx}
+ 		select * from c_comment where cp_idx = #{cp_idx}
  	 </select>
  	 
  	 <!-- 댓글 삽입 -->
  	 <insert id="camping_gear_comment_insert" parameterType="cgbcvo">
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
- 			SELECT (IFNULL(MAX(cp_idx),0)+1) as groups FROM cgb_comment
+ 			SELECT (IFNULL(MAX(cp_idx),0)+1) as groups FROM c_comment
  		</selectKey>
- 		insert into cgb_comment(member_nickname, content, write_date, cp_idx, groups, step, lev)
+ 		insert into c_comment(member_nickname, content, write_date, cp_idx, groups, step, lev)
  			values(#{member_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, 0, 0)
  	</insert>
  	
  	<!-- 댓글 삭제 -->
  	<delete id="camping_gear_comment_delete" parameterType="String">
- 		delete from cgb_comment where c_idx = #{c_idx}
+ 		delete from c_comment where c_idx = #{c_idx}
  	</delete>
  	
  	<!-- 댓글 수정 -->
  	<update id="camping_gear_comment_update" parameterType="cgbcvo">
- 		update cgb_comment 
+ 		update c_comment 
  		set content = #{content}, write_date = sysdate()
  	    where cp_idx=#{cp_idx} and c_idx = #{c_idx}
  	</update>
  	
  	<!-- 댓글댓글 -->
  	<select id="camping_gear_comment_reply_list" parameterType="String" resultType="cgbcvo">
- 		select * from cgb_comment where cp_idx = #{cp_idx}
+ 		select * from c_comment where cp_idx = #{cp_idx}
  	</select>
  	
  	<!-- 댓글댓글 -->
  	<update id="camping_gear_comm_lev_update" parameterType="Map">
- 	 	update cgb_comment set lev=lev+1 where groups=#{groups} and lev>=#{lev} 
+ 	 	update c_comment set lev=lev+1 where groups=#{groups} and lev>=#{lev} 
  	 </update>
  	 
  	 <!-- 댓글댓글 -->
  	 <insert id="camping_gear_ans_insert" parameterType="cgbcvo">
- 	 	insert into cgb_comment(member_nickname, content, write_date, cp_idx, groups, step, lev)
+ 	 	insert into c_comment(member_nickname, content, write_date, cp_idx, groups, step, lev)
  			values(#{member_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, #{step}, #{lev})
  	 </insert>
  	 
  	 <!-- 댓글댓글 목록 디테일 가져오기 -->
  	 <select id="camping_gear_reply_detail" parameterType="String" resultType="cgbcvo">
- 		select * from cgb_comment where c_idx = #{c_idx}
+ 		select * from c_comment where c_idx = #{c_idx}
  	</select>
+ 	
+ 	
+ 	
+ 	
  	
  	<!-- 캠핑추천 검색 -->
  	<select id="camping_gear_search_list" resultType="cgsvo">
@@ -306,4 +322,22 @@
  			<when test="searchType == 4"> Lower(cp_regdate) like concat( Lower(#{searchValue}), '%')</when>
  		</choose>
  	</select>
+ 	
+ 	<!-- 게시판내 검색 기능  -->
+ 	<select id="camping_board_search_list2" parameterType="Map" resultType="cgsvo">
+	    
+	    select * from board_camp by groups desc, lev asc  limit #{limit} offset #{offset}  
+	</select>
+ 	
+ 	
+ 
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
 </mapper>

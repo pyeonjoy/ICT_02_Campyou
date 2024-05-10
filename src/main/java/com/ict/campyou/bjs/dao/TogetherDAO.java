@@ -19,6 +19,13 @@ public class TogetherDAO {
 		return sqlSessionTemplate.selectOne("bjs.count");
 	}
 	
+	public int getToTotalCount2(String searchType, String searchKeyword) throws Exception {
+		Map<String, String> map = new HashMap<String, String>(); 
+		map.put("searchType", searchType);
+		map.put("searchKeyword", searchKeyword);
+		return sqlSessionTemplate.selectOne("bjs.count2", map);
+	}
+	
 	public List<TogetherVO> getTogetherList(int offset, int limit) throws Exception {
 		Map<String, Integer> map = new HashMap<String, Integer>();  
 		map.put("offset", offset);
@@ -61,20 +68,14 @@ public class TogetherDAO {
 		return sqlSessionTemplate.selectOne("bjs.camp_detail", campName);
 	}
 	
-	public List<TogetherVO> getTogetherListSearch(String searchType, String searchKeyword) throws Exception {
-		Map<String, String> map = new HashMap<String, String>();  
+	public List<TogetherVO> getTogetherListSearch(int offset, int limit, String searchType, String searchKeyword) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();  
+		map.put("offset", offset);
+		map.put("limit", limit);
 		map.put("searchType", searchType);
 		map.put("searchKeyword", searchKeyword);
 		return sqlSessionTemplate.selectList("bjs.to_list_search", map);
 	}
-//	public List<TogetherVO> getTogetherListSearch(int offset, int limit, String searchType, String searchKeyword) throws Exception {
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("offset", offset);
-//		map.put("limit", limit);
-//		map.put("searchType", searchType);
-//		map.put("searchKeyword", searchKeyword);
-//		return sqlSessionTemplate.selectList("bjs.to_list_search", map);
-//	}
 	
 	public int getPromiseChk(PromiseVO pvo) {
 		return sqlSessionTemplate.selectOne("bjs.promise_chk", pvo);
@@ -92,7 +93,27 @@ public class TogetherDAO {
 		return sqlSessionTemplate.update("bjs.to_update", tvo);
 	}
 	
-	public int getTogetherDeleteOK(String t_idx) {
+	public int getTogetherDeleteOK(String t_idx) throws Exception {
 		return sqlSessionTemplate.update("bjs.to_delete", t_idx);
+	}
+	
+	public List<PromiseVO> getPromiseList(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectList("bjs.promise_list", member_idx);
+	}
+	
+	public int getAcceptPromise(String pm_idx) throws Exception {
+		return sqlSessionTemplate.update("bjs.accept_promise", pm_idx);
+	}
+	
+	public int getPromiseCount(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.promise_count", member_idx);
+	}
+	
+	public int getDeclinePromise(String pm_idx) throws Exception {
+		return sqlSessionTemplate.update("bjs.decline_promise", pm_idx);
+	}
+	
+	public List<PromiseVO> getTogetherHistory() throws Exception {
+		return sqlSessionTemplate.selectList("bjs.together_history");
 	}
 }

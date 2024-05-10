@@ -97,7 +97,6 @@ input[type="button"]:hover, input[type="reset"]:hover {
     resize: vertical;
 }
 
-
 /* 댓글 출력장  */
 
 .reply-output {
@@ -115,6 +114,28 @@ input[type="button"]:hover, input[type="reset"]:hover {
 
 
 
+
+
+
+
+
+/* 확인해보기 */
+/* 확인해보기 */
+/* 확인해보기 */
+.btn-color {
+	margin: 0 5px; /* 각 버튼 사이의 여백 */
+    padding: 4px 8px;
+    background-color: #003300;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+	
+}
+.btn-color:hover {
+    background-color: #005500; /* 호버 시 배경색 변경 */
+}
 
 
 

@@ -14,6 +14,7 @@
 <%@ include file="../hs/header.jsp" %>
 <script type="text/javascript">
 function to_list_go(f) {
+	console.log(f.cPage.value);
 	f.action="together_list.do";
 	f.submit();
 }
@@ -35,13 +36,13 @@ function initMap() {
     let t_facltdivnm = document.getElementById('t_facltdivnm').value;
     let t_mangedivnm = document.getElementById('t_mangedivnm').value;
     
-    var map = new naver.maps.Map('map', {
+    let map = new naver.maps.Map('map', {
         center: new naver.maps.LatLng(t_mapy, t_mapx),
         zoom: 15
     });
     
     if (t_mapx && t_mapy) {
-        var marker = new naver.maps.Marker({
+    	let marker = new naver.maps.Marker({
             position: new naver.maps.LatLng(t_mapy, t_mapx),
             map: map
         });
@@ -228,7 +229,7 @@ function to_delete_go(f, t_idx) {
                     	<p class="toDetailContent2Sub2flexP">${tvo.t_address }</p>
                     </div>
                     <p>캠핑날짜&nbsp;${tvo.t_startdate } - ${tvo.t_enddate }</p>
-                    <p>캠핑타입&nbsp;${tvo.t_camptype }</p>
+                    <p>캠핑타입&nbsp;${tvo.t_induty }</p>
 <!--                     <div class="toDetailContent2Sub2ImgDiv"><div id="map" class="toDetailContent2Sub2Img"></div></div> -->
 					<div id="map" style="width:100%;height:400px;"></div>
 					<input type="hidden" id="t_mapx" value="${tvo.t_mapx }">
