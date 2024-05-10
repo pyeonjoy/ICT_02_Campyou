@@ -80,18 +80,10 @@ button.pagination-button  {
     background-color: #003300;
     color: white;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-
-/* 여기 버튼 고치기 */
-/* 여기 버튼 고치기 */
-/* 여기 버튼 고치기 */
-/* 여기 버튼 고치기 */
-/* 여기 버튼 고치기 */
-/* 여기 버튼 고치기 */
 button {
     margin: 0 5px; /* 각 버튼 사이의 여백 */
     padding: 8px 16px;
