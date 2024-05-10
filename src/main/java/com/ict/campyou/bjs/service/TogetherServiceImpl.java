@@ -21,6 +21,11 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 
 	@Override
+	public int getToTotalCount2(String searchType, String searchKeyword) throws Exception {
+		return togetherDAO.getToTotalCount2(searchType, searchKeyword);
+	}
+
+	@Override
 	public List<TogetherVO> getTogetherList(int offset, int limit) throws Exception {
 		return togetherDAO.getTogetherList(offset, limit);
 	}
@@ -61,13 +66,9 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 
 	@Override
-	public List<TogetherVO> getTogetherListSearch(String searchType, String searchKeyword) throws Exception{
-		return togetherDAO.getTogetherListSearch(searchType, searchKeyword);
+	public List<TogetherVO> getTogetherListSearch(int offset, int limit, String searchType, String searchKeyword) throws Exception{
+		return togetherDAO.getTogetherListSearch(offset, limit, searchType, searchKeyword);
 	}
-//	@Override
-//	public List<TogetherVO> getTogetherListSearch(int offset, int limit, String searchType, String searchKeyword) throws Exception{
-//		return togetherDAO.getTogetherListSearch(offset, limit, searchType, searchKeyword);
-//	}
 
 	@Override
 	public int getPromiseChk(PromiseVO pvo) {
@@ -90,8 +91,32 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 
 	@Override
-	public int getTogetherDeleteOK(String t_idx) {
+	public int getTogetherDeleteOK(String t_idx) throws Exception {
 		return togetherDAO.getTogetherDeleteOK(t_idx);
 	}
-
+	
+	@Override
+	public List<PromiseVO> getPromiseList(String member_idx) throws Exception {
+		return togetherDAO.getPromiseList(member_idx);
+	}
+	
+	@Override
+	public int getAcceptPromise(String pm_idx) throws Exception {
+		return togetherDAO.getAcceptPromise(pm_idx);
+	}
+	
+	@Override
+	public int getPromiseCount(String member_idx) throws Exception {
+		return togetherDAO.getPromiseCount(member_idx);
+	}
+	
+	@Override
+	public int getDeclinePromise(String pm_idx) throws Exception {
+		return togetherDAO.getDeclinePromise(pm_idx);
+	}
+	
+@Override
+	public List<PromiseVO> getTogetherHistory() throws Exception {
+		return togetherDAO.getTogetherHistory();
+	}
 }
