@@ -17,10 +17,12 @@
 				<a href="/"> <img class="logo-03" src="resources/img/logo-03.png" alt="CampYou">
 				</a>
 				<ul>
-					<li><a href="#">캠핑장 검색</a></li>
-					<li><a href="#">지도로 검색</a></li>
+					<li><a href="camplist.do">캠핑장 검색</a></li>
+					<li><a href="camp_map_list.do">지도로 검색</a></li>
 					<li><a href="#">커뮤니티</a></li>
 					<li><a href="#">동행 구하기</a></li>
+					<li><a href="community_board.do">자유게시판</a></li>
+					<li><a href="camping_gear_board.do">캠핑제품추천게시판</a></li>
 				</ul>
 			</div>
 			<div class="header_right">

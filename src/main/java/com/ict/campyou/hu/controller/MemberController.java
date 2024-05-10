@@ -1,6 +1,7 @@
 package com.ict.campyou.hu.controller;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -28,10 +29,12 @@ import com.ict.campyou.bm.dao.ChatVO;
 import com.ict.campyou.bm.service.MyService;
 import com.ict.campyou.common.Paging;
 import com.ict.campyou.hu.dao.BoardFreeVO;
+
 import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.CommentVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.hu.service.BoardFreeService;
+
 import com.ict.campyou.hu.service.CommBoardService;
 import com.ict.campyou.hu.service.CommentReplyService;
 import com.ict.campyou.hu.service.MemberService;
@@ -49,6 +52,9 @@ public class MemberController {
 	
 	@Autowired
 	private BoardFreeService boardFreeService;
+	
+	//@Autowired
+	//private CampingGearService campingGearService;
 	
 	@Autowired
 	private Paging paging;
@@ -163,12 +169,12 @@ public class MemberController {
 	  @RequestMapping("admin_page_go.do")
 	  public ModelAndView getAdminPage() {
 		  try {
-			  ModelAndView mv = new ModelAndView("hu/adminPage");
+			  ModelAndView mv = new ModelAndView("hu/boardFree/adminPage");
 			  return mv;
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		  return new ModelAndView("hu/error");
+		  return new ModelAndView("hu/boardFree/error");
 	  }
 	  
 	  @RequestMapping("terms_of_use_go.do")
@@ -185,8 +191,9 @@ public class MemberController {
 	  @RequestMapping("community_board.do")
 	  public ModelAndView getCommunityBoard(HttpServletRequest request, HttpSession session) {
 		  try {
-			  ModelAndView mv = new ModelAndView("hu/communityBoard");
+			  ModelAndView mv = new ModelAndView("hu/boardFree/communityBoard");
 			  
+<<<<<<< HEAD
 			  //����¡ ��� & ��ü �Խù� ��
 			  int count = commBoardService.getTotalCount();
 			  paging.setTotalRecord(count);
@@ -198,12 +205,29 @@ public class MemberController {
 				  //��ü ������ �� (DB�Խù� �� / ���������� 10��)
 				  paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
 				  // (DB�Խù� �� % ���������� 10�� != 0) �̸� 1pg�� ���Ѵ�.
+=======
+			  //페이징 기법 & 전체 게시물 수
+			  int count = commBoardService.getTotalCount();
+			  paging.setTotalRecord(count);
+			  
+			  //전체 페이지 수
+			  if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+				  paging.setTotalPage(1);
+			  }else {
+				  //전체 페이지 수 (DB게시물 수 / 한페이지당 10줄)
+				  paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+				  // (DB게시물 수 % 한페이지당 10줄 != 0) 이면 1pg를 더한다.
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 				  if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
 					  paging.setTotalPage(paging.getTotalPage() + 1);
 				  }
 			  }
 			  
+<<<<<<< HEAD
 			  //���� ������ ����
+=======
+			  //현재 페이지 구함
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 			  String cPage = request.getParameter("cPage");
 			  if(cPage == null) {
 				  paging.setNowPage(1);
@@ -211,12 +235,21 @@ public class MemberController {
 				  paging.setNowPage(Integer.parseInt(cPage));
 			  }
 			  
+<<<<<<< HEAD
 			  // begin, end ���ϱ� (Oracle)
 			  // offset ���ϱ�
 			  // offset = limit * (����������-1);
 			  paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
 			  
 			  //���� ��� // �����
+=======
+			  // begin, end 구하기 (Oracle)
+			  // offset 구하기
+			  // offset = limit * (현재페이지-1);
+			  paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
+			  
+			  //시작 블록 // 끝블록
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 			  paging.setBeginBlock(
 						(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
 				paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
@@ -227,12 +260,20 @@ public class MemberController {
 			  
 			  List<CommBoardVO> commBoard_list = commBoardService.getCommBoardList(paging.getOffset(), paging.getNumPerPage());
 			  
+<<<<<<< HEAD
 			  //�ɹ����� ���� �θ���
+=======
+			  //맴버정보 세선 부르기
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  CommBoardVO cbvo = new CommBoardVO();
 			  
 			  if(memberInfo != null) {
+<<<<<<< HEAD
 				  //�ɹ����� ������ ���
+=======
+				  //맴버세션 정보를 담기
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 			  }
 			  
@@ -242,17 +283,17 @@ public class MemberController {
 					mv.addObject("memberInfo", memberInfo);
 					return mv;
 				}
-				return new ModelAndView("hu/error");
+				return new ModelAndView("hu/boardFree/error");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return new ModelAndView("hu/error");
+		return new ModelAndView("hu/boardFree/error");
 	  }
 	  
 	  @RequestMapping("comm_board_write.do")
 	  public ModelAndView getBoardWrite(HttpSession session) {
 		  try {
-			  ModelAndView mv = new ModelAndView("hu/communityBoardWrite");
+			  ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardWrite");
 			  
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  
@@ -263,7 +304,7 @@ public class MemberController {
 		  } catch (Exception e) {
 			  System.out.println(e);
 		  }
-		  return new ModelAndView("hu/error");
+		  return new ModelAndView("hu/boardFree/error");
 	  }
 	  
 	  @RequestMapping("comm_board_write_ok.do")
@@ -271,22 +312,30 @@ public class MemberController {
 		  try {
 			  ModelAndView mv = new ModelAndView("redirect:community_board.do");
 			  
+<<<<<<< HEAD
 			  //�ɹ����� ���� �θ���
+=======
+			  //맴버정보 세선 부르기
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  
 			  String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 			  MultipartFile file = cbvo.getFile();
 			  
 			  if(memberInfo != null) {
+<<<<<<< HEAD
 				  //�ɹ����� ������ ���
+=======
+				  //맴버세션 정보를 담기
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 				  
 				  if(file.isEmpty()) {
-					  cbvo.setF_name("");
+					  cbvo.setBf_name(""); // "" 안에 path 넣으면 경로가 나온다.
 				  }else {
 					  UUID uuid = UUID.randomUUID();
 					  String f_name = uuid.toString() + "_" + file.getOriginalFilename();
-					  cbvo.setF_name(f_name);
+					  cbvo.setBf_name(f_name);
 					  
 					  byte[] in = file.getBytes();
 					  File out = new File(path, f_name);
@@ -301,14 +350,15 @@ public class MemberController {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		  return new ModelAndView("hu/error");
+		  return new ModelAndView("hu/boardFree/error");
 	  }
 	  
 	  @RequestMapping("commBoard_detail.do")
 	  public ModelAndView getCommBoardDetail(@ModelAttribute("cPage") String cPage, String b_idx, HttpSession session) {
 		  try {
-			  ModelAndView mv = new ModelAndView("hu/communityBoardDetail");
+			  ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardDetail");
 			  
+<<<<<<< HEAD
 			  //�ɹ����� ���� �θ���
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  
@@ -320,6 +370,19 @@ public class MemberController {
 				  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 				  
 				  //�ɹ����� ������ ���
+=======
+			  //맴버정보 세선 부르기
+			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+			  
+			  //hit 업데이트
+			  int result = commBoardService.getCommBoardHit(b_idx);
+			  
+			  if(memberInfo != null) {
+				  //상세보기
+				  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
+				  
+				  //맴버세션 정보를 담기
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 				  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
@@ -333,13 +396,13 @@ public class MemberController {
 		  } catch (Exception e) {
 			System.out.println(e);
 		  }
-		  return new ModelAndView("hu/error");
+		  return new ModelAndView("hu/boardFree/error");
 	  }
 	  
 	  @RequestMapping("comm_board_down.do")
 	  public void boardDown(HttpServletRequest request, HttpServletResponse response) {
 			try {
-				String f_name = request.getParameter("f_name");
+				String f_name = request.getParameter("bf_name");
 				String path = request.getSession().getServletContext().getRealPath("/resources/upload/" + f_name);
 				String r_path = URLEncoder.encode(path, "UTF-8");
 				response.setContentType("application/x-msdownload");
@@ -356,9 +419,10 @@ public class MemberController {
 	  
 	  @RequestMapping("comm_reply_go.do")
 	  public ModelAndView getCommBoardReply(@ModelAttribute("cPage") String cPage, @ModelAttribute("b_idx") String b_idx) {
-		  return new ModelAndView("hu/communityBoardReply");
+		  return new ModelAndView("hu/boardFree/communityBoardReply");
 	  }
 	  
+<<<<<<< HEAD
 	  
 	   @RequestMapping("comm_board_reply_ok.do")
 	   public ModelAndView getBbsDetail(String b_idx, String cPage, HttpSession session) {
@@ -385,6 +449,9 @@ public class MemberController {
 		   return new ModelAndView("hu/error");
 	   }
 	  
+=======
+	  	//답글 입력 삽입
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 	  	@RequestMapping("comment_insert.do")
 		public ModelAndView getCommentInsert(CommentVO cvo, String cPage, @ModelAttribute("b_idx")String b_idx) {
 			ModelAndView mv = new ModelAndView("redirect:comm_board_reply_ok.do");
@@ -394,7 +461,7 @@ public class MemberController {
 				mv.addObject("cPage", cPage);
 				return mv;
 			}
-			return new ModelAndView("hu/error");
+			return new ModelAndView("hu/boardFree/error");
 		}
 	  
 		@RequestMapping("comment_delete.do")
@@ -418,23 +485,27 @@ public class MemberController {
 				mv.addObject("cPage", cPage);
 				return mv;
 			}
-			return new ModelAndView("hu/error");
+			return new ModelAndView("hu/boardFree/error");
 		}
 	  
 	  
 	  @RequestMapping("comm_board_delete.do")
 	  public ModelAndView getBoardDelete(@ModelAttribute("cPage") String cPage, @ModelAttribute("b_idx") String b_idx) {
 		  try {
-			  ModelAndView mv = new ModelAndView("hu/communityBoardDelete");
+			  ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardDelete");
 			  mv.addObject("cPage", cPage);
 			  return mv;
 		  } catch (Exception e) {
 			  System.out.println(e);
 		  }
-		  return new ModelAndView("hu/error");
+		  return new ModelAndView("hu/boardFree/error");
 	  }
 	  
+<<<<<<< HEAD
 	  //������ ���� ����
+=======
+	  //관리자 강제 삭제
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 	  @RequestMapping("comm_board_admin_delete.do")
 	  public ModelAndView getCommBoardAdminDelete(String c_idx, String cPage, @ModelAttribute("b_idx") String b_idx) {
 		  ModelAndView mv =  new ModelAndView("redirect:community_board.do");
@@ -451,35 +522,43 @@ public class MemberController {
 				                           @ModelAttribute("b_idx")String b_idx, CommBoardVO cbvo) {
 		  ModelAndView mv = new ModelAndView();
 
+<<<<<<< HEAD
 		  // ��й�ȣ üũ
+=======
+		  // 비밀번호 체크
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 		  CommBoardVO cbvo2 = commBoardService.getCommBoardDetail(cbvo.getB_idx());
 		  	
 		  String dpwd = cbvo2.getB_pwd();
 
 		  if (!passwordEncoder.matches(cbvo.getB_pwd(), dpwd)) { 
-		       mv.setViewName("hu/communityBoardDelete");
+		       mv.setViewName("hu/boardFree/communityBoardDelete");
 			   mv.addObject("pwdchk", "fail");
 			   return mv;
 		   } else {
+<<<<<<< HEAD
 			   // active �÷��� ���� 1�� ��������.
+=======
+			   // active 컬럼의 값을 1로 변경하자.
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 			   int result = commBoardService.getCommBoardDelete(cbvo2);
 			   if (result > 0) {
 				   mv.setViewName("redirect:community_board.do");
 					return mv;
 				}
 			}
-			return new ModelAndView("hu/error");
+			return new ModelAndView("hu/boardFree/error");
 		}
 	  
 	  	@RequestMapping("comm_board_update.do")
 		public ModelAndView getCommBoardUpdate(@ModelAttribute("cPage") String cPage, @ModelAttribute("b_idx") String b_idx) {
-			ModelAndView mv = new ModelAndView("hu/communityBoardUpdate");
+			ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardUpdate");
 			CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 			if(cbvo != null) {
 				mv.addObject("cbvo", cbvo);
 				return mv;
 			}
-			return new ModelAndView("hu/error");
+			return new ModelAndView("hu/boardFree/error");
 		}
 	  	
 	  	@RequestMapping("comm_board_update_ok.do")
@@ -491,21 +570,21 @@ public class MemberController {
 			String dpwd = cbvo2.getB_pwd();
 			
 			if(! passwordEncoder.matches(cbvo.getB_pwd(), dpwd)) {
-				cbvo.setF_name(cbvo.getOld_f_name());
+				cbvo.setBf_name(cbvo.getOld_f_name());
 				mv.addObject("pwchk", "fail");
 				mv.addObject("cbvo", cbvo);
-				mv.setViewName("hu/communityBoardUpdate");
+				mv.setViewName("hu/boardFree/communityBoardUpdate");
 				return mv;
 			}else {
 				try {
 					String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 					MultipartFile file = cbvo.getFile();
 					if(file.isEmpty()) {
-						cbvo.setF_name(cbvo.getOld_f_name());
+						cbvo.setBf_name(cbvo.getOld_f_name());
 					}else {
 						UUID uuid = UUID.randomUUID();
 						String f_name = uuid.toString()+"_"+ file.getOriginalFilename();
-						cbvo.setF_name(f_name);
+						cbvo.setBf_name(f_name);
 						
 						byte[] in = file.getBytes();
 						File out = new File(path, f_name);
@@ -521,12 +600,13 @@ public class MemberController {
 					System.out.println(e);
 				}
 			}
-			return new ModelAndView("hu/error");
+			return new ModelAndView("hu/boardFree/error");
 		}
 	  	
 	  	@RequestMapping("commBoard_content.do")
 	  	public ModelAndView getCommBoardContent(@ModelAttribute("cPage") String cPage, String b_idx, HttpSession session) {
 	  		try {
+<<<<<<< HEAD
 	  			ModelAndView mv = new ModelAndView("hu/communityBoardContent");
 	  			//�ɹ����� ���� �θ���
 				MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
@@ -539,6 +619,20 @@ public class MemberController {
 					  //�󼼺���
 					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 					  //��� ����Ʈ
+=======
+	  			ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardContent");
+	  			//맴버정보 세선 부르기
+				MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+				  
+				  //hit 업데이트
+				  int result = commBoardService.getCommBoardHit(b_idx);
+				  
+				  //비회원 게시판 보기 & 댓글보기
+				  if(memberInfo == null) {
+					  //상세보기
+					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
+					  //댓글 리스트
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 					  List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
 					 
 					  if(result > 0 && cbvo != null ){
@@ -549,10 +643,17 @@ public class MemberController {
 					  return mv;
 				  }
 				  if(memberInfo != null) {
+<<<<<<< HEAD
 					  //�󼼺���
 					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 					  
 					  //�ɹ����� ������ ���
+=======
+					  //상세보기
+					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
+					  
+					  //맴버세션 정보를 담기
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 					  cbvo.setMember_idx(memberInfo.getMember_idx());
 					  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
@@ -568,17 +669,48 @@ public class MemberController {
 			  } catch (Exception e) {
 				System.out.println(e);
 			  }
-			  return new ModelAndView("hu/error");
+			  return new ModelAndView("hu/boardFree/error");
 	  	}
+	  	
+	  	
+	  	//댓글 출력
+	  	 @RequestMapping("comm_board_reply_ok.do")
+		   public ModelAndView getBbsDetail(String b_idx, String cPage, HttpSession session) {
+			  
+			   ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardContent");
+			  
+			   MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+			  
+			   //hit 업데이트
+			   int result = commBoardService.getCommBoardHit(b_idx);
+			  
+			   // 상세보기 
+			   CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
+			  
+				
+			   if(result>0 && cbvo != null) {
+				   // 댓글 가져오기 
+				   List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
+				   mv.addObject("commBoard_list2", commBoard_list2);
+				   mv.addObject("memberInfo", memberInfo);
+				   mv.addObject("cbvo", cbvo);
+				   mv.addObject("cPage", cPage);
+			 	   return mv;
+			   }
+			   return new ModelAndView("hu/boardFree/error");
+		   }
 
+	  	
+	  	
+	  	/*
 	  	@RequestMapping("comment_reply_ok.do")
 		public ModelAndView getBoardAnsWrite(CommentVO cvo3, @ModelAttribute("cPage") String cPage, @ModelAttribute("bo_idx") String b_idx) {
 	    	try {
-	    		CommentVO cvo = comReplyService.getCommentReplyDetail(b_idx);
+	    		 CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 	    		
-	    		int groups = Integer.parseInt(cvo.getGroups());
-	    		int step = Integer.parseInt(cvo.getStep());
-				int lev = Integer.parseInt(cvo.getLev());
+	    		int groups = Integer.parseInt(cbvo.getGroups());
+	    		int step = Integer.parseInt(cbvo.getStep());
+				int lev = Integer.parseInt(cbvo.getLev());
 	    		
 				step++;
 				lev++;
@@ -594,37 +726,75 @@ public class MemberController {
 				cvo3.setLev(String.valueOf(lev));
 	    		
 				//ModelAndView mv = new ModelAndView("redirect:commBoard_content.do");
-				ModelAndView mv = new ModelAndView("hu/communityBoardContent");
+				ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardContent");
 				
 				int result2 = comReplyService.getAnsInsert(cvo3);
 				if(result2 > 0) {
-					mv.addObject("cvo", cvo);
+					mv.addObject("cvo", cvo3);
 					return mv;
 				}
 			} catch (Exception e) {
 				System.out.println(e);
 			}
-	    	return new ModelAndView("hu/error");
+	    	return new ModelAndView("hu/boardFree/error");
 		}
+<<<<<<< HEAD
 	  		
 	  	// ����� ���
+=======
+	  		*/
+	  	
+	  	
+	  	// 댓글의 댓글 삽입 
+	
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 		@RequestMapping("comment_reply_insert.do")
-		public ModelAndView getCommentReplyInsert(CommentVO cvo, String cPage, @ModelAttribute("b_idx")String b_idx) {
+		public ModelAndView getCommentReplyInsert(CommentVO cvo, String cPage, @ModelAttribute("b_idx")String b_idx, HttpSession session) {
 			ModelAndView mv = new ModelAndView("redirect:comm_board_reply_ok.do");
 			
-			int result = comReplyService.getCommentReplyInsert(cvo);
-			if(result > 0) {
+			MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+			 
+			List<CommentVO> lcvo = commBoardService.getCommentReplyList(b_idx);
+			
+			CommentVO cvo2 = commBoardService.getCommentReplyDetail(cvo.getC_idx());
+			
+			int groups = Integer.parseInt(cvo2.getGroups());
+    		int step = Integer.parseInt(cvo2.getStep());
+			int lev = Integer.parseInt(cvo2.getLev());
+			
+		
+			step++;
+			lev++;
+		
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("groups", groups);
+			map.put("lev", lev);
+			
+			int result = commBoardService.getLevUpdate(map);
+			
+			cvo.setGroups(String.valueOf(groups));
+			cvo.setStep(String.valueOf(step));
+			cvo.setLev(String.valueOf(lev));
+			
+			int result2 = commBoardService.getAnsInsert(cvo);
+			if(result2 > 0) {
+				mv.addObject("lcvo", lcvo);
+				mv.addObject("memberInfo", memberInfo);
 				mv.addObject("cPage", cPage);
 				return mv;
 			}
-			return new ModelAndView("hu/error");
+			return new ModelAndView("hu/boardFree/error");
 		}
 	  	
+<<<<<<< HEAD
 		//�Խ��� �˻�
+=======
+		//게시판 검색
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 	   @RequestMapping("board_free_list_go.do")
-	   public ModelAndView getEmpList() {
+	   public ModelAndView getBoardFreeSearch() {
 		 try {
-			ModelAndView mv = new ModelAndView("hu/boardFreeList");
+			ModelAndView mv = new ModelAndView("hu/boardFree/boardFreeList");
 			
 		    List<BoardFreeVO> boardFreeList = boardFreeService.getBoardFreeList();
 		    
@@ -635,14 +805,18 @@ public class MemberController {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		   return new ModelAndView("hu/error");
+		   return new ModelAndView("hu/boardFree/error");
 	   }
 	   
+<<<<<<< HEAD
 	   //�Խ��� �˻�
+=======
+	   //게시판 검색
+>>>>>>> 5c8c58cd3f88390a148308e75df9fca170eb1580
 	   @RequestMapping("board_free_search.do")
-	   public ModelAndView getEmpSearchList(@ModelAttribute("b_idx")String b_idx, String keyword) {
+	   public ModelAndView getBoardFreeSearchList(@ModelAttribute("b_idx")String b_idx, String keyword) {
 		   try {
-				ModelAndView mv = new ModelAndView("hu/boardFreeSearchlist");
+				ModelAndView mv = new ModelAndView("hu/boardFree/boardFreeSearchlist");
 				List<BoardFreeVO> searchlist = boardFreeService.getBoardFreeSearchList(b_idx, keyword);
 				if(searchlist != null) {
 					mv.addObject("searchlist", searchlist);
@@ -651,43 +825,6 @@ public class MemberController {
 			} catch (Exception e) {
 				System.out.println(e);
 			}
-		   return new ModelAndView("hu/error");
-	   }
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	  	
-	  	
-	  	
-	  	  	
+		   return new ModelAndView("hu/boardFree/error");
+	   }	  	  	
 }

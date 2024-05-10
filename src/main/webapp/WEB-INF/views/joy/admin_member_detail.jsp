@@ -6,6 +6,7 @@
 <html lang="ko">
 <link href="resources/css/reset.css" rel="stylesheet" />
 <link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
+<%@ include file="../hs/admin_menu.jsp" %>
 <head>
 <meta charset="utf-8">
 <title>회원관리 상세</title>
@@ -108,6 +109,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				</c:if>
 				<button type="button" onclick="location.href='member_edit.do?member_idx=${m.member_idx}'">회원수정</button>
 				<button type="button" onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원삭제</button>
+				<button type="button" onclick="location.href='admin_member_list.do'">목록으로</button>
 			</p>
 			</div>
 		</div>
@@ -131,13 +133,21 @@ window.addEventListener('DOMContentLoaded', function() {
 					<th>상태</th>
 				</tr>
 				<tr>
-					<td>${b.b_idx }</td>
+					<%-- <td>${b.b_idx }</td>
 					<td>${b.b_type }</td>
 					<td>${b.b_subject }</td>
 					<td>${b.bf_name }</td>
 					<td>${b.b_regdate }</td>
 					<td>${b.b_hit }</td>
-					<td>${b.b_active }</td>
+					<td>${b.b_active }</td> --%>
+					
+					<td>${b.b_idx }</td>
+					<td>${b.b_type }</td>
+					<td>${b.b_title }</td>
+					<td>${b.f_name }</td>
+					<td>${b.regdate }</td>
+					<td>${b.hit }</td>
+					<td>${b.active }</td>
 				</tr>
 			</table>
 			</div>
@@ -145,7 +155,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			<table style="table-layout: auto; width: 100%; table-layout: fixed;">
 				<tr>
 					<th>번호</th>
-					<th>유형</th>
+					<!-- <th>유형</th> -->
 					<th>제목</th>
 					<th>닉네임</th>
 					<th>작성일</th>
@@ -154,16 +164,17 @@ window.addEventListener('DOMContentLoaded', function() {
 				</tr>
 				<tr>
 					<td>${b.cp_idx }</td>
-					<td>${b.cp_type }</td>
+					<%-- <td>${b.cp_type }</td> --%>
 					<td>${b.cpf_name }</td>
 					<td>${b.cp_regdate }</td>
 					<td>${b.cp_hit }</td>
 					<td>${b.cp_active }</td>
-					<td>${b.cp_active }</td>
+					<%-- <td>${b.cp_active }</td> --%>
 				</tr>
 			</table>
 			</div>
 			</c:forEach>
 		</div>
+		<jsp:include page="../hs/footer.jsp" />
 </body>
 </html>

@@ -9,16 +9,11 @@
 <!-- summer note -->
 <link rel="stylesheet" href="resources/css/summernote-lite.css">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardWrite.css">
-<!-- <style type="text/css">
-	a { text-decoration: none;}
-	table{width: 800px; border-collapse:collapse; text-align: center;}
-	table,th,td{border: 1px solid black; padding: 3px}
-	div{width: 800px; margin:auto; text-align: center;}
-	
+ <style type="text/css">
 	/* summernote toolbar 수정 */
 	.note-btn-group{width: auto;}
 	.note-toolbar{width: auto;}
-</style> -->
+</style> 
 <script type="text/javascript">
 	function board_write_ok(f) {
 		for (var i = 0; i < f.elements.length; i++) {
@@ -43,7 +38,7 @@
 	<div>
 		<h2>자유게시판 글쓰기</h2>
 		<hr>
-		<p><a href="community_board.do">자유게시판 리스트</a></p>
+		<p><a href="community_board.do">자유게시판 돌아가기</a></p>
 		<form action="comm_board_write_ok.do" method="post" enctype="multipart/form-data">
 			<table>
 				<tr align="center">
@@ -76,7 +71,7 @@
 				</tr>
 				<tr align="center">
 					<td bgcolor="#003300" style="color: white;">제목</td>
-					<td align="left"><input type="text" name="b_title"></td>
+					<td align="left"><input type="text" name="b_subject"></td>
 				</tr>
 				<tr align="center">
 					<td bgcolor="#003300" style="color: white;">별명</td>

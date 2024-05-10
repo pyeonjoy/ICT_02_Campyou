@@ -1,12 +1,10 @@
 package com.ict.campyou.bjs.controller;
 
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
 import com.ict.campyou.common.Paging2;
 import com.ict.campyou.hu.dao.MemberVO;
-import com.ict.campyou.jun.dao.CampVO;
 
 @Controller
 public class TogetherController {
@@ -65,13 +62,12 @@ public class TogetherController {
 		List<TogetherVO> togetherList = togetherService.getTogetherList(paging.getOffset(), paging.getNumPerPage());
 		
 		// member의 dob 꺼내서 나이로 환산 후 연령대 구해서 set
-		for (TogetherVO togetherVO : togetherList) {
-		    LocalDate dob = LocalDate.parse(togetherVO.getMember_dob());
+		for (TogetherVO tvo : togetherList) {
+		    LocalDate dob = LocalDate.parse(tvo.getMember_dob());
 		    LocalDate currentDate = LocalDate.now();
 		    int age = Period.between(dob, currentDate).getYears();
 //		    int age = dob.until(currentDate).getYears();
-
-
+		    
 		    String ageGroup;
 		    switch (age / 10) {
 		        case 0: ageGroup = "10대 미만"; break;
@@ -84,7 +80,7 @@ public class TogetherController {
 		        case 7: ageGroup = "70대 이상"; break;
 		        default: ageGroup = "80대 이상"; break;
 		    }
-		    togetherVO.setMember_dob(ageGroup);
+		    tvo.setMember_dob(ageGroup);
 		}
 		
 		mv.setViewName("bjs/together_list");
@@ -109,8 +105,9 @@ public class TogetherController {
 	@RequestMapping("together_detail.do")
 	public ModelAndView getTogetherDetail(@ModelAttribute("cPage")String cPage, String t_idx, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo"); 
+		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
 		TogetherVO tvo = togetherService.getTogetherDetail(t_idx);
+		int pvo = togetherService.getPomiseCount(t_idx);
 		
 		// member의 dob 꺼내서 나이로 환산 후 연령대 구해서 set
 	    LocalDate dob = LocalDate.parse(tvo.getMember_dob());
@@ -136,6 +133,33 @@ public class TogetherController {
 			mv.setViewName("bjs/together_detail");
 			mv.addObject("tvo", tvo);
 			mv.addObject("memberUser", memberUser);
+//			mv.addObject("cPage", cPage);
+			mv.addObject("appluNum", pvo);
+			return mv;
+		}
+		return new ModelAndView("error");
+	}
+	
+	@RequestMapping("to_update.do")
+	public ModelAndView getTogetherUpdate(@ModelAttribute("cPage")String cPage, @ModelAttribute("t_idx")String t_idx) throws Exception {
+		ModelAndView mv = new ModelAndView("bjs/together_update");
+//		System.out.println("t_idx : " + t_idx);
+//		System.out.println("cpage : " + cPage);
+		TogetherVO tvo = togetherService.getTogetherDetail(t_idx);
+		if(tvo != null) {
+			mv.addObject("tvo", tvo);
+			return mv;
+		}
+		return new ModelAndView("error");
+	}
+	
+	@RequestMapping("to_delete_ok.do")
+	public ModelAndView getTogetherDeleteOK(@ModelAttribute("cPage")String cPage, @ModelAttribute("t_idx")String t_idx, TogetherVO tvo) throws Exception {
+		ModelAndView mv = new ModelAndView("bjs/together_update");
+		
+		int result = togetherService.getTogetherDeleteOK(t_idx);
+		if (result > 0) {
+			mv.setViewName("redirect:together_list.do?cPage=" + cPage);
 			return mv;
 		}
 		return new ModelAndView("error");

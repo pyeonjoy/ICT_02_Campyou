@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ict.campyou.jun.dao.CampDAO;
 import com.ict.campyou.jun.dao.CampVO;
+import com.ict.campyou.jun.dao.HeartDAO;
 import com.ict.campyou.jun.dao.ReviewDAO;
 import com.ict.campyou.jun.dao.ReviewVO;
 
@@ -19,6 +20,8 @@ public class CampServiceImpl implements CampService{
 	@Autowired
 	private ReviewDAO reviewDAO;
 	
+	@Autowired
+	private HeartDAO heartDAO;
 	@Override
 	public CampVO getCampInfo(CampVO cvo,String contentid) {
 		return campDAO.getCampInfo(cvo,contentid);
@@ -32,6 +35,26 @@ public class CampServiceImpl implements CampService{
 	@Override
 	public List<ReviewVO> loadReview(String contentid) {
 		return reviewDAO.loadReview(contentid);
+	}
+
+	@Override
+	public int updateHit(String contentid) {
+		return campDAO.updateHit(contentid);
+	}
+
+	@Override
+	public int addHeart(String contentid,String member_idx) {
+		return heartDAO.addHeart(contentid,member_idx);
+	}
+
+	@Override
+	public String checkHeart(String contentid, String member_idx) {
+		return heartDAO.checkHeart(contentid,member_idx);
+	}
+
+	@Override
+	public int delHeart(String contentid, String member_idx) {
+		return heartDAO.delHeart(contentid,member_idx);
 	}
 
 

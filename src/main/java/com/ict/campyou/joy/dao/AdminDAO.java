@@ -1,16 +1,22 @@
 package com.ict.campyou.joy.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.ict.campyou.hu.dao.MemberVO;
+import com.ict.campyou.jun.dao.CampVO;
 
 @Repository
 public class AdminDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
+// 관리자페이지 메인 
 	public List<AdminVO> getadminmainmember() {
 		try {
 			return sqlSessionTemplate.selectList("joy.getMemberCounts");
@@ -52,9 +58,10 @@ public class AdminDAO {
 		return -1;
 	}
 	
-	public List<AdminMemberVO> getboardall() {
+	public List<AdminMemberVO> getboardall(String member_idx) {
 		try {
-			return sqlSessionTemplate.selectList("joy.boardall");
+			System.out.println("오나?"+member_idx);
+			return sqlSessionTemplate.selectList("joy.boardall",member_idx);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -70,16 +77,16 @@ public class AdminDAO {
 		
 		
 	}
-	public int getreportall() {
+	public int getreportall(String member_idx) {
 		try {
-			return sqlSessionTemplate.selectOne("joy.reportall");
+			return sqlSessionTemplate.selectOne("joy.reportall",member_idx);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return -1;
 	}
 	
-
+//회원관리 
 	public int getmemberstop(String member_idx) {
 		try {
 			return sqlSessionTemplate.update("joy.memberstop",member_idx);
@@ -129,4 +136,78 @@ public class AdminDAO {
 		}
 		return -1;
 	}
+	public List<MemberVO> allmember(int offset, int limit) {
+		try {
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("offset", offset);
+			map.put("limit", limit);
+			return sqlSessionTemplate.selectList("joy.allmember",map);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	//팝업 
+	public int getPopUPWrite(AdminVO avo) {
+		try {
+			return sqlSessionTemplate.delete("joy.popUPWrite",avo);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getTotalCount() {
+		try {
+		 return sqlSessionTemplate.selectOne("joy.count");	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getTotalCount2() {
+		try {
+			return sqlSessionTemplate.selectOne("joy.count2");	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getpopupdate(AdminVO avo) {
+		try {
+			return sqlSessionTemplate.update("joy.popupdate",avo);	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getpopupdate2(AdminVO avo) {
+		try {
+			return sqlSessionTemplate.update("joy.popupdate2",avo);	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	
+	public List<AdminVO> getPopList(int offset, int limit) {
+		try {
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("offset", offset);
+			map.put("limit", limit);
+			return sqlSessionTemplate.selectList("joy.popUPlist",map);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+
+	public int getpopdelete(String popidx) {
+		try {
+			return sqlSessionTemplate.delete("joy.popdelete",popidx);	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	
 }

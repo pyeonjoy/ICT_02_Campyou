@@ -1,7 +1,7 @@
 package com.ict.campyou.hu.dao;
 
 public class BoardFreeVO {
-	private String bf_no, b_title, member_nickname, b_content, regdate;
+	private String bf_no, b_subject, member_nickname, b_content, b_regdate;
 
 	public String getBf_no() {
 		return bf_no;
@@ -11,20 +11,12 @@ public class BoardFreeVO {
 		this.bf_no = bf_no;
 	}
 
-	public String getRegdate() {
-		return regdate;
+	public String getB_subject() {
+		return b_subject;
 	}
 
-	public void setRegdate(String regdate) {
-		this.regdate = regdate;
-	}
-
-	public String getB_title() {
-		return b_title;
-	}
-
-	public void setB_title(String b_title) {
-		this.b_title = b_title;
+	public void setB_subject(String b_subject) {
+		this.b_subject = b_subject;
 	}
 
 	public String getMember_nickname() {
@@ -41,5 +33,13 @@ public class BoardFreeVO {
 
 	public void setB_content(String b_content) {
 		this.b_content = b_content;
+	}
+
+	public String getB_regdate() {
+		return b_regdate;
+	}
+
+	public void setB_regdate(String b_regdate) {
+		this.b_regdate = b_regdate;
 	}
 }

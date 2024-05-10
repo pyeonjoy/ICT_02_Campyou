@@ -91,4 +91,29 @@ public class CommBoardServiceImpl implements CommBoardService {
 		
 		return commBoardDAO.getCommBoardAdminDelete(b_idx);
 	}
+
+	@Override
+	public List<CommentVO> getCommentReplyList(String b_idx) {
+		
+		return commBoardDAO.getCommentReplyList(b_idx);
+	}
+
+	@Override
+	public int getLevUpdate(Map<String, Integer> map) {
+		
+		return commBoardDAO.getLevUpdate(map);
+	}
+
+	@Override
+	public int getAnsInsert(CommentVO cvo) {
+		
+		return commBoardDAO.getAnsInsert(cvo);
+	}
+
+	@Override
+	public CommentVO getCommentReplyDetail(String c_idx) {
+		
+		return commBoardDAO.getCommentReplyDetail(c_idx);
+	}
+
 }
