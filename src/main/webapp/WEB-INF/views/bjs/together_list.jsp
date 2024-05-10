@@ -105,11 +105,16 @@
 		        				<c:when test="${k.t_active == 1 }">
 		        					<div class="toContentOne" style="background-color: rgba(128, 128, 128, 0.1);">
 						                <div>
+							            
 						                    <div class="toContentOne1">
-						                        <div class="userImage"><img src="${path}/resources/images/${k.member_img }" class="userImage2"></div>
+						                    	<a href="report_write.do?member_idx=${k.member_idx}">
+						                        <div class="userImage">
+						                        	<img src="${path}/resources/images/${k.member_img }" class="userImage2">
+						                        </div>
+						                     </a>
 						                        <div>
 							                        <div class="toContentOne1span1">
-							                            <span class="to_member_nickname">${k.member_nickname }</span>
+														    <span class="to_member_nickname">${k.member_nickname}</span>
 							                            <span class="to_member_age">(${k.member_dob })</span>
 							                        </div>
 							                        <div class="toContentOne1span toContentOne1span2">
@@ -141,7 +146,9 @@
 						            <div class="toContentOne">
 						                <div>
 						                    <div class="toContentOne1">
+						                    	<a href="report_write.do?member_idx=${k.member_idx}">
 						                        <div class="userImage"><img src="${path}/resources/images/${k.member_img }" class="userImage2"></div>
+						                        </a>
 						                        <div>
 							                        <div class="toContentOne1span1">
 							                            <span class="to_member_nickname">${k.member_nickname }</span>

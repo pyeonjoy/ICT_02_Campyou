@@ -142,9 +142,9 @@ public class AdminServiceImpl implements AdminService{
 
 	@Transactional
 	@Override
-	public int getadminreport(String report_day,String report_idx) {
+	public int getadminreport(String report_day,String report_idx,String adminmember_idx) {
 		int result1 = admindao.getadminreport(report_day,report_idx); 
-		int result2 = admindao.getadminreportadd(report_day,report_idx); 
+		int result2 = admindao.getadminreportadd(report_day,report_idx,adminmember_idx); 
 		System.out.println("1:"+ result1);
 		System.out.println("2:"+ result2);
 		if (result1 > 0 && result2 > 0) {
@@ -160,8 +160,8 @@ public class AdminServiceImpl implements AdminService{
 	
 	
 	@Override
-	public int getstatusupdate(String member_idx) {
-		return admindao.getstatusupdate(member_idx);
+	public int getstatusupdate() {
+		return admindao.getstatusupdate();
 	}
 	
 	

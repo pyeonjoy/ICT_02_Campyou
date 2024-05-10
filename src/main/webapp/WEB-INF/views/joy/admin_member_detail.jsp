@@ -149,6 +149,25 @@ h2 {
 	border-radius: 20px;
 	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
+/*모달 팝업 영역 스타일링*/
+.modal2 {
+	/*팝업 배경*/
+	display: none;
+    width: 10px;
+    height: 0px;
+}
+
+.modal2 .modal_popup2 {
+	/*팝업*/
+	position: absolute;
+    top: 71%;
+    left: 44%;
+	transform: translate(-50%, -50%);
+	padding: 20px;
+	background: #ffffff;
+	border-radius: 20px;
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
 </style>
 
 
@@ -179,7 +198,6 @@ window.addEventListener('DOMContentLoaded', function() {
 <body>
 	<h2 class="head">회원 관리 상세</h2>
 	<h3 style="text-align: center;">회원 상세 정보</h3>
-	<c:forEach var="m" items="${member}">
 		<div class="wrap">
 			<div class="left">
 				<p style="text-align: center">
@@ -195,6 +213,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			</div>
 			<div class="right">
 				<table style="table-layout: auto; width: 100%; table-layout: fixed;">
+	<c:forEach var="m" items="${member}">
 					<tr>
 						<th>NO</th>
 						<th>ID</th>
@@ -249,10 +268,31 @@ window.addEventListener('DOMContentLoaded', function() {
 							<td>정지중</td>
 						</c:if>
 					</tr>
+		</c:forEach>
 				</table>
-			
-				<button type="button"
-					onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원정지</button>
+				<div class="modal2">
+				<c:forEach var="r" items="${reporteach}">
+							<div class="modal_popup2">
+								<form action="admin_report.do" method="post">
+								<input type="hidden" name=member_idx value="${r.member_idx }" >
+								<input type="hidden" name=report_idx value="${r.report_idx }" >
+								<input type="radio" name="report_day" value="0">해제
+								<input type="radio" name="report_day" value="3">3일
+								<input type="radio" name="report_day" value="7">7일
+								<input type="radio" name="report_day" value="30">30일
+								<input type="radio" name="report_day" value="60">60일
+								<input type="radio" name="report_day" value="90">90일
+								<input type="radio" name="report_day" value="9999">무기한
+								<div style="margin-top: 20px;">
+								<button type="submit" onclick="location.href='member_stop.do?member_idx=${r.member_idx}">확인</button>
+								<button type="button" class="close_btn2">닫기</button>
+								</div>
+								</form>
+							</div>
+				</c:forEach>
+						</div>
+						<!--end 모달 팝업-->		
+								<button type="button" class="modal_btn2">회원 정지</button>
 				<button type="button"
 					onclick="location.href='member_edit.do?member_idx=${m.member_idx}'">회원수정</button>
 				<button type="button"
@@ -260,7 +300,6 @@ window.addEventListener('DOMContentLoaded', function() {
 				<button type="button" onclick="location.href='admin_member_list.do'">목록으로</button>
 			</div>
 		</div>
-		</c:forEach>
 		<div class=under>
 			<table style="table-layout: auto; width: 100%; table-layout: fixed;">
 					<tr>
@@ -293,9 +332,9 @@ window.addEventListener('DOMContentLoaded', function() {
 								<input type="radio" name="report_day" value="30">30일
 								<input type="radio" name="report_day" value="60">60일
 								<input type="radio" name="report_day" value="90">90일
-								<input type="radio" name="report_day" value="9999">무기한
+								<input type="radio" name="report_day" value="100">무기한
 								<div style="margin-top: 20px;">
-								<button type="submit" onclick="location.href='admin_report.do'">확인</button>
+								<button type="submit" onclick="location.href='admin_report.do?member_idx=${r.member_idx}'">확인</button>
 								<button type="button" class="close_btn">닫기</button>
 								</div>
 								</form>
@@ -378,6 +417,23 @@ modalOpen.addEventListener('click',function(){
 modalClose.addEventListener('click',function(){
    //display 속성을 none으로 변경
     modal.style.display = 'none';
+});
+</script>
+		<script type="text/javascript">
+const modal2 = document.querySelector('.modal2');
+const modal2Open = document.querySelector('.modal_btn2');
+const modal2Close = document.querySelector('.close_btn2');
+
+
+//열기 버튼을 눌렀을 때 모달팝업이 열림
+modal2Open.addEventListener('click',function(){
+    //display 속성을 block로 변경
+    modal2.style.display = 'block';
+});
+//닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+modal2Close.addEventListener('click',function(){
+   //display 속성을 none으로 변경
+    modal2.style.display = 'none';
 });
 </script>
 		<jsp:include page="../hs/footer.jsp" />

@@ -8,4 +8,5 @@ import com.ict.campyou.jun.dao.CampVO;
 public interface MainService {
 		public List<AdminVO> getwithboard();
 		public List<CampVO> getcamphit();
+		public int getReportWrite(AdminVO avo);
 }

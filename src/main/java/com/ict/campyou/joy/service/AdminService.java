@@ -33,7 +33,7 @@ public interface AdminService {
 	public int getpopupdate(AdminVO avo);
 	public int getPopDelete(String popidx);
 	public String getPopmain();
-	public int getadminreport(String report_day, String report_idx);
-	public int getstatusupdate(String member_idx);
+	public int getadminreport(String report_day, String report_idx, String adminmember_idx);
+	public int getstatusupdate();
 	
 }
