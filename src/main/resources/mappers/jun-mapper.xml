@@ -7,8 +7,8 @@
 		select * from camp_list where contentid = #{contentid}
 	</select>
 	<insert id="addReview" parameterType="rvo">
-		insert into camp_review(member_idx,contentid,member_nickname,r_comment,rating,r_regdate)
-		values(#{member_idx},#{contentid},#{member_nickname},#{r_comment},#{rating},sysdate())
+		insert into camp_review(member_idx,contentid,member_nickname,r_comment,rating,member_img,r_regdate)
+		values(#{member_idx},#{contentid},#{member_nickname},#{r_comment},#{rating},#{member_img},sysdate())
 	</insert>
 	<select id="loadReview" resultType="rvo">
 		select * from camp_review where contentid = #{contentid}
