@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="/resources/public/js/jun/camp_list.js"></script>
+
 <title>캠핑장리스트</title>
 <style type="text/css">
 .camp_list_container {
@@ -67,6 +68,7 @@
     top: 80px;
     right: -30px;
 }
+
 </style>
 </head>
 <body>

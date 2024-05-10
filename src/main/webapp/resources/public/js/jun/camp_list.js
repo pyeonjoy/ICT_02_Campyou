@@ -88,6 +88,7 @@ function loadHeart(contentid, $container) {
 
 
 function Heart(contentid) {
+    let $container = $(this).closest(".camp_item").find(".Heart_button");
     $.ajax({
         url: "addHeart.do",
         method: "post",
@@ -95,10 +96,9 @@ function Heart(contentid) {
         success: function(data) {
             if(data != "error") {
                 alert("관심 캠핑장에 등록이 되었습니다.");
-                camp_all_list();
+                loadHeart(contentid, $container);
             } else {
-            	delHeart(contentid);
-            	camp_all_list();
+                delHeart(contentid, $container);
             }
         },
         error: function() {
@@ -107,7 +107,8 @@ function Heart(contentid) {
         }
     });
 }
-function delHeart(contentid) {
+
+function delHeart(contentid,$container) {
 	$.ajax({
 		url:"delHeart.do",
 		method: "post",
@@ -115,7 +116,7 @@ function delHeart(contentid) {
 		success: function(data){
 			if (data != "error") {
 				alert("관심캠핑장에서 제거하였습니다.");
-				camp_all_list();
+				loadHeart(contentid, $container);
 			}
 		}
 	});
