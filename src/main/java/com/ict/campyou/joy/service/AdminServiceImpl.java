@@ -145,9 +145,11 @@ public class AdminServiceImpl implements AdminService{
 	public int getadminreport(String report_day,String report_idx,String adminmember_idx) {
 		int result1 = admindao.getadminreport(report_day,report_idx); 
 		int result2 = admindao.getadminreportadd(report_day,report_idx,adminmember_idx); 
-		System.out.println("1:"+ result1);
-		System.out.println("2:"+ result2);
-		if (result1 > 0 && result2 > 0) {
+		System.out.println("result2:"+ result2);
+		System.out.println("report_day:"+ report_day);
+		System.out.println("report_idx:"+ report_idx);
+		System.out.println("adminmember_idx:"+ adminmember_idx);
+		if (result1 > -1 && result2 > -1) {
 		System.out.println("오나?");
 			return 1; // 성공
 		} else {

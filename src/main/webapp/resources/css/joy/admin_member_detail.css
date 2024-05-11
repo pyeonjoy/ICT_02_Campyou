@@ -1,0 +1,158 @@
+@charset "UTF-8";
+
+
+.head {
+	padding-top: 250px;
+	text-align: center;
+}
+body {
+	background-color: #F6FFF1;
+}
+
+.wrap {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 10px;
+	margin: 0 auto;
+	padding: 10px;
+	width: 1000px;
+}
+
+.proimg {
+	width: 90px;
+	height: 90px;
+	margin: 30px auto;
+	border-radius: 100%;
+	background-color: gainsboro;
+}
+
+.left {
+	width: 200px;
+	height: 200px;
+}
+
+.right {
+	width: 700px;
+}
+
+table {
+	width: 100%;
+	border-top: 1px solid #032805;
+	border-collapse: collapse;
+}
+
+th, td {
+	border-bottom: 1px solid #032805;
+	padding: 11px;
+	text-align: center;
+	width: 100%;
+	height: 40px;
+}
+
+th {
+	background-color: #032805;
+	color: white;
+}
+
+button {
+	margin-top: 20px;
+	width: 140px;
+	height: 30px;
+	background-color: #032805;
+	color: white;
+	border: 0px;
+	border-radius: 3px;
+	margin: 0 auto;
+}
+
+button:hover {
+	margin-top: 20px;
+	width: 140px;
+	height: 30px;
+	background-color: #FFBA34;
+	color: white;
+	border: 0px;
+	border-radius: 3px;
+	margin: 0 auto;
+}
+
+.b2 {
+	margin: 50 auto;
+	text-align: center;
+}
+
+.under {
+	margin-top: 200px;
+	width: 1000px;
+	margin: 200px auto;
+}
+
+.top button {
+	margin-top: 20px;
+	width: 467px;
+	height: 50px;
+	background-color: #F6FFF1;
+	border: 1px solid black;
+	border-radius: 3px;
+	margin: 15px;
+	color: black;
+}
+
+.top>button:hover {
+	margin-top: 20px;
+	width: 467px;
+	height: 50px;
+	background-color: #FFBA34;
+	border: 1px solid black;
+	border-radius: 3px;
+	margin: 15px;
+	background-color: #053610;
+	color: white;
+}
+
+.right input {
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+/*모달 팝업 영역 스타일링*/
+.modal {
+	/*팝업 배경*/
+	display: none;
+    width: 10px;
+    height: 0px;
+}
+
+.modal .modal_popup {
+	/*팝업*/
+	position: absolute;
+	top: 70%;
+    left: 42%;
+	transform: translate(-50%, -50%);
+	padding: 20px;
+	background: #ffffff;
+	border-radius: 20px;
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+/*모달 팝업 영역 스타일링*/
+.modal2 {
+	/*팝업 배경*/
+	display: none;
+    width: 10px;
+    height: 0px;
+}
+
+.modal2 .modal_popup2 {
+	/*팝업*/
+	position: absolute;
+    top: 71%;
+    left: 44%;
+	transform: translate(-50%, -50%);
+	padding: 20px;
+	background: #ffffff;
+	border-radius: 20px;
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
