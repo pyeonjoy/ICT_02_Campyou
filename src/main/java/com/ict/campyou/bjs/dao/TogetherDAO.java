@@ -38,7 +38,7 @@ public class TogetherDAO {
 	}
 	
 	public int getPomiseCount(String t_idx) throws Exception {
-		return sqlSessionTemplate.selectOne("bjs.promiseCount", t_idx);
+		return sqlSessionTemplate.selectOne("bjs.promise_people_count", t_idx);
 	}
 	
 	public TogetherVO getTogetherDetail(String t_idx) throws Exception {
@@ -105,15 +105,23 @@ public class TogetherDAO {
 		return sqlSessionTemplate.update("bjs.accept_promise", pm_idx);
 	}
 	
-	public int getPromiseCount(String member_idx) throws Exception {
-		return sqlSessionTemplate.selectOne("bjs.promise_count", member_idx);
+	public int getPromiseMyCount(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.promise_ok_my_count", member_idx);
 	}
 	
 	public int getDeclinePromise(String pm_idx) throws Exception {
 		return sqlSessionTemplate.update("bjs.decline_promise", pm_idx);
 	}
 	
-	public List<PromiseVO> getTogetherHistory() throws Exception {
-		return sqlSessionTemplate.selectList("bjs.together_history");
+	public int getToHistoryCount(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.history_count", member_idx);
+	}
+	
+	public List<PromiseVO> getTogetherHistoryGet(String member_idx, int offset, int limit) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_idx", member_idx);
+		map.put("offset", offset);
+		map.put("limit", limit);
+		return sqlSessionTemplate.selectList("bjs.together_history", map);
 	}
 }
