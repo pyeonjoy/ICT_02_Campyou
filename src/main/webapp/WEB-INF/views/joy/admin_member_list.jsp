@@ -128,6 +128,27 @@ table tfoot ol.paging li a:hover {
 			</tbody>
 			<tfoot>
 				<tr>
+					<form action="freeList" method="post">
+						<div class="search-wrap">
+							<button type="submit" NAME="searchName">검색</button>
+							<input type="text" name="searchType">
+							<select>
+								<option name="member_name">이름</option>
+								<option name="member_id">ID</option>
+								<option name="member_nickname">닉네임</option>
+							</select>
+						</div>
+						<input type="hidden" name="pageNum" value="1">
+						<input type="hidden" name="amount" value="10">
+					</form>
+				
+				
+				
+				
+				
+				
+				
+				
 					<td colspan="13">
 						<ol class="paging" style="margin: 0 auto; width: 175px;">
 							<!-- 이전 버튼 -->

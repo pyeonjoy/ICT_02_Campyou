@@ -236,20 +236,21 @@ public class AdminDAO {
 		}
 		return -1;
 	}
-	public int getadminreportadd(String report_day,String report_idx) {
+	public int getadminreportadd(String report_day,String report_idx,String adminmember_idx) {
 		try {
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("report_day", report_day);
 			map.put("report_idx", report_idx);
+			map.put("adminmember_idx", adminmember_idx);
 			return sqlSessionTemplate.update("joy.adminreportadd",map);	
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return -1;
 	}
-	public int getstatusupdate(String member_idx) {
+	public int getstatusupdate() {
 		try {
-			return sqlSessionTemplate.update("joy.statusupdate",member_idx);	
+			return sqlSessionTemplate.update("joy.statusupdate");	
 		} catch (Exception e) {
 			System.out.println(e);
 		}

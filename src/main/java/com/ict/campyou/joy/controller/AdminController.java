@@ -22,6 +22,7 @@ import com.ict.campyou.common.Paging3;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.joy.dao.AdminMemberVO;
 import com.ict.campyou.joy.service.AdminService;
+import com.jcraft.jsch.Logger;
 
 @Controller
 public class AdminController {
@@ -101,6 +102,8 @@ public class AdminController {
 					paging.setEndBlock(paging.getTotalPage());
 				}
 					List<MemberVO> member = adminService.allmember(paging.getOffset(), paging.getNumPerPage());
+					int statusupdate = adminService.getstatusupdate();
+					System.out.println("statusupdate"+statusupdate);
 					if (member != null) {
 						mv.addObject("member", member);
 						mv.addObject("paging", paging);
@@ -110,10 +113,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping("admin_member_detail.do")
-	public ModelAndView adminMemberDetail(String member_idx) {
+	public ModelAndView adminMemberDetail(String member_idx,String reportmember_idx) {
 		ModelAndView mv = new ModelAndView("joy/admin_member_detail");
 		int report_all = adminService.getreportall(member_idx);
-		int statusupdate = adminService.getstatusupdate(member_idx);
+
 		List<AdminMemberVO> board_all = adminService.getboardall(member_idx);
 		List<AdminMemberVO> member_report = adminService.getadminmemberreport(member_idx);
 		List<AdminMemberVO> admin_report = adminService.getradmineporteach(member_idx);
@@ -130,13 +133,17 @@ public class AdminController {
 	@RequestMapping("admin_report.do")
 	public ModelAndView adminReport(@RequestParam("member_idx") String member_idx,
 	                                 @RequestParam("report_idx") String report_idx,
-	                                 @RequestParam("report_day") String report_day) {
+	                                 @RequestParam("report_day") String report_day,
+	                                 HttpServletRequest request, String admin_idx) {
+		HttpSession session = request.getSession();
+		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+		admin_idx = mvo.getMember_idx();
 	    ModelAndView mv = new ModelAndView();
 	    System.out.println("리포트idx" + report_idx);
 	    System.out.println("멤버idx" + member_idx);
-	    int result = adminService.getadminreport(report_day, report_idx);
+	    int result = adminService.getadminreport(report_day, report_idx,admin_idx);
 	    if (result > 0) {
-	        mv.setViewName("redirect:admin_member_detail.do?member_idx=" + member_idx);
+	        mv.setViewName("redirect:admin_member_list.do");
 	        return mv;
 	    } else {
 	        return new ModelAndView("board/error");
@@ -245,5 +252,4 @@ public class AdminController {
 		}
 	}
 	
-
 }
