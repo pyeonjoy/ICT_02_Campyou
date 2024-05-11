@@ -7,33 +7,48 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>together_history</title>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_history.css">
 <%@ include file="../hs/header.jsp" %>
 <script type="text/javascript">
 $(function() {
+	$('.thwrapper1Button1').addClass('active');
 	promiseApplyList();
-	console.log(1);
 });
 
-function promiseApplyList() {
+$(document).on('click', '.thwrapper1Button1', function() {
+    $('.thwrapper1Button').removeClass('active');
+    $(this).addClass('active');
+    promiseApplyList();
+});
+
+$(document).on('click', '.thwrapper1Button2', function() {
+    $('.thwrapper1Button').removeClass('active');
+    $(this).addClass('active');
+    promiseApplyListRequested();
+});
+
+function promiseApplyList(page) {
 	let memberIdx = document.getElementById("member_idx").value;
     	$('.thwrapper').empty();
     $.ajax({
         url: 'get_together_history.do',
         type: 'post',
         data: {
-            member_idx: memberIdx
+            member_idx: memberIdx,
+            cPage: page
         },
         dataType: 'json',
         success: function(data) {
-        	if (data != null && data.length > 0) {
-                let imgSrc = data.member_img === null || data.member_img === '' || data.member_img === 'user2.png' ? '${path}/resources/images/' + data.member_img : data.member_img;
+        	let toHistory = data.toHistory;
+        	if (toHistory != null && toHistory.length > 0) {
+//                 let imgSrc = toHistory.member_img === null || toHistory.member_img === '' || toHistory.member_img === 'user2.png' ? '${path}/resources/images/user2.png' : '${path}/resources/images/' + toHistory.member_img;
                 let html = '';
             	html += '<div class="thwrapper1">';
-                html += '<button type="button" name="" class="thwrapper1Button" onclick="">동행 신청 받은 내역</button>';
-                html += '<button type="button" name="" class="thwrapper1Button" onclick="">동행 신청 내역</button>';
+                html += '<button type="button" name="" class="thwrapper1Button thwrapper1Button1" onclick="">동행 신청 받은 내역</button>';
+                html += '<button type="button" name="" class="thwrapper1Button thwrapper1Button2" onclick="">동행 신청 내역</button>';
                 html += '</div>';
                 html += '<ul class="thul1">';
                 html += '<li class="thli th1">이미지</li>';
@@ -43,10 +58,10 @@ function promiseApplyList() {
                 html += '<li class="thli th1">인원</li>';
                 html += '<li class="thli th1">신청상태</li>';
                 html += '</ul>';
-                for (let i = 0; i < data.length; i++) {
-                    let promise = data[i];
+                for (let i = 0; i < toHistory.length; i++) {
+                    let promise = toHistory[i];
 	                let html2 = '<div class="thul2">';
-	                html2 += '<ul><li class="th1 thliImage"><img src="' + imgSrc + '" class="qa11">사진</a></li></ul>';
+	                html2 += '<ul><li class="th1 thliImage"><img src="${path}/resources/images/' + promise.member_img + '" class="qa11 thliImage2"></a></li></ul>';
 	                html2 += '<ul><li class="th1">' + promise.member_nickname + '(' + promise.member_dob + ')(' + promise.promise_my_count + ')</li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.t_campname + '</a></li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
@@ -59,13 +74,42 @@ function promiseApplyList() {
 	                html2 += '</div>';
 	                html += html2;
                 }
-         	 $('.thwrapper').append(html);
+         		$('.thwrapper').append(html);
         	} else {
         		let html = '<div class="no-data-message">';
         		html += '<p class="no-data-messageP">동행신청이 없습니다.</p>';
         		html += '</div>';
                 $('.thul2').replaceWith(html);
             }
+
+            let paging = data.paging;
+            $('.th_paging').empty();
+            let pagingHtml = '';
+         	// 이전 버튼
+            if (paging.beginBlock <= paging.pagePerBlock) {
+                pagingHtml += '<li class="th_disable"><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+                pagingHtml += '<li class="th_disable"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+            } else {
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + 1 + ')" class="th_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + (paging.beginBlock - paging.pagePerBlock) + ')" class="th_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+            }
+            // 페이지번호들
+            for (let k = paging.beginBlock; k <= paging.endBlock; k++) {
+                if (k === paging.nowPage) {
+                	pagingHtml += '<li class="nowpagecolor">' + k + '</li>';
+                } else {
+                	pagingHtml += '<li><a href="javascript:promiseApplyList(' + k + ')" class="nowpage">' + k + '</a></li>';
+                }
+            }
+            // 이후 버튼
+            if (paging.endBlock >= paging.totalPage) {
+                pagingHtml += '<li class="th_disable"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+                pagingHtml += '<li class="th_disable"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+            } else {
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + (paging.beginBlock + paging.pagePerBlock) + '" class="th_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + paging.totalPage + '" class="th_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+            }
+            $('.th_paging').append(pagingHtml);
         },
         error: function(xhr, status, error) {
         	console.error(error);
@@ -103,16 +147,19 @@ function promiseApplyList() {
 	     		</div>
      		</div>
 		</div>
-		<div class="thwrapper1">
+		<div class="thwrapper2">
 			<ul class="th_paging">
-				<!-- 이전 버튼 -->
 				<c:choose>
 					<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
-						<li class="th_disable">이전으로</li>
+						<li class="th_disable"><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>
+						<li class="th_disable"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a href="qa_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }" class="th_able">이전으로</a>
+							<a href="together_list.do?cPage=1" class="th_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+		                </li>
+		                <li>
+                 				<a href="together_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }" class="th_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -124,7 +171,7 @@ function promiseApplyList() {
 							<li class="nowpagecolor">${k }</li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="qa_list.do?cPage=${k }" class="nowpage">${k }</a></li>
+							<li><a href="together_list.do?cPage=${k}" class="nowpage">${k}</a></li>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
@@ -132,11 +179,15 @@ function promiseApplyList() {
 				<!-- 이후 버튼 -->
 				<c:choose>
 					<c:when test="${paging.endBlock >= paging.totalPage }">
-						<li class="th_disable">다음으로</li>
+						<li class="th_disable"><i class="fa-solid fa-chevron-right" style="color: white; border-radius: 50%; font-size: 1.2rem;"></i></li>
+						<li class="th_disable"><i class="fa-solid fa-angles-right" style="color: white; border-radius: 50%; font-size: 1.2rem;"></i></li>
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a href="qa_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }" class="th_able">다음으로</a>
+							<a href="together_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }" class="th_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+		                </li>
+		                <li>
+		                    <a href="together_list.do?cPage=${paging.totalPage}" class="th_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
 						</li>
 					</c:otherwise>
 				</c:choose>

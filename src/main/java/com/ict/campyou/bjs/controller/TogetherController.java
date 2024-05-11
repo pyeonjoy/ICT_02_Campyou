@@ -185,7 +185,6 @@ public class TogetherController {
 	@RequestMapping("together_history.do")
 	public ModelAndView getTogetherHistory(@RequestParam("member_idx")String member_idx) throws Exception {
 		ModelAndView mv = new ModelAndView();
-		System.out.println(member_idx);
 		mv.setViewName("bjs/together_history");
 		mv.addObject("member_idx", member_idx);
 		return mv;

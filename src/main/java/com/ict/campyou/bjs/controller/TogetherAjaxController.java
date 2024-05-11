@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -23,6 +24,7 @@ import com.ict.campyou.bjs.dao.PromiseVO;
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
 import com.ict.campyou.common.Paging2;
+import com.ict.campyou.common.Paging4;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 
@@ -30,6 +32,9 @@ import com.ict.campyou.jun.dao.CampVO;
 public class TogetherAjaxController {
 	@Autowired
 	private TogetherService togetherService;
+	
+	@Autowired
+	private Paging4 paging;
 
 	@RequestMapping(value = "together_Write2.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
@@ -47,7 +52,6 @@ public class TogetherAjaxController {
 	@ResponseBody
 	public String getTogetherWriteOK(TogetherVO tvo, HttpSession session, HttpServletResponse response) throws Exception{
 		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
-//		System.out.println(tvo.getT_content());
 		if(memberUser != null) {
 			tvo.setMember_idx(memberUser.getMember_idx());
 			int result = togetherService.getTogetherWriteOK(tvo);
@@ -198,16 +202,39 @@ public class TogetherAjaxController {
 	
 	@RequestMapping(value = "get_together_history.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
-	public List<PromiseVO> getTogetherHistoryGet(@RequestParam("member_idx")String member_idx) throws Exception {
-		System.out.println("hi.do");
-		List<PromiseVO> toHistory = togetherService.getTogetherHistoryGet(member_idx);
+	public Map<String, Object> getTogetherHistoryGet(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
+		int count = togetherService.getToHistoryCount(member_idx);
+		paging.setTotalRecord(count);
+		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+			paging.setTotalPage(1);
+		}else {
+			paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+			if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+				paging.setTotalPage(paging.getTotalPage() +1);
+			}
+		}
+		String cPage = request.getParameter("cPage");
+		if(cPage == null) {
+			paging.setNowPage(1);
+		}else {
+			paging.setNowPage(Integer.parseInt(cPage));
+		}
+		
+		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
+		
+		paging.setBeginBlock((int)((paging.getNowPage() -1) / paging.getPagePerBlock()) * paging.getPagePerBlock() +1);
+		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() -1);
+		
+		if(paging.getEndBlock() > paging.getTotalPage()) {
+			paging.setEndBlock(paging.getTotalPage());
+		}
+		List<PromiseVO> toHistory = togetherService.getTogetherHistoryGet(member_idx, paging.getOffset(), paging.getNumPerPage());
 		
 		if(toHistory != null) {
 			for (PromiseVO pvo : toHistory) {
 				LocalDate dob = LocalDate.parse(pvo.getMember_dob());
 				LocalDate currentDate = LocalDate.now();
 				int age = Period.between(dob, currentDate).getYears();
-				
 				String ageGroup;
 				switch (age / 10) {
 				case 0: ageGroup = "10대 미만"; break;
@@ -228,7 +255,10 @@ public class TogetherAjaxController {
 				pvo.setPromise_my_count(promiseMyCount);
 			}
 		}
-	    return toHistory;
+		Map<String, Object> response = new HashMap<>();
+		response.put("toHistory", toHistory);
+	    response.put("paging", paging);
+	    return response;
 	}
 	
 }

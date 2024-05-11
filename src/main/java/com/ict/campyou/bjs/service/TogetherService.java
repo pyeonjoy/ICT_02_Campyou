@@ -27,5 +27,6 @@ public interface TogetherService {
 	public int getAcceptPromise(String pm_idx) throws Exception;
 	public int getPromiseMyCount(String member_idx) throws Exception;
 	public int getDeclinePromise(String pm_idx) throws Exception;
-	public List<PromiseVO> getTogetherHistoryGet(String member_idx) throws Exception;
+	public int getToHistoryCount(String member_idx) throws Exception;
+	public List<PromiseVO> getTogetherHistoryGet(String member_idx, int offset, int limit) throws Exception;
 }
