@@ -29,4 +29,6 @@ public interface TogetherService {
 	public int getDeclinePromise(String pm_idx) throws Exception;
 	public int getToHistoryCount(String member_idx) throws Exception;
 	public List<PromiseVO> getTogetherHistoryGet(String member_idx, int offset, int limit) throws Exception;
+	public int getToHistorySendCount(String member_idx) throws Exception;
+	public List<PromiseVO> getTogetherSendHistory(String member_idx, int offset, int limit);
 }

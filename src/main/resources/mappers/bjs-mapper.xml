@@ -111,22 +111,37 @@
 		select count(*) from with_promise where member_idx = #{member_idx} and pm_state = 2
 	</select>
 	<update id="decline_promise" parameterType="String">
-		update with_promise set pm_state = 2 where pm_idx = #{pm_idx}
+		update with_promise set pm_state = -1 where pm_idx = #{pm_idx}
 	</update>
 	<select id="history_count" parameterType="String" resultType="int">
 		select count(*)
 	    from with_promise p
 	    join board_with b on p.t_idx = b.t_idx
 	    join members m on p.member_idx = m.member_idx
-	    where p.pm_state = 0 and p.t_idx in	(select t_idx from board_with where member_idx = #{member_idx} and t_active = 0)
+	    where p.pm_master = 0 and p.t_idx in (select t_idx from board_with where member_idx = #{member_idx} and t_active = 0)
 	</select>
 	<select id="together_history" parameterType="Map" resultType="pvo">
 		select b.t_startdate, b.t_enddate, b.t_campname, b.t_numpeople, p.*, m.member_img, m.member_dob, m.member_nickname
 	    from with_promise p
 	    join board_with b on p.t_idx = b.t_idx
 	    join members m on p.member_idx = m.member_idx
-	    where p.pm_state = 0 and p.t_idx in	(select t_idx from board_with where member_idx = #{member_idx} and t_active = 0)
-	    order by p.pm_idx
+	    where p.pm_master = 0 and p.t_idx in (select t_idx from board_with where member_idx = #{member_idx} and t_active = 0)
+	    order by case when p.pm_state = 0 then 0 else 1 end, p.pm_idx desc
 		limit #{limit} offset #{offset}
+	</select>
+	<select id="histor_send_count" parameterType="String" resultType="int">
+		select count(*)
+		from with_promise
+		where member_idx = #{member_idx} and pm_master = 0
+	</select>
+	<select id="together_send_history" parameterType="Map" resultType="pvo">
+		select b.t_startdate, b.t_enddate, b.t_campname, b.t_numpeople, p.t_idx, p.pm_state, p.pm_regdate, m.member_nickname
+	    from with_promise p
+	    join board_with b on p.t_idx = b.t_idx
+	    join members m on b.member_idx = m.member_idx
+	    where p.member_idx = #{member_idx} and p.pm_master = 0
+	    order by case when p.pm_state = 0 then p.pm_idx end desc,
+	        	 case when p.pm_state != 0 then p.pm_idx end asc
+	    limit #{limit} offset #{offset}
 	</select>
 </mapper>
