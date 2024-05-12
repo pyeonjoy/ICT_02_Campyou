@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+ <c:set var="path" value="${pageContext.request.contextPath}" />  
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,15 +26,6 @@
 		f.action="camping_gear_admin_delete.do";
 		f.submit();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/////// 여기서부터 댓글
 	//댓글 삽입
@@ -134,10 +126,25 @@ function comment_reply(f) {
     f.parentNode.appendChild(replyDiv); 
 } 
 </script>
+<style type="text/css">
+textarea {
+    resize: none;
+    width: 600px; 
+    height: 50px;
+}
+
+#textarea1{
+	resize: none;
+}
+
+#textarea2{
+	resize: none;
+}
+</style>
 </head>
 <body>
 <div>
-	<h2>게시글</h2>
+	<h2>캠핑추천 게시글</h2>
 	<hr>
 	<form method="post">
 	<table>
@@ -223,7 +230,7 @@ function comment_reply(f) {
 					<p>별명 : <input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
 								${memberInfo.member_nickname}
 					</p>
-					<p>내용 : <textarea rows="3" cols="40" name="content"></textarea>
+					<p><textarea id="textarea1" rows="3" cols="40" name="content"></textarea>
 					<input style="margin-left: 20px" type="button" value="댓글저장" onclick="cgb_comment_insert(this.form)">
 					</p>
 					<!-- 댓글 저장시 어떤 원글의 댓글인지 저장해야 한다. -->
@@ -251,9 +258,9 @@ function comment_reply(f) {
                 <textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요!"></textarea>
                 <!-- <input type="button" value="답글 작성" onclick="reply_reply_insert(this.form)"> <hr> --><hr>
                 
-                <input type="button" value="댓글삭제" onclick="cgb_comment_delete(this.form)">
-                <input type="button" id="updateGo" value="댓글수정" onclick="cgb_comment_update(this.form)">
-                <input type="button" value="답글답글" onclick="cgb_comment_reply_insert(this.form)">
+                <input class="btn-color" type="button" value="댓글삭제" onclick="cgb_comment_delete(this.form)">
+                <input class="btn-color" type="button" id="updateGo" value="댓글수정" onclick="cgb_comment_update(this.form)">
+                <!-- <input type="button" value="답글답글" onclick="cgb_comment_reply_insert(this.form)"> -->
                 <input type="hidden" value="${cPage}" name="cPage">
                 <input type="hidden" name="c_idx" value="${k.c_idx}">
                 <input type="hidden" name="cp_idx" value="${k.cp_idx}">
@@ -272,7 +279,7 @@ function comment_reply(f) {
 							<p>별명 : <input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
 									${memberInfo.member_nickname}
 							</p>
-							<p>내용 <textarea rows="3" cols="40" name="content"></textarea>
+							<p><textarea id="textarea2" rows="3" cols="40" name="content"></textarea>
 							<input style="margin-left: 20px" type="button" value="댓글저장" onclick="cgb_comment_insert(this.form)"></p>
 							<!-- 댓글 저장시 어떤 원글의 댓글인지 저장해야 한다. -->
 							<input type="hidden" name ="cp_idx" value="${cgbvo.cp_idx}" >
@@ -280,8 +287,6 @@ function comment_reply(f) {
 						</fieldset>
 					</form>
 				</div>
-				
-				
 				<%-- 회원 댓글 출력 --%>
 				<div class="reply-output">
 					<c:forEach var="k" items="${camping_gear_list2}">
@@ -295,8 +300,8 @@ function comment_reply(f) {
 								<c:choose>
 									<c:when test="${memberInfo.member_nickname != k.member_nickname}">
 									 	<!-- 답글의 답글 입력창 -->
-                						<textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요"></textarea><hr>
-										<input type="button" value="답글답글" onclick="cgb_comment_reply_insert(this.form)">
+                						<!-- <textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요"></textarea><hr> -->
+										<!-- <input type="button" value="답글답글" onclick="cgb_comment_reply_insert(this.form)"> -->
 										<input type="hidden" value="${cPage}" name="cPage">
 						                <input type="hidden" name="c_idx" value="${k.c_idx}">
 						                <input type="hidden" name="cp_idx" value="${k.cp_idx}">
@@ -307,9 +312,9 @@ function comment_reply(f) {
 						                <textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요!"></textarea>
 						                <!-- <input type="button" value="답글 작성" onclick="reply_reply_insert(this.form)"> <hr> --><hr>
 						                
-						                <input type="button" value="댓글삭제" onclick="cgb_comment_delete(this.form)">
-						                <input type="button" id="updateGo" value="댓글수정" onclick="cgb_comment_update(this.form)">
-						                <input type="button" value="답글답글" onclick="cgb_comment_reply_insert(this.form)"> 
+						                <input class="btn-color" type="button" value="댓글삭제" onclick="cgb_comment_delete(this.form)">
+						                <input class="btn-color" type="button" id="updateGo" value="댓글수정" onclick="cgb_comment_update(this.form)">
+						                <!-- <input type="button" value="답글답글" onclick="cgb_comment_reply_insert(this.form)">  -->
 						                <input type="hidden" value="${cPage}" name="cPage">
 						                <input type="hidden" name="c_idx" value="${k.c_idx}">
 						                <input type="hidden" name="cp_idx" value="${k.cp_idx}">

@@ -35,7 +35,7 @@
 	</select>
 
 	<select id="adminmainreport" resultType="int">
-		SELECT count(report_num) AS totalreport
+		SELECT count(report_idx) AS totalreport
 		FROM admin_report
 		WHERE report_date = now()
 	</select>
@@ -52,12 +52,12 @@
 	    FROM members m
 	    INNER JOIN board_free b ON m.member_idx = b.member_idx
 	    INNER JOIN board_camp c ON m.member_idx = c.member_idx
-	    WHERE m.member_idx = #{member_idx}
+	   <!--  WHERE m.member_idx = #{member_idx} -->
 	</select>
 	<select id="reportall" resultType="int">
-		SELECT count(member_idx)
+		SELECT count(report_idx)
 		FROM admin_report
-		WHERE member_idx =#{member_idx}
+		WHERE reportmember_idx =#{member_idx}
 	</select>
 	<select id="memberedit" resultType="amvo" parameterType="amvo">
 		update members
@@ -111,6 +111,9 @@
 		SELECT * FROM popup ORDER BY popidx DESC LIMIT  #{limit} OFFSET #{offset} 
 		
 	</select>
+	<select id="popmain" parameterType="String" resultType="String">
+		SELECT * FROM popup where active=1
+	</select>
 	<update id="popupdate" parameterType="avo">
     UPDATE popup 
 	SET active = 1 
@@ -129,4 +132,52 @@
 	<delete id="popdelete" parameterType="String">
 	DELETE FROM popup WHERE popidx = #{popidx}
 	</delete>
+	<select id="getradmineporteach" resultType="amvo" parameterType="String">
+		SELECT *
+		FROM admin_report
+		where reportmember_idx =#{member_idx}
+	</select>
+	<update id="adminreport" parameterType="map">
+    UPDATE admin_report
+	SET report_day = #{report_day} 
+	WHERE report_idx = #{report_idx}
+	</update>
+	<!-- 회원정보- 회원 정지시키는 메퍼 -->
+	<update id="adminreportadd"  parameterType="map">
+		UPDATE admin_report r
+			INNER JOIN members m ON r.member_idx = m.member_idx
+			INNER JOIN admin a ON a.admin_idx = r.admin_idx
+			SET r.report_ok_date = CASE 
+			                            WHEN r.report_day = #{report_day} THEN DATE_ADD(NOW(), INTERVAL #{report_day} DAY)
+			                            ELSE r.report_ok_date
+			                        END,
+		    m.member_active = -1,
+		    r.report_status = 1,
+		    r.report_now_date = NOW(),
+		    r.admin_idx = #{admin_idx}
+		WHERE r.member_idx = #{member_idx};
+
+	</update>
+	<!-- 회원정보- 회원 정지 풀리는 메퍼 -->
+	<update id="statusupdate"  parameterType="String">
+	UPDATE admin_report a
+	INNER JOIN members m ON a.member_idx = m.member_idx
+	SET a.report_status = 1, m.member_active = 0
+	WHERE DATE(a.report_ok_date)&lt;= CURDATE();
+	</update>
+	<insert id="reportwriteok" parameterType="avo">
+		insert into admin_report(report_content,reportmember_idx,member_idx,report_date,report_now_date,report_ok_date)
+		values(#{report_content},#{reportmember_idx},#{member_idx},sysdate(),sysdate(),sysdate())
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

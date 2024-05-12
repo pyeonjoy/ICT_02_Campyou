@@ -2,6 +2,7 @@ package com.ict.campyou.bjs.controller;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import com.ict.campyou.bjs.dao.PromiseVO;
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
+import com.ict.campyou.common.Paging2;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 
@@ -75,108 +77,6 @@ public class TogetherAjaxController {
 		}
 		return result;
 	}
-	
-	@RequestMapping(value = "together_list_search.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
-	@ResponseBody
-	public String getTogetherListSearch(@RequestParam("searchType") String searchType, @RequestParam("searchKeyword") String searchKeyword) throws Exception{
-		String result = "";
-		if (searchType != null && searchKeyword != null) {
-	        List<TogetherVO> toListSearch = togetherService.getTogetherListSearch(searchType, searchKeyword);
-	        
-	        if (toListSearch != null) {
-	        	 for (TogetherVO tvo : toListSearch) {
-	                 LocalDate dob = LocalDate.parse(tvo.getMember_dob());
-	                 LocalDate currentDate = LocalDate.now();
-	                 int age = Period.between(dob, currentDate).getYears();
-	                 String ageGroup;
-	                 switch (age / 10) {
-	                     case 0: ageGroup = "10대 미만"; break;
-	                     case 1: ageGroup = "10대"; break;
-	                     case 2: ageGroup = "20대"; break;
-	                     case 3: ageGroup = "30대"; break;
-	                     case 4: ageGroup = "40대"; break;
-	                     case 5: ageGroup = "50대 이상"; break;
-	                     case 6: ageGroup = "60대 이상"; break;
-	                     case 7: ageGroup = "70대 이상"; break;
-	                     default: ageGroup = "80대 이상"; break;
-	                 }
-	                 tvo.setMember_dob(ageGroup);
-	             }
-	            Gson gson = new Gson();
-	            String jsontoListSearch = gson.toJson(toListSearch);
-	            return jsontoListSearch;
-	        }
-	    }
-	    return result;
-	}
-	
-//	@RequestMapping(value = "together_list_search.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
-//	@ResponseBody
-//	public String getTogetherListSearch(@RequestParam("searchType") String searchType, @RequestParam("searchKeyword") String searchKeyword, HttpServletRequest request) throws Exception{
-//		int count = togetherService.getToTotalCount();
-//		paging.setTotalRecord(count);
-//		
-//		// 전체 페이지의 수
-//		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
-//			paging.setTotalPage(1);
-//		}else {
-//			paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-//			if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
-//				paging.setTotalPage(paging.getTotalPage() +1);
-//			}
-//		}
-//		
-//		String cPage = request.getParameter("cPage");
-//		if(cPage == null) {
-//			paging.setNowPage(1);
-//		}else {
-//			paging.setNowPage(Integer.parseInt(cPage));
-//		}
-//		
-//		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
-//		
-//		paging.setBeginBlock((int)((paging.getNowPage() -1) / paging.getPagePerBlock()) * paging.getPagePerBlock() +1);
-//		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() -1);
-//		
-//		if(paging.getEndBlock() > paging.getTotalPage()) {
-//			paging.setEndBlock(paging.getTotalPage());
-//		}
-//		
-//		String result = "";
-//		if (searchType != null && searchKeyword != null) {
-//			Map<String, Object> resultMap = new HashMap<>();
-//	        List<TogetherVO> toListSearch = togetherService.getTogetherListSearch(paging.getOffset(), paging.getNumPerPage(), searchType, searchKeyword);
-//	        
-//	        if (toListSearch != null) {
-//	        	 for (TogetherVO tvo : toListSearch) {
-//	                 LocalDate dob = LocalDate.parse(tvo.getMember_dob());
-//	                 LocalDate currentDate = LocalDate.now();
-//	                 int age = Period.between(dob, currentDate).getYears();
-//	                 String ageGroup;
-//	                 switch (age / 10) {
-//	                     case 0: ageGroup = "10대 미만"; break;
-//	                     case 1: ageGroup = "10대"; break;
-//	                     case 2: ageGroup = "20대"; break;
-//	                     case 3: ageGroup = "30대"; break;
-//	                     case 4: ageGroup = "40대"; break;
-//	                     case 5: ageGroup = "50대 이상"; break;
-//	                     case 6: ageGroup = "60대 이상"; break;
-//	                     case 7: ageGroup = "70대 이상"; break;
-//	                     default: ageGroup = "80대 이상"; break;
-//	                 }
-//	                 tvo.setMember_dob(ageGroup);
-//	             }
-//	        	 
-//	        	resultMap.put("toListSearch", toListSearch);
-//	            resultMap.put("paging", paging);
-//	            Gson gson = new Gson();
-//	            result = gson.toJson(resultMap);
-////	            String jsontoListSearch = gson.toJson(toListSearch);
-////	            return jsontoListSearch;
-//	        }
-//	    }
-//	    return result;
-//	}
 	
 	@RequestMapping(value = "to_promise_chk.do", produces = "application/plain; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
@@ -237,4 +137,60 @@ public class TogetherAjaxController {
 		}
 		return "error" ;
 	}
+	
+	@RequestMapping(value = "promiseApplyList.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public List<PromiseVO> getPromiseApplyList(String member_idx) throws Exception {
+		List<PromiseVO> result = togetherService.getPromiseList(member_idx);
+		if(result != null) {
+			for (PromiseVO list : result) {
+				System.out.println("Promise: " + list.getT_idx()); 
+				System.out.println("Promise: " + list.getMember_nickname());
+				System.out.println("Promise: " + list.getPm_idx()); 
+				System.out.println("Promise: " + list.getTf_name());
+				LocalDate dob = LocalDate.parse(list.getMember_dob());
+				LocalDate currentDate = LocalDate.now();
+				int age = Period.between(dob, currentDate).getYears();
+				
+				String ageGroup;
+				switch (age / 10) {
+				case 0: ageGroup = "10대 미만"; break;
+				case 1: ageGroup = "10대"; break;
+				case 2: ageGroup = "20대"; break;
+				case 3: ageGroup = "30대"; break;
+				case 4: ageGroup = "40대"; break;
+				case 5: ageGroup = "50대 이상"; break;
+				case 6: ageGroup = "60대 이상"; break;
+				case 7: ageGroup = "70대 이상"; break;
+				default: ageGroup = "80대 이상"; break;
+				}
+				list.setMember_dob(ageGroup);
+				int promiseCount = togetherService.getPromiseCount(list.getMember_idx());
+				System.out.println(promiseCount);
+				list.setPromise_count(promiseCount);
+			}
+		}
+		return result;
+    }
+	
+	@RequestMapping(value = "acceptPromise.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getAcceptPromise(String pm_idx) throws Exception {
+		int result = togetherService.getAcceptPromise(pm_idx);
+		if(result > 0) {
+			return result;
+		}
+		return -1;
+	}
+	
+	@RequestMapping(value = "declinePromise.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getDeclinePromise(String pm_idx) throws Exception {
+		int result = togetherService.getDeclinePromise(pm_idx);
+		if(result > 0) {
+			return result;
+		}
+		return -1;
+	}
+	
 }
