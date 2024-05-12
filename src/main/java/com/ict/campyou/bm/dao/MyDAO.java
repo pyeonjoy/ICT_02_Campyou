@@ -1,6 +1,9 @@
 package com.ict.campyou.bm.dao;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,6 +135,35 @@ public int deletMember(String member_idx) {
 			System.out.println(e);
 		}
 		return 0;
+}
+public int addChatMsg(ChatVO chvo) {
+	return sqlSessionTemplate.insert("bomi.addChat",chvo);
+}
+
+public List<ChatVO> getChatList(String member_idx) {
+	 List<ChatVO> chatList = new ArrayList<>();
+	 Set<String> uniqueRooms = new HashSet<>();
+	 List<ChatVO> allRooms = sqlSessionTemplate.selectList("bomi.getRooms", member_idx + "-%");
+	 for (ChatVO room : allRooms) {
+	     uniqueRooms.add(room.getMsg_room());
+	 }
+	 List<ChatVO> allRooms2 = sqlSessionTemplate.selectList("bomi.getRooms", "-%"+member_idx);
+	 for (ChatVO room : allRooms2) {
+		 uniqueRooms.add(room.getMsg_room());
+	 }
+	 for (String room : uniqueRooms) {
+	     ChatVO maxMsgIdxRoom = sqlSessionTemplate.selectOne("bomi.getMaxMsgIdxRoom", room);
+	     chatList.add(maxMsgIdxRoom);
+	 }
+
+	    return chatList; 
+}
+
+public List<ChatVO> getOneRoom(String msg_room) {
+	return sqlSessionTemplate.selectList("bomi.getRoom", msg_room);
+}
+public int updateMsgRead(String msg_idx) {
+	return sqlSessionTemplate.update("bomi.msgRead",msg_idx);
 }
 
 }

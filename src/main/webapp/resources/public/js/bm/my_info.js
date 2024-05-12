@@ -108,7 +108,7 @@ function handle_pwd(memberIdx, f) {
 }
 
 
-function handle_delete(memberIdx) {
+function handle_delete(memberIdx,form) {
 	 const passwordInput = document.getElementById('password');
     const password = passwordInput.value.trim();
     
@@ -119,7 +119,8 @@ function handle_delete(memberIdx) {
     }  
      if (password && response === "success") {
 
-    href.location = "deleteUser.do?member_idx="+memberIdx; 
+	form.submit()
+    form.action = "deleteUser.do?member_idx="+memberIdx; 
     }   
 }
 

@@ -1,6 +1,7 @@
 package com.ict.campyou.bm.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.campyou.bjs.dao.TogetherVO;
+import com.ict.campyou.bjs.service.TogetherService;
+import com.ict.campyou.bm.dao.ChatVO;
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.PasswordCheckRequest;
 import com.ict.campyou.bm.dao.QnaVO;
@@ -33,6 +37,9 @@ public class BomiController {
 	@Autowired
 	private MyService myService;
 
+	@Autowired
+	private TogetherService togetherService;
+	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
@@ -61,9 +68,74 @@ public class BomiController {
 		return mv;
 	}
 	
+	@GetMapping("chat-list.do")
+	public ModelAndView showChatList(HttpSession session) {
+		  ModelAndView mv = new ModelAndView();
+		  MemberVO mvo = (MemberVO) session.getAttribute("memberInfo"); //내정보
+		  String member_idx = mvo.getMember_idx(); // 내 idx
+			 List <ChatVO> list = myService.getChatList(member_idx);
+		    mv.setViewName("bm/chat_list"); 
+			mv.addObject("list", list);
+		    return mv;
+	}
+	
+	@GetMapping("selectOneRoom.do")
+	public ModelAndView selectOneRoom(@RequestParam("msg_room") String msg_room, HttpSession session) {
+		ModelAndView mv = new ModelAndView("bm/chatroom2");
+		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");// 내정보
+		String my_idx = mvo.getMember_idx();
+		String [] array = msg_room.split("-");
+		String open_idx = array[0];
+		String join_idx = array[1];  //sender_idx = member_idx
+		List <ChatVO> chatList = myService.getOneRoom(msg_room);
+		MemberVO joiner = myService.getMember(join_idx);  // 나
+		MemberVO opener = myService.getMember(open_idx); //상대방
+		
+		for (ChatVO chat : chatList) {
+		    if (!chat.getSend_idx().equals(my_idx)) { 
+		        chat.setMsg_read("0");
+		      int res = myService.updateMsgRead(chat.getMsg_idx());
+		    }
+		}
+		
+		mv.addObject("chatList", chatList);
+		mv.addObject("msg_room", msg_room);
+		mv.addObject("joiner", joiner);
+		mv.addObject("opener", opener);
+		mv.addObject("my_idx", my_idx); // 내 idx가져가기
+
+		return mv;
+	}
 	@GetMapping("chatroom.do")
-	public ModelAndView gotoChatRoom() {
-		ModelAndView mv = new ModelAndView("bm/chatroom");
+	public ModelAndView gotoChatRoom(@RequestParam("t_idx") String t_idx, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		try {
+			MemberVO joiner = (MemberVO) session.getAttribute("memberInfo"); //내정보
+			String my_idx = joiner.getMember_idx(); // 내 idx
+			TogetherVO tvo = togetherService.getTogetherDetail(t_idx); //채팅방의 캠핑정보
+			String opener_idx = tvo.getMember_idx(); // 동행 올린 사람의 idx
+			String room_name = tvo.getT_campname()+" "+tvo.getT_startdate()+"-"+tvo.getT_enddate();
+			MemberVO opener = myService.getMember(opener_idx); //상대방정보
+			String msg_room = opener_idx+'-'+ my_idx;   //동행구하는사람의 idx-채팅보내는사람의 idx
+			List <ChatVO> chatList = myService.getOneRoom(msg_room);
+			
+			mv.addObject("chatList", chatList);
+			mv.addObject("msg_room", msg_room);
+			mv.addObject("joiner", joiner);
+			mv.addObject("opener", opener);
+			mv.addObject("my_idx", my_idx); // 내 idx가져가기
+			mv.addObject("msg_room", msg_room);
+			mv.addObject("room_name", room_name);
+			if(chatList != null) {
+				mv.addObject("chatList", chatList);
+				mv.setViewName("bm/chatroom2");
+			}
+			else {
+				mv.setViewName("bm/chatroom");
+			}			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		return mv;
 	}
 	
@@ -78,7 +150,6 @@ public class BomiController {
 		return mv;
 	}
 	
-
 	///////////////////////////////////////USER INFORMATION///////////////////////////////////////////////////////////
 
 //	check my information  
@@ -101,8 +172,17 @@ public class BomiController {
 				String path = req.getSession().getServletContext().getRealPath("/resources/uploadUser_img");
 
 				MultipartFile file = mvo.getFile();
-				String old_userImg = mvo.getMember_old_img();
 				
+				File uploadFolder = new File(path);
+
+		        if (!uploadFolder.exists()) {
+		            boolean created = uploadFolder.mkdirs();
+		            if (!created) {
+		                System.out.println("폴더 생성에 실패했습니다.");
+		            }
+		        }
+				String old_userImg = mvo.getMember_old_img();
+				System.out.println(file);
 				if (file.isEmpty()) {
 					mvo.setMember_img(old_userImg);
 
@@ -117,12 +197,10 @@ public class BomiController {
 				}
 
 				int res = myService.changeUserInfo(mvo);
-				
+				System.out.println(res);
 				if (res > 0) {
 					return mv;
 				}			
-				return mv;
-				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -147,10 +225,11 @@ public class BomiController {
 			return new ModelAndView("redirect:pwd_change.do");			
 		}
 		// Delete User
-		@RequestMapping("deleteUser.do")
+		@GetMapping("deleteUser.do")
 		public ModelAndView changeUserPw(@RequestParam("member_idx") String member_idx) {
 			ModelAndView mv = new ModelAndView("redirect:home.do");
 			int res = myService.deletMember(member_idx);
+			System.out.println(res);
 			return mv;
 		}
 		
