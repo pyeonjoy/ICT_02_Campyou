@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="/resources/public/js/jun/camp_list.js"></script>
+<link rel="stylesheet" href="resources/public/css/bjs/together_list.css">
+<script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
 
 <title>캠핑장리스트</title>
 <style type="text/css">
@@ -63,10 +65,16 @@
 #camp_list_button button {
 	margin: 0 10px;
 }
-.Heart_button{
-    position: relative;
-    top: 80px;
-    right: -30px;
+
+.Heart_button {
+	position: relative;
+	top: 80px;
+	right: -30px;
+}
+.page_button_space {
+	display: flex;
+	justify-content: center;
+	padding: 20px;
 }
 
 </style>
@@ -77,10 +85,10 @@
 	<div class="camp_list_container">
 		<jsp:include page="../hs/camp_search_box.jsp" />
 		<div id="camp_list_show"></div>
-	</div>
-	<div id="camp_list_button">
-		<button class="camp_list_before">이전 페이지</button>
-		<button class="camp_list_next">다음 페이지</button>
+		<div class="page_button">
+			<ul class="to_paging camp_list_page">
+			</ul>
+		</div>
 	</div>
 	<jsp:include page="../hs/footer.jsp" />
 </body>
