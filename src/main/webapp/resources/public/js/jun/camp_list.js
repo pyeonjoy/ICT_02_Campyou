@@ -214,19 +214,20 @@ $.ajax({
         induty: selectedInduty.join(),
         sbrscl: selectedSbrscl.join()
     },
-    dataType: "xml",
+    dataType: "json",
     success: function(data) {
         $("#camp_list_show").empty();
         
-        $(data).find('item').each(function() {
-            let firstImageUrl = $(this).find("firstImageUrl").text();
-            let doNm = $(this).find("doNm").text();
-            let sigunguNm = $(this).find("sigunguNm").text();
-            let facltNm = $(this).find("facltNm").text();
-            let induty = $(this).find("induty").text();
-            let addr1 = $(this).find("addr1").text();
-            let tel = $(this).find("tel").text();
-            let homepage = $(this).find("homepage").text();
+            $.each(data, function(index, camp) {
+            let firstImageUrl = camp.firstimageurl;
+            let doNm = camp.donm;
+            let sigunguNm = camp.sigungunm;
+            let facltNm = camp.facltnm;
+            let induty = camp.induty;
+            let addr1 = camp.addr1;
+            let tel = camp.tel;
+            let homepage = camp.homepage;
+            let contentid = camp.contentid
             
             let campItem = "<div class='camp_item'>";
             if (firstImageUrl != null && firstImageUrl !== "") {
@@ -234,7 +235,7 @@ $.ajax({
             } else {
                 campItem += "<img src='/resources/images/2.jpg' alt='대체 이미지'>";
             }
-            campItem += "<div class='camp_info'>";
+            campItem += "<div class='camp_info' onclick='location.href=\"camp_detail.do?contentid=" + contentid + "\"'>";
             campItem += "<p> [" + doNm + sigunguNm + "] </p>";
             campItem += "<h4>" + facltNm + "</h4><span>" + induty + "</span>";
             campItem += "<p>" + addr1 + "</p>";
@@ -245,14 +246,16 @@ $.ajax({
             campItem += "</div>";
 
             $("#camp_list_show").append(campItem);
+            let $container = $("#camp_list_show").find(".Heart_button:last");
+            loadHeart(contentid, $container);
         });
         
-        pageNumbers();
     },
     error: function() {
         alert("검색 실패");
     }
 });
+
 
 
     });

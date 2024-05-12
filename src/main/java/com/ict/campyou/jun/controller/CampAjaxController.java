@@ -77,37 +77,16 @@ public class CampAjaxController {
 		return null;
 	}
 
-	@RequestMapping(value = "camp_list_search.do", produces = "text/xml; charset=utf-8")
+	@RequestMapping(value = "camp_list_search.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String Camp_list_keyword(@RequestParam(defaultValue = "1") int pageNo,
+	public List<CampVO> Camp_list_keyword(@RequestParam(defaultValue = "1") int pageNo,
             @RequestParam(required = false, defaultValue = "") String keyword,
             @RequestParam(required = false, defaultValue = "") String lctCl,
             @RequestParam(required = false, defaultValue = "") String induty,
             @RequestParam(required = false, defaultValue = "") String sbrscl) {
-			List<CampVO> cvo = campService.searchCampDetail(keyword,lctCl,induty,sbrscl);
-		    StringBuilder sb = new StringBuilder();
-		    sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		    sb.append("<camp_list>");
-		    
-			if (cvo != null) {
-		        for (CampVO camp : cvo) {
-		            sb.append("<item>");
-		            sb.append("<firstImageUrl>").append(camp.getFirstimageurl()).append("</firstImageUrl>");
-		            sb.append("<doNm>").append(camp.getDonm()).append("</doNm>");
-		            sb.append("<sigunguNm>").append(camp.getSigungunm()).append("</sigunguNm>");
-		            // sb.append("<facltNm>").append(camp.getFacltnm()).append("</facltNm>");
-		            // sb.append("<induty>").append(camp.getInduty()).append("</induty>");
-		            sb.append("<addr1>").append(camp.getAddr1()).append("</addr1>");
-		            //sb.append("<tel>").append(camp.getTel()).append("</tel>");
-		            //sb.append("<homepage>").append(camp.getHomepage()).append("</homepage>");
-		            sb.append("<contentId>").append(camp.getContentid()).append("</contentId>");
-		            sb.append("</item>");
-		        }
-		    }
-		    
-		    sb.append("</camp_list>");
-		    
-		    return sb.toString();
+		    List<CampVO> cvo = campService.searchCampDetail(keyword, lctCl, induty, sbrscl);
+		    return cvo;
+		  
 	}
 		
 	
