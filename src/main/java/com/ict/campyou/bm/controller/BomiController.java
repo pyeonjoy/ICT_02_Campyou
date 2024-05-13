@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ict.campyou.bjs.dao.TogetherVO;
+import com.ict.campyou.bjs.dao.TogetherCommentVO;
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.PasswordCheckRequest;
 import com.ict.campyou.bm.dao.QnaVO;
@@ -290,7 +290,7 @@ public class BomiController {
 					paging.setEndBlock(paging.getTotalPage());
 				}
 				
-			 List<TogetherVO> list = myService.getMyAcc_List(member_idx);
+			 List<TogetherCommentVO> list = myService.getMyAcc_List(member_idx);
 			 mv.addObject("list",list);
 			 //캠핑이미지첨부도 하기 !!
 			return mv;			 

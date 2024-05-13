@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.ict.campyou.bjs.dao.PromiseVO;
 import com.ict.campyou.bjs.dao.TogetherVO;
+import com.ict.campyou.bjs.dao.TogetherCommentVO;
 import com.ict.campyou.bjs.service.TogetherService;
 import com.ict.campyou.common.Paging2;
 import com.ict.campyou.common.Paging4;
@@ -38,7 +39,7 @@ public class TogetherAjaxController {
 
 	@RequestMapping(value = "together_Write2.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
-	public String getTogetherWrite(TogetherVO tvo, HttpSession session) throws Exception{
+	public String getTogetherWrite(TogetherCommentVO tvo, HttpSession session) throws Exception{
 		List<CampVO> campList = togetherService.getTogetherCampList();
 		if(campList != null) {
 			Gson gson = new Gson();
@@ -315,6 +316,17 @@ public class TogetherAjaxController {
 		response.put("toSendHistory", toSendHistory);
 		response.put("paging", paging);
 		return response;
+	}
+	
+	@RequestMapping(value = "to_comment_list.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
+		List<TogetherCommentVO> toCommentList = togetherService.getToCommentList(t_idx);
+		for (TogetherCommentVO k : toCommentList) {
+			System.out.println(k.getMember_idx());
+			System.out.println(k.getWc_content());
+		}
+		return toCommentList;
 	}
 	
 }

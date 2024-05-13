@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ict.campyou.bjs.dao.PromiseVO;
-import com.ict.campyou.bjs.dao.TogetherDAO;
 import com.ict.campyou.bjs.dao.TogetherVO;
+import com.ict.campyou.bjs.dao.TogetherDAO;
+import com.ict.campyou.bjs.dao.TogetherCommentVO;
 import com.ict.campyou.jun.dao.CampVO;
 
 @Service
@@ -131,7 +132,12 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 	
 	@Override
-	public List<PromiseVO> getTogetherSendHistory(String member_idx, int offset, int limit) {
+	public List<PromiseVO> getTogetherSendHistory(String member_idx, int offset, int limit) throws Exception {
 		return togetherDAO.getTogetherSendHistory(member_idx, offset, limit);
+	}
+	
+	@Override
+	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
+		return togetherDAO.getToCommentList(t_idx);
 	}
 }

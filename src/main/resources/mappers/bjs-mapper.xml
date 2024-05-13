@@ -144,4 +144,11 @@
 	        	 case when p.pm_state != 0 then p.pm_idx end asc
 	    limit #{limit} offset #{offset}
 	</select>
+	<select id="to_comment_list" parameterType="String" resultType="tcvo">
+		select wc.*, m.member_nickname, m.member_img
+		from board_with_comment wc
+		join members m on wc.member_idx = m.member_idx
+		where wc.t_idx = #{t_idx}
+		order by wc.wc_groups, wc.wc_lev
+	</select>
 </mapper>
