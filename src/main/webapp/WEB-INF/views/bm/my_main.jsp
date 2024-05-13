@@ -133,33 +133,6 @@ function promiseApplyList() {
               value="${mvo.member_idx}"
             />
 
-   
-  <div class="mypage">   
-    <div class="welcome"> 
-     <div class="my_img">   
-     <c:choose>
-	    <c:when test="${empty mvo.member_img}"> 
-	    <img src="${path}/resources/img/cat.png" alt="user_img" class="my_img"> 
-	    </c:when>	    
-	    <c:otherwise>   
-          <img src="${path}/resources/uploadUser_img/${mvo.member_img}" alt="user_img" class="my_img">
-     </c:otherwise>
-     </c:choose>  
-     </div>
-      <h2 class="welcome_user"> ${mvo.member_name}님, 환영합니다. </h2>
-    </div>
-    <div class="accompany_container">
-     
-      <div class="accompany_list">
-        <div class="list_header">          
-          <img src="http://via.placeholder.com/40x40" alt="user_img" class="otheruser_img">
-          <div class="list_summery">
-            <p class="list_nickname">user nickname</p>
-            <p class="list_go">같이가고싶어요!</p>
-          </div>
-        </div>
-
-
 	<div class="mypage">
 		<div class="welcome">
 			<div class="user_img">
@@ -176,7 +149,7 @@ function promiseApplyList() {
 			</div>
 			<h2 class="welcome_user">${mvo.member_name}님, 환영합니다.</h2>
 		</div>
-		<a href="together_history.do" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
+		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
 		<div class="accompany_container">
 
 			<%--        <img src="${path}/resources/img/right.png" alt="arrow-left" class="arrow arrow-left"> --%>
