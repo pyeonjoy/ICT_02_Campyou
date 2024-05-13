@@ -149,7 +149,7 @@ function promiseApplyList() {
       <h2 class="welcome_user"> ${mvo.member_name}님, 환영합니다. </h2>
     </div>
     <div class="accompany_container">
-     
+     </div>
       <div class="accompany_list">
         <div class="list_header">          
           <img src="http://via.placeholder.com/40x40" alt="user_img" class="otheruser_img">

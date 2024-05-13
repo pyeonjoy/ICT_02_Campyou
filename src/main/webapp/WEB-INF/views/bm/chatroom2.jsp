@@ -9,7 +9,6 @@
 <title>WebSocket Chat</title>
 <link rel="stylesheet" href="${path}/resources/public/css/bm/chatroom.css" />
 <script defer src="${path}/resources/public/js/bm/chatroom.js"></script>
-<script defer src="${path}/resources/public/js/bm/header_chat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </head>
@@ -24,7 +23,7 @@
 	<div id="chat-page" class="chatPage">
       <div class="chat-container">
         <div class="form-header">
-          <button class="back" onclick="openChat()"><img src="${path}/resources/img/right.png" alt="back-button" class="left-arrow"></button>
+          <button class="back" onclick="redirectToChatList()"><img src="${path}/resources/img/right.png" alt="back-button" class="left-arrow"></button>
  <c:choose>
      		 <c:when test="${my_idx} == ${opener.member_idx}">
         <span class="chatroom">${joiner.member_nickname}</span> 
