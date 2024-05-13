@@ -324,6 +324,7 @@ public class TogetherAjaxController {
 		List<TogetherCommentVO> toCommentList = togetherService.getToCommentList(t_idx);
 		for (TogetherCommentVO k : toCommentList) {
 			System.out.println(k.getMember_idx());
+			System.out.println(k.getMember_nickname());
 			System.out.println(k.getWc_content());
 		}
 		return toCommentList;

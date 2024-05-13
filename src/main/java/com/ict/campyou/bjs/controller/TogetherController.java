@@ -126,6 +126,7 @@ public class TogetherController {
 	public ModelAndView getTogetherDetail(@ModelAttribute("cPage")String cPage, String t_idx, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
+//		System.out.println(memberUser.getMember_img());
 		TogetherVO tvo = togetherService.getTogetherDetail(t_idx);
 		int pvo = togetherService.getPomiseCount(t_idx);
 		

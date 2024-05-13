@@ -179,44 +179,63 @@ function to_delete_go(f, t_idx) {
 
 function to_comment() {
     let tIdx = document.getElementById('t_idx').value;
-    
+    if (document.getElementById('login_member_img').value) {
+        loginMemberImg = document.getElementById('login_member_img').value;
+    }
+    $('.toDetailContent4').empty();
     $.ajax({
         type: "POST",
         url: "to_comment_list.do",
         data: {
             t_idx: tIdx
         },
-        success: function(response) {
-			let commentContainer = $('.toDetailContent4Sub2');
-            response.forEach(function(comment) {
-                let commentHTML = `
-                    <div class="toDetailContent4Sub3">
-                        <div class="toDetailContent4Sub2Sub1">
-                            <div class="toDetailContent4Sub2Sub1Div">
-                                <div class="userImageDiv"><img src="${path}/resources/images/${comment.member_img}" class="userImage3"></div>
-                                <div>
-                                    <strong>${comment.member_nickname}</strong>
-                                    <p>${comment.wc_regdate}</p>
-                                </div>
-                            </div>
-                            <div class="toDetailContent4Sub2Sub2">
-                                <input type="button" value="답글 달기" onclick="to_coment_write(this.form)" class="toDetailContent4Sub2Sub2Button">
-                            </div>
-                        </div>
-                        <div class="toDetailContent4Sub2Sub3">
-                            <div class="toDetailContent2Sub1Div2">
-                                <span class="toDetailContent2Sub1Div2Span">${comment.wc_content}</span>
-                            </div>
-                            <div>
-                                <input type="button" value="X" onclick="" class="toDetailContent4Sub2Sub2Button">
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                // 댓글을 추가합니다.
-                commentContainer.append(commentHTML);
-            });
+        dataType: "json",
+        success: function(data) {
+            if (data != null) {
+            	let commentHTML = '';
+            	commentHTML += '<p class="toDetailContent4Sub1">댓글</p>';
+            	commentHTML += '<form method="post">';
+            	commentHTML += '<div class="toDetailInput">';
+            	// 로그인 여부에 따라 이미지 출력
+                if (loginMemberImg) {
+                    commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + loginMemberImg + '" class="userImage32"></div>';
+                } else {
+                    commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/user2.png" class="userImage32"></div>';
+                    $('.toDetailInputBox').prop('disabled', true); // 댓글 입력 창 비활성화
+                    $('.toDetailInputBox').attr('placeholder', '로그인 후 작성 가능합니다.'); // 플레이스홀더 설정
+                }
+            	commentHTML += '<input type="text" value="" id="" class="toDetailInputBox">';
+            	commentHTML += '<input type="button" value="입력" id="" class="toDetailInputBox toDetailInputSubmit" onclick="">';
+            	commentHTML += '</div>';
+            	commentHTML += '</form>';
+            	for (let i = 0; i < data.length; i++) {
+            		let comment = data[i];
+                    let commentHTML2 = '<div class="toDetailContent4Sub3">';
+                    commentHTML2 += '<div class="toDetailContent4Sub2Sub1">';
+                    commentHTML2 += '<div class="toDetailContent4Sub2Sub1Div">';
+                    commentHTML2 += '<div class="userImageDiv"><img src="${path}/resources/images/' + comment.member_img + '" class="userImage3"></div>';
+                    commentHTML2 += '<div>';
+                    commentHTML2 += '<p>' + comment.member_nickname + '</p>';
+                    commentHTML2 += '<p>' + comment.wc_regdate + '</p>';
+                    commentHTML2 += '</div>';
+                    commentHTML2 += '</div>';
+                    commentHTML2 += '<div class="toDetailContent4Sub2Sub2">';
+                    commentHTML2 += '<input type="button" value="답글 달기" onclick="to_coment_write(this.form)" class="toDetailContent4Sub2Sub2Button">';
+                    commentHTML2 += '</div>';
+                    commentHTML2 += '</div>';
+                    commentHTML2 += '<div class="toDetailContent4Sub2Sub3">';
+                    commentHTML2 += '<div class="toDetailContent2Sub1Div2">';
+                    commentHTML2 += '<span class="toDetailContent2Sub1Div2Span">' + comment.wc_content + '</span>';
+                    commentHTML2 += '</div>';
+                    commentHTML2 += '<div>';
+                    commentHTML2 += '<input type="button" value="X" onclick="" class="toDetailContent4Sub2Sub2Button">';
+                    commentHTML2 += '</div>';
+                    commentHTML2 += '</div>';
+                    commentHTML2 += '</div>';
+                    commentHTML += commentHTML2;
+                }
+            $('.toDetailContent4').append(commentHTML);
+            }
         },
         error: function(xhr, status, error) {
             console.error(error);
@@ -299,6 +318,7 @@ function to_comment() {
             		<c:when test="${memberUser.member_idx eq tvo.member_idx }">
 		                <input type="button" value="수정하기" onclick="to_update_go(this.form)" class="toDetailContent3Button">
 		                <input type="button" value="삭제하기" onclick="to_delete_go(this.form, ${tvo.t_idx})" class="toDetailContent3Button">
+		                <input type="hidden" id="login_member_img" value="${memberUser.member_img }">
             		</c:when>
             		<c:otherwise>
 						            		
