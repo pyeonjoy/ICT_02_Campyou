@@ -194,5 +194,6 @@ public class TogetherVO {
 	public void setT_mangedivnm(String t_mangedivnm) {
 		this.t_mangedivnm = t_mangedivnm;
 	}
+
 	
 }

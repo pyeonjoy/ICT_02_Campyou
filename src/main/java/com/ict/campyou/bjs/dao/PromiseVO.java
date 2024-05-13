@@ -2,7 +2,7 @@ package com.ict.campyou.bjs.dao;
 
 public class PromiseVO {
 	private String pm_idx, t_idx, member_idx, pm_state, pm_end, pm_regdate, tf_name, t_startdate, t_enddate, t_campname, t_numpeople, member_img, member_dob, member_nickname;
-	private int promise_count;
+	private int promise_count, promise_my_count;
 
 	public String getPm_idx() {
 		return pm_idx;
@@ -122,6 +122,14 @@ public class PromiseVO {
 
 	public void setPromise_count(int promiseCount) {
 		this.promise_count = promiseCount;
+	}
+
+	public int getPromise_my_count() {
+		return promise_my_count;
+	}
+
+	public void setPromise_my_count(int promise_my_count) {
+		this.promise_my_count = promise_my_count;
 	}
 
 	

@@ -9,7 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ict.campyou.bjs.dao.TogetherVO;
+import com.ict.campyou.bjs.dao.TogetherCommentVO;
 import com.ict.campyou.hu.dao.MemberVO;
 
 
@@ -119,7 +119,7 @@ public QnaVO getMyOneQna(String qna_idx) {
 	return null;
 }
 
-public List<TogetherVO> getMyAcc_List(String member_idx) {	
+public List<TogetherCommentVO> getMyAcc_List(String member_idx) {	
 	try {
 	return sqlSessionTemplate.selectList("bomi.getList", member_idx);
 	}catch  (Exception e) {

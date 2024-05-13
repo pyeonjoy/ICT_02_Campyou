@@ -1,67 +1,130 @@
 @charset "UTF-8";
 *{margin: 0px; padding: 0px; box-sizing: border-box;}
 
-.qcontainer{
-	padding-top: 4.06rem;
+.thcontainer{
+	padding-top: 150px;
 	width: 100%;
 	min-height: 85vh;
 }
-.qwrapper{
+.thwrapper{
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
 }
-.qau{
-	width: 60%;
-	display: grid;
-	grid-template-columns: 5% 10% 55% 10% 20%;
-	list-style: none;
-/* 	border-top: 1px solid black; */
-	border-bottom: 1px solid black;
-	padding: 0.7rem 0;
-	
+.thwrapper1{
+	width: 50%;
+	margin-bottom: 3rem;
 }
-.q1{
+.thwrapper2{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	margin-top: 1rem;
+}
+.thwrapper1Button{
+	width: 48.5%;
+	height: 3rem;
+	font-size: 1rem;
+/* 	padding: 1rem 10rem; */
+}
+.thwrapper1Button_active{
+	background-color: #053610;
+	color: white;
+}
+.thwrapper1Button:first-child{
+	margin-right: 1rem;
+}
+.thul1{
+	width: 50%;
+	display: grid;
+	grid-template-columns: 10% 25% 25% 20% 10% 10%;
+	list-style: none;
+	background-color: #053610;
+	color: white;
+	padding: 0.7rem 0;
 	text-align: center;
 }
-.q2{
-	margin-left: 2rem;
+.thul3{
+	width: 50%;
+	display: grid;
+	grid-template-columns: 25% 25% 20% 10% 10% 10%;
+	list-style: none;
+	background-color: #053610;
+	color: white;
+	padding: 0.7rem 0;
+	text-align: center;
 }
-.qa11{
+.thliImage3{
+	
+}
+.thliImage{
+	
+}
+.thliImage2{
+	max-width: 100%;
+	max-height: 100%;
+}
+.thul2{
+	width: 50%;
+	height: 100px;
+	display: grid;
+	grid-template-columns: 10% 25% 25% 20% 10% 10%;
+	list-style: none;
+	padding: 0.7rem 0;
+	align-items: center;
+	justify-content: center;
+}
+.thul4{
+	width: 50%;
+	height: 100px;
+	display: grid;
+	grid-template-columns: 25% 25% 20% 10% 10% 10%;
+	list-style: none;
+	padding: 0.7rem 0;
+	align-items: center;
+	justify-content: center;
+}
+.thul5{
+	width: 50%;
+	height: 100px;
+	display: flex;
+	padding: 0.7rem 0;
+	align-items: center;
+	justify-content: center;
+}
+.thul2Div{
+	width: 100%;
+	display: flex;
+}
+.thul2DivButton{
+	width: 48%;
+	height: 30px;
+}
+.thul2DivButton:first-child{
+	margin-right: 0.5rem;
+}
+.th1{
+	text-align: center;
+}
+.th2{
+/* 	margin-left: 2rem; */
+}
+.th11{
 	text-decoration: none;
 	color: black;
 }
-.qtitle{
-	width: 60%;
-	margin-top: 6rem;
-	padding-bottom: 2rem;
-	border-bottom: 1px solid black;
-}
-.empty_qa_ul{
+.empty_th_ul{
 	width: 60%;
 	border-bottom: 1px solid black;
 	padding: 0.7rem 0;
 	list-style: none;
 	text-align: center;
 }
-.qwrite{
-	width: 80%;
-	height: 1.9rem;
-	display: flex;
-    justify-content: flex-end;
-    margin: 2rem 0;
-}
-.qwrite1{
-	min-width: 8rem;
-	height: 100%;
-	background-color: black;
-	color: white;
-	border: none;
-	cursor: pointer;
-}
-.qa_paging{
+.th_paging{
 	display: flex;
 	width: 100%;
 	justify-content: center;
@@ -70,32 +133,31 @@
 	align-items: center;
 }
 .nowpagecolor{
-	border: 1px solid black;
 	padding: 0 0.5rem;
-	margin: 0 0.2rem;
+	margin: 0 0.5rem;
 	text-decoration: none;
-	background-color: black;
-	color: white;
+	background-color: white;
+	color: #FFBA34;
+	font-size: 1.4rem;
 }
 .nowpage{
-	border: 1px solid black;
 	padding: 0 0.5rem;
-	margin: 0 0.2rem;
+	margin: 0 0.5rem;
 	background-color: white;
 	color: black;
 	text-decoration: none;
+	font-size: 1.4rem;
 }
-.qa_disable{
+.th_disable{
 	color: silver;
 	margin: 0 1rem;
 	text-decoration: none;
 }
-.qa_able{
+.th_able{
 	color: black;
 	margin: 0 1rem;
 	text-decoration: none;
 }
 .nowpage:hover{
-	background-color: black;
-	color: white;
+	color: #FFBA34;
 }
