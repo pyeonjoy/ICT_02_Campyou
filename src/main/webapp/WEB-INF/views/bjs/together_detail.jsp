@@ -27,6 +27,7 @@ function to_list_go(f) {
 $(function() {
 	initMap();
 	toggleApplyButton();
+	to_comment();
 });
 function initMap() {
     let markers = [];
@@ -175,6 +176,53 @@ function to_delete_go(f, t_idx) {
 	    }
 	 }, 150);
 }
+
+function to_comment() {
+    let tIdx = document.getElementById('t_idx').value;
+    
+    $.ajax({
+        type: "POST",
+        url: "to_comment_list.do",
+        data: {
+            t_idx: tIdx
+        },
+        success: function(response) {
+			let commentContainer = $('.toDetailContent4Sub2');
+            response.forEach(function(comment) {
+                let commentHTML = `
+                    <div class="toDetailContent4Sub3">
+                        <div class="toDetailContent4Sub2Sub1">
+                            <div class="toDetailContent4Sub2Sub1Div">
+                                <div class="userImageDiv"><img src="${path}/resources/images/${comment.member_img}" class="userImage3"></div>
+                                <div>
+                                    <strong>${comment.member_nickname}</strong>
+                                    <p>${comment.wc_regdate}</p>
+                                </div>
+                            </div>
+                            <div class="toDetailContent4Sub2Sub2">
+                                <input type="button" value="답글 달기" onclick="to_coment_write(this.form)" class="toDetailContent4Sub2Sub2Button">
+                            </div>
+                        </div>
+                        <div class="toDetailContent4Sub2Sub3">
+                            <div class="toDetailContent2Sub1Div2">
+                                <span class="toDetailContent2Sub1Div2Span">${comment.wc_content}</span>
+                            </div>
+                            <div>
+                                <input type="button" value="X" onclick="" class="toDetailContent4Sub2Sub2Button">
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // 댓글을 추가합니다.
+                commentContainer.append(commentHTML);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
 </script>
 </head>
 <body>
@@ -197,12 +245,9 @@ function to_delete_go(f, t_idx) {
 					<span class="to_member_age">(${tvo.member_dob })</span>
                 </div>
 
-                <input type="button" value="1:1 채팅하기" id="" onclick="enterChatRoom(${tvo.t_idx})" class="toDetailContent1Button toDetailContent1Button1">
-                <input type="button" value="참가 신청하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button2">
-
 <!--                 <input type="button" value="1:1 채팅하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1"> -->
 <!--                 <input type="button" value="참가 신청하기" id="" onclick="to_application()" class="toDetailContent1Button toDetailContent1Button2"> -->
-                <button type="button" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1">1:1 채팅하기</button>
+                <button type="button" id="" onclick="enterChatRoom(${tvo.t_idx})" class="toDetailContent1Button toDetailContent1Button1">1:1 채팅하기</button>
                 <button type="button" id="toDetailContent1Button2" onclick="to_apply()" class="toDetailContent1Button toDetailContent1Button2">참가신청하기</button>
                 <button type="button" id="toDetailContent1Button3" onclick="to_cancel()" class="toDetailContent1Button toDetailContent1Button2">참가신청취소</button>
 <!--                 <input type="button" value="참가 취소하기" id="" onclick=""> -->
@@ -268,80 +313,33 @@ function to_delete_go(f, t_idx) {
                     <div class="toDetailInput">
                         <div class="userImageDiv2"><img src="${path}/resources/images/tree-4.jpg" class="userImage32"></div>
                         <input type="text" value="" id="" class="toDetailInputBox">
-                        <input type="submit" value="입력" id="" class="toDetailInputBox toDetailInputSubmit">
-                    </div>
-                    <div class="toDetailContent4Sub2">
-                        <div class="toDetailContent4Sub3">
-                            <div class="toDetailContent4Sub2Sub1">
-                                <div class="toDetailContent4Sub2Sub1Div">
-                                    <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div>
-                                    <div>
-                                        <strong>짱구</strong>
-                                        <p>2024-04-23 16:53</p>
-                                    </div>
-                                </div>
-                                <div class="toDetailContent4Sub2Sub2">
-                                    <input type="button" value="답글 달기" id="" onclick=""
-                                        class="toDetailContent4Sub2Sub2Button">
-                                </div>
-                            </div>
-                            <div class="toDetailContent4Sub2Sub3">
-                                <div class="toDetailContent2Sub1Div2">
-                                    <span class="toDetailContent2Sub1Div2Span">언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요?</span>
-                                </div>
-                                <div>
-                                    <input type="button" value="X" id="" onclick="" class="toDetailContent4Sub2Sub2Button">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="toDetailContent4Sub3">
-                            <div class="toDetailContent4Sub2Sub1">
-                                <div class="toDetailContent4Sub2Sub1Div">
-                                    <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div>
-                                    <div>
-                                        <strong>짱구</strong>
-                                        <p>2024-04-23 16:53</p>
-                                    </div>
-                                </div>
-                                <div class="toDetailContent4Sub2Sub2">
-                                    <input type="button" value="답글 달기" id="" onclick=""
-                                        class="toDetailContent4Sub2Sub2Button">
-                                </div>
-                            </div>
-                            <div class="toDetailContent4Sub2Sub3">
-                                <div class="toDetailContent2Sub1Div2">
-                                    <span class="toDetailContent2Sub1Div2Span">언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요?</span>
-                                </div>
-                                <div>
-                                    <input type="button" value="X" id="" onclick="" class="toDetailContent4Sub2Sub2Button">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="toDetailContent4Sub3">
-                            <div class="toDetailContent4Sub2Sub1">
-                                <div class="toDetailContent4Sub2Sub1Div">
-                                    <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div>
-                                    <div>
-                                        <strong>짱구</strong>
-                                        <p>2024-04-23 16:53</p>
-                                    </div>
-                                </div>
-                                <div class="toDetailContent4Sub2Sub2">
-                                    <input type="button" value="답글 달기" id="" onclick=""
-                                        class="toDetailContent4Sub2Sub2Button">
-                                </div>
-                            </div>
-                            <div class="toDetailContent4Sub2Sub3">
-                                <div class="toDetailContent2Sub1Div2">
-                                    <span class="toDetailContent2Sub1Div2Span">언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요?</span>
-                                </div>
-                                <div>
-                                    <input type="button" value="X" id="" onclick="" class="toDetailContent4Sub2Sub2Button">
-                                </div>
-                            </div>
-                        </div>
+                        <input type="button" value="입력" id="" class="toDetailInputBox toDetailInputSubmit" onclick="">
                     </div>
                 </form>
+                <div class="toDetailContent4Sub2">
+                    <div class="toDetailContent4Sub3">
+                        <div class="toDetailContent4Sub2Sub1">
+                            <div class="toDetailContent4Sub2Sub1Div">
+                                <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div>
+                                <div>
+                                    <strong>짱구</strong>
+                                    <p>2024-04-23 16:53</p>
+                                </div>
+                            </div>
+                            <div class="toDetailContent4Sub2Sub2">
+                                <input type="button" value="답글 달기" id="" onclick="to_coment_write(this.form)" class="toDetailContent4Sub2Sub2Button">
+                            </div>
+                        </div>
+                        <div class="toDetailContent4Sub2Sub3">
+                            <div class="toDetailContent2Sub1Div2">
+                                <span class="toDetailContent2Sub1Div2Span">언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요?</span>
+                            </div>
+                            <div>
+                                <input type="button" value="X" id="" onclick="" class="toDetailContent4Sub2Sub2Button">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

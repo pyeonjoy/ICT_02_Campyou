@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ict.campyou.bjs.dao.PromiseVO;
 import com.ict.campyou.bjs.dao.TogetherVO;
+import com.ict.campyou.bjs.dao.TogetherCommentVO;
 import com.ict.campyou.jun.dao.CampVO;
 
 public interface TogetherService {
@@ -25,7 +26,11 @@ public interface TogetherService {
 	public int getTogetherDeleteOK(String t_idx) throws Exception;
 	public List<PromiseVO> getPromiseList(String member_idx) throws Exception;
 	public int getAcceptPromise(String pm_idx) throws Exception;
-	public int getPromiseCount(String member_idx) throws Exception;
+	public int getPromiseMyCount(String member_idx) throws Exception;
 	public int getDeclinePromise(String pm_idx) throws Exception;
-	public List<PromiseVO> getTogetherHistory() throws Exception;
+	public int getToHistoryCount(String member_idx) throws Exception;
+	public List<PromiseVO> getTogetherHistoryGet(String member_idx, int offset, int limit) throws Exception;
+	public int getToHistorySendCount(String member_idx) throws Exception;
+	public List<PromiseVO> getTogetherSendHistory(String member_idx, int offset, int limit) throws Exception;
+	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception;
 }

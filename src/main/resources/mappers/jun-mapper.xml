@@ -43,6 +43,24 @@
             AND sbrscl = #{sbrscl}
         </if>
     </where>
+        limit #{limit} offset #{offset}
 </select>
-
+<select id="searchCount" parameterType="Map" resultType="int">
+    select count(*)
+    from camp_list 
+    <where>
+        <if test="keyword != null and keyword != ''">
+            AND (facltnm LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+        <if test="lctCl != null and lctCl != ''">
+            AND lctCl = #{lctCl}
+        </if>
+        <if test="induty != null and induty != ''">
+            AND induty = #{induty}
+        </if>
+        <if test="sbrscl != null and sbrscl != ''">
+            AND sbrscl = #{sbrscl}
+        </if>
+    </where>
+</select>
 </mapper>
