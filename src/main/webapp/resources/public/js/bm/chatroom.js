@@ -68,7 +68,7 @@ function sendMessage(form, e) {
     'room_name': room_name
   };
 
-  stompClient.send("/app/chat.sendMessage", headers, JSON.stringify(chatMessage));
+  stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
 
   form.elements["msg_content"].value = '';
   return false;
@@ -84,4 +84,8 @@ function showMessageOutput(chvo) {
   `;
   msgContainer.insertAdjacentHTML("afterbegin", messageHTML);
   msgContainer.scrollTop = msgContainer.scrollHeight;
+}
+
+function redirectToChatList(){
+ window.location.href = "chat-list.do";
 }
