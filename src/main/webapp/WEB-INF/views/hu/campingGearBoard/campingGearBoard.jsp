@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>	
-<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
+<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />	
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -29,7 +30,7 @@
 <body>
 	<div id="board-free" align="center">
 		<table id="table1">
-		<caption>캠핑제품추천</caption>
+		<caption>캠핑추천게시판</caption>
 			<thead>
 				<tr class="title">
 					<th class="no">번호</th>
@@ -47,36 +48,63 @@
 					<c:otherwise>
 						<c:forEach var="k" items="${camping_gear_list}" varStatus="vs">
 							<tr>
-								<td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>
-								<td>
-									<c:choose>
-										<c:when test="${k.cp_active == 1}">
-											<span style="color:lightgray">삭제된 게시물입니다</span>
-										</c:when>
-										<c:otherwise>
-											<a href="camping_gear_content.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.cp_subject}</a>
-										</c:otherwise>
-									</c:choose>
-								</td>
-								<td>
-									<c:choose>
-										<c:when test="${memberInfo.member_id == 'admin'}">
-											<a href="camping_gear_detail.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
-										</c:when>
-										<c:otherwise>
-											<c:choose>
-												<c:when test="${memberInfo.member_nickname == k.member_nickname}">
-													<a href="camping_gear_detail.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
-												</c:when>
-												<c:otherwise>
-													${k.member_nickname}
-												</c:otherwise>
-											</c:choose>
-										</c:otherwise>
-									</c:choose>
-								</td>
-								<td>${k.cp_regdate.substring(0,10)}</td>
-								<td>${k.cp_hit}</td>
+							    <c:choose>
+							        <c:when test="${k.member_nickname == '관리자'}">
+							        <td class="admin-write-color" style="background-color: lightyellow;">공지</td>
+							          <%--   <td class="admin-write-color" style="background-color: lightyellow;">${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td> --%>
+						
+							            <td class="admin-write-color" style="background-color: lightyellow;">
+							                <!-- <td style="text-align: left; " /> -->
+							                <%-- <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
+							                <c:choose>
+							                    <c:when test="${k.cp_active == 1}">
+							                        <span style="color:lightgray">삭제된 게시물입니다</span>
+							                    </c:when>
+							                    <c:otherwise>
+							                        <a href="camping_gear_content.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.cp_subject}</a>
+							                    </c:otherwise>
+					
+							                </c:choose>
+							            </td>
+							            <td class="admin-write-color" style="background-color: lightyellow;">${k.member_nickname}</td>
+							            <td class="admin-write-color" style="background-color: lightyellow;">${k.cp_regdate.substring(0,10)}</td>
+							            <td class="admin-write-color" style="background-color: lightyellow;">${k.cp_hit}</td>
+							        </c:when>						        
+							        <c:otherwise>
+							            <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>
+							            <td>
+							                <!-- <td style="text-align: left; " /> -->
+							                <%-- <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
+							                <c:choose>
+							                    <c:when test="${k.cp_active == 1}">
+							                        <span style="color:lightgray">삭제된 게시물입니다</span>
+							                    </c:when>
+							                    <c:otherwise>
+							                        <a href="camping_gear_content.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.cp_subject}</a>
+							                    </c:otherwise>
+							                </c:choose>
+							            </td>
+							            <td>
+							                <c:choose>
+							                    <c:when test="${memberInfo.member_id == 'admin'}">
+							                        <a href="camping_gear_detail.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                    </c:when>
+							                    <c:otherwise>
+							                        <c:choose>
+							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}">
+							                                <a href="camping_gear_detail.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                            </c:when>
+							                            <c:otherwise>
+							                                ${k.member_nickname}
+							                            </c:otherwise>
+							                        </c:choose>
+							                    </c:otherwise>
+							                </c:choose>
+							            </td>
+							            <td>${k.cp_regdate.substring(0,10)}</td>
+							            <td>${k.cp_hit}</td>
+							        </c:otherwise>
+							    </c:choose>
 							</tr>
 						</c:forEach>
 					</c:otherwise>
@@ -84,7 +112,6 @@
 			</tbody>
 		</table>
 		
-	
 		<table id="table2">
 		<tfoot id="aaa">
 			<tr id="foot-tr">
@@ -148,4 +175,9 @@
 					</c:choose>
 				</td>
 				</tr>
-			
+			</tfoot>	
+		</table>
+	</div>
+<%@ include file="../../hs/footer.jsp" %>
+</body>
+</html>

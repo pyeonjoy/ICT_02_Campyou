@@ -45,73 +45,43 @@
 	});
 	
 	function to_search() {
-	    let searchType = document.getElementById("searchType").value;
+		let searchType = document.getElementById("searchType").value; // 검색 타입 가져오기
 	    let searchKeyword = document.getElementById("searchbar").value;
-	    if (searchKeyword.trim() === "") {
-	        alert("검색어를 입력해주세요.");
-	        return;
-	    }
-	    
-	    $.ajax({
-	        url: 'together_list_search.do',
-	        type: 'post',
-	        data: {
-	            searchType: searchType,
-	            searchKeyword: searchKeyword
-	        },
-	        dataType: 'html',
-	        success: function(data) {
-	            var searchResults = JSON.parse(data);
-	            var contentHTML = '';
-	            if (searchResults.length > 0) {
-	                searchResults.forEach(function(item) {
-	                	contentHTML += '<div class="toContentOne">';
-	                    contentHTML += '<div>';
-	                    contentHTML += '<div class="toContentOne1">';
-	                    if (item.member_img === null || item.member_img === '' || item.member_img === 'user2.png') {
-	                    	contentHTML += '<div class="userImage"><img src="${path}/resources/images/' + item.member_img + '" class="userImage2"></div>';
-	                    } else {
-	                    	contentHTML += '<div class="userImage"><img src="' + item.member_img + '" class="userImage2"></div>';
-	                    }
-	                    contentHTML += '<div>';
-	                    contentHTML += '<div class="toContentOne1span1">';
-	                    contentHTML += '<span class="to_member_nickname">' + item.member_nickname + '</span>';
-	                    contentHTML += '<span class="to_member_age">(' + item.member_dob + ')</span>';
-	                    contentHTML += '</div>';
-	                    contentHTML += '<div class="toContentOne1span toContentOne1span2">';
-	                    contentHTML += '<span>' + item.t_campname + '</span>';
-	                    contentHTML += '<span class="to_campdate">' + item.t_startdate + '-' + item.t_enddate + '</span>';
-	                    contentHTML += '</div>';
-	                    contentHTML += '</div>';
-	                    contentHTML += '</div>';
-	                    contentHTML += '</div>';
-	                    contentHTML += '<a href="together_detail.do?t_idx=' + item.t_idx +  '" class="toContentOne2">';
-	                    if (item.tf_name === null || item.tf_name === '') {
-	                        contentHTML += '<img src="${path}/resources/images/to_camp.jpg" class="toContentOne2img">';
-	                    } else {
-	                        contentHTML += '<img src="' + item.tf_name + '" class="toContentOne2img">';
-	                    }
-	                    contentHTML += '<span class="toContentOne2sub2">' + item.t_camptype + '</span>';
-	                    contentHTML += '</a>';
-	                    contentHTML += '<a href="together_detail.do?t_idx=' + item.t_idx +  '" class="toContentOne3">';
-	                    contentHTML += '<strong class="to_list_subject">' + item.t_subject + '</strong>';
-	                    contentHTML += '<span>' + item.t_content + '</span>';
-	                    contentHTML += '</a>';
-	                    contentHTML += '</div>';
-	                });
-	            } else {
-	                contentHTML = '<h2>검색 결과가 없습니다</h2>';
-	            }
-
-	            $(".toContent").html(contentHTML);
-	            
-	            $(".searchbar").val("");
-	        },
-	        error: function(xhr, status, error) {
-	            console.error(error);
-	        }
-	    });
+// 	    f.append("searchType", searchType);
+// 	    f.append("searchKeyword", searchKeyword);
+// 	    f.action="together_list.do";
+// 	    f.submit();
+	    location.href="together_list.do?searchType=" + searchType + "&searchKeyword=" + searchKeyword
 	}
+// 	function handlePaging() {
+// 	    // 페이징 번호를 클릭했을 때 AJAX로 해당 페이지의 게시물을 로드
+// 	    $(document).on('click', '.to_paging a', function (e) {
+// 	        e.preventDefault();
+// 	        var pageUrl = $(this).attr('href');
+// 	        var searchType = $("#searchType").val();
+// 	        var searchKeyword = $("#searchbar").val();
+// 	        // AJAX 요청을 보낼 때 페이징 정보를 함께 전달합니다.
+// 	        $.ajax({
+// 	            url: pageUrl,
+// 	            type: 'post',
+// 	            data: {
+// 	                searchType: searchType,
+// 	                searchKeyword: searchKeyword
+// 	            },
+// 	            dataType: 'json',
+// 	            success: function (data) {
+// 	                // AJAX로 로드한 페이지의 내용을 paginationWrapper에 삽입
+// 	                $('.toContent').html($(data).find('.toContent').html());
+// 	                $('#paginationWrapper').html($(data).find('#paginationWrapper').html());
+// 	            },
+// 	            error: function (xhr, status, error) {
+// 	                console.error(error);
+// 	            }
+// 	        });
+// 	    });
+// 	}
+
+
 </script>
 </head>
 <body>
@@ -119,6 +89,11 @@
         <div class="togetherh2">
             <h3>동 행</h3>
         </div>
+        <c:choose>
+			<c:when test="${not empty searchKeyword and not empty searchType }">
+				<div class="searchRes">${searchType }&nbsp;/&nbsp;${searchKeyword }&nbsp;<a href="together_list.do">X</a></div>
+			</c:when>
+		</c:choose>
         <c:choose>
         	<c:when test="${empty togetherList }">
         		<h2>게시물이 존재하지 않습니다</h2>
@@ -130,11 +105,16 @@
 		        				<c:when test="${k.t_active == 1 }">
 		        					<div class="toContentOne" style="background-color: rgba(128, 128, 128, 0.1);">
 						                <div>
+							            
 						                    <div class="toContentOne1">
-						                        <div class="userImage"><img src="${path}/resources/images/${k.member_img }" class="userImage2"></div>
+						                    	<a href="report_write.do?member_idx=${k.member_idx}">
+						                        <div class="userImage">
+						                        	<img src="${path}/resources/images/${k.member_img }" class="userImage2">
+						                        </div>
+						                     </a>
 						                        <div>
 							                        <div class="toContentOne1span1">
-							                            <span class="to_member_nickname">${k.member_nickname }</span>
+														    <span class="to_member_nickname">${k.member_nickname}</span>
 							                            <span class="to_member_age">(${k.member_dob })</span>
 							                        </div>
 							                        <div class="toContentOne1span toContentOne1span2">
@@ -166,7 +146,9 @@
 						            <div class="toContentOne">
 						                <div>
 						                    <div class="toContentOne1">
+						                    	<a href="report_write.do?member_idx=${k.member_idx}">
 						                        <div class="userImage"><img src="${path}/resources/images/${k.member_img }" class="userImage2"></div>
+						                        </a>
 						                        <div>
 							                        <div class="toContentOne1span1">
 							                            <span class="to_member_nickname">${k.member_nickname }</span>
@@ -188,7 +170,7 @@
 								                    <img src="${k.tf_name }" class="toContentOne2img">
 						                		</c:otherwise>
 						                	</c:choose>
-						                    <span class="toContentOne2sub2">${k.t_camptype }</span>
+						                    <span class="toContentOne2sub2">${k.t_induty }</span>
 						                </a>
 						                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne3">
 						                    <strong class="to_list_subject">${k.t_subject }</strong>
@@ -204,56 +186,105 @@
         <div class="toPagingContainer">
         	<form class="searchForm" onsubmit="return false;">
         		<select name="searchType" class="searchSelect" id="searchType">
-        			<option value="제목" ${param.searchType eq 'latest' ? 'selected' : ''}>제목</option>
-        			<option value="내용" ${param.searchType eq 'latest' ? 'selected' : ''}>내용</option>
-        			<option value="캠핑지" ${param.searchType eq 'latest' ? 'selected' : ''}>캠핑지</option>
+        			<option value="제목" ${param.searchType eq '제목' ? 'selected' : ''}>제목</option>
+        			<option value="내용" ${param.searchType eq '내용' ? 'selected' : ''}>내용</option>
+        			<option value="캠핑지" ${param.searchType eq '캠핑지' ? 'selected' : ''}>캠핑지</option>
         		</select>
-        		<input type="search" class="searchbar" id="searchbar">
-        		<button type="button" class="res" >검색</button>
+        		<input type="search" name="searchKeyword" class="searchbar" id="searchbar">
+<!--         		<input type="submit" class="res" value="검색" onclick="to_search()"> -->
+        		<button type="button" class="res" onclick="to_search()">검색</button>
 			</form>
-	        <div class="towrapper">
+	        <div class="towrapper" id="paginationWrapper">
 				<ul class="to_paging">
 					<!-- 이전 버튼 -->
 					<c:choose>
-						<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
-							<li class="to_disable"><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>
-							<li class="to_disable"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>
+						<c:when test="${empty searchType && empty searchKeyword}">
+							<c:choose>
+								<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
+									<li class="to_disable"><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>
+									<li class="to_disable"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>
+								</c:when>
+								<c:otherwise>
+									<li>
+										<a href="together_list.do?cPage=1" class="to_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+					                </li>
+					                <li>
+		                  				<a href="together_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }" class="to_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+									</li>
+								</c:otherwise>
+							</c:choose>
+				
+							<!-- 페이지번호들 -->
+							<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock }" step="1" var="k">
+								<c:choose>
+									<c:when test="${k == paging.nowPage }">
+										<li class="nowpagecolor">${k }</li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="together_list.do?cPage=${k}" class="nowpage">${k}</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							
+							<!-- 이후 버튼 -->
+							<c:choose>
+								<c:when test="${paging.endBlock >= paging.totalPage }">
+									<li class="to_disable"><i class="fa-solid fa-chevron-right" style="color: white; border-radius: 50%; font-size: 1.2rem;"></i></li>
+									<li class="to_disable"><i class="fa-solid fa-angles-right" style="color: white; border-radius: 50%; font-size: 1.2rem;"></i></li>
+								</c:when>
+								<c:otherwise>
+									<li>
+										<a href="together_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }" class="to_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+					                </li>
+					                <li>
+					                    <a href="together_list.do?cPage=${paging.totalPage}" class="to_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+									</li>
+								</c:otherwise>
+							</c:choose>
 						</c:when>
 						<c:otherwise>
-							<li>
-								<a href="together_list.do?cPage=1" class="to_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
-							</li>
-							<li>
-								<a href="together_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }" class="to_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
-							</li>
-						</c:otherwise>
-					</c:choose>
-		
-					<!-- 페이지번호들 -->
-					<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock }" step="1" var="k">
-						<c:choose>
-							<c:when test="${k == paging.nowPage }">
-								<li class="nowpagecolor">${k }</li>
-							</c:when>
-							<c:otherwise>
-								<li><a href="together_list.do?cPage=${k }" class="nowpage">${k }</a></li>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-					
-					<!-- 이후 버튼 -->
-					<c:choose>
-						<c:when test="${paging.endBlock >= paging.totalPage }">
-							<li class="to_disable"><i class="fa-solid fa-chevron-right" style="color: white; border-radius: 50%; font-size: 1.2rem;"></i></li>
-							<li class="to_disable"><i class="fa-solid fa-angles-right" style="color: white; border-radius: 50%; font-size: 1.2rem;"></i></li>
-						</c:when>
-						<c:otherwise>
-							<li>
-								<a href="together_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }" class="to_able"><i class="fa-solid fa-chevron-right" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
-							</li>
-							<li>
-								<a href="together_list.do?cPage=${paging.totalPage}" class="to_able"><i class="fa-solid fa-angles-right" style="color: 041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
-							</li>
+							<c:choose>
+								<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
+									<li class="to_disable"><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>
+									<li class="to_disable"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>
+								</c:when>
+								<c:otherwise>
+									<li>
+										<a href="together_list.do?cPage=1&searchType=${searchType}&searchKeyword=${searchKeyword}" class="to_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+					                </li>
+					                <li>
+		                  				<a href="together_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }&searchType=${searchType}&searchKeyword=${searchKeyword}" class="to_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+									</li>
+								</c:otherwise>
+							</c:choose>
+				
+							<!-- 페이지번호들 -->
+							<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock }" step="1" var="k">
+								<c:choose>
+									<c:when test="${k == paging.nowPage }">
+										<li class="nowpagecolor">${k }</li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="together_list.do?cPage=${k}&searchType=${searchType}&searchKeyword=${searchKeyword}" class="nowpage">${k}</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							
+							<!-- 이후 버튼 -->
+							<c:choose>
+								<c:when test="${paging.endBlock >= paging.totalPage }">
+									<li class="to_disable"><i class="fa-solid fa-chevron-right" style="color: white; border-radius: 50%; font-size: 1.2rem;"></i></li>
+									<li class="to_disable"><i class="fa-solid fa-angles-right" style="color: white; border-radius: 50%; font-size: 1.2rem;"></i></li>
+								</c:when>
+								<c:otherwise>
+									<li>
+										<a href="together_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }&searchType=${searchType}&searchKeyword=${searchKeyword}" class="to_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+					                </li>
+					                <li>
+					                    <a href="together_list.do?cPage=${paging.totalPage}&searchType=${searchType}&searchKeyword=${searchKeyword}" class="to_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a>
+									</li>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</ul>

@@ -31,6 +31,16 @@ public class MainDAO {
 		return null;
 	}
 	
+	public int getreportwriteok(AdminVO avo) {
+		try {
+			
+			return sqlSessionTemplate.insert("joy.reportwriteok",avo);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	
 }
 
 	

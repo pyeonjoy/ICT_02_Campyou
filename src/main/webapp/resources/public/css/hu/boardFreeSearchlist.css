@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *{
   box-sizing: border-box;
   margin: 0;
@@ -45,11 +46,11 @@ table th, table td {
 }
 
 table td:nth-child(1) {
-    width: 10%;
+    width: 15%;
 }
 
 table td:nth-child(2) {
-    width: 30%;
+    width: 25%;
 }
 
 table td:nth-child(3) {
@@ -60,10 +61,11 @@ table td:nth-child(4) {
 }
 
 #btn-position{
-	margin-left:650px;
+	margin-left:1150px;
 }
 
 #btn-position #btn{
+	display: inline-block;
 	border-radius: 5px;
 	padding: 0.5rem 0.9rem;
 	background: #003300;
@@ -71,7 +73,58 @@ table td:nth-child(4) {
 	color: white;
 }
 
+/* 버튼 스타일 */
+button.pagination-button  {
+    margin: 0 5px; /* 각 버튼 사이의 여백 */
+    padding: 8px 16px;
+    background-color: #003300;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
 
+/* 여기 버튼 고치기 */
+/* 여기 버튼 고치기 */
+/* 여기 버튼 고치기 */
+/* 여기 버튼 고치기 */
+/* 여기 버튼 고치기 */
+/* 여기 버튼 고치기 */
+button {
+    margin: 0 5px; /* 각 버튼 사이의 여백 */
+    padding: 8px 16px;
+    background-color: #003300;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
+button.pagination-button:hover {
+    background-color: #005900;
+}
 
+/* 페이지네이션 컨테이너 스타일 */
+div.pagination {
+    text-align: center;
+}
+
+button.pagination-button span {
+    font-size: 14px;
+}
+
+a:link {
+  color:black;
+}
+a:visited {
+  color:black;
+}
+a:hover {
+  color:black;
+}
+a:active {
+  color:black;
+}

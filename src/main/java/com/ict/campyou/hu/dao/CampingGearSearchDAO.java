@@ -26,4 +26,20 @@ public class CampingGearSearchDAO {
 		
 		return sqlSessionTemplate.selectList("member.camping_gear_search_list_ok", map);
 	}
+	
+	
+	
+	
+	public List<CampingGearSearchVO> getCampingGearSearchList2(int offset, int limit) {
+		//게시판 내 검색 기능
+		try {
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("offset", offset);
+			map.put("limit", limit);
+			return sqlSessionTemplate.selectList("member.camping_board_search_list2", map);		
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 }

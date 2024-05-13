@@ -87,7 +87,6 @@ table tfoot ol.paging li a:hover {
 				<tr class="title">
 					<th class="no">선</th>
 					<th class="no">idx</th>
-					<th class="subject">이미지</th>
 					<th class="subject">id</th>
 					<th class="writer">이름</th>
 					<th class="reg">닉네임</th>
@@ -111,7 +110,6 @@ table tfoot ol.paging li a:hover {
 							  <form action="admin_member_detail.do?member_idx=${k.member_idx }" method="post">
 							  <td><input type="submit" value="선택"></td>
 							    <td>${k.member_idx }</td>
-							    <td>${k.member_img }</td>
 							    <td>${k.member_id }</td>
 							    <td>${k.member_name }</td>
 							    <td>${k.member_nickname }</td>
@@ -130,6 +128,27 @@ table tfoot ol.paging li a:hover {
 			</tbody>
 			<tfoot>
 				<tr>
+					<form action="freeList" method="post">
+						<div class="search-wrap">
+							<button type="submit" NAME="searchName">검색</button>
+							<input type="text" name="searchType">
+							<select>
+								<option name="member_name">이름</option>
+								<option name="member_id">ID</option>
+								<option name="member_nickname">닉네임</option>
+							</select>
+						</div>
+						<input type="hidden" name="pageNum" value="1">
+						<input type="hidden" name="amount" value="10">
+					</form>
+				
+				
+				
+				
+				
+				
+				
+				
 					<td colspan="13">
 						<ol class="paging" style="margin: 0 auto; width: 175px;">
 							<!-- 이전 버튼 -->

@@ -6,7 +6,88 @@ public class AdminVO {
 	private String report_date, cp_regdate, bf_regdate, t__regdate, member_regdate,  
 	member_active, qna_status, totalMembers, todayMembers, hit, f_name, title, writer,regdate, t_subject, active,
 	groups, step, lev;
+
+	private String report_idx, report_content, report_ok_date, report_now_date,report_status,report_day,reportmember_idx,admin_idx;
 	
+	public String getReport_idx() {
+		return report_idx;
+	}
+
+
+	public void setReport_idx(String report_idx) {
+		this.report_idx = report_idx;
+	}
+
+
+	public String getReport_content() {
+		return report_content;
+	}
+
+
+	public void setReport_content(String report_content) {
+		this.report_content = report_content;
+	}
+
+
+	public String getReport_ok_date() {
+		return report_ok_date;
+	}
+
+
+	public void setReport_ok_date(String report_ok_date) {
+		this.report_ok_date = report_ok_date;
+	}
+
+
+	public String getReport_now_date() {
+		return report_now_date;
+	}
+
+
+	public void setReport_now_date(String report_now_date) {
+		this.report_now_date = report_now_date;
+	}
+
+
+	public String getReport_status() {
+		return report_status;
+	}
+
+
+	public void setReport_status(String report_status) {
+		this.report_status = report_status;
+	}
+
+
+	public String getReport_day() {
+		return report_day;
+	}
+
+
+	public void setReport_day(String report_day) {
+		this.report_day = report_day;
+	}
+
+
+	public String getReportmember_idx() {
+		return reportmember_idx;
+	}
+
+
+	public void setReportmember_idx(String reportmember_idx) {
+		this.reportmember_idx = reportmember_idx;
+	}
+
+
+	public String getAdmin_idx() {
+		return admin_idx;
+	}
+
+
+	public void setAdmin_idx(String admin_idx) {
+		this.admin_idx = admin_idx;
+	}
+
 
 	public String getActive() {
 		return active;

@@ -73,18 +73,27 @@
 		let formData = new FormData(document.getElementsByClassName('togetherWriteForm')[0]);
 	    let startDate = $('input[name="datetimes"]').data('daterangepicker').startDate.format('YYYY/MM/DD');
 	    let endDate = $('input[name="datetimes"]').data('daterangepicker').endDate.format('YYYY/MM/DD');
-	    let selectedCampingType = $(".togetherSub1Button.active").attr("name");
 
-	    if (!selectedCampingType) {
-	        alert("캠핑 타입을 선택해주세요.");
-	        return;
-	    }
+	    let subject = $("input[name='t_subject']").val();
+        let content = $("#t_content").summernote('code');
+
+        if (subject.trim() === '') {
+            alert("제목을 입력하세요.");
+            return;
+        }
+        if (content.trim() === '' || content === '<p><br></p>') {
+            alert("내용을 입력하세요.");
+            return;
+        }
+// 	    if (!t_induty) {
+// 	        alert("캠핑 타입을 선택해주세요.");
+// 	        return;
+// 	    }
 	    if (!t_mapx && !t_mapy) {
 	        alert("동행할 캠핑장 위치를 선택해주세요.");
 	        return;
 	    }
 
-	    formData.append("t_camptype", selectedCampingType);
 	    formData.append("t_startdate", startDate);
 	    formData.append("t_enddate", endDate);
 	    formData.append("t_mapx", t_mapx);
@@ -111,12 +120,12 @@
 	    return false;
 	}
 	
-	$(document).ready(function() {
-	    $('.togetherSub1Button').click(function() {
-	        $('.togetherSub1Button').removeClass('active');
-	        $(this).addClass('active');
-	    });
-	});
+// 	$(document).ready(function() {
+// 	    $('.togetherSub1Button').click(function() {
+// 	        $('.togetherSub1Button').removeClass('active');
+// 	        $(this).addClass('active');
+// 	    });
+// 	});
 		
 	
 	
@@ -159,14 +168,15 @@
                     });
                     infoWindow.open(map, position);
                     
-                    $('.togetherSub1DivP').val(camp.addr1);
-                    $('.togetherSub1DivP1').val(camp.facltnm);
-                    campImageUrl = camp.firstimageurl;
-                    t_mapx = camp.mapx;
-                    t_mapy = camp.mapy;
-                    t_induty = camp.induty;
-                	t_facltdivnm = camp.facltdivnm;
-                	t_mangedivnm = camp.mangedivnm;
+                    $('.togetherSub1DivP').val(addr);
+                    $('.togetherSub1DivP1').val(campName);
+                    t_induty = $('.togetherCampType').text(induty);
+                    campImageUrl = imageUrl;
+                    t_mapx = mapx;
+                    t_mapy = mapy;
+                    t_induty = induty;
+                    t_facltdivnm = facltdivnm;
+                    t_mangedivnm = mangedivnm;
                 	
                 	$(".searchbar").val("");
                 } 
@@ -222,10 +232,20 @@
 
 	                        if (infoWindow.getMap()) {
 	                            infoWindow.close();
+	                            $('.togetherSub1DivP').val("");
+	                            $('.togetherSub1DivP1').val("");
+	                            $('.togetherCampType').text("");
+	                            campImageUrl = "";
+	                            t_mapx = "";
+	                            t_mapy = "";
+	                            t_induty = "";
+	                            t_facltdivnm = "";
+	                            t_mangedivnm = "";
 	                        } else {
 	                            infoWindow.open(map, marker);
 	                            $('.togetherSub1DivP').val(addr);
 	                            $('.togetherSub1DivP1').val(campName);
+	                            t_induty = $('.togetherCampType').text(induty);
 	                            campImageUrl = imageUrl;
 	                            t_mapx = mapx;
 	                            t_mapy = mapy;
@@ -277,15 +297,13 @@
 	            <input type="button" value="작성하기" class="togetherWriteInputSubmit" onclick="together_write_ok()">
 	        </div>
 	        <div class="togetherWriteSelect">
-	            <strong>캠핑타입</strong>
-	            <div class="togetherSub1">
-<!-- 	            	<input type="button" name="t_camptype" value="카라반" class="togetherSub1Button"> -->
-<!-- 	            	<input type="button" name="t_camptype" value="글램핑" class="togetherSub1Button"> -->
-<!-- 	            	<input type="button" name="t_camptype" value="야영지" class="togetherSub1Button"> -->
-	            	<button type="button" name="카라반" value="카라반" class="togetherSub1Button">카라반</button>
-	            	<button type="button" name="글램핑" value="글램핑" class="togetherSub1Button">글램핑</button>
-	            	<button type="button" name="야영지" value="야영지" class="togetherSub1Button">야영지</button>
-	            </div>
+	            <span class="togetherSub5Strong">캠핑타입</span>
+				<span class="togetherCampType"></span>
+<!-- 	            <div class="togetherSub1"> -->
+<!-- 	            	<button type="button" name="카라반" value="카라반" class="togetherSub1Button">카라반</button> -->
+<!-- 	            	<button type="button" name="글램핑" value="글램핑" class="togetherSub1Button">글램핑</button> -->
+<!-- 	            	<button type="button" name="야영지" value="야영지" class="togetherSub1Button">야영지</button> -->
+<!-- 	            </div> -->
 	            <div class="togetherSub1">
 	                <strong class="togetherSub5Strong">캠핑장</strong>
 	                <div class="togetherSub1Div">
@@ -306,7 +324,7 @@
 	                <span>명</span>
 	            </div>
 	            <div class="togetherSub2">
-	                <strong>캠핑기간</strong>
+	                <strong class="togetherSub5Strong">캠핑기간</strong>
 	                <p><input type="text" name="datetimes" value="" class="datetimes" /></p>
 	            </div>
 	        </div>

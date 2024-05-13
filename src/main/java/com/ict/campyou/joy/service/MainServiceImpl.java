@@ -23,6 +23,11 @@ public class MainServiceImpl implements MainService{
 		public List<CampVO> getcamphit() {
 			return maindao.getcamphit();
 		}
+
+		@Override
+		public int getReportWrite(AdminVO avo) {
+			return maindao.getreportwriteok(avo);
+		}
 	
 	
 	
