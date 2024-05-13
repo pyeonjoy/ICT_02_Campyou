@@ -7,7 +7,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -84,7 +86,7 @@ public class CampAjaxController {
 
 	@RequestMapping(value = "camp_list_search.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public List<CampVO> Camp_list_keyword(@RequestParam(defaultValue = "1") int pageNo,
+	public Map<String, Object> Camp_list_keyword(@RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam(required = false, defaultValue = "") String keyword,
 			@RequestParam(required = false, defaultValue = "") String lctCl,
 			@RequestParam(required = false, defaultValue = "") String induty,
@@ -118,8 +120,12 @@ public class CampAjaxController {
 		}
 		
 		List<CampVO> cvo = campService.searchCampDetail(keyword, lctCl, induty, sbrscl,paging.getOffset(), paging.getNumPerPage());
-		return cvo;
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("cvo", cvo);
+	    response.put("paging", paging);
 
+	    return response;
+		
 	}
 
 	@RequestMapping(value = "camp_detail_img.do", produces = "text/xml; charset=utf-8")

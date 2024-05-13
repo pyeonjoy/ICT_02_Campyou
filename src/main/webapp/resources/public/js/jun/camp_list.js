@@ -185,7 +185,6 @@ $(document).ready(function() {
             $(this).removeClass("empty").addClass("filled").html("❤️");
         }
     });
-
     $("#search_button").click(function() {
         let keywordInput = $("#keyword_input").val();
         let selectedLctCl = [];
@@ -208,18 +207,15 @@ $.ajax({
     url: "camp_list_search.do",
     method: "post",
     data: {
-        pageNo: pageNo,
         keyword: keywordInput,
         lctCl: selectedLctCl.join(),
         induty: selectedInduty.join(),
-        sbrscl: selectedSbrscl.join()
+        sbrscl: selectedSbrscl.join(),
     },
     dataType: "json",
     success: function(data) {
         $("#camp_list_show").empty();
-        $(".camp_list_page").empty();
-        
-            $.each(data, function(index, camp) {
+        $.each(data.cvo, function(index, camp) {
             let firstImageUrl = camp.firstimageurl;
             let doNm = camp.donm;
             let sigunguNm = camp.sigungunm;
@@ -228,7 +224,7 @@ $.ajax({
             let addr1 = camp.addr1;
             let tel = camp.tel;
             let homepage = camp.homepage;
-            let contentid = camp.contentid
+            let contentid = camp.contentid;
             
             let campItem = "<div class='camp_item'>";
             if (firstImageUrl != null && firstImageUrl !== "") {
@@ -248,13 +244,42 @@ $.ajax({
             $("#camp_list_show").append(campItem);
             let $container = $("#camp_list_show").find(".Heart_button:last");
             loadHeart(contentid, $container);
-        });
-        
-    },
-    error: function() {
-        alert("검색 실패");
-    }
-});
+            });
+            // 페이징 처리
+            let paging = data.paging;
+            $('.th_paging').empty();
+            $('.page_button').empty();
+            let pagingHtml = '';
+            // 이전 버튼
+            if (paging.beginBlock <= paging.pagePerBlock) {
+                pagingHtml += '<li class="th_disable"><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+                pagingHtml += '<li class="th_disable"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+            } else {
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + 1 + ')" class="th_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + (paging.beginBlock - paging.pagePerBlock) + ')" class="th_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+            }
+            // 페이지번호들
+            for (let k = paging.beginBlock; k <= paging.endBlock; k++) {
+                if (k === paging.nowPage) {
+                    pagingHtml += '<li class="nowpagecolor">' + k + '</li>';
+                } else {
+                    pagingHtml += '<li><a href="javascript:promiseApplyList(' + k + ')" class="nowpage">' + k + '</a></li>';
+                }
+            }
+            // 이후 버튼
+            if (paging.endBlock >= paging.totalPage) {
+                pagingHtml += '<li class="th_disable"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+                pagingHtml += '<li class="th_disable"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+            } else {
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + (paging.beginBlock + paging.pagePerBlock) + '" class="th_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + paging.totalPage + '" class="th_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+            }
+            $('.th_paging').append(pagingHtml);
+        },
+        error: function() {
+            alert("검색 실패");
+        }
+    });
 
 
 

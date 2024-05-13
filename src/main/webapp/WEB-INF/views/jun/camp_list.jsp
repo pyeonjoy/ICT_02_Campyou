@@ -76,6 +76,11 @@
 	justify-content: center;
 	padding: 20px;
 }
+.page_button2{
+	display: flex;
+	justify-content: center;
+	padding: 20px;
+}
 
 </style>
 </head>
@@ -87,6 +92,10 @@
 		<div id="camp_list_show"></div>
 		<div class="page_button">
 			<ul class="to_paging camp_list_page">
+			</ul>
+		</div>
+		<div class ="page_button2">
+			<ul class="th_paging">
 			</ul>
 		</div>
 	</div>
