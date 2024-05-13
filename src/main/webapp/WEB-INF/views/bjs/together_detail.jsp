@@ -245,12 +245,9 @@ function to_comment() {
 					<span class="to_member_age">(${tvo.member_dob })</span>
                 </div>
 
-                <input type="button" value="1:1 채팅하기" id="" onclick="enterChatRoom(${tvo.t_idx})" class="toDetailContent1Button toDetailContent1Button1">
-                <input type="button" value="참가 신청하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button2">
-
 <!--                 <input type="button" value="1:1 채팅하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1"> -->
 <!--                 <input type="button" value="참가 신청하기" id="" onclick="to_application()" class="toDetailContent1Button toDetailContent1Button2"> -->
-                <button type="button" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1">1:1 채팅하기</button>
+                <button type="button" id="" onclick="enterChatRoom(${tvo.t_idx})" class="toDetailContent1Button toDetailContent1Button1">1:1 채팅하기</button>
                 <button type="button" id="toDetailContent1Button2" onclick="to_apply()" class="toDetailContent1Button toDetailContent1Button2">참가신청하기</button>
                 <button type="button" id="toDetailContent1Button3" onclick="to_cancel()" class="toDetailContent1Button toDetailContent1Button2">참가신청취소</button>
 <!--                 <input type="button" value="참가 취소하기" id="" onclick=""> -->
