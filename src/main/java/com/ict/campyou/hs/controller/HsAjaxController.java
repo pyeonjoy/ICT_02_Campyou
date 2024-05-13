@@ -131,6 +131,7 @@ public class HsAjaxController {
 	@RequestMapping(value = "camp_list_keyword_detail.do", produces = "text/xml; charset=utf-8")
 	@ResponseBody
 	public String camp_list_keyword_detail(@RequestParam(defaultValue = "1") int pageNo,
+			@RequestParam int numOfRows,
 			@RequestParam String keyword) {
 		BufferedReader rd = null;
 		HttpURLConnection conn = null;
@@ -147,10 +148,59 @@ public class HsAjaxController {
 					"&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("CampYou", "UTF-8"));
 			urlBuilder.append("&keyword=" + URLEncoder.encode(keyword, "UTF-8"));
 			urlBuilder.append("&pageNo=" + pageNo);
-			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("5000", "UTF-8"));
+			urlBuilder.append("&" + URLEncoder.encode("numOfRows=" + numOfRows, "UTF-8"));
 			URL url = new URL(urlBuilder.toString());
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
+			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			} else {
+				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+			}
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				sb.append(line);
+			}
+			return sb.toString();
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			try {
+				rd.close();
+				conn.disconnect();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	
+	@RequestMapping(value = "camp_list5000.do", produces = "text/xml; charset=utf-8")
+	@ResponseBody
+	public String campList5000(@RequestParam(defaultValue = "1") int pageNo) {
+		BufferedReader rd = null;
+		HttpURLConnection conn = null;
+		try {
+			// contentId = 캠핑장 고유 번호
+			StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/GoCamping/basedList"); // 캠핑리스트
+																												// 불러오기
+			urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "="
+					+ URLEncoder.encode(
+							"X0kmMKfzM75AstLAvFpYYUYZ618haU808lrytcOmk+MX27oB2z1ds+qlA6/vupBqS2tNWmLuRfjricCDf+GZ/g==",
+							"UTF-8"));
+			urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "="
+					+ URLEncoder.encode("WIN", "UTF-8")); /* 한 페이지 결과 수 */
+			urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "="
+					+ URLEncoder.encode("CampYou", "UTF-8")); /* 한 페이지 결과 수 */
+			urlBuilder.append("&pageNo=" + pageNo);
+			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
+					+ URLEncoder.encode("5000", "UTF-8")); /* 한 페이지 결과 수 */
+			URL url = new URL(urlBuilder.toString());
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+
 			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			} else {

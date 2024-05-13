@@ -19,7 +19,7 @@ $(document).ready(function() {
 		}
 	);
 	
-	
+	// 지도 정보창 닫기
 	naver.maps.Event.addListener(map, 'click', function() {
     	closeInfoWindow();
 	});
@@ -30,6 +30,7 @@ $(document).ready(function() {
     	}
 	}
 	
+	// 마커 초기화
 	function marker_empty(){
         closeInfoWindow();	
         for (let i = 0; i < markers.length; i++){
@@ -40,6 +41,7 @@ $(document).ready(function() {
         infoWindows.length = 0;
 	}
 	
+	// 항목 생성
 	function data_show(item){
         let firstImageUrl = $(item).find("firstImageUrl").text();
         let doNm = $(item).find("doNm").text();
@@ -54,7 +56,7 @@ $(document).ready(function() {
         let campItem = "<div class='camp_item'>";
         campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
         campItem += "<div class='camp_info'>";
-        campItem += "<p> ["+ doNm + sigunguNm+"] </p>";
+        campItem += "<p> ["+ doNm + " " + sigunguNm+"] </p>";
         campItem += "<h4>" + facltNm + "</h4><span>" + induty + "</span>";
         campItem += "<p>" + addr1 + "</p>";
         campItem += "<p>" + tel + "</p>";
@@ -72,6 +74,7 @@ $(document).ready(function() {
         markerArr.push({lat: mapY, lng: mapX, facltNm: facltNm, addr1: addr1,tel:tel});
 	}
 	
+	// 마커 생성
 	function marker_show() {
 		for (let i = 0; i < markerArr.length; i++) {
         	let LatLng = new naver.maps.LatLng(markerArr[i].lat, markerArr[i].lng);
@@ -80,7 +83,6 @@ $(document).ready(function() {
 	            position: LatLng,
 	            title: markerArr[i].facltNm
         	});
-        	
         	
 	        let infoWindow = new naver.maps.InfoWindow({
                 content: '<div style="padding:20px;"><p><b>' 
@@ -113,7 +115,7 @@ $(document).ready(function() {
 	    }
 	}
 
- 
+	// 캠핑 리스트
     function camp_all_list() {
     	camp_list_option = "camp_all_list";
     	marker_empty();
@@ -139,6 +141,7 @@ $(document).ready(function() {
     }
    	camp_all_list();
 
+   	// 캠핑 검색
     function search_camp() {
     	camp_list_option = "search_camp";
     	marker_empty();
@@ -162,16 +165,17 @@ $(document).ready(function() {
             selectedSbrscl.push($(this).val());
         });
         
-        if(keywordInput != "") {
-        	if((selectedLctCl.length + selectedInduty.length + selectedSbrscl.length) == 0){
-        		$.ajax({
-		            url: "camp_list_search2.do",
+        // 키워드 검색
+        if (keywordInput != "") {
+	        if((selectedLctCl.length + selectedInduty.length + selectedSbrscl.length) == 0 && sido_search == "") {
+	    		$.ajax({
+		            url: "camp_list_keyword_detail.do",
 		            method: "post",
 		            dataType: "xml",
 		            traditional: true,
 		            data:{ 
-		                pageNo: pageNo,
 		                keyword: keywordInput,
+		                numOfRows: numOfRows
 		            },
 		            success: function(data) {
 		            	$("#camp_list_show").empty();
@@ -187,15 +191,14 @@ $(document).ready(function() {
 		                alert("검색 실패");
 		            }
 	        	});
-        	} else {
+	        } else if ((selectedLctCl.length + selectedInduty.length + selectedSbrscl.length) > 0 || sido_search != "") {
 				$.ajax({
 		            url: "camp_list_keyword_detail.do",
 		            method: "post",
 		            dataType: "xml",
 		            traditional: true,
 		            data:{ 
-		                pageNo: pageNo,
-		                keyword: keywordInput
+		                numOfRows: 5000
 		            },
 		            success: function(data) {
 		            	$("#camp_list_show").empty();
@@ -203,52 +206,87 @@ $(document).ready(function() {
 					        let s_lctCl = $(this).find("lctCl").text();
 					        let s_induty = $(this).find("induty").text();
 					        let s_sbrscl = $(this).find("sbrsCl").text();
-					        
+					        let s_doNm = $(this).find("doNm").text();
+					        let s_sigunguNm = $(this).find("sigunguNm").text();
 					        
 							const lctClArr = s_lctCl.split(",");
 							const indutyArr = s_induty.split(",");
 							const sbrsclArr = s_sbrscl.split(",");
 							
-						    console.log("================");
-						    console.log("lctClArray:" + lctClArr);
-						    console.log("" + selectedLctCl);
-						    
-						    console.log("indutyArr:" + indutyArr);
-						    console.log("" + selectedInduty);
-						    
-						    console.log("sbrsclArr:" + sbrsclArr);
-						    console.log("" + selectedSbrscl);
-							
 							if (
+								(sido_search == "" || sido_search == s_doNm ) && 
+								(sigungu_search == "" || sigungu_search == s_sigunguNm) &&
 								(selectedLctCl.length === 0 || selectedLctCl.some(k => lctClArr.includes(k))) &&
 								(selectedInduty.length === 0 || selectedInduty.some(k => indutyArr.includes(k))) &&
 								(selectedSbrscl.length === 0 || selectedSbrscl.some(k => sbrsclArr.includes(k))) 
 							){
 							    data_show(this); 
-							} else {
-							    console.log("실패");
+							    totalCount += 1;
 							}
-						    console.log("================");
 					        
 						});
+		                console.log(totalCount);
 	               		pageNumbers();
 	                	marker_show();
 		            },
 		            error: function() {
 		                alert("검색 실패2");
 		            }
-	        	});     	
-        	}
-    	}
+	        	});
+	        }
+	        // 옵션으로만 검색
+        } else if (keywordInput == "" && ((selectedLctCl.length + selectedInduty.length + selectedSbrscl.length) > 0 || sido_search != "")) {
+        	$.ajax({
+	            url: "camp_list5000.do",
+	            method: "post",
+	            dataType: "xml",
+	            traditional: true,
+	            success: function(data) {
+	            	$("#camp_list_show").empty();
+	                $(data).find("item").each(function() {
+				        let s_lctCl = $(this).find("lctCl").text();
+				        let s_induty = $(this).find("induty").text();
+				        let s_sbrscl = $(this).find("sbrsCl").text();
+				        let s_doNm = $(this).find("doNm").text();
+				        let s_sigunguNm = $(this).find("sigunguNm").text();
+				        
+						const lctClArr = s_lctCl.split(",");
+						const indutyArr = s_induty.split(",");
+						const sbrsclArr = s_sbrscl.split(",");
+						
+						if (
+							(sido_search == "" || sido_search == s_doNm ) && 
+							(sigungu_search == "" || sigungu_search == s_sigunguNm) &&
+							(selectedLctCl.length === 0 || selectedLctCl.some(k => lctClArr.includes(k))) &&
+							(selectedInduty.length === 0 || selectedInduty.some(k => indutyArr.includes(k))) &&
+							(selectedSbrscl.length === 0 || selectedSbrscl.some(k => sbrsclArr.includes(k))) 
+						){
+						    data_show(this); 
+						    totalCount += 1;
+						}
+				        
+					});
+	                
+	                console.log(totalCount);
+               		pageNumbers();
+                	marker_show();
+	            },
+	            error: function() {
+	                alert("검색 실패3");
+	            }
+        	});
+        }
     }
     
     
+    // 검색 버튼 클릭시
     $("#search_button").on("click",  function() {
+    	totalCount = 0;
     	search_camp();
     	pageNo = 1;
     });
     
-    
+    // 캠프 div 클릭시 마커 이동
 	$(document).on("click", ".camp_item",  function() {
 		let facltNm = $(this).find(".camp_info h4").text();
 		
@@ -268,10 +306,9 @@ $(document).ready(function() {
 	            break; 
 	        }
     	}
-    	
-    	
     });
     
+	// 페이지 번호
 	function pageNumbers(){
 		$(".camp_list_page").empty();
 		last_page = Math.ceil(totalCount / numOfRows);
@@ -296,7 +333,8 @@ $(document).ready(function() {
 	    
         $(".camp_list_page").append(pageShow);
     }
-	   
+	
+	// 페이지 이동
 	$(document).on("click", ".camp_list_next, .camp_list_before, .nowpage, .camp_list_last, .camp_list_first", function() {
 		if ($(this).hasClass("camp_list_next")) {
         	pageNo = Math.ceil(pageNo / page_num_count) * page_num_count + 1;
@@ -321,12 +359,13 @@ $(document).ready(function() {
 	    $(".camp_list_wrap").scrollTop(0); 
 	    if(camp_list_option == "camp_all_list") {
         	camp_all_list();
-	    } else {
+	    } else if (camp_list_option == "search_camp") {
 	    	search_camp();
 	    }
 	    pageNumbers();
 	});
     
+	// 엔터키 입력시
     $("#keyword_input").keypress(function(event) {
         if (event.which === 13) {
             search_camp();
