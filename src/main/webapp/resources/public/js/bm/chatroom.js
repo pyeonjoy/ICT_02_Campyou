@@ -17,7 +17,6 @@ const opposite_idx = document.getElementById("opposite_idx").value;
 
 const msg_room = document.getElementById("msg_room").value;
 const room_name = document.getElementById("room_name").value;
-
 const my_idx = document.getElementById("my_idx").value;
 const joiner_img = document.getElementById("joiner_img").value;
 const opener_img = document.getElementById("opener_img").value;
@@ -68,7 +67,8 @@ function sendMessage(form, e) {
     'msg_room': msg_room,
     'room_name': room_name
   };
-  stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+
+  stompClient.send("/app/chat.sendMessage", headers, JSON.stringify(chatMessage));
 
   form.elements["msg_content"].value = '';
   return false;
