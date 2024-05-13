@@ -217,6 +217,7 @@ $.ajax({
     dataType: "json",
     success: function(data) {
         $("#camp_list_show").empty();
+        $(".camp_list_page").empty();
         
             $.each(data, function(index, camp) {
             let firstImageUrl = camp.firstimageurl;
@@ -244,7 +245,6 @@ $.ajax({
             campItem += "<div class='button_container'><button onclick=\"window.open('" + homepage + "')\">홈페이지</button></div>";
             campItem += "<div class='Heart_button'></div>";
             campItem += "</div>";
-
             $("#camp_list_show").append(campItem);
             let $container = $("#camp_list_show").find(".Heart_button:last");
             loadHeart(contentid, $container);
