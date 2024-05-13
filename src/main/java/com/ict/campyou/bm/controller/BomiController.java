@@ -76,6 +76,7 @@ public class BomiController {
 			 List <ChatVO> list = myService.getChatList(member_idx);
 		    mv.setViewName("bm/chat_list"); 
 			mv.addObject("list", list);
+			mv.addObject("member_idx", member_idx);
 		    return mv;
 	}
 	
@@ -124,14 +125,14 @@ public class BomiController {
 			mv.addObject("joiner", joiner);
 			mv.addObject("opener", opener);
 			mv.addObject("my_idx", my_idx); // 내 idx가져가기
-			mv.addObject("msg_room", msg_room);
-			mv.addObject("room_name", room_name);
-			if(chatList != null) {
-				mv.addObject("chatList", chatList);
-				mv.setViewName("bm/chatroom2");
+			System.out.println(chatList);
+			if(chatList.isEmpty()) {
+				mv.addObject("room_name", room_name);
+				mv.setViewName("bm/chatroom");
 			}
 			else {
-				mv.setViewName("bm/chatroom");
+				mv.addObject("chatList", chatList);
+				mv.setViewName("bm/chatroom2");
 			}			
 		} catch (Exception e) {
 			System.out.println(e);

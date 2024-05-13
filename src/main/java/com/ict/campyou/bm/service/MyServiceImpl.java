@@ -85,5 +85,9 @@ public class MyServiceImpl implements MyService{
 	public int updateMsgRead(String msg_idx) {
 		return myDao.updateMsgRead(msg_idx);
 	}
+	@Override
+	public List<ChatVO> getMessagesToUpdate(String msg_room) {
+		return myDao.getMessagesToUpdate(msg_room);
+	}
 
 }

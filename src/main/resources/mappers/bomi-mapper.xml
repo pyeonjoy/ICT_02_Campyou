@@ -87,5 +87,7 @@ select * from m_chat where msg_room=#{msg_room} ORDER BY msg_idx DESC
 <update id="msgRead" parameterType="String">
  update m_chat set msg_read=0
 </update>
-
+<select id="msgToUpdate">
+select *
+</select>
 </mapper>
