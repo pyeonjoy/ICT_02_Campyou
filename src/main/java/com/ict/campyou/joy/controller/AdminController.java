@@ -19,6 +19,7 @@ import com.ict.campyou.joy.dao.AdminVO;
 import com.ict.campyou.common.Paging;
 import com.ict.campyou.common.Paging2;
 import com.ict.campyou.common.Paging3;
+import com.ict.campyou.hu.dao.CampingGearSearchVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.joy.dao.AdminMemberVO;
 import com.ict.campyou.joy.service.AdminService;
@@ -43,8 +44,9 @@ public class AdminController {
 		List<AdminVO> admin_member = adminService.getadminmainmember();
 		List<AdminVO> admin_board = adminService.getadminboard();
 		int admin_qna = adminService.getadminqna();
-		int admin_report = adminService.getadminreport();
+		int admin_report = adminService.getmainadminreport();
 		int admin_match = adminService.getadminmatch();
+		System.out.println("admin_report"+admin_report);
 		if (admin_member != null) {
 			mv.addObject("member", admin_member);
 			mv.addObject("board", admin_board);
@@ -118,32 +120,34 @@ public class AdminController {
 		int report_all = adminService.getreportall(member_idx);
 
 		List<AdminMemberVO> board_all = adminService.getboardall(member_idx);
-		List<AdminMemberVO> member_report = adminService.getadminmemberreport(member_idx);
-		List<AdminMemberVO> admin_report = adminService.getradmineporteach(member_idx);
+		List<AdminMemberVO> member = adminService.getadminmemberreport(member_idx);
+		List<AdminMemberVO> reporteach = adminService.getradmineporteach(member_idx);
+		List<AdminMemberVO> stop = adminService.getradminstop(member_idx);
 		if (board_all != null) {
-			mv.addObject("reporteach", admin_report);
+			System.out.println("report_all"+report_all);
+			mv.addObject("stop", stop);
+			mv.addObject("reporteach", reporteach);
 			mv.addObject("report", report_all);
 			mv.addObject("board", board_all);
-			mv.addObject("member", member_report);
+			mv.addObject("member", member);
 			return mv;
 		}
 		return new ModelAndView("board/error");
 	}
 	
 	@RequestMapping("admin_report.do")
-	public ModelAndView adminReport(@RequestParam("member_idx") String member_idx,
-	                                 @RequestParam("report_idx") String report_idx,
+	public ModelAndView adminReport(@RequestParam("report_idx") String report_idx,
+	                                 @RequestParam("reportmember_idx") String reportmember_idx,
 	                                 @RequestParam("report_day") String report_day,
 	                                 HttpServletRequest request, String admin_idx) {
 		HttpSession session = request.getSession();
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
 		admin_idx = mvo.getMember_idx();
 	    ModelAndView mv = new ModelAndView();
-	    System.out.println("리포트idx" + report_idx);
-	    System.out.println("멤버idx" + member_idx);
-	    int result = adminService.getadminreport(report_day, report_idx,admin_idx);
+	    System.out.println("reportmember_idx" + reportmember_idx);
+	    int result = adminService.getadminreport(report_day, report_idx,admin_idx,reportmember_idx);
 	    if (result > 0) {
-	        mv.setViewName("redirect:admin_member_list.do");
+	        mv.setViewName("redirect:admin_member_detail.do?member_idx=" + reportmember_idx);
 	        return mv;
 	    } else {
 	        return new ModelAndView("board/error");
@@ -179,8 +183,6 @@ public class AdminController {
 	    }
 	    return new ModelAndView("board/error");
 	}
-
-	
 
 	@RequestMapping("member_stop.do")
 	public ModelAndView adminMemberStop(@RequestParam("member_idx") String member_idx, HttpServletResponse response, HttpServletRequest request) throws IOException {
@@ -221,7 +223,6 @@ public class AdminController {
 	    }
 	}
 
-
 	@RequestMapping("member_upgrade.do")
 	public ModelAndView adminMemberUpgrade(@RequestParam("member_idx") String member_idx, HttpServletRequest request) {
 	    ModelAndView mv = new ModelAndView();
@@ -251,5 +252,93 @@ public class AdminController {
 			return new ModelAndView("board/error");
 		}
 	}
-	
+	 @RequestMapping("member_search.do")
+	   public ModelAndView getCampingGearSearchList(@ModelAttribute("searchType")String searchType, String keyword, HttpServletRequest request) {
+		   try {
+				ModelAndView mv = new ModelAndView("joy/admin_member_search");
+				// 페이징 기법
+				// 전체 게시물의 수
+				int count = adminService.getTotalCount2();
+				paging.setTotalRecord(count);
+				System.out.println("전체게시글"+paging.getTotalRecord());
+				System.out.println("paging.getBeginBlock()"+paging.getBeginBlock());
+				System.out.println("paging.getPagePerBlock()"+paging.getPagePerBlock());
+				
+				// 전체 페이지의 수
+				if (paging.getTotalRecord() <= paging.getNumPerPage()) {
+					paging.setTotalPage(1);
+				} else {
+					paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+					if (paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+						paging.setTotalPage(paging.getTotalPage() + 1);
+					}
+				}
+
+				// 현재 페이지 구함
+				String cPage = request.getParameter("cPage");
+				System.out.println("cpage"+cPage);
+				if (cPage == null) {
+					paging.setNowPage(1);
+				} else {
+					paging.setNowPage(Integer.parseInt(cPage));
+				}
+
+				// begin, end 구하기 (Oracle)
+				// offset 구하기
+				// offset = limit * (현재페이지-1);
+				paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
+
+				// 시작 블록 // 끝블록
+				paging.setBeginBlock(
+						(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
+				paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+
+				if (paging.getEndBlock() > paging.getTotalPage()) {
+					paging.setEndBlock(paging.getTotalPage());
+				}
+				List<AdminMemberVO> searchmember = adminService.getmemberSearch(searchType, keyword);
+				if(searchmember != null) {
+					mv.addObject("searchmember", searchmember);
+					return mv;
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		   return new ModelAndView("board/error");
+	   }
+	 @RequestMapping("report_write2.do")
+		public ModelAndView reportwrite2(HttpServletRequest request,String member_idx){
+			ModelAndView mv = new ModelAndView("joy/report_write2");
+			HttpSession session = request.getSession();
+			String reportmember_idx = member_idx; 
+			MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+			List<AdminMemberVO> member = adminService.getadminmemberreport(member_idx);
+			if (member != null) {
+				System.out.println(member.get(0).getMember_idx());
+				mv.addObject("member", member);
+				return mv;
+			}
+			return new ModelAndView("board/error");
+	 }
+		@RequestMapping("report_writeok2.do")
+		public ModelAndView reportwriteOK2(AdminMemberVO amvo, HttpServletRequest request, String member_idx, String reportmember_idx, String admin_idx) {
+			try {
+				ModelAndView mv = new ModelAndView();
+				HttpSession session = request.getSession();
+				MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+		        amvo.setMember_idx(member_idx);
+		        amvo.setAdmin_idx(mvo.getMember_idx());
+				System.out.println(member_idx);
+				int result = adminService.getadminreportall(amvo);
+			    if (result > 0) {
+			        mv.setViewName("redirect:admin_member_detail.do?member_idx=" + member_idx);
+			        return mv;
+			    } else {
+			        return new ModelAndView("board/error");
+			    }
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			return new ModelAndView("board/error");
+		}
 }

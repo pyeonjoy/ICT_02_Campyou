@@ -89,6 +89,12 @@ public class AdminServiceImpl implements AdminService{
 	public List<MemberVO> allmember(int offset, int limit) {
 		return admindao.allmember(offset, limit);
 	}
+	
+
+	@Override
+	public List<AdminMemberVO> getmemberSearch(String searchType, String keyword) {
+		return admindao.getmemberSearch(searchType, keyword);
+	}
 
 //팝업===================================================================================		
 	@Override
@@ -142,15 +148,18 @@ public class AdminServiceImpl implements AdminService{
 
 	@Transactional
 	@Override
-	public int getadminreport(String report_day,String report_idx,String adminmember_idx) {
-		int result1 = admindao.getadminreport(report_day,report_idx); 
-		int result2 = admindao.getadminreportadd(report_day,report_idx,adminmember_idx); 
+	public int getadminreport(String report_day,String report_idx,String admin_idx,String reportmember_idx) {
+		int result1 = admindao.getadminreportadd(report_day,report_idx,admin_idx,reportmember_idx); 
+		int result2 = admindao.getadminreportadd2(report_day,report_idx,admin_idx,reportmember_idx); 
+		int result3 = admindao.getadminreportadd3(report_day,report_idx,admin_idx,reportmember_idx); 
+		int result4 = admindao.getadminreport(report_day,report_idx); 
+		System.out.println("result1:"+ result1);
 		System.out.println("result2:"+ result2);
-		System.out.println("report_day:"+ report_day);
-		System.out.println("report_idx:"+ report_idx);
-		System.out.println("adminmember_idx:"+ adminmember_idx);
-		if (result1 > -1 && result2 > -1) {
-		System.out.println("오나?");
+		System.out.println("result3:"+ result3);
+		System.out.println("result4:"+ result4);
+		System.out.println("adminmember_idx:"+ admin_idx);
+		if (result1 > 0 && result2 > 0 && result3 > 0 ) {
+		System.out.println("getadminreportadd2오나?");
 			return 1; // 성공
 		} else {
 			return -1; // 실패
@@ -165,6 +174,35 @@ public class AdminServiceImpl implements AdminService{
 	public int getstatusupdate() {
 		return admindao.getstatusupdate();
 	}
+	@Transactional
+	@Override
+	public int getadminreportall(AdminMemberVO amvo) {
+		int result1= admindao.getadminreportall(amvo);
+		int result2= admindao.getadminreportall2(amvo);
+		int result3= admindao.getadminreportall3(amvo);
+		int result4= admindao.getadminreportall4(amvo);
+		System.out.println("result1:"+ result1);
+		System.out.println("result2:"+ result2);
+		System.out.println("result3:"+ result3);
+		System.out.println("result4:"+ result4);
+		if (result1 > 0 && result2 > 0 && result3 > 0 ) {
+				return 1; // 성공
+			} else {
+				return -1; // 실패
+			}
+		}
+
+	@Override
+	public List<AdminMemberVO> getradminstop(String member_idx) {
+		return admindao.getradminstop(member_idx);
+	}
+
+	@Override
+	public int getmainadminreport() {
+		return admindao.getmainadminreport();
+	}
+
+
 	
 	
 
