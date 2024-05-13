@@ -1,7 +1,15 @@
 package com.ict.campyou.jun.dao;
 
 public class ReviewVO {
-	private String review_idx, member_idx, contentid, member_nickname, r_comment, rating, r_regdate;
+	private String review_idx, member_idx, contentid, member_nickname, r_comment, rating,member_img,r_regdate;
+
+	public String getMember_img() {
+		return member_img;
+	}
+
+	public void setMember_img(String member_img) {
+		this.member_img = member_img;
+	}
 
 	public String getReview_idx() {
 		return review_idx;

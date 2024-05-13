@@ -12,7 +12,12 @@
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_detail.css">
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
 <%@ include file="../hs/header.jsp" %>
-<script type="text/javascript">
+
+<script>
+function enterChatRoom(t_idx){
+	 const popup = window.open("chatroom.do?t_idx="+t_idx, "new", 
+	    "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=400, height=670, right=0, top=0, location=no, titlebar=no");
+}
 function to_list_go(f) {
 	console.log(f.cPage.value);
 	f.action="together_list.do";
@@ -27,8 +32,6 @@ $(function() {
 function initMap() {
     let markers = [];
     let infoWindows = [];
-
-
     let t_mapx = document.getElementById('t_mapx').value;
     let t_mapy = document.getElementById('t_mapy').value;
     let tf_name = document.getElementById('tf_name').value;
@@ -241,6 +244,10 @@ function to_comment() {
                     <span class="to_member_nickname">${tvo.member_nickname }</span>
 					<span class="to_member_age">(${tvo.member_dob })</span>
                 </div>
+
+                <input type="button" value="1:1 채팅하기" id="" onclick="enterChatRoom(${tvo.t_idx})" class="toDetailContent1Button toDetailContent1Button1">
+                <input type="button" value="참가 신청하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button2">
+
 <!--                 <input type="button" value="1:1 채팅하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1"> -->
 <!--                 <input type="button" value="참가 신청하기" id="" onclick="to_application()" class="toDetailContent1Button toDetailContent1Button2"> -->
                 <button type="button" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1">1:1 채팅하기</button>
@@ -251,6 +258,7 @@ function to_comment() {
                 <input type="hidden" name="t_idx" id="t_idx" value="${tvo.t_idx }">
                 <input type="hidden" id="member_idx" value="${memberUser.member_idx }">
                 <span class="toDetailContent1Num">${appluNum }/${tvo.t_numpeople }명</span>
+
                 <span>${tvo.t_regdate }</span>
             </div>
             <div class="toDetailContent2">

@@ -1,181 +1,87 @@
-"use strict";
+'use strict';
 
-// chat-rooms
-const usernamePage = document.querySelector("#username-page");
-const chatLists = document.querySelector(".chatLists");
-const selectRoomList = document.querySelectorAll(".chat_list");
+const path = "${path}";
 
-// chat-page
 const chatPage = document.querySelector(".chatPage");
 const messageForm = document.querySelector("#messageForm");
-const messageInput = document.querySelector("#message");
-const connectingElement = document.querySelector(".connecting");
-
+const msgContainer = document.querySelector(".message-container");
 //btn
 const back = document.querySelector(".back");
-const cancel = document.querySelector(".cancel");
-back.addEventListener("click", function () {
-  chatPage.classList.add("hidden");
-  chatLists.classList.remove("hidden");
-});
-
-cancel.addEventListener("click", function () {
-  chatLists.classList.add("hidden");
-});
-
-// connecting to chat server
 
 let stompClient = null;
-let send_nick = null;
 
-function getUserInfo() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'profile.do', true); 
-    
-    xhr.onload = function () {
-        if (xhr.status >= 200 && xhr.status < 300) {
-            const user = JSON.parse(xhr.responseText);
-       		send_nick = user.nickname;
-         	stompClient.send("/app/chat/join", {}, userInfo);
+//members info
+const joiner_nick = document.getElementById("joiner_nick").value;
+const opener_nick = document.getElementById("opener_nick").value;
+const opposite_idx = document.getElementById("opposite_idx").value;
 
-        } else {
-            console.error('Request failed with status', xhr.status);
-        }
-    };   
-    // 요청 전송
-    xhr.send();
-}
+const msg_room = document.getElementById("msg_room").value;
+const room_name = document.getElementById("room_name").value;
+const my_idx = document.getElementById("my_idx").value;
+const joiner_img = document.getElementById("joiner_img").value;
+const opener_img = document.getElementById("opener_img").value;
+const queueName = '/user/queue/' + msg_room;
+
+const send_nick = my_idx === opposite_idx ? opener_nick : joiner_nick;
+const reci_nick = my_idx === opposite_idx ? joiner_nick : opener_nick;
+const reci_img = my_idx === opposite_idx ? joiner_img : opener_img;
+//Room info
 
 
-
-function onMessageRead() {
-  const newBadge = document.querySelector(".new");
-  newBadge.classList.add("hidden");
-}
-
-function connect(e) {
+connect();
+messageForm.addEventListener('submit', function (e) {
   e.preventDefault();
-  chatPage.classList.remove("hidden");
-  chatLists.classList.add("hidden");
+  sendMessage(this, e);
+});
 
-  const socket = new SockJS("/ws");
-
+function connect() {
+  const socket = new SockJS('chat-ws2.do');
   stompClient = Stomp.over(socket);
-  console.log("web socket connection");
-  stompClient.connect({}, onConnected, onError);
-   stompClient.send("/app/chat/join", {}, "");
+
+  stompClient.connect({}, function () {
+    stompClient.subscribe(queueName, function (messageOutput) {
+      const chvo = JSON.parse(messageOutput.body);
+      showMessageOutput(chvo);
+    });
+  });
 }
 
-
-function onConnected() {
-  stompClient.subscribe("/app/topic/", onMessageReceived);
-
-  connectingElement.classList.add("hidden");
-  onMessageRead();  
+function disconnect() {
+  if (stompClient !== null) {
+    stompClient.disconnect();
+  }
+  console.log("Disconnected");
 }
 
-function onError(error) {
-  connectingElement.textContent = "⛔️ 현재 서버 접속이 원활하지 않습니다.";
-  connectingElement.style.color = "red";
-  connectingElement.style.fontSize = "0.9rem";
-}
-
-selectRoomList.forEach((room) => room.addEventListener("click", connect));
-
-function sendMessage(e) {  
+function sendMessage(form, e) {
   e.preventDefault();
-  if (!stompClient || !stompClient.connected) {
-        console.error('WebSocket connection is not established yet.');
-        return;
-    }
-    
-	getUserInfo();
-  
-  const messageContent = messageInput.value.trim();
-  if (messageContent && stompClient) {
-    const chatMessage = {
-      send_nick: send_nick,
-      msg_content: messageInput.value,
-    };
-    stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
-    messageInput.value = "";
-  }
-  displayMessage(chatMessage.content);
+  const message = form.elements["msg_content"].value;
+  const currentDate = new Date();
+  const formattedDate = currentDate.toISOString();
+  const chatMessage = {
+    'msg_content': message,
+    'send_idx': my_idx,
+    'send_nick': send_nick,
+    'send_date': formattedDate,
+    'reci_nick': reci_nick,
+    'msg_room': msg_room,
+    'room_name': room_name
+  };
+
+  stompClient.send("/app/chat.sendMessage", headers, JSON.stringify(chatMessage));
+
+  form.elements["msg_content"].value = '';
+  return false;
 }
 
-function displayMessage(content) {
-  const msgContainer = document.querySelector(".message-container");
-
-  const myMsg = `
-  <div class="li-msg li-msg--2">
-  <span class="user-message user--2-message">${content}</span>
-  </div>
+function showMessageOutput(chvo) {
+  const isOwnMessage = chvo.send_idx === my_idx;
+  const messageClass = isOwnMessage ? "user--2-message" : "user--1-message";
+  const messageHTML = `
+    <div class="li-msg ${isOwnMessage ? 'li-msg--2' : 'li-msg--1'}">
+      <span class="user-message ${messageClass}">${chvo.msg_content}</span>
+    </div>
   `;
-
-  msgContainer.insertAdjacentHTML("beforeend", myMsg);
+  msgContainer.insertAdjacentHTML("afterbegin", messageHTML);
+  msgContainer.scrollTop = msgContainer.scrollHeight;
 }
-
-function onMessageReceived(payload) {
-  const newBadge = document.querySelector(".new");
-  newBadge.classList.remove("hidden");
-
-  const msgContainer = document.querySelector(".message-container");
-  const message = JSON.parse(payload.body);
-  const urMsg = ` <div class="li-msg li-msg--1">
-  <img
-    src="http://placehold.it/30x30"
-    alt="user_img"
-    class="img_for_user1"
-  />
-  <span class="user-message user--1-message">${message.content}</span>
-</div>`;
-
-  msgContainer.insertAdjacentHTML("beforeend", urMsg);
-
-  const chatList = document.querySelector(
-    `.chat_list[data-sender="${message.sender}"]`
-  );
-  if (chatList) {
-    // 기존 채팅방이 있으면 새로운 메시지만 업데이트
-    const chatContent = chatList.querySelector(".chat_content");
-    chatContent.textContent = message.content;
-  } else {
-    // 기존 채팅방이 없으면 새로운 채팅방 리스트 추가
-    const chatLists = document.querySelector(".chat_lists");
-    const newChatList = `
-      <div class="chat_list" data-list="${message.room_no}">
-        <div class="chat-imgs">
-          <img src="http://placehold.it/50x50" alt="user_img" class="user_img" />
-          <div class="new hidden">N</div>
-        </div>
-        <div class="chat_detail">
-          <p class="nick_name">${message.sender}</p>
-          <p class="chat_content">${message.content}</p>
-        </div>
-      </div>`;
-    chatLists.insertAdjacentHTML("afterbegin", newChatList);
-  }
-  //   const chatLists = document.querySelector(".chat_lists");
-  //   const chatList = ` <div class="chat_list">
-  //   <div class="chat-imgs">
-  //     <img
-  //       src="http://placehold.it/50x50"
-  //       alt="user_img"
-  //       class="user_img"
-  //     />
-  //     <div class="new hidden">N</div>
-  //   </div>
-  //   <div class="chat_detail">
-  //     <p class="nick_name">${message.sender}</p>
-  //     <p class="chat_content">${message.content}</p>
-  //   </div>
-  // </div>
-  // </div>`;
-
-  //   chatLists.insertAdjacentHTML("afterbegin", chatList);
-}
-
-
-window.addEventListener('load', getUserInfo);
-messageForm.addEventListener("submit", sendMessage);
-

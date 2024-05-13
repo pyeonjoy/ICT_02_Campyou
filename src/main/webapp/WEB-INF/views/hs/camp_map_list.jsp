@@ -13,9 +13,7 @@
 <script src="resources/public/js/hs/camp_map_list.js" ></script>
 <title>CAMPYOU:지도로 검색</title>
 <script type="text/javascript">
-$(document).ready(function() {
-	
-});
+
 </script>
 </head>
 <body>
@@ -32,7 +30,7 @@ $(document).ready(function() {
 		   		<div id="camp_list_show"></div>
    				<div class="page_button_space">
 	   				<div class="page_button">
-						<ul class="to_paging campe_list_page">
+						<ul class="to_paging camp_list_page">
 							
 						</ul>
 			   		</div>
