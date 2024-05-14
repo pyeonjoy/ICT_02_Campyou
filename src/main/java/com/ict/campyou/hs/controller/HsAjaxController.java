@@ -148,7 +148,7 @@ public class HsAjaxController {
 					"&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("CampYou", "UTF-8"));
 			urlBuilder.append("&keyword=" + URLEncoder.encode(keyword, "UTF-8"));
 			urlBuilder.append("&pageNo=" + pageNo);
-			urlBuilder.append("&" + URLEncoder.encode("numOfRows=" + numOfRows, "UTF-8"));
+			urlBuilder.append("&numOfRows=" + numOfRows);
 			URL url = new URL(urlBuilder.toString());
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
