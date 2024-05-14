@@ -173,7 +173,7 @@ textarea {
 	<tr id="foot-tr">
      <td colspan="2">
      <c:choose>
-     		<c:when test="${memberInfo.member_id eq 'admin'}">
+     		<c:when test="${not empty adminInfo}">
      				<input type="hidden" value="${cbvo.b_idx}" name="b_idx"> 
 	     			<input type="hidden" value="${cPage}" name="cPage">
 	        		<input class="contentBtn" type="button" value="목록" onclick="comm_board_list(this.form)" />
@@ -212,14 +212,26 @@ textarea {
 	</form>
 </div>
 <c:choose>
-	<c:when test="${memberInfo.member_id == 'admin'}">
+	<c:when test="${not empty adminInfo}">
 	<%-- 댓글 입력 --%>
 		<div class="reply-function">
 			<form method="post">
 				<fieldset>
-					<p>별명 : <input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
+					
+					<c:choose>
+						<c:when test="${not empty adminInfo}">
+							<p>별명 : <input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}">
+								${adminInfo.admin_nickname}
+							</p>
+						</c:when>
+						<c:otherwise>
+							<p>별명 : <input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
 								${memberInfo.member_nickname}
-					</p>
+							</p>
+						</c:otherwise>
+					</c:choose>
+				
+					
 					<p><textarea id="textarea1" rows="3" cols="40" name="content"></textarea>
 					<input style="margin-left: 20px" type="button" value="댓글저장" onclick="comment_insert(this.form)">
 					</p>
@@ -234,24 +246,41 @@ textarea {
     <c:forEach var="k" items="${commBoard_list2}">
         <div class="reply-output2">
             <form method="post">
-                <span>별명 : ${k.member_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                <span>날짜 : ${k.write_date.substring(0,10)}</span>
-                <p>${k.content}</p>
-                
-                
-               <%--  <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
-               
-        
-                <!-- 답글의 답글 입력창 -->
-                <textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요!"></textarea>
-                <!-- <input type="button" value="답글 작성" onclick="reply_reply_insert(this.form)"> <hr> --><hr>
-                
-                <input type="button" value="댓글삭제" onclick="comment_delete(this.form)">
-                <input type="button" id="updateGo" value="댓글수정" onclick="comment_update(this.form)">
-                <!-- <input type="button" value="답글답글" onclick="comment_reply_insert(this.form)"> -->
-                <input type="hidden" value="${cPage}" name="cPage">
-                <input type="hidden" name="c_idx" value="${k.c_idx}">
-                <input type="hidden" name="b_idx" value="${k.b_idx}">
+            		
+            	<c:choose>
+					<c:when test="${not empty adminInfo}">
+						<span>별명 : ${k.admin_nickname} ${k.member_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+		                <span>날짜 : ${k.write_date.substring(0,10)}</span>
+		                <p>${k.content}</p>
+		               <%--  <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
+		                <!-- 답글의 답글 입력창 -->
+		                <textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요!"></textarea>
+		                <!-- <input type="button" value="답글 작성" onclick="reply_reply_insert(this.form)"> <hr> --><hr>
+		                
+		                <input class="btn-color" type="button" value="댓글삭제" onclick="comment_delete(this.form)">
+		                <input class="btn-color" type="button" id="updateGo" value="댓글수정" onclick="comment_update(this.form)">
+		                <!-- <input type="button" value="답글답글" onclick="comment_reply_insert(this.form)"> -->
+		                <input type="hidden" value="${cPage}" name="cPage">
+		                <input type="hidden" name="c_idx" value="${k.c_idx}">
+		                <input type="hidden" name="b_idx" value="${k.b_idx}">
+					</c:when>
+					<c:otherwise>
+						<span>별명 : ${k.admin_nickname} ${k.member_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+		                <span>날짜 : ${k.write_date.substring(0,10)}</span>
+		                <p>${k.content}</p>
+		               <%--  <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
+		                <!-- 답글의 답글 입력창 -->
+		                <textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요!"></textarea>
+		                <!-- <input type="button" value="답글 작성" onclick="reply_reply_insert(this.form)"> <hr> --><hr>
+		                
+		                <input class="btn-color" type="button" value="댓글삭제" onclick="comment_delete(this.form)">
+		                <input class="btn-color" type="button" id="updateGo" value="댓글수정" onclick="comment_update(this.form)">
+		                <!-- <input type="button" value="답글답글" onclick="comment_reply_insert(this.form)"> -->
+		                <input type="hidden" value="${cPage}" name="cPage">
+		                <input type="hidden" name="c_idx" value="${k.c_idx}">
+		                <input type="hidden" name="b_idx" value="${k.b_idx}">
+					</c:otherwise>            	
+            	</c:choose>
             </form>
         </div>
     </c:forEach>
@@ -280,7 +309,7 @@ textarea {
 					<c:forEach var="k" items="${commBoard_list2}">
 						<div class="reply-output2" >
 							<form method="post">
-								<span>별명 : ${k.member_nickname}</span> &nbsp;&nbsp;&nbsp;&nbsp;
+								<span>별명 : ${k.member_nickname} ${k.admin_nickname}</span> &nbsp;&nbsp;&nbsp;&nbsp;
 								<span>날짜 : ${k.write_date.substring(0,10)}</span>
 								<p>${k.content}</p>
 								
@@ -300,8 +329,8 @@ textarea {
 						                <textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요!"></textarea>
 						                <!-- <input type="button" value="답글 작성" onclick="reply_reply_insert(this.form)"> <hr> --><hr>
 						                
-						                <input type="button" value="댓글삭제" onclick="comment_delete(this.form)">
-						                <input type="button" id="updateGo" value="댓글수정" onclick="comment_update(this.form)">
+						                <input class="btn-color" type="button" value="댓글삭제" onclick="comment_delete(this.form)">
+						                <input class="btn-color" type="button" id="updateGo" value="댓글수정" onclick="comment_update(this.form)">
 						                <!-- <input type="button" value="답글답글" onclick="comment_reply_insert(this.form)">  -->
 						                <input type="hidden" value="${cPage}" name="cPage">
 						                <input type="hidden" name="c_idx" value="${k.c_idx}">
@@ -319,7 +348,7 @@ textarea {
 					<c:forEach var="k" items="${commBoard_list2}">
 						<div class="reply-output2">
 							<form method="post">
-								<span>별명 : ${k.member_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+								<span>별명 : ${k.member_nickname} ${k.admin_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
 								<span>날짜 : ${k.write_date.substring(0,10)}</span>
 								<p>${k.content}</p>
 								<!-- <input type="button" value="댓글삭제" onclick="comment_delete(this.form)"> -->

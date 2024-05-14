@@ -10,6 +10,7 @@
 	<typeAliases>
 	
 		<typeAlias type="com.ict.campyou.hu.dao.MemberVO" alias="mvo"/>
+		<typeAlias type="com.ict.campyou.hu.dao.AdminMembVO" alias="admvo"/>
 		<typeAlias type="com.ict.campyou.hu.dao.CommBoardVO" alias="cbvo"/>
 		<typeAlias type="com.ict.campyou.hu.dao.CommentVO" alias="covo"/>
 		<typeAlias type="com.ict.campyou.hu.dao.BoardFreeVO" alias="bfvo"/>
