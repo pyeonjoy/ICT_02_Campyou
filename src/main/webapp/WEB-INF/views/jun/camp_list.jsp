@@ -80,8 +80,40 @@
 	display: flex;
 	justify-content: center;
 	padding: 20px;
+	flex-direction: row;
 }
-
+.page_button2 ul{
+	display: flex;
+}
+.search_nowpagecolor{
+	padding: 0 0.5rem;
+	margin: 0 0.5rem;
+	text-decoration: none;
+	background-color: white;
+	color: #FFBA34;
+	font-size: 1.4rem;
+}
+.search_nowpage{
+	padding: 0 0.5rem;
+	margin: 0 0.5rem;
+	background-color: white;
+	color: black;
+	text-decoration: none;
+	font-size: 1.4rem;
+}
+.search_th_disable{
+	color: silver;
+	margin: 0 1rem;
+	text-decoration: none;
+}
+.search_th_able{
+	color: black;
+	margin: 0 1rem;
+	text-decoration: none;
+}
+.search_nowpage:hover{
+	color: #FFBA34;
+}
 </style>
 </head>
 <body>
@@ -94,11 +126,11 @@
 			<ul class="to_paging camp_list_page">
 			</ul>
 		</div>
+	</div>
 		<div class ="page_button2">
 			<ul class="th_paging">
 			</ul>
 		</div>
-	</div>
 	<jsp:include page="../hs/footer.jsp" />
 </body>
 
