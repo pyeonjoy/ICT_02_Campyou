@@ -10,6 +10,11 @@
 			values(#{member_id}, #{member_name},#{member_pwd},#{member_nickname},#{member_dob}, #{member_phone},#{member_email}, sysdate())
 	</insert>
 	
+	<insert id="admin_insert" parameterType="admvo">
+		insert into admin(admin_id, admin_pwd, admin_name, admin_nickname, admin_phone, admin_email, admin_status)
+			values(#{admin_id}, #{admin_pwd},#{admin_name},#{admin_nickname},#{admin_phone}, #{admin_email}, 1)
+	</insert>
+	
 	<select id="idchk" parameterType="String" resultType="int">
  		select count(*) from members where member_id=#{member_id}
  	</select>
@@ -17,9 +22,13 @@
  	<select id="loginIdchk" parameterType="String" resultType="int">
  		select count(*) from members where member_id=#{member_id}
  	</select>
- 	
+
  	<select id="login" parameterType="mvo" resultType="mvo">
  		select * from members where member_id=#{member_id}
+ 	</select>
+ 	
+ 	<select id="admin_login" parameterType="admvo" resultType="admvo">
+ 		select * from admin where admin_id=#{admin_id}
  	</select>
  	
  	<select id="findPwd" parameterType="mvo" resultType="mvo">
@@ -67,12 +76,13 @@
  		where b_idx = #{b_idx} 
  	</update>
  	
+ 	<!-- 'admin'  추가 -->
  	<insert id="comm_board_insert" parameterType="cbvo">
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM board_free
  		</selectKey>
- 		insert into board_free(member_idx, b_type, b_subject, member_nickname, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name)
- 			values(#{member_idx}, #{b_type}, #{b_subject}, #{member_nickname}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{bf_name})
+ 		insert into board_free(member_idx, admin_idx, b_type, b_subject, member_nickname, admin_nickname, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name)
+ 			values(#{member_idx}, #{admin_idx}, #{b_type}, #{b_subject}, #{member_nickname}, #{admin_nickname}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{bf_name})
  	</insert>
  	
  	<select id="comm_board_detail" parameterType="String" resultType="cbvo">
@@ -125,8 +135,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM f_comment
  		</selectKey>
- 		insert into f_comment(member_nickname, content, write_date, b_idx, groups, step, lev)
- 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, 0, 0)
+ 		insert into f_comment(member_nickname, admin_nickname, content, write_date, b_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{admin_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, 0, 0)
  	</insert>
  	
  	<delete id="comment_delete" parameterType="String">
@@ -149,8 +159,8 @@
  	
  	 <!-- 수정했음 -->
  	 <insert id="comment_reply_insert" parameterType="covo">
- 	 	insert into f_comment(member_nickname, content, write_date, b_idx, group, step, lev)
- 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{group}, #{step}, #{lev})
+ 	 	insert into f_comment(member_nickname, admin_nickname, content, write_date, b_idx, group, step, lev)
+ 			values(#{member_nickname}, #{admin_nickname}, #{content}, sysdate(), #{b_idx}, #{group}, #{step}, #{lev})
  	 </insert>
  	 
  	 
@@ -176,8 +186,8 @@
  		
  	
  	 <insert id="ans_insert1" parameterType="covo">
- 	 	insert into f_comment(member_nickname, content, write_date, b_idx, groups, step, lev)
- 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, #{step}, #{lev})
+ 	 	insert into f_comment(member_nickname, admin_nickname, content, write_date, b_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{admin_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, #{step}, #{lev})
  	 </insert>
  	 
  	<!--  <insert id="ans_insert" parameterType="covo">

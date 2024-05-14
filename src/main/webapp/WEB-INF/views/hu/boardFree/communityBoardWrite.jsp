@@ -19,8 +19,8 @@
 	function board_write_ok(f) {
 		for (var i = 0; i < f.elements.length; i++) {
 			if (f.elements[i].value == "") {
-				if (i == 3) continue;
-				if(i == 6) break;
+				if (i == 3 || i == 4) continue;
+				if(i == 6  || i == 7 ||i == 9) break;
 				alert(f.elements[i].name + "를 입력하세요");
 				f.elements[i].focus();
 				return; //수행 중단
@@ -45,7 +45,7 @@
 				<tr align="center">
 					<td bgcolor="#003300" style="color: white;">유형</td>
 					<c:choose>
-						<c:when test="${memberInfo.member_id == 'admin'}">
+						<c:when test="${adminInfo != null}">
 							<td>
 								<select name="b_type">
 									<option value="공지사항">공지사항</option>
@@ -76,8 +76,26 @@
 				</tr>
 				<tr align="center">
 					<td bgcolor="#003300" style="color: white;">별명</td>
-					<td align="left">${memberInfo.member_nickname}
-					<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
+					
+					<c:choose>
+						<c:when test="${adminInfo != null}">
+							<td align="left">${adminInfo.admin_nickname}
+							<input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}">
+							<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
+						</c:when>
+						<c:otherwise>
+							<td align="left">${memberInfo.member_nickname}
+							<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
+							<input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}">
+						</c:otherwise>
+					</c:choose>
+					
+					
+		
+					
+					
+					
+					
 					</td>
 				</tr>
 				<tr>

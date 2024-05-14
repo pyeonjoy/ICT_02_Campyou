@@ -1,9 +1,5 @@
 package com.ict.campyou.hu.service;
 
-import java.util.List;
-
-import com.ict.campyou.hu.dao.CommBoardVO;
-import com.ict.campyou.hu.dao.CommentVO;
 import com.ict.campyou.hu.dao.MemberVO;
 
 public interface MemberService {

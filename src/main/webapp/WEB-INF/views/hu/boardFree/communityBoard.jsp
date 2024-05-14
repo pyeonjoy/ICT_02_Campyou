@@ -68,15 +68,18 @@
 							            </td>
 							            <td class="admin-write-color" style="background-color: lightyellow;">
 							                <c:choose>
-							                    <c:when test="${memberInfo.member_id == 'admin'}">
+							                    <c:when test="${not empty adminInfo}">
+							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${adminInfo.admin_nickname}</a>
 							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname}</a>
 							                    </c:when>
 							                    <c:otherwise>
 							                        <c:choose>
 							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}">
+							                            	<a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${adminInfo.admin_nickname}</a>
 							                                <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname}</a>
 							                            </c:when>
 							                            <c:otherwise>
+							                            	<span style="color: black;">${k.admin_nickname}</span>
 							                                <span style="color: black;">${k.member_nickname}</span>
 							                            </c:otherwise>
 							                        </c:choose>
@@ -103,16 +106,19 @@
 							            </td>
 							            <td>
 							                <c:choose>
-							                    <c:when test="${memberInfo.member_id == 'admin'}">
-							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                    <c:when test="${not empty adminInfo}">
+							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>
+							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
 							                    </c:when>
 							                    <c:otherwise>
 							                        <c:choose>
 							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}">
-							                                <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                              <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>
+							                         	  <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
 							                            </c:when>
 							                            <c:otherwise>
-							                                ${k.member_nickname}
+							                            	${k.admin_nickname}
+							                            	${k.member_nickname}
 							                            </c:otherwise>
 							                        </c:choose>
 							                    </c:otherwise>
@@ -128,8 +134,6 @@
 				</c:choose>
 			</tbody>
 		</table>
-		
-		
 		<table id="table2">
 		<tfoot id="aaa">
 			<tr id="foot-tr">
@@ -185,7 +189,7 @@
 				</td>
 				<td>
 					<c:choose>
-						<c:when test="${memberInfo != null}">
+						<c:when test="${memberInfo != null || adminInfo != null}">
 							<input type="button" id="btnWrite" value="글쓰기" onclick="commBoard_write()">
 						</c:when>
 						<c:otherwise>
