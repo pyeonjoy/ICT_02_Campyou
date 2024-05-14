@@ -140,4 +140,9 @@ public class TogetherServiceImpl implements TogetherService{
 	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
 		return togetherDAO.getToCommentList(t_idx);
 	}
+
+	@Override
+	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception {
+		return togetherDAO.getToCommentWrite(tcvo);
+	}
 }

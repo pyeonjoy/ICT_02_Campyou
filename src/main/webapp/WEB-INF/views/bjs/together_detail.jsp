@@ -179,9 +179,6 @@ function to_delete_go(f, t_idx) {
 
 function to_comment() {
     let tIdx = document.getElementById('t_idx').value;
-    if (document.getElementById('login_member_img').value) {
-        loginMemberImg = document.getElementById('login_member_img').value;
-    }
     $('.toDetailContent4').empty();
     $.ajax({
         type: "POST",
@@ -191,25 +188,23 @@ function to_comment() {
         },
         dataType: "json",
         success: function(data) {
-            if (data != null) {
+            if (data.toCommentList != null) {
             	let commentHTML = '';
             	commentHTML += '<p class="toDetailContent4Sub1">댓글</p>';
             	commentHTML += '<form method="post">';
             	commentHTML += '<div class="toDetailInput">';
-            	// 로그인 여부에 따라 이미지 출력
-                if (loginMemberImg) {
-                    commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + loginMemberImg + '" class="userImage32"></div>';
-                } else {
-                    commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/user2.png" class="userImage32"></div>';
-                    $('.toDetailInputBox').prop('disabled', true); // 댓글 입력 창 비활성화
-                    $('.toDetailInputBox').attr('placeholder', '로그인 후 작성 가능합니다.'); // 플레이스홀더 설정
-                }
-            	commentHTML += '<input type="text" value="" id="" class="toDetailInputBox">';
-            	commentHTML += '<input type="button" value="입력" id="" class="toDetailInputBox toDetailInputSubmit" onclick="">';
+            	if(data.memberUser && data.memberUser.member_img != null){
+	                commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32"></div>';
+            		commentHTML += '<input type="text" value="" id="" class="toDetailInputBox">';
+            	}else{
+            		commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/user2.png" class="userImage32"></div>';
+            		commentHTML += '<input type="text" value="" id="" class="toDetailInputBox" placeholder="로그인 후 작성" readonly>';
+            	}
+            	commentHTML += '<input type="button" value="입력" id="" class="toDetailInputSubmit" onclick="">';
             	commentHTML += '</div>';
             	commentHTML += '</form>';
-            	for (let i = 0; i < data.length; i++) {
-            		let comment = data[i];
+            	for (let i = 0; i < data.toCommentList.length; i++) {
+            		let comment = data.toCommentList[i];
                     let commentHTML2 = '<div class="toDetailContent4Sub3">';
                     commentHTML2 += '<div class="toDetailContent4Sub2Sub1">';
                     commentHTML2 += '<div class="toDetailContent4Sub2Sub1Div">';
@@ -220,7 +215,7 @@ function to_comment() {
                     commentHTML2 += '</div>';
                     commentHTML2 += '</div>';
                     commentHTML2 += '<div class="toDetailContent4Sub2Sub2">';
-                    commentHTML2 += '<input type="button" value="답글 달기" onclick="to_coment_write(this.form)" class="toDetailContent4Sub2Sub2Button">';
+                    commentHTML2 += '<input type="button" value="답글 달기" class="toDetailContent4Sub2Sub2Button" >';
                     commentHTML2 += '</div>';
                     commentHTML2 += '</div>';
                     commentHTML2 += '<div class="toDetailContent4Sub2Sub3">';
@@ -231,6 +226,18 @@ function to_comment() {
                     commentHTML2 += '<input type="button" value="X" onclick="" class="toDetailContent4Sub2Sub2Button">';
                     commentHTML2 += '</div>';
                     commentHTML2 += '</div>';
+                    commentHTML2 += '<form method="post" class="toDetailInputForm" style="display:none;">';
+                    commentHTML2 += '<span class="toDetailInputSpan">ㄴ</span>';
+                    commentHTML2 += '<div class="toDetailInput">';
+                    commentHTML2 += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32"></div>';
+                    commentHTML2 += '<input type="text" value="" id="" class="toDetailInputBox">';
+                    commentHTML2 += '<input type="button" value="입력" id="" class="toDetailInputSubmit">';
+                    commentHTML2 += '<input type="hidden" value="' + comment.wc_idx + '" id="wc_idx" >';
+                    commentHTML2 += '<input type="hidden" value="' + comment.wc_groups + '" id="wc_groups" >';
+                    commentHTML2 += '<input type="hidden" value="' + comment.wc_step + '" id="wc_step" >';
+                    commentHTML2 += '<input type="hidden" value="' + comment.wc_lev + '" id="wc_lev" >';
+                    commentHTML2 += '</div>';
+                    commentHTML2 += '</form>';
                     commentHTML2 += '</div>';
                     commentHTML += commentHTML2;
                 }
@@ -242,6 +249,57 @@ function to_comment() {
         }
     });
 }
+
+$(document).on("click", ".toDetailContent4Sub2Sub2Button", function() {
+    let parentDiv = $(this).closest(".toDetailContent4Sub3");
+    let commentForm = parentDiv.find(".toDetailInputForm");
+    if (commentForm.css("display") === "none") {
+        commentForm.css("display", "flex");
+    } else {
+        commentForm.css("display", "none");
+    }
+});
+
+
+$(document).on("click", ".toDetailInputSubmit", function() {
+    let parentDiv = $(this).closest(".toDetailInput");
+    let commentInput = parentDiv.find(".toDetailInputBox").val();
+    let memberIdx = $("#member_idx").val();
+    let tIdx = $("#t_idx").val();
+    let wcGroups = $("#wc_groups").val();
+    let wcStep = $("#wc_step").val();
+    let wcLev = $("#wc_lev").val();
+    let wcIdx = null;
+    if (parentDiv.find('.wc_idx').length) {
+        wcIdx = parentDiv.find('.wc_idx').val();
+    }
+ 	console.log(wcIdx);
+ 	
+    if (commentInput.trim() === "") {
+        alert("댓글을 입력해주세요.");
+        return;
+    }
+    
+    $.ajax({
+        type: "POST",
+        url: "to_comment_write.do",
+        data: {
+        	member_idx: memberIdx,
+            t_idx: tIdx,
+            wc_content: commentInput,
+            wc_groups: wcGroups,
+            wc_step: wcStep,
+            wc_lev: wcLev,
+            wc_idx: wcIdx
+        },
+        success: function(response) {
+            to_comment();
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+});
 </script>
 </head>
 <body>
@@ -318,7 +376,6 @@ function to_comment() {
             		<c:when test="${memberUser.member_idx eq tvo.member_idx }">
 		                <input type="button" value="수정하기" onclick="to_update_go(this.form)" class="toDetailContent3Button">
 		                <input type="button" value="삭제하기" onclick="to_delete_go(this.form, ${tvo.t_idx})" class="toDetailContent3Button">
-		                <input type="hidden" id="login_member_img" value="${memberUser.member_img }">
             		</c:when>
             		<c:otherwise>
 						            		

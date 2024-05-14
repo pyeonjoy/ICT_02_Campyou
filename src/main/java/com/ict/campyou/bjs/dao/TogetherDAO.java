@@ -140,4 +140,13 @@ public class TogetherDAO {
 	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
 		return sqlSessionTemplate.selectList("bjs.to_comment_list", t_idx);
 	}
+	
+	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception {
+//		return sqlSessionTemplate.insert("bjs.to_comment_write", tcvo);
+		if(tcvo.getWc_idx() != null && !tcvo.getWc_idx().isEmpty()) {
+			return sqlSessionTemplate.insert("bjs.to_comment_in_write", tcvo);
+		}else {
+			return sqlSessionTemplate.insert("bjs.to_comment_write", tcvo);
+		}
+	}
 }

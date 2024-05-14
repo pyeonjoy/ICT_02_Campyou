@@ -39,7 +39,7 @@ public class TogetherAjaxController {
 
 	@RequestMapping(value = "together_Write2.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
-	public String getTogetherWrite(TogetherCommentVO tvo, HttpSession session) throws Exception{
+	public String getTogetherWrite(TogetherVO tvo, HttpSession session) throws Exception{
 		List<CampVO> campList = togetherService.getTogetherCampList();
 		if(campList != null) {
 			Gson gson = new Gson();
@@ -320,14 +320,36 @@ public class TogetherAjaxController {
 	
 	@RequestMapping(value = "to_comment_list.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
-	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
+	public Map<String, Object> getToCommentList(String t_idx, HttpSession session) throws Exception {
+		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
+		if (memberUser == null) {
+	        memberUser = new MemberVO();
+	    }
 		List<TogetherCommentVO> toCommentList = togetherService.getToCommentList(t_idx);
 		for (TogetherCommentVO k : toCommentList) {
+			System.out.println(k.getWc_idx());
 			System.out.println(k.getMember_idx());
+			System.out.println(k.getMember_img());
 			System.out.println(k.getMember_nickname());
 			System.out.println(k.getWc_content());
 		}
-		return toCommentList;
+		System.out.println(memberUser.getMember_img());
+		Map<String, Object> response = new HashMap<>();
+	    response.put("memberUser", memberUser);
+	    response.put("toCommentList", toCommentList);
+
+	    return response;
+	}
+	
+	@RequestMapping(value = "to_comment_write.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception {
+		System.out.println("wc_idx:"+tcvo.getWc_idx());
+		int result = togetherService.getToCommentWrite(tcvo);
+		if(result > 0) {
+			return result;
+		}
+		return -1;
 	}
 	
 }
