@@ -205,6 +205,7 @@ public class TogetherAjaxController {
 	@ResponseBody
 	public Map<String, Object> getTogetherHistoryGet(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
 		int count = togetherService.getToHistoryCount(member_idx);
+
 		System.out.println(count);
 		paging.setTotalRecord(count);
 		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
@@ -328,5 +329,4 @@ public class TogetherAjaxController {
 		}
 		return toCommentList;
 	}
-	
 }

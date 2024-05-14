@@ -60,6 +60,7 @@ function updatePromiseStatus(pmIdx, status) {
     });
 }
 
+
 function promiseApplyList(page) {
 	let memberIdx = document.getElementById("member_idx").value;
     	$('.thwrapper').empty();
@@ -77,6 +78,7 @@ function promiseApplyList(page) {
 //                 let imgSrc = toHistory.member_img === null || toHistory.member_img === '' || toHistory.member_img === 'user2.png' ? '${path}/resources/images/user2.png' : '${path}/resources/images/' + toHistory.member_img;
                 let html = '';
             	html += '<div class="thwrapper1">';
+
                 html += '<button type="button" class="thwrapper1Button thwrapper1Button_active" onclick="promiseApplyList()">동행 신청 받은 내역</button>';
                 html += '<button type="button" class="thwrapper1Button" onclick="promiseApplySendList()">동행 신청 내역</button>';
                 html += '</div>';
@@ -202,6 +204,7 @@ function promiseApplySendList(page) {
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.pm_regdate + '</a></li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.pm_state + '</a></li></ul>';
+
 	                html2 += '</div>';
 	                html += html2;
                 }
@@ -226,6 +229,7 @@ function promiseApplySendList(page) {
         		html += '</div>';
         		html += '</div>';
                 $('.thwrapper').append(html);
+
             }
 
             let paging = data.paging;

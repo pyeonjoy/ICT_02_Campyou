@@ -7,16 +7,16 @@
 <link href="resources/css/reset.css" rel="stylesheet" />
 <link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=qpvmsbuult"></script>
+<script type="module" src="https://ryj9d86xjh.execute-api.ap-northeast-2.amazonaws.com/v1/api/js/drop_fontstream_js/?sid=gAAAAABmQdUd8y-oUIO39NM2Moe5C2mGa0rE06hJqBQcaKXQO9x1HZhXz-WNG8kMCK3TAgzebfkuj-tJJActuz4i_AXWHPXtAQ5fYARL4KKKG5dpxVqwpQaS5_PtsJD2TxV7ifaxqHtTXbxaXLMohwIGqJLEHw0eOT1hI3cGDK2AvnoVfX2q2kSEKwbB4KqAYW5kVR3ESF5sekzdtMKkIeZ_QvAPFemEItrqqhsC-dfYLFu0qV7Cn9R_zUzqgTZCH6xF61N0t4vI" charset="utf-8"></script><head>
 <%@ include file="../hs/admin_menu.jsp"%>
-<head>
 <meta charset="utf-8">
 <style type="text/css">
+
 </style>
 <title>회원관리 상세</title>
 </head>
 <body>
-	<h2 class="head">회원 관리 상세</h2>
-	<h3 style="text-align: center;">회원 상세 정보</h3>
+	<h3 class="head" style="">회원 관리 상세</h3>
 		<div class="wrap">
 			<div class="left">
 			<c:forEach var="m" items="${member}">
@@ -79,47 +79,73 @@
 						<td>${m.member_grade}</td>
 						<td>${report}</td>
 
-						<c:if test="${m.member_active== 1}">
+						<c:if test="${m.member_active== 0}">
 							<td>활동중</td>
 						</c:if>
 
-						<c:if test="${m.member_active== 0}">
+						<c:if test="${m.member_active== -1}">
 							<td>정지중</td>
+						</c:if>
+						
+						<c:if test="${m.member_active== -2}">
+							<td>회원삭제</td>
 						</c:if>
 					</tr>
 		</c:forEach>
 				</table>
+				<c:choose>
+				<c:when test="${not empty reporteach}">
 				<div class="modal">
-				<c:forEach var="r" items="${reporteach}">
-							<div class="modal_popup">
-								<form action="admin_report.do" method="post">
-								<input type="hidden" name="report_idx" value="${r.report_idx }" >
-								<input type="hidden" name="member_idx" value="${r.member_idx }" >
-								<input type="radio" name="report_day" value="0">${r.report_idx }
-								<input type="radio" name="report_day" value="3">3일
-								<input type="radio" name="report_day" value="7">7일
-								<input type="radio" name="report_day" value="30">30일
-								<input type="radio" name="report_day" value="60">60일
-								<input type="radio" name="report_day" value="90">90일
-								<input type="radio" name="report_day" value="9999">무기한
-								<div style="margin-top: 20px;">
-								<button type="submit" onclick="location.href='admin_report.do?member_idx=${r.member_idx}">확인</button>
-								<button type="button" class="close_btn">닫기</button>
-								</div>
-								</form>
-							</div>
+						<c:forEach var="r" items="${reporteach}">
+									<div class="modal_popup">
+										<form action="admin_report.do" method="post">
+										<input type="hidden" name="report_idx" value="${r.report_idx }" >
+										<input type="hidden" name="reportmember_idx" value="${r.reportmember_idx }" >
+										<input type="radio" name="report_day" value="0">${r.report_idx }
+										<input type="radio" name="report_day" value="3">3일
+										<input type="radio" name="report_day" value="7">7일
+										<input type="radio" name="report_day" value="30">30일
+										<input type="radio" name="report_day" value="60">60일
+										<input type="radio" name="report_day" value="90">90일
+										<input type="radio" name="report_day" value="9999">무기한
+										<div style="margin-top: 20px;">
+										<button type="submit" onclick="location.href='admin_report.do?member_idx=${r.member_idx}">확인</button>
+										<button type="button" class="close_btn">닫기</button>
+										</div>
+										</form>
+									</div>
+						</c:forEach>
+					</div>
+					<c:forEach var="r" items="${reporteach}" varStatus="loop">
+					    <!-- 첫 번째 배열만 처리 -->
+					    <c:if test="${loop.index == 0}">
+					        <!-- 처리할 내용 -->
+					        <button type="button" class="modal_btn">신고 처리</button>
+					    </c:if>
+					</c:forEach>
+
+				</c:when>
+				</c:choose>
+				<c:forEach var="m" items="${member}">
+				<c:if test="${m.member_active== 0}">
+				<button type="button" onclick="location.href='report_write2.do?member_idx=${m.member_idx}'">정지하기</button>
+				</c:if>
+				<c:if test="${m.member_active== -1}">
+				<button type="button" onclick="location.href='member_stopcancel.do?member_idx=${m.member_idx}'">정지해제</button>
+				</c:if>
+				<c:if test="${m.member_active== -2}">
+				<button type="button" onclick="location.href='member_stopcancel.do?member_idx=${m.member_idx}'">탈퇴취소</button>
+				</c:if>
 				</c:forEach>
-						</div>
-						<!--end 모달 팝업-->		
-								<button type="button" class="modal_btn">회원 정지</button>
 				<c:forEach var="m" items="${member}">
 				<button type="button"
 					onclick="location.href='member_edit.do?member_idx=${m.member_idx}'">회원수정</button>
 				<button type="button"
 					onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원삭제</button>
-				<button type="button" onclick="location.href='admin_member_list.do'">목록으로</button>
 				</c:forEach>
 			</div>
+				<button style="margin: 37px 157%; background-color: #041601; color: white" type="button" onclick="history.go(-1)">목록으로</button>
+
 		</div>
 		<div class=under>
 			<table style="table-layout: auto; width: 100%; table-layout: fixed;">
@@ -127,24 +153,45 @@
 						<th>신고번호</th>
 						<th>신고 내용</th>
 						<th>신고 날짜</th>
-						<th>신고 처리 날짜</th>
-						<th>신고 처리 관리자</th>
-						<th>신고 상태</th>
-						<th>상태 변경</th>
+						<th>처리 날짜</th>
+						<th>정지 만료 날짜</th>
+						<th>처리 관리자</th>
+						<th>상태</th>
 					</tr>
 				<c:forEach var="r" items="${reporteach}">
 					<tr>
 						<td>${r.report_idx }</td>
 						<td>${r.report_content }</td>
 						<td>${r.report_date }</td>
+						<td>${r.report_now_date }</td>
 						<td>${r.report_ok_date }</td>
-						<td>${r.member_idx }</td>
+						<td>${r.admin_idx }</td>
 						<c:if test="${r.report_status == 0}">
-						<td>신고 처리 대기</td>
+						<td>처리 대기</td>
 						</c:if>
 						<c:if test="${r.report_status == 1}">
-						<td>신고 처리 완료</td>
+						<td>처리 완료</td>
 						</c:if>
+					</tr>
+				</c:forEach>
+			</table>
+			<table style="table-layout: auto; width: 100%; table-layout: fixed; margin-top: 20px;">
+					<tr>
+						<th>정지번호</th>
+						<th>정지 내용</th>
+						<th>정지 날짜</th>
+						<th>정지 만료 날짜</th>
+						<th>처리 관리자</th>
+						<th>상태</th>
+					</tr>
+				<c:forEach var="r" items="${stop}">
+					<tr>
+						<td>${r.stop_idx }</td>
+						<td>${r.stop_content }</td>
+						<td>${r.stop_date }</td>
+						<td>${r.stop_ok_date }</td>
+						<td>${r.admin_idx }</td>
+						<td>처리 완료</td>
 					</tr>
 				</c:forEach>
 			</table>

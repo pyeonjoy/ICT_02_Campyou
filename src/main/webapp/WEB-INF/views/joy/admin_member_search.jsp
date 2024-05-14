@@ -103,29 +103,30 @@ table tfoot ol.paging li a:hover {
 <body>
 	<div id="bbs" align="center">
 		<table summary="게시판 목록">
-			<caption style="margin-bottom:100px;"><h3>유저 목록</h3></caption>
+			<caption  style="margin-bottom:100px;"><h3>게시판 목록</h3></caption>
 			<thead>
 				<tr class="title">
-					<th style="width:5px">선택</th>
+					<th class="no">선택</th>
 					<th class="no">idx</th>
 					<th class="subject">id</th>
-					<th class="writer">이름</th>
+					<th class="subject">이름</th>
 					<th class="subject">닉네임</th>
 					<th class="subject">생년월일</th>
-					<th class="subject" style="width:500px;">번호</th>
+					<th class="subject">번호</th>
 					<th class="subject">이메일</th>
 					<th class="subject">가입일</th>
-					<th class="subject">등급</th>
-					<th class="subject">상태</th>
+					<th class="subject">관리자</th>
+					<th class="hit">등급</th>
+					<th class="hit">로그인</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:choose>
-					<c:when test="${empty member }">
+					<c:when test="${empty searchmember }">
 						<tr><td colspan="5"><h3>게시물이 존재하지 않습니다.</h3></td></tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="k" items="${member}" varStatus="vs">
+						<c:forEach var="k" items="${searchmember}" varStatus="vs">
 							<tr>
 							  <form action="admin_member_detail.do?member_idx=${k.member_idx }" method="post">
 							  <td><input type="submit" value="선택"></td>
@@ -136,25 +137,10 @@ table tfoot ol.paging li a:hover {
 							    <td>${k.member_dob }</td>
 							    <td>${k.member_phone }</td>
 							    <td>${k.member_email }</td>
-							    <td class="subject">${k.member_regdate }</td>
-							    <c:if test="${k.member_grade== 0}">
-							    <td class="subject">일반회원</td>
-							    </c:if>
-							    <c:if test="${k.member_grade== 1}">
-							    <td class="subject">열심회원</td>
-							    </c:if>
-							    <c:if test="${k.member_grade== 2}">
-							    <td class="subject">우수회원</td>
-							    </c:if>
-							    <c:if test="${k.member_active== 0}">
-							    <td class="subject">일반회원</td>
-							    </c:if>
-							    <c:if test="${k.member_active== -1}">
-							    <td class="subject">정지회원</td>
-							    </c:if>
-							    <c:if test="${k.member_active== -2}">
-							    <td class="subject">탈퇴회원</td>
-							    </c:if>
+							    <td>${k.member_regdate }</td>
+							    <td>${k.member_grade }</td>
+							    <td>${k.member_active }</td>
+							    <td>${k.member_login }</td>
 							</form>
 							</tr>
 						</c:forEach>
@@ -163,45 +149,45 @@ table tfoot ol.paging li a:hover {
 			</tbody>
 			<tfoot>
 				<tr>
-				
 					<td colspan="13">
-						<ol class="paging" style="margin: 0 auto; width: 275px;">
+						<ol class="paging" style="margin: 0 auto; width: 175px;">
 							<!-- 이전 버튼 -->
 							<c:choose>
 								<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
 									<li class="disable">이전으로</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="admin_member_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }">이전으로</a></li>
+									<li><a href="admin_member_search.do?cPage=${paging.beginBlock - paging.pagePerBlock }">이전으로</a></li>
 								</c:otherwise>
 							</c:choose>
 							<!-- 페이지번호들 -->
-							<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock }" step="1" var="k">
-								<c:choose>
-									<c:when test="${k == paging.nowPage }">
-										<li class="now">${k}</li>
-									</c:when>
-									<c:otherwise>
-										<li><a href="admin_member_list.do?cPage=${k}">${k}</a></li>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-							
+							<c:if test="${not empty cPage}">
+							    <c:forEach begin="${paging.beginBlock}" end="${paging.endBlock}" step="1" var="k">
+							        <c:choose>
+							            <c:when test="${k == paging.nowPage}">
+							                <li class="now">${k}</li>
+							            </c:when>
+							            <c:otherwise>
+							                <li><a href="admin_member_search.do?cPage=${k}">${k}</a></li>
+							            </c:otherwise>
+							        </c:choose>
+							    </c:forEach>
+							</c:if>
 							<!-- 이후 버튼 -->
 								<c:choose>
 								<c:when test="${paging.endBlock >= paging.totalPage }">
 									<li class="disable">다음으로</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="admin_member_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
+									<li><a href="admin_member_search.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
 								</c:otherwise>
 							</c:choose>
 						</ol>	
 					</td>
 				</tr>
 				<tr>
-				<td colspan="13">
-					<form action="member_search.do" method="post">
+				<td  colspan="13">
+				<form action="member_search.do" method="post">
 					    <div class="search-wrap">
 					        <select name="searchType">
 					            <option value="name">이름</option>
@@ -211,14 +197,13 @@ table tfoot ol.paging li a:hover {
 					    	<input type="text" name="keyword">
 					        <button type="submit" name="search">검색</button>
 					    </div>
-					    <input type="hidden" name="offset" value="1">
-					    <input type="hidden" name="limit" value="10">
+					    <input type="hidden" name="pageNum" value="1">
+					    <input type="hidden" name="amount" value="10">
 					</form>
-				</td>
+					</td>
 				</tr>
 			</tfoot>	
 		</table>
 	</div>
-	<jsp:include page="../hs/footer.jsp" />
 </body>
 </html>

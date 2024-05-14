@@ -9,13 +9,40 @@
 <meta charset="utf-8">
 <title>관리자 페이지 메인</title>
 <style>
+@font-face {
+    font-family: 'JalnanGothic';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h2{
+     font-family: 'JalnanGothic';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h3{
+    font-family: 'JalnanGothic';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    line-height: 30px;
+
+}
+h4{
+    font-family: 'JalnanGothic';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    line-height: 30px;
+}
 body {
 	background-color: #F6FFF1;
 }
 
 .head {
 	text-align: center;
-	margin: 100px;;
+	padding: 200px 50px 30px 50px;
 }
 
 .wrap {
@@ -23,9 +50,8 @@ body {
 	grid-template-columns: 1fr 1fr;
 	grid-gap: 10px;
 	margin: 0 auto;
-	padding: 10px;
-	height: 100px;
-	width: 1000px;
+	height: 800px;
+	width: 1230px;
 }
 
 .hr {
@@ -174,7 +200,7 @@ table tfoot ol.paging li a:hover {
 </style>
 </head>
 <body>
-	<h2 class="head">팝업 관리</h2>
+	<h3 class="head">팝업 관리</h3>
 	<div class="wrap">
 		<div class="left">
 					<img class="mainimg" src="resources/popup/${f_name}">
@@ -273,5 +299,6 @@ table tfoot ol.paging li a:hover {
 			</div>
 		</div>
 	</div>
+		<jsp:include page="../hs/footer.jsp" />
 </body>
 </html>
