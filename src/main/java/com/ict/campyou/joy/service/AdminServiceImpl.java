@@ -92,8 +92,8 @@ public class AdminServiceImpl implements AdminService{
 	
 
 	@Override
-	public List<AdminMemberVO> getmemberSearch(String searchType, String keyword) {
-		return admindao.getmemberSearch(searchType, keyword);
+	public List<AdminMemberVO> getmemberSearch(String searchType, String keyword, int offset, int limit) {
+		return admindao.getmemberSearch(searchType, keyword, offset, limit);
 	}
 
 //팝업===================================================================================		

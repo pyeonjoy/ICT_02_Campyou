@@ -29,7 +29,7 @@ public interface AdminService {
 	public int getremoveimg(String member_idx);
 	public List<MemberVO> allmember(int offset, int limit);
 	public int getTotalCount2();
-	List<AdminMemberVO> getmemberSearch(String searchType, String keyword);
+	List<AdminMemberVO> getmemberSearch(String searchType, String keyword, int offset, int limit);
 	public int getadminreport(String report_day, String report_idx, String admin_idx, String reportmember_idx);
 	public int getadminreportall(AdminMemberVO amvo);
 	

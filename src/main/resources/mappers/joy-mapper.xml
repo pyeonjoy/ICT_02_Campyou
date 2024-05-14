@@ -7,11 +7,9 @@
  	<!-- 총 멤버 수, 오늘의 가입 멤버 수, 총 탈퇴 회원 -->
 	<select id="getMemberCounts" resultType="avo">
 		SELECT
-		(SELECT count(member_idx) FROM members) AS totalMembers,
-		(SELECT count(member_idx) FROM members WHERE member_regdate = now()) AS
-		todayMembers,
-		(SELECT count(member_idx) FROM members WHERE member_active = -2) AS
-		unactiveMembers
+		    (SELECT COUNT(member_idx) FROM members) AS totalMembers, 
+		    (SELECT COUNT(member_idx) FROM members WHERE DATE(member_regdate) = CURDATE()) AS todayMembers, 
+		    (SELECT COUNT(member_idx) FROM members WHERE member_active = -2) AS unactiveMembers;
 	</select>
 	
 	<!-- 회원 게시글 확인 -->
@@ -127,7 +125,7 @@
 	    from members
 	    <include refid="criteria"></include>
 	    order by member_idx desc 
-	     <!-- limit #{limit}, #{offset} -->
+	    limit #{limit} offset #{offset}
 	</select>
 	
 	<!-- 페이징 - 유저리스트 -->

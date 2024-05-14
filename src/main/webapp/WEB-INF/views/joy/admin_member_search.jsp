@@ -39,7 +39,7 @@ h4{
 padding: 200px 100px 300px 100px;
 }
 #bbs table {
-	width:800px;
+	width:1200px;
 	margin:0 auto;
 	margin-top:20px;
 	border: 1px solid black;
@@ -57,15 +57,9 @@ padding: 200px 100px 300px 100px;
 	text-align: center;
 	border: 1px solid black;
 	padding: 4px 10px;
+	width: 9%;
 }
 
-.no { width: 15% }
-.subject { 	width: 30% }
-.writer {	width: 20% }
-.reg {	width: 20% }
-.hit {	width: 15% }
-.title {	background: lightsteelblue }
-.odd {	background: silver }
 
 /* paging */
 table tfoot ol.paging {
@@ -163,7 +157,7 @@ table tfoot ol.paging li a:hover {
 									<li class="disable">이전으로</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="admin_member_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }">이전으로</a></li>
+									<li><a href="admin_member_search.do?cPage=${paging.beginBlock - paging.pagePerBlock }">이전으로</a></li>
 								</c:otherwise>
 							</c:choose>
 							<!-- 페이지번호들 -->
@@ -174,7 +168,7 @@ table tfoot ol.paging li a:hover {
 							                <li class="now">${k}</li>
 							            </c:when>
 							            <c:otherwise>
-							                <li><a href="admin_member_list.do?cPage=${k}">${k}</a></li>
+							                <li><a href="admin_member_search.do?cPage=${k}">${k}</a></li>
 							            </c:otherwise>
 							        </c:choose>
 							    </c:forEach>
@@ -185,7 +179,7 @@ table tfoot ol.paging li a:hover {
 									<li class="disable">다음으로</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="admin_member_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
+									<li><a href="admin_member_search.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
 								</c:otherwise>
 							</c:choose>
 						</ol>	

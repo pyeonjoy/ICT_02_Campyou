@@ -144,7 +144,8 @@
 					onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원삭제</button>
 				</c:forEach>
 			</div>
-				<button style="margin: 37px 157%; background-color: #041601; color: white" type="button" onclick="location.href='admin_member_list.do'">목록으로</button>
+				<button style="margin: 37px 157%; background-color: #041601; color: white" type="button" onclick="history.go(-1)">목록으로</button>
+
 		</div>
 		<div class=under>
 			<table style="table-layout: auto; width: 100%; table-layout: fixed;">

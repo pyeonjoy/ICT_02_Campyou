@@ -156,6 +156,8 @@ public class AdminDAO {
 	public List<MemberVO> allmember(int offset, int limit) {
 		try {
 			Map<String, Integer> map = new HashMap<String, Integer>();
+			System.out.println("offset"+offset);
+			System.out.println("limit"+limit);
 			map.put("offset", offset);
 			map.put("limit", limit);
 			return sqlSessionTemplate.selectList("joy.allmember",map);
@@ -302,12 +304,15 @@ public class AdminDAO {
 		return -1;
 	}
 	
-	public List<AdminMemberVO> getmemberSearch(String searchType, String keyword) {
+	public List<AdminMemberVO> getmemberSearch(String searchType, String keyword, int offset, int limit) {
 		
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchType", searchType);
 		map.put("keyword", keyword);
-		
+		map.put("offset", offset);
+		map.put("limit", limit);
+		System.out.println("offset"+ offset);
+		System.out.println("limit"+ limit);
 		return sqlSessionTemplate.selectList("joy.getmemberSearch", map);
 	}
 	public int getadminreportall(AdminMemberVO amvo) {

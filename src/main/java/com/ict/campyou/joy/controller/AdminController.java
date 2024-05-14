@@ -57,62 +57,7 @@ public class AdminController {
 		}
 		return new ModelAndView("board/error");
 	}
-	@RequestMapping("admin_member_list.do")
-	public ModelAndView adminMemberList(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("joy/admin_member_list");
-		HttpSession session = request.getSession();
-		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-		mvo.setMember_idx(mvo.getMember_idx());
-		// 페이징 기법
-				// 전체 게시물의 수
-				int count = adminService.getTotalCount2();
-				paging.setTotalRecord(count);
-				System.out.println("전체게시글"+paging.getTotalRecord());
-				System.out.println("paging.getBeginBlock()"+paging.getBeginBlock());
-				System.out.println("paging.getPagePerBlock()"+paging.getPagePerBlock());
-				
-				// 전체 페이지의 수
-				if (paging.getTotalRecord() <= paging.getNumPerPage()) {
-					paging.setTotalPage(1);
-				} else {
-					paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-					if (paging.getTotalRecord() % paging.getNumPerPage() != 0) {
-						paging.setTotalPage(paging.getTotalPage() + 1);
-					}
-				}
 
-				// 현재 페이지 구함
-				String cPage = request.getParameter("cPage");
-				System.out.println("cpage"+cPage);
-				if (cPage == null) {
-					paging.setNowPage(1);
-				} else {
-					paging.setNowPage(Integer.parseInt(cPage));
-				}
-
-				// begin, end 구하기 (Oracle)
-				// offset 구하기
-				// offset = limit * (현재페이지-1);
-				paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
-
-				// 시작 블록 // 끝블록
-				paging.setBeginBlock(
-						(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
-				paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
-
-				if (paging.getEndBlock() > paging.getTotalPage()) {
-					paging.setEndBlock(paging.getTotalPage());
-				}
-					List<MemberVO> member = adminService.allmember(paging.getOffset(), paging.getNumPerPage());
-					int statusupdate = adminService.getstatusupdate();
-					System.out.println("statusupdate"+statusupdate);
-					if (member != null) {
-						mv.addObject("member", member);
-						mv.addObject("paging", paging);
-						return mv;
-					}
-					return new ModelAndView("board/error");
-	}
 	
 	@RequestMapping("admin_member_detail.do")
 	public ModelAndView adminMemberDetail(String member_idx,String reportmember_idx) {
@@ -214,7 +159,7 @@ public class AdminController {
 	        response.setCharacterEncoding("UTF-8");
 	        response.setContentType("text/html; charset=utf-8");
 	        PrintWriter out = response.getWriter();
-	        out.println("<script> alert('회원 정지해제 되었습니다.'); window.location.href='admin_member_detail.do?member_idx=" + member_idx + "'; </script>");
+	        out.println("<script> alert('회원 복구 되었습니다.'); window.location.href='admin_member_detail.do?member_idx=" + member_idx + "'; </script>");
 	        out.close();
 	        mv.setViewName("redirect:admin_member_detail.do");
 	        return mv;
@@ -253,7 +198,7 @@ public class AdminController {
 		}
 	}
 	 @RequestMapping("member_search.do")
-	   public ModelAndView getCampingGearSearchList(@ModelAttribute("searchType")String searchType, String keyword, HttpServletRequest request) {
+	   public ModelAndView getCampingGearSearchList(@ModelAttribute("searchType")String searchType, int offset, int limit, String keyword, HttpServletRequest request) {
 		   try {
 				ModelAndView mv = new ModelAndView("joy/admin_member_search");
 				// 페이징 기법
@@ -296,9 +241,10 @@ public class AdminController {
 				if (paging.getEndBlock() > paging.getTotalPage()) {
 					paging.setEndBlock(paging.getTotalPage());
 				}
-				List<AdminMemberVO> searchmember = adminService.getmemberSearch(searchType, keyword);
+				List<AdminMemberVO> searchmember = adminService.getmemberSearch(searchType, keyword,paging.getOffset(), paging.getNumPerPage());
 				if(searchmember != null) {
 					mv.addObject("searchmember", searchmember);
+					mv.addObject("paging",paging);
 					return mv;
 				}
 			} catch (Exception e) {
@@ -306,6 +252,63 @@ public class AdminController {
 			}
 		   return new ModelAndView("board/error");
 	   }
+	 
+		@RequestMapping("admin_member_list.do")
+		public ModelAndView adminMemberList(HttpServletRequest request) {
+			ModelAndView mv = new ModelAndView("joy/admin_member_list");
+			HttpSession session = request.getSession();
+			MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+			mvo.setMember_idx(mvo.getMember_idx());
+			// 페이징 기법
+					// 전체 게시물의 수
+					int count = adminService.getTotalCount2();
+					paging.setTotalRecord(count);
+					System.out.println("전체게시글"+paging.getTotalRecord());
+					System.out.println("paging.getBeginBlock()"+paging.getBeginBlock());
+					System.out.println("paging.getPagePerBlock()"+paging.getPagePerBlock());
+					
+					// 전체 페이지의 수
+					if (paging.getTotalRecord() <= paging.getNumPerPage()) {
+						paging.setTotalPage(1);
+					} else {
+						paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+						if (paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+							paging.setTotalPage(paging.getTotalPage() + 1);
+						}
+					}
+
+					// 현재 페이지 구함
+					String cPage = request.getParameter("cPage");
+					System.out.println("cpage"+cPage);
+					if (cPage == null) {
+						paging.setNowPage(1);
+					} else {
+						paging.setNowPage(Integer.parseInt(cPage));
+					}
+
+					// begin, end 구하기 (Oracle)
+					// offset 구하기
+					// offset = limit * (현재페이지-1);
+					paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
+
+					// 시작 블록 // 끝블록
+					paging.setBeginBlock(
+							(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
+					paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+
+					if (paging.getEndBlock() > paging.getTotalPage()) {
+						paging.setEndBlock(paging.getTotalPage());
+					}
+						List<MemberVO> member = adminService.allmember(paging.getOffset(), paging.getNumPerPage());
+						int statusupdate = adminService.getstatusupdate();
+						System.out.println("statusupdate"+statusupdate);
+						if (member != null) {
+							mv.addObject("member", member);
+							mv.addObject("paging", paging);
+							return mv;
+						}
+						return new ModelAndView("board/error");
+		}
 	 @RequestMapping("report_write2.do")
 		public ModelAndView reportwrite2(HttpServletRequest request,String member_idx){
 			ModelAndView mv = new ModelAndView("joy/report_write2");

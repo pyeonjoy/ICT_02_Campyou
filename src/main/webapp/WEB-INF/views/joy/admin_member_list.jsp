@@ -57,6 +57,7 @@ padding: 200px 100px 300px 100px;
 	text-align: center;
 	border: 1px solid black;
 	padding: 4px 10px;
+	width: 9%;
 }
 
 
@@ -112,11 +113,10 @@ table tfoot ol.paging li a:hover {
 					<th class="subject">닉네임</th>
 					<th class="subject">생년월일</th>
 					<th class="subject" style="width:500px;">번호</th>
-					<th class="hit">이메일</th>
-					<th class="hit">가입일</th>
-					<th class="subject">관리자</th>
-					<th class="hit">등급</th>
-					<th class="hit">로그인</th>
+					<th class="subject">이메일</th>
+					<th class="subject">가입일</th>
+					<th class="subject">등급</th>
+					<th class="subject">상태</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -136,10 +136,25 @@ table tfoot ol.paging li a:hover {
 							    <td>${k.member_dob }</td>
 							    <td>${k.member_phone }</td>
 							    <td>${k.member_email }</td>
-							    <td>${k.member_regdate }</td>
-							    <td>${k.member_grade }</td>
-							    <td>${k.member_active }</td>
-							    <td>${k.member_login }</td>
+							    <td class="subject">${k.member_regdate }</td>
+							    <c:if test="${k.member_grade== 0}">
+							    <td class="subject">일반회원</td>
+							    </c:if>
+							    <c:if test="${k.member_grade== 1}">
+							    <td class="subject">열심회원</td>
+							    </c:if>
+							    <c:if test="${k.member_grade== 2}">
+							    <td class="subject">우수회원</td>
+							    </c:if>
+							    <c:if test="${k.member_active== 0}">
+							    <td class="subject">일반회원</td>
+							    </c:if>
+							    <c:if test="${k.member_active== -1}">
+							    <td class="subject">정지회원</td>
+							    </c:if>
+							    <c:if test="${k.member_active== -2}">
+							    <td class="subject">탈퇴회원</td>
+							    </c:if>
 							</form>
 							</tr>
 						</c:forEach>
@@ -196,8 +211,8 @@ table tfoot ol.paging li a:hover {
 					    	<input type="text" name="keyword">
 					        <button type="submit" name="search">검색</button>
 					    </div>
-					    <input type="hidden" name="pageNum" value="1">
-					    <input type="hidden" name="amount" value="10">
+					    <input type="hidden" name="offset" value="1">
+					    <input type="hidden" name="limit" value="10">
 					</form>
 				</td>
 				</tr>
