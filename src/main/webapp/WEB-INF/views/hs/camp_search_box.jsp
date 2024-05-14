@@ -69,7 +69,7 @@ $(document).ready(function() {
 			
 			<input type="text" id="keyword_input" placeholder="검색어를 입력하세요">
 			<input type="button" value="상세조건+" id="detail_search">
-			<button id="search_button">검색</button>
+			<button id="search_button" type="submit" onclick="list_search()">검색</button>
 		</div>
 		<div class="search_button_option">
 			<div class="option">
