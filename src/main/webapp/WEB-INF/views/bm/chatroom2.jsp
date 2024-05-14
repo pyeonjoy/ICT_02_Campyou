@@ -6,61 +6,52 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>chatroom</title>
-<link rel="stylesheet" href="${path}/resources/public/css/bm/chatroom.css">
+<title>WebSocket Chat</title>
+<link rel="stylesheet" href="${path}/resources/public/css/bm/chatroom.css" />
+<script defer src="${path}/resources/public/js/bm/chatroom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </head>
 <body>
-  <button class="btn-enterChat" onclick="connect(event)">
-      chatroom 채팅방 처음입성
-    </button>
-    <button class="btn-chatList" onclick="handleChatList()">
-      기존채팅방리스트보기
-    </button>
-    <div class="chat-container chatLists hidden">
-      <div class="form-header">
-        <button class="cancel"></button>
-        <span class="chatroom">채팅방</span>
-      </div>
-
-      <!-- c:forEach  -->
-      <div class="chat_lists">
-        <div class="chat_list">
-          <div class="chat-imgs">
-            <img
-              src="http://placehold.it/50x50"
-              alt="user_img"
-              class="user_img"
-            />
-            <div class="new hidden">N</div>
-          </div>
-          <div class="chat_detail">
-            <p class="nick_name">member_nickname</p>
-            <p class="chat_content">content </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="chat-page" class="chatPage hidden">
+ <input type="hidden" id="joiner_nick" value="${joiner.member_nickname}" />
+ <input type="hidden" id="opener_nick" value="${opener.member_nickname}" />
+ <input type="hidden" id="joiner_img" value="${joiner.member_img}" />
+ <input type="hidden" id="opener_img" value="${opener.member_img}"/>
+ <input  type="hidden" id="msg_room" value="${msg_room}" />
+ <input  type="hidden" id="my_idx" value="${my_idx}" />
+ <input  type="hidden" id="opposite_idx" value="${opener.member_idx}" />	
+	<div id="chat-page" class="chatPage">
       <div class="chat-container">
         <div class="form-header">
-          <button class="back"><img src="${path}/resources/img/right.png" alt="back-button" class="left-arrow"></button>
-      <span class="chatroom">채팅방</span>
+          <button class="back" onclick="redirectToChatList()"><img src="${path}/resources/img/right.png" alt="back-button" class="left-arrow"></button>
+ <c:choose>
+     		 <c:when test="${my_idx} == ${opener.member_idx}">
+        <span class="chatroom">${joiner.member_nickname}</span> 
+        </c:when>
+  	<c:otherwise>
+        <span class="chatroom">${ opener.member_nickname}</span>
+ </c:otherwise>
+ </c:choose>
         </div>
-        <div class="connecting">Connecting...</div>
-        <div class="message-container">
-          <div class="li-msg li-msg--1">
+        <div class="message-container"> 
+        <c:forEach var="chat" items="${chatList}">
+        <c:if test="${chat.send_idx != my_idx }">
+			<div class="li-msg li-msg--1">
             <img
-              src="http://placehold.it/30x30"
+              src="${path}/resources/img/cat.png"
               alt="user_img"
               class="img_for_user1"
             />
-            <span class="user-message user--1-message">message1</span>
+            <span class="user-message user--1-message">${chat.msg_content}</span>
           </div>
-
+          </c:if> 
+ 		<c:if test="${chat.send_idx == my_idx}"> 
           <div class="li-msg li-msg--2">
-            <span class="user-message user--2-message">message12</span>
+            <span class="user-message user--2-message">${chat.msg_content}</span>
           </div>
+		</c:if>  
+ 			<input  type="hidden" id="room_name" value="${chat.room_name}" />
+        </c:forEach>             
         </div>
 
         <form id="messageForm" name="messageForm">
@@ -68,11 +59,12 @@
             <div class="input-group clearfix">
               <input
                 type="text"
-                id="message"
+                id="msg_content"
+                name="msg_content"
                 autocomplete="off"
                 class="form-control"
               />
-              <button type="submit" class="btn-send">
+              <button id="send" class="btn-send" >
                 <img
                   src="${path}/resources/img/send.png"
                   alt="send-img"
@@ -84,9 +76,5 @@
         </form>
       </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script src="${path}/resources/public/js/bm/chatroom.js"></script>
 </body>
 </html>

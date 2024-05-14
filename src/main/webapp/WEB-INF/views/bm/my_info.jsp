@@ -40,13 +40,13 @@
     <div class="user_img_container">
     <c:choose>
 	    <c:when test="${empty mvo.member_img}">
-	     <div class="user_img">
+	     <div class="my_img">
 	        <img src="${path}/resources/img/cat.png" alt="user_img" id="user_img">
 	      </div>
 	    </c:when>	    
 	    <c:otherwise>	
-	      <div class="user_img">
-	        <img src="${path}/resources/uploadUser_img/${mvo.member_img}" alt="user_img">
+	      <div class="my_img">
+	        <img src="${path}/resources/uploadUser_img/${mvo.member_img}" alt="user_img" id="user_img">
 	      </div>
 	     </c:otherwise>
       </c:choose>    
@@ -95,7 +95,7 @@
         <button class="btn btn_pwdreset" onclick="handle_pwd(${mvo.member_idx}, this.form)">비밀번호 변경</button>
       </div>
     </div>
-     <button href="deleteMember.do" class="btn btn-userDelete" onclick="handle_delete(${mvo.member_idx}">회원탈퇴</button>
+     <button class="btn btn-userDelete" onclick="handle_delete(${mvo.member_idx}, this.form)">회원탈퇴</button>
   </form>
 </body>
 </html>

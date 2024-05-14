@@ -3,8 +3,15 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="bomi">
+<resultMap id="ChatVOResultMap" type="chvo">
+    <id property="msg_idx" column="msg_idx"/>
+    <result property="msg_content" column="msg_content"/>
+    <result property="send_nick" column="send_nick"/>
+    <result property="reci_nick" column="reci_nick"/>
+    <result property="send_date" column="send_date"/>
+    <result property="msg_read" column="msg_read"/>   
+</resultMap>
 <select id="faq_lists" resultType="fvo">
 select * from faq order by faq_idx
 </select>
@@ -34,11 +41,9 @@ update members set member_pwd = #{member_pwd} where member_idx = #{member_idx}
 select * from qna where qna_idx=#{qna_idx}
 </select>
 
-
 <update id="modiQna" parameterType="String" >
 update qna set qna_title=#{qna_title}, qna_content=#{qna_content} where qna_idx=#{qna_idx}
 </update>
-
 
 <select id="getlist" resultType="tvo" parameterType="String">
 select * from board_with where member_idx=#{member_idx} order by t_idx desc LIMIT 4
@@ -55,5 +60,34 @@ select * from qna where member_idx=#{member_idx}
 <select id="count" resultType="int" parameterType="String">
 select count(*) from qna where member_idx=#{member_idx}
 
+</select>
+
+<insert id="addChat" parameterType="chvo">
+insert into m_chat(msg_room, room_name, send_idx,send_nick, reci_nick, send_date, msg_content, msg_read)
+values(#{msg_room},#{room_name},#{send_idx}, #{send_nick},#{reci_nick}, #{send_date},#{msg_content}, 1)
+</insert>
+
+<select id="getRooms" resultType="chvo">
+SELECT * FROM m_chat WHERE msg_room LIKE CONCAT(#{msg_room}, '%') OR msg_room LIKE CONCAT('%', #{msg_room})
+
+</select>
+
+<select id="getMaxMsgIdxRoom" resultMap="ChatVOResultMap">
+    SELECT *
+    FROM m_chat
+    WHERE msg_room = #{msg_room}
+    ORDER BY msg_idx DESC
+    LIMIT 1
+</select>
+
+<select id="getRoom" parameterType="String" resultType="chvo">
+select * from m_chat where msg_room=#{msg_room} ORDER BY msg_idx DESC   
+</select>
+
+<update id="msgRead" parameterType="String">
+ update m_chat set msg_read=0
+</update>
+<select id="msgToUpdate">
+select *
 </select>
 </mapper>

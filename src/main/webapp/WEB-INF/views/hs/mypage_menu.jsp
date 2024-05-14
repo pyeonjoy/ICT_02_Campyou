@@ -6,6 +6,19 @@
 <meta charset="UTF-8">
 <title></title>
 <link href="/resources/css/menu_aside.css" rel="stylesheet" />
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+	const member_idx = "${sessionScope.memberInfo.member_idx}";
+	
+	$(document).ready(function() {
+	    $("a[href='together_history.do']").click(function(e) {
+	        e.preventDefault();
+	        let href = $(this).attr("href");
+	        href += "?member_idx=" + member_idx;
+	        window.location.href = href;
+	    });
+	});
+</script>
 </head>
 <body>
 	<div class="mypage_menu_header">
@@ -18,7 +31,7 @@
 			 <li><a id="myInfoLink" href="#">회원 정보</a></li>
     <li><a href="#">관심 캠핑장</a></li>
     <li><a id="inquiryLink" href="#">1:1 문의하기</a></li>
-    <li><a href="#">동행 내역</a></li>
+    <li><a href="together_history.do">동행 내역</a></li>
     <li><a href="my_faq.do">FAQ</a></li>
 			</ul>
 		</div>

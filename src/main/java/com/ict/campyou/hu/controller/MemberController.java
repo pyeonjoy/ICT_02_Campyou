@@ -143,6 +143,7 @@ public class MemberController {
 				  }		 
 				  session.setAttribute("memberInfo", vo2);
 				  mv.setViewName("redirect:/");
+				  mv.addObject("member_idx", vo2.getMember_idx());
 				  return mv;  
 	          }
 		  }catch (Exception e) {

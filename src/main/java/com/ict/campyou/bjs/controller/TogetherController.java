@@ -182,11 +182,11 @@ public class TogetherController {
 		return new ModelAndView("error");
 	}
 	
-	@RequestMapping("together_history.do.do")
-	public ModelAndView getTogetherHistory() throws Exception {
-		ModelAndView mv = new ModelAndView("bjs/together_history");
-		List<PromiseVO> toHistory = togetherService.getTogetherHistory();
-		mv.addObject(toHistory);
+	@RequestMapping("together_history.do")
+	public ModelAndView getTogetherHistory(@RequestParam("member_idx")String member_idx) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bjs/together_history");
+		mv.addObject("member_idx", member_idx);
 		return mv;
 	}
 	

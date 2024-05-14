@@ -1,7 +1,13 @@
 package com.ict.campyou.joy.dao;
 
 public class AdminMemberVO {
- private String  member_idx, report_content,report_date,report_ok_date, report_status, report_idx;
+ private String  member_idx, report_content,report_date,report_ok_date, report_status, report_idx, report_day;
+public String getReport_day() {
+	return report_day;
+}
+public void setReport_day(String report_day) {
+	this.report_day = report_day;
+}
 public String getReport_ok_date() {
 	return report_ok_date;
 }

@@ -27,6 +27,7 @@
 		<typeAlias type="com.ict.campyou.jun.dao.ReviewVO" alias="rvo"/>
 		<typeAlias type="com.ict.campyou.jun.dao.HeartVO" alias="hvo"/>
 		<typeAlias type="com.ict.campyou.bjs.dao.PromiseVO" alias="pvo"/>
+		<typeAlias type="com.ict.campyou.bjs.dao.TogetherCommentVO" alias="tcvo"/>
 		
 	</typeAliases>
 	<mappers>

@@ -21,5 +21,9 @@ public interface CampService {
 
 	int delHeart(String contentid, String member_idx);
 
+	List<CampVO> searchCampDetail(String keyword, String lctCl, String induty, String sbrscl,int offset, int limit);
+
+	int searchCount(String keyword, String lctCl, String induty, String sbrscl);
+
 
 }
