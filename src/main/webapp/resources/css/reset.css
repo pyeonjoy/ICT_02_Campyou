@@ -99,15 +99,15 @@ a, a:visited, a:hover {
 input[type="button"], input[type="submit"], input[type="reset"], button
 	{
 	border-radius: 5px;
-	background-color: #FFFDDE;
+	background-color: #FFFBB9;
 	color: black;
 	text-align: center;
-	border: 0px solid black;
+	border: 0px solid #FAAB12;
 }
 
 input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover,
 	button:hover {
-	border: 0px solid black;
+	border: 0px solid #FFFDDE;
 	border-radius: 5px;
 	background-color: #032805;
 	color: white;
