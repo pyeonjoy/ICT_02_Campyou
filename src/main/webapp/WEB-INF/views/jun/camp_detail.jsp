@@ -13,6 +13,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const contentId = urlParams.get('contentid');
 $(document).ready(function() {
+	
     if (contentId) {
         $.ajax({
             url: "camp_detail_img.do",
@@ -159,6 +160,7 @@ function delHeart() {
 		}
 	});
 }
+let totalImages = $("#detail_img img").length;
 $(document).on("click", "#detail_img img", function() {
     let imageUrl = $(this).attr("src");
     let modalContent = '<div id="myModal" class="modal">' +
@@ -173,13 +175,14 @@ $(document).on("click", "#detail_img img", function() {
     let span = document.getElementsByClassName("close")[0];
 
     modal.style.display = "block";
-    
-    $("body").css("overflow", "hidden");
-    
+    $(".modal-content").data("index", $(this).index());
+
     span.onclick = function() {
         modal.style.display = "none";
         $("#myModal").remove();
         $("body").css("overflow", "auto");
+        $(".left_button").off("click");
+        $(".right_button").off("click");
     }
 
     window.onclick = function(e) {
@@ -187,9 +190,37 @@ $(document).on("click", "#detail_img img", function() {
             modal.style.display = "none";
             $("#myModal").remove();
             $("body").css("overflow", "auto");
+            $(".left_button").off("click");
+            $(".right_button").off("click");
         }
     }
+
+    $(".left_button").click(function() {
+        navigateImage("before");
+    });
+
+    $(".right_button").click(function() {
+        navigateImage("next");
+    });
 });
+
+function navigateImage(direction) {
+    let images = $("#detail_img img");
+    let currentIndex = $(".modal-content").data("index");
+
+    if (direction === "before") {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+    } else if (direction === "next") {
+        currentIndex = (currentIndex + 1) % images.length;
+    }
+
+    let nextImageSrc = images.eq(currentIndex).attr("src");
+    $(".modal-content").attr("src", nextImageSrc);
+    $(".modal-content").data("index", currentIndex);
+}
+
+
+
 function loadReview(){
     $.ajax({
         url: "loadReview.do",

@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.ict.campyou.bjs.dao.PromiseVO;
 import com.ict.campyou.bjs.dao.TogetherVO;
+import com.ict.campyou.bjs.dao.TogetherCommentVO;
 import com.ict.campyou.bjs.service.TogetherService;
 import com.ict.campyou.common.Paging2;
 import com.ict.campyou.common.Paging4;
@@ -38,7 +39,7 @@ public class TogetherAjaxController {
 
 	@RequestMapping(value = "together_Write2.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
-	public String getTogetherWrite(TogetherVO tvo, HttpSession session) throws Exception{
+	public String getTogetherWrite(TogetherCommentVO tvo, HttpSession session) throws Exception{
 		List<CampVO> campList = togetherService.getTogetherCampList();
 		if(campList != null) {
 			Gson gson = new Gson();
@@ -204,6 +205,8 @@ public class TogetherAjaxController {
 	@ResponseBody
 	public Map<String, Object> getTogetherHistoryGet(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
 		int count = togetherService.getToHistoryCount(member_idx);
+
+		System.out.println(count);
 		paging.setTotalRecord(count);
 		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 			paging.setTotalPage(1);
@@ -249,6 +252,13 @@ public class TogetherAjaxController {
 				}
 				pvo.setMember_dob(ageGroup);
 				
+				switch (pvo.getPm_state()) {
+				case "0": pvo.setPm_state("신청중"); break;
+				case "1": pvo.setPm_state("수락"); break;
+				case "-1": pvo.setPm_state("거절"); break;
+				case "2": pvo.setPm_state("동행완료"); break;
+			}
+				
 				int promiseCount = togetherService.getPomiseCount(pvo.getT_idx());
 				int promiseMyCount = togetherService.getPromiseMyCount(pvo.getMember_idx());
 				pvo.setPromise_count(promiseCount);
@@ -261,4 +271,62 @@ public class TogetherAjaxController {
 	    return response;
 	}
 	
+	@RequestMapping(value = "get_together_send_history.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getTogetherSendHistory(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
+		int count = togetherService.getToHistorySendCount(member_idx);
+		paging.setTotalRecord(count);
+		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+			paging.setTotalPage(1);
+		}else {
+			paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+			if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+				paging.setTotalPage(paging.getTotalPage() +1);
+			}
+		}
+		String cPage = request.getParameter("cPage");
+		if(cPage == null) {
+			paging.setNowPage(1);
+		}else {
+			paging.setNowPage(Integer.parseInt(cPage));
+		}
+		
+		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
+		
+		paging.setBeginBlock((int)((paging.getNowPage() -1) / paging.getPagePerBlock()) * paging.getPagePerBlock() +1);
+		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() -1);
+		
+		if(paging.getEndBlock() > paging.getTotalPage()) {
+			paging.setEndBlock(paging.getTotalPage());
+		}
+		List<PromiseVO> toSendHistory = togetherService.getTogetherSendHistory(member_idx, paging.getOffset(), paging.getNumPerPage());
+		
+		if(toSendHistory != null) {
+			for (PromiseVO pvo : toSendHistory) {
+				switch (pvo.getPm_state()) {
+					case "0": pvo.setPm_state("신청중"); break;
+					case "1": pvo.setPm_state("수락"); break;
+					case "-1": pvo.setPm_state("거절"); break;
+					case "2": pvo.setPm_state("동행완료"); break;
+				}
+				int promiseCount = togetherService.getPomiseCount(pvo.getT_idx());
+				pvo.setPromise_count(promiseCount);
+			}
+		}
+		Map<String, Object> response = new HashMap<>();
+		response.put("toSendHistory", toSendHistory);
+		response.put("paging", paging);
+		return response;
+	}
+	
+	@RequestMapping(value = "to_comment_list.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
+		List<TogetherCommentVO> toCommentList = togetherService.getToCommentList(t_idx);
+		for (TogetherCommentVO k : toCommentList) {
+			System.out.println(k.getMember_idx());
+			System.out.println(k.getWc_content());
+		}
+		return toCommentList;
+	}
 }

@@ -2,9 +2,23 @@ package com.ict.campyou.hu.dao;
 
 import org.springframework.web.multipart.MultipartFile;
 
+//admin_idx 추가
 public class CommBoardVO {
-	private String b_idx, member_idx, b_type, b_subject, member_nickname, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name, b_active, old_f_name;
+	private String b_idx, member_idx, admin_idx, b_type, b_subject, member_nickname, admin_nickname, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name, b_active, old_f_name;
+	public String getAdmin_nickname() {
+		return admin_nickname;
+	}
+	public void setAdmin_nickname(String admin_nickname) {
+		this.admin_nickname = admin_nickname;
+	}
 	private MultipartFile file;
+	
+	public String getAdmin_idx() {
+		return admin_idx;
+	}
+	public void setAdmin_idx(String admin_idx) {
+		this.admin_idx = admin_idx;
+	}
 	public String getB_idx() {
 		return b_idx;
 	}

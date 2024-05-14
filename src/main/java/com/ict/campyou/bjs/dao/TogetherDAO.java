@@ -124,4 +124,20 @@ public class TogetherDAO {
 		map.put("limit", limit);
 		return sqlSessionTemplate.selectList("bjs.together_history", map);
 	}
+	
+	public int getToHistorySendCount(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.histor_send_count", member_idx);
+	}
+	
+	public List<PromiseVO> getTogetherSendHistory(String member_idx, int offset, int limit) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_idx", member_idx);
+		map.put("offset", offset);
+		map.put("limit", limit);
+		return sqlSessionTemplate.selectList("bjs.together_send_history", map);
+	}
+	
+	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
+		return sqlSessionTemplate.selectList("bjs.to_comment_list", t_idx);
+	}
 }

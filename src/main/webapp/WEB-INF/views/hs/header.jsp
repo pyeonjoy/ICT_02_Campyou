@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title></title>
 <link href="resources/css/header.css" rel="stylesheet" />
+<link rel="stylesheet" href="${path}/resources/public/css/bm/chatroom.css" />
+<script defer src="${path}/resources/public/js/bm/header_chat.js"></script>
 </head>
 <body>
 	<div class="header" id="header">
@@ -26,17 +28,17 @@
 			<div class="header_right">
 				<ul>
 					<c:choose>
-						<c:when test="${empty memberInfo}">
+						<c:when test="${empty memberInfo && empty admin}">
 							<li><a href="login_form.do">로그인</a></li>
 							<li><a href="sign_up_page_go.do">회원가입</a></li>
 
 						</c:when>
 						<c:otherwise>
-							<li><a href="chatroom.do"><img class="icon chat"
+							<li><a href="javascript:void(0)" onclick="openChat()"><img class="icon chat"
 									src="resources/img/icon_chat.png" alt="CampYou"></a></li>
 							<li><a href="my_main.do"><img class="icon user"
 									src="resources/img/icon_user.png" alt="mypage"></a></li>
-							<c:if test="${admin == 'ok'}">
+							<c:if test="${admin != null}">
 								<li><a href="#"><img class="icon admin" src="resources/img/icon_admin.png" alt="management"></a></li>
 							</c:if>
 							<li><a href="logout_form.do">로그아웃</a></li>

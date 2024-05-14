@@ -57,5 +57,15 @@ public class CampServiceImpl implements CampService{
 		return heartDAO.delHeart(contentid,member_idx);
 	}
 
+	@Override
+	public List<CampVO> searchCampDetail(String keyword, String lctCl, String induty, String sbrscl,int offset, int limit) {
+		return campDAO.searchCampDetail(keyword,lctCl,induty,sbrscl,offset,limit);
+	}
+
+	@Override
+	public int searchCount(String keyword, String lctCl, String induty, String sbrscl) {
+		return campDAO.searchCount(keyword,lctCl,induty,sbrscl);
+	}
+
 
 }
