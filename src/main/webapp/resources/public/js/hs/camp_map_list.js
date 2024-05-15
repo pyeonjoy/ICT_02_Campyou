@@ -42,7 +42,7 @@ $(document).ready(function() {
 	}
 	
 	// 항목 생성
-	function data_show(item){
+	function createCampItem(item){
         let firstImageUrl = $(item).find("firstImageUrl").text();
         let doNm = $(item).find("doNm").text();
         let sigunguNm = $(item).find("sigunguNm").text();
@@ -63,14 +63,14 @@ $(document).ready(function() {
         campItem += "</div>";
         campItem += "<div class='button_container'><button onclick=\"window.open('camp_detail.do?contentid=" + contentid +"')\">상세보기</button></div>";
         campItem += "</div>";
-		
-        $("#camp_list_show").append(campItem);
         
         // 지도
         let mapX = $(item).find("mapX").text();
         let mapY = $(item).find("mapY").text();
         
         markerArr.push({lat: mapY, lng: mapX, facltNm: facltNm, addr1: addr1,tel:tel});
+        
+        return campItem;
 	}
 	
 	// 마커 생성
@@ -128,8 +128,10 @@ $(document).ready(function() {
                 totalCount = $(data).find('totalCount').text();
                 
                 $(data).find("item").each(function(i, k) {
-                	 data_show(this); 
+                	 $("#camp_list_show").append(createCampItem(this));
                 });
+                
+            	
                 pageNumbers();
                 marker_show();
             },
@@ -156,8 +158,11 @@ $(document).ready(function() {
    	}
    	
     function search_camp() {
-    	camp_list_option = "search_camp";
     	marker_empty();
+    	camp_list_option = "search_camp";
+    	
+    	let searchDataItems= [];
+    	
         let keywordInput = $("#keyword_input").val();
         let selectedLctCl = [];
         let selectedInduty = [];
@@ -196,7 +201,7 @@ $(document).ready(function() {
     			(selectedInduty.length === 0 || selectedInduty.some(k => indutyArr.includes(k))) &&
     			(selectedSbrscl.length === 0 || selectedSbrscl.some(k => sbrsclArr.includes(k))))
     		{
-    		    data_show(item); 
+    			searchDataItems.push(createCampItem(item)); 
     		    totalCount += 1;
     		}
        	}
@@ -205,14 +210,13 @@ $(document).ready(function() {
         if (keywordInput != "") {
 	        if((selectedLctCl.length + selectedInduty.length + selectedSbrscl.length) == 0 && sido_search == "") {
 	        	ajaxData("camp_list_keyword_detail.do",
-	        			{ keyword: keywordInput, numOfRows: numOfRows },
+	        			{ keyword: keywordInput, numOfRows: numOfRows,	pageNo: pageNo },
 	        			function(data) {
 			            	$("#camp_list_show").empty();
 		            		totalCount = $(data).find('totalCount').text();
 		            		$(data).find("item").each(function () {
-		                        data_show(this);
+		                    	$("#camp_list_show").append(createCampItem(this));
 		                    });
-		            		
 		               		pageNumbers();
 		                	marker_show();
 			            });
@@ -224,6 +228,7 @@ $(document).ready(function() {
 	        				$(data).find("item").each(function (i, k) {
 	        					datailFilter(this);
 	        				});
+	        				$("#camp_list_show").append(searchPage(searchDataItems));
 		                	marker_show();
 			            });
 	        }
@@ -242,7 +247,6 @@ $(document).ready(function() {
         	camp_all_list();
         	pageNo = 1;
         }
-        
     }
     
     // 검색 버튼 클릭시
@@ -252,7 +256,7 @@ $(document).ready(function() {
     	pageNo = 1;
     });
     
-    // 캠프 div 클릭시 마커 이동
+    // 캠프 div 클릭시 해당 캠핑장 마커로 이동
 	$(document).on("click", ".camp_item",  function() {
 		let facltNm = $(this).find(".camp_info h4").text();
 		
@@ -278,14 +282,14 @@ $(document).ready(function() {
 	function pageNumbers(){
 		$(".camp_list_page").empty();
 		last_page = Math.ceil(totalCount / numOfRows);
-	    c_Pages = Math.floor((pageNo - 1) / page_num_count) * page_num_count; 
+	    c_page_index = Math.floor((pageNo - 1) / page_num_count) * page_num_count; 
 	    
 	    let pageShow = (pageNo <= page_num_count) ? '<li class="to_disable camp_list_first">' : '<li class="to_able camp_list_first">';
 	    pageShow += '<i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
 		pageShow += (pageNo <= page_num_count) ? '<li class="to_disable' : '<li class="to_able';
 		pageShow +=	' camp_list_before"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
 	    
-	    for (i = c_Pages; i < c_Pages + page_num_count ; i++){
+	    for (i = c_page_index; i < c_page_index + page_num_count ; i++){
 	    	if (i >= last_page) { break; }
 	    	pageNums = i + 1;
         	pageShow += (pageNums == pageNo) ? '<li class="nowpagecolor">' + pageNums : '<li class="nowpage">' + pageNums;
@@ -299,6 +303,17 @@ $(document).ready(function() {
 	    
         $(".camp_list_page").append(pageShow);
     }
+	
+	// 검색 페이지 이동
+	function searchPage(items){
+		last_page = Math.ceil(totalCount / numOfRows);
+	    c_page_index = Math.floor((pageNo - 1) / page_num_count) * page_num_count; 
+		
+		
+		let showSearchResult = items.slice(c_page_index * numOfRows, c_page_index * numOfRows + numOfRows);
+		
+		return showSearchResult;
+	}
 	
 	// 페이지 이동
 	$(document).on("click", ".camp_list_next, .camp_list_before, .nowpage, .camp_list_last, .camp_list_first", function() {
@@ -323,9 +338,9 @@ $(document).ready(function() {
 	    } 
 	    
 	    $(".camp_list_wrap").scrollTop(0); 
-	    if(camp_list_option == "camp_all_list") {
+	    if(camp_list_option === "camp_all_list") {
         	camp_all_list();
-	    } else if (camp_list_option == "search_camp") {
+	    } else if (camp_list_option === "search_camp") {
 	    	search_camp();
 	    }
 	    pageNumbers();
