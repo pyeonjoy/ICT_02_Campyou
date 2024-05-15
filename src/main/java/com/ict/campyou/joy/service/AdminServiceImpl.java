@@ -117,7 +117,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 	@Override
 	public int getTotalCount3() {
-		return admindao.getTotalCount2();
+		return admindao.getTotalCount3();
 	}
 
 	

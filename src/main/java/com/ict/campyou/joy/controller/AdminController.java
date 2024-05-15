@@ -334,7 +334,7 @@ public class AdminController {
 				if (paging.getEndBlock() > paging.getTotalPage()) {
 					paging.setEndBlock(paging.getTotalPage());
 				}
-				List<AdminMemberVO> searchreport = adminService.getmemberSearch(searchType, keyword,paging.getOffset(), paging.getNumPerPage());
+				List<AdminMemberVO> searchreport = adminService.getreportSearch(searchType, keyword,paging.getOffset(), paging.getNumPerPage());
 				if(searchreport != null) {
 					mv.addObject("report", searchreport);
 					mv.addObject("paging",paging);
@@ -346,7 +346,7 @@ public class AdminController {
 		   return new ModelAndView("board/error");
 	   }
 	 
-		@RequestMapping("admin_report_list.do")
+		@RequestMapping("report_list.do")
 		public ModelAndView adminReportList(HttpServletRequest request) {
 			ModelAndView mv = new ModelAndView("joy/admin_report_list");
 			HttpSession session = request.getSession();
@@ -359,6 +359,7 @@ public class AdminController {
 					System.out.println("전체게시글"+paging.getTotalRecord());
 					System.out.println("paging.getBeginBlock()"+paging.getBeginBlock());
 					System.out.println("paging.getPagePerBlock()"+paging.getPagePerBlock());
+					System.out.println("paging.nowPage()"+paging.getNowPage());
 					
 					// 전체 페이지의 수
 					if (paging.getTotalRecord() <= paging.getNumPerPage()) {
@@ -394,7 +395,7 @@ public class AdminController {
 					}
 						List<AdminMemberVO> report = adminService.allreport(paging.getOffset(), paging.getNumPerPage());
 						if (report != null) {
-							mv.addObject("member", report);
+							mv.addObject("report", report);
 							mv.addObject("paging", paging);
 							return mv;
 						}

@@ -9,6 +9,7 @@
 <style type="text/css">
 @charset "UTF-8";
 
+
 .grid_container{
   display: grid;
   justify-content: center;
@@ -31,8 +32,8 @@
 }
 .grid_header{
   padding: .8rem 1rem;
-  background-color: #032805;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-white);
   width: 100%;
 }
 .grid_title{
@@ -44,8 +45,8 @@ width: 100%;
 }
 
 .btn{
-  background-color: white;
-  border: #032805;
+  background-color: var(--text-white);
+  border: 2px solid var(--primary-color);
   padding: 3px 10px;
   position: absolute;
   right: 0;
@@ -91,6 +92,11 @@ width: 100%;
 	text-decoration: none;
 	border-radius: 50%; font-size: 2rem;
 }
+.to_able{
+	color: black;
+	margin: 0 1rem;
+	text-decoration: none;
+}
 .nowpage:hover{
 	color: #FFBA34;
 }
@@ -117,7 +123,7 @@ width: 2.7rem;
 <title>신고게시</title>
 </head>
 <body>
-	<%@ include file="../hs/admin_menu.jsp"%>
+	<%@ include file="../hs/mypage_menu.jsp"%>
 
 	<div class="grid_container">
 		<h3 class="grid_title">신고게시판</h3>
@@ -137,10 +143,10 @@ width: 2.7rem;
 					<c:forEach var="k" items="${report }" varStatus="vs" begin="1">
 						<div class="grid_row grid_row_content">${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage+ vs.index)}</div>
 						<div class="grid_row grid_row_content">
-							<a href="admin_member_detail.do?member_idx=${k.reportmember_idx}">${k.report_content }</a>
+							<a href="report_detail.do?report_idx=${k.report_idx}">${k.report_content }</a>
 						</div>
-						<div class="grid_row grid_row_content">${k.member_idx }</div>
 						<div class="grid_row grid_row_content">${k.reportmember_idx }</div>
+						<div class="grid_row grid_row_content">${k.member_idx }</div>
 						<c:choose>
 							<c:when test="${k.report_status==0}">
 								<div class="grid_row grid_row_content">처리중</div>
