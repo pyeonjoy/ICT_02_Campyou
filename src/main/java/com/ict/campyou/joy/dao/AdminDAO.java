@@ -17,7 +17,7 @@ public class AdminDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-// 관리자페이지 메인 
+// 관리자페이지 메인 ============================================================================================================================================================
 	public List<AdminVO> getadminmainmember() {
 		try {
 			return sqlSessionTemplate.selectList("joy.getMemberCounts");
@@ -87,7 +87,7 @@ public class AdminDAO {
 		return -1;
 	}
 	
-//회원관리 
+//회원관리  ============================================================================================================================================================
 	public List<AdminMemberVO> getradmineporteach(String member_idx) {
 		try {
 			return sqlSessionTemplate.selectList("joy.getradmineporteach",member_idx);
@@ -166,6 +166,7 @@ public class AdminDAO {
 		}
 		return null;
 	}
+	
 	//팝업 
 	public int getPopUPWrite(AdminVO avo) {
 		try {
@@ -186,6 +187,14 @@ public class AdminDAO {
 	public int getTotalCount2() {
 		try {
 			return sqlSessionTemplate.selectOne("joy.count2");	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	public int getTotalCount3() {
+		try {
+			return sqlSessionTemplate.selectOne("joy.count3");	
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -315,6 +324,33 @@ public class AdminDAO {
 		System.out.println("limit"+ limit);
 		return sqlSessionTemplate.selectList("joy.getmemberSearch", map);
 	}
+	public List<AdminMemberVO> getreportSearch(String searchType, String keyword, int offset, int limit) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("searchType", searchType);
+		map.put("keyword", keyword);
+		map.put("offset", offset);
+		map.put("limit", limit);
+		System.out.println("offset"+ offset);
+		System.out.println("limit"+ limit);
+		return sqlSessionTemplate.selectList("joy.getreportSearch", map);
+	}
+	
+	public List<AdminMemberVO> allreport(int offset, int limit) {
+		try {
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			System.out.println("offset"+offset);
+			System.out.println("limit"+limit);
+			map.put("offset", offset);
+			map.put("limit", limit);
+			return sqlSessionTemplate.selectList("joy.allreport",map);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	
 	public int getadminreportall(AdminMemberVO amvo) {
 		try {
 			return sqlSessionTemplate.insert("joy.reportallwrite",amvo);

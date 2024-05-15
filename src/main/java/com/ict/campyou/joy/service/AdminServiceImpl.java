@@ -115,6 +115,10 @@ public class AdminServiceImpl implements AdminService{
 	public int getTotalCount2() {
 		return admindao.getTotalCount2();
 	}
+	@Override
+	public int getTotalCount3() {
+		return admindao.getTotalCount2();
+	}
 
 	
 	@Transactional
@@ -200,6 +204,16 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int getmainadminreport() {
 		return admindao.getmainadminreport();
+	}
+
+	@Override
+	public List<AdminMemberVO> allreport(int offset, int limit) {
+		return admindao.allreport(offset, limit);
+	}
+
+	@Override
+	public List<AdminMemberVO> getreportSearch(String searchType, String keyword, int offset, int limit) {
+		return admindao.getreportSearch(searchType, keyword, offset, limit);
 	}
 
 
