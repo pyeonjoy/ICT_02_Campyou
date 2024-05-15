@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -205,44 +206,61 @@ function to_comment() {
             	commentHTML += '</form>';
             	for (let i = 0; i < data.toCommentList.length; i++) {
             		let comment = data.toCommentList[i];
-                    let commentHTML2 = '<div class="toDetailContent4Sub3">';
-                    commentHTML2 += '<div class="toDetailContent4Sub2Sub1">';
-                    commentHTML2 += '<div class="toDetailContent4Sub2Sub1Div">';
-                    commentHTML2 += '<div class="userImageDiv"><img src="${path}/resources/images/' + comment.member_img + '" class="userImage3"></div>';
-                    commentHTML2 += '<div>';
-                    commentHTML2 += '<p>' + comment.member_nickname + '</p>';
-                    commentHTML2 += '<p>' + comment.wc_regdate + '</p>';
-                    commentHTML2 += '</div>';
-                    commentHTML2 += '</div>';
-                    commentHTML2 += '<div class="toDetailContent4Sub2Sub2">';
-                    commentHTML2 += '<input type="button" value="답글 달기" class="toDetailContent4Sub2Sub2Button" >';
-                    commentHTML2 += '</div>';
-                    commentHTML2 += '</div>';
-                    commentHTML2 += '<div class="toDetailContent4Sub2Sub3">';
-                    commentHTML2 += '<div class="toDetailContent2Sub1Div2">';
-                    commentHTML2 += '<span class="toDetailContent2Sub1Div2Span">' + comment.wc_content + '</span>';
-                    commentHTML2 += '</div>';
-                    commentHTML2 += '<div>';
-                    commentHTML2 += '<input type="button" value="X" onclick="" class="toDetailContent4Sub2Sub2Button">';
-                    commentHTML2 += '</div>';
-                    commentHTML2 += '</div>';
-                    commentHTML2 += '<form method="post" class="toDetailInputForm" style="display:none;">';
-                    commentHTML2 += '<span class="toDetailInputSpan">ㄴ</span>';
-                    commentHTML2 += '<div class="toDetailInput">';
-                    commentHTML2 += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32"></div>';
-                    commentHTML2 += '<input type="text" value="" id="" class="toDetailInputBox">';
-                    commentHTML2 += '<input type="button" value="입력" id="" class="toDetailInputSubmit">';
-                    commentHTML2 += '<input type="hidden" value="' + comment.wc_idx + '" id="wc_idx" >';
-                    commentHTML2 += '<input type="hidden" value="' + comment.wc_groups + '" id="wc_groups" >';
-                    commentHTML2 += '<input type="hidden" value="' + comment.wc_step + '" id="wc_step" >';
-                    commentHTML2 += '<input type="hidden" value="' + comment.wc_lev + '" id="wc_lev" >';
-                    commentHTML2 += '</div>';
-                    commentHTML2 += '</form>';
-                    commentHTML2 += '</div>';
-                    commentHTML += commentHTML2;
-                }
-            $('.toDetailContent4').append(commentHTML);
+            	    let indentation = '';
+//             	    for (let j = 1; j <= comment.wc_step; j++) {
+//             	        indentation += 'ㄴ';
+//             	    }
+//             	    commentHTML += '<span class="toDetailInputSpan>' + indentation + '</span>';
+            	    if (comment.wc_active === 1) {
+            	        commentHTML += '<span style="color: lightgrey">삭제된 댓글입니다.</span>';
+            	    } else {
+            	        commentHTML += '<div class="toDetailContent4Sub3">';
+            	        commentHTML += '<div class="toDetailContent4Sub2Sub1">';
+            	        commentHTML += '<div class="toDetailContent4Sub2Sub1Div">';
+            	        commentHTML += '<div class="userImageDiv"><img src="${path}/resources/images/' + comment.member_img + '" class="userImage3"></div>';
+            	        commentHTML += '<div>';
+            	        commentHTML += '<p>' + comment.member_nickname + '</p>';
+            	        commentHTML += '<p>' + comment.wc_regdate + '</p>';
+            	        commentHTML += '</div>';
+            	        commentHTML += '</div>';
+            	        commentHTML += '<div class="toDetailContent4Sub2Sub2">';
+            	        commentHTML += '<input type="button" value="답글 달기" class="toDetailContent4Sub2Sub2Button" >';
+            	        commentHTML += '</div>';
+            	        commentHTML += '</div>';
+            	        commentHTML += '<div class="toDetailContent4Sub2Sub3">';
+            	        commentHTML += '<div class="toDetailContent2Sub1Div2">';
+            	        if(comment.wc_step > 0){
+            	        for (let j = 1; j <= comment.wc_step; j++) {
+            	        	indentation += '&nbsp;&nbsp;';
+            	        }
+            	        indentation += 'ㄴ';
+		            	commentHTML += '<span class="toDetailContent2Sub1Div2Span">' + indentation + comment.wc_content + '</span>';
+            	        }else{
+		            	commentHTML += '<span class="toDetailContent2Sub1Div2Span">' + comment.wc_content + '</span>';
+            	        }
+            	        commentHTML += '</div>';
+            	        commentHTML += '<div>';
+            	        commentHTML += '<input type="button" value="X" onclick="" class="toDetailContent4Sub2Sub2Button">';
+            	        commentHTML += '</div>';
+            	        commentHTML += '</div>';
+            	        commentHTML += '<form method="post" class="toDetailInputForm" style="display:none;">';
+            	        commentHTML += '<span class="toDetailInputSpan">ㄴ</span>';
+            	        commentHTML += '<div class="toDetailInput">';
+            	        commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32"></div>';
+            	        commentHTML += '<input type="text" value="" id="" class="toDetailInputBox">';
+            	        commentHTML += '<input type="button" value="입력" id="" class="toDetailInputSubmit">';
+            	        commentHTML += '<input type="hidden" value="' + comment.wc_idx + '" id="wc_idx" >';
+            	        commentHTML += '<input type="hidden" value="' + comment.wc_groups + '" id="wc_groups" >';
+            	        console.log("step:",comment.wc_step);
+            	        commentHTML += '<input type="hidden" value="' + comment.wc_step + '" id="wc_step" >';
+            	        commentHTML += '<input type="hidden" value="' + comment.wc_lev + '" id="wc_lev" >';
+            	        commentHTML += '</div>';
+            	        commentHTML += '</form>';
+            	        commentHTML += '</div>';
+            	    }
             }
+            $('.toDetailContent4').append(commentHTML);
+        }
         },
         error: function(xhr, status, error) {
             console.error(error);
@@ -266,14 +284,15 @@ $(document).on("click", ".toDetailInputSubmit", function() {
     let commentInput = parentDiv.find(".toDetailInputBox").val();
     let memberIdx = $("#member_idx").val();
     let tIdx = $("#t_idx").val();
-    let wcGroups = $("#wc_groups").val();
-    let wcStep = $("#wc_step").val();
-    let wcLev = $("#wc_lev").val();
+    let wcGroups = parentDiv.find("#wc_groups").val();
+    let wcStep = parentDiv.find("#wc_step").val();
+    let wcLev = parentDiv.find("#wc_lev").val();
     let wcIdx = null;
-    if (parentDiv.find('.wc_idx').length) {
-        wcIdx = parentDiv.find('.wc_idx').val();
+    if (parentDiv.find('#wc_idx').length) {
+        wcIdx = parentDiv.find('#wc_idx').val();
     }
- 	console.log(wcIdx);
+//  	console.log(wcIdx);
+ 	console.log(wcStep);
  	
     if (commentInput.trim() === "") {
         alert("댓글을 입력해주세요.");
@@ -331,7 +350,7 @@ $(document).on("click", ".toDetailInputSubmit", function() {
                 <input type="hidden" id="t_member_idx" value="${tvo.member_idx }">
                 <input type="hidden" name="t_idx" id="t_idx" value="${tvo.t_idx }">
                 <input type="hidden" id="member_idx" value="${memberUser.member_idx }">
-                <span class="toDetailContent1Num">${appluNum }/${tvo.t_numpeople }명</span>
+                <span class="toDetailContent1Num">${proCount }/${tvo.t_numpeople }명</span>
 
                 <span>${tvo.t_regdate }</span>
             </div>

@@ -128,7 +128,7 @@ public class TogetherController {
 		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
 //		System.out.println(memberUser.getMember_img());
 		TogetherVO tvo = togetherService.getTogetherDetail(t_idx);
-		int pvo = togetherService.getPomiseCount(t_idx);
+		int proCount = togetherService.getPomiseCount(t_idx);
 		
 		// member의 dob 꺼내서 나이로 환산 후 연령대 구해서 set
 	    LocalDate dob = LocalDate.parse(tvo.getMember_dob());
@@ -154,7 +154,7 @@ public class TogetherController {
 			mv.setViewName("bjs/together_detail");
 			mv.addObject("tvo", tvo);
 			mv.addObject("memberUser", memberUser);
-			mv.addObject("appluNum", pvo);
+			mv.addObject("proCount", proCount);
 			return mv;
 		}
 		return new ModelAndView("error");
