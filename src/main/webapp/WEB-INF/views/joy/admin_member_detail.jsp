@@ -5,7 +5,7 @@
 <!doctype html>
 <html lang="ko">
 <link href="resources/css/reset.css" rel="stylesheet" />
-<link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
+<link href="resources/public/css/joy/admin_member_detail.css" rel="stylesheet" />
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=qpvmsbuult"></script>
 <script type="module" src="https://ryj9d86xjh.execute-api.ap-northeast-2.amazonaws.com/v1/api/js/drop_fontstream_js/?sid=gAAAAABmQdUd8y-oUIO39NM2Moe5C2mGa0rE06hJqBQcaKXQO9x1HZhXz-WNG8kMCK3TAgzebfkuj-tJJActuz4i_AXWHPXtAQ5fYARL4KKKG5dpxVqwpQaS5_PtsJD2TxV7ifaxqHtTXbxaXLMohwIGqJLEHw0eOT1hI3cGDK2AvnoVfX2q2kSEKwbB4KqAYW5kVR3ESF5sekzdtMKkIeZ_QvAPFemEItrqqhsC-dfYLFu0qV7Cn9R_zUzqgTZCH6xF61N0t4vI" charset="utf-8"></script><head>
 <%@ include file="../hs/admin_menu.jsp"%>
@@ -144,7 +144,7 @@
 					onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원삭제</button>
 				</c:forEach>
 			</div>
-				<button style="margin: 37px 157%; background-color: #041601; color: white" type="button" onclick="history.go(-1)">목록으로</button>
+				<button style="margin: 37px 157%; background-color: #041601; color: white" type="button" onclick="goBackAndRefresh()">목록으로</button>
 
 		</div>
 		<div class=under>
@@ -212,6 +212,22 @@ modalClose.addEventListener('click',function(){
    //display 속성을 none으로 변경
     modal.style.display = 'none';
 });
+</script>
+
+<script type="text/javascript">
+    function goBackAndRefresh() {
+        // 세션 스토리지를 사용하여 새로고침 플래그 설정
+        sessionStorage.setItem("refreshFlag", "true");
+        history.go(-1);
+    }
+
+    window.onload = function() {
+        // 세션 스토리지에서 플래그를 확인하고 새로고침
+        if (sessionStorage.getItem("refreshFlag") === "true") {
+            sessionStorage.removeItem("refreshFlag");
+            location.reload();
+        }
+    }
 </script>
 		<jsp:include page="../hs/footer.jsp" />
 </body>

@@ -32,7 +32,7 @@
 				<ul>
 					<li><a href="admin_member_list.do">회원 관리</a></li>
 					<li><a href="#">문의 내역</a></li>
-					<li><a href="#">신고 내역</a></li>
+					<li><a href="report_list.do">신고 내역</a></li>
 					<li><a href="#">FAQ 관리</a></li>
 				</ul>
 			</div>

@@ -8,33 +8,7 @@
 <link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
 <%@ include file="../hs/admin_menu.jsp" %>
 <style type="text/css">
-@font-face {
-    font-family: 'JalnanGothic';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-h2{
-     font-family: 'JalnanGothic';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-h3{
-    font-family: 'JalnanGothic';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    line-height: 30px;
 
-}
-h4{
-    font-family: 'JalnanGothic';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    line-height: 30px;
-}
 #bbs{
 padding: 200px 100px 300px 100px;
 }
@@ -42,7 +16,6 @@ padding: 200px 100px 300px 100px;
 	width:1200px;
 	margin:0 auto;
 	margin-top:20px;
-	border: 1px solid black;
 	border-collapse: collapse;
 	font-size: 14px;
 }
@@ -55,48 +28,84 @@ padding: 200px 100px 300px 100px;
 
 #bbs table th, #bbs table td {
 	text-align: center;
-	border: 1px solid black;
-	padding: 4px 10px;
+	padding: 14px 10px;
 	width: 9%;
 }
+#bbs table th{
+  background-color: #032805;
+  color: white;
+}
+#bbs table td{
+	border-bottom: 1px solid black;
+  background-color: white;
+  color: #032805;
+}
 
-
-/* paging */
-table tfoot ol.paging {
+.pwrapper{
+	grid-column: 3;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+/* 	width: 100%; */
+}  
+.paging{
+	display: flex;
+	width: 100%;
+	justify-content: center;
 	list-style: none;
+	margin: 1rem 0;
+	align-items: center;
 }
 
-table tfoot ol.paging li {
-	float: left;
-	margin-right: 8px;
+.nowpagecolor{
+	padding: 0 0.5rem;
+	margin: 0 0.5rem;
+	text-decoration: none;
+	background-color: white;
+	color: #FFBA34;
+	font-size: 1.4rem;
 }
-
-table tfoot ol.paging li a {
-	display: block;
-	padding: 3px 7px;
-	border: 1px solid #00B3DC;
-	color: #2f313e;
-	font-weight: bold;
+.nowpage{
+	padding: 0 0.5rem;
+	margin: 0 0.5rem;
+	background-color: white;
+	color: black;
+	text-decoration: none;
+	font-size: 1.4rem;
 }
-
-table tfoot ol.paging li a:hover {
-	background: #00B3DC;
-	color: white;
-	font-weight: bold;
-}
-
-.disable {
-	padding: 3px 7px;
-	border: 1px solid silver;
+.disable{
 	color: silver;
+	margin: 0 1rem;
+	text-decoration: none;
+	border-radius: 50%; font-size: 2rem;
 }
-
-.now {
-	padding: 3px 7px;
-	border: 1px solid #ff4aa5;
-	background: #ff4aa5;
-	color: white;
-	font-weight: bold;
+.to_able{
+	color: black;
+	margin: 0 1rem;
+	text-decoration: none;
+}
+.nowpage:hover{
+	color: #FFBA34;
+}
+.toPagingContainer{
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+}
+.togetherWriteButton{
+	grid-column: 4;
+    display: flex;
+    justify-content: flex-end;
+}
+.searchbtn{
+width: 2.7rem;
+    height: 25px;
+    border: none;
+    margin-right: 1rem;
+    background-color: #041601;
+    color: white;
+    text-align: center;
 }
 </style>
 </head>
@@ -106,7 +115,7 @@ table tfoot ol.paging li a:hover {
 			<caption style="margin-bottom:100px;"><h3>유저 목록</h3></caption>
 			<thead>
 				<tr class="title">
-					<th style="width:5px">선택</th>
+					<th >선택</th>
 					<th class="no">idx</th>
 					<th class="subject">id</th>
 					<th class="writer">이름</th>
@@ -128,7 +137,7 @@ table tfoot ol.paging li a:hover {
 						<c:forEach var="k" items="${member}" varStatus="vs">
 							<tr>
 							  <form action="admin_member_detail.do?member_idx=${k.member_idx }" method="post">
-							  <td><input type="submit" value="선택"></td>
+							  <td><input type="submit" value="선택" style="background-color:#FFBA34"></td>
 							    <td>${k.member_idx }</td>
 							    <td>${k.member_id }</td>
 							    <td>${k.member_name }</td>
@@ -162,14 +171,13 @@ table tfoot ol.paging li a:hover {
 				</c:choose>
 			</tbody>
 			<tfoot>
-				<tr>
-				
-					<td colspan="13">
+				<tr >
+					<td colspan="13" class="prapper">
 						<ol class="paging" style="margin: 0 auto; width: 275px;">
 							<!-- 이전 버튼 -->
 							<c:choose>
 								<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
-									<li class="disable">이전으로</li>
+									<li class="disable"><</li>
 								</c:when>
 								<c:otherwise>
 									<li><a href="admin_member_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }">이전으로</a></li>
@@ -179,10 +187,10 @@ table tfoot ol.paging li a:hover {
 							<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock }" step="1" var="k">
 								<c:choose>
 									<c:when test="${k == paging.nowPage }">
-										<li class="now">${k}</li>
+										<li class="nowpagecolor">${k}</li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="admin_member_list.do?cPage=${k}">${k}</a></li>
+										<li><a href="admin_member_list.do?cPage=${k}" class="nowpage">${k}</a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
@@ -190,7 +198,7 @@ table tfoot ol.paging li a:hover {
 							<!-- 이후 버튼 -->
 								<c:choose>
 								<c:when test="${paging.endBlock >= paging.totalPage }">
-									<li class="disable">다음으로</li>
+									<li class="disable">></li>
 								</c:when>
 								<c:otherwise>
 									<li><a href="admin_member_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
@@ -209,7 +217,7 @@ table tfoot ol.paging li a:hover {
 					            <option value="nickname">닉네임</option>
 					        </select>
 					    	<input type="text" name="keyword">
-					        <button type="submit" name="search">검색</button>
+					        <button type="submit" name="search"  class="searchbtn">검색</button>
 					    </div>
 					    <input type="hidden" name="offset" value="1">
 					    <input type="hidden" name="limit" value="10">
