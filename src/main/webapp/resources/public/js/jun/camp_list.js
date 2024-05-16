@@ -1,9 +1,14 @@
 function list_search(page) {
+
+		
         let keywordInput = $("#keyword_input").val();
         let selectedLctCl = [];
         let selectedInduty = [];
         let selectedSbrscl = [];
 
+		let sido_search = $("#sido_search").val();
+        let sigungu_search = $("#sigungu_search").val();
+		
         $("input[name='lctCl']:checked").each(function() {
             selectedLctCl.push($(this).val());
         });
@@ -24,6 +29,8 @@ $.ajax({
         lctCl: selectedLctCl.join(),
         induty: selectedInduty.join(),
         sbrscl: selectedSbrscl.join(),
+        s_sido: sido_search,
+        s_sigungu: sigungu_search,
         cPage: page
     },
     dataType: "json",

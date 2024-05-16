@@ -86,14 +86,18 @@ public class CampAjaxController {
 
 	@RequestMapping(value = "camp_list_search.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public Map<String, Object> Camp_list_keyword(@RequestParam(defaultValue = "1") int pageNo,
+	public Map<String, Object> Camp_list_keyword(
 			@RequestParam(required = false, defaultValue = "") String keyword,
 			@RequestParam(required = false, defaultValue = "") String lctCl,
 			@RequestParam(required = false, defaultValue = "") String induty,
 			@RequestParam(required = false, defaultValue = "") String sbrscl,
+			@RequestParam(required = false, defaultValue = "") String s_sido,
+			@RequestParam(required = false, defaultValue = "") String s_sigungu,
 			HttpServletRequest request) {
-		int count = campService.searchCount(keyword, lctCl, induty, sbrscl);
+		int count = campService.searchCount(keyword, lctCl, induty, sbrscl,s_sido,s_sigungu);
 		System.out.println("검색된 갯수 = "+count);
+		System.out.println(s_sido+"시도");
+		System.out.println(s_sigungu+"시군구");
 		paging.setTotalRecord(count);
 		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 			paging.setTotalPage(1);
@@ -119,7 +123,7 @@ public class CampAjaxController {
 			paging.setEndBlock(paging.getTotalPage());
 		}
 		
-		List<CampVO> cvo = campService.searchCampDetail(keyword, lctCl, induty, sbrscl,paging.getOffset(), paging.getNumPerPage());
+		List<CampVO> cvo = campService.searchCampDetail(keyword, lctCl, induty, sbrscl,paging.getOffset(), paging.getNumPerPage(),s_sido,s_sigungu);
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("cvo", cvo);
 	    response.put("paging", paging);
