@@ -116,6 +116,9 @@
 									</div>
 						</c:forEach>
 					</div>
+					
+					
+					
 					<c:forEach var="r" items="${reporteach}" varStatus="loop">
 					    <!-- 첫 번째 배열만 처리 -->
 					    <c:if test="${loop.index == 0}">
@@ -124,6 +127,27 @@
 					    </c:if>
 					</c:forEach>
 
+					<script type="text/javascript">
+					    document.addEventListener("DOMContentLoaded", function() {
+					        const modalOpenButtons = document.querySelectorAll('.modal_btn');
+					        const modalCloseButtons = document.querySelectorAll('.close_btn');
+					        const modal = document.querySelector('.modal');
+					
+					        // 열기 버튼을 눌렀을 때 모달팝업이 열림
+					        modalOpenButtons.forEach(function(button) {
+					            button.addEventListener('click', function() {
+					                modal.style.display = 'block';
+					            });
+					        });
+					
+					        // 닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+					        modalCloseButtons.forEach(function(button) {
+					            button.addEventListener('click', function() {
+					                modal.style.display = 'none';
+					            });
+					        });
+					    });
+					</script>
 				</c:when>
 				</c:choose>
 				<c:forEach var="m" items="${member}">
@@ -144,7 +168,7 @@
 					onclick="location.href='member_stop.do?member_idx=${m.member_idx}'">회원삭제</button>
 				</c:forEach>
 			</div>
-				<button style="margin: 37px 157%; background-color: #041601; color: white" type="button" onclick="goBackAndRefresh()">목록으로</button>
+				<button style="margin: 37px 157%; background-color: #041601; color: white" type="button"  onclick="history.go(-1)">목록으로</button>
 
 		</div>
 		<div class=under>
@@ -196,39 +220,7 @@
 				</c:forEach>
 			</table>
 		</div>
-		<script type="text/javascript">
-const modal = document.querySelector('.modal');
-const modalOpen = document.querySelector('.modal_btn');
-const modalClose = document.querySelector('.close_btn');
-
-
-//열기 버튼을 눌렀을 때 모달팝업이 열림
-modalOpen.addEventListener('click',function(){
-    //display 속성을 block로 변경
-    modal.style.display = 'block';
-});
-//닫기 버튼을 눌렀을 때 모달팝업이 닫힘
-modalClose.addEventListener('click',function(){
-   //display 속성을 none으로 변경
-    modal.style.display = 'none';
-});
-</script>
-
-<script type="text/javascript">
-    function goBackAndRefresh() {
-        // 세션 스토리지를 사용하여 새로고침 플래그 설정
-        sessionStorage.setItem("refreshFlag", "true");
-        history.go(-1);
-    }
-
-    window.onload = function() {
-        // 세션 스토리지에서 플래그를 확인하고 새로고침
-        if (sessionStorage.getItem("refreshFlag") === "true") {
-            sessionStorage.removeItem("refreshFlag");
-            location.reload();
-        }
-    }
-</script>
+		
 		<jsp:include page="../hs/footer.jsp" />
 </body>
 </html>

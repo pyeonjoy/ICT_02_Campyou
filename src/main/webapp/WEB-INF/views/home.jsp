@@ -51,7 +51,7 @@ body {
 
 .wrap {
 	margin: auto;
-	width: 1200px;
+	width: 1500px;
 	text-align: center;
 	font-weight: bold;
 	color: #FFFDDE;
@@ -119,6 +119,16 @@ button {
 	position: absolute;
 	left: 0px;
 }
+.popularinner{
+	display: flex;
+	justify-content: center;
+	margin-bottom: 35px;
+	
+}
+.show{
+padding-left: 60px;
+padding-right: 60px;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
@@ -139,7 +149,7 @@ $(document).ready(function() {
             
         }); 
     });
-/*  
+ 
  
 
 // 	$(function() {
@@ -251,7 +261,7 @@ $(document).ready(function() {
 	    });
 	}
 });
-     */
+   
 </script>
 
 </head>
@@ -302,13 +312,22 @@ $(document).ready(function() {
 	<div class="wrap">
 		<div class="popular">
 			<h3>Popular campsites</h3>
-
+			<div class="popularinner">
 			<c:forEach var="c" items="${camphit}">
+			<div>
+			<div>
 				<a href="camp_detail.do?contentid=${c.contentid}"> <img
-					class="popularimg" src="${c.firstimageurl}"></a>
+					class="popularimg" src="${c.firstimageurl}">
+					</a>
+			</div>
+			<div>
+				<h4>${c.facltnm }</h4>
+			</div>
+			</div>
 			</c:forEach>
+			</div>
 			<p>
-				<button onclick="location.href='camplist.do'">Show More</button>
+				<button class="show" onclick="location.href='camplist.do'">Show More</button>
 			</p>
 		</div>
 		<div class="popular">
@@ -319,7 +338,7 @@ $(document).ready(function() {
 				</c:forEach>
 			</div>
 			<p>
-				<button onclick="location.href='together_list.do'">Show
+				<button  class="show" onclick="location.href='together_list.do'">Show
 					More</button>
 			</p>
 		</div>

@@ -107,7 +107,8 @@ button{
 				<tbody>
 					<tr>
 						<th>신고 내용</th>
-						<td align="left"><textarea rows="10" cols="60" name="report_content"></textarea>
+						<td align="left"><textarea rows="10" cols="60" name="report_content" maxlength="100"></textarea>
+</textarea>
 						</td>
 					</tr>
 					<tr>

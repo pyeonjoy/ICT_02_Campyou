@@ -144,7 +144,7 @@ button{
 							<c:forEach var="m" items="${member}">
 								<input type="hidden" name="member_idx" value="${m.member_idx}" />
 								<h3>정지 내용</h3>
-								<textarea rows="10" cols="60" name="stop_content"></textarea>
+								<textarea rows="10" cols="60" name="stop_content" maxlength="100"></textarea>
 								<div class="modal">
 									<div class="modal_popup">
 										<input type="radio" name="stop_day" value="3">3일
