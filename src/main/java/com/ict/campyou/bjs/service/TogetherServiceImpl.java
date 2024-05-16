@@ -1,13 +1,15 @@
 package com.ict.campyou.bjs.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ict.campyou.bjs.dao.PromiseVO;
-import com.ict.campyou.bjs.dao.TogetherDAO;
 import com.ict.campyou.bjs.dao.TogetherVO;
+import com.ict.campyou.bjs.dao.TogetherDAO;
+import com.ict.campyou.bjs.dao.TogetherCommentVO;
 import com.ict.campyou.jun.dao.CampVO;
 
 @Service
@@ -106,8 +108,8 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 	
 	@Override
-	public int getPromiseCount(String member_idx) throws Exception {
-		return togetherDAO.getPromiseCount(member_idx);
+	public int getPromiseMyCount(String member_idx) throws Exception {
+		return togetherDAO.getPromiseMyCount(member_idx);
 	}
 	
 	@Override
@@ -115,8 +117,40 @@ public class TogetherServiceImpl implements TogetherService{
 		return togetherDAO.getDeclinePromise(pm_idx);
 	}
 	
-@Override
-	public List<PromiseVO> getTogetherHistory() throws Exception {
-		return togetherDAO.getTogetherHistory();
+	@Override
+	public int getToHistoryCount(String member_idx) throws Exception {
+		return togetherDAO.getToHistoryCount(member_idx);
 	}
+	
+	@Override
+	public List<PromiseVO> getTogetherHistoryGet(String member_idx, int offset, int limit) throws Exception {
+		return togetherDAO.getTogetherHistoryGet(member_idx, offset, limit);
+
+	}
+	
+	@Override
+	public int getToHistorySendCount(String member_idx) throws Exception {
+		return togetherDAO.getToHistorySendCount(member_idx);
+	}
+	
+	@Override
+	public List<PromiseVO> getTogetherSendHistory(String member_idx, int offset, int limit) throws Exception {
+		return togetherDAO.getTogetherSendHistory(member_idx, offset, limit);
+	}
+	
+	@Override
+	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
+		return togetherDAO.getToCommentList(t_idx);
+	}
+
+	@Override
+	public int getToCommentLevUpdate(Map<String, Integer> map) throws Exception {
+		return togetherDAO.getToCommentLevUpdate(map);
+	}
+	
+	@Override
+	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception {
+		return togetherDAO.getToCommentWrite(tcvo);
+	}
+
 }

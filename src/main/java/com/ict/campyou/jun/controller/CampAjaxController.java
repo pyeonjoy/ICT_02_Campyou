@@ -7,8 +7,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ict.campyou.common.Paging;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.ReviewVO;
@@ -28,6 +32,9 @@ public class CampAjaxController {
 
 	@Autowired
 	private CampService campService;
+
+	@Autowired
+	private Paging paging;
 
 	@RequestMapping(value = "camp_list.do", produces = "text/xml; charset=utf-8")
 	@ResponseBody
@@ -79,17 +86,47 @@ public class CampAjaxController {
 
 	@RequestMapping(value = "camp_list_search.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public List<CampVO> Camp_list_keyword(@RequestParam(defaultValue = "1") int pageNo,
-            @RequestParam(required = false, defaultValue = "") String keyword,
-            @RequestParam(required = false, defaultValue = "") String lctCl,
-            @RequestParam(required = false, defaultValue = "") String induty,
-            @RequestParam(required = false, defaultValue = "") String sbrscl) {
-		    List<CampVO> cvo = campService.searchCampDetail(keyword, lctCl, induty, sbrscl);
-		    return cvo;
-		  
-	}
+	public Map<String, Object> Camp_list_keyword(@RequestParam(defaultValue = "1") int pageNo,
+			@RequestParam(required = false, defaultValue = "") String keyword,
+			@RequestParam(required = false, defaultValue = "") String lctCl,
+			@RequestParam(required = false, defaultValue = "") String induty,
+			@RequestParam(required = false, defaultValue = "") String sbrscl,
+			HttpServletRequest request) {
+		int count = campService.searchCount(keyword, lctCl, induty, sbrscl);
+		System.out.println("검색된 갯수 = "+count);
+		paging.setTotalRecord(count);
+		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+			paging.setTotalPage(1);
+		}else {
+			paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+			if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+				paging.setTotalPage(paging.getTotalPage() +1);
+			}
+		}
+		String cPage = request.getParameter("cPage");
+		if(cPage == null) {
+			paging.setNowPage(1);
+		}else {
+			paging.setNowPage(Integer.parseInt(cPage));
+		}
 		
-	
+		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
+		
+		paging.setBeginBlock((int)((paging.getNowPage() -1) / paging.getPagePerBlock()) * paging.getPagePerBlock() +1);
+		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() -1);
+		
+		if(paging.getEndBlock() > paging.getTotalPage()) {
+			paging.setEndBlock(paging.getTotalPage());
+		}
+		
+		List<CampVO> cvo = campService.searchCampDetail(keyword, lctCl, induty, sbrscl,paging.getOffset(), paging.getNumPerPage());
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("cvo", cvo);
+	    response.put("paging", paging);
+
+	    return response;
+		
+	}
 
 	@RequestMapping(value = "camp_detail_img.do", produces = "text/xml; charset=utf-8")
 	@ResponseBody
@@ -158,55 +195,51 @@ public class CampAjaxController {
 	@RequestMapping(value = "loadReview.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public List<ReviewVO> loadReview(@RequestParam() String contentid) {
-	    List<ReviewVO> res = campService.loadReview(contentid);
-	    if (res == null) {
-	        return Collections.emptyList();
-	    } else {
-	        return res;
-	    }
+		List<ReviewVO> res = campService.loadReview(contentid);
+		if (res == null) {
+			return Collections.emptyList();
+		} else {
+			return res;
+		}
 	}
-
 
 	@RequestMapping(value = "checkHeart.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String checkHeart(@RequestParam()String contentid, HttpSession session) {
-	    MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-	    if (mvo == null) {
-	        return ("hu/loginForm");
-	    } else {
-	        String member_idx = mvo.getMember_idx();
-	        String chkHeart = campService.checkHeart(contentid, member_idx);
-	        if (chkHeart != null) {
-	            return "false";
-	        } else {
-	        	return "true";
-	        }
-	    }
+	public String checkHeart(@RequestParam() String contentid, HttpSession session) {
+		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+		if (mvo == null) {
+			return ("hu/loginForm");
+		} else {
+			String member_idx = mvo.getMember_idx();
+			String chkHeart = campService.checkHeart(contentid, member_idx);
+			if (chkHeart != null) {
+				return "false";
+			} else {
+				return "true";
+			}
+		}
 	}
 
-	
-	
-	
 	@RequestMapping(value = "addHeart.do", produces = "text/plain; charset=utf-8")
 	@ResponseBody
 	public String addHeart(@RequestParam() String contentid, HttpSession session) {
-	    MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-	    String member_idx = mvo.getMember_idx();
-	    String chkHeart = campService.checkHeart(contentid, member_idx);
-	    if (chkHeart == null) {
-	        int result = campService.addHeart(contentid, member_idx);
-	        return String.valueOf(result);
-	    } else {
-	    	return "error";
-	    }
-	}
-	
-	@RequestMapping(value = "delHeart.do", produces = "text/plain; charset=utf-8")
-	@ResponseBody
-	public String delHeart(@RequestParam()String contentid, HttpSession session) {
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
 		String member_idx = mvo.getMember_idx();
-		int delHeart = campService.delHeart(contentid,member_idx);
+		String chkHeart = campService.checkHeart(contentid, member_idx);
+		if (chkHeart == null) {
+			int result = campService.addHeart(contentid, member_idx);
+			return String.valueOf(result);
+		} else {
+			return "error";
+		}
+	}
+
+	@RequestMapping(value = "delHeart.do", produces = "text/plain; charset=utf-8")
+	@ResponseBody
+	public String delHeart(@RequestParam() String contentid, HttpSession session) {
+		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+		String member_idx = mvo.getMember_idx();
+		int delHeart = campService.delHeart(contentid, member_idx);
 		if (delHeart > 0) {
 			return String.valueOf(delHeart);
 		}

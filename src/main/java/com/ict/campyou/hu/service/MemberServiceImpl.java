@@ -1,12 +1,7 @@
 package com.ict.campyou.hu.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.ict.campyou.hu.dao.CommBoardVO;
-import com.ict.campyou.hu.dao.CommentVO;
 import com.ict.campyou.hu.dao.MemberDAO;
 import com.ict.campyou.hu.dao.MemberVO;
 

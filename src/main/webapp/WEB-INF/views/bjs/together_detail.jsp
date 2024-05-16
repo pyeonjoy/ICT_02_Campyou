@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -27,6 +28,7 @@ function to_list_go(f) {
 $(function() {
 	initMap();
 	toggleApplyButton();
+	to_comment();
 });
 function initMap() {
     let markers = [];
@@ -175,6 +177,148 @@ function to_delete_go(f, t_idx) {
 	    }
 	 }, 150);
 }
+
+function to_comment() {
+    let tIdx = document.getElementById('t_idx').value;
+    $('.toDetailContent4').empty();
+    $.ajax({
+        type: "POST",
+        url: "to_comment_list.do",
+        data: {
+            t_idx: tIdx
+        },
+        dataType: "json",
+        success: function(data) {
+            if (data.toCommentList != null) {
+            	let commentHTML = '';
+            	commentHTML += '<p class="toDetailContent4Sub1">댓글</p>';
+            	commentHTML += '<form method="post">';
+            	commentHTML += '<div class="toDetailInput">';
+            	if(data.memberUser && data.memberUser.member_img != null){
+	                commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32"></div>';
+            		commentHTML += '<input type="text" value="" id="" class="toDetailInputBox">';
+            	}else{
+            		commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/user2.png" class="userImage32"></div>';
+            		commentHTML += '<input type="text" value="" id="" class="toDetailInputBox" placeholder="로그인 후 작성" readonly>';
+            	}
+            	commentHTML += '<input type="button" value="입력" id="" class="toDetailInputSubmit" onclick="">';
+            	commentHTML += '</div>';
+            	commentHTML += '</form>';
+            	for (let i = 0; i < data.toCommentList.length; i++) {
+            		let comment = data.toCommentList[i];
+            	    let indentation = '';
+//             	    for (let j = 1; j <= comment.wc_step; j++) {
+//             	        indentation += 'ㄴ';
+//             	    }
+//             	    commentHTML += '<span class="toDetailInputSpan>' + indentation + '</span>';
+            	    if (comment.wc_active === 1) {
+            	        commentHTML += '<span style="color: lightgrey">삭제된 댓글입니다.</span>';
+            	    } else {
+            	        commentHTML += '<div class="toDetailContent4Sub3">';
+            	        commentHTML += '<div class="toDetailContent4Sub2Sub1">';
+            	        commentHTML += '<div class="toDetailContent4Sub2Sub1Div">';
+            	        commentHTML += '<div class="userImageDiv"><img src="${path}/resources/images/' + comment.member_img + '" class="userImage3"></div>';
+            	        commentHTML += '<div>';
+            	        commentHTML += '<p>' + comment.member_nickname + '</p>';
+            	        commentHTML += '<p>' + comment.wc_regdate + '</p>';
+            	        commentHTML += '</div>';
+            	        commentHTML += '</div>';
+            	        commentHTML += '<div class="toDetailContent4Sub2Sub2">';
+            	        commentHTML += '<input type="button" value="답글 달기" class="toDetailContent4Sub2Sub2Button" >';
+            	        commentHTML += '</div>';
+            	        commentHTML += '</div>';
+            	        commentHTML += '<div class="toDetailContent4Sub2Sub3">';
+            	        commentHTML += '<div class="toDetailContent2Sub1Div2">';
+            	        if(comment.wc_step > 0){
+            	        for (let j = 1; j <= comment.wc_step; j++) {
+            	        	indentation += '&nbsp;&nbsp;';
+            	        }
+            	        indentation += 'ㄴ';
+		            	commentHTML += '<span class="toDetailContent2Sub1Div2Span">' + indentation + comment.wc_content + '</span>';
+            	        }else{
+		            	commentHTML += '<span class="toDetailContent2Sub1Div2Span">' + comment.wc_content + '</span>';
+            	        }
+            	        commentHTML += '</div>';
+            	        commentHTML += '<div>';
+            	        commentHTML += '<input type="button" value="X" onclick="" class="toDetailContent4Sub2Sub2Button">';
+            	        commentHTML += '</div>';
+            	        commentHTML += '</div>';
+            	        commentHTML += '<form method="post" class="toDetailInputForm" style="display:none;">';
+            	        commentHTML += '<span class="toDetailInputSpan">ㄴ</span>';
+            	        commentHTML += '<div class="toDetailInput">';
+            	        commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32"></div>';
+            	        commentHTML += '<input type="text" value="" id="" class="toDetailInputBox">';
+            	        commentHTML += '<input type="button" value="입력" id="" class="toDetailInputSubmit">';
+            	        commentHTML += '<input type="hidden" value="' + comment.wc_idx + '" id="wc_idx" >';
+            	        commentHTML += '<input type="hidden" value="' + comment.wc_groups + '" id="wc_groups" >';
+            	        console.log("step:",comment.wc_step);
+            	        commentHTML += '<input type="hidden" value="' + comment.wc_step + '" id="wc_step" >';
+            	        commentHTML += '<input type="hidden" value="' + comment.wc_lev + '" id="wc_lev" >';
+            	        commentHTML += '</div>';
+            	        commentHTML += '</form>';
+            	        commentHTML += '</div>';
+            	    }
+            }
+            $('.toDetailContent4').append(commentHTML);
+        }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+$(document).on("click", ".toDetailContent4Sub2Sub2Button", function() {
+    let parentDiv = $(this).closest(".toDetailContent4Sub3");
+    let commentForm = parentDiv.find(".toDetailInputForm");
+    if (commentForm.css("display") === "none") {
+        commentForm.css("display", "flex");
+    } else {
+        commentForm.css("display", "none");
+    }
+});
+
+
+$(document).on("click", ".toDetailInputSubmit", function() {
+    let parentDiv = $(this).closest(".toDetailInput");
+    let commentInput = parentDiv.find(".toDetailInputBox").val();
+    let memberIdx = $("#member_idx").val();
+    let tIdx = $("#t_idx").val();
+    let wcGroups = parentDiv.find("#wc_groups").val();
+    let wcStep = parentDiv.find("#wc_step").val();
+    let wcLev = parentDiv.find("#wc_lev").val();
+    let wcIdx = null;
+    if (parentDiv.find('#wc_idx').length) {
+        wcIdx = parentDiv.find('#wc_idx').val();
+    }
+//  	console.log(wcIdx);
+ 	console.log(wcStep);
+ 	
+    if (commentInput.trim() === "") {
+        alert("댓글을 입력해주세요.");
+        return;
+    }
+    
+    $.ajax({
+        type: "POST",
+        url: "to_comment_write.do",
+        data: {
+        	member_idx: memberIdx,
+            t_idx: tIdx,
+            wc_content: commentInput,
+            wc_groups: wcGroups,
+            wc_step: wcStep,
+            wc_lev: wcLev,
+            wc_idx: wcIdx
+        },
+        success: function(response) {
+            to_comment();
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+});
 </script>
 </head>
 <body>
@@ -197,19 +341,16 @@ function to_delete_go(f, t_idx) {
 					<span class="to_member_age">(${tvo.member_dob })</span>
                 </div>
 
-                <input type="button" value="1:1 채팅하기" id="" onclick="enterChatRoom(${tvo.t_idx})" class="toDetailContent1Button toDetailContent1Button1">
-                <input type="button" value="참가 신청하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button2">
-
 <!--                 <input type="button" value="1:1 채팅하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1"> -->
 <!--                 <input type="button" value="참가 신청하기" id="" onclick="to_application()" class="toDetailContent1Button toDetailContent1Button2"> -->
-                <button type="button" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1">1:1 채팅하기</button>
+                <button type="button" id="" onclick="enterChatRoom(${tvo.t_idx})" class="toDetailContent1Button toDetailContent1Button1">1:1 채팅하기</button>
                 <button type="button" id="toDetailContent1Button2" onclick="to_apply()" class="toDetailContent1Button toDetailContent1Button2">참가신청하기</button>
                 <button type="button" id="toDetailContent1Button3" onclick="to_cancel()" class="toDetailContent1Button toDetailContent1Button2">참가신청취소</button>
 <!--                 <input type="button" value="참가 취소하기" id="" onclick=""> -->
                 <input type="hidden" id="t_member_idx" value="${tvo.member_idx }">
                 <input type="hidden" name="t_idx" id="t_idx" value="${tvo.t_idx }">
                 <input type="hidden" id="member_idx" value="${memberUser.member_idx }">
-                <span class="toDetailContent1Num">${appluNum }/${tvo.t_numpeople }명</span>
+                <span class="toDetailContent1Num">${proCount }/${tvo.t_numpeople }명</span>
 
                 <span>${tvo.t_regdate }</span>
             </div>
@@ -268,80 +409,33 @@ function to_delete_go(f, t_idx) {
                     <div class="toDetailInput">
                         <div class="userImageDiv2"><img src="${path}/resources/images/tree-4.jpg" class="userImage32"></div>
                         <input type="text" value="" id="" class="toDetailInputBox">
-                        <input type="submit" value="입력" id="" class="toDetailInputBox toDetailInputSubmit">
-                    </div>
-                    <div class="toDetailContent4Sub2">
-                        <div class="toDetailContent4Sub3">
-                            <div class="toDetailContent4Sub2Sub1">
-                                <div class="toDetailContent4Sub2Sub1Div">
-                                    <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div>
-                                    <div>
-                                        <strong>짱구</strong>
-                                        <p>2024-04-23 16:53</p>
-                                    </div>
-                                </div>
-                                <div class="toDetailContent4Sub2Sub2">
-                                    <input type="button" value="답글 달기" id="" onclick=""
-                                        class="toDetailContent4Sub2Sub2Button">
-                                </div>
-                            </div>
-                            <div class="toDetailContent4Sub2Sub3">
-                                <div class="toDetailContent2Sub1Div2">
-                                    <span class="toDetailContent2Sub1Div2Span">언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요?</span>
-                                </div>
-                                <div>
-                                    <input type="button" value="X" id="" onclick="" class="toDetailContent4Sub2Sub2Button">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="toDetailContent4Sub3">
-                            <div class="toDetailContent4Sub2Sub1">
-                                <div class="toDetailContent4Sub2Sub1Div">
-                                    <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div>
-                                    <div>
-                                        <strong>짱구</strong>
-                                        <p>2024-04-23 16:53</p>
-                                    </div>
-                                </div>
-                                <div class="toDetailContent4Sub2Sub2">
-                                    <input type="button" value="답글 달기" id="" onclick=""
-                                        class="toDetailContent4Sub2Sub2Button">
-                                </div>
-                            </div>
-                            <div class="toDetailContent4Sub2Sub3">
-                                <div class="toDetailContent2Sub1Div2">
-                                    <span class="toDetailContent2Sub1Div2Span">언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요?</span>
-                                </div>
-                                <div>
-                                    <input type="button" value="X" id="" onclick="" class="toDetailContent4Sub2Sub2Button">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="toDetailContent4Sub3">
-                            <div class="toDetailContent4Sub2Sub1">
-                                <div class="toDetailContent4Sub2Sub1Div">
-                                    <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div>
-                                    <div>
-                                        <strong>짱구</strong>
-                                        <p>2024-04-23 16:53</p>
-                                    </div>
-                                </div>
-                                <div class="toDetailContent4Sub2Sub2">
-                                    <input type="button" value="답글 달기" id="" onclick=""
-                                        class="toDetailContent4Sub2Sub2Button">
-                                </div>
-                            </div>
-                            <div class="toDetailContent4Sub2Sub3">
-                                <div class="toDetailContent2Sub1Div2">
-                                    <span class="toDetailContent2Sub1Div2Span">언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요?</span>
-                                </div>
-                                <div>
-                                    <input type="button" value="X" id="" onclick="" class="toDetailContent4Sub2Sub2Button">
-                                </div>
-                            </div>
-                        </div>
+                        <input type="button" value="입력" id="" class="toDetailInputBox toDetailInputSubmit" onclick="">
                     </div>
                 </form>
+                <div class="toDetailContent4Sub2">
+                    <div class="toDetailContent4Sub3">
+                        <div class="toDetailContent4Sub2Sub1">
+                            <div class="toDetailContent4Sub2Sub1Div">
+                                <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div>
+                                <div>
+                                    <strong>짱구</strong>
+                                    <p>2024-04-23 16:53</p>
+                                </div>
+                            </div>
+                            <div class="toDetailContent4Sub2Sub2">
+                                <input type="button" value="답글 달기" id="" onclick="to_coment_write(this.form)" class="toDetailContent4Sub2Sub2Button">
+                            </div>
+                        </div>
+                        <div class="toDetailContent4Sub2Sub3">
+                            <div class="toDetailContent2Sub1Div2">
+                                <span class="toDetailContent2Sub1Div2Span">언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요?</span>
+                            </div>
+                            <div>
+                                <input type="button" value="X" id="" onclick="" class="toDetailContent4Sub2Sub2Button">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

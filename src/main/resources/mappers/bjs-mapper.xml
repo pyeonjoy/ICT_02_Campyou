@@ -32,7 +32,7 @@
 	<select id="camp_list" resultType="cvo">
 		select * from camp_list
 	</select>
-	<select id="promiseCount" resultType="int">
+	<select id="promise_people_count" resultType="int">
 		select count(*) from with_promise where t_idx = #{t_idx} and pm_state != -1 and	pm_state != 0
 	</select>
 	<select id="to_detail" parameterType="String" resultType="tvo">
@@ -107,17 +107,67 @@
 	<update id="accept_promise" parameterType="String">
 		update with_promise set pm_state = 1 where pm_idx = #{pm_idx}
 	</update>
-	<select id="promise_count" parameterType="String" resultType="int">
+	<select id="promise_ok_my_count" parameterType="String" resultType="int">
 		select count(*) from with_promise where member_idx = #{member_idx} and pm_state = 2
 	</select>
 	<update id="decline_promise" parameterType="String">
-		update with_promise set pm_state = 2 where pm_idx = #{pm_idx}
+		update with_promise set pm_state = -1 where pm_idx = #{pm_idx}
 	</update>
-	<select id="together_history" resultType="pvo">
-		select b.tf_name, b.t_startdate, b.t_enddate, b.t_campname, b.t_numpeople, p.*, m.member_img, m.member_dob, m.member_nickname
+	<select id="history_count" parameterType="String" resultType="int">
+		select count(*)
 	    from with_promise p
 	    join board_with b on p.t_idx = b.t_idx
 	    join members m on p.member_idx = m.member_idx
-	    where p.pm_state = 0 and p.t_idx in	(select t_idx from board_with where member_idx = #{memberIdx} and t_active = 0)
+	    where p.pm_master = 0 and p.t_idx in (select t_idx from board_with where member_idx = #{member_idx} and t_active = 0)
 	</select>
+	<select id="together_history" parameterType="Map" resultType="pvo">
+		select b.t_startdate, b.t_enddate, b.t_campname, b.t_numpeople, p.*, m.member_img, m.member_dob, m.member_nickname
+	    from with_promise p
+	    join board_with b on p.t_idx = b.t_idx
+	    join members m on p.member_idx = m.member_idx
+	    where p.pm_master = 0 and p.t_idx in (select t_idx from board_with where member_idx = #{member_idx} and t_active = 0)
+	    order by case when p.pm_state = 0 then 0 else 1 end, p.pm_idx desc
+		limit #{limit} offset #{offset}
+	</select>
+	<select id="histor_send_count" parameterType="String" resultType="int">
+		select count(*)
+		from with_promise
+		where member_idx = #{member_idx} and pm_master = 0
+	</select>
+	<select id="together_send_history" parameterType="Map" resultType="pvo">
+		select b.t_startdate, b.t_enddate, b.t_campname, b.t_numpeople, p.t_idx, p.pm_state, p.pm_regdate, m.member_nickname
+	    from with_promise p
+	    join board_with b on p.t_idx = b.t_idx
+	    join members m on b.member_idx = m.member_idx
+	    where p.member_idx = #{member_idx} and p.pm_master = 0
+	    order by case when p.pm_state = 0 then p.pm_idx end desc,
+	        	 case when p.pm_state != 0 then p.pm_idx end asc
+	    limit #{limit} offset #{offset}
+	</select>
+	<select id="to_comment_list" parameterType="String" resultType="tcvo">
+		select wc.*, m.member_nickname, m.member_img
+		from board_with_comment wc
+		join members m on wc.member_idx = m.member_idx
+		where wc.t_idx = #{t_idx}
+		order by wc.wc_groups, wc.wc_lev
+	</select>
+	<update id="to_comment_lev_update" parameterType="Map">
+		update board_with_comment set wc_lev = wc_lev + 1 where wc_groups = #{wc_groups} and wc_lev >= #{wc_lev}
+	</update>
+	<insert id="to_comment_write" parameterType="tcvo">
+	        <selectKey keyProperty="wc_groups" resultType="String" order="BEFORE">
+	            select IFNULL(MAX(wc_groups), 0) + 1 from board_with_comment where t_idx = #{t_idx}
+	        </selectKey>
+	        insert into board_with_comment (t_idx, member_idx, wc_content, wc_groups, wc_regdate)
+	        values (#{t_idx}, #{member_idx}, #{wc_content}, #{wc_groups}, sysdate())
+	</insert>
+	<insert id="to_comment_in_write" parameterType="tcvo">
+<!-- 		<selectKey keyProperty="wc_step" resultType="String" order="BEFORE"> -->
+<!-- 	        SELECT IFNULL(MAX(wc_step), 0) + 1 AS wc_step -->
+<!-- 	        FROM board_with_comment -->
+<!-- 	        WHERE wc_groups = #{wc_groups} AND wc_step > #{wc_step} -->
+<!--    		 </selectKey> -->
+        insert into board_with_comment (t_idx, member_idx, wc_content, wc_groups, wc_comment_idx, wc_step, wc_lev, wc_regdate)
+        values (#{t_idx}, #{member_idx}, #{wc_content}, #{wc_groups}, #{wc_idx}, #{wc_step}, #{wc_lev}, sysdate())
+	</insert>
 </mapper>

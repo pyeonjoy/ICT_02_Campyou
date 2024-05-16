@@ -4,8 +4,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class MemberVO {
 	private String member_idx, member_id, member_name, member_nickname, member_dob, member_email, member_pwd,
-			member_phone, member_img, member_active, member_regdate, member_old_img,member_grade, member_login,admin_idx,reportmember_idx ;
-
+			member_phone, member_img, member_active, member_regdate, member_old_img,member_grade, member_login ;
+  
 	public String getAdmin_idx() {
 		return admin_idx;
 	}

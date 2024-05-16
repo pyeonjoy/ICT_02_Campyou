@@ -18,6 +18,10 @@
 <meta name="generator" content="Hugo 0.88.1">
 <title>임시 메인페이지</title>
 <style>
+#header {
+   background-color: rgba(5, 54, 16, 0.7);
+}
+
 .bd-placeholder-img {
 	font-size: 1.125rem;
 	text-anchor: middle;
@@ -271,7 +275,7 @@ $(document).ready(function() {
 
 
 
-	<h1 class="display-4 fw-normal">임시 메인 페이지</h1>
+	<h1 class="display-4 fw-normal" style="padding: 200px;">.</h1>
 	<h1 class="display-4 fw-normal">
 		<button onclick="location.href='together_list.do'">준수</button>
 	</h1>

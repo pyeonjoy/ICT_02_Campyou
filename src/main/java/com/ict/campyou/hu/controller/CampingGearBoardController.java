@@ -53,23 +53,23 @@ public class CampingGearBoardController {
 		  try {
 			  ModelAndView mv = new ModelAndView("hu/campingGearBoard/campingGearBoard");
 			  
-			  //ÆäÀÌÂ¡ ±â¹ý & ÀüÃ¼ °Ô½Ã¹° ¼ö
+			
 			  int count = campingGearBoardService.getTotalCount();
 			  paging.setTotalRecord(count);
 			  
-			  //ÀüÃ¼ ÆäÀÌÁö ¼ö
+			
 			  if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 				  paging.setTotalPage(1);
 			  }else {
-				  //ÀüÃ¼ ÆäÀÌÁö ¼ö (DB°Ô½Ã¹° ¼ö / ÇÑÆäÀÌÁö´ç 10ÁÙ)
+				 
 				  paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-				  // (DB°Ô½Ã¹° ¼ö % ÇÑÆäÀÌÁö´ç 10ÁÙ != 0) ÀÌ¸é 1pg¸¦ ´õÇÑ´Ù.
+				 
 				  if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
 					  paging.setTotalPage(paging.getTotalPage() + 1);
 				  }
 			  }
 			  
-			  //ÇöÀç ÆäÀÌÁö ±¸ÇÔ
+			
 			  String cPage = request.getParameter("cPage");
 			  if(cPage == null) {
 				  paging.setNowPage(1);
@@ -77,12 +77,8 @@ public class CampingGearBoardController {
 				  paging.setNowPage(Integer.parseInt(cPage));
 			  }
 			  
-			  // begin, end ±¸ÇÏ±â (Oracle)
-			  // offset ±¸ÇÏ±â
-			  // offset = limit * (ÇöÀçÆäÀÌÁö-1);
 			  paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
 			  
-			  //½ÃÀÛ ºí·Ï // ³¡ºí·Ï
 			  paging.setBeginBlock(
 						(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
 				paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
@@ -93,12 +89,10 @@ public class CampingGearBoardController {
 			  
 			  List<CampingGearBoardVO> camping_gear_list = campingGearBoardService.getCampingGearList(paging.getOffset(), paging.getNumPerPage());
 			  
-			  //¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  CampingGearBoardVO cgbvo = new CampingGearBoardVO();
 			  
 			  if(memberInfo != null) {
-				  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
 				  cgbvo.setMember_idx(memberInfo.getMember_idx());
 			  }
 			  
@@ -115,8 +109,6 @@ public class CampingGearBoardController {
 		return new ModelAndView("hu/campingGearBoard/error");
 	  }
 	 
-	 
-	 //±Û¾²´Â ÆäÀÌÁö·Î °¡±â
 	 @RequestMapping("camping_gear_write.do")
 	  public ModelAndView getCampingGearWrite(HttpSession session) {
 		  try {
@@ -134,24 +126,21 @@ public class CampingGearBoardController {
 		  return new ModelAndView("hu/campingGearBoard/error");
 	  }
 	 
-	 // ±Û¾²´Â ÆäÀÌÁö·Î °¡¼­ ±Û¾²±â
 	 @RequestMapping("camping_gear_write_ok.do")
 	  public ModelAndView getCampingGearWriteOk(CampingGearBoardVO cgbvo, HttpServletRequest request, HttpSession session) {
 		  try {
 			  ModelAndView mv = new ModelAndView("redirect:camping_gear_board.do");
 			  
-			  //¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  
 			  String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 			  MultipartFile file = cgbvo.getFile();
 			  
 			  if(memberInfo != null) {
-				  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
 				  cgbvo.setMember_idx(memberInfo.getMember_idx());
 				  
 				  if(file.isEmpty()) {
-					  cgbvo.setCpf_name(""); // "" ¾È¿¡ path ³ÖÀ¸¸é °æ·Î°¡ ³ª¿Â´Ù.
+					  cgbvo.setCpf_name("");
 				  }else {
 					  UUID uuid = UUID.randomUUID();
 					  String f_name = uuid.toString() + "_" + file.getOriginalFilename();
@@ -173,23 +162,19 @@ public class CampingGearBoardController {
 		  return new ModelAndView("hu/campingGearBoard/error");
 	  }
 	 
-	 //È¸¿ø °Ô½ÃÆÇ Á¤º¸
 	  @RequestMapping("camping_gear_detail.do")
 	  public ModelAndView getCampingGearDetail(@ModelAttribute("cPage") String cPage, String cp_idx, HttpSession session) {
 		  try {
 			  ModelAndView mv = new ModelAndView("hu/campingGearBoard/campingGearDetail");
 			  
-			  //¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  
-			  //hit ¾÷µ¥ÀÌÆ®
 			  int result = campingGearBoardService.getCampingGearHit(cp_idx);
 			  
 			  if(memberInfo != null) {
-				  //»ó¼¼º¸±â
+		
 				  CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
 				  
-				  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
 				  cgbvo.setMember_idx(memberInfo.getMember_idx());
 				  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
@@ -206,7 +191,6 @@ public class CampingGearBoardController {
 		  return new ModelAndView("hu/campingGearBoard/error");
 	  }
 	 
-	  //È¸¿øÀÌ ¿Ã¸° »çÁø ´Ù¿î·Îµå
 	  @RequestMapping("camping_gear_pics_down.do")
 	  public void CampingGearPicsDown(HttpServletRequest request, HttpServletResponse response) {
 		  try {
@@ -225,7 +209,6 @@ public class CampingGearBoardController {
 		  }
 	  }
 	  
-	  //¼öÁ¤ ÆäÀÌÁö·Î °¡±â
 	  @RequestMapping("camping_gear_update.do")
 	  public ModelAndView getCampingGearUpdate(@ModelAttribute("cPage") String cPage, @ModelAttribute("cp_idx") String cp_idx) {
 		  
@@ -239,7 +222,6 @@ public class CampingGearBoardController {
 		  return new ModelAndView("hu/campingGearBoard/error");
 	  }
 	  
-	  //¼öÁ¤ ÆäÀÌÁö ±â´É
 	  	@RequestMapping("camping_gear_update_ok.do")
 		public ModelAndView getCampingGearUpdateOK(@ModelAttribute("cPage")String cPage, @ModelAttribute("cp_idx")String cp_idx,
 												  CampingGearBoardVO cgbvo, HttpServletRequest request) {
@@ -281,7 +263,6 @@ public class CampingGearBoardController {
 			return new ModelAndView("hu/campingGearBoard/error");
 		}
 	  	
-	  	//»èÁ¦ ÆäÀÌÁö
 	  	 @RequestMapping("camping_gear_delete.do")
 		  public ModelAndView getCampingGearDelete(@ModelAttribute("cPage") String cPage, @ModelAttribute("cp_idx") String cp_idx) {
 			  try {
@@ -294,13 +275,11 @@ public class CampingGearBoardController {
 			  return new ModelAndView("hu/campingGearBoard/error");
 		  }
 	  	 
-	  	 //°Ô½ÃÆÇ ±Û »èÁ¦
 	  	 @RequestMapping("camping_gear_delete_ok.do")
 		  public ModelAndView getCampingGearDeleteOk(@ModelAttribute("cPage") String cPage, 
 					                           @ModelAttribute("cp_idx")String cp_idx, CampingGearBoardVO cgbvo) {
 			  ModelAndView mv = new ModelAndView();
 
-			  // ºñ¹Ð¹øÈ£ Ã¼Å©
 			  CampingGearBoardVO cgbvo2 = campingGearBoardService.getCampingGearDetail(cgbvo.getCp_idx());
 			  	
 			  String dpwd = cgbvo2.getCp_pwd();
@@ -310,7 +289,6 @@ public class CampingGearBoardController {
 				   mv.addObject("pwdchk", "fail");
 				   return mv;
 			   } else {
-				   // active ÄÃ·³ÀÇ °ªÀ» 1·Î º¯°æÇÏÀÚ.
 				   int result = campingGearBoardService.getCampingGearDelete(cgbvo2);
 				   if (result > 0) {
 					   mv.setViewName("redirect:camping_gear_board.do");
@@ -320,7 +298,6 @@ public class CampingGearBoardController {
 				return new ModelAndView("hu/boardFree/error");
 			}
 	  	
-	  	 //°ü¸®ÀÚ °­Á¦ »èÁ¦
 		  @RequestMapping("camping_gear_admin_delete.do")
 		  public ModelAndView getCommBoardAdminDelete(String c_idx, String cPage, @ModelAttribute("cp_idx") String cp_idx) {
 			  ModelAndView mv =  new ModelAndView("redirect:camping_gear_board.do");
@@ -332,23 +309,17 @@ public class CampingGearBoardController {
 			  return mv;
 		  }
 	  	
-	  	//°Ô½ÃÆÇ È¸¿ø ±Û(content) º¸±â
 	  	@RequestMapping("camping_gear_content.do")
 	  	public ModelAndView getCommBoardContent(@ModelAttribute("cPage") String cPage, String cp_idx, HttpSession session) {
 	  		try {
 	  			ModelAndView mv = new ModelAndView("hu/campingGearBoard/campingGearContent");
-	  			//¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
 				MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 				  
-				  //hit ¾÷µ¥ÀÌÆ®
 				  int result = campingGearBoardService.getCampingGearHit(cp_idx);
 				  
-				  //ºñÈ¸¿ø °Ô½ÃÆÇ º¸±â & ´ñ±Ûº¸±â
 				  if(memberInfo == null) {
-					  //»ó¼¼º¸±â
 					  CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
 
-					  //´ñ±Û ¸®½ºÆ®
 					  List<CampingGearBoardCommentVO> camping_gear_list2 = campingGearBoardService.getCampingGearList2(cp_idx);
 					 
 					  if(result > 0 && cgbvo != null ){
@@ -359,10 +330,8 @@ public class CampingGearBoardController {
 					  return mv;
 				  }
 				  if(memberInfo != null) {
-					  //»ó¼¼º¸±â
 					  CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
 					  
-					  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
 					  cgbvo.setMember_idx(memberInfo.getMember_idx());
 					  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
@@ -381,9 +350,6 @@ public class CampingGearBoardController {
 			  return new ModelAndView("hu/campingGearBoard/error");
 	  	}
 	  	
-	  	// ¿©±â¼­ºÎÅÍ ´ñ±Û
-	  	
-	    //´ä±Û ÀÔ·Â »ðÀÔ
 	  	@RequestMapping("cgb_comment_insert.do")
 		public ModelAndView getCampingGearBoardCommentInsert(CampingGearBoardCommentVO cgbvo, String cPage, @ModelAttribute("cp_idx")String cp_idx) {
 			ModelAndView mv = new ModelAndView("redirect:cgb_board_reply_ok.do");
@@ -396,7 +362,6 @@ public class CampingGearBoardController {
 			return new ModelAndView("hu/campingGearBoard/error");
 		}
 	  	
-	  	//´ñ±Û »èÁ¦
 		@RequestMapping("cgb_comment_delete.do")
 		public ModelAndView getCampingGearBoardCommentDelete(String c_idx, String cPage, @ModelAttribute("cp_idx")String cp_idx) {
 			ModelAndView mv =  new ModelAndView("redirect:cgb_board_reply_ok.do");
@@ -408,7 +373,6 @@ public class CampingGearBoardController {
 			return new ModelAndView("hu/campingGearBoard/error");
 		}
 		
-		//´ñ±Û ¼öÁ¤
 		@RequestMapping("cgb_comment_update.do")
 		public ModelAndView getCampingGearBoardCommentUpdate(CampingGearBoardCommentVO cgbvo, String c_idx, String cPage, String content, @ModelAttribute("cp_idx")String cp_idx) {
 			ModelAndView mv =  new ModelAndView("redirect:cgb_board_reply_ok.do");
@@ -421,7 +385,6 @@ public class CampingGearBoardController {
 			return new ModelAndView("hu/campingGearBoard/error");
 		}
 		
-		//´ñ±Û Ãâ·Â
 	  	 @RequestMapping("cgb_board_reply_ok.do")
 		   public ModelAndView getBbsDetail(String cp_idx, String cPage, HttpSession session) {
 			  
@@ -429,17 +392,14 @@ public class CampingGearBoardController {
 			  
 			   MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  
-			   //hit ¾÷µ¥ÀÌÆ®
 			  // int result = campingGearBoardService.getCommBoardHit(cp_idx);
 			   int result = campingGearBoardService.getCampingGearHit(cp_idx);
 			  
-			   // »ó¼¼º¸±â 
 			   //CommBoardVO cbvo = campingGearBoardService.getCommBoardDetail(cp_idx);
 			   CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
 			  
 				
 			   if(result>0 && cgbvo != null) {
-				   // ´ñ±Û °¡Á®¿À±â 
 				   List<CampingGearBoardCommentVO> camping_gear_list2 = campingGearBoardService.getCampingGearList2(cp_idx);
 				   mv.addObject("camping_gear_list2", camping_gear_list2);
 				   mv.addObject("memberInfo", memberInfo);
@@ -450,7 +410,6 @@ public class CampingGearBoardController {
 			   return new ModelAndView("hu/campingGearBoard/error");
 		   }
 
-		    // ´ñ±ÛÀÇ ´ñ±Û »ðÀÔ 
 			@RequestMapping("cgb_comment_reply_insert.do")
 			public ModelAndView getCommentReplyInsert(CampingGearBoardCommentVO cgbvo, String cPage, @ModelAttribute("cp_idx")String cp_idx, HttpSession session) {
 				ModelAndView mv = new ModelAndView("redirect:cgb_board_reply_ok.do");
@@ -489,7 +448,6 @@ public class CampingGearBoardController {
 				return new ModelAndView("hu/campingGearBoard/error");
 			}
 			
-			//°Ô½ÃÆÇ °Ë»ö
 		   @RequestMapping("camping_gear_list_go.do")
 		   public ModelAndView getCampingGearSearch() {
 			 try {
@@ -520,7 +478,7 @@ public class CampingGearBoardController {
 		   
 		   
 		   
-		   //°Ô½ÃÆÇ °Ë»ö 
+		   //ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ 
 		   @RequestMapping("camping_gear_search.do")
 		   public ModelAndView getCampingGearSearchList(@ModelAttribute("cp_idx")String cp_idx, String keyword) {
 			   try {
@@ -543,23 +501,23 @@ public class CampingGearBoardController {
 				  try {
 					  ModelAndView mv = new ModelAndView("hu/campingGearBoard/campingGearSearchList");
 					  
-					  //ÆäÀÌÂ¡ ±â¹ý & ÀüÃ¼ °Ô½Ã¹° ¼ö
+					  //ï¿½ï¿½ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ & ï¿½ï¿½Ã¼ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½
 					  int count = campingGearBoardService.getTotalCount();
 					  paging.setTotalRecord(count);
 					  
-					  //ÀüÃ¼ ÆäÀÌÁö ¼ö
+					  //ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 					  if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 						  paging.setTotalPage(1);
 					  }else {
-						  //ÀüÃ¼ ÆäÀÌÁö ¼ö (DB°Ô½Ã¹° ¼ö / ÇÑÆäÀÌÁö´ç 10ÁÙ)
+						  //ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (DBï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 10ï¿½ï¿½)
 						  paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-						  // (DB°Ô½Ã¹° ¼ö % ÇÑÆäÀÌÁö´ç 10ÁÙ != 0) ÀÌ¸é 1pg¸¦ ´õÇÑ´Ù.
+						  // (DBï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 10ï¿½ï¿½ != 0) ï¿½Ì¸ï¿½ 1pgï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
 						  if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
 							  paging.setTotalPage(paging.getTotalPage() + 1);
 						  }
 					  }
 					  
-					  //ÇöÀç ÆäÀÌÁö ±¸ÇÔ
+					  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					  String cPage = request.getParameter("cPage");
 					  if(cPage == null) {
 						  paging.setNowPage(1);
@@ -567,12 +525,12 @@ public class CampingGearBoardController {
 						  paging.setNowPage(Integer.parseInt(cPage));
 					  }
 					  
-					  // begin, end ±¸ÇÏ±â (Oracle)
-					  // offset ±¸ÇÏ±â
-					  // offset = limit * (ÇöÀçÆäÀÌÁö-1);
+					  // begin, end ï¿½ï¿½ï¿½Ï±ï¿½ (Oracle)
+					  // offset ï¿½ï¿½ï¿½Ï±ï¿½
+					  // offset = limit * (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-1);
 					  paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
 					  
-					  //½ÃÀÛ ºí·Ï // ³¡ºí·Ï
+					  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ // ï¿½ï¿½ï¿½ï¿½ï¿½
 					  paging.setBeginBlock(
 								(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
 						paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
@@ -585,12 +543,12 @@ public class CampingGearBoardController {
 					  
 					  List<CampingGearSearchVO> searchlist = campingGearSearchService.getCampingGearSearchListOk(cp_idx, keyword);
 					  
-					  //¸É¹öÁ¤º¸ ¼¼¼± ºÎ¸£±â
+					  //ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ï¿½
 					  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 					  //CampingGearBoardVO cgbvo = new CampingGearBoardVO();
 					  
 					  //if(memberInfo != null) {
-						  //¸É¹ö¼¼¼Ç Á¤º¸¸¦ ´ã±â
+						  //ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 					//	  cgbvo.setMember_idx(memberInfo.getMember_idx());
 					 // }
 					  
