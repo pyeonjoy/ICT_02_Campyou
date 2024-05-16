@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	const page_num_count = 4;
-    const numOfRows = 10;
+    const numOfRows = 5;
     let pageNo = 1;
     let totalCount = 0;
 	let last_page = 0; 
@@ -56,10 +56,11 @@ $(document).ready(function() {
         let campItem = "<div class='camp_item'>";
         campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
         campItem += "<div class='camp_info'>";
-        campItem += "<p> ["+ doNm + " " + sigunguNm+"] </p>";
-        campItem += "<h4>" + facltNm + "</h4><span>" + induty + "</span>";
-        campItem += "<p>" + addr1 + "</p>";
-        campItem += "<p>" + tel + "</p>";
+        campItem += "<p class='location'> ["+ doNm + " " + sigunguNm+"] </p>";
+        campItem += "<h4>" + facltNm + "</h4>";
+        campItem += "<p class='induty'>" + induty + "</p>";
+        campItem += "<p class='addr'>" + addr1 + "</p>";
+        campItem += "<p class='tel'>" + tel + "</p>";
         campItem += "</div>";
         campItem += "<div class='button_container'><button onclick=\"window.open('camp_detail.do?contentid=" + contentid +"')\">상세보기</button></div>";
         campItem += "</div>";
@@ -119,13 +120,14 @@ $(document).ready(function() {
     	camp_list_option = "camp_all_list";
     	marker_empty();
         $.ajax({
-            url: "camp_list.do",
+            url: "camp_list5000.do",
             method: "post",
-            data: { pageNo: pageNo },
+            data: { pageNo: pageNo, numOfRows: numOfRows  },
             dataType: "xml",
             success: function(data) {
                 $("#camp_list_show").empty();
                 totalCount = $(data).find('totalCount').text();
+                $(".totalCount").text(totalCount);
                 
                 $(data).find("item").each(function(i, k) {
                 	 $("#camp_list_show").append(createCampItem(this));
@@ -215,6 +217,7 @@ $(document).ready(function() {
 		            		$(data).find("item").each(function () {
 		                    	$("#camp_list_show").append(createCampItem(this));
 		                    });
+		            		$(".totalCount").text(totalCount);
 		               		pageNumbers();
 		                	marker_show();
 			            });
@@ -228,6 +231,7 @@ $(document).ready(function() {
 	        				});
 	        				pageNumbers();
 	        				$("#camp_list_show").append(searchResultSlice(searchDataItems));
+	        				$(".totalCount").text(totalCount);
 		                	marker_show();
 			            });
 	        }
@@ -237,11 +241,14 @@ $(document).ready(function() {
         			{ numOfRows: 5000 },
         			function(data) {
         				$("#camp_list_show").empty();
+        				$(".totalCount").text(totalCount);
+        				
         				$(data).find("item").each(function (i, k) {
         					datailFilter(this);
         				});
         				pageNumbers();
         				$("#camp_list_show").append(searchResultSlice(searchDataItems));
+        				$(".totalCount").text(totalCount);
 	                	marker_show();
 		            });
         } else {
@@ -344,9 +351,6 @@ $(document).ready(function() {
     	}
     });
     
-	
-	
-    
 	// 엔터키 입력시
     $("#keyword_input").keypress(function(event) {
         if (event.which === 13) {
@@ -354,4 +358,10 @@ $(document).ready(function() {
             pageNo = 1;
         }
     });
+    
 });
+
+
+function go_list() {
+	window.location = 'camplist.do';
+}
