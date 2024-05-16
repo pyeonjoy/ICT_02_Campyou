@@ -19,8 +19,7 @@
 
 #camp_list_show {
 	display: flex;
-	justify-content: center;
-	align-items: flex-start;
+	justify-content: flex-end;
 	flex-wrap: wrap;
 }
 
@@ -113,6 +112,11 @@
 }
 .search_nowpage:hover{
 	color: #FFBA34;
+}
+.1_result{
+    width: 98%;
+    height: 200px;
+    margin: 120px;
 }
 </style>
 </head>

@@ -116,11 +116,16 @@ public class CampAjaxController {
 		
 		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
 		
-		paging.setBeginBlock((int)((paging.getNowPage() -1) / paging.getPagePerBlock()) * paging.getPagePerBlock() +1);
-		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() -1);
-		
-		if(paging.getEndBlock() > paging.getTotalPage()) {
-			paging.setEndBlock(paging.getTotalPage());
+		paging.setBeginBlock((paging.getNowPage() - 1) / paging.getPagePerBlock() * paging.getPagePerBlock() + 1);
+		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+
+		if (paging.getEndBlock() > paging.getTotalPage()) {
+		    paging.setEndBlock(paging.getTotalPage());
+		}
+		if (paging.getTotalRecord() == 0) {
+		    paging.setTotalPage(1);
+		} else {
+		    paging.setTotalPage((int)Math.ceil((double)paging.getTotalRecord() / paging.getNumPerPage()));
 		}
 		
 		List<CampVO> cvo = campService.searchCampDetail(keyword, lctCl, induty, sbrscl,paging.getOffset(), paging.getNumPerPage(),s_sido,s_sigungu);

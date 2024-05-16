@@ -31,10 +31,10 @@
     from camp_list 
     <where>
         <if test="s_sido != null and s_sido != ''">
-    		AND sigungunm = #{s_sido}
+    		AND donm = #{s_sido}
     	</if>
     	<if test="s_sigungu != null and s_sigungu != ''">
-    		AND donm = #{s_sigungu}
+    		AND sigungunm = #{s_sigungu}
     	</if>
         <if test="keyword != null and keyword != ''">
             AND (facltnm LIKE CONCAT('%', #{keyword}, '%'))
@@ -55,11 +55,11 @@
     select count(*)
     from camp_list 
     <where>
-    	<if test="s_sido != null and s_sido != ''">
-    		AND sigungunm = #{s_sido}
+        <if test="s_sido != null and s_sido != ''">
+    		AND donm = #{s_sido}
     	</if>
     	<if test="s_sigungu != null and s_sigungu != ''">
-    		AND donm = #{s_sigungu}
+    		AND sigungunm = #{s_sigungu}
     	</if>
         <if test="keyword != null and keyword != ''">
             AND (facltnm LIKE CONCAT('%', #{keyword}, '%'))
