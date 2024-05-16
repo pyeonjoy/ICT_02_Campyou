@@ -130,8 +130,6 @@ $(document).ready(function() {
                 $(data).find("item").each(function(i, k) {
                 	 $("#camp_list_show").append(createCampItem(this));
                 });
-                
-            	
                 pageNumbers();
                 marker_show();
             },
@@ -158,6 +156,7 @@ $(document).ready(function() {
    	}
    	
     function search_camp() {
+    	totalCount = 0;
     	marker_empty();
     	camp_list_option = "search_camp";
     	
@@ -189,7 +188,6 @@ $(document).ready(function() {
     		let s_sbrscl = $(item).find("sbrsCl").text();
     		let s_doNm = $(item).find("doNm").text();
     		let s_sigunguNm = $(item).find("sigunguNm").text();
-    		console.log("asd" + s_doNm);
          
     		const lctClArr = s_lctCl.split(",");
     		const indutyArr = s_induty.split(",");
@@ -228,7 +226,8 @@ $(document).ready(function() {
 	        				$(data).find("item").each(function (i, k) {
 	        					datailFilter(this);
 	        				});
-	        				$("#camp_list_show").append(searchPage(searchDataItems));
+	        				pageNumbers();
+	        				$("#camp_list_show").append(searchResultSlice(searchDataItems));
 		                	marker_show();
 			            });
 	        }
@@ -241,6 +240,8 @@ $(document).ready(function() {
         				$(data).find("item").each(function (i, k) {
         					datailFilter(this);
         				});
+        				pageNumbers();
+        				$("#camp_list_show").append(searchResultSlice(searchDataItems));
 	                	marker_show();
 		            });
         } else {
@@ -251,32 +252,17 @@ $(document).ready(function() {
     
     // 검색 버튼 클릭시
     $("#search_button").on("click",  function() {
-    	totalCount = 0;
     	search_camp();
     	pageNo = 1;
     });
     
-    // 캠프 div 클릭시 해당 캠핑장 마커로 이동
-	$(document).on("click", ".camp_item",  function() {
-		let facltNm = $(this).find(".camp_info h4").text();
-		
-		function getClickHandler(seq) {
-			return function(e) { 
-                let marker = markers[seq],
-                infoWindow = infoWindows[seq]; 
-                infoWindow.open(map, marker);
-			}
-		}
-		
-		for (let i = 0; i < markerArr.length; i++) {
-	        if (markerArr[i].facltNm === facltNm) {
-	            let LatLng = new naver.maps.LatLng(markerArr[i].lat, markerArr[i].lng);
-	            map.setCenter(LatLng);
-	            naver.maps.Event.trigger(markers[i], 'click',  getClickHandler(i));
-	            break; 
-	        }
-    	}
-    });
+    
+    // 검색 페이지 이동
+ 	function searchResultSlice(items){
+ 		let showSearchResult = items.slice((pageNo - 1) * numOfRows, (pageNo - 1) * numOfRows + numOfRows);
+ 		markerArr = markerArr.slice((pageNo - 1) * numOfRows, (pageNo - 1) * numOfRows + numOfRows);
+ 		return showSearchResult;
+ 	}
     
 	// 페이지 번호
 	function pageNumbers(){
@@ -303,17 +289,7 @@ $(document).ready(function() {
 	    
         $(".camp_list_page").append(pageShow);
     }
-	
-	// 검색 페이지 이동
-	function searchPage(items){
-		last_page = Math.ceil(totalCount / numOfRows);
-	    c_page_index = Math.floor((pageNo - 1) / page_num_count) * page_num_count; 
-		
-		
-		let showSearchResult = items.slice(c_page_index * numOfRows, c_page_index * numOfRows + numOfRows);
-		
-		return showSearchResult;
-	}
+ 	
 	
 	// 페이지 이동
 	$(document).on("click", ".camp_list_next, .camp_list_before, .nowpage, .camp_list_last, .camp_list_first", function() {
@@ -345,6 +321,31 @@ $(document).ready(function() {
 	    }
 	    pageNumbers();
 	});
+    
+    // 캠프 div 클릭시 해당 캠핑장 마커로 이동
+	$(document).on("click", ".camp_item",  function() {
+		let facltNm = $(this).find(".camp_info h4").text();
+		
+		function getClickHandler(seq) {
+			return function(e) { 
+                let marker = markers[seq],
+                infoWindow = infoWindows[seq]; 
+                infoWindow.open(map, marker);
+			}
+		}
+		
+		for (let i = 0; i < markerArr.length; i++) {
+	        if (markerArr[i].facltNm === facltNm) {
+	            let LatLng = new naver.maps.LatLng(markerArr[i].lat, markerArr[i].lng);
+	            map.setCenter(LatLng);
+	            naver.maps.Event.trigger(markers[i], 'click',  getClickHandler(i));
+	            break; 
+	        }
+    	}
+    });
+    
+	
+	
     
 	// 엔터키 입력시
     $("#keyword_input").keypress(function(event) {
