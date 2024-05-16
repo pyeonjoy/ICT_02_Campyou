@@ -39,7 +39,7 @@ public class TogetherAjaxController {
 
 	@RequestMapping(value = "together_Write2.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
-	public String getTogetherWrite(TogetherCommentVO tvo, HttpSession session) throws Exception{
+	public String getTogetherWrite(TogetherVO tvo, HttpSession session) throws Exception{
 		List<CampVO> campList = togetherService.getTogetherCampList();
 		if(campList != null) {
 			Gson gson = new Gson();
@@ -321,12 +321,59 @@ public class TogetherAjaxController {
 	
 	@RequestMapping(value = "to_comment_list.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
-	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
+	public Map<String, Object> getToCommentList(String t_idx, HttpSession session) throws Exception {
+		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
+		if (memberUser == null) {
+	        memberUser = new MemberVO();
+	    }
 		List<TogetherCommentVO> toCommentList = togetherService.getToCommentList(t_idx);
 		for (TogetherCommentVO k : toCommentList) {
-			System.out.println(k.getMember_idx());
-			System.out.println(k.getWc_content());
+//			System.out.println(k.getWc_idx());
+//			System.out.println(k.getMember_idx());
+//			System.out.println(k.getWc_groups());
+//			System.out.println(k.getMember_img());
+//			System.out.println(k.getMember_nickname());
+//			System.out.println(k.getWc_content());
 		}
-		return toCommentList;
+		Map<String, Object> response = new HashMap<>();
+	    response.put("memberUser", memberUser);
+	    response.put("toCommentList", toCommentList);
+
+	    return response;
+	}
+	
+	@RequestMapping(value = "to_comment_write.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception {
+		System.out.println("wc_idx:"+tcvo.getWc_idx());
+		System.out.println("wc_groups:"+tcvo.getWc_groups());
+		// 대댓글인 경우만
+		if(!tcvo.getWc_idx().isEmpty()) {
+			// 부모의 groups, step, lev
+			int wc_groups = Integer.parseInt(tcvo.getWc_groups());
+			int wc_step = Integer.parseInt(tcvo.getWc_step());
+			int wc_lev = Integer.parseInt(tcvo.getWc_lev());
+			
+			wc_step++;
+			wc_lev++;
+			
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("wc_groups", wc_groups);
+//			map.put("wc_step", wc_step);
+			map.put("wc_lev", wc_lev);
+			System.out.println("컨트롤러groups:"+wc_groups);
+//			System.out.println("컨트롤러step:"+wc_step);
+			System.out.println("컨트롤러lev:"+wc_lev);
+			int levUpdate = togetherService.getToCommentLevUpdate(map);
+			tcvo.setWc_groups(String.valueOf(wc_groups));
+			tcvo.setWc_step(String.valueOf(wc_step));
+			tcvo.setWc_lev(String.valueOf(wc_lev));
+		}
+		
+		int result = togetherService.getToCommentWrite(tcvo);
+		if(result > 0) {
+			return result;
+		}
+		return -1;
 	}
 }

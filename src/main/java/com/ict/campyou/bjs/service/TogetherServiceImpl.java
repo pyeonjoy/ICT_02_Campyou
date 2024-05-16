@@ -1,6 +1,7 @@
 package com.ict.campyou.bjs.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -141,4 +142,15 @@ public class TogetherServiceImpl implements TogetherService{
 	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
 		return togetherDAO.getToCommentList(t_idx);
 	}
+
+	@Override
+	public int getToCommentLevUpdate(Map<String, Integer> map) throws Exception {
+		return togetherDAO.getToCommentLevUpdate(map);
+	}
+	
+	@Override
+	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception {
+		return togetherDAO.getToCommentWrite(tcvo);
+	}
+
 }
