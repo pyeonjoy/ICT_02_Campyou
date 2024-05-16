@@ -223,14 +223,14 @@ public class MemberController {
 	          
 	          
 	          if(admvo2 == null || !passwordEncoder.matches(admvo.getAdmin_pwd(), admvo2.getAdmin_pwd()) && (admvo.getAdmin_id() != admvo2.getAdmin_id()) ) {
-	        	  mv.setViewName("redirect:admin_login_form.do");
+	        	  mv.setViewName("redirect:/");
 	        	  //mv.addObject("pwdchk", "fail");
 	              return mv;
 	          }else {
-	        	  
+	        	  System.out.println(admvo2);
 	        	  if(admvo2 != null && admvo2.getAdmin_status().equals("1")){
 	        		  session.setAttribute("admin", admvo2); 
-	        		  mv.setViewName("redirect:/");
+	        		  mv.setViewName("redirect:/admin_login_form.do");
 					  return mv;
 				  }		 
 

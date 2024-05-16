@@ -120,7 +120,7 @@ width: 2.7rem;
 	<%@ include file="../hs/admin_menu.jsp"%>
 
 	<div class="grid_container">
-		<h3 class="grid_title">신고게시판</h3>
+		<h3 class="grid_title" style="margin-bottom:100px;">신고게시판</h3>
 		<div class="grid_col grid_header">
 			<div class="grid_row grid_row1">번호</div>
 			<div class="grid_row grid_row2">신고내용</div>

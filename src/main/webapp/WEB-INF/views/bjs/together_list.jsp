@@ -146,9 +146,7 @@
 						            <div class="toContentOne">
 						                <div>
 						                    <div class="toContentOne1">
-						                    	<a href="report_write.do?member_idx=${k.member_idx}">
 						                        <div class="userImage"><img src="${path}/resources/images/${k.member_img }" class="userImage2"></div>
-						                        </a>
 						                        <div>
 							                        <div class="toContentOne1span1">
 							                            <span class="to_member_nickname">${k.member_nickname }</span>

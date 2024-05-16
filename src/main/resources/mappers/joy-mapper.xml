@@ -178,9 +178,9 @@
 	</select>
 	
 	<!-- 씬고  테이블 전체 불러오기 -->
-	<select id="allreport" resultType="amvo">
+	<select id="allreport" parameterType="Map" resultType="amvo">
 		SELECT *
-		FROM admin_report
+		FROM admin_report limit #{limit} offset #{offset}
 	</select>
 	
 	<!-- ===========================================================회원정보====================================================== -->

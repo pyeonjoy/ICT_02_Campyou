@@ -31,7 +31,6 @@
 						<c:when test="${empty memberInfo && empty admin}">
 							<li><a href="login_form.do">로그인</a></li>
 							<li><a href="sign_up_page_go.do">회원가입</a></li>
-
 						</c:when>
 						<c:otherwise>
 							<li><a href="javascript:void(0)" onclick="openChat()"><img class="icon chat"

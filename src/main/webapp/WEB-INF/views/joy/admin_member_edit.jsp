@@ -5,7 +5,7 @@
 <!doctype html>
 <html lang="ko">
 <link href="resources/css/reset.css" rel="stylesheet" />
-<link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
+<link href="resources/public/css/joy/admin_member_detail.css" rel="stylesheet" />
 <%@ include file="../hs/admin_menu.jsp" %>
 <head>
 <meta charset="utf-8">
