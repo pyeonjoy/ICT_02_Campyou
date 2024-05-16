@@ -6,85 +6,124 @@
 	align-items: center;
 }
 
-.camp_map_list_wrap {
+.result_info {
+	padding: 5px;
+}
+.totalCount {
+	color: orange;
+}
+
+.result_info_line {
 	width: 90vw;
-	height: 740px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.go_list_button input[type="button"]{
+	font-weight: 600;
+	width: 100px;
+	height: 36px;
+	background-color: #FFBA34;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.go_list_button input[type="button"]:hover{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.map_and_list_wrap {
+	width: 90vw;
+	height: 730px;
 	margin-bottom: 100px;
-	position: relative;
 	border: 1px solid #ccc;
 }
 
-
-.camp_list_wrap{
-	border-left: 1px solid #ccc;
-	float:left;
-    width: 40%;
-    height: 100%;
-    overflow-y: scroll;
-    flex-direction: column;
-}
-
-
-#camp_list_show {
-    display: flex;
-    height: 100%;
-    flex-wrap: wrap;
-    float:left;
-}
-
-.camp_item {
-    position: relative;
-    display: flex;
-    border-bottom: 1px solid #ccc;
-    box-sizing: border-box;
-    padding: 10px;
-    width: 100%;
-    
-}
-
-.camp_item img {
-    width: 180px;
-    height: 120px;
-    object-fit: cover;
-    overflow: hidden;
-    margin-right: 20px;
-    border-radius: 5px;
-}
-
-.camp_info {
-    width: 60%;
-}
-
-.camp_item p {
-    margin: 6px 0;
-}
-.camp_info span{
-	font-size: 12px;
-}
-
-.map_show{
-	float: left;
+.map_show {
 	width: 60%;
-	height: 100%;
 }
 
 #map {
-	position: absolute;
 	width: 100%;
 	height: 100%;
 }
-.page_button_space {
-	display: flex;
-	justify-content: center;
-	padding: 20px;
+
+.camp_lists, .map_show {
+	height: 100%;
+	float: left;
 }
 
-.camp_item .button_container{
+.camp_lists {
+	border-left: 1px solid #ccc;
+	width: 40%;
+	display: flex;
+	flex-direction: column;
+}
+
+.camp_item {
+	display: flex;
+	position: relative; height : 135px; padding : 10px;
+	border-bottom: 1px solid #ccc;
+	padding: 10px;
+	height: 135px;
+}
+
+.camp_item img {
+	max-width: 180px;
+	width: 40%;
+	height: 100%;
+	object-fit: cover;
+	overflow: hidden;
+	margin-right: 20px;
+	border-radius: 5px;
+}
+
+@media screen and (max-width: 1100px) {
+	.camp_item img {
+		display: none;
+	}
+}
+
+.camp_info {
+	width: 100%;
+}
+
+.camp_info p {
+	margin-bottom: 0.6rem;
+}
+
+.camp_info .addr, .camp_info .tel {
+	font-size: 0.9rem;
+}
+
+.camp_info .induty {
+	font-size: 0.8rem;
+	color: #666;
+}
+
+.camp_item .button_container {
 	position: absolute;
 	right: 10px;
 }
 
-.camp_item button{
+.camp_item button {
 	width: 80px;
 	padding: 5px;
+}
+
+.page_button {
+	display: flex;
+	height: 100%;
+}
+
+.camp_list_page {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
 }
