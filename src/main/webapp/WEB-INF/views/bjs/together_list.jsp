@@ -229,8 +229,8 @@
 							<!-- 이후 버튼 -->
 							<c:choose>
 								<c:when test="${paging.endBlock >= paging.totalPage }">
-									<li class="to_disable"><i class="fa-solid fa-chevron-right" style="color: white; border-radius: 50%; font-size: 1.2rem;"></i></li>
-									<li class="to_disable"><i class="fa-solid fa-angles-right" style="color: white; border-radius: 50%; font-size: 1.2rem;"></i></li>
+									<li class="to_disable"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>
+									<li class="to_disable"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>
 								</c:when>
 								<c:otherwise>
 									<li>
@@ -273,8 +273,8 @@
 							<!-- 이후 버튼 -->
 							<c:choose>
 								<c:when test="${paging.endBlock >= paging.totalPage }">
-									<li class="to_disable"><i class="fa-solid fa-chevron-right" style="color: white; border-radius: 50%; font-size: 1.2rem;"></i></li>
-									<li class="to_disable"><i class="fa-solid fa-angles-right" style="color: white; border-radius: 50%; font-size: 1.2rem;"></i></li>
+									<li class="to_disable"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>
+									<li class="to_disable"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>
 								</c:when>
 								<c:otherwise>
 									<li>

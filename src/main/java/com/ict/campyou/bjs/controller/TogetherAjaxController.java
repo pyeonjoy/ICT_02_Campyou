@@ -344,8 +344,6 @@ public class TogetherAjaxController {
 	@RequestMapping(value = "to_comment_write.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
 	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception {
-		System.out.println("wc_idx:"+tcvo.getWc_idx());
-		System.out.println("wc_groups:"+tcvo.getWc_groups());
 		// 대댓글인 경우만
 		if(!tcvo.getWc_idx().isEmpty()) {
 			// 부모의 groups, step, lev
@@ -358,18 +356,33 @@ public class TogetherAjaxController {
 			
 			Map<String, Integer> map = new HashMap<String, Integer>();
 			map.put("wc_groups", wc_groups);
-//			map.put("wc_step", wc_step);
+			map.put("wc_step", wc_step);
 			map.put("wc_lev", wc_lev);
-			System.out.println("컨트롤러groups:"+wc_groups);
-//			System.out.println("컨트롤러step:"+wc_step);
-			System.out.println("컨트롤러lev:"+wc_lev);
-			int levUpdate = togetherService.getToCommentLevUpdate(map);
+			int same = togetherService.getToCommentSame(map);
+			if(same > 0) {
+				wc_step++;
+				map.put("wc_groups", wc_groups);
+				map.put("wc_step", wc_step);
+				int GSUpdate = togetherService.getToCommentGSUpdate(map);
+			}else {
+				int GSUpdate = togetherService.getToCommentGSUpdate(map);
+			}
 			tcvo.setWc_groups(String.valueOf(wc_groups));
 			tcvo.setWc_step(String.valueOf(wc_step));
 			tcvo.setWc_lev(String.valueOf(wc_lev));
 		}
 		
 		int result = togetherService.getToCommentWrite(tcvo);
+		if(result > 0) {
+			return result;
+		}
+		return -1;
+	}
+	
+	@RequestMapping(value = "to_comment_delete.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getToCommentDelete(String wc_idx) throws Exception {
+		int result = togetherService.getToCommentDelete(wc_idx);
 		if(result > 0) {
 			return result;
 		}

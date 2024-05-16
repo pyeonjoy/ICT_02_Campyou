@@ -149,10 +149,16 @@
 		from board_with_comment wc
 		join members m on wc.member_idx = m.member_idx
 		where wc.t_idx = #{t_idx}
-		order by wc.wc_groups, wc.wc_lev
+		order by wc.wc_groups, wc.wc_step, wc.wc_lev desc
 	</select>
-	<update id="to_comment_lev_update" parameterType="Map">
-		update board_with_comment set wc_lev = wc_lev + 1 where wc_groups = #{wc_groups} and wc_lev >= #{wc_lev}
+	<select id="to_comment_same" parameterType="Map" resultType="int">
+		select count(*) from board_with_comment where wc_groups = #{wc_groups} and wc_step = #{wc_step} and wc_lev = #{wc_lev}
+	</select>
+<!-- 	<select id="to_step_max" parameterType="Map" resultType="int"> -->
+<!--     	select max(wc_step) from board_with_comment where wc_groups = #{wc_groups} and wc_lev = 0 -->
+<!-- 	</select> -->
+	<update id="to_comment_gs_update" parameterType="Map">
+		update board_with_comment set wc_step = wc_step + 1 where wc_groups = #{wc_groups} and wc_step >= #{wc_step}
 	</update>
 	<insert id="to_comment_write" parameterType="tcvo">
 	        <selectKey keyProperty="wc_groups" resultType="String" order="BEFORE">
@@ -162,12 +168,10 @@
 	        values (#{t_idx}, #{member_idx}, #{wc_content}, #{wc_groups}, sysdate())
 	</insert>
 	<insert id="to_comment_in_write" parameterType="tcvo">
-<!-- 		<selectKey keyProperty="wc_step" resultType="String" order="BEFORE"> -->
-<!-- 	        SELECT IFNULL(MAX(wc_step), 0) + 1 AS wc_step -->
-<!-- 	        FROM board_with_comment -->
-<!-- 	        WHERE wc_groups = #{wc_groups} AND wc_step > #{wc_step} -->
-<!--    		 </selectKey> -->
-        insert into board_with_comment (t_idx, member_idx, wc_content, wc_groups, wc_comment_idx, wc_step, wc_lev, wc_regdate)
-        values (#{t_idx}, #{member_idx}, #{wc_content}, #{wc_groups}, #{wc_idx}, #{wc_step}, #{wc_lev}, sysdate())
+        insert into board_with_comment (t_idx, member_idx, wc_content, wc_groups, wc_step, wc_lev, wc_regdate)
+        values (#{t_idx}, #{member_idx}, #{wc_content}, #{wc_groups}, #{wc_step}, #{wc_lev}, sysdate())
 	</insert>
+	<update id="to_comment_delete" parameterType="String">
+		update board_with_comment set wc_active = 1 where wc_idx = #{wc_idx}
+	</update>
 </mapper>

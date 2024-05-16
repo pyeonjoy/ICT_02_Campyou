@@ -141,10 +141,20 @@ public class TogetherServiceImpl implements TogetherService{
 	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
 		return togetherDAO.getToCommentList(t_idx);
 	}
+	
+//	@Override
+//	public int getToCommentMaxStep(Map<String, Integer> map) {
+//		return togetherDAO.getToCommentMaxStep(map);
+//	}
 
 	@Override
-	public int getToCommentLevUpdate(Map<String, Integer> map) throws Exception {
-		return togetherDAO.getToCommentLevUpdate(map);
+	public int getToCommentSame(Map<String, Integer> map) {
+		return togetherDAO.getToCommentSame(map);
+	}
+	
+	@Override
+	public int getToCommentGSUpdate(Map<String, Integer> map) throws Exception {
+		return togetherDAO.getToCommentGSUpdate(map);
 	}
 	
 	@Override
@@ -152,4 +162,8 @@ public class TogetherServiceImpl implements TogetherService{
 		return togetherDAO.getToCommentWrite(tcvo);
 	}
 
+	@Override
+	public int getToCommentDelete(String wc_idx) throws Exception {
+		return togetherDAO.getToCommentDelete(wc_idx);
+	}
 }

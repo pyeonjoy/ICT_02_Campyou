@@ -141,9 +141,17 @@ public class TogetherDAO {
 		return sqlSessionTemplate.selectList("bjs.to_comment_list", t_idx);
 	}
 	
-	public int getToCommentLevUpdate(Map<String, Integer> map) throws Exception {
-		System.out.println("스텝,레벨업데이트");
-		return sqlSessionTemplate.update("bjs.to_comment_lev_update", map);
+//	public int getToCommentMaxStep(Map<String, Integer> map) {
+//		return sqlSessionTemplate.selectOne("bjs.to_step_max", map);
+//	}
+	
+	public int getToCommentSame(Map<String, Integer> map) {
+		int result = sqlSessionTemplate.selectOne("bjs.to_comment_same", map);
+		return result;
+	}
+	
+	public int getToCommentGSUpdate(Map<String, Integer> map) throws Exception {
+		return sqlSessionTemplate.update("bjs.to_comment_gs_update", map);
 	}
 	
 	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception {
@@ -152,5 +160,9 @@ public class TogetherDAO {
 		}else {
 			return sqlSessionTemplate.insert("bjs.to_comment_write", tcvo);
 		}
+	}
+	
+	public int getToCommentDelete(String wc_idx) throws Exception {
+		return sqlSessionTemplate.update("bjs.to_comment_delete", wc_idx);
 	}
 }

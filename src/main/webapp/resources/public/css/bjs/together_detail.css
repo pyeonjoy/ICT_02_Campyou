@@ -160,6 +160,10 @@
     cursor: pointer;
     margin-left: 1rem;
 }
+.toCommentDelUpdateButton{
+	display: flex;
+	flex-direction: column;
+}
 .toDetailContent4{
     margin: 3rem 0;
 }
@@ -195,6 +199,11 @@
     height: 2.3rem;
     border-radius: 50%;
 }
+.toDetailContent4Sub2{
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
 .toDetailContent4Sub2Sub1{
     display: flex;
     justify-content: space-between;
@@ -211,6 +220,18 @@
 .toDetailContent4Sub3{
     padding: 1rem 0;
     border-bottom: 1px solid lightgray;
+}
+.toDetailContent4Sub6{
+    padding: 1rem 0;
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    align-items: center;
+}
+.toSpace{
+	margin-right: 0.5rem;
+}
+.toCommentWidth{
+	flex-grow: 1;
 }
 .toDetailContent4Sub2Sub2{
     display: flex;
@@ -232,4 +253,8 @@
     width: 75px;
     height: 1.2rem;
     cursor: pointer;
+}
+.toDetailContent4Sub2Sub2ButtonX, .toDetailContent4Sub2Sub2ButtonUpdate{
+	width: 75px;
+    height: 1.2rem;
 }

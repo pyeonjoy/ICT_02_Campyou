@@ -34,6 +34,9 @@ public interface TogetherService {
 	public int getToHistorySendCount(String member_idx) throws Exception;
 	public List<PromiseVO> getTogetherSendHistory(String member_idx, int offset, int limit) throws Exception;
 	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception;
-	public int getToCommentLevUpdate(Map<String, Integer> map) throws Exception;
+//	public int getToCommentMaxStep(Map<String, Integer> map);
+	public int getToCommentSame(Map<String, Integer> map);
+	public int getToCommentGSUpdate(Map<String, Integer> map) throws Exception;
 	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception;
+	public int getToCommentDelete(String wc_idx) throws Exception;
 }
