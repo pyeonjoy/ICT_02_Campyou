@@ -12,7 +12,9 @@
 
 .faq_container{
   width: 70%;
+  height: 80vh;
   transform: translate(15rem,10rem);
+  margin-left: 5rem;
 }
 .faq_title{
   text-align: center;
@@ -43,6 +45,11 @@
 .questions {
   cursor: pointer;
 }
+
+.questions2 {
+  cursor: pointer;
+}
+
 .question {
 	margin-top: 1rem;
 }

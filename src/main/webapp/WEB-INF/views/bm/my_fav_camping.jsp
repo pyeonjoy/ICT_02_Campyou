@@ -21,11 +21,12 @@ const path = "${path}";
 	<%@ include file="../hs/mypage_menu.jsp"%>
 	
  <div class="mypage">
-      <h2 class="my_camping"> 관심 캠핑장 </h2>
+      <h3 class="my_camping"> 관심 캠핑장 </h3>
 
     <div class="camping_container"> 
     
     </div>
   </div>
+    <%@ include file="../hs/footer.jsp"%>
 </body>
 </html>
