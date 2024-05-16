@@ -25,20 +25,11 @@ text-align: center;
 }
 .camping_container{
    position: relative;
-   display: flex;
-}
-.list_container{
-  grid-column: 1/5 ;
-  width: 100%;  
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr 1fr ;
 }
 
-.welcome_user{
-  line-height: 80px;
-}
-
-.accompany_list{
+.fav_list{
 position: relative;
   width: 12rem;
   height: 15rem;
@@ -47,6 +38,14 @@ position: relative;
   border-radius: 1rem;
   padding: 1rem .5rem;
   margin-right: .5rem;
+  margin-bottom: 1rem;
+   place-self: center;
+   
+}
+.nolist{
+	text-align: center;
+	margin: 5rem;
+
 }
 
 .list_summery{
@@ -58,7 +57,7 @@ position: relative;
 	font-weight: 700;
 }
 .list_rest_addr{
-	font_size: .7rem;
+	font-size: .7rem;
 	padding-bottom: 1rem;
 	
 }
@@ -66,12 +65,14 @@ position: relative;
 .list_item {
     position: relative;
     width: 180px; 
+   overflow: hidden;
 }
 
 .list_image_container {
     position: relative;
     width: 180px; 
     height: 120px; 
+     object-fit: cover;
 }
 
 .camping_img {
@@ -94,10 +95,13 @@ position: relative;
     opacity: 1; 
 }
 
+.types{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+}
 .list_type{
-position: absolute;
-top: .3rem;
-left: .3rem;
 height: 1.2rem;
 padding: 1px;
 text-align: center;
@@ -105,8 +109,14 @@ border-radius: .4rem;
 line-height: 1rem;
 font-size: .8rem;
 white-space: nowrap;
+margin-right: 10px;
 }
-
+.btn-heart{
+	position: absolute;
+	top: 10px;
+	right:10px;
+	background-color:transparent;
+}
 .btn{
   background-color: var(--text-white);
   border: 1px solid var(--text-black);
@@ -116,24 +126,29 @@ white-space: nowrap;
   margin: 2px;
   transition: all .3s ease-in;
   cursor: pointer;
-      position: absolute;
-    bottom: 10px;
-    right: 10px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 .btn:hover{
   background-color: var(--primary-color-light);
+  color:var(--primary-color);
+  border: 1px solid var(--text-black);
+   border-radius: 2px;
 }
 .type_yellow{
   background-color:var(--primary-color-yellow) ;
 }
 .type_green{
   background-color: var(--primary-color);
+  color: var(--text-white);
 }
 .type_light{
   background-color: var(--primary-color-light);
 }
 .list_name{
   font-weight: 800;
-  font-size: .9rem;
+  font-size: .8rem;
+  word-wrap: break-word;
 }
