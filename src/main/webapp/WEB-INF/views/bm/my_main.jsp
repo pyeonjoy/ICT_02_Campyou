@@ -6,10 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/bm/my_main.css">
   <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
   <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>마이페이지</title>
 <script>
 function handleMyBoardList(member_idx){
@@ -126,39 +126,6 @@ function promiseApplyList() {
 </head>
 <body>
 		<%@ include file="../hs/mypage_menu.jsp"%>
-		  <input
-              type="hidden"
-              id="memberIdx"
-              name="member_idx"
-              value="${mvo.member_idx}"
-            />
-
-   
-  <div class="mypage">   
-    <div class="welcome"> 
-     <div class="my_img">   
-     <c:choose>
-	    <c:when test="${empty mvo.member_img}"> 
-	    <img src="${path}/resources/img/cat.png" alt="user_img" class="my_img"> 
-	    </c:when>	    
-	    <c:otherwise>   
-          <img src="${path}/resources/uploadUser_img/${mvo.member_img}" alt="user_img" class="my_img">
-     </c:otherwise>
-     </c:choose>  
-     </div>
-      <h2 class="welcome_user"> ${mvo.member_name}님, 환영합니다. </h2>
-    </div>
-    <div class="accompany_container">
-     </div>
-      <div class="accompany_list">
-        <div class="list_header">          
-          <img src="http://via.placeholder.com/40x40" alt="user_img" class="otheruser_img">
-          <div class="list_summery">
-            <p class="list_nickname">user nickname</p>
-            <p class="list_go">같이가고싶어요!</p>
-          </div>
-        </div>
-
 
 	<div class="mypage">
 		<div class="welcome">
@@ -191,13 +158,13 @@ function promiseApplyList() {
 				<div class="my_list_summery">
 
 					<c:choose>
-						<c:when test="${empty list }">
+						<c:when test="${empty selectedList }">
 							<h4 class="nolist">작성 내역이 없습니다.</h4>
 						</c:when>
 						<c:otherwise>
-							<c:forEach var="list" items="${list }">
-								<a href="togetherDetail.do?t_idx=" ${t_idx}>
-								<p class="my_list_title">{list.t_subject}</p></a>
+							<c:forEach var="list" items="${selectedList}">
+								<a href="boardDetail.do?board_idx=${list.board_idx}">
+								<p class="my_list_title">{list.b_subject}</p></a>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
@@ -208,9 +175,19 @@ function promiseApplyList() {
 				<button class="more_list"
 					onclick="handleMyFavList(${mvo.member_idx})">+</button>
 				<div class="my_list_summery">
-					<p class="my_list_camping">{ 오토 캠핑장 }</p>
+				<c:choose>
+						<c:when test="${empty campMap }">
+							<h4 class="nolist">관심캠핑장이 없습니다.</h4>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="entry" items="${campMap}">
+					<a class="my_list_camping" href="campDetail.do?contentid=${entry.key}"> ${entry.value}</a>
+					</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
+
 		</div>
 	</div>
 	<%-- <%@ include file="../hs/footer.jsp" %> --%>

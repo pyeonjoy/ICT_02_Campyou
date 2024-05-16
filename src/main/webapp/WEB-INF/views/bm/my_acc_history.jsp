@@ -81,12 +81,7 @@
 			</li>
 			</c:otherwise>
 		</c:choose>
-		
-		<!--
-      <a><span class="paging_list paging_prev"><</span></a>
-      <a class="paging-link"><span class="paging_list paging_num">1</span></a>
-      <a><span class="paging_list paging_next">></span></a>
-      -->
+
     </div>
   </div>
 </body>

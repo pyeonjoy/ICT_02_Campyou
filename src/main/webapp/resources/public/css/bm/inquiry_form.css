@@ -61,3 +61,13 @@ margin-top: 1rem;
   border-radius: 2px;
    cursor: pointer;
 }
+.to_disable{
+	color: silver;
+	margin: 0 1rem;
+	text-decoration: none;
+}
+.to_able{
+	color: black;
+	margin: 0 1rem;
+	text-decoration: none;
+}
