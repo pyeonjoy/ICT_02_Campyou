@@ -77,7 +77,8 @@
 							<td>관리자</td>
 						</c:if>
 						<td>${m.member_grade}</td>
-						<td>${report}</td>
+						
+						        <td>${report}</td>
 
 						<c:if test="${m.member_active== 0}">
 							<td>활동중</td>

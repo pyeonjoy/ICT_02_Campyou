@@ -91,8 +91,9 @@
 				</div>
 				<span class="member_age">20대</span>
 				<div>
-					<input type="button" value="채팅"> <input type="button"
-						value="신고" onclick="report_write.do?member_idx=${k.member_idx}">
+					<input type="button" value="채팅">
+					<input type="button" value="신고" onclick="location.href='report_write.do?member_idx=${k.member_idx}'">
+
 				</div>
 			</div>
 			<hr>
