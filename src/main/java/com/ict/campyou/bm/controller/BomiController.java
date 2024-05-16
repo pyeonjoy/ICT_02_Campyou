@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -108,20 +107,20 @@ public class BomiController {
 	}
 	
 
-	@GetMapping("my_fav_list.do")
-	public ModelAndView myFavList(HttpSession session) {
-		ModelAndView mv = new ModelAndView("bm/my_fav_camping");
-		MemberVO member = (MemberVO) session.getAttribute("memberInfo");
-		String member_idx = member.getMember_idx();
-		List<HeartVO> favlist = myService.getFavList(member_idx);
-		List<CampVO> camps = new ArrayList<>();
-		 for (HeartVO heart : favlist) {
-		CampVO cvo = myService.getMyFavoriteCamp(heart.getContentid());
-		camps.add(cvo);
-		 }
-		 mv.addObject("camps", camps);
-		return mv;		
-	}
+//	@GetMapping("my_fav_list.do")
+//	public ModelAndView myFavList(HttpSession session) {
+//		ModelAndView mv = new ModelAndView("bm/my_fav_camping");
+//		MemberVO member = (MemberVO) session.getAttribute("memberInfo");
+//		String member_idx = member.getMember_idx();
+//		List<HeartVO> favlist = myService.getFavList(member_idx);
+//		List<CampVO> camps = new ArrayList<>();
+//		 for (HeartVO heart : favlist) {
+//		CampVO cvo = myService.getMyFavoriteCamp(heart.getContentid());
+//		camps.add(cvo);
+//		 }
+//		 mv.addObject("camps", camps);
+//		return mv;		
+//	}
 	
 	 @GetMapping("campDetail.do")
 	 public ModelAndView campDetail(@RequestParam("contentid")String contentid) {

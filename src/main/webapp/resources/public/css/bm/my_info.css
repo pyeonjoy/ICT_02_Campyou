@@ -9,6 +9,9 @@
   padding: 0;
 }
 
+.mypage{
+height: 80vh;
+}
 .my_title {
   text-align: center;
   margin-bottom: 6rem;
@@ -16,7 +19,6 @@
    transform: translateY(10rem);
 }
 .user_info {
-width: 70%;
 margin: auto;
   display: flex;
   align-items: center;
@@ -36,17 +38,24 @@ margin: auto;
   position: relative;
   bottom: 0;
 }
-/*
-.file {
- /* position: absolute; */
-  top: 0;
-  left: -20%;
-}
-*/
+
+
+
 .user_info_container {
+  height:50%;
   margin: 1rem 1.5rem;
   position: relative;
+  display: flex;
+}
 
+.user_info_container_left{
+	height: 100%;	
+	
+}
+
+.user_info_container_right{
+	height: 100%;
+		
 }
 .my_img {
   width: 99px;
@@ -86,9 +95,9 @@ margin: auto;
   width: 13rem;
 }
 .btn-check {
-  position: absolute;
-right: 12rem;
-    top: 8.6rem;
+white-space:nowrap;
+	position:absolute;
+	top:8.5rem;;
 
 }
 .btn_container {
@@ -102,8 +111,8 @@ right: 12rem;
   font-size: 0.8rem;
   font-weight: 100;
   position: absolute;
-  bottom: -7rem;
-  right: 1rem;
+  bottom: 0;
+  right: -16rem;
 }
 .hidden {
   opacity: 0;

@@ -84,5 +84,6 @@
 
     </div>
   </div>
+    <%@ include file="../hs/footer.jsp"%>
 </body>
 </html>

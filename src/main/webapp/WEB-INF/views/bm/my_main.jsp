@@ -190,6 +190,6 @@ function promiseApplyList() {
 
 		</div>
 	</div>
-	<%-- <%@ include file="../hs/footer.jsp" %> --%>
+	  <%@ include file="../hs/footer.jsp"%>
 </body>
 </html>

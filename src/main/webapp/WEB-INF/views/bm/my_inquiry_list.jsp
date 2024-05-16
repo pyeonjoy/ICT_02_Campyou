@@ -18,9 +18,9 @@
 </head>
 <body>
 		<%@ include file="../hs/mypage_menu.jsp"%>
-
-  <div class="grid_container">
+<div class="inquiry">
 <h3 class="grid_title">1:1문의 내역</h3>
+  <div class="grid_container">
     <div class="grid_col grid_header">
       <div class="grid_row grid_row1">번호</div>
       <div class="grid_row grid_row2">제목</div>
@@ -100,5 +100,7 @@
  
     </div>
   </div>
+  </div>
+    <%@ include file="../hs/footer.jsp"%>
 </body>
 </html>
