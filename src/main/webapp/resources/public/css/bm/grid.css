@@ -70,6 +70,7 @@ width: 100%;
   font-size: .9rem;
 }
 .paging_list{
+  margin: 0 10px;
   display: flex;
   align-items: center;
   justify-content: center;
