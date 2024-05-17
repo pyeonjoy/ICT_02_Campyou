@@ -164,29 +164,30 @@ public class MyDAO {
 	}
 
 	public List<ChatVO> getChatList(String member_idx) {
-		try {
-			
-			List<ChatVO> chatList = new ArrayList<>();
-			Set<String> uniqueRooms = new HashSet<>();
-			List<ChatVO> allRooms = sqlSessionTemplate.selectList("bomi.getRooms", member_idx + "-%");
-			for (ChatVO room : allRooms) {
-				uniqueRooms.add(room.getMsg_room());
-			}
-			List<ChatVO> allRooms2 = sqlSessionTemplate.selectList("bomi.getRooms", "-%" + member_idx);
-			for (ChatVO room : allRooms2) {
-				uniqueRooms.add(room.getMsg_room());
-			}
-			for (String room : uniqueRooms) {
-				ChatVO maxMsgIdxRoom = sqlSessionTemplate.selectOne("bomi.getMaxMsgIdxRoom", room);
-				chatList.add(maxMsgIdxRoom);
-				return chatList;
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
+	    try {
+	        List<ChatVO> chatList = new ArrayList<>();
+	        Set<String> uniqueRooms = new HashSet<>();
 
+	        List<ChatVO> allRooms = sqlSessionTemplate.selectList("bomi.getRooms", member_idx);
+	        for (ChatVO room : allRooms) {
+	            uniqueRooms.add(room.getMsg_room());
+	        }
+
+	        for (String room : uniqueRooms) {
+	            ChatVO maxMsgIdxRoom = sqlSessionTemplate.selectOne("bomi.getMaxMsgIdxRoom", room);
+	            if (maxMsgIdxRoom != null) {
+	                chatList.add(maxMsgIdxRoom);
+	            }
+	        }
+
+	        return chatList; 
+
+	    } catch (Exception e) {
+	        System.out.println(e);
+	        return null; 
+	    }
 	}
+
 
 	public List<ChatVO> getOneRoom(String msg_room) {
 		try {

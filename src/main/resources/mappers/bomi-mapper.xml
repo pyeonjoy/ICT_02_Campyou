@@ -72,14 +72,13 @@ values(#{msg_room},#{room_name},#{send_idx}, #{send_nick},#{reci_nick}, #{send_d
 </insert>
 
 <select id="getRooms" resultType="chvo">
-SELECT * FROM m_chat WHERE msg_room LIKE CONCAT(#{msg_room}, '%') OR msg_room LIKE CONCAT('%', #{msg_room})
-
+SELECT * FROM m_chat WHERE msg_room REGEXP CONCAT('^', #{member_idx}, '-|-', #{member_idx}, '$')
 </select>
 
 <select id="getMaxMsgIdxRoom" resultMap="ChatVOResultMap">
     SELECT *
     FROM m_chat
-    WHERE msg_room = #{msg_room}
+    WHERE msg_room = #{room}
     ORDER BY msg_idx DESC
     LIMIT 1
 </select>
