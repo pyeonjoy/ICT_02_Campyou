@@ -20,7 +20,6 @@ function enterChatRoom(t_idx){
 	    "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=400, height=670, right=0, top=0, location=no, titlebar=no");
 }
 function to_list_go(f) {
-	console.log(f.cPage.value);
 	f.action="together_list.do";
 	f.submit();
 }
@@ -210,7 +209,7 @@ function to_comment() {
             	    
            	    	if(comment.wc_step > 0){
                	        for (let j = 1; j <= comment.wc_lev; j++) {
-               	        	indentation += '&nbsp;&nbsp;';
+               	        	indentation += '&nbsp;&nbsp;&nbsp;&nbsp;';
                	        }
                	        indentation += 'ㄴ';
                	        commentHTML += '<div class="toDetailContent4Sub6">';
@@ -230,13 +229,13 @@ function to_comment() {
            	        commentHTML += '<div class="toCommentDelUpdateButton">';
            	       	if(data.memberUser.member_idx != null && data.memberUser.member_idx == comment.member_idx){
 	           	        commentHTML += '<input type="button" value="X" class="toDetailContent4Sub2Sub2ButtonX">';
-	           	        commentHTML += '<input type="button" value="수정" class="toDetailContent4Sub2Sub2ButtonUpdate">';
+	           	        commentHTML += '<input type="button" value="수 정" class="toDetailContent4Sub2Sub2ButtonUpdate">';
            	       	}
            	        commentHTML += '</div>';
            	        commentHTML += '</div>';
            	        commentHTML += '<div class="toDetailContent4Sub2Sub3">';
            	        commentHTML += '<div class="toDetailContent2Sub1Div2">';
-           	    	 if (comment.wc_active === 1) {
+           	    	 if (comment.wc_active == 1) {
          	       	 	commentHTML += '<span class="toDetailContent2Sub1Div2Span" style="color: lightgrey">삭제된 댓글입니다.</span>';
            	    	 }else{
 		            	commentHTML += '<span class="toDetailContent2Sub1Div2Span">' + comment.wc_content + '</span>';
@@ -244,7 +243,7 @@ function to_comment() {
            	        commentHTML += '</div>';
            	        commentHTML += '<div class="toDetailContent4Sub2Sub2">';
            	        if(data.memberUser.member_idx != null){
-	           	        commentHTML += '<input type="button" value="답글 달기" class="toDetailContent4Sub2Sub2Button" >';
+	           	        commentHTML += '<input type="button" value="답 글" class="toDetailContent4Sub2Sub2Button" >';
            	        }
            	        commentHTML += '</div>';
            	        commentHTML += '</div>';
@@ -253,11 +252,25 @@ function to_comment() {
            	        commentHTML += '<div class="toDetailInput">';
            	        commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32"></div>';
            	        commentHTML += '<input type="text" value="" id="" class="toDetailInputBox">';
-           	        commentHTML += '<input type="button" value="입력" id="" class="toDetailInputSubmit">';
+           	        commentHTML += '<input type="button" value="입 력" id="" class="toDetailInputSubmit">';
            	        commentHTML += '<input type="hidden" value="' + comment.wc_idx + '" id="wc_idx" >';
            	        commentHTML += '<input type="hidden" value="' + comment.wc_groups + '" id="wc_groups" >';
            	        commentHTML += '<input type="hidden" value="' + comment.wc_step + '" id="wc_step" >';
            	        commentHTML += '<input type="hidden" value="' + comment.wc_lev + '" id="wc_lev" >';
+           	        commentHTML += '</div>';
+           	        commentHTML += '</form>';
+           	        commentHTML += '<form method="post" class="toDetailInputForm2" style="display:none;">';
+           	        commentHTML += '<span class="toDetailInputSpan">ㄴ</span>';
+           	        commentHTML += '<div class="toDetailInput">';
+           	        commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32"></div>';
+           	        commentHTML += '<input type="text" value="' + comment.wc_content + '" id="" class="toDetailInputBox2">';
+           	        commentHTML += '<input type="button" value="수정하기" id="" class="toCommentUpdate">';
+//            	        commentHTML += '<input type="hidden" value="' + comment.wc_idx + '" id="wc_idx" >';
+//            	        commentHTML += '<input type="hidden" value="' + comment.wc_groups + '" id="wc_groups" >';
+//            	        commentHTML += '<input type="hidden" value="' + comment.wc_step + '" id="wc_step" >';
+//            	        commentHTML += '<input type="hidden" value="' + comment.wc_lev + '" id="wc_lev" >';
+					commentHTML += '<input type="hidden" value="' + comment.wc_idx + '" id="wc_idx" >';
+           	        commentHTML += '<input type="hidden" value="' + comment.wc_content + '" id="beforeContent" >';
            	        commentHTML += '</div>';
            	        commentHTML += '</form>';
            	        commentHTML += '</div>';
@@ -275,6 +288,9 @@ function to_comment() {
 }
 
 $(document).on("click", ".toDetailContent4Sub2Sub2Button", function() {
+	$(".toDetailInputForm").hide();
+    $(".toDetailInputForm2").hide();
+	
     let parentDiv = $(this).closest(".toDetailContent4Sub3, .toDetailContent4Sub6");
     let commentForm = parentDiv.find(".toDetailInputForm");
     if (commentForm.css("display") === "none") {
@@ -283,7 +299,6 @@ $(document).on("click", ".toDetailContent4Sub2Sub2Button", function() {
         commentForm.css("display", "none");
     }
 });
-
 
 $(document).on("click", ".toDetailInputSubmit", function() {
     let parentDiv = $(this).closest(".toDetailInput");
@@ -324,13 +339,55 @@ $(document).on("click", ".toDetailInputSubmit", function() {
     });
 });
 
+$(document).on("click", ".toDetailContent4Sub2Sub2ButtonUpdate", function() {
+	$(".toDetailInputForm").hide();
+    $(".toDetailInputForm2").hide();
+	
+    let parentDiv = $(this).closest(".toDetailContent4Sub3, .toDetailContent4Sub6");
+    let commentForm = parentDiv.find(".toDetailInputForm2");
+    if (commentForm.css("display") === "none") {
+        commentForm.css("display", "flex");
+    } else {
+        commentForm.css("display", "none");
+    }
+});
+
+
+$(document).on("click", ".toCommentUpdate", function() {
+    let parentDiv = $(this).closest(".toDetailInput");
+    let commentInput = parentDiv.find(".toDetailInputBox2").val();
+    let beforeContent = parentDiv.find("#beforeContent").val();
+    let wcIdx = parentDiv.find('#wc_idx').val();
+ 	
+    if (commentInput.trim() === "") {
+        alert("댓글을 입력해주세요.");
+        return;
+    }else if(beforeContent === commentInput){
+    	alert("수정할 내용을 입력해주세요");
+    	return;
+    }
+    
+    $.ajax({
+        type: "POST",
+        url: "to_comment_update.do",
+        data: {
+            wc_content: commentInput,
+            wc_idx: wcIdx
+        },
+        success: function(response) {
+            to_comment();
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+});
+
 $(document).on("click", ".toDetailContent4Sub2Sub2ButtonX", function() {
-    setTimeout(function(){
 	    let result = confirm("정말 삭제하시겠습니까?");
 	    if (result) {
-	    	let parentDiv = $(this).closest(".toDetailInput");
-	        let wcIdx = parentDiv.find('#wc_idx').val();
-	     	
+	        let wcIdx = $(this).closest(".toDetailContent4Sub3, .toDetailContent4Sub6").find('#wc_idx').val();
+	        
 	        $.ajax({
 	            type: "POST",
 	            url: "to_comment_delete.do",
@@ -347,7 +404,6 @@ $(document).on("click", ".toDetailContent4Sub2Sub2ButtonX", function() {
 	    }else{
 	    	return;
 	    }
-	 }, 200);
 });
 </script>
 </head>

@@ -47,6 +47,7 @@ public class TogetherDAO {
 	}
 	
 	public int getTogetherWriteOK(TogetherVO tvo) throws Exception {
+		sqlSessionTemplate.update("bjs.write_count", tvo.getMember_idx());
 		sqlSessionTemplate.insert("bjs.to_insert", tvo);
 		int t_idx = sqlSessionTemplate.selectOne("bjs.write_t_idx");
 		return t_idx;
@@ -141,11 +142,11 @@ public class TogetherDAO {
 		return sqlSessionTemplate.selectList("bjs.to_comment_list", t_idx);
 	}
 	
-//	public int getToCommentMaxStep(Map<String, Integer> map) {
-//		return sqlSessionTemplate.selectOne("bjs.to_step_max", map);
-//	}
+	public int getToCommentMaxStep(Map<String, Integer> map) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.to_step_max", map);
+	}
 	
-	public int getToCommentSame(Map<String, Integer> map) {
+	public int getToCommentSame(Map<String, Integer> map) throws Exception {
 		int result = sqlSessionTemplate.selectOne("bjs.to_comment_same", map);
 		return result;
 	}
@@ -164,5 +165,21 @@ public class TogetherDAO {
 	
 	public int getToCommentDelete(String wc_idx) throws Exception {
 		return sqlSessionTemplate.update("bjs.to_comment_delete", wc_idx);
+	}
+	
+	public int getToCommentUpdate(TogetherCommentVO tcvo) throws Exception {
+		return sqlSessionTemplate.update("bjs.to_comment_update", tcvo);
+	}
+	
+	public int getBoardWithCount(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.my_board_with_count", member_idx);
+	}
+	
+	public List<TogetherVO> getPromiseIng(String member_idx, int offset, int limit) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_idx", member_idx);
+		map.put("offset", offset);
+		map.put("limit", limit);
+		return sqlSessionTemplate.selectList("bjs.promise_ing", map);
 	}
 }

@@ -45,43 +45,16 @@
 	});
 	
 	function to_search() {
-		let searchType = document.getElementById("searchType").value; // 검색 타입 가져오기
+		let searchType = document.getElementById("searchType").value;
 	    let searchKeyword = document.getElementById("searchbar").value;
-// 	    f.append("searchType", searchType);
-// 	    f.append("searchKeyword", searchKeyword);
-// 	    f.action="together_list.do";
-// 	    f.submit();
 	    location.href="together_list.do?searchType=" + searchType + "&searchKeyword=" + searchKeyword
 	}
-// 	function handlePaging() {
-// 	    // 페이징 번호를 클릭했을 때 AJAX로 해당 페이지의 게시물을 로드
-// 	    $(document).on('click', '.to_paging a', function (e) {
-// 	        e.preventDefault();
-// 	        var pageUrl = $(this).attr('href');
-// 	        var searchType = $("#searchType").val();
-// 	        var searchKeyword = $("#searchbar").val();
-// 	        // AJAX 요청을 보낼 때 페이징 정보를 함께 전달합니다.
-// 	        $.ajax({
-// 	            url: pageUrl,
-// 	            type: 'post',
-// 	            data: {
-// 	                searchType: searchType,
-// 	                searchKeyword: searchKeyword
-// 	            },
-// 	            dataType: 'json',
-// 	            success: function (data) {
-// 	                // AJAX로 로드한 페이지의 내용을 paginationWrapper에 삽입
-// 	                $('.toContent').html($(data).find('.toContent').html());
-// 	                $('#paginationWrapper').html($(data).find('#paginationWrapper').html());
-// 	            },
-// 	            error: function (xhr, status, error) {
-// 	                console.error(error);
-// 	            }
-// 	        });
+
+// 	$(document).ready(function() {
+// 	    $('#sortSelect').change(function() {
+// 	        $('#sortForm').submit();
 // 	    });
-// 	}
-
-
+// 	});
 </script>
 </head>
 <body>
@@ -89,6 +62,13 @@
         <div class="togetherh2">
             <h3>동 행</h3>
         </div>
+<!--         <form action="to_list_sort.do" method="get" class="sortform" id="sortForm"> -->
+<!-- 		    <select name="sort" class="sort" id="sortSelect"> -->
+<%-- 		        <option value="normal" ${param.sort eq 'normal' ? 'selected' : ''}>기본</option> --%>
+<%-- 		        <option value="hit" ${param.sort eq 'hit' ? 'selected' : ''}>조회순</option> --%>
+<%-- 		        <option value="comment" ${param.sort eq 'comment' ? 'selected' : ''}>댓글순</option> --%>
+<!-- 		    </select> -->
+<!-- 		</form>	 -->
         <c:choose>
 			<c:when test="${not empty searchKeyword and not empty searchType }">
 				<div class="searchRes">${searchType }&nbsp;/&nbsp;${searchKeyword }&nbsp;<a href="together_list.do">X</a></div>

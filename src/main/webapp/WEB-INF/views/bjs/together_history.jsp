@@ -22,8 +22,6 @@ $(function() {
     	let promiseText = $(this).closest('.thul2').find(".compare").text();
         let promiseCount = promiseText.split('/')[0];
         let totalNumPeople = promiseText.split('/')[1];
-        console.log("1" + promiseCount);
-        console.log("2" + totalNumPeople);
         if (parseInt(promiseCount) >= parseInt(totalNumPeople)) {
             alert("정원이 초과되었습니다.");
             return;
@@ -93,9 +91,9 @@ function promiseApplyList(page) {
 	                let html2 = '<div class="thul2">';
 	                html2 += '<ul class="thliImage3"><li class="th1 thliImage"><img src="${path}/resources/images/' + promise.member_img + '" class="qa11 thliImage2"></a></li></ul>';
 	                html2 += '<ul><li class="th1">' + promise.member_nickname + '(' + promise.member_dob + ')(' + promise.promise_my_count + ')</li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.t_campname + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11 compare">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_campname + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11 compare">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
 	                if (promise.pm_state === "신청중") {
 	                    html2 += '<div class="thul2Div">';
 	                    html2 += '<button type="button" class="thul2DivButton acceptButton" onclick="">수락</button>';
@@ -197,11 +195,11 @@ function promiseApplySendList(page) {
                     let promise = toSendHistory[i];
 	                let html2 = '<div class="thul4">';
 	                html2 += '<ul><li class="th1">' + promise.member_nickname + '</li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.t_campname + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.pm_regdate + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.pm_state + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_campname + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.pm_regdate + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.pm_state + '</a></li></ul>';
 	                html2 += '</div>';
 	                html += html2;
                 }

@@ -44,6 +44,9 @@
 	<update id="to_hit" parameterType="String">
 		update board_with set t_hit = t_hit + 1 where t_idx = #{t_idx}
 	</update>
+	<update id="write_count" parameterType="String">
+		update members set member_with = member_with + 1 where member_idx = #{member_idx}
+	</update>
 	<insert id="to_insert" parameterType="tvo">
 		insert into board_with(member_idx, t_subject, t_content, t_campname, t_address, t_startdate, t_enddate, t_numpeople, t_regdate, tf_name, t_mapx, t_mapy, t_induty, t_facltdivnm, t_mangedivnm)
 		values(#{member_idx}, #{t_subject}, #{t_content}, #{t_campname}, #{t_address}, #{t_startdate}, #{t_enddate}, #{t_numpeople}, sysdate(), #{tf_name}, #{t_mapx}, #{t_mapy}, #{t_induty}, #{t_facltdivnm}, #{t_mangedivnm})
@@ -154,9 +157,9 @@
 	<select id="to_comment_same" parameterType="Map" resultType="int">
 		select count(*) from board_with_comment where wc_groups = #{wc_groups} and wc_step = #{wc_step} and wc_lev = #{wc_lev}
 	</select>
-<!-- 	<select id="to_step_max" parameterType="Map" resultType="int"> -->
-<!--     	select max(wc_step) from board_with_comment where wc_groups = #{wc_groups} and wc_lev = 0 -->
-<!-- 	</select> -->
+	<select id="to_step_max" parameterType="Map" resultType="int">
+    	select max(wc_step) from board_with_comment where wc_groups = #{wc_groups} and wc_lev = #{wc_lev}
+	</select>
 	<update id="to_comment_gs_update" parameterType="Map">
 		update board_with_comment set wc_step = wc_step + 1 where wc_groups = #{wc_groups} and wc_step >= #{wc_step}
 	</update>
@@ -174,4 +177,13 @@
 	<update id="to_comment_delete" parameterType="String">
 		update board_with_comment set wc_active = 1 where wc_idx = #{wc_idx}
 	</update>
+	<update id="to_comment_update" parameterType="tcvo">
+		update board_with_comment set wc_content = #{wc_content} where wc_idx = #{wc_idx}
+	</update>
+	<select id="my_board_with_count" parameterType="String" resultType="int">
+		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0
+	</select>
+	<select id="promise_ing" parameterType="Map" resultType="tvo">
+		select * from board_with where member_idx = #{member_idx} and t_active = 0
+	</select>
 </mapper>

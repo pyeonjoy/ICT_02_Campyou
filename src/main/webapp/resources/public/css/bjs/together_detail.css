@@ -99,6 +99,9 @@
 .toDetailInputForm{
 	margin-top: 1rem;
 }
+.toDetailInputForm2{
+	margin-top: 1rem;
+}
 .toDetailInput{
     width: 100%;
     display: grid;
@@ -111,7 +114,17 @@
 .toDetailInputBox{
     height: 2rem;
 }
+.toDetailInputBox2{
+    height: 2rem;
+}
 .toDetailInputSubmit{
+    background-color: #FAAB12;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    height: 2rem;
+}
+.toCommentUpdate{
     background-color: #FAAB12;
     border: none;
     font-weight: bold;

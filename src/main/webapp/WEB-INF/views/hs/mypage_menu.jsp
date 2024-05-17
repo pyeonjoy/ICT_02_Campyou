@@ -11,7 +11,7 @@
 	const member_idx = "${sessionScope.memberInfo.member_idx}";
 	
 	$(document).ready(function() {
-	    $("a[href='together_history.do']").click(function(e) {
+	    $("a[href='together_history.do'], a[href='together_partner.do']").click(function(e) {
 	        e.preventDefault();
 	        let href = $(this).attr("href");
 	        href += "?member_idx=" + member_idx;
@@ -32,6 +32,7 @@
     <li><a href="#">관심 캠핑장</a></li>
     <li><a id="inquiryLink" href="#">1:1 문의하기</a></li>
     <li><a href="together_history.do">동행 내역</a></li>
+    <li><a href="together_partner.do">동행 파트너</a></li>
     <li><a href="my_faq.do">FAQ</a></li>
 			</ul>
 		</div>
