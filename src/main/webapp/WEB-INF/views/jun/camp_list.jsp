@@ -15,40 +15,39 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 100%;
 }
 
 #camp_list_show {
-	display: flex;
-	justify-content: flex-end;
-	flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+#camp_list_show img{
+    width: 40%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
 }
 
 .camp_item {
-	position: relative;
-	display: flex;
-	width: 45%;
-	margin-bottom: 40px;
-	padding: 20px;
-	border: 1px solid black;
-	box-sizing: border-box;
-	margin-right: 4%;
-}
-
-.camp_item img {
-	width: 220px;
-	height: 180px;
-	margin-right: 20px;
+    position: relative;
+    display: flex;
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    margin-right: 4%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 45%;
+    max-width: 45%; 
 }
 
 .camp_info {
-	width: 60%;
+    padding: 0 20px;
+    line-height: 75px;
 }
-
-.camp_item p {
-	margin: 0;
-	margin-bottom: 10px;
-}
-
 .button_container {
 	position: absolute;
 	top: 10px;
@@ -66,9 +65,9 @@
 }
 
 .Heart_button {
-	position: relative;
-	top: 80px;
-	right: -30px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 .page_button_space {
 	display: flex;
@@ -113,11 +112,7 @@
 .search_nowpage:hover{
 	color: #FFBA34;
 }
-.1_result{
-    width: 98%;
-    height: 200px;
-    margin: 120px;
-}
+
 </style>
 </head>
 <body>

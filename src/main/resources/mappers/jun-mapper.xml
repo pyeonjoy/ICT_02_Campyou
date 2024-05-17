@@ -49,8 +49,8 @@
             AND sbrscl = #{sbrscl}
         </if>
     </where>
-        limit #{limit} offset #{offset}
-</select>
+			limit #{limit} offset #{offset}
+	</select>
 <select id="searchCount" parameterType="Map" resultType="int">
     select count(*)
     from camp_list 

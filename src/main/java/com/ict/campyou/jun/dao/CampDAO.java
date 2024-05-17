@@ -46,6 +46,8 @@ public class CampDAO {
 			map.put("lctCl", lctCl);
 			map.put("induty", induty);
 			map.put("sbrscl", sbrscl);
+			map.put("s_sido",s_sido);
+			map.put("s_sigungu",s_sigungu);
 			return sqlSessionTemplate.selectOne("jun.searchCount",map);
 		} catch (Exception e) {
 			System.out.println(e);

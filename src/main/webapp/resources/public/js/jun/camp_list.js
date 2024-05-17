@@ -197,7 +197,7 @@ $(document).ready(function() {
             }
             campItem += "<div class='camp_info' onclick='location.href=\"camp_detail.do?contentid=" + contentid + "\"'>";
             campItem += "<p> [" + doNm + sigunguNm + "] </p>";
-            campItem += "<h4>" + facltNm + "</h4><span>" + induty + "</span>";
+            campItem += "<h4 style=\'display: inline;'>" + facltNm + "</h4><p style=\'display: inline;font-weight: bold;'>" + " / "+ induty + "</p>";
             campItem += "<p>" + addr1 + "</p>";
             campItem += "<p>" + tel + "</p>";
             campItem += "</div>";
