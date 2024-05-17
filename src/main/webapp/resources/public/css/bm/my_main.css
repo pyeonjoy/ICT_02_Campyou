@@ -21,6 +21,8 @@
 	align-items: center;
 	justify-content: center;
 	transform: translateY(4rem);
+	width: 70%;
+    margin: 0 auto;
 }
 /* align contents with grid  */
 .welcome {

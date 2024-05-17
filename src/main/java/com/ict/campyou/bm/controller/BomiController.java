@@ -337,7 +337,6 @@ public class BomiController {
 			
 			int count = myService.getTotalCount(member_idx);
 			paging.setTotalRecord(count);
-
 			if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 				paging.setTotalPage(1);
 			}else {
@@ -365,10 +364,8 @@ public class BomiController {
 				paging.setEndBlock(paging.getTotalPage());
 			}
 		
-			MemberVO mvo2 = myService.getMember(member_idx);
-			
 			String nickname = mvo.getMember_nickname();
-			List<QnaVO> list = myService.getMyQna(member_idx,paging.getOffset(), paging.getNumPerPage());
+			List<QnaVO> list = myService.getMyQna(member_idx, paging.getOffset(), paging.getNumPerPage());
 			mv.addObject("nickname", nickname);
 			mv.addObject("member_idx", member_idx);
 			mv.addObject("list", list);
