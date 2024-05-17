@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
 import com.ict.campyou.bm.dao.BoardsVO;
@@ -148,6 +150,8 @@ public class BomiController {
 		    mv.setViewName("bm/chat_list"); 
 			mv.addObject("list", list);
 			mv.addObject("member_idx", member_idx);
+			Gson gson = new Gson();
+			String json = gson.toJson(list);
 		    return mv;
 	}
 	
@@ -165,7 +169,6 @@ public class BomiController {
 		
 		for (ChatVO chat : chatList) {
 		    if (!chat.getSend_idx().equals(my_idx)) { 
-		        chat.setMsg_read("0");
 		      int res = myService.updateMsgRead(chat.getMsg_idx());
 		    }
 		}
