@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.hu.dao.BoardFreeVO;
 import com.ict.campyou.hu.dao.CampingGearBoardVO;
+import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.HeartVO;
@@ -216,7 +217,7 @@ public class MyDAO {
 		return null;
 	}
 
-	public List<BoardFreeVO> getBoard1(String member_idx) {
+	public List<CommBoardVO> getBoard1(String member_idx) {
 		try {
 			return sqlSessionTemplate.selectList("bomi.getBoard1", member_idx);
 			
@@ -245,4 +246,23 @@ public class MyDAO {
 		return null;
 	}
 
+	public CommBoardVO getBoard1ByIdx(String board_idx) {
+		try {
+			
+			return sqlSessionTemplate.selectOne("bomi.getBoard1ByIdx", board_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	public CampingGearBoardVO getBoard2ByIdx(String board_idx) {	
+		try {
+			
+			return sqlSessionTemplate.selectOne("bomi.getBoard2ByIdx", board_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 }

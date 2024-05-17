@@ -92,15 +92,11 @@ select * from m_chat where msg_room=#{msg_room} ORDER BY msg_idx DESC
  update m_chat set msg_read=0
 </update>
 
-<select id="msgToUpdate">
-select *
-</select>
-
 <select id="getFavList" parameterType="String" resultType="hvo">
  select * from camp_heart where member_idx=#{member_idx}
 </select>
 
-<select id="getBoard1" parameterType="String" resultType="bfvo">
+<select id="getBoard1" parameterType="String" resultType="cbvo">
  select * from board_free where member_idx=#{member_idx} order by b_idx DESC
 </select>
 
@@ -111,6 +107,11 @@ select *
 <select id="getCampDetail" parameterType="String" resultType="cvo">
  select * from camp_list where contentid=#{contentid}
 </select>
-
+<select id="getBoard1ByIdx" parameterType="String" resultType="cbvo">
+ select * from board_free where b_idx=#{board_idx}
+</select>
+<select id="getBoard2ByIdx" parameterType="String" resultType="cgbvo">
+ select * from board_camp where cp_idx=#{board_idx} 
+</select>
 
 </mapper>

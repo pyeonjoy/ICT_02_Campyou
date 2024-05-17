@@ -14,18 +14,18 @@
 
 .mypage {
 	width: 70%;
+	height: 80vh;
 	margin: auto;
 	display: grid;
 	gap: 3rem;
 	align-items: center;
 	justify-content: center;
-	transform: translateY(10rem);
+	transform: translateY(4rem);
 }
 /* align contents with grid  */
 .welcome {
-	grid-column: 1/5;
 	display: flex;
-	margin-top: 3rem;
+	grid-column: 1/5;
 	gap: 1rem;
 	justify-content: center;
 	align-items: center;
@@ -39,10 +39,12 @@
 }
 
 .list_container {
-	grid-column: 1/5;
-	width: 100%;
-	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-column: 1 / 5;
+    width: 60rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    margin-bottom: 5rem;
 }
 .no-data-message{
 	grid-column: 1/5;
@@ -216,19 +218,24 @@
 	padding: .5rem;
 	position: relative;
 	width: 100%;
+	height: 9rem;
 }
 
 .my_title {
 	display: inline;
-	border-bottom: 2px solid var(- -text-black);
+	border-bottom: 2px solid var(--text-black);
 	padding: 2px;
 	font-size: 1rem;
 }
-
+.my_list_title, .my_list_camping{
+	margin-bottom: 5px;
+} 
 .my_list_summery {
 	padding-top: 1rem;
 	padding-bottom: 1rem;
 	font-size: .9rem;
+	display: flex;
+    flex-direction: column;
 }
 
 .more_list {
@@ -244,6 +251,7 @@
 
 .nolist {
 	font-size: 1rem;
+	font-weight: 600;
 }
 
 .arrow {

@@ -1,7 +1,7 @@
 package com.ict.campyou.bm.dao;
 
 public class BoardsVO {
-	private String board_idx, member_idx, b_subject,b_regdate;
+	private String board_idx, member_idx, b_subject,b_regdate, board_type;
 
 	public String getBoard_idx() {
 		return board_idx;
@@ -33,6 +33,14 @@ public class BoardsVO {
 
 	public void setB_regdate(String b_regdate) {
 		this.b_regdate = b_regdate;
+	}
+
+	public String getBoard_type() {
+		return board_type;
+	}
+
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
 	}
 	
 }

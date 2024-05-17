@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -29,8 +28,8 @@ import com.ict.campyou.bm.dao.PasswordCheckRequest;
 import com.ict.campyou.bm.dao.QnaVO;
 import com.ict.campyou.bm.service.MyService;
 import com.ict.campyou.common.Paging;
-import com.ict.campyou.hu.dao.BoardFreeVO;
 import com.ict.campyou.hu.dao.CampingGearBoardVO;
+import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.HeartVO;
@@ -64,7 +63,7 @@ public class BomiController {
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
 		String member_idx = mvo.getMember_idx();
 		List<HeartVO> favlist = myService.getFavList(member_idx);
-		List<BoardFreeVO> board1 = myService.getBoard1(member_idx);
+		List<CommBoardVO> board1 = myService.getBoard1(member_idx);
 		List<CampingGearBoardVO> board2 = myService.getBoard2(member_idx);
 		List<BoardsVO> boardsList = new ArrayList<>();
 		Map<String, String> map = new HashMap<>();
@@ -79,12 +78,13 @@ public class BomiController {
 		     }
 		 }
 		 
-		 for (BoardFreeVO board : board1) {
+		 for (CommBoardVO board : board1) {
 	            BoardsVO boardsVO = new BoardsVO();
-	            boardsVO.setBoard_idx(board.getBf_no());
+	            boardsVO.setBoard_idx(board.getB_idx());
 	            boardsVO.setMember_idx(member_idx);
 	            boardsVO.setB_subject(board.getB_subject());
 	            boardsVO.setB_regdate(board.getB_regdate());
+	            boardsVO.setBoard_type("1");
 	            boardsList.add(boardsVO);
 	        }
 
@@ -94,34 +94,36 @@ public class BomiController {
             boardsVO.setMember_idx(board.getMember_idx());
             boardsVO.setB_subject(board.getCp_subject());
             boardsVO.setB_regdate(board.getCp_regdate());
+            boardsVO.setBoard_type("2");
             boardsList.add(boardsVO);
         }
 	        
 	    List<BoardsVO> selectedList = myService.getSelectFour(boardsList);
-	        
 		mv.addObject("mvo", mvo);
 		mv.addObject("campMap", map); 
 		mv.addObject("selectedList", selectedList);
 
 		return mv;
 	}
-	
+	@GetMapping("boardDetail.do")
+	public ModelAndView boardDetail(@RequestParam("board_idx") String board_idx, @RequestParam("board_type") String board_type) {
+	    ModelAndView mv;
+	    if (board_type.equals("1")) {
+	    	CommBoardVO cbvo = myService.getBoard1ByIdx(board_idx);
+	        mv = new ModelAndView("hu/boardFree/communityBoardContent");
+	        mv.addObject("cbvo", cbvo);
+	    } else if (board_type.equals("2")) {
+	        CampingGearBoardVO cgbvo = myService.getBoard2ByIdx(board_idx);
+	        mv = new ModelAndView("hu/campingGearBoard/campingGearDetail");
+	        mv.addObject("cgbvo", cgbvo);
+	    } else {
+	        // Handle invalid board_type
+	        mv = new ModelAndView("errorView");
+	        mv.addObject("errorMessage", "Invalid board_type");
+	    }
+	    return mv;
+	}
 
-//	@GetMapping("my_fav_list.do")
-//	public ModelAndView myFavList(HttpSession session) {
-//		ModelAndView mv = new ModelAndView("bm/my_fav_camping");
-//		MemberVO member = (MemberVO) session.getAttribute("memberInfo");
-//		String member_idx = member.getMember_idx();
-//		List<HeartVO> favlist = myService.getFavList(member_idx);
-//		List<CampVO> camps = new ArrayList<>();
-//		 for (HeartVO heart : favlist) {
-//		CampVO cvo = myService.getMyFavoriteCamp(heart.getContentid());
-//		camps.add(cvo);
-//		 }
-//		 mv.addObject("camps", camps);
-//		return mv;		
-//	}
-	
 	 @GetMapping("campDetail.do")
 	 public ModelAndView campDetail(@RequestParam("contentid")String contentid) {
 		 ModelAndView mv = new ModelAndView("jun/camp_detail");
