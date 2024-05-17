@@ -58,7 +58,7 @@
 					</tr>
 					<tr align="center">
 						<td bgcolor="#003300" style="color: white;">별명</td>
-						<td align="left">${cgbvo.member_nickname}
+						<td align="left">${cgbvo.member_nickname} ${cgbvo.admin_nickname}
 						<input type="hidden" name="member_nickname" value="${cgbvo.member_nickname}">
 						</td>
 					</tr>

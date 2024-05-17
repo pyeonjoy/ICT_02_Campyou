@@ -21,6 +21,7 @@ public class MemberDAO {
 		return 0;
 	}
 	
+	// 회원가입 아이디 중복체크
 	public String getIdChk(String member_id) {
 		try {
 		  	int result = sqlSessionTemplate.selectOne("member.idchk", member_id);

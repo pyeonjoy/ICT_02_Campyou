@@ -39,7 +39,7 @@
 							<li><a href="my_main.do"><img class="icon user"
 									src="resources/img/icon_user.png" alt="mypage"></a></li>
 							<c:if test="${admin != null}">
-								<li><a href="#"><img class="icon admin" src="resources/img/icon_admin.png" alt="management"></a></li>
+								<li><a href="admin_page.do"><img class="icon admin" src="resources/img/icon_admin.png" alt="management"></a></li>
 							</c:if>
 							<li><a href="logout_form.do">로그아웃</a></li>
 						</c:otherwise>

@@ -49,13 +49,9 @@
 						<c:forEach var="k" items="${camping_gear_list}" varStatus="vs">
 							<tr>
 							    <c:choose>
-							        <c:when test="${k.member_nickname == '관리자'}">
+							        <c:when test="${k.admin_nickname == '관리자'}">
 							        <td class="admin-write-color" style="background-color: lightyellow;">공지</td>
-							          <%--   <td class="admin-write-color" style="background-color: lightyellow;">${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td> --%>
-						
 							            <td class="admin-write-color" style="background-color: lightyellow;">
-							                <!-- <td style="text-align: left; " /> -->
-							                <%-- <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
 							                <c:choose>
 							                    <c:when test="${k.cp_active == 1}">
 							                        <span style="color:lightgray">삭제된 게시물입니다</span>
@@ -63,10 +59,18 @@
 							                    <c:otherwise>
 							                        <a href="camping_gear_content.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.cp_subject}</a>
 							                    </c:otherwise>
-					
 							                </c:choose>
 							            </td>
-							            <td class="admin-write-color" style="background-color: lightyellow;">${k.member_nickname}</td>
+							            <td class="admin-write-color" style="background-color: lightyellow;">
+							            	<c:choose>
+											    <c:when test="${adminInfo != null}">
+											            <a href="camping_gear_detail.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>     
+											    </c:when>
+											    <c:otherwise>
+											   	 	${k.admin_nickname}
+											    </c:otherwise>
+											</c:choose>
+							            </td>
 							            <td class="admin-write-color" style="background-color: lightyellow;">${k.cp_regdate.substring(0,10)}</td>
 							            <td class="admin-write-color" style="background-color: lightyellow;">${k.cp_hit}</td>
 							        </c:when>						        
@@ -86,15 +90,18 @@
 							            </td>
 							            <td>
 							                <c:choose>
-							                    <c:when test="${memberInfo.member_id == 'admin'}">
+							                    <c:when test="${not empty adminInfo}">
+							                    	<a href="camping_gear_detail.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>
 							                        <a href="camping_gear_detail.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
 							                    </c:when>
 							                    <c:otherwise>
 							                        <c:choose>
 							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}">
+							                            	<a href="camping_gear_detail.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>
 							                                <a href="camping_gear_detail.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
 							                            </c:when>
 							                            <c:otherwise>
+							                            	${k.admin_nickname}
 							                                ${k.member_nickname}
 							                            </c:otherwise>
 							                        </c:choose>
@@ -166,7 +173,7 @@
 				</td>
 				<td>
 					<c:choose>
-						<c:when test="${memberInfo != null}">
+						<c:when test="${memberInfo != null || adminInfo != null}">
 							<input type="button" id="btnWrite" value="글쓰기" onclick="camping_gear_write()">
 						</c:when>
 						<c:otherwise>

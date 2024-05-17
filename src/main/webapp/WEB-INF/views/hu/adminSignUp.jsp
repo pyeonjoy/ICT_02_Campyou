@@ -55,13 +55,13 @@
 		f.submit();
 	}
 </script>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 //name double check
 $(document).ready(function() {
-	$("#member_id").keyup(function() {
+	$("#admin_id").keyup(function() {
 		$.ajax({
-			url: "getIdChk.do",
-			data : "member_id="+$("#member_id").val(),
+			url: "getAdminIdChk.do",
+			data : "admin_id="+$("#admin_id").val(),
 			method : "post", 
 			dataType: "text",
 			success : function(data) {
@@ -83,7 +83,7 @@ $(document).ready(function() {
 			}
 		});
 	});
-	$("#member_nickname").keyup(function() {
+	/* $("#member_nickname").keyup(function() {
 		$.ajax({
 			url: "getNickNameChk.do",
 			data : "member_nickname="+$("#member_nickname").val(),
@@ -106,7 +106,7 @@ $(document).ready(function() {
 				alert("읽기실패");
 			}
 		});
-	});
+	}); */
 	//중복된 이름과 별명이 하나라도 있으면 회원가입 비활성화 코드
 	function checkSignUpButton() {
        if ($("#idSpan").text() === "(중복된 아이디 입니다)" || $("#nickNameSpan").text() === "(중복된 별명 입니다)") {
@@ -116,7 +116,7 @@ $(document).ready(function() {
        }
    }
 });
-</script> -->
+</script> 
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

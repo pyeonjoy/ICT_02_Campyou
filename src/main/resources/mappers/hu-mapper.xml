@@ -11,13 +11,57 @@
 	</insert>
 	
 	<insert id="admin_insert" parameterType="admvo">
-		insert into admin(admin_id, admin_pwd, admin_name, admin_nickname, admin_phone, admin_email, admin_status)
-			values(#{admin_id}, #{admin_pwd},#{admin_name},#{admin_nickname},#{admin_phone}, #{admin_email}, 1)
+		insert into admin(admin_id, admin_pwd, admin_name, admin_nickname, admin_phone, admin_email, admin_status, groups, step, lev)
+			values(#{admin_id}, #{admin_pwd},#{admin_name},#{admin_nickname},#{admin_phone}, #{admin_email}, 0, 0, 0, 0)
 	</insert>
 	
 	<select id="idchk" parameterType="String" resultType="int">
  		select count(*) from members where member_id=#{member_id}
  	</select>
+ 	
+ 	<!-- 관리자 페이지 페이지수 카운트 -->
+ 	<select id="admin_page_count" resultType="int">
+ 		select count(*) from admin
+ 	</select>
+ 	
+ 	<!-- 관리자 가입 아이디 중복체크  -->
+ 	<select id="adminidchk" parameterType="String" resultType="int">
+ 		select count(*) from admin where admin_id=#{admin_id}
+ 	</select>
+ 	
+ 	<!-- 관리자 권한 주기 업데이트 -->
+ 	<update id="give_admin_permission_update" parameterType="admvo">
+ 		update admin
+        set admin_status= 1
+        where admin_idx = #{admin_idx}
+ 	</update>
+ 	
+ 	<!-- 관리자 권한 빼앗기 업데이트 -->
+ 	<update id="revoke_admin_permission_update" parameterType="admvo">
+ 		update admin
+        set admin_status= 0
+        where admin_idx = #{admin_idx}
+ 	</update>
+ 	
+ 	<!-- 슈퍼관리자가 부하관리자 강제삭제 -->
+ 	<delete id="assistant_admin_delete" parameterType="admvo">
+ 		delete from admin where admin_idx = #{admin_idx}
+ 	</delete>
+ 	
+ 	<!-- 관리자 관리자 정보 가지고 오기 -->
+ 	<select id="admin_info_update" parameterType="String" resultType="admvo">
+ 		select * from admin where admin_idx=#{admin_idx}
+ 	</select>
+ 	
+ 	<!-- 관리자 정보수정 -->
+ 	<update id="admin_update_ok" parameterType="admvo">
+ 		update admin
+        set admin_name=#{admin_name},
+        	admin_nickname=#{admin_nickname},
+        	admin_phone=#{admin_phone},
+        	admin_email=#{admin_email} 
+        where admin_idx = #{admin_idx}
+ 	</update>
  	
  	<select id="loginIdchk" parameterType="String" resultType="int">
  		select count(*) from members where member_id=#{member_id}
@@ -60,7 +104,7 @@
 		select * from board_free order by groups desc, lev asc  limit #{limit} offset #{offset} 
  	</select> -->
  	
- 	<select id="comm_board_list" parameterType="Map" resultType="cbvo">
+ 	<!-- <select id="comm_board_list" parameterType="Map" resultType="cbvo">
 	    select * from board_free 
 	    where b_type = '공지사항'
 	    union 
@@ -68,7 +112,29 @@
 	    where b_type != '공지사항' 
 	    order by b_type = '공지사항' desc, groups desc, lev asc 
 	    limit #{limit} offset #{offset}
-	</select>
+	</select> -->
+	
+	<select id="comm_board_list" parameterType="Map" resultType="cbvo">
+		    select * from board_free 
+		    where admin_nickname = '관리자'
+		    union 
+		    select * from board_free 
+		    where admin_nickname != '관리자' 
+		    order by admin_nickname = '관리자' desc, groups desc, lev asc 
+	    limit #{limit} offset #{offset}
+	</select> 
+	
+	<!-- 관리자 리스트 -->
+	<select id="admin_list" parameterType="Map" resultType="admvo">
+ 		<!-- select * from admin order by groups desc, lev asc  limit #{limit} offset #{offset} --> 
+ 		select * from admin 
+	    where admin_id = 'admin'
+	    union 
+	    select * from admin 
+	    where admin_id != 'admin' 
+	    order by admin_id = 'admin' desc, groups desc, lev asc 
+	    limit #{limit} offset #{offset}
+ 	</select>
  	
  	<update id="comm_board_hit" parameterType="String">
  		update board_free 
@@ -217,11 +283,11 @@
  	<!-- 캠핑게시판 공지사항 위로 올리는 코드  -->
  	<select id="cgb_list" parameterType="Map" resultType="cgbvo">
 		    select * from board_camp 
-		    where member_nickname = '관리자'
+		    where admin_nickname = '관리자'
 		    union 
 		    select * from board_camp 
-		    where member_nickname != '관리자' 
-		    order by member_nickname = '관리자' desc, groups desc, lev asc 
+		    where admin_nickname != '관리자' 
+		    order by admin_nickname = '관리자' desc, groups desc, lev asc 
 	    limit #{limit} offset #{offset}
 	</select> 
  	
@@ -230,8 +296,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(cp_idx),0)+1) as groups FROM board_camp
  		</selectKey>
- 		insert into board_camp(member_idx, cp_subject, member_nickname, cp_content, cp_pwd, cpf_name, cp_regdate, cp_hit, cp_active, cp_notice, groups, step, lev)
- 			values(#{member_idx}, #{cp_subject}, #{member_nickname}, #{cp_content},#{cp_pwd},#{cpf_name}, sysdate(), 0, 0, 0, #{groups}, 0, 0)
+ 		insert into board_camp(member_idx, admin_idx, cp_subject, member_nickname, admin_nickname, cp_content, cp_pwd, cpf_name, cp_regdate, cp_hit, cp_active, cp_notice, groups, step, lev)
+ 			values(#{member_idx}, #{admin_idx}, #{cp_subject}, #{member_nickname}, #{admin_nickname}, #{cp_content},#{cp_pwd},#{cpf_name}, sysdate(), 0, 0, 0, #{groups}, 0, 0)
  	</insert>
  	
  	
@@ -274,8 +340,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(cp_idx),0)+1) as groups FROM c_comment
  		</selectKey>
- 		insert into c_comment(member_nickname, content, write_date, cp_idx, groups, step, lev)
- 			values(#{member_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, 0, 0)
+ 		insert into c_comment(member_nickname, admin_nickname, content, write_date, cp_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{admin_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, 0, 0)
  	</insert>
  	
  	<!-- 댓글 삭제 -->
