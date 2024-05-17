@@ -21,7 +21,7 @@
 	<div class="search_result"></div>
 	<div class="result_info_line">
 		<div class="result_info">
-			<h4>검색 결과 <span class="totalCount"></span></h4>		
+			<h4><span class="keyword"></span> 검색 결과 <span class="totalCount"></span></h4>		
 		</div>
 		<div class="go_list_button">
 			<input type="button" value="리스트로 검색" onclick="go_list()">
@@ -34,7 +34,7 @@
    		<div class="camp_lists">
 	   		<div id="camp_list_show"></div>
  				<div class="page_button">
-				<ul class="camp_list_page"></ul>
+				<ul class="to_paging camp_list_page"></ul>
    			</div>
   		</div>
   	</div>
