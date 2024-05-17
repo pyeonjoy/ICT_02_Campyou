@@ -7,8 +7,8 @@ import com.ict.campyou.bm.dao.BoardsVO;
 import com.ict.campyou.bm.dao.ChatVO;
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.QnaVO;
-import com.ict.campyou.hu.dao.BoardFreeVO;
 import com.ict.campyou.hu.dao.CampingGearBoardVO;
+import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.HeartVO;
@@ -52,13 +52,17 @@ public interface MyService {
 	
 	public List<HeartVO> getFavList(String member_idx);
 	
-	public List<BoardFreeVO> getBoard1(String member_idx);
+	public List<CommBoardVO> getBoard1(String member_idx);
 	
 	public List<CampingGearBoardVO> getBoard2(String member_idx);
 
 	public List<BoardsVO> getSelectFour(List<BoardsVO> boardsList);
 	
 	public CampVO getMyFavoriteCamp(String contentid);
+	
+	public CommBoardVO getBoard1ByIdx(String board_idx);
+
+	public CampingGearBoardVO getBoard2ByIdx(String board_idx);
 }
 
 	

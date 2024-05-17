@@ -1,10 +1,11 @@
 'use strict'
 let induty, induty2;
 const hearts = document.querySelector(".camping_container");
+
 function goToHomepage(url) {
   window.location.href = url;
 }
-console.log(data);
+
 //function delHeart(contentid) {
 //const xhttp = new XMLHttpRequest();
 //xhttp.open("POST", "delHeart.do", true);
@@ -14,11 +15,11 @@ console.log(data);
 //}
 function delHeart(contentid) {
 
-window.href.location="delHeart.do?contentid="+contentid
+window.location.href="delHeart.do?contentid="+contentid
 window.location.reload();
 }
 
-if(data=[]) {
+if(data.length===0) {
 	const html = `<h4 class="nolist">관심 캠핑장이 없습니다. </h4>`;
 	hearts.insertAdjacentHTML("afterbegin", html)
 }
@@ -55,5 +56,8 @@ data.forEach(c => {
       </div>
       <button class="btn" onclick="goToHomepage('${c.homepage}')">홈페이지</button>
     </div>`;
-  hearts.insertAdjacentHTML("afterbegin", html)
+  hearts.insertAdjacentHTML("afterbegin", html);
+  document.querySelector(".fav_list").addEventListener("click", function(){
+	  window.href.location=`campDetail.do?contentid=${c.contentid}`
+  })
 });

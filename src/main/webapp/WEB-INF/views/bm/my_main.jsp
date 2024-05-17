@@ -159,12 +159,12 @@ function promiseApplyList() {
 
 					<c:choose>
 						<c:when test="${empty selectedList }">
-							<h4 class="nolist">작성 내역이 없습니다.</h4>
+							<p class="nolist">작성 내역이 없습니다.</p>
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="list" items="${selectedList}">
-								<a href="boardDetail.do?board_idx=${list.board_idx}">
-								<p class="my_list_title">{list.b_subject}</p></a>
+								<a href="boardDetail.do?board_idx=${list.board_idx}&board_type=${list.board_type}">
+								<p class="my_list_title">${list.b_subject}</p></a>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>

@@ -15,6 +15,7 @@ import com.ict.campyou.bm.dao.MyDAO;
 import com.ict.campyou.bm.dao.QnaVO;
 import com.ict.campyou.hu.dao.BoardFreeVO;
 import com.ict.campyou.hu.dao.CampingGearBoardVO;
+import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.HeartVO;
@@ -100,7 +101,7 @@ public class MyServiceImpl implements MyService{
 		return myDao.getFavList(member_idx);
 	}
 	@Override
-	public List<BoardFreeVO> getBoard1(String member_idx) {
+	public List<CommBoardVO> getBoard1(String member_idx) {
 		return myDao.getBoard1(member_idx);
 	}
 	@Override
@@ -120,6 +121,14 @@ public class MyServiceImpl implements MyService{
 	@Override
 	public CampVO getMyFavoriteCamp(String contentid) {
 		return myDao.getMyFavoriteCamp(contentid);
+	}
+	@Override
+	public CommBoardVO getBoard1ByIdx(String board_idx) {
+		return myDao.getBoard1ByIdx(board_idx);
+	}
+	@Override
+	public CampingGearBoardVO getBoard2ByIdx(String board_idx) {		
+		return myDao.getBoard2ByIdx(board_idx);
 	}
 
 }
