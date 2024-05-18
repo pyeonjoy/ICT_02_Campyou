@@ -69,9 +69,9 @@ $(document).ready(function() {
         campItem += "<p class='tel'>" + tel + "</p>";
         campItem += "</div>";
         campItem += "<div class='button_container'>"
-		campItem += "<button onclick=\"window.open('camp_detail.do?contentid=" + contentid +"')\">상세보기</button>";
+		campItem += "<button onclick=\"window.open('camp_detail.do?contentid=" + contentid +"')\">상세보기</button></div>";
 		campItem += "<div class='Heart_button'></div>";
-        campItem += "</div></div>";
+        campItem += "</div>";
         
         // 지도
         let mapX = $(item).find("mapX").text();
@@ -381,7 +381,7 @@ $(document).ready(function() {
 	}
 	
 	// 하트
-	function loadHeart(contentid) {
+	function loadHeart(contentid, $container) {
 	    $.ajax({
 	        url: "checkHeart.do",
 	        type: "get",
@@ -390,24 +390,18 @@ $(document).ready(function() {
 	        success: function(data) {
 	            $("#detail_button").empty();
 	            if (data === true) {
-	                let detailButton = "<div>";
-	                detailButton += "<input type='button' name='page' value='🤍' onclick='Heart()'>";
-	                detailButton += "</div>";
+	                let detailButton = "<input type='button' name='page' value='🤍' data-contentid='"+ contentid + "'>";
 	                $("#detail_button").append(detailButton);
 	            } else if (data === false) {
-	                let detailButton = "<div>";
-	                detailButton += "<input type='button' id='Heart' name='page' value='❤️' onclick='delHeart()'>";
-	                detailButton += "</div>";
-	                $("#detail_button").append(detailButton);
+	            	let detailButton = "<input type='button' id='Heart' name='page' value='❤️' data-contentid='"+ contentid + "'>";
 	            } else {
 	                alert("찜 여부를 확인하는 중 오류가 발생했습니다.");
 	            }
+                $container.html(detailButton);
 	        },
 	        error: function() {
-	            let detailButton = "<div>";
-	            detailButton += "<input type='button' id='Heart' name='page' value='🤍' onclick='Heart()'>";
-	            detailButton += "</div>";
-	            $(".Heart_button").append(detailButton);
+	        	let detailButton = "<input type='button' id='Heart' name='page' value='🤍' data-contentid='"+ contentid + "'>";
+	            $container.html(detailButton);
 	        }
 	    });
 	}
