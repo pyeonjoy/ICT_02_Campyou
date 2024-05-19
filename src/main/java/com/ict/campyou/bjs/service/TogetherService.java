@@ -42,4 +42,6 @@ public interface TogetherService {
 	public int getToCommentUpdate(TogetherCommentVO tcvo) throws Exception;
 	public int getBoardWithCount(String member_idx) throws Exception;
 	public List<TogetherVO> getPromiseIng(String member_idx, int offset, int limit) throws Exception;
+	public List<PromiseVO> getPromisePeopleDetail(String t_idx) throws Exception;
+	public int getPromiseBanMember(PromiseVO pvo) throws Exception;
 }

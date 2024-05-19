@@ -288,16 +288,13 @@ function to_comment() {
 }
 
 $(document).on("click", ".toDetailContent4Sub2Sub2Button", function() {
-	$(".toDetailInputForm").hide();
-    $(".toDetailInputForm2").hide();
-	
-    let parentDiv = $(this).closest(".toDetailContent4Sub3, .toDetailContent4Sub6");
+	let parentDiv = $(this).closest(".toDetailContent4Sub3, .toDetailContent4Sub6");
     let commentForm = parentDiv.find(".toDetailInputForm");
-    if (commentForm.css("display") === "none") {
-        commentForm.css("display", "flex");
-    } else {
-        commentForm.css("display", "none");
-    }
+
+    $(".toDetailInputForm").not(commentForm).hide();
+    $(".toDetailInputForm2").hide();
+    
+    commentForm.toggle();
 });
 
 $(document).on("click", ".toDetailInputSubmit", function() {
@@ -340,16 +337,13 @@ $(document).on("click", ".toDetailInputSubmit", function() {
 });
 
 $(document).on("click", ".toDetailContent4Sub2Sub2ButtonUpdate", function() {
-	$(".toDetailInputForm").hide();
-    $(".toDetailInputForm2").hide();
-	
     let parentDiv = $(this).closest(".toDetailContent4Sub3, .toDetailContent4Sub6");
     let commentForm = parentDiv.find(".toDetailInputForm2");
-    if (commentForm.css("display") === "none") {
-        commentForm.css("display", "flex");
-    } else {
-        commentForm.css("display", "none");
-    }
+    
+    $(".toDetailInputForm").hide();
+    $(".toDetailInputForm2").not(commentForm).hide();
+    
+    commentForm.toggle();
 });
 
 

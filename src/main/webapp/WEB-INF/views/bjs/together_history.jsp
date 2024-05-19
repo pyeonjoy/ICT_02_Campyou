@@ -11,6 +11,7 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_history.css">
+<link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
 <%@ include file="../hs/header.jsp" %>
 <%@ include file="../hs/mypage_menu.jsp"%>
 <script type="text/javascript">

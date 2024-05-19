@@ -182,4 +182,12 @@ public class TogetherDAO {
 		map.put("limit", limit);
 		return sqlSessionTemplate.selectList("bjs.promise_ing", map);
 	}
+	
+	public List<PromiseVO> getPromisePeopleDetail(String t_idx) throws Exception {
+		return sqlSessionTemplate.selectList("bjs.promise_people_detail", t_idx);
+	}
+	
+	public int getPromiseBanMember(PromiseVO pvo) throws Exception {
+		return sqlSessionTemplate.update("bjs.promise_ban_member", pvo);
+	}
 }

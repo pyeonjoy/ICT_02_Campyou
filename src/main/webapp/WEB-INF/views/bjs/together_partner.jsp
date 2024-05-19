@@ -11,7 +11,9 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_partner.css">
+<link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
 <%@ include file="../hs/header.jsp" %>
+<%@ include file="../hs/mypage_menu.jsp"%>
 <script type="text/javascript">
 // $(document).on("click", ".thwrapper1Button", function() {
 // 	let toPromiseing = document.querySelector(".toContent");
@@ -25,11 +27,16 @@
 //     }
 // });
 $(function() {
-	toPromiseing();
+	let cpage = document.getElementById("cPage").value;
+	if(cpage != null){
+		toPromiseIng(cpage);
+	}else{
+		toPromiseIng();
+	}
 });
-function toPromiseing(page) {
+function toPromiseIng(page) {
 	let memberIdx = document.getElementById("member_idx").value;
-    	$('.toContent').empty();
+   	$('.toContent').empty();
     $.ajax({
         url: 'get_promise_ing.do',
         type: 'post',
@@ -41,53 +48,50 @@ function toPromiseing(page) {
         success: function(data) {
         	let toPromiseIng = data.toPromiseIng;
                 let html = '';
-//             	html += '<div class="thwrapper1">';
-//                 html += '<button type="button" class="thwrapper1Button thwrapper1Button_active" onclick="toPromiseing()">모집중인 동행</button>';
-//                 html += '<button type="button" class="thwrapper1Button" onclick="toPromiseReady()">진행중인 동행</button>';
-//                 html += '<button type="button" class="thwrapper1Button2" onclick="promiseApplySendList()">동행 완료</button>';
-//                 html += '</div>';
         	if (toPromiseIng != null && toPromiseIng.length > 0) {
         		for (let i = 0; i < toPromiseIng.length; i++) {
                     let PromiseIng = toPromiseIng[i];
-//                     let html2 = '<form class="toContent">';
-                    let html2 = '<div class="toContentOne">';
-                    html2 += '<div>';
-                    html2 += '<div class="toContentOne1">';
-                    html2 += '<a href="report_write.do?member_idx=' + PromiseIng.member_idx + '">';
-                    html2 += '<div class="userImage"><img src="${path}/resources/images/' + PromiseIng.member_img + '" class="userImage2"></div>';
-                    html2 += '</a>';
-                    html2 += '<div>';
-                    html2 += '<div class="toContentOne1span1">';
-                    html2 += '<span class="to_member_nickname">' + PromiseIng.member_nickname + '</span>';
-                    html2 += '<span class="to_member_age">(' + PromiseIng.member_dob + ')</span>';
-                    html2 += '<div>';
-                    html2 += '<div class="toContentOne1span toContentOne1span2">';
-                    html2 += '<span>' + PromiseIng.t_campname + '</span>';
-                    html2 += '<span class="to_campdate">' + PromiseIng.t_startdate + '-' + PromiseIng.t_enddate + '</span>';
-                    html2 += '<div>';
-                    html2 += '<div>';
-                    html2 += '<div>';
-                    html2 += '<div>';
-                    html2 += '<a href="together_detail.do?t_idx=' + PromiseIng.t_idx + '&cPage=' + data.paging.nowPage + '" class="toContentOne2">';
+                    html += '<div class="toContentOne">';
+                    html += '<div>';
+                    html += '<div class="toContentOne1">';
+                    html += '<div class="to_list_subject">' + PromiseIng.t_subject + '</div>';
+                    html += '<div>';
+                    html += '<div class="toContentOne1span toContentOne1span2">';
+                    html += '<span>' + PromiseIng.t_campname + '</span>';
+                    html += '<span class="to_campdate">' + PromiseIng.t_startdate + '-' + PromiseIng.t_enddate + '</span>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="toContentOne2">';
                     if (!PromiseIng.tf_name) {
-                        html2 += '<img src="${path}/resources/images/to_camp.jpg" class="toContentOne2img">';
+                        html += '<img src="${path}/resources/images/to_camp.jpg" class="toContentOne2img">';
                     } else {
-                        html2 += '<img src="' + PromiseIng.tf_name + '" class="toContentOne2img">';
+                        html += '<img src="' + PromiseIng.tf_name + '" class="toContentOne2img">';
                     }
-                    html2 += '<span class="toContentOne2sub2">' + PromiseIng.t_induty + '</span>';
-                    html2 += '</a>';
-                    html2 += '<a href="together_detail.do?t_idx=' + PromiseIng.t_idx + '&cPage=' + data.paging.nowPage + '" class="toContentOne3">';
-                    html2 += '<strong class="to_list_subject">' + PromiseIng.t_subject + '</strong>';
-                    html2 += '<span>' + PromiseIng.t_content + '</span>';
-                    html2 += '</a>';
-                    html2 += '</div>';
-                    html2 += '</div>';
-                    html2 += '</div>';
-                    html2 += '</div>';
-                    html2 += '</div>';
-                    html2 += '</div>';
-//                     html2 += '</form>';
-                    html += html2;
+                    html += '<span class="toContentOne2sub2">' + PromiseIng.t_induty + '</span>';
+                    html += '</div>';
+                    html += '<div>';
+                    html += '<div class="toContentOne3">';
+                    html += '<p>조회수 : ' + PromiseIng.t_hit + '</p>';
+                    html += '<p>모집 : ' + PromiseIng.promise_count + ' / ' + PromiseIng.t_numpeople + '명' + '</p>';
+                    html += '</div>';
+                    html += '<form method="post" class="toContentOne4">';
+                    html += '<button type="button" class="toContentOne2" onclick="to_detail(' + PromiseIng.t_idx + ',' + data.paging.nowPage + ')">상세 보기<button>';
+                    html += '<button type="button" class="toContentOne2" onclick="to_people_detail(this.form)">인원 보기<button>';
+                    html += '<input type="hidden" name="t_idx" value="' + PromiseIng.t_idx + '">';
+                    html += '<input type="hidden" name="cPage" value="' + data.paging.nowPage + '">';
+                    html += '<input type="hidden" name="t_campname" value="' + PromiseIng.t_campname + '">';
+                    html += '<input type="hidden" name="t_subject" value="' + PromiseIng.t_subject + '">';
+                    html += '<input type="hidden" name="t_startdate" value="' + PromiseIng.t_startdate + '">';
+                    html += '<input type="hidden" name="t_enddate" value="' + PromiseIng.t_enddate + '">';
+                    html += '<input type="hidden" name="t_induty" value="' + PromiseIng.t_induty + '">';
+                    html += '<input type="hidden" name="promise_count" value="' + PromiseIng.promise_count + '">';
+                    html += '<input type="hidden" name="t_numpeople" value="' + PromiseIng.t_numpeople + '">';
+                    html += '<input type="hidden" name="member_idx" value="' + memberIdx + '">';
+                    html += '</form>';
+                    html += '</div>';
+                    html += '</div>';
                 }
                 $('.toContent').append(html);
             } else {
@@ -96,34 +100,34 @@ function toPromiseing(page) {
                 html += '<p class="no-data-messageP">모집중인 동행이 없습니다</p>';
                 html += '</div>';
                 html += '</div>';
-                $('.toContent').append(html);
+                $('.toContent').replaceWith(html);
             }
             let paging = data.paging;
             $('.to_paging').empty();
             let pagingHtml = '';
             // 이전 버튼
             if (paging.beginBlock <= paging.pagePerBlock) {
-                pagingHtml += '<li class="th_disable"><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
-                pagingHtml += '<li class="th_disable"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+                pagingHtml += '<li class="to_disable"><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+                pagingHtml += '<li class="to_disable"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
             } else {
-                pagingHtml += '<li><a href="javascript:promiseApplyList(1)" class="th_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
-                pagingHtml += '<li><a href="javascript:promiseApplyList(' + (paging.beginBlock - paging.pagePerBlock) + ')" class="th_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseIng(1)" class="to_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseIng(' + (paging.beginBlock - paging.pagePerBlock) + ')" class="to_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
             }
             // 페이지번호들
             for (let k = paging.beginBlock; k <= paging.endBlock; k++) {
                 if (k === paging.nowPage) {
                     pagingHtml += '<li class="nowpagecolor">' + k + '</li>';
                 } else {
-                    pagingHtml += '<li><a href="javascript:promiseApplyList(' + k + ')" class="nowpage">' + k + '</a></li>';
+                    pagingHtml += '<li><a href="javascript:toPromiseIng(' + k + ')" class="nowpage">' + k + '</a></li>';
                 }
             }
             // 이후 버튼
             if (paging.endBlock >= paging.totalPage) {
-                pagingHtml += '<li class="th_disable"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
-                pagingHtml += '<li class="th_disable"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+                pagingHtml += '<li class="to_disable"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+                pagingHtml += '<li class="to_disable"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
             } else {
-                pagingHtml += '<li><a href="javascript:promiseApplyList(' + (paging.beginBlock + paging.pagePerBlock) + ')" class="th_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
-                pagingHtml += '<li><a href="javascript:promiseApplyList(' + paging.totalPage + ')" class="th_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseIng(' + (paging.beginBlock + paging.pagePerBlock) + ')" class="to_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseIng(' + paging.totalPage + ')" class="to_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
             }
             $('.to_paging').append(pagingHtml);
         },
@@ -132,15 +136,23 @@ function toPromiseing(page) {
         }
     });
 }
+function to_detail(t_idx, nowPage) {
+    location.href = 'together_detail.do?t_idx=' + t_idx + '&cPage=' + nowPage;
+}
+function to_people_detail(f) {
+	f.action="together_people_detail.do";
+	f.submit();
+}
 </script>
 </head>
 <body>
     <div class="toContainer">
         <input type="hidden" id="member_idx" value="${member_idx }">
+        <input type="hidden" id="cPage" value="${cPage }">
         <div class="thwrapper1">
             <button type="button" class="thwrapper1Button thwrapper1Button_active" onclick="toPromiseing()">모집중인 동행</button>
             <button type="button" class="thwrapper1Button" onclick="toPromiseReady()">진행중인 동행</button>
-            <button type="button" class="thwrapper1Button" onclick="promiseApplySendList()">동행 완료</button>
+            <button type="button" class="thwrapper1Button2" onclick="promiseApplySendList()">동행 완료</button>
         </div>
         <form class="toContent">
 <%--        		<c:forEach var="k" items="${togetherList }"> --%>

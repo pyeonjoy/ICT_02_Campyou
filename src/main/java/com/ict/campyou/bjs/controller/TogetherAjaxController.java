@@ -154,10 +154,6 @@ public class TogetherAjaxController {
 		List<PromiseVO> result = togetherService.getPromiseList(member_idx);
 		if(result != null) {
 			for (PromiseVO list : result) {
-//				System.out.println("Promise: " + list.getT_idx()); 
-//				System.out.println("Promise: " + list.getMember_nickname());
-//				System.out.println("Promise: " + list.getPm_idx()); 
-//				System.out.println("Promise: " + list.getTf_name());
 				LocalDate dob = LocalDate.parse(list.getMember_dob());
 				LocalDate currentDate = LocalDate.now();
 				int age = Period.between(dob, currentDate).getYears();
@@ -176,7 +172,6 @@ public class TogetherAjaxController {
 				}
 				list.setMember_dob(ageGroup);
 				int promiseCount = togetherService.getPromiseMyCount(list.getMember_idx());
-				System.out.println(promiseCount);
 				list.setPromise_count(promiseCount);
 			}
 		}
@@ -207,7 +202,6 @@ public class TogetherAjaxController {
 	@ResponseBody
 	public Map<String, Object> getTogetherHistoryGet(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
 		int count = togetherService.getToHistoryCount(member_idx);
-		System.out.println(count);
 		paging.setTotalRecord(count);
 		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 			paging.setTotalPage(1);
@@ -328,15 +322,6 @@ public class TogetherAjaxController {
 	        memberUser = new MemberVO();
 	    }
 		List<TogetherCommentVO> toCommentList = togetherService.getToCommentList(t_idx);
-		for (TogetherCommentVO k : toCommentList) {
-//			System.out.println(k.getWc_idx());
-//			System.out.println(k.getMember_idx());
-//			System.out.println(k.getWc_groups());
-//			System.out.println(k.getMember_img());
-//			System.out.println(k.getMember_nickname());
-//			System.out.println(k.getWc_content());
-//			System.out.println(k.getWc_active());
-		}
 		Map<String, Object> response = new HashMap<>();
 	    response.put("memberUser", memberUser);
 	    response.put("toCommentList", toCommentList);
@@ -390,7 +375,6 @@ public class TogetherAjaxController {
 	@RequestMapping(value = "to_comment_delete.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
 	public int getToCommentDelete(String wc_idx) throws Exception {
-		System.out.println(wc_idx);
 		int result = togetherService.getToCommentDelete(wc_idx);
 		if(result > 0) {
 			return result;
@@ -401,8 +385,6 @@ public class TogetherAjaxController {
 	@RequestMapping(value = "to_comment_update.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
 	public int getToCommentUpdate(TogetherCommentVO tcvo) throws Exception {
-		System.out.println(tcvo.getWc_content());
-		System.out.println(tcvo.getWc_idx());
 		int result = togetherService.getToCommentUpdate(tcvo);
 		if(result > 0) {
 			return result;
@@ -425,7 +407,7 @@ public class TogetherAjaxController {
 			}
 		}
 		String cPage = request.getParameter("cPage");
-		if(cPage == null) {
+		if(cPage == null || cPage.isEmpty()) {
 			paging2.setNowPage(1);
 		}else {
 			paging2.setNowPage(Integer.parseInt(cPage));
@@ -441,10 +423,8 @@ public class TogetherAjaxController {
 		}
 		
 		List<TogetherVO> toPromiseIng = togetherService.getPromiseIng(member_idx, paging2.getOffset(), paging2.getNumPerPage());
-		System.out.println(1);
 		if(toPromiseIng != null) {
 			for (TogetherVO tvo : toPromiseIng) {
-				System.out.println(tvo.getT_campname());
 				int promiseCount = togetherService.getPomiseCount(tvo.getT_idx());
 				tvo.setPromise_count(promiseCount);
 			}
@@ -453,5 +433,45 @@ public class TogetherAjaxController {
 		response.put("toPromiseIng", toPromiseIng);
 		response.put("paging", paging2);
 		return response;
+	}
+	
+	@RequestMapping(value = "promise_people_detail.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public List<PromiseVO> getPromisePeopleDetail(@RequestParam("t_idx")String t_idx) throws Exception {
+		List<PromiseVO> proPeopleDetail = togetherService.getPromisePeopleDetail(t_idx);
+		if(proPeopleDetail != null) {
+			for (PromiseVO pvo : proPeopleDetail) {
+				LocalDate dob = LocalDate.parse(pvo.getMember_dob());
+				LocalDate currentDate = LocalDate.now();
+				int age = Period.between(dob, currentDate).getYears();
+				String ageGroup;
+				switch (age / 10) {
+				case 0: ageGroup = "10대 미만"; break;
+				case 1: ageGroup = "10대"; break;
+				case 2: ageGroup = "20대"; break;
+				case 3: ageGroup = "30대"; break;
+				case 4: ageGroup = "40대"; break;
+				case 5: ageGroup = "50대 이상"; break;
+				case 6: ageGroup = "60대 이상"; break;
+				case 7: ageGroup = "70대 이상"; break;
+				default: ageGroup = "80대 이상"; break;
+				}
+				pvo.setMember_dob(ageGroup);
+				
+				int proOKCount = togetherService.getPromiseMyCount(pvo.getMember_idx());
+				pvo.setPromise_my_count(proOKCount);
+			}
+		}
+		return proPeopleDetail;
+	}
+	
+	@RequestMapping(value = "promise_banish_member.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getPromiseBanMember(PromiseVO pvo) throws Exception {
+		int result = togetherService.getPromiseBanMember(pvo);
+		if(result > 0) {
+			return result;
+		}
+		return -1;
 	}
 }
