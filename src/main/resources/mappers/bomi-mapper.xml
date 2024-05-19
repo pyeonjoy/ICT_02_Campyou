@@ -31,12 +31,15 @@ select * from members where member_idx=#{member_idx}
 update members set member_nickname=#{member_nickname}, member_phone=#{member_phone}, member_email=#{member_email}, 
 	member_img=#{member_img} where member_idx= #{member_idx}
 </update>
+
 <update id="updatePw" parameterType="mvo" >
 update members set member_pwd = #{member_pwd} where member_idx = #{member_idx}
 </update>
+
 <delete id="getDeleteUser" parameterType="String">
  delete from members where member_idx=#{member_idx}
 </delete>
+
 <select id="getOne" resultType="qvo" parameterType="String">
 select * from qna where qna_idx=#{qna_idx}
 </select>
@@ -44,17 +47,18 @@ select * from qna where qna_idx=#{qna_idx}
 <update id="modiQna" parameterType="String" >
 update qna set qna_title=#{qna_title}, qna_content=#{qna_content} where qna_idx=#{qna_idx}
 </update>
-
-<select id="getlist" resultType="tvo" parameterType="String">
+<!--  
+<select id="getlist" resultType="tvo" parameterType="Map">
 select * from board_with where member_idx=#{member_idx} order by t_idx desc LIMIT 4
 </select>
+-->
 <insert id="upQna" parameterType="qvo">
 insert into qna(member_idx, qna_title, qna_content, qna_date, qna_status)
 values(#{member_idx},#{qna_title},#{qna_content}, sysdate(), 0)
 </insert>
 
-<select id="getQnas" resultType="qvo" parameterType="String">
-select * from qna where member_idx=#{member_idx}
+<select id="getQnas" resultType="qvo" parameterType="Map">
+select * from qna where member_idx=#{member_idx} order by qna_idx desc limit #{limit} offset #{offset}
 </select>
 
 <select id="count" resultType="int" parameterType="String">
@@ -68,14 +72,13 @@ values(#{msg_room},#{room_name},#{send_idx}, #{send_nick},#{reci_nick}, #{send_d
 </insert>
 
 <select id="getRooms" resultType="chvo">
-SELECT * FROM m_chat WHERE msg_room LIKE CONCAT(#{msg_room}, '%') OR msg_room LIKE CONCAT('%', #{msg_room})
-
+SELECT * FROM m_chat WHERE msg_room REGEXP CONCAT('^', #{member_idx}, '-|-', #{member_idx}, '$')
 </select>
 
 <select id="getMaxMsgIdxRoom" resultMap="ChatVOResultMap">
     SELECT *
     FROM m_chat
-    WHERE msg_room = #{msg_room}
+    WHERE msg_room = #{room}
     ORDER BY msg_idx DESC
     LIMIT 1
 </select>
@@ -87,7 +90,27 @@ select * from m_chat where msg_room=#{msg_room} ORDER BY msg_idx DESC
 <update id="msgRead" parameterType="String">
  update m_chat set msg_read=0
 </update>
-<select id="msgToUpdate">
-select *
+
+<select id="getFavList" parameterType="String" resultType="hvo">
+ select * from camp_heart where member_idx=#{member_idx}
 </select>
+
+<select id="getBoard1" parameterType="String" resultType="cbvo">
+ select * from board_free where member_idx=#{member_idx} order by b_idx DESC
+</select>
+
+<select id="getBoard2" parameterType="String" resultType="cgbvo">
+ select * from board_camp where member_idx=#{member_idx} order by cp_idx DESC
+</select>
+
+<select id="getCampDetail" parameterType="String" resultType="cvo">
+ select * from camp_list where contentid=#{contentid}
+</select>
+<select id="getBoard1ByIdx" parameterType="String" resultType="cbvo">
+ select * from board_free where b_idx=#{board_idx}
+</select>
+<select id="getBoard2ByIdx" parameterType="String" resultType="cgbvo">
+ select * from board_camp where cp_idx=#{board_idx} 
+</select>
+
 </mapper>

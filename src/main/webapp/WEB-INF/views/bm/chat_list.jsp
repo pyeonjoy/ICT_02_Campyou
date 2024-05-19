@@ -34,11 +34,10 @@
 							<div class="chat-imgs">
 								<img src="${path}/resources/img/cat.png" alt="user_img"
 									class="user_img" />
-										<c:if test="${chat.send_idx != member_idx && chat.msg_read == 1}">
+										<c:if test="${chat.send_idx != member_idx && chat.msg_read == 0}">
 										    <div class="new">N</div>
 										</c:if>
 							</div>
-
 							<div class="chat_detail">
 								<p class="nick_name">${chat.room_name}</p>
 								<p class="chat_content">${chat.msg_content}</p>
@@ -46,7 +45,6 @@
 						</div>
 						</a>
 					</c:forEach>
-
 				</c:otherwise>
 			</c:choose>
 		</div>
