@@ -143,6 +143,7 @@ function promiseApplyList() {
 			</div>
 			<h2 class="welcome_user">${mvo.member_name}님, 환영합니다.</h2>
 		</div>
+		<input type="hidden" id="memberIdx" value="${mvo.member_idx }">
 		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
 		<div class="accompany_container">
 

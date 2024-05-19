@@ -36,7 +36,7 @@ $(function() {
 });
 function toPromiseIng(page) {
 	let memberIdx = document.getElementById("member_idx").value;
-   	$('.toContent').empty();
+   	$('.toContent, .thwrapper1').empty();
     $.ajax({
         url: 'get_promise_ing.do',
         type: 'post',
@@ -47,6 +47,11 @@ function toPromiseIng(page) {
         dataType: 'json',
         success: function(data) {
         	let toPromiseIng = data.toPromiseIng;
+        	let html2 = '';
+        		html2 += '<button type="button" class="thwrapper1Button thwrapper1Button_active" onclick="toPromiseIng()">모집중인 동행</button>'
+        		html2 += '<button type="button" class="thwrapper1Button" onclick="toPromiseReady()">진행중인 동행</button>'
+        		html2 += '<button type="button" class="thwrapper1Button2" onclick="toPromiseEnd()">동행 완료</button>'
+       			$('.thwrapper1').append(html2);
                 let html = '';
         	if (toPromiseIng != null && toPromiseIng.length > 0) {
         		for (let i = 0; i < toPromiseIng.length; i++) {
@@ -143,6 +148,113 @@ function to_people_detail(f) {
 	f.action="together_people_detail.do";
 	f.submit();
 }
+function toPromiseReady(page) {
+	let memberIdx = document.getElementById("member_idx").value;
+   	$('.toContent, .thwrapper1').empty();
+    $.ajax({
+        url: 'get_promise_ready.do',
+        type: 'post',
+        data: {
+            member_idx: memberIdx,
+            cPage: page
+        },
+        dataType: 'json',
+        success: function(data) {
+        	let toPromiseReady = data.toPromiseReady;
+        	let html2 = '';
+        		html2 += '<button type="button" class="thwrapper1Button" onclick="toPromiseIng()">모집중인 동행</button>'
+        		html2 += '<button type="button" class="thwrapper1Button thwrapper1Button_active" onclick="toPromiseReady()">진행중인 동행</button>'
+        		html2 += '<button type="button" class="thwrapper1Button2" onclick="toPromiseEnd()">동행 완료</button>'
+       			$('.thwrapper1').append(html2);
+                let html = '';
+        	if (toPromiseReady != null && toPromiseReady.length > 0) {
+        		for (let i = 0; i < toPromiseReady.length; i++) {
+                    let toPromiseReady = toPromiseReady[i];
+                    html += '<div class="toContentOne">';
+                    html += '<div>';
+                    html += '<div class="toContentOne1">';
+                    html += '<div class="to_list_subject">' + toPromiseReady.t_subject + '</div>';
+                    html += '<div>';
+                    html += '<div class="toContentOne1span toContentOne1span2">';
+                    html += '<span>' + toPromiseReady.t_campname + '</span>';
+                    html += '<span class="to_campdate">' + toPromiseReady.t_startdate + '-' + toPromiseReady.t_enddate + '</span>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="toContentOne2">';
+                    if (!toPromiseReady.tf_name) {
+                        html += '<img src="${path}/resources/images/to_camp.jpg" class="toContentOne2img">';
+                    } else {
+                        html += '<img src="' + toPromiseReady.tf_name + '" class="toContentOne2img">';
+                    }
+                    html += '<span class="toContentOne2sub2">' + toPromiseReady.t_induty + '</span>';
+                    html += '</div>';
+                    html += '<div>';
+                    html += '<div class="toContentOne3">';
+                    html += '<p>조회수 : ' + toPromiseReady.t_hit + '</p>';
+                    html += '<p>모집 : ' + toPromiseReady.promise_count + ' / ' + toPromiseReady.t_numpeople + '명' + '</p>';
+                    html += '</div>';
+                    html += '<form method="post" class="toContentOne4">';
+                    html += '<button type="button" class="toContentOne2" onclick="to_detail(' + toPromiseReady.t_idx + ',' + data.paging.nowPage + ')">상세 보기<button>';
+                    html += '<button type="button" class="toContentOne2" onclick="to_people_detail(this.form)">인원 보기<button>';
+                    html += '<input type="hidden" name="t_idx" value="' + toPromiseReady.t_idx + '">';
+                    html += '<input type="hidden" name="cPage" value="' + data.paging.nowPage + '">';
+                    html += '<input type="hidden" name="t_campname" value="' + toPromiseReady.t_campname + '">';
+                    html += '<input type="hidden" name="t_subject" value="' + toPromiseReady.t_subject + '">';
+                    html += '<input type="hidden" name="t_startdate" value="' + toPromiseReady.t_startdate + '">';
+                    html += '<input type="hidden" name="t_enddate" value="' + toPromiseReady.t_enddate + '">';
+                    html += '<input type="hidden" name="t_induty" value="' + toPromiseReady.t_induty + '">';
+                    html += '<input type="hidden" name="promise_count" value="' + toPromiseReady.promise_count + '">';
+                    html += '<input type="hidden" name="t_numpeople" value="' + toPromiseReady.t_numpeople + '">';
+                    html += '<input type="hidden" name="member_idx" value="' + memberIdx + '">';
+                    html += '</form>';
+                    html += '</div>';
+                    html += '</div>';
+                }
+                $('.toContent').append(html);
+            } else {
+                html += '<div class="thul5">';
+                html += '<div class="no-data-message">';
+                html += '<p class="no-data-messageP">모집중인 동행이 없습니다</p>';
+                html += '</div>';
+                html += '</div>';
+                $('.toContent').replaceWith(html);
+            }
+            let paging = data.paging;
+            $('.to_paging').empty();
+            let pagingHtml = '';
+            // 이전 버튼
+            if (paging.beginBlock <= paging.pagePerBlock) {
+                pagingHtml += '<li class="to_disable"><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+                pagingHtml += '<li class="to_disable"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+            } else {
+                pagingHtml += '<li><a href="javascript:toPromiseIng(1)" class="to_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseIng(' + (paging.beginBlock - paging.pagePerBlock) + ')" class="to_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+            }
+            // 페이지번호들
+            for (let k = paging.beginBlock; k <= paging.endBlock; k++) {
+                if (k === paging.nowPage) {
+                    pagingHtml += '<li class="nowpagecolor">' + k + '</li>';
+                } else {
+                    pagingHtml += '<li><a href="javascript:toPromiseIng(' + k + ')" class="nowpage">' + k + '</a></li>';
+                }
+            }
+            // 이후 버튼
+            if (paging.endBlock >= paging.totalPage) {
+                pagingHtml += '<li class="to_disable"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+                pagingHtml += '<li class="to_disable"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+            } else {
+                pagingHtml += '<li><a href="javascript:toPromiseIng(' + (paging.beginBlock + paging.pagePerBlock) + ')" class="to_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseIng(' + paging.totalPage + ')" class="to_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+            }
+            $('.to_paging').append(pagingHtml);
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
 </script>
 </head>
 <body>
@@ -150,9 +262,9 @@ function to_people_detail(f) {
         <input type="hidden" id="member_idx" value="${member_idx }">
         <input type="hidden" id="cPage" value="${cPage }">
         <div class="thwrapper1">
-            <button type="button" class="thwrapper1Button thwrapper1Button_active" onclick="toPromiseing()">모집중인 동행</button>
-            <button type="button" class="thwrapper1Button" onclick="toPromiseReady()">진행중인 동행</button>
-            <button type="button" class="thwrapper1Button2" onclick="promiseApplySendList()">동행 완료</button>
+<!--             <button type="button" class="thwrapper1Button thwrapper1Button_active" onclick="toPromiseing()">모집중인 동행</button> -->
+<!--             <button type="button" class="thwrapper1Button" onclick="toPromiseReady()">진행중인 동행</button> -->
+<!--             <button type="button" class="thwrapper1Button2" onclick="promiseApplySendList()">동행 완료</button> -->
         </div>
         <form class="toContent">
 <%--        		<c:forEach var="k" items="${togetherList }"> --%>

@@ -190,4 +190,16 @@ public class TogetherDAO {
 	public int getPromiseBanMember(PromiseVO pvo) throws Exception {
 		return sqlSessionTemplate.update("bjs.promise_ban_member", pvo);
 	}
+	
+	public int getBoardWithCountReady(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.my_board_with_ready_count", member_idx);
+	}
+	
+	public List<TogetherVO> getPromiseReady(String member_idx, int offset, int limit) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_idx", member_idx);
+		map.put("offset", offset);
+		map.put("limit", limit);
+		return sqlSessionTemplate.selectList("bjs.promise_ready", map);
+	}
 }

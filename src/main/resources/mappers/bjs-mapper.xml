@@ -33,7 +33,7 @@
 		select * from camp_list
 	</select>
 	<select id="promise_people_count" resultType="int">
-		select count(*) from with_promise where t_idx = #{t_idx} and pm_state != -1 and	pm_state != 0
+		select count(*) from with_promise where t_idx = #{t_idx} and pm_state != -1 and	pm_state != 0 and pm_state != 3
 	</select>
 	<select id="to_detail" parameterType="String" resultType="tvo">
 		select b.*, m.member_nickname, m.member_dob, m.member_img
@@ -181,10 +181,10 @@
 		update board_with_comment set wc_content = #{wc_content} where wc_idx = #{wc_idx}
 	</update>
 	<select id="my_board_with_count" parameterType="String" resultType="int">
-		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0
+		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate > now()
 	</select>
 	<select id="promise_ing" parameterType="Map" resultType="tvo">
-		select * from board_with where member_idx = #{member_idx} and t_active = 0 order by t_idx desc limit #{limit} offset #{offset}
+		select * from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate > now() order by t_idx desc limit #{limit} offset #{offset}
 	</select>
 	<select id="promise_people_detail" parameterType="String" resultType="pvo">
 	    select wp.*, m.member_img, m.member_dob, m.member_nickname
@@ -196,4 +196,10 @@
 	<update id="promise_ban_member" parameterType="pvo">
 		update with_promise set pm_state = 3 where member_idx = #{member_idx} and t_idx = #{t_idx}
 	</update>
+	<select id="my_board_with_ready_count" parameterType="String" resultType="int">
+		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate &lt;= now() and t_enddate >= now()
+	</select>
+	<select id="promise_ready" parameterType="Map" resultType="tvo">
+		select * from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate &lt;= now() and t_enddate >= now() order by t_idx desc limit #{limit} offset #{offset}
+	</select>
 </mapper>

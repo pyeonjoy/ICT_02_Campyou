@@ -477,4 +477,45 @@ public class TogetherAjaxController {
 		return -1;
 	}
 
+	@RequestMapping(value = "get_promise_ready.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getPromiseReady(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
+		int count = togetherService.getBoardWithCountReady(member_idx);
+		paging2.setTotalRecord(count);
+		if(paging2.getTotalRecord() <= paging2.getNumPerPage()) {
+			paging2.setTotalPage(1);
+		}else {
+			paging2.setTotalPage(paging2.getTotalRecord() / paging2.getNumPerPage());
+			if(paging2.getTotalRecord() % paging2.getNumPerPage() != 0) {
+				paging2.setTotalPage(paging2.getTotalPage() +1);
+			}
+		}
+		String cPage = request.getParameter("cPage");
+		if(cPage == null || cPage.isEmpty()) {
+			paging2.setNowPage(1);
+		}else {
+			paging2.setNowPage(Integer.parseInt(cPage));
+		}
+		
+		paging2.setOffset(paging2.getNumPerPage() * (paging2.getNowPage() -1));
+		
+		paging2.setBeginBlock((int)((paging2.getNowPage() -1) / paging2.getPagePerBlock()) * paging2.getPagePerBlock() +1);
+		paging2.setEndBlock(paging2.getBeginBlock() + paging2.getPagePerBlock() -1);
+		
+		if(paging2.getEndBlock() > paging2.getTotalPage()) {
+			paging2.setEndBlock(paging2.getTotalPage());
+		}
+		List<TogetherVO> toPromiseReady = togetherService.getPromiseReady(member_idx, paging2.getOffset(), paging2.getNumPerPage());
+		if(toPromiseReady != null) {
+			for (TogetherVO tvo : toPromiseReady) {
+				System.out.println(tvo.getT_campname());
+				int promiseCount = togetherService.getPomiseCount(tvo.getT_idx());
+				tvo.setPromise_count(promiseCount);
+			}
+		}
+		Map<String, Object> response = new HashMap<>();
+		response.put("toPromiseReady", toPromiseReady);
+		response.put("paging", paging2);
+		return response;
+	}
 }
