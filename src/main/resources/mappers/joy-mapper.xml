@@ -349,5 +349,9 @@
 			SET member_active = -1
 			WHERE member_idx = #{member_idx}
 	</update>
-	
+	<update id="star" parameterType="mvo">
+	UPDATE members
+			SET member_rating = #{member_rating}+memver_rating /#{rating_count}
+			WHERE member_idx = #{member_idx}
+	</update>
 </mapper>

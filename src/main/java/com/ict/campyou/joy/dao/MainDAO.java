@@ -40,6 +40,14 @@ public class MainDAO {
 		}
 		return -1;
 	}
+	public int getStart(MemberVO mvo) {
+		try {
+			return sqlSessionTemplate.update("joy.getstar",mvo);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
 	
 }
 
