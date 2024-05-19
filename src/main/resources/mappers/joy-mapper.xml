@@ -3,62 +3,212 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="joy">
-<!--관리자페이지 메인 -->
+<!-- ==================================================관리자페이지 메인=================================================== -->
+ 	<!-- 총 멤버 수, 오늘의 가입 멤버 수, 총 탈퇴 회원 -->
 	<select id="getMemberCounts" resultType="avo">
 		SELECT
-		(SELECT count(member_idx) FROM members) AS totalMembers,
-		(SELECT count(member_idx) FROM members WHERE member_regdate = now()) AS
-		todayMembers,
-		(SELECT count(member_idx) FROM members WHERE member_active = 0) AS
-		unactiveMembers
+		    (SELECT COUNT(member_idx) FROM members) AS totalMembers, 
+		    (SELECT COUNT(member_idx) FROM members WHERE DATE(member_regdate) = CURDATE()) AS todayMembers, 
+		    (SELECT COUNT(member_idx) FROM members WHERE member_active = -2) AS unactiveMembers;
 	</select>
-
+	
+	<!-- 회원 게시글 확인 -->
 	<select id="boardmix" resultType="avo">
-		SELECT count(b_idx) AS totalb_idx,
-		count(t_idx) AS totalt_idx
-		,count(cp_idx) AS totalcp_idx
-		FROM members m
-		inner join board_free b on m.member_idx = b.member_idx
-		inner join board_with w on m.member_idx = w.member_idx
-		inner join board_camp c on m.member_idx = c.member_idx
+		SELECT count(member_free) AS totalb_idx,
+				count(member_with) AS totalt_idx
+				,count(member_camp) AS totalcp_idx
+				FROM members
 	</select>
-
-	<select id="adminmainqna" resultType="int">
+	
+	<!-- 동행 매칭 내역 확인 -->
+	<select id="adminmainmatch" resultType="int">
 		SELECT count(pm_idx) AS totalpm_idx
 		FROM with_promise
 	</select>
-
-	<select id="adminmainmatch" resultType="int">
+	
+	<!-- qna내역 확인 -->
+	<select id="adminmainqna" resultType="int">
 		SELECT count(qna_idx) AS totalqnl
 		FROM qna
 		WHERE qna_status = 0
 	</select>
-
+	
+	<!-- 신고 내역 확인 -->
 	<select id="adminmainreport" resultType="int">
 		SELECT count(report_idx) AS totalreport
 		FROM admin_report
 		WHERE report_date = now()
 	</select>
+	
+
+
+	
+<!-- =====================================================홈화면============================================================= -->
+	<!-- 가장 인기있는 게시글 5개 -->
+	<select id="getwithboard" resultType="avo">
+		SELECT *
+		FROM board_with
+		ORDER BY t_hit DESC
+		LIMIT 5;
+	</select>
+	
+	<!-- 가장 인기있는 캠핑장 3개-->
+	<select id="camphit" resultType="cvo">
+		SELECT *
+		FROM camp_list
+		ORDER BY hit DESC
+		LIMIT 3;
+	</select>
+	
+<!-- ==============================================================팝업=====================================================  -->
+	<!-- 팝업 글쓰기 -->
+	<insert id="popUPWrite" parameterType="avo">
+		insert into popup(writer,title, regdate, f_name)
+		values(#{writer},#{title},sysdate(), #{f_name})
+	</insert>
+	
+	<!-- 페이징 - 팝업 개수 -->
+	<select id="count" resultType="int">
+		select count(*) from popup
+	</select>
+
+	<!-- 팝업 리스트 -->	
+	<select id="popUPlist" parameterType="Map" resultType="avo">
+		SELECT * FROM popup ORDER BY popidx DESC LIMIT  #{limit} OFFSET #{offset} 
+	</select>
+	
+	<!-- 팝업 엑티브 1인것들만 보이게하기 -->
+	<select id="popmain" parameterType="String" resultType="String">
+		SELECT * FROM popup where active=1
+	</select>
+	
+	<!-- 팝업 변경하기1 -->
+	<update id="popupdate" parameterType="avo">
+    UPDATE popup 
+	SET active = 1 
+	WHERE popidx = #{popidx}
+	</update>
+	<!-- 팝업 변경하기2 -->
+	<update id="popupdate2" parameterType="avo">
+    UPDATE popup 
+	SET active = 0 
+	WHERE popidx != #{popidx}
+	</update>
+	
+	<!-- 팝업 삭제하기 -->
+	<delete id="popdelete" parameterType="String">
+	DELETE FROM popup WHERE popidx = #{popidx}
+	</delete>
+	
+<!-- ===========================================================멤버리스트=================================================== -->
+
+	<!-- 유저 검색 -->
+	<sql id="criteria">
+	    <if test="keyword != null and searchType != null">
+	        where 
+	        <choose>
+	            <when test="searchType == 'name'">
+	                member_name like concat('%', #{keyword}, '%')
+	            </when>
+	            <when test="searchType == 'id'">
+	                member_id like concat('%', #{keyword}, '%')
+	            </when>
+	            <when test="searchType == 'nickname'">
+	                member_nickname like concat('%', #{keyword}, '%')
+	            </when>
+	        </choose>
+	    </if>
+	</sql>
+
+	<select id="getmemberSearch" parameterType="Map" resultType="mvo">
+	    select *
+	    from members
+	    <include refid="criteria"></include>
+	    order by member_idx desc 
+	    limit #{limit} offset #{offset}
+	</select>
+	
+	<!-- 페이징 - 유저리스트 -->
+	<select id="count2" resultType="int">
+		select count(*) from members
+	</select>
+	
+	<!-- 멤버스 테이블 전체 불러오기 -->
 	<select id="adminmemberreport" resultType="amvo">
 		SELECT *
 		FROM members
 		WHERE member_idx =#{member_idx}
 	</select>
+	
+<!-- ===========================================================신고 리스트=================================================== -->
 
-<!-- 회원정보 -->
+	<!-- 신고 검색 조건을 포함한 SQL 템플릿 -->
+		<sql id="criteria2">
+		    <if test="keyword != null and searchType != null">
+		        where 
+		        <choose>
+		            <when test="searchType == 'content'">
+		                report_content like concat('%', #{keyword}, '%')
+		            </when>
+		            <when test="searchType == 'reportmember'">
+		                reportmember_idx like concat('%', #{keyword}, '%')
+		            </when>
+		            <when test="searchType == 'member'">
+		                member_idx like concat('%', #{keyword}, '%')
+		            </when>
+		        </choose>
+		    </if>
+		</sql>
+		
+		<!-- 신고 검색 쿼리 -->
+		<select id="getreportSearch" parameterType="Map" resultType="amvo">
+		    select *
+		    from admin_report
+		    <if test="keyword != null and searchType != null">
+		        <include refid="criteria2"/>
+		    </if>
+		    order by report_idx desc 
+		    limit #{limit} offset #{offset}
+		</select>
 
+	
+	<!-- 페이징 - 신고 리스트 -->
+	<select id="count3" resultType="int">
+		select count(*) from admin_report
+	</select>
+	
+	<!-- 씬고  테이블 전체 불러오기 -->
+	<select id="allreport" parameterType="Map" resultType="amvo">
+		SELECT *
+		FROM admin_report limit #{limit} offset #{offset}
+	</select>
+	
+	<!-- ===========================================================회원정보====================================================== -->
+
+	
+	<!-- 멤버정보, 게시판 정보 한번에 불러오기 -->
 	<select id="boardall" resultType="amvo" parameterType="String">
 	    SELECT *
 	    FROM members m
 	    INNER JOIN board_free b ON m.member_idx = b.member_idx
 	    INNER JOIN board_camp c ON m.member_idx = c.member_idx
-	   <!--  WHERE m.member_idx = #{member_idx} -->
+	   	WHERE m.member_idx = #{member_idx}
 	</select>
+	
+	<!-- 신고 몇번 총갯수 확인 -->
+	<select id="getmainadminreport" resultType="int">
+		SELECT count(report_idx)
+		FROM admin_report
+	</select>
+	
+	<!-- 신고 몇번 받은지 누적 횟수 확인 -->
 	<select id="reportall" resultType="int">
 		SELECT count(report_idx)
 		FROM admin_report
 		WHERE reportmember_idx =#{member_idx}
 	</select>
+	
+	<!-- 회원정보 수정 -->
 	<select id="memberedit" resultType="amvo" parameterType="amvo">
 		update members
 		set member_id = #{member_id}, member_name = #{member_name},
@@ -67,117 +217,137 @@
 		member_regdate = #{member_regdate}
 		where member_idx =#{member_idx}
 	</select>
+	
+	<!-- 회원 삭제하기 -->
 	<select id="memberstop" resultType="amvo" parameterType="String">
-		update members set member_active = 0
+		update members set member_active = -2
 		where member_idx =#{member_idx}
 	</select>
+	
+	<!-- 회원 삭제 취소 -->
 	<update id="memberstopcancel" parameterType="String">
-		update members set member_active = 1
+		update members set member_active = 0
 		where member_idx =#{member_idx}
 	</update>
+	
+	<!-- 관리자 지정하기  
 	<update id="memberupgrade" parameterType="String">
 		update members set member_grade = 1
 		where member_idx =#{member_idx}
 	</update>
+	-->
+	
+	<!-- 회원 이미지 삭제하기 -->
 	<select id="removeimg" parameterType="String">
 		update members set member_img = DEFAULT
 		where member_idx =#{member_idx}
 	</select>
-	<select id="getwithboard" resultType="avo">
-		SELECT *
-		FROM board_with
-		ORDER BY t_hit DESC
-		LIMIT 5;
-	</select>
-	<select id="camphit" resultType="cvo">
-		SELECT *
-		FROM camp_list
-		ORDER BY hit DESC
-		LIMIT 3;
-	</select>
-	
-<!-- 팝업  -->
-	<insert id="popUPWrite" parameterType="avo">
-		insert into popup(writer,title, regdate, f_name)
-		values(#{writer},#{title},sysdate(), #{f_name})
-	</insert>
-	<select id="count" resultType="int">
-		select count(*) from popup
-	</select>
-	<select id="count2" resultType="int">
-		select count(*) from members
-	</select>
-	<select id="popUPlist" parameterType="Map" resultType="avo">
-		SELECT * FROM popup ORDER BY popidx DESC LIMIT  #{limit} OFFSET #{offset} 
-		
-	</select>
-	<select id="popmain" parameterType="String" resultType="String">
-		SELECT * FROM popup where active=1
-	</select>
-	<update id="popupdate" parameterType="avo">
-    UPDATE popup 
-	SET active = 1 
-	WHERE popidx = #{popidx}
-	</update>
-	<update id="popupdate2" parameterType="avo">
-    UPDATE popup 
-	SET active = 0 
-	WHERE popidx != #{popidx}
-	</update>
+	<!-- 멤버리스트 모든 멤버 불러오기 -->
 	<select id="allmember" resultType="mvo">
 		SELECT *
 		FROM members
 		ORDER BY member_idx DESC LIMIT  #{limit} OFFSET #{offset}
 	</select>
-	<delete id="popdelete" parameterType="String">
-	DELETE FROM popup WHERE popidx = #{popidx}
-	</delete>
+
+	
+	<!-- 신고 세부내역 불러오기 -->
 	<select id="getradmineporteach" resultType="amvo" parameterType="String">
 		SELECT *
 		FROM admin_report
 		where reportmember_idx =#{member_idx}
 	</select>
+	
+	<!-- 회원 정지 세부내역 불러오기 -->
+	<select id="getradminstop" resultType="amvo" parameterType="String">
+		SELECT *
+		FROM admin_stop
+		where member_idx =#{member_idx}
+	</select>
+	
+	<!-- 신고 처리시 신고데이 설정 -->
 	<update id="adminreport" parameterType="map">
     UPDATE admin_report
 	SET report_day = #{report_day} 
 	WHERE report_idx = #{report_idx}
 	</update>
-	<!-- 회원정보- 회원 정지시키는 메퍼 -->
+	
+	<!-- 신고 처리시 날짜 업데이트 -->
 	<update id="adminreportadd"  parameterType="map">
-		UPDATE admin_report r
-			INNER JOIN members m ON r.member_idx = m.member_idx
-			INNER JOIN admin a ON a.admin_idx = r.admin_idx
-			SET r.report_ok_date = CASE 
-			                            WHEN r.report_day = #{report_day} THEN DATE_ADD(NOW(), INTERVAL #{report_day} DAY)
-			                            ELSE r.report_ok_date
-			                        END,
-		    m.member_active = -1,
-		    r.report_status = 1,
-		    r.report_now_date = NOW(),
-		    r.admin_idx = #{admin_idx}
-		WHERE r.member_idx = #{member_idx};
+		UPDATE admin_report
+			SET report_status = 1,
+			    report_now_date = NOW(),
+			    admin_idx = #{admin_idx}
+		WHERE reportmember_idx = #{reportmember_idx};
 
 	</update>
-	<!-- 회원정보- 회원 정지 풀리는 메퍼 -->
+
+	<!-- 신고 처리시 신고처리날짜 업데이트 -->	
+	<update id="adminreportadd2" parameterType="map">
+	UPDATE admin_report
+		SET 
+		    report_day =  #{report_day},
+		    report_ok_date = CASE
+		                        WHEN report_day =  #{report_day} THEN DATE_ADD(NOW(), INTERVAL  #{report_day} DAY)
+		                        ELSE report_ok_date
+		                    END
+		WHERE 
+		    reportmember_idx = #{reportmember_idx}
+	</update>
+	
+	<!-- 신고처리시 멤버테이블 정지 -->
+	<update id="adminreportadd3" parameterType="map">
+   		UPDATE members
+			SET member_active = -1
+		WHERE member_idx = #{reportmember_idx}
+	</update>
+	
+	<!-- 회원 정지 풀기 -->
 	<update id="statusupdate"  parameterType="String">
 	UPDATE admin_report a
 	INNER JOIN members m ON a.member_idx = m.member_idx
 	SET a.report_status = 1, m.member_active = 0
-	WHERE DATE(a.report_ok_date)&lt;= CURDATE();
+	WHERE DATE(a.report_ok_date)&lt; CURDATE();
 	</update>
+	
+	<!-- 신고 작성하기 -->
 	<insert id="reportwriteok" parameterType="avo">
 		insert into admin_report(report_content,reportmember_idx,member_idx,report_date,report_now_date,report_ok_date)
 		values(#{report_content},#{reportmember_idx},#{member_idx},sysdate(),sysdate(),sysdate())
 	</insert>
 	
+	<!-- 회원정지작성 -->
+	<insert id="reportallwrite" parameterType="amvo">
+	    insert into admin_stop(member_idx, stop_idx, stop_content, stop_date, stop_ok_date,  stop_status, stop_day, admin_idx) 
+	    values(#{member_idx}, #{stop_idx}, #{stop_content}, sysdate(), sysdate(), 1, #{stop_day}, #{admin_idx})
+	</insert>
 	
+	<!-- 회원정지시 상태변경 -->
+	<update id="reportallwrite2" parameterType="amvo">
+	    update admin_stop
+	    set stop_status = case 
+	                            when stop_status != 0 then stop_status + 1
+	                            else stop_status
+	                        end
+	    where member_idx = #{member_idx}
+	</update>
 	
-	
-	
-	
-	
-	
-	
-	
+	<!-- 회원 정지시 날짜 업데이트 -->
+		<update id="reportallwrite3" parameterType="amvo">
+	UPDATE admin_stop
+		SET 
+		    stop_day =  #{stop_day},
+		    stop_ok_date = CASE
+		                        WHEN stop_day =  #{stop_day} THEN DATE_ADD(NOW(), INTERVAL  #{stop_day} DAY)
+		                        ELSE stop_ok_date
+		                    END
+		WHERE 
+		    member_idx = #{member_idx}
+	</update>
+	<!-- 회원 정지시 멤버 업데이트 -->
+	<update id="reportallwrite4" parameterType="amvo">
+	UPDATE members
+			SET member_active = -1
+			WHERE member_idx = #{member_idx}
+	</update>
 	
 </mapper>

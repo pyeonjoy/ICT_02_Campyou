@@ -23,7 +23,7 @@ public class StompController {
 	public ChatVO sendMessage(@Payload ChatVO chvo) {
 		int res = myService.addChatMsg(chvo);
 		String my_idx = chvo.getSend_idx(); 
-        List<ChatVO> messagesToUpdate = myService.getMessagesToUpdate(chvo.getMsg_room());
+        List<ChatVO> messagesToUpdate = myService.getOneRoom(chvo.getMsg_room());
 
 	for (ChatVO message : messagesToUpdate) {
 		if (message.getSend_idx() != my_idx && message.getSend_date().compareTo(chvo.getSend_date()) < 0) {

@@ -1,10 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <title>로그인</title>
+<%@ include file="../hs/header.jsp" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/member.css">
 <!-- <script type="text/javascript">
@@ -49,6 +51,30 @@ $(document).ready(function() {
 	});
 </script>  -->
 
+
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+    $("#member_id").keyup(function() {
+        $.ajax({
+            url: "login_go_ok.do",
+            data : "member_id="+$("#member_id").val(),
+            method : "post", 
+            dataType: "text",
+            success : function(data) {
+            
+                  if ($("#member_id").val() == "admin") {
+                      $("#member_id").attr("name", "admin_id");
+                      $("#member_pwd").attr("name", "admin_pwd");
+                  }
+              } 
+          },
+          error : function() {
+              alert("읽기실패");
+          }
+      });
+  });
+});
+</script>  -->
 <script type="text/javascript">
 function logIn(f) {
 	if(f.member_id.value === ""){
@@ -61,7 +87,6 @@ function logIn(f) {
 		 f.member_pwd.focus();
 		 return;
 	 }
-    
 	f.action="login_go_ok.do";
 	f.submit();
 }
@@ -90,8 +115,7 @@ function naverLogIn() {
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-   <section class="vh-100" style="background-color: #508bfc;">
-   <section class="vh-100 bg-image" style="background-image: url('https://a.cdn-hotels.com/gdcs/production68/d64/b63a25ae-248e-4ca0-823d-381fa7156982.jpg');">
+   <section class="vh-100 bg-image" style="background-image: url('https://jindongri.zapza.me/upload/2021/0604/202106041622791076238010.jpg');">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -99,21 +123,27 @@ function naverLogIn() {
           <div class="card-body p-5 text-center">
             <h3 class="mb-5">로그인</h3>
 			<form>
-	            <div data-mdb-input-init class="form-outline mb-4">
-	              <input type="text" id="member_id" name="member_id" class="form-control form-control-lg" />
-	              <label class="form-label" for="member_id"><b>아이디</b></label>&nbsp;<span id="idSpanLogIn"></span>
-	            </div>
-	            <div data-mdb-input-init class="form-outline mb-4">
-	              <input type="password" id="member_pwd" name="member_pwd" class="form-control form-control-lg" />
-	              <label class="form-label" for="member_pwd"><b>비밀번호</b></label>
-	            </div>
+			
+			
+			
+					<div data-mdb-input-init class="form-outline mb-4">
+		              <input type="text" id="member_id" name="member_id" class="form-control form-control-lg" /><br>
+		              <label class="form-label" for="member_id"><b>아이디</b></label>&nbsp;<span id="idSpanLogIn"></span>
+		            </div>
+		            <div data-mdb-input-init class="form-outline mb-4">
+		              <input type="password" id="member_pwd" name="member_pwd" class="form-control form-control-lg" /><br>
+		              <label class="form-label" for="member_pwd"><b>비밀번호</b></label>
+		            </div>
+			
+			
+	           
 				
 	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit" id="m_id" onclick="logIn(this.form)">로그인</button>
 	            
 	            <br><br>
 	            <p class="small mb-5 pb-lg-2"><a class="text-muted" href="find_pwd_go.do">비밀번호 찾기</a> &nbsp;
 	           	<a class="text-muted" href="find_id_go.do">아이디 찾기</a></p>
-	           	<p class="text-center text-muted mt-5 mb-2">회원이 아니신가요?&nbsp;<a href="sign_up_page_go.do"class="fw-bold text-body">회원가입</a></p>
+	           	<p class="text-center text-muted mt-5 mb-1">회원이 아니신가요?&nbsp;<a href="sign_up_page_go.do"class="fw-bold text-body">회원가입</a></p>
 	            <hr class="my-4">  
 			</form>
 				<a id="a-color" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=4a601447a1662d2919cfc432b342bc38&redirect_uri=http://localhost:8090/kakaologin.do">
@@ -128,5 +158,6 @@ function naverLogIn() {
     </div>
   </div>
 </section>
+<%@ include file="../hs/footer.jsp" %>
 </body>
 </html>

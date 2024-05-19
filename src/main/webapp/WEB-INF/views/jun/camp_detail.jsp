@@ -160,64 +160,85 @@ function delHeart() {
 		}
 	});
 }
+function preloadImages() {
+    $("#detail_img img").each(function() {
+        let imageUrl = $(this).attr("src");
+        let img = new Image();
+        img.src = imageUrl;
+    });
+}
+
 let totalImages = $("#detail_img img").length;
-$(document).on("click", "#detail_img img", function() {
-    let imageUrl = $(this).attr("src");
-    let modalContent = '<div id="myModal" class="modal">' +
-                       '<span class="close"></span>' +
-                       '<img class="modal-content" src="' + imageUrl + '">' +
-                       '<img class="left_button" src="/resources/images/left.png">' +
-                       '<img class="right_button" src="/resources/images/right_.png">' +
-                       '</div>';
+$(document).ready(function() {
+    $("#detail_img img").each(function() {
+        $("<img>").attr("src", $(this).attr("src")).on("load", function() {
+        });
+    });
+    $(document).on("click", "#detail_img img", function() {
+        let imageUrl = $(this).attr("src");
+        let modalContent = '<div id="myModal" class="modal">' +
+                           '<span class="close"></span>' +
+                           '<img class="modal-content" src="' + imageUrl + '">' +
+                           '<img class="left_button" src="/resources/images/left.png">' +
+                           '<img class="right_button" src="/resources/images/right_.png">' +
+                           '</div>';
+        console.log(imageUrl);
+        $("#modal_show").append(modalContent);
+        let modal = document.getElementById("myModal");
+        let span = document.getElementsByClassName("close")[0];
 
-    $("#modal_show").append(modalContent);
-    let modal = document.getElementById("myModal");
-    let span = document.getElementsByClassName("close")[0];
-
-    modal.style.display = "block";
-    $(".modal-content").data("index", $(this).index());
-
-    span.onclick = function() {
-        modal.style.display = "none";
-        $("#myModal").remove();
-        $("body").css("overflow", "auto");
-        $(".left_button").off("click");
-        $(".right_button").off("click");
-    }
-
-    window.onclick = function(e) {
-        if (e.target == modal) {
+        modal.style.display = "block";
+        $("body").css("overflow", "hidden");
+        
+        
+        $(".modal-content").data("index", $(this).index());
+        
+        $(".modal-content").on("load", function() {
+            modal.style.display = "block";
+        });
+        span.onclick = function() {
             modal.style.display = "none";
             $("#myModal").remove();
             $("body").css("overflow", "auto");
-            $(".left_button").off("click");
-            $(".right_button").off("click");
         }
+
+        window.onclick = function(e) {
+            if (e.target == modal) {
+                modal.style.display = "none";
+                $("#myModal").remove();
+                $("body").css("overflow", "auto");
+            }
+        };
+        
+        $(".left_button").on("click", function() {
+            navigateImage("before");
+            console.log("이전");
+        });
+
+        $(".right_button").on("click", function() {
+            navigateImage("next");
+            console.log("다음");
+        });
+    });
+
+    function navigateImage(direction) {
+        let images = $("#detail_img img");
+        let currentIndex = $(".modal-content").data("index");
+
+        if (direction === "before") {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+        } else if (direction === "next") {
+            currentIndex = (currentIndex + 1) % images.length;
+        }
+
+        let nextImageSrc = images.eq(currentIndex).attr("src");
+        $("<img>").attr("src", nextImageSrc).on("load", function() {
+            $(".modal-content").attr("src", nextImageSrc);
+            $(".modal-content").data("index", currentIndex);
+        });
     }
-
-    $(".left_button").click(function() {
-        navigateImage("before");
-    });
-
-    $(".right_button").click(function() {
-        navigateImage("next");
-    });
 });
 
-function navigateImage(direction) {
-    let images = $("#detail_img img");
-    let currentIndex = $(".modal-content").data("index");
-
-    if (direction === "before") {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-    } else if (direction === "next") {
-        currentIndex = (currentIndex + 1) % images.length;
-    }
-
-    let nextImageSrc = images.eq(currentIndex).attr("src");
-    $(".modal-content").attr("src", nextImageSrc);
-    $(".modal-content").data("index", currentIndex);
-}
 
 
 

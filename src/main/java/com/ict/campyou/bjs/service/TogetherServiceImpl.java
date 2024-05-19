@@ -125,6 +125,7 @@ public class TogetherServiceImpl implements TogetherService{
 	@Override
 	public List<PromiseVO> getTogetherHistoryGet(String member_idx, int offset, int limit) throws Exception {
 		return togetherDAO.getTogetherHistoryGet(member_idx, offset, limit);
+
 	}
 	
 	@Override

@@ -33,7 +33,7 @@ $(document).ready(function() {
 		    method: "post",
 		    dataType: "xml",
 		    success: function(data) {
-		    	let option = "<option>전체</option>";
+		    	let option = "<option value=''>전체</option>";
 		        $(data).find(selectSido).each(function() {
 		        	$(this).find("sigungu").each(function() {
 			        	let sigungu = $(this).text();
@@ -50,7 +50,6 @@ $(document).ready(function() {
 	});
 	
 	$("#detail_search").click(function(){
-		console.log("클릭")
       	$(".search_button_option").toggle();
     });
 });
@@ -60,16 +59,16 @@ $(document).ready(function() {
 	<div>
 		<div class="search_wrap">
 			<select id="sido_search" name="sido_search">
-				<option>전체</option>
+				<option value="">전체</option>
 			</select> 
 			
 			<select id="sigungu_search" name="sigungu_search">
-				<option>전체</option>
+				<option value="">전체</option>
 			</select>
 			
 			<input type="text" id="keyword_input" placeholder="검색어를 입력하세요">
 			<input type="button" value="상세조건+" id="detail_search">
-			<button id="search_button">검색</button>
+			<button id="search_button" type="submit" onclick="list_search()">검색</button>
 		</div>
 		<div class="search_button_option">
 			<div class="option">

@@ -59,6 +59,7 @@ function updatePromiseStatus(pmIdx, status) {
     });
 }
 
+
 function promiseApplyList(page) {
 	let memberIdx = document.getElementById("member_idx").value;
     	$('.thwrapper').empty();
@@ -76,6 +77,7 @@ function promiseApplyList(page) {
 //                 let imgSrc = toHistory.member_img === null || toHistory.member_img === '' || toHistory.member_img === 'user2.png' ? '${path}/resources/images/user2.png' : '${path}/resources/images/' + toHistory.member_img;
                 let html = '';
             	html += '<div class="thwrapper1">';
+
                 html += '<button type="button" class="thwrapper1Button thwrapper1Button_active" onclick="promiseApplyList()">동행 신청 받은 내역</button>';
                 html += '<button type="button" class="thwrapper1Button" onclick="promiseApplySendList()">동행 신청 내역</button>';
                 html += '</div>';
@@ -196,6 +198,7 @@ function promiseApplySendList(page) {
                     let promise = toSendHistory[i];
 	                let html2 = '<div class="thul4">';
 	                html2 += '<ul><li class="th1">' + promise.member_nickname + '</li></ul>';
+
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_campname + '</a></li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
@@ -225,6 +228,7 @@ function promiseApplySendList(page) {
         		html += '</div>';
         		html += '</div>';
                 $('.thwrapper').append(html);
+
             }
 
             let paging = data.paging;
@@ -251,8 +255,8 @@ function promiseApplySendList(page) {
                 pagingHtml += '<li class="th_disable"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
                 pagingHtml += '<li class="th_disable"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
             } else {
-                pagingHtml += '<li><a href="javascript:promiseApplyList(' + (paging.beginBlock + paging.pagePerBlock) + '" class="th_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
-                pagingHtml += '<li><a href="javascript:promiseApplyList(' + paging.totalPage + '" class="th_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + (paging.beginBlock + paging.pagePerBlock) + ')" class="th_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + paging.totalPage + ')" class="th_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
             }
             $('.th_paging').append(pagingHtml);
         },

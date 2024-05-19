@@ -1,6 +1,7 @@
 package com.ict.campyou.hu.controller;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -27,6 +28,8 @@ import com.ict.campyou.hu.dao.BoardFreeVO;
 import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.CommentVO;
 import com.ict.campyou.hu.dao.MemberVO;
+import com.ict.campyou.hu.dao.AdminMembVO;
+import com.ict.campyou.hu.service.AdminMembService;
 import com.ict.campyou.hu.service.BoardFreeService;
 import com.ict.campyou.hu.service.CommBoardService;
 import com.ict.campyou.hu.service.CommentReplyService;
@@ -45,6 +48,9 @@ public class MemberController {
 	
 	@Autowired
 	private BoardFreeService boardFreeService;
+	
+	@Autowired
+	private AdminMembService adminMembService;
 	
 	//@Autowired
 	//private CampingGearService campingGearService;
@@ -67,7 +73,8 @@ public class MemberController {
 		  } 
 		  return new ModelAndView("error"); 
 	  }
-	
+	  
+	  //일반회원 회원가입
 	  @RequestMapping("sign_up_go.do")
 	  public ModelAndView getSignUp(MemberVO mvo, HttpServletRequest request) {
 		  try {
@@ -104,6 +111,7 @@ public class MemberController {
 		return new ModelAndView("hu/error");
 	  }
 	  
+	  //일반회원 로그인 페이지
 	  @RequestMapping("login_form.do")
 	  public ModelAndView getLoginForm() {
 		  try {
@@ -115,6 +123,7 @@ public class MemberController {
 		  return new ModelAndView("hu/error");
 	  }
 	  
+	  //일반회원 로그인
 	  @RequestMapping("login_go_ok.do")
 	  public ModelAndView getLogin(HttpServletRequest request, MemberVO vo) {
 		  try {
@@ -136,6 +145,95 @@ public class MemberController {
 				  mv.setViewName("redirect:/");
 				  mv.addObject("member_idx", vo2.getMember_idx());
 				  return mv;  
+	          }
+		  }catch (Exception e) {
+			System.out.println(e);
+		}
+		  return new ModelAndView("hu/error");
+	  }
+	  
+	  //관리자 회원가입 페이지 가기
+	  @RequestMapping("admin_signup_page_go.do") 
+	  public ModelAndView getAdminSignUpPage() { 
+		  try {
+			  	ModelAndView mv = new ModelAndView("hu/adminSignUp"); 
+			  	return mv; 
+		  }
+		  catch (Exception e) { 
+			  System.out.println(e); 
+		  } 
+		  return new ModelAndView("error"); 
+	  }
+	  
+	  //관리자 회원가입
+	  @RequestMapping("admin_sign_up_go.do")
+	  public ModelAndView getAdminSignUp(AdminMembVO admvo, HttpServletRequest request) {
+		  try {
+			  ModelAndView mv = new ModelAndView();
+			  
+			  String admin_id = request.getParameter("admin_id");
+			  String admin_pwd = request.getParameter("admin_pwd");
+			  String admin_name = request.getParameter("admin_name");
+			  String admin_nickname = request.getParameter("admin_nickname");
+			  String admin_phone = request.getParameter("admin_phone");
+			  String admin_email = request.getParameter("admin_email");
+			  
+			  String admin_encrypt_pwd = passwordEncoder.encode(admin_pwd);
+			  
+			  AdminMembVO admvo2 = new AdminMembVO();
+			  admvo2.setAdmin_id(admin_id);
+			  admvo2.setAdmin_pwd(admin_encrypt_pwd);
+			  admvo2.setAdmin_name(admin_name);
+			  admvo2.setAdmin_nickname(admin_nickname);
+			  admvo2.setAdmin_phone(admin_phone);
+			  admvo2.setAdmin_email(admin_email);
+			  
+			  int result = adminMembService.getAdminSignUp(admvo2);
+			  
+			  if(result > 0) {
+				  mv.setViewName("hu/adminLoginForm");
+				  return mv;
+			  }
+		  }catch (Exception e) {
+			System.out.println(e);
+		}
+		return new ModelAndView("hu/error");
+	  }
+	  
+	  //관리자 로그인 페이지 가기
+	  @RequestMapping("admin_login_form.do")
+	  public ModelAndView getAdminLoginForm() {
+		  try {
+			  ModelAndView mv = new ModelAndView("hu/adminLoginForm");
+			  return mv;
+		  }catch (Exception e) {
+			System.out.println(e);
+		}
+		  return new ModelAndView("hu/error");
+	  }
+	  
+	  //관리자 로그인 기능
+	  @RequestMapping("admin_login_go_ok.do")
+	  public ModelAndView getAdminLogin(HttpServletRequest request, AdminMembVO admvo) {
+		  try {
+			  HttpSession session = request.getSession();
+	          ModelAndView mv = new ModelAndView();
+	          
+	          AdminMembVO admvo2 = adminMembService.getAdminLogInOK(admvo);
+	          
+	          
+	          if(admvo2 == null || !passwordEncoder.matches(admvo.getAdmin_pwd(), admvo2.getAdmin_pwd()) && (admvo.getAdmin_id() != admvo2.getAdmin_id()) ) {
+	        	  mv.setViewName("redirect:/");
+	        	  //mv.addObject("pwdchk", "fail");
+	              return mv;
+	          }else {
+	        	  System.out.println(admvo2);
+	        	  if(admvo2 != null && admvo2.getAdmin_status().equals("1")){
+	        		  session.setAttribute("admin", admvo2); 
+	        		  mv.setViewName("redirect:/admin_login_form.do");
+					  return mv;
+				  }		 
+
 	          }
 		  }catch (Exception e) {
 			System.out.println(e);
@@ -213,23 +311,18 @@ public class MemberController {
 		  try {
 			  ModelAndView mv = new ModelAndView("hu/boardFree/communityBoard");
 			  
-			  //�럹�씠吏� 湲곕쾿 & �쟾泥� 寃뚯떆臾� �닔
 			  int count = commBoardService.getTotalCount();
 			  paging.setTotalRecord(count);
 			  
-			  //�쟾泥� �럹�씠吏� �닔
 			  if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 				  paging.setTotalPage(1);
 			  }else {
-				  //�쟾泥� �럹�씠吏� �닔 (DB寃뚯떆臾� �닔 / �븳�럹�씠吏��떦 10以�)
 				  paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-				  // (DB寃뚯떆臾� �닔 % �븳�럹�씠吏��떦 10以� != 0) �씠硫� 1pg瑜� �뜑�븳�떎.
 				  if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
 					  paging.setTotalPage(paging.getTotalPage() + 1);
 				  }
 			  }
 			  
-			  //�쁽�옱 �럹�씠吏� 援ы븿
 			  String cPage = request.getParameter("cPage");
 			  if(cPage == null) {
 				  paging.setNowPage(1);
@@ -237,12 +330,8 @@ public class MemberController {
 				  paging.setNowPage(Integer.parseInt(cPage));
 			  }
 			  
-			  // begin, end 援ы븯湲� (Oracle)
-			  // offset 援ы븯湲�
-			  // offset = limit * (�쁽�옱�럹�씠吏�-1);
 			  paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
 			  
-			  //�떆�옉 釉붾줉 // �걹釉붾줉
 			  paging.setBeginBlock(
 						(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
 				paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
@@ -253,19 +342,25 @@ public class MemberController {
 			  
 			  List<CommBoardVO> commBoard_list = commBoardService.getCommBoardList(paging.getOffset(), paging.getNumPerPage());
 			  
-			  //留대쾭�젙蹂� �꽭�꽑 遺�瑜닿린
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+			
 			  CommBoardVO cbvo = new CommBoardVO();
+		
 			  
 			  if(memberInfo != null) {
-				  //留대쾭�꽭�뀡 �젙蹂대�� �떞湲�
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
+			  }
+			  
+			  if(adminInfo != null) {
+				  cbvo.setMember_idx(adminInfo.getAdmin_idx());
 			  }
 			  
 			  if (commBoard_list != null) {
 					mv.addObject("commBoard_list", commBoard_list);
 					mv.addObject("paging", paging);
 					mv.addObject("memberInfo", memberInfo);
+					mv.addObject("adminInfo", adminInfo);
 					return mv;
 				}
 				return new ModelAndView("hu/boardFree/error");
@@ -281,9 +376,14 @@ public class MemberController {
 			  ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardWrite");
 			  
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
-			  
+			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+
 			  if(memberInfo != null) {
 				  mv.addObject("memberInfo", memberInfo);
+				  return mv;
+			  }
+			  if(adminInfo != null) {
+				  mv.addObject("adminInfo", adminInfo);
 				  return mv;
 			  }
 		  } catch (Exception e) {
@@ -297,18 +397,40 @@ public class MemberController {
 		  try {
 			  ModelAndView mv = new ModelAndView("redirect:community_board.do");
 			  
-			  //留대쾭�젙蹂� �꽭�꽑 遺�瑜닿린
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 			  
 			  String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 			  MultipartFile file = cbvo.getFile();
 			  
+			  //일반회원 글쓰기
 			  if(memberInfo != null) {
-				  //留대쾭�꽭�뀡 �젙蹂대�� �떞湲�
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 				  
 				  if(file.isEmpty()) {
-					  cbvo.setBf_name(""); // "" �븞�뿉 path �꽔�쑝硫� 寃쎈줈媛� �굹�삩�떎.
+					  cbvo.setBf_name(""); 
+				  }else {
+					  UUID uuid = UUID.randomUUID();
+					  String f_name = uuid.toString() + "_" + file.getOriginalFilename();
+					  cbvo.setBf_name(f_name);
+					  
+					  byte[] in = file.getBytes();
+					  File out = new File(path, f_name);
+					  FileCopyUtils.copy(in, out);
+				  }	
+				  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));
+				  int result = commBoardService.getCommBoardInsert(cbvo);
+				  if(result > 0) {
+					  return mv;
+				  } 
+			  }
+			  
+			  //관리자 글쓰기
+			  if(adminInfo != null) {
+				  cbvo.setAdmin_idx(adminInfo.getAdmin_idx());
+				  
+				  if(file.isEmpty()) {
+					  cbvo.setBf_name(""); 
 				  }else {
 					  UUID uuid = UUID.randomUUID();
 					  String f_name = uuid.toString() + "_" + file.getOriginalFilename();
@@ -335,23 +457,39 @@ public class MemberController {
 		  try {
 			  ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardDetail");
 			  
-			  //留대쾭�젙蹂� �꽭�꽑 遺�瑜닿린
+		
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 			  
-			  //hit �뾽�뜲�씠�듃
+			 
 			  int result = commBoardService.getCommBoardHit(b_idx);
 			  
 			  if(memberInfo != null) {
-				  //�긽�꽭蹂닿린
 				  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 				  
-				  //留대쾭�꽭�뀡 �젙蹂대�� �떞湲�
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 				  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
 				  if(result > 0 && cbvo != null && cbvo.getMember_idx().equals(memberInfo.getMember_idx())) {
+					  
 					  mv.addObject("cbvo", cbvo);
 					  mv.addObject("memberInfo", memberInfo);
+					  mv.addObject("adminInfo", adminInfo);
+					  //mv.addObject("member_nickname", memberInfo.getMember_nickname());
+					  return mv;
+				  }  
+			  }
+			  if(adminInfo != null) {
+				  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
+				  
+				  cbvo.setAdmin_idx(adminInfo.getAdmin_idx());
+				  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
+
+				  if(result > 0 && cbvo != null && cbvo.getAdmin_idx().equals(adminInfo.getAdmin_idx())) {
+					  
+					  mv.addObject("cbvo", cbvo);
+					  mv.addObject("memberInfo", memberInfo);
+					  mv.addObject("adminInfo", adminInfo);
 					  //mv.addObject("member_nickname", memberInfo.getMember_nickname());
 					  return mv;
 				  }  
@@ -385,7 +523,7 @@ public class MemberController {
 		  return new ModelAndView("hu/boardFree/communityBoardReply");
 	  }
 	  
-	  	//�떟湲� �엯�젰 �궫�엯
+	  	//댓글입력 저장
 	  	@RequestMapping("comment_insert.do")
 		public ModelAndView getCommentInsert(CommentVO cvo, String cPage, @ModelAttribute("b_idx")String b_idx) {
 			ModelAndView mv = new ModelAndView("redirect:comm_board_reply_ok.do");
@@ -529,70 +667,87 @@ public class MemberController {
 	  	public ModelAndView getCommBoardContent(@ModelAttribute("cPage") String cPage, String b_idx, HttpSession session) {
 	  		try {
 	  			ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardContent");
-	  			//留대쾭�젙蹂� �꽭�꽑 遺�瑜닿린
+	  			
 				MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+				AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 				  
-				  //hit �뾽�뜲�씠�듃
-				  int result = commBoardService.getCommBoardHit(b_idx);
+				int result = commBoardService.getCommBoardHit(b_idx);
 				  
-				  //鍮꾪쉶�썝 寃뚯떆�뙋 蹂닿린 & �뙎湲�蹂닿린
-				  if(memberInfo == null) {
-					  //�긽�꽭蹂닿린
-					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
-					  //�뙎湲� 由ъ뒪�듃
-					  List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
+				
+				if(memberInfo == null && adminInfo == null) {
+					
+					CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 					 
-					  if(result > 0 && cbvo != null ){
-						  mv.addObject("commBoard_list2", commBoard_list2);
-						  mv.addObject("cbvo", cbvo);
-						  return mv;
-					  } 
-					  return mv;
-				  }
-				  if(memberInfo != null) {
-					  //�긽�꽭蹂닿린
-					  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
+					List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
+					 
+					if(result > 0 && cbvo != null ){
+						mv.addObject("commBoard_list2", commBoard_list2);
+						mv.addObject("cbvo", cbvo);
+						return mv;
+					} 
+					return mv;
+				}
+				
+				if(memberInfo != null) {
+					
+					CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 					  
-					  //留대쾭�꽭�뀡 �젙蹂대�� �떞湲�
-					  cbvo.setMember_idx(memberInfo.getMember_idx());
-					  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
+					 
+					cbvo.setMember_idx(memberInfo.getMember_idx());
+					//cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
-					  if(result > 0 && cbvo != null && cbvo.getMember_idx().equals(memberInfo.getMember_idx())) {
-						  List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
-						  mv.addObject("commBoard_list2", commBoard_list2);
-						  mv.addObject("cbvo", cbvo);
-						  mv.addObject("memberInfo", memberInfo);
-						 // mv.addObject("member_nickname", memberInfo.getMember_nickname());
-						  return mv;
-					  }  
-				  }
-			  } catch (Exception e) {
-				System.out.println(e);
-			  }
-			  return new ModelAndView("hu/boardFree/error");
+					if(result > 0 && cbvo != null && cbvo.getMember_idx().equals(memberInfo.getMember_idx())) {
+						List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
+						mv.addObject("commBoard_list2", commBoard_list2);
+						mv.addObject("cbvo", cbvo);
+						mv.addObject("memberInfo", memberInfo);
+					    // mv.addObject("member_nickname", memberInfo.getMember_nickname());
+						return mv;
+					}  
+				}
+				
+				if(adminInfo != null) {
+					CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
+					  
+					cbvo.setAdmin_idx(adminInfo.getAdmin_idx());
+					if(result > 0 && cbvo != null && cbvo.getAdmin_idx().equals(adminInfo.getAdmin_idx())) {
+						List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
+						mv.addObject("commBoard_list2", commBoard_list2);
+						mv.addObject("cbvo", cbvo);
+						mv.addObject("adminInfo", adminInfo);
+					    // mv.addObject("member_nickname", memberInfo.getMember_nickname());
+					
+						return mv;
+					}  
+				}
+			 } catch (Exception e) {
+				 	System.out.println(e);
+			 }
+			 return new ModelAndView("hu/boardFree/error");
 	  	}
 	  	
 	  	
-	  	//�뙎湲� 異쒕젰
 	  	 @RequestMapping("comm_board_reply_ok.do")
 		   public ModelAndView getBbsDetail(String b_idx, String cPage, HttpSession session) {
 			  
 			   ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardContent");
 			  
 			   MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+			   AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 			  
-			   //hit �뾽�뜲�씠�듃
+			   //hit 카운트 계산
 			   int result = commBoardService.getCommBoardHit(b_idx);
 			  
-			   // �긽�꽭蹂닿린 
+			   
 			   CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 			  
 				
 			   if(result>0 && cbvo != null) {
-				   // �뙎湲� 媛��졇�삤湲� 
+				   
 				   List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
 				   mv.addObject("commBoard_list2", commBoard_list2);
 				   mv.addObject("memberInfo", memberInfo);
+				   mv.addObject("adminInfo", adminInfo);
 				   mv.addObject("cbvo", cbvo);
 				   mv.addObject("cPage", cPage);
 			 	   return mv;
@@ -640,14 +795,12 @@ public class MemberController {
 		}
 	  		*/
 	  	
-	  	
-	  	// �뙎湲��쓽 �뙎湲� �궫�엯 
-	
 		@RequestMapping("comment_reply_insert.do")
 		public ModelAndView getCommentReplyInsert(CommentVO cvo, String cPage, @ModelAttribute("b_idx")String b_idx, HttpSession session) {
 			ModelAndView mv = new ModelAndView("redirect:comm_board_reply_ok.do");
 			
 			MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+			AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 			 
 			List<CommentVO> lcvo = commBoardService.getCommentReplyList(b_idx);
 			
@@ -675,6 +828,7 @@ public class MemberController {
 			if(result2 > 0) {
 				mv.addObject("lcvo", lcvo);
 				mv.addObject("memberInfo", memberInfo);
+				mv.addObject("adminInfo", adminInfo);
 				mv.addObject("cPage", cPage);
 				return mv;
 			}

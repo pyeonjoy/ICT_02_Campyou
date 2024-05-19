@@ -15,7 +15,7 @@
 <body>
 <body>
 
-		<%@ include file="../hs/mypage_menu.jsp"%>
+<%@ include file="../hs/mypage_menu.jsp"%>
 
   <div class="faq_container">
     <h3 class="faq_title">FAQ</h3>
@@ -33,13 +33,13 @@
    </div> 
    <div class="question_container question_container--2"> 
 	      <c:forEach var="faqs2" items="${faqs2}">
-	      <div class="questions">
+	      <div class="questions2">
 	        <p class="question" data-question="${faqs2.faq_idx}"> > ${faqs2.faq_title}</p>
 	        <p class ="answer answer--${faqs2.faq_idx}">${faqs2.faq_content}</p>  
 	      </div>
 	       </c:forEach> 
    </div>
   </div>
-</body>
+ <%@ include file="../hs/footer.jsp"%>
 </body>
 </html>

@@ -202,6 +202,7 @@ public class TogetherAjaxController {
 	@ResponseBody
 	public Map<String, Object> getTogetherHistoryGet(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
 		int count = togetherService.getToHistoryCount(member_idx);
+
 		paging.setTotalRecord(count);
 		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 			paging.setTotalPage(1);
@@ -371,6 +372,7 @@ public class TogetherAjaxController {
 		}
 		return -1;
 	}
+
 	
 	@RequestMapping(value = "to_comment_delete.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
@@ -474,4 +476,5 @@ public class TogetherAjaxController {
 		}
 		return -1;
 	}
+
 }

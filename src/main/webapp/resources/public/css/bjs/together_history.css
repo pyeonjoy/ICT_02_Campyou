@@ -24,6 +24,7 @@
 	align-items: center;
 	width: 100%;
 	margin-top: 1rem;
+
 }
 .thwrapper1Button{
 	width: 48.5%;
@@ -31,6 +32,7 @@
 	font-size: 1rem;
 /* 	padding: 1rem 10rem; */
 }
+
 .thwrapper1Button_active{
 	background-color: #053610;
 	color: white;
@@ -48,6 +50,7 @@
 	padding: 0.7rem 0;
 	text-align: center;
 }
+
 .thul3{
 	width: 50%;
 	display: grid;
@@ -78,6 +81,7 @@
 	align-items: center;
 	justify-content: center;
 }
+
 .thul4{
 	width: 50%;
 	height: 100px;
