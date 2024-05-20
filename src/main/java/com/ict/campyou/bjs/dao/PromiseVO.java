@@ -1,7 +1,7 @@
 package com.ict.campyou.bjs.dao;
 
 public class PromiseVO {
-	private String pm_idx, t_idx, member_idx, pm_state, pm_end, pm_regdate, tf_name, t_startdate, t_enddate, t_campname, t_numpeople, member_img, member_dob, member_nickname;
+	private String pm_idx, t_idx, member_idx, pm_state, pm_master, pm_end, pm_regdate, pm_regdate_ok, tf_name, t_startdate, t_enddate, t_campname, t_numpeople, member_img, member_dob, member_nickname;
 	private int promise_count, promise_my_count;
 
 	public String getPm_idx() {
@@ -35,6 +35,14 @@ public class PromiseVO {
 	public void setPm_state(String pm_state) {
 		this.pm_state = pm_state;
 	}
+	
+	public String getPm_master() {
+		return pm_master;
+	}
+
+	public void setPm_master(String pm_master) {
+		this.pm_master = pm_master;
+	}
 
 	public String getPm_end() {
 		return pm_end;
@@ -50,6 +58,14 @@ public class PromiseVO {
 
 	public void setPm_regdate(String pm_regdate) {
 		this.pm_regdate = pm_regdate;
+	}
+
+	public String getPm_regdate_ok() {
+		return pm_regdate_ok;
+	}
+
+	public void setPm_regdate_ok(String pm_regdate_ok) {
+		this.pm_regdate_ok = pm_regdate_ok;
 	}
 
 	public String getTf_name() {

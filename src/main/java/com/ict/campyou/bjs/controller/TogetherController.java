@@ -127,7 +127,7 @@ public class TogetherController {
 		ModelAndView mv = new ModelAndView();
 		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
 		TogetherVO tvo = togetherService.getTogetherDetail(t_idx);
-		int pvo = togetherService.getPomiseCount(t_idx);
+		int proCount = togetherService.getPomiseCount(t_idx);
 		
 		// member의 dob 꺼내서 나이로 환산 후 연령대 구해서 set
 	    LocalDate dob = LocalDate.parse(tvo.getMember_dob());
@@ -153,7 +153,7 @@ public class TogetherController {
 			mv.setViewName("bjs/together_detail");
 			mv.addObject("tvo", tvo);
 			mv.addObject("memberUser", memberUser);
-			mv.addObject("appluNum", pvo);
+			mv.addObject("proCount", proCount);
 			return mv;
 		}
 		return new ModelAndView("error");
@@ -187,6 +187,26 @@ public class TogetherController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bjs/together_history");
 		mv.addObject("member_idx", member_idx);
+		return mv;
+	}
+	
+	@RequestMapping("together_partner.do")
+	public ModelAndView getTogetherPartner(@RequestParam("member_idx")String member_idx, @RequestParam(value = "cPage", required = false)String cPage) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bjs/together_partner");
+		mv.addObject("member_idx", member_idx);
+		if(cPage != null) {
+			mv.addObject("cPage", cPage);
+		}
+		return mv;
+	}
+	
+	@RequestMapping("together_people_detail.do")
+	public ModelAndView getTogetherPeopleDetail(@ModelAttribute("cPage")String cPage, TogetherVO tvo) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bjs/together_people_detail");
+		mv.addObject("tvo", tvo);
+		mv.addObject("cPage", cPage);
 		return mv;
 	}
 	

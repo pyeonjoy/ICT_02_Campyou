@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,8 +20,12 @@
             </ul>
         </div>
         <div class="header_right">
-            <ul>
-                <li><a href="logout_form.do">로그아웃</a></li>
+            <ul><c:choose>
+                <c:when test="${empty memberInfo && empty admin}">
+							<li><a href="login_form.do">로그인</a></li>
+							<li><a href="sign_up_page_go.do">회원가입</a></li>
+						</c:when>
+				</c:choose>
             </ul>
        </div>
     </div>

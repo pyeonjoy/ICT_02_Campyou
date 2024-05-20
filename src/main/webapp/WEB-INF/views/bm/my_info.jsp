@@ -34,7 +34,7 @@
 <body>
 
 <%@ include file="../hs/mypage_menu.jsp"%>
-
+<div class="mypage">
    <h3 class="my_title">마이페이지</h3>
   <form class="user_info" method="post" enctype="multipart/form-data">
     <div class="user_img_container">
@@ -58,7 +58,9 @@
 <input type="file" name="file" class="file" id="user_img" onchange="setThumbnail(this, event)">
 	      </div>
     </div>
+    
     <div class="user_info_container">
+    <div class="user_info_container_left">
       <div class="detail name_detail">
         <label for="name" >이름</label><input type="text" id="name" name="member_name"  class="input input_name" disabled value="${mvo.member_name }">
       </div>
@@ -79,7 +81,7 @@
       <div class="detail pw_detail">
         <label for="password" >비밀번호</label> <input type="password" id="password" name="member_pwd" class="input input_pw" >
       </div>
-      <button class="btn btn-check" onclick="checkPassword(event)">확인</button>
+      
       <div class="detail nickname_detail">
         <label for="nickname" >닉네임</label><input type="text" id="nickname" name="member_nickname"  class="input input_nickname" value="${mvo.member_nickname }">
       </div>
@@ -94,8 +96,14 @@
         <button class="btn btn_change" onclick="handleChangeInfo(this.form)">저장</button>
         <button class="btn btn_pwdreset" onclick="handle_pwd(${mvo.member_idx}, this.form)">비밀번호 변경</button>
       </div>
-    </div>
+      </div>
+      <div class="user_info_container_right">
+      	<button class="btn btn-check" onclick="checkPassword(event)">확인</button>
      <button class="btn btn-userDelete" onclick="handle_delete(${mvo.member_idx}, this.form)">회원탈퇴</button>
+      </div>
+    </div>
   </form>
+  </div>
+  <%@ include file="../hs/footer.jsp"%>
 </body>
 </html>

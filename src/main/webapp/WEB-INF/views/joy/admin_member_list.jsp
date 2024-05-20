@@ -8,14 +8,14 @@
 <link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
 <%@ include file="../hs/admin_menu.jsp" %>
 <style type="text/css">
+
 #bbs{
-padding-top: 300px;
+padding: 200px 100px 300px 100px;
 }
 #bbs table {
-	width:800px;
+	width:1200px;
 	margin:0 auto;
 	margin-top:20px;
-	border: 1px solid black;
 	border-collapse: collapse;
 	font-size: 14px;
 }
@@ -28,75 +28,104 @@ padding-top: 300px;
 
 #bbs table th, #bbs table td {
 	text-align: center;
-	border: 1px solid black;
-	padding: 4px 10px;
+	padding: 14px 10px;
+	width: 9%;
+}
+#bbs table th{
+  background-color: #032805;
+  color: white;
+}
+#bbs table td{
+	border-bottom: 1px solid black;
+  background-color: white;
+  color: #032805;
 }
 
-.no { width: 15% }
-.subject { 	width: 30% }
-.writer {	width: 20% }
-.reg {	width: 20% }
-.hit {	width: 15% }
-.title {	background: lightsteelblue }
-.odd {	background: silver }
-
-/* paging */
-table tfoot ol.paging {
+.pwrapper{
+	grid-column: 3;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+/* 	width: 100%; */
+}  
+.paging{
+	display: flex;
+	width: 100%;
+	justify-content: center;
 	list-style: none;
+	margin: 1rem 0;
+	align-items: center;
 }
 
-table tfoot ol.paging li {
-	float: left;
-	margin-right: 8px;
+.nowpagecolor{
+	padding: 0 0.5rem;
+	margin: 0 0.5rem;
+	text-decoration: none;
+	background-color: white;
+	color: #FFBA34;
+	font-size: 1.4rem;
 }
-
-table tfoot ol.paging li a {
-	display: block;
-	padding: 3px 7px;
-	border: 1px solid #00B3DC;
-	color: #2f313e;
-	font-weight: bold;
+.nowpage{
+	padding: 0 0.5rem;
+	margin: 0 0.5rem;
+	background-color: white;
+	color: black;
+	text-decoration: none;
+	font-size: 1.4rem;
 }
-
-table tfoot ol.paging li a:hover {
-	background: #00B3DC;
-	color: white;
-	font-weight: bold;
-}
-
-.disable {
-	padding: 3px 7px;
-	border: 1px solid silver;
+.disable{
 	color: silver;
+	margin: 0 1rem;
+	text-decoration: none;
+	border-radius: 50%; font-size: 2rem;
 }
-
-.now {
-	padding: 3px 7px;
-	border: 1px solid #ff4aa5;
-	background: #ff4aa5;
-	color: white;
-	font-weight: bold;
+.to_able{
+	color: black;
+	margin: 0 1rem;
+	text-decoration: none;
+}
+.nowpage:hover{
+	color: #FFBA34;
+}
+.toPagingContainer{
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+}
+.togetherWriteButton{
+	grid-column: 4;
+    display: flex;
+    justify-content: flex-end;
+}
+.searchbtn{
+width: 2.7rem;
+    height: 25px;
+    border: none;
+    margin-right: 1rem;
+    background-color: #041601;
+    color: white;
+    text-align: center;
 }
 </style>
 </head>
 <body>
 	<div id="bbs" align="center">
 		<table summary="게시판 목록">
-			<caption>게시판 목록</caption>
+			<caption style="margin-bottom:100px;"><h3>유저 목록</h3></caption>
 			<thead>
 				<tr class="title">
-					<th class="no">선</th>
+					<th >선택</th>
 					<th class="no">idx</th>
 					<th class="subject">id</th>
 					<th class="writer">이름</th>
-					<th class="reg">닉네임</th>
-					<th class="reg">생년월일</th>
-					<th class="hit">번호</th>
-					<th class="hit">이메일</th>
-					<th class="hit">가입일</th>
-					<th class="subject">관리자</th>
-					<th class="hit">등급</th>
-					<th class="hit">로그인</th>
+					<th class="subject">닉네임</th>
+					<th class="subject">생년월일</th>
+					<th class="subject" style="width:500px;">번호</th>
+					<th class="subject">이메일</th>
+					<th class="subject">가입일</th>
+					<th class="subject">등급</th>
+					<th class="subject">상태</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -108,7 +137,7 @@ table tfoot ol.paging li a:hover {
 						<c:forEach var="k" items="${member}" varStatus="vs">
 							<tr>
 							  <form action="admin_member_detail.do?member_idx=${k.member_idx }" method="post">
-							  <td><input type="submit" value="선택"></td>
+							  <td><input type="submit" value="선택" style="background-color:#FFBA34"></td>
 							    <td>${k.member_idx }</td>
 							    <td>${k.member_id }</td>
 							    <td>${k.member_name }</td>
@@ -116,10 +145,25 @@ table tfoot ol.paging li a:hover {
 							    <td>${k.member_dob }</td>
 							    <td>${k.member_phone }</td>
 							    <td>${k.member_email }</td>
-							    <td>${k.member_regdate }</td>
-							    <td>${k.member_grade }</td>
-							    <td>${k.member_active }</td>
-							    <td>${k.member_login }</td>
+							    <td class="subject">${k.member_regdate }</td>
+							    <c:if test="${k.member_grade== 0}">
+							    <td class="subject">일반회원</td>
+							    </c:if>
+							    <c:if test="${k.member_grade== 1}">
+							    <td class="subject">열심회원</td>
+							    </c:if>
+							    <c:if test="${k.member_grade== 2}">
+							    <td class="subject">우수회원</td>
+							    </c:if>
+							    <c:if test="${k.member_active== 0}">
+							    <td class="subject">일반회원</td>
+							    </c:if>
+							    <c:if test="${k.member_active== -1}">
+							    <td class="subject">정지회원</td>
+							    </c:if>
+							    <c:if test="${k.member_active== -2}">
+							    <td class="subject">탈퇴회원</td>
+							    </c:if>
 							</form>
 							</tr>
 						</c:forEach>
@@ -127,34 +171,13 @@ table tfoot ol.paging li a:hover {
 				</c:choose>
 			</tbody>
 			<tfoot>
-				<tr>
-					<form action="freeList" method="post">
-						<div class="search-wrap">
-							<button type="submit" NAME="searchName">검색</button>
-							<input type="text" name="searchType">
-							<select>
-								<option name="member_name">이름</option>
-								<option name="member_id">ID</option>
-								<option name="member_nickname">닉네임</option>
-							</select>
-						</div>
-						<input type="hidden" name="pageNum" value="1">
-						<input type="hidden" name="amount" value="10">
-					</form>
-				
-				
-				
-				
-				
-				
-				
-				
-					<td colspan="13">
-						<ol class="paging" style="margin: 0 auto; width: 175px;">
+				<tr >
+					<td colspan="13" class="prapper">
+						<ol class="paging" style="margin: 0 auto; width: 275px;">
 							<!-- 이전 버튼 -->
 							<c:choose>
 								<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
-									<li class="disable">이전으로</li>
+									<li class="disable"><</li>
 								</c:when>
 								<c:otherwise>
 									<li><a href="admin_member_list.do?cPage=${paging.beginBlock - paging.pagePerBlock }">이전으로</a></li>
@@ -164,10 +187,10 @@ table tfoot ol.paging li a:hover {
 							<c:forEach begin="${paging.beginBlock }" end="${paging.endBlock }" step="1" var="k">
 								<c:choose>
 									<c:when test="${k == paging.nowPage }">
-										<li class="now">${k}</li>
+										<li class="nowpagecolor">${k}</li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="admin_member_list.do?cPage=${k}">${k}</a></li>
+										<li><a href="admin_member_list.do?cPage=${k}" class="nowpage">${k}</a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
@@ -175,7 +198,7 @@ table tfoot ol.paging li a:hover {
 							<!-- 이후 버튼 -->
 								<c:choose>
 								<c:when test="${paging.endBlock >= paging.totalPage }">
-									<li class="disable">다음으로</li>
+									<li class="disable">></li>
 								</c:when>
 								<c:otherwise>
 									<li><a href="admin_member_list.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
@@ -184,8 +207,26 @@ table tfoot ol.paging li a:hover {
 						</ol>	
 					</td>
 				</tr>
+				<tr>
+				<td colspan="13">
+					<form action="member_search.do" method="post">
+					    <div class="search-wrap">
+					        <select name="searchType">
+					            <option value="name">이름</option>
+					            <option value="id">ID</option>
+					            <option value="nickname">닉네임</option>
+					        </select>
+					    	<input type="text" name="keyword">
+					        <button type="submit" name="search"  class="searchbtn">검색</button>
+					    </div>
+					    <input type="hidden" name="offset" value="1">
+					    <input type="hidden" name="limit" value="10">
+					</form>
+				</td>
+				</tr>
 			</tfoot>	
 		</table>
 	</div>
+	<jsp:include page="../hs/footer.jsp" />
 </body>
 </html>

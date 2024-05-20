@@ -47,6 +47,7 @@ public class TogetherDAO {
 	}
 	
 	public int getTogetherWriteOK(TogetherVO tvo) throws Exception {
+		sqlSessionTemplate.update("bjs.write_count", tvo.getMember_idx());
 		sqlSessionTemplate.insert("bjs.to_insert", tvo);
 		int t_idx = sqlSessionTemplate.selectOne("bjs.write_t_idx");
 		return t_idx;
@@ -139,5 +140,78 @@ public class TogetherDAO {
 	
 	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
 		return sqlSessionTemplate.selectList("bjs.to_comment_list", t_idx);
+	}
+	
+	public int getToCommentMaxStep(Map<String, Integer> map) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.to_step_max", map);
+	}
+	
+	public int getToCommentSame(Map<String, Integer> map) throws Exception {
+		int result = sqlSessionTemplate.selectOne("bjs.to_comment_same", map);
+		return result;
+	}
+	
+	public int getToCommentGSUpdate(Map<String, Integer> map) throws Exception {
+		return sqlSessionTemplate.update("bjs.to_comment_gs_update", map);
+	}
+	
+	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception {
+		if(tcvo.getWc_idx() != null && !tcvo.getWc_idx().isEmpty()) {
+			return sqlSessionTemplate.insert("bjs.to_comment_in_write", tcvo);
+		}else {
+			return sqlSessionTemplate.insert("bjs.to_comment_write", tcvo);
+		}
+	}
+	
+	public int getToCommentDelete(String wc_idx) throws Exception {
+		return sqlSessionTemplate.update("bjs.to_comment_delete", wc_idx);
+	}
+	
+	public int getToCommentUpdate(TogetherCommentVO tcvo) throws Exception {
+		return sqlSessionTemplate.update("bjs.to_comment_update", tcvo);
+	}
+	
+	public int getBoardWithCount(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.my_board_with_count", member_idx);
+	}
+	
+	public List<TogetherVO> getPromiseIng(String member_idx, int offset, int limit) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_idx", member_idx);
+		map.put("offset", offset);
+		map.put("limit", limit);
+		return sqlSessionTemplate.selectList("bjs.promise_ing", map);
+	}
+	
+	public List<PromiseVO> getPromisePeopleDetail(String t_idx) throws Exception {
+		return sqlSessionTemplate.selectList("bjs.promise_people_detail", t_idx);
+	}
+	
+	public int getPromiseBanMember(PromiseVO pvo) throws Exception {
+		return sqlSessionTemplate.update("bjs.promise_ban_member", pvo);
+	}
+	
+	public int getBoardWithCountReady(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.my_board_with_ready_count", member_idx);
+	}
+	
+	public List<TogetherVO> getPromiseReady(String member_idx, int offset, int limit) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_idx", member_idx);
+		map.put("offset", offset);
+		map.put("limit", limit);
+		return sqlSessionTemplate.selectList("bjs.promise_ready", map);
+	}
+	
+	public int getBoardWithCountEnd(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("my_board_with_end_count", member_idx);
+	}
+	
+	public List<TogetherVO> getPromiseEnd(String member_idx, int offset, int limit) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_idx", member_idx);
+		map.put("offset", offset);
+		map.put("limit", limit);
+		return sqlSessionTemplate.selectList("bjs.promise_End", map);
 	}
 }

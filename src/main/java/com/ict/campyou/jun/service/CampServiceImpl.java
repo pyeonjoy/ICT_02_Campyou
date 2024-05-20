@@ -58,13 +58,13 @@ public class CampServiceImpl implements CampService{
 	}
 
 	@Override
-	public List<CampVO> searchCampDetail(String keyword, String lctCl, String induty, String sbrscl,int offset, int limit) {
-		return campDAO.searchCampDetail(keyword,lctCl,induty,sbrscl,offset,limit);
+	public List<CampVO> searchCampDetail(String keyword, String lctCl, String induty, String sbrscl,int offset, int limit,String s_sido,String s_sigungu) {
+		return campDAO.searchCampDetail(keyword,lctCl,induty,sbrscl,offset,limit, s_sido, s_sigungu);
 	}
 
 	@Override
-	public int searchCount(String keyword, String lctCl, String induty, String sbrscl) {
-		return campDAO.searchCount(keyword,lctCl,induty,sbrscl);
+	public int searchCount(String keyword, String lctCl, String induty, String sbrscl,String s_sido,String s_sigungu) {
+		return campDAO.searchCount(keyword,lctCl,induty,sbrscl, s_sido, s_sigungu);
 	}
 
 

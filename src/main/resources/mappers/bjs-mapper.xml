@@ -33,7 +33,7 @@
 		select * from camp_list
 	</select>
 	<select id="promise_people_count" resultType="int">
-		select count(*) from with_promise where t_idx = #{t_idx} and pm_state != -1 and	pm_state != 0
+		select count(*) from with_promise where t_idx = #{t_idx} and pm_state != -1 and	pm_state != 0 and pm_state != 3
 	</select>
 	<select id="to_detail" parameterType="String" resultType="tvo">
 		select b.*, m.member_nickname, m.member_dob, m.member_img
@@ -43,6 +43,9 @@
 	</select>
 	<update id="to_hit" parameterType="String">
 		update board_with set t_hit = t_hit + 1 where t_idx = #{t_idx}
+	</update>
+	<update id="write_count" parameterType="String">
+		update members set member_with = member_with + 1 where member_idx = #{member_idx}
 	</update>
 	<insert id="to_insert" parameterType="tvo">
 		insert into board_with(member_idx, t_subject, t_content, t_campname, t_address, t_startdate, t_enddate, t_numpeople, t_regdate, tf_name, t_mapx, t_mapy, t_induty, t_facltdivnm, t_mangedivnm)
@@ -140,7 +143,7 @@
 	    join board_with b on p.t_idx = b.t_idx
 	    join members m on b.member_idx = m.member_idx
 	    where p.member_idx = #{member_idx} and p.pm_master = 0
-	    order by case when p.pm_state = 0 then p.pm_idx end desc,
+	     order by case when p.pm_state = 0 then p.pm_idx end desc,
 	        	 case when p.pm_state != 0 then p.pm_idx end asc
 	    limit #{limit} offset #{offset}
 	</select>
@@ -149,6 +152,60 @@
 		from board_with_comment wc
 		join members m on wc.member_idx = m.member_idx
 		where wc.t_idx = #{t_idx}
-		order by wc.wc_groups, wc.wc_lev
+		order by wc.wc_groups, wc.wc_step, wc.wc_lev desc
+	</select>
+	<select id="to_comment_same" parameterType="Map" resultType="int">
+		select count(*) from board_with_comment where wc_groups = #{wc_groups} and wc_step = #{wc_step} and wc_lev = #{wc_lev}
+	</select>
+	<select id="to_step_max" parameterType="Map" resultType="int">
+    	select max(wc_step) from board_with_comment where wc_groups = #{wc_groups} and wc_lev = #{wc_lev}
+	</select>
+	<update id="to_comment_gs_update" parameterType="Map">
+		update board_with_comment set wc_step = wc_step + 1 where wc_groups = #{wc_groups} and wc_step >= #{wc_step}
+	</update>
+	<insert id="to_comment_write" parameterType="tcvo">
+	        <selectKey keyProperty="wc_groups" resultType="String" order="BEFORE">
+	            select IFNULL(MAX(wc_groups), 0) + 1 from board_with_comment where t_idx = #{t_idx}
+	        </selectKey>
+	        insert into board_with_comment (t_idx, member_idx, wc_content, wc_groups, wc_regdate)
+	        values (#{t_idx}, #{member_idx}, #{wc_content}, #{wc_groups}, sysdate())
+	</insert>
+	<insert id="to_comment_in_write" parameterType="tcvo">
+        insert into board_with_comment (t_idx, member_idx, wc_content, wc_groups, wc_step, wc_lev, wc_regdate)
+        values (#{t_idx}, #{member_idx}, #{wc_content}, #{wc_groups}, #{wc_step}, #{wc_lev}, sysdate())
+	</insert>
+	<update id="to_comment_delete" parameterType="String">
+		update board_with_comment set wc_active = 1 where wc_idx = #{wc_idx}
+	</update>
+	<update id="to_comment_update" parameterType="tcvo">
+		update board_with_comment set wc_content = #{wc_content} where wc_idx = #{wc_idx}
+	</update>
+	<select id="my_board_with_count" parameterType="String" resultType="int">
+		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate > now()
+	</select>
+	<select id="promise_ing" parameterType="Map" resultType="tvo">
+		select * from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate > now() order by t_idx desc limit #{limit} offset #{offset}
+	</select>
+	<select id="promise_people_detail" parameterType="String" resultType="pvo">
+	    select wp.*, m.member_img, m.member_dob, m.member_nickname
+	    from with_promise wp 
+	    join members m on wp.member_idx = m.member_idx
+	    where wp.t_idx = #{t_idx} and wp.pm_state = 1
+	    order by wp.pm_master desc
+	</select>
+	<update id="promise_ban_member" parameterType="pvo">
+		update with_promise set pm_state = 3 where member_idx = #{member_idx} and t_idx = #{t_idx}
+	</update>
+	<select id="my_board_with_ready_count" parameterType="String" resultType="int">
+		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate &lt;= now() and t_enddate >= now()
+	</select>
+	<select id="promise_ready" parameterType="Map" resultType="tvo">
+		select * from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate &lt;= now() and t_enddate >= now() order by t_idx desc limit #{limit} offset #{offset}
+	</select>
+	<select id="my_board_with_end_count" parameterType="String" resultType="int">
+		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0 and t_enddate &lt; now()
+	</select>
+	<select id="promise_End" parameterType="Map" resultType="tvo">
+		select * from board_with where member_idx = #{member_idx} and t_active = 0 and t_enddate &lt; now() order by t_idx desc limit #{limit} offset #{offset}
 	</select>
 </mapper>

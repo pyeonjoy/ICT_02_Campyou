@@ -2,7 +2,6 @@ package com.ict.campyou.bjs.controller;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,14 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.ict.campyou.bjs.dao.PromiseVO;
-import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.dao.TogetherCommentVO;
+import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
-import com.ict.campyou.common.Paging2;
 import com.ict.campyou.common.Paging4;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
@@ -36,10 +33,12 @@ public class TogetherAjaxController {
 	
 	@Autowired
 	private Paging4 paging;
+//	@Autowired
+//	private Paging2 paging2;
 
 	@RequestMapping(value = "together_Write2.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
-	public String getTogetherWrite(TogetherCommentVO tvo, HttpSession session) throws Exception{
+	public String getTogetherWrite(TogetherVO tvo, HttpSession session) throws Exception{
 		List<CampVO> campList = togetherService.getTogetherCampList();
 		if(campList != null) {
 			Gson gson = new Gson();
@@ -152,10 +151,6 @@ public class TogetherAjaxController {
 		List<PromiseVO> result = togetherService.getPromiseList(member_idx);
 		if(result != null) {
 			for (PromiseVO list : result) {
-//				System.out.println("Promise: " + list.getT_idx()); 
-//				System.out.println("Promise: " + list.getMember_nickname());
-//				System.out.println("Promise: " + list.getPm_idx()); 
-//				System.out.println("Promise: " + list.getTf_name());
 				LocalDate dob = LocalDate.parse(list.getMember_dob());
 				LocalDate currentDate = LocalDate.now();
 				int age = Period.between(dob, currentDate).getYears();
@@ -174,7 +169,6 @@ public class TogetherAjaxController {
 				}
 				list.setMember_dob(ageGroup);
 				int promiseCount = togetherService.getPromiseMyCount(list.getMember_idx());
-				System.out.println(promiseCount);
 				list.setPromise_count(promiseCount);
 			}
 		}
@@ -205,7 +199,7 @@ public class TogetherAjaxController {
 	@ResponseBody
 	public Map<String, Object> getTogetherHistoryGet(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
 		int count = togetherService.getToHistoryCount(member_idx);
-		System.out.println(count);
+
 		paging.setTotalRecord(count);
 		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 			paging.setTotalPage(1);
@@ -320,13 +314,245 @@ public class TogetherAjaxController {
 	
 	@RequestMapping(value = "to_comment_list.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
-	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
+	public Map<String, Object> getToCommentList(String t_idx, HttpSession session) throws Exception {
+		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
+		if (memberUser == null) {
+	        memberUser = new MemberVO();
+	    }
 		List<TogetherCommentVO> toCommentList = togetherService.getToCommentList(t_idx);
-		for (TogetherCommentVO k : toCommentList) {
-			System.out.println(k.getMember_idx());
-			System.out.println(k.getWc_content());
-		}
-		return toCommentList;
+		Map<String, Object> response = new HashMap<>();
+	    response.put("memberUser", memberUser);
+	    response.put("toCommentList", toCommentList);
+
+	    return response;
 	}
 	
+	@RequestMapping(value = "to_comment_write.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception {
+		// 대댓글인 경우만
+		if(!tcvo.getWc_idx().isEmpty()) {
+			int wc_groups = Integer.parseInt(tcvo.getWc_groups());
+			int wc_step = Integer.parseInt(tcvo.getWc_step());
+			int wc_lev = Integer.parseInt(tcvo.getWc_lev());
+			
+			wc_step++;
+			wc_lev++;
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("wc_groups", wc_groups);
+			map.put("wc_step", wc_step);
+			map.put("wc_lev", wc_lev);
+			int same = togetherService.getToCommentSame(map);
+			if(same > 0) {
+				if(wc_step == 1 && wc_lev == 1) {
+					int maxStep = togetherService.getToCommentMaxStep(map);
+					wc_step = maxStep + 1;
+					map.put("wc_groups", wc_groups);
+					map.put("wc_step", wc_step);
+				}else {
+					wc_step++;
+					map.put("wc_groups", wc_groups);
+					map.put("wc_step", wc_step);
+					int GSUpdate = togetherService.getToCommentGSUpdate(map);
+				}
+			}else {
+				int GSUpdate = togetherService.getToCommentGSUpdate(map);
+			}
+			tcvo.setWc_groups(String.valueOf(wc_groups));
+			tcvo.setWc_step(String.valueOf(wc_step));
+			tcvo.setWc_lev(String.valueOf(wc_lev));
+		}
+		
+		int result = togetherService.getToCommentWrite(tcvo);
+		if(result > 0) {
+			return result;
+		}
+		return -1;
+	}
+
+	
+	@RequestMapping(value = "to_comment_delete.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getToCommentDelete(String wc_idx) throws Exception {
+		int result = togetherService.getToCommentDelete(wc_idx);
+		if(result > 0) {
+			return result;
+		}
+		return -1;
+	}
+	
+	@RequestMapping(value = "to_comment_update.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getToCommentUpdate(TogetherCommentVO tcvo) throws Exception {
+		int result = togetherService.getToCommentUpdate(tcvo);
+		if(result > 0) {
+			return result;
+		}
+		return -1;
+	}
+	
+	
+	@RequestMapping(value = "get_promise_ing.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getPromiseIng(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
+		int count = togetherService.getBoardWithCount(member_idx);
+		paging.setTotalRecord(count);
+		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+			paging.setTotalPage(1);
+		}else {
+			paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+			if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+				paging.setTotalPage(paging.getTotalPage() +1);
+			}
+		}
+		String cPage = request.getParameter("cPage");
+		if(cPage == null || cPage.isEmpty()) {
+			paging.setNowPage(1);
+		}else {
+			paging.setNowPage(Integer.parseInt(cPage));
+		}
+		
+		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
+		
+		paging.setBeginBlock((int)((paging.getNowPage() -1) / paging.getPagePerBlock()) * paging.getPagePerBlock() +1);
+		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() -1);
+		
+		if(paging.getEndBlock() > paging.getTotalPage()) {
+			paging.setEndBlock(paging.getTotalPage());
+		}
+		
+		List<TogetherVO> toPromiseIng = togetherService.getPromiseIng(member_idx, paging.getOffset(), paging.getNumPerPage());
+		if(toPromiseIng != null) {
+			for (TogetherVO tvo : toPromiseIng) {
+				int promiseCount = togetherService.getPomiseCount(tvo.getT_idx());
+				tvo.setPromise_count(promiseCount);
+			}
+		}
+		Map<String, Object> response = new HashMap<>();
+		response.put("toPromiseIng", toPromiseIng);
+		response.put("paging", paging);
+		return response;
+	}
+	
+	@RequestMapping(value = "promise_people_detail.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public List<PromiseVO> getPromisePeopleDetail(@RequestParam("t_idx")String t_idx) throws Exception {
+		List<PromiseVO> proPeopleDetail = togetherService.getPromisePeopleDetail(t_idx);
+		if(proPeopleDetail != null) {
+			for (PromiseVO pvo : proPeopleDetail) {
+				LocalDate dob = LocalDate.parse(pvo.getMember_dob());
+				LocalDate currentDate = LocalDate.now();
+				int age = Period.between(dob, currentDate).getYears();
+				String ageGroup;
+				switch (age / 10) {
+				case 0: ageGroup = "10대 미만"; break;
+				case 1: ageGroup = "10대"; break;
+				case 2: ageGroup = "20대"; break;
+				case 3: ageGroup = "30대"; break;
+				case 4: ageGroup = "40대"; break;
+				case 5: ageGroup = "50대 이상"; break;
+				case 6: ageGroup = "60대 이상"; break;
+				case 7: ageGroup = "70대 이상"; break;
+				default: ageGroup = "80대 이상"; break;
+				}
+				pvo.setMember_dob(ageGroup);
+				
+				int proOKCount = togetherService.getPromiseMyCount(pvo.getMember_idx());
+				pvo.setPromise_my_count(proOKCount);
+			}
+		}
+		return proPeopleDetail;
+	}
+	
+	@RequestMapping(value = "promise_banish_member.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getPromiseBanMember(PromiseVO pvo) throws Exception {
+		int result = togetherService.getPromiseBanMember(pvo);
+		if(result > 0) {
+			return result;
+		}
+		return -1;
+	}
+
+	@RequestMapping(value = "get_promise_ready.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getPromiseReady(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
+		int count = togetherService.getBoardWithCountReady(member_idx);
+		paging.setTotalRecord(count);
+		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+			paging.setTotalPage(1);
+		}else {
+			paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+			if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+				paging.setTotalPage(paging.getTotalPage() +1);
+			}
+		}
+		String cPage = request.getParameter("cPage");
+		if(cPage == null || cPage.isEmpty()) {
+			paging.setNowPage(1);
+		}else {
+			paging.setNowPage(Integer.parseInt(cPage));
+		}
+		
+		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
+		
+		paging.setBeginBlock((int)((paging.getNowPage() -1) / paging.getPagePerBlock()) * paging.getPagePerBlock() +1);
+		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() -1);
+		
+		if(paging.getEndBlock() > paging.getTotalPage()) {
+			paging.setEndBlock(paging.getTotalPage());
+		}
+		List<TogetherVO> toPromiseReady = togetherService.getPromiseReady(member_idx, paging.getOffset(), paging.getNumPerPage());
+		if(toPromiseReady != null) {
+			for (TogetherVO tvo : toPromiseReady) {
+				int promiseCount = togetherService.getPomiseCount(tvo.getT_idx());
+				tvo.setPromise_count(promiseCount);
+			}
+		}
+		Map<String, Object> response = new HashMap<>();
+		response.put("toPromiseReady", toPromiseReady);
+		response.put("paging", paging);
+		return response;
+	}
+	
+	@RequestMapping(value = "get_promise_end.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getPromiseEnd(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
+		int count = togetherService.getBoardWithCountEnd(member_idx);
+		paging.setTotalRecord(count);
+		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+			paging.setTotalPage(1);
+		}else {
+			paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+			if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+				paging.setTotalPage(paging.getTotalPage() +1);
+			}
+		}
+		String cPage = request.getParameter("cPage");
+		if(cPage == null || cPage.isEmpty()) {
+			paging.setNowPage(1);
+		}else {
+			paging.setNowPage(Integer.parseInt(cPage));
+		}
+		
+		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
+		
+		paging.setBeginBlock((int)((paging.getNowPage() -1) / paging.getPagePerBlock()) * paging.getPagePerBlock() +1);
+		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() -1);
+		
+		if(paging.getEndBlock() > paging.getTotalPage()) {
+			paging.setEndBlock(paging.getTotalPage());
+		}
+		List<TogetherVO> toPromiseEnd = togetherService.getPromiseEnd(member_idx, paging.getOffset(), paging.getNumPerPage());
+		if(toPromiseEnd != null) {
+			for (TogetherVO tvo : toPromiseEnd) {
+				int promiseCount = togetherService.getPomiseCount(tvo.getT_idx());
+				tvo.setPromise_count(promiseCount);
+			}
+		}
+		Map<String, Object> response = new HashMap<>();
+		response.put("toPromiseEnd", toPromiseEnd);
+		response.put("paging", paging);
+		return response;
+	}
 }

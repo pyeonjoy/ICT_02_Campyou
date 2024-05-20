@@ -1,7 +1,68 @@
 package com.ict.campyou.joy.dao;
 
 public class AdminMemberVO {
- private String  member_idx, report_content,report_date,report_ok_date, report_status, report_idx, report_day;
+ private String  member_idx, report_content,report_date,report_now_date,admin_idx, report_ok_date, report_status, report_idx, report_day, reportmember_idx;
+ private String  stop_content,stop_date,stop_now_date, stop_ok_date, stop_status, stop_idx, stop_day;
+ public String getStop_content() {
+	return stop_content;
+}
+public void setStop_content(String stop_content) {
+	this.stop_content = stop_content;
+}
+public String getStop_date() {
+	return stop_date;
+}
+public void setStop_date(String stop_date) {
+	this.stop_date = stop_date;
+}
+public String getStop_now_date() {
+	return stop_now_date;
+}
+public void setStop_now_date(String stop_now_date) {
+	this.stop_now_date = stop_now_date;
+}
+public String getStop_ok_date() {
+	return stop_ok_date;
+}
+public void setStop_ok_date(String stop_ok_date) {
+	this.stop_ok_date = stop_ok_date;
+}
+public String getStop_status() {
+	return stop_status;
+}
+public void setStop_status(String stop_status) {
+	this.stop_status = stop_status;
+}
+public String getStop_idx() {
+	return stop_idx;
+}
+public void setStop_idx(String stop_idx) {
+	this.stop_idx = stop_idx;
+}
+public String getStop_day() {
+	return stop_day;
+}
+public void setStop_day(String stop_day) {
+	this.stop_day = stop_day;
+}
+public String getReport_now_date() {
+	return report_now_date;
+}
+public void setReport_now_date(String report_now_date) {
+	this.report_now_date = report_now_date;
+}
+public String getAdmin_idx() {
+	return admin_idx;
+}
+public void setAdmin_idx(String admin_idx) {
+	this.admin_idx = admin_idx;
+}
+public String getReportmember_idx() {
+	return reportmember_idx;
+}
+public void setReportmember_idx(String reportmember_idx) {
+	this.reportmember_idx = reportmember_idx;
+}
 public String getReport_day() {
 	return report_day;
 }

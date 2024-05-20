@@ -1,12 +1,14 @@
 package com.ict.campyou.bm.controller;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,15 +20,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
+import com.ict.campyou.bm.dao.BoardsVO;
 import com.ict.campyou.bm.dao.ChatVO;
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.PasswordCheckRequest;
 import com.ict.campyou.bm.dao.QnaVO;
 import com.ict.campyou.bm.service.MyService;
 import com.ict.campyou.common.Paging;
+import com.ict.campyou.hu.dao.CampingGearBoardVO;
+import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
+import com.ict.campyou.jun.dao.CampVO;
+import com.ict.campyou.jun.dao.HeartVO;
 
 
 @Controller
@@ -42,7 +50,7 @@ public class BomiController {
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	Paging paging;
+	private Paging paging;
 
 //	Simple page router	
 	@GetMapping("home.do")
@@ -55,9 +63,76 @@ public class BomiController {
 	public ModelAndView gotoMypage(HttpSession session) {
 		ModelAndView mv = new ModelAndView("bm/my_main");
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+		String member_idx = mvo.getMember_idx();
+		List<HeartVO> favlist = myService.getFavList(member_idx);
+		List<CommBoardVO> board1 = myService.getBoard1(member_idx);
+		List<CampingGearBoardVO> board2 = myService.getBoard2(member_idx);
+		List<BoardsVO> boardsList = new ArrayList<>();
+		Map<String, String> map = new HashMap<>();
+		 int count = 0; 
+		 for (HeartVO heart : favlist) {
+		     if (count < 4) { 
+		         CampVO cvo = myService.getMyFavoriteCamp(heart.getContentid());
+		         map.put(heart.getContentid(), cvo.getFacltnm());
+		         count++;
+		     } else {
+		         break; 
+		     }
+		 }
+		 
+		 for (CommBoardVO board : board1) {
+	            BoardsVO boardsVO = new BoardsVO();
+	            boardsVO.setBoard_idx(board.getB_idx());
+	            boardsVO.setMember_idx(member_idx);
+	            boardsVO.setB_subject(board.getB_subject());
+	            boardsVO.setB_regdate(board.getB_regdate());
+	            boardsVO.setBoard_type("1");
+	            boardsList.add(boardsVO);
+	        }
+
+        for (CampingGearBoardVO board : board2) {
+            BoardsVO boardsVO = new BoardsVO();
+            boardsVO.setBoard_idx(board.getCp_idx());
+            boardsVO.setMember_idx(board.getMember_idx());
+            boardsVO.setB_subject(board.getCp_subject());
+            boardsVO.setB_regdate(board.getCp_regdate());
+            boardsVO.setBoard_type("2");
+            boardsList.add(boardsVO);
+        }
+	        
+	    List<BoardsVO> selectedList = myService.getSelectFour(boardsList);
 		mv.addObject("mvo", mvo);
+		mv.addObject("campMap", map); 
+		mv.addObject("selectedList", selectedList);
+
 		return mv;
 	}
+	@GetMapping("boardDetail.do")
+	public ModelAndView boardDetail(@RequestParam("board_idx") String board_idx, @RequestParam("board_type") String board_type) {
+	    ModelAndView mv;
+	    if (board_type.equals("1")) {
+	    	CommBoardVO cbvo = myService.getBoard1ByIdx(board_idx);
+	        mv = new ModelAndView("hu/boardFree/communityBoardContent");
+	        mv.addObject("cbvo", cbvo);
+	    } else if (board_type.equals("2")) {
+	        CampingGearBoardVO cgbvo = myService.getBoard2ByIdx(board_idx);
+	        mv = new ModelAndView("hu/campingGearBoard/campingGearDetail");
+	        mv.addObject("cgbvo", cgbvo);
+	    } else {
+	        // Handle invalid board_type
+	        mv = new ModelAndView("errorView");
+	        mv.addObject("errorMessage", "Invalid board_type");
+	    }
+	    return mv;
+	}
+
+	 @GetMapping("campDetail.do")
+	 public ModelAndView campDetail(@RequestParam("contentid")String contentid) {
+		 ModelAndView mv = new ModelAndView("jun/camp_detail");
+		 CampVO info = myService.getMyFavoriteCamp(contentid);
+		 mv.addObject("info", info);
+		return mv;
+	 }
 	
 	@RequestMapping("my_change_pw.do")
 	public ModelAndView gotoMy_changePw(@RequestParam("member_idx") String member_idx) {
@@ -75,6 +150,8 @@ public class BomiController {
 		    mv.setViewName("bm/chat_list"); 
 			mv.addObject("list", list);
 			mv.addObject("member_idx", member_idx);
+			Gson gson = new Gson();
+			String json = gson.toJson(list);
 		    return mv;
 	}
 	
@@ -92,7 +169,6 @@ public class BomiController {
 		
 		for (ChatVO chat : chatList) {
 		    if (!chat.getSend_idx().equals(my_idx)) { 
-		        chat.setMsg_read("0");
 		      int res = myService.updateMsgRead(chat.getMsg_idx());
 		    }
 		}
@@ -123,7 +199,6 @@ public class BomiController {
 			mv.addObject("joiner", joiner);
 			mv.addObject("opener", opener);
 			mv.addObject("my_idx", my_idx); // 내 idx가져가기
-			System.out.println(chatList);
 			if(chatList.isEmpty()) {
 				mv.addObject("room_name", room_name);
 				mv.setViewName("bm/chatroom");
@@ -216,11 +291,9 @@ public class BomiController {
 			mvo.setMember_pwd(passwordEncoder.encode(newPassword));
 			int res = myService.changeUserPW(mvo);
 			System.out.println(res);
-			if(res>0) {
-				
+			if(res>0) {				
 				return mv;
 			}
-
 			return new ModelAndView("redirect:pwd_change.do");			
 		}
 		// Delete User
@@ -228,7 +301,6 @@ public class BomiController {
 		public ModelAndView changeUserPw(@RequestParam("member_idx") String member_idx) {
 			ModelAndView mv = new ModelAndView("redirect:home.do");
 			int res = myService.deletMember(member_idx);
-			System.out.println(res);
 			return mv;
 		}
 		
@@ -258,12 +330,13 @@ public class BomiController {
 		 
 		//User's inquiry list 
 		@GetMapping("my_inquiry_list.do")
-		public ModelAndView gotoMyqnaList(@RequestParam("member_idx") String member_idx, HttpServletRequest req) {
+		public ModelAndView gotoMyqnaList(HttpSession session, HttpServletRequest req) {
 			ModelAndView mv = new ModelAndView("bm/my_inquiry_list");
+			MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+			String member_idx = mvo.getMember_idx();
 			
 			int count = myService.getTotalCount(member_idx);
 			paging.setTotalRecord(count);
-			System.out.println(count);
 			if(paging.getTotalRecord() <= paging.getNumPerPage()) {
 				paging.setTotalPage(1);
 			}else {
@@ -291,15 +364,12 @@ public class BomiController {
 				paging.setEndBlock(paging.getTotalPage());
 			}
 		
-			MemberVO mvo = myService.getMember(member_idx);
-			
 			String nickname = mvo.getMember_nickname();
-			List<QnaVO> list = myService.getMyQna(member_idx);
+			List<QnaVO> list = myService.getMyQna(member_idx, paging.getOffset(), paging.getNumPerPage());
 			mv.addObject("nickname", nickname);
 			mv.addObject("member_idx", member_idx);
 			mv.addObject("list", list);
 			mv.addObject("paging", paging);
-
 			return mv;
 		}
 		
@@ -334,46 +404,48 @@ public class BomiController {
 				return new ModelAndView("error");
 		
 		    }
-		 @GetMapping("my_acc_history.do")
-		 public ModelAndView goToAccompanyHistoryList(@RequestParam("member_idx") String member_idx, HttpServletRequest req) {
-			 ModelAndView mv = new ModelAndView("my_acc_history.do");
-			 
-			 int count = myService.getTotalCount(member_idx);
-				paging.setTotalRecord(count);
-				
-				if(paging.getTotalRecord() <= paging.getNumPerPage()) {
-					paging.setTotalPage(1);
-				}else {
-					paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-					if(paging.getTotalRecord() % paging.getNumPerPage() !=0) {
-						paging.setTotalPage(paging.getTotalPage()+1);
-					}
-				}
-				
-				String cPage = req.getParameter("cPage");
-				if(cPage == null) {
-					paging.setNowPage(1);
-				}else {
-					paging.setNowPage(Integer.parseInt(cPage));
-				}
-				
-				paging.setOffset(paging.getNumPerPage() * (paging.getNowPage()-1));
-				
-				paging.setBeginBlock((int)((paging.getNowPage()-1)/paging.getPagePerBlock())*
-						paging.getPagePerBlock()+1);
-				
-				paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock()-1);
-				
-				if(paging.getEndBlock() > paging.getTotalBlock()) {
-					paging.setEndBlock(paging.getTotalPage());
-				}
-				
-			 List<TogetherVO> list = myService.getMyAcc_List(member_idx);
-			 mv.addObject("list",list);
-			 //캠핑이미지첨부도 하기 !!
-			return mv;			 
-					 
-		 }
+
+//		 @GetMapping("my_acc_history.do")
+//		 public ModelAndView goToAccompanyHistoryList(@RequestParam("member_idx") String member_idx, HttpServletRequest req) {
+//			 ModelAndView mv = new ModelAndView("my_acc_history.do");
+//			 
+//			 int count = myService.getTotalCount(member_idx);
+//				paging.setTotalRecord(count);
+//				
+//				if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+//					paging.setTotalPage(1);
+//				}else {
+//					paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+//					if(paging.getTotalRecord() % paging.getNumPerPage() !=0) {
+//						paging.setTotalPage(paging.getTotalPage()+1);
+//					}
+//				}
+//				
+//				String cPage = req.getParameter("cPage");
+//				if(cPage == null) {
+//					paging.setNowPage(1);
+//				}else {
+//					paging.setNowPage(Integer.parseInt(cPage));
+//				}
+//				
+//				paging.setOffset(paging.getNumPerPage() * (paging.getNowPage()-1));
+//				
+//				paging.setBeginBlock((int)((paging.getNowPage()-1)/paging.getPagePerBlock())*
+//						paging.getPagePerBlock()+1);
+//				
+//				paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock()-1);
+//				
+//				if(paging.getEndBlock() > paging.getTotalBlock()) {
+//					paging.setEndBlock(paging.getTotalPage());
+//				}
+//				
+//			 List<TogetherVO> list = myService.getMyAcc_List(member_idx, paging.getOffset(), paging.getNumPerPage());
+//			 mv.addObject("list",list);
+//			 mv.addObject("paging", paging);
+//			 //캠핑이미지첨부도 하기 !!
+//			return mv;			 
+//					 
+//		 }
 
 		}
 

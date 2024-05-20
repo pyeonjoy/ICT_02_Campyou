@@ -1,18 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ include file="../hs/admin_header.jsp"%>
+<%@ include file="../hs/admin_menu.jsp"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <title>관리자 페이지 메인</title>
 <style>
+@font-face {
+    font-family: 'JalnanGothic';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h2{
+     font-family: 'JalnanGothic';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h3{
+    font-family: 'JalnanGothic';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    line-height: 30px;
+
+}
+h4{
+    font-family: 'JalnanGothic';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    line-height: 30px;
+}
 body {
 	background-color: #F6FFF1;
 }
 .head{
     text-align: center;
-    margin: 100px;;
+	padding: 200px 50px 30px 50px;
 }
 .wrap {
     display: grid;
@@ -20,8 +49,8 @@ body {
     grid-gap: 10px;
     margin: 0 auto;
     padding: 10px;
-    height: 100px;
-    width: 1000px;
+    height: 800px;
+    width: 522px;
 }
 .hr{
     width: 500px;
@@ -81,6 +110,10 @@ button{
 .b1{
     float: right;
 }
+.under{
+width:200px;
+margin: 0 auto;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -98,7 +131,7 @@ button{
 </script>
 </head>
 <body>
-    <h2 class="head">팝업창 글 작성하기</h2>
+    <h3 class="head">팝업창 글 작성하기</h3>
     <div class="wrap">
         <div class="left">
             <form action="popup_write_ok.do" method="post" enctype="multipart/form-data">
@@ -122,7 +155,7 @@ button{
 						<td align="left"><input type="file" name="file"></td>
 					</tr>
 					<tr>
-						<td colspan="2">
+						<td colspan="2" class="under">
 						<input type="button" value="입력" onclick="popup_write_ok(this.form)" /> 
 						<input type="button" value="취소" onclick="history.go(-1)" />
 
@@ -133,5 +166,6 @@ button{
 			</form>
         </div>
     </div>
+   		<jsp:include page="../hs/footer.jsp" />
     </body>
 </html>

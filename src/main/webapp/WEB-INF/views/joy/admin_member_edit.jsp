@@ -5,7 +5,7 @@
 <!doctype html>
 <html lang="ko">
 <link href="resources/css/reset.css" rel="stylesheet" />
-<link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
+<link href="resources/public/css/joy/admin_member_detail.css" rel="stylesheet" />
 <%@ include file="../hs/admin_menu.jsp" %>
 <head>
 <meta charset="utf-8">
@@ -19,8 +19,7 @@ height: 475px;}
 </style>
 </head>
 <body>
-	<h2 class="head">회원 관리 상세</h2>
-	<h3 style="text-align: center;">회원 상세 정보</h3>
+	<h3 class="head">회원 관리 상세</h3>
 	<div class="wrap">
 		<c:forEach var="m" items="${member}"> 
 			<div class="left">
@@ -89,7 +88,8 @@ height: 475px;}
 				</table>
 				<p style="text-align: center; margin-top: 50px;">
 				 <button type="submit">수정완료</button>
-				 <button type="button" onclick='location.href="admin_member_detail.do"'>취소</button>
+				 <button type="button" onclick='history.go(-1)'>취소</button>
+
 				</p>
 				</form>
 			</div>

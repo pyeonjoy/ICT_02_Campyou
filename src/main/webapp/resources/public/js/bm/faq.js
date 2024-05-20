@@ -1,5 +1,6 @@
 'use strict'
 const questions = document.querySelectorAll('.question');
+const questions2 = document.querySelectorAll('.question2');
 const answers = document.querySelectorAll('.answer');
 const question_containers = document.querySelectorAll('.question_container');
 const lists = document.querySelectorAll('.question-list')
@@ -10,27 +11,24 @@ window.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
-const openAnswer = function(e){
+const openAnswer = function(e, containerClass){
     const clicked = e.target.closest('.question');
-console.log(clicked);
+    if (!clicked) return;
 
-  if (!clicked) return; 
-  document.querySelector(`.answer--${clicked.dataset.question}`).classList.remove('answer-active');
+    const container = clicked.closest(`.${containerClass}`);
+
+    if (container) {
+
+        const answer = container.querySelector(`.answer--${clicked.dataset.question}`);
+        if (answer) {
   
-  if (clicked.classList.contains('question-active')) {
-    clicked.classList.remove('question-active');
-    document.querySelector(`.answer--${clicked.dataset.question}`).classList.remove('answer-active');
-  }   
-  else { 
-    questions.forEach(q => q.classList.remove("question-active"));
-    answers.forEach(a => a.classList.remove('answer-active'));
-    clicked.classList.add("question-active");
-    document.querySelector(`.answer--${clicked.dataset.question}`).classList.add('answer-active');
-  }
-  }
+            answer.classList.toggle('answer-active');
+        }
+    }
+}
 
-
-questions.forEach(q => q.addEventListener('click', openAnswer));
+questions.forEach(q => q.addEventListener('click', (e) => openAnswer(e, 'question_container')));
+questions2.forEach(q => q.addEventListener('click', (e) => openAnswer(e, 'question_container--2')));
 
 const listClicked = function (e) {
   const checked = e.target.closest('.question-list');
@@ -41,9 +39,12 @@ const listClicked = function (e) {
     if (list === checked) {
       list.classList.add('list_active');
       document.querySelector(`.question_container--${list.dataset.list}`).classList.add("active");
+     
+      
     } else {
       list.classList.remove('list_active');
       document.querySelector(`.question_container--${list.dataset.list}`).classList.remove("active");
+      
     }
   })
 }

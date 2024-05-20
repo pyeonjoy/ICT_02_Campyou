@@ -10,6 +10,25 @@
 <meta charset="utf-8">
 <title>관리자 페이지 메인</title>
 <style>
+@font-face {
+    font-family: 'JalnanGothic';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h2{
+     font-family: 'JalnanGothic';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h4{
+    font-family: 'JalnanGothic';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    line-height: 30px;
+}
 body{
   background-color: #F6FFF1;
 }
@@ -40,6 +59,7 @@ background-color: #FFBA34;
 border-radius: 10px;
 padding: 10px;
 margin-bottom: 10px;
+padding-bottom: 5px;
 }
 .inner > *{
 margin: 7px;
@@ -51,7 +71,7 @@ font-size: 15px;
 </head>
 <body>
     <div class="wrap">
-    <h3 class="admhead">관리자님 환영합니다</h3>
+    <h2 class="admhead">관리자님 환영합니다</h2>
             <div class="inner">
             <c:forEach var="k" items="${member}">
                 <h4>유저 현황</h4>

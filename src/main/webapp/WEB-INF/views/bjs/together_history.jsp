@@ -11,6 +11,7 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_history.css">
+<link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
 <%@ include file="../hs/header.jsp" %>
 <%@ include file="../hs/mypage_menu.jsp"%>
 <script type="text/javascript">
@@ -22,8 +23,6 @@ $(function() {
     	let promiseText = $(this).closest('.thul2').find(".compare").text();
         let promiseCount = promiseText.split('/')[0];
         let totalNumPeople = promiseText.split('/')[1];
-        console.log("1" + promiseCount);
-        console.log("2" + totalNumPeople);
         if (parseInt(promiseCount) >= parseInt(totalNumPeople)) {
             alert("정원이 초과되었습니다.");
             return;
@@ -60,6 +59,7 @@ function updatePromiseStatus(pmIdx, status) {
     });
 }
 
+
 function promiseApplyList(page) {
 	let memberIdx = document.getElementById("member_idx").value;
     	$('.thwrapper').empty();
@@ -77,6 +77,7 @@ function promiseApplyList(page) {
 //                 let imgSrc = toHistory.member_img === null || toHistory.member_img === '' || toHistory.member_img === 'user2.png' ? '${path}/resources/images/user2.png' : '${path}/resources/images/' + toHistory.member_img;
                 let html = '';
             	html += '<div class="thwrapper1">';
+
                 html += '<button type="button" class="thwrapper1Button thwrapper1Button_active" onclick="promiseApplyList()">동행 신청 받은 내역</button>';
                 html += '<button type="button" class="thwrapper1Button" onclick="promiseApplySendList()">동행 신청 내역</button>';
                 html += '</div>';
@@ -93,9 +94,9 @@ function promiseApplyList(page) {
 	                let html2 = '<div class="thul2">';
 	                html2 += '<ul class="thliImage3"><li class="th1 thliImage"><img src="${path}/resources/images/' + promise.member_img + '" class="qa11 thliImage2"></a></li></ul>';
 	                html2 += '<ul><li class="th1">' + promise.member_nickname + '(' + promise.member_dob + ')(' + promise.promise_my_count + ')</li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.t_campname + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11 compare">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_campname + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11 compare">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
 	                if (promise.pm_state === "신청중") {
 	                    html2 += '<div class="thul2Div">';
 	                    html2 += '<button type="button" class="thul2DivButton acceptButton" onclick="">수락</button>';
@@ -155,8 +156,8 @@ function promiseApplyList(page) {
                 pagingHtml += '<li class="th_disable"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
                 pagingHtml += '<li class="th_disable"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
             } else {
-                pagingHtml += '<li><a href="javascript:promiseApplyList(' + (paging.beginBlock + paging.pagePerBlock) + '" class="th_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
-                pagingHtml += '<li><a href="javascript:promiseApplyList(' + paging.totalPage + '" class="th_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + (paging.beginBlock + paging.pagePerBlock) + ')" class="th_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + paging.totalPage + ')" class="th_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
             }
             $('.th_paging').append(pagingHtml);
         },
@@ -197,11 +198,12 @@ function promiseApplySendList(page) {
                     let promise = toSendHistory[i];
 	                let html2 = '<div class="thul4">';
 	                html2 += '<ul><li class="th1">' + promise.member_nickname + '</li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.t_campname + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.pm_regdate + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '" class="qa11">' + promise.pm_state + '</a></li></ul>';
+
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_campname + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.pm_regdate + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.pm_state + '</a></li></ul>';
 	                html2 += '</div>';
 	                html += html2;
                 }
@@ -226,6 +228,7 @@ function promiseApplySendList(page) {
         		html += '</div>';
         		html += '</div>';
                 $('.thwrapper').append(html);
+
             }
 
             let paging = data.paging;
@@ -252,8 +255,8 @@ function promiseApplySendList(page) {
                 pagingHtml += '<li class="th_disable"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
                 pagingHtml += '<li class="th_disable"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
             } else {
-                pagingHtml += '<li><a href="javascript:promiseApplyList(' + (paging.beginBlock + paging.pagePerBlock) + '" class="th_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
-                pagingHtml += '<li><a href="javascript:promiseApplyList(' + paging.totalPage + '" class="th_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + (paging.beginBlock + paging.pagePerBlock) + ')" class="th_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:promiseApplyList(' + paging.totalPage + ')" class="th_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
             }
             $('.th_paging').append(pagingHtml);
         },

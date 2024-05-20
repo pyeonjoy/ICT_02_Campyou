@@ -12,16 +12,20 @@
 }
 .grid_title{
 text-align: center;
-  margin: 2rem;
+  margin-bottom: 2rem;
   color: var(--primary-color);
+}
+.inquiry{
+  width: 70%;
+  height: 80vh;
+  margin: 0 auto;
+  transform: translateY(10rem);
+	
 }
 .grid_container{
   display: grid;
   justify-content: center;
   align-items: center;
-  width: 70%;
-  margin: 0 auto;
-  transform: translateY(10rem);
 }
 .grid_col{
   display: grid;
@@ -70,6 +74,7 @@ width: 100%;
   font-size: .9rem;
 }
 .paging_list{
+  margin: 0 10px;
   display: flex;
   align-items: center;
   justify-content: center;

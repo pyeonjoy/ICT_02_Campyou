@@ -1,6 +1,7 @@
 package com.ict.campyou.bjs.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -124,6 +125,7 @@ public class TogetherServiceImpl implements TogetherService{
 	@Override
 	public List<PromiseVO> getTogetherHistoryGet(String member_idx, int offset, int limit) throws Exception {
 		return togetherDAO.getTogetherHistoryGet(member_idx, offset, limit);
+
 	}
 	
 	@Override
@@ -139,5 +141,75 @@ public class TogetherServiceImpl implements TogetherService{
 	@Override
 	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception {
 		return togetherDAO.getToCommentList(t_idx);
+	}
+	
+	@Override
+	public int getToCommentMaxStep(Map<String, Integer> map) throws Exception {
+		return togetherDAO.getToCommentMaxStep(map);
+	}
+
+	@Override
+	public int getToCommentSame(Map<String, Integer> map) throws Exception {
+		return togetherDAO.getToCommentSame(map);
+	}
+	
+	@Override
+	public int getToCommentGSUpdate(Map<String, Integer> map) throws Exception {
+		return togetherDAO.getToCommentGSUpdate(map);
+	}
+	
+	@Override
+	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception {
+		return togetherDAO.getToCommentWrite(tcvo);
+	}
+
+	@Override
+	public int getToCommentDelete(String wc_idx) throws Exception {
+		return togetherDAO.getToCommentDelete(wc_idx);
+	}
+	
+	@Override
+	public int getToCommentUpdate(TogetherCommentVO tcvo) throws Exception {
+		return togetherDAO.getToCommentUpdate(tcvo);
+	}
+	
+	@Override
+	public int getBoardWithCount(String member_idx) throws Exception {
+		return togetherDAO.getBoardWithCount(member_idx);
+	}
+	
+	@Override
+	public List<TogetherVO> getPromiseIng(String member_idx, int offset, int limit) throws Exception {
+		return togetherDAO.getPromiseIng(member_idx, offset, limit);
+	}
+	
+	@Override
+	public List<PromiseVO> getPromisePeopleDetail(String t_idx) throws Exception {
+		return togetherDAO.getPromisePeopleDetail(t_idx);
+	}
+	
+	@Override
+	public int getPromiseBanMember(PromiseVO pvo) throws Exception {
+		return togetherDAO.getPromiseBanMember(pvo);
+	}
+	
+	@Override
+	public int getBoardWithCountReady(String member_idx) throws Exception {
+		return togetherDAO.getBoardWithCountReady(member_idx);
+	}
+	
+	@Override
+	public List<TogetherVO> getPromiseReady(String member_idx, int offset, int limit) throws Exception {
+		return togetherDAO.getPromiseReady(member_idx, offset, limit);
+	}
+	
+	@Override
+	public int getBoardWithCountEnd(String member_idx) throws Exception {
+		return togetherDAO.getBoardWithCountEnd(member_idx);
+	}
+	
+	@Override
+	public List<TogetherVO> getPromiseEnd(String member_idx, int offset, int limit) throws Exception {
+		return togetherDAO.getPromiseEnd(member_idx, offset, limit);
 	}
 }
