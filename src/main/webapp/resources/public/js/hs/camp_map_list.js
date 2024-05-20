@@ -366,8 +366,10 @@ $(document).ready(function() {
  	// 페이지 html 생성
 	function pageNumbers(){
 		$(".camp_list_page").empty();
+		
 		last_page = Math.ceil(totalCount / numOfRows);
 	    c_page_index = Math.floor((pageNo - 1) / page_num_count) * page_num_count; 
+	    l_page_index = Math.floor((last_page - 1) / page_num_count) * page_num_count; 
 	    
 	    let pageShow = (pageNo <= page_num_count) ? '<li class="to_disable camp_list_first">' : '<li class="to_able camp_list_first">';
 	    pageShow += '<i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
@@ -381,9 +383,9 @@ $(document).ready(function() {
         	pageShow += '</li>';
 	    }
 	    
-	    pageShow += (pageNo > last_page - (last_page % page_num_count) ) ? '<li class="to_disable' : '<li class="to_able';
+	    pageShow += (c_page_index == l_page_index) ? '<li class="to_disable' : '<li class="to_able';
 	    pageShow += ' camp_list_next"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
-	    pageShow += (pageNo > last_page - (last_page % page_num_count) ) ? '<li class="to_disable' : '<li class="to_able';
+	    pageShow += (c_page_index == l_page_index) ? '<li class="to_disable' : '<li class="to_able';
 		pageShow +=	' camp_list_last"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
 	    
         $(".camp_list_page").append(pageShow);
