@@ -202,4 +202,14 @@ public class TogetherServiceImpl implements TogetherService{
 	public List<TogetherVO> getPromiseReady(String member_idx, int offset, int limit) throws Exception {
 		return togetherDAO.getPromiseReady(member_idx, offset, limit);
 	}
+	
+	@Override
+	public int getBoardWithCountEnd(String member_idx) throws Exception {
+		return togetherDAO.getBoardWithCountEnd(member_idx);
+	}
+	
+	@Override
+	public List<TogetherVO> getPromiseEnd(String member_idx, int offset, int limit) throws Exception {
+		return togetherDAO.getPromiseEnd(member_idx, offset, limit);
+	}
 }

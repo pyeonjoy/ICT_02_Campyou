@@ -2,7 +2,6 @@ package com.ict.campyou.bjs.controller;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,14 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.ict.campyou.bjs.dao.PromiseVO;
-import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.dao.TogetherCommentVO;
+import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
-import com.ict.campyou.common.Paging2;
 import com.ict.campyou.common.Paging4;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
@@ -36,8 +33,8 @@ public class TogetherAjaxController {
 	
 	@Autowired
 	private Paging4 paging;
-	@Autowired
-	private Paging2 paging2;
+//	@Autowired
+//	private Paging2 paging2;
 
 	@RequestMapping(value = "together_Write2.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
@@ -399,32 +396,32 @@ public class TogetherAjaxController {
 	@ResponseBody
 	public Map<String, Object> getPromiseIng(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
 		int count = togetherService.getBoardWithCount(member_idx);
-		paging2.setTotalRecord(count);
-		if(paging2.getTotalRecord() <= paging2.getNumPerPage()) {
-			paging2.setTotalPage(1);
+		paging.setTotalRecord(count);
+		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+			paging.setTotalPage(1);
 		}else {
-			paging2.setTotalPage(paging2.getTotalRecord() / paging2.getNumPerPage());
-			if(paging2.getTotalRecord() % paging2.getNumPerPage() != 0) {
-				paging2.setTotalPage(paging2.getTotalPage() +1);
+			paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+			if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+				paging.setTotalPage(paging.getTotalPage() +1);
 			}
 		}
 		String cPage = request.getParameter("cPage");
 		if(cPage == null || cPage.isEmpty()) {
-			paging2.setNowPage(1);
+			paging.setNowPage(1);
 		}else {
-			paging2.setNowPage(Integer.parseInt(cPage));
+			paging.setNowPage(Integer.parseInt(cPage));
 		}
 		
-		paging2.setOffset(paging2.getNumPerPage() * (paging2.getNowPage() -1));
+		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
 		
-		paging2.setBeginBlock((int)((paging2.getNowPage() -1) / paging2.getPagePerBlock()) * paging2.getPagePerBlock() +1);
-		paging2.setEndBlock(paging2.getBeginBlock() + paging2.getPagePerBlock() -1);
+		paging.setBeginBlock((int)((paging.getNowPage() -1) / paging.getPagePerBlock()) * paging.getPagePerBlock() +1);
+		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() -1);
 		
-		if(paging2.getEndBlock() > paging2.getTotalPage()) {
-			paging2.setEndBlock(paging2.getTotalPage());
+		if(paging.getEndBlock() > paging.getTotalPage()) {
+			paging.setEndBlock(paging.getTotalPage());
 		}
 		
-		List<TogetherVO> toPromiseIng = togetherService.getPromiseIng(member_idx, paging2.getOffset(), paging2.getNumPerPage());
+		List<TogetherVO> toPromiseIng = togetherService.getPromiseIng(member_idx, paging.getOffset(), paging.getNumPerPage());
 		if(toPromiseIng != null) {
 			for (TogetherVO tvo : toPromiseIng) {
 				int promiseCount = togetherService.getPomiseCount(tvo.getT_idx());
@@ -433,7 +430,7 @@ public class TogetherAjaxController {
 		}
 		Map<String, Object> response = new HashMap<>();
 		response.put("toPromiseIng", toPromiseIng);
-		response.put("paging", paging2);
+		response.put("paging", paging);
 		return response;
 	}
 	
@@ -481,41 +478,81 @@ public class TogetherAjaxController {
 	@ResponseBody
 	public Map<String, Object> getPromiseReady(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
 		int count = togetherService.getBoardWithCountReady(member_idx);
-		paging2.setTotalRecord(count);
-		if(paging2.getTotalRecord() <= paging2.getNumPerPage()) {
-			paging2.setTotalPage(1);
+		paging.setTotalRecord(count);
+		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+			paging.setTotalPage(1);
 		}else {
-			paging2.setTotalPage(paging2.getTotalRecord() / paging2.getNumPerPage());
-			if(paging2.getTotalRecord() % paging2.getNumPerPage() != 0) {
-				paging2.setTotalPage(paging2.getTotalPage() +1);
+			paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+			if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+				paging.setTotalPage(paging.getTotalPage() +1);
 			}
 		}
 		String cPage = request.getParameter("cPage");
 		if(cPage == null || cPage.isEmpty()) {
-			paging2.setNowPage(1);
+			paging.setNowPage(1);
 		}else {
-			paging2.setNowPage(Integer.parseInt(cPage));
+			paging.setNowPage(Integer.parseInt(cPage));
 		}
 		
-		paging2.setOffset(paging2.getNumPerPage() * (paging2.getNowPage() -1));
+		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
 		
-		paging2.setBeginBlock((int)((paging2.getNowPage() -1) / paging2.getPagePerBlock()) * paging2.getPagePerBlock() +1);
-		paging2.setEndBlock(paging2.getBeginBlock() + paging2.getPagePerBlock() -1);
+		paging.setBeginBlock((int)((paging.getNowPage() -1) / paging.getPagePerBlock()) * paging.getPagePerBlock() +1);
+		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() -1);
 		
-		if(paging2.getEndBlock() > paging2.getTotalPage()) {
-			paging2.setEndBlock(paging2.getTotalPage());
+		if(paging.getEndBlock() > paging.getTotalPage()) {
+			paging.setEndBlock(paging.getTotalPage());
 		}
-		List<TogetherVO> toPromiseReady = togetherService.getPromiseReady(member_idx, paging2.getOffset(), paging2.getNumPerPage());
+		List<TogetherVO> toPromiseReady = togetherService.getPromiseReady(member_idx, paging.getOffset(), paging.getNumPerPage());
 		if(toPromiseReady != null) {
 			for (TogetherVO tvo : toPromiseReady) {
-				System.out.println(tvo.getT_campname());
 				int promiseCount = togetherService.getPomiseCount(tvo.getT_idx());
 				tvo.setPromise_count(promiseCount);
 			}
 		}
 		Map<String, Object> response = new HashMap<>();
 		response.put("toPromiseReady", toPromiseReady);
-		response.put("paging", paging2);
+		response.put("paging", paging);
+		return response;
+	}
+	
+	@RequestMapping(value = "get_promise_end.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getPromiseEnd(@RequestParam("member_idx")String member_idx, HttpServletRequest request) throws Exception {
+		int count = togetherService.getBoardWithCountEnd(member_idx);
+		paging.setTotalRecord(count);
+		if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+			paging.setTotalPage(1);
+		}else {
+			paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+			if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+				paging.setTotalPage(paging.getTotalPage() +1);
+			}
+		}
+		String cPage = request.getParameter("cPage");
+		if(cPage == null || cPage.isEmpty()) {
+			paging.setNowPage(1);
+		}else {
+			paging.setNowPage(Integer.parseInt(cPage));
+		}
+		
+		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
+		
+		paging.setBeginBlock((int)((paging.getNowPage() -1) / paging.getPagePerBlock()) * paging.getPagePerBlock() +1);
+		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() -1);
+		
+		if(paging.getEndBlock() > paging.getTotalPage()) {
+			paging.setEndBlock(paging.getTotalPage());
+		}
+		List<TogetherVO> toPromiseEnd = togetherService.getPromiseEnd(member_idx, paging.getOffset(), paging.getNumPerPage());
+		if(toPromiseEnd != null) {
+			for (TogetherVO tvo : toPromiseEnd) {
+				int promiseCount = togetherService.getPomiseCount(tvo.getT_idx());
+				tvo.setPromise_count(promiseCount);
+			}
+		}
+		Map<String, Object> response = new HashMap<>();
+		response.put("toPromiseEnd", toPromiseEnd);
+		response.put("paging", paging);
 		return response;
 	}
 }

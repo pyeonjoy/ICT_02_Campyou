@@ -202,4 +202,10 @@
 	<select id="promise_ready" parameterType="Map" resultType="tvo">
 		select * from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate &lt;= now() and t_enddate >= now() order by t_idx desc limit #{limit} offset #{offset}
 	</select>
+	<select id="my_board_with_end_count" parameterType="String" resultType="int">
+		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0 and t_enddate &lt; now()
+	</select>
+	<select id="promise_End" parameterType="Map" resultType="tvo">
+		select * from board_with where member_idx = #{member_idx} and t_active = 0 and t_enddate &lt; now() order by t_idx desc limit #{limit} offset #{offset}
+	</select>
 </mapper>

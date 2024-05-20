@@ -46,4 +46,6 @@ public interface TogetherService {
 	public int getPromiseBanMember(PromiseVO pvo) throws Exception;
 	public int getBoardWithCountReady(String member_idx) throws Exception;
 	public List<TogetherVO> getPromiseReady(String member_idx, int offset, int limit) throws Exception;
+	public int getBoardWithCountEnd(String member_idx) throws Exception;
+	public List<TogetherVO> getPromiseEnd(String member_idx, int offset, int limit) throws Exception;
 }

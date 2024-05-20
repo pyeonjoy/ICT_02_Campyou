@@ -32,11 +32,9 @@
 		color: white;
 	}
     .toContent{
+    	width: 100%;
         display: grid;
-        grid-template-columns: 32% 32% 32% 32%;
-/*         grid-template-columns: repeat(4, minmax(0, 17%)); */
-/*         grid-template-columns: repeat(4, 1fr); */
-/*         grid-templatetoContentOne-columns: repeat(4, minmax(0, 1fr)); */
+        grid-template-columns: 15% 15% 15% 15%;
         gap: 3rem;
         justify-content: center;
         margin: 5rem 0;
