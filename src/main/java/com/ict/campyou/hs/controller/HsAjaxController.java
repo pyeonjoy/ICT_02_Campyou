@@ -83,7 +83,7 @@ public class HsAjaxController {
 	
 	@RequestMapping(value = "camp_list_keyword_detail.do", produces = "text/xml; charset=utf-8")
 	@ResponseBody
-	public String camp_list_keyword_detail(@RequestParam(defaultValue = "1") int pageNo,
+	public String campListKeywordDetail(@RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam int numOfRows,
 			@RequestParam String keyword) {
 		BufferedReader rd = null;
@@ -130,9 +130,9 @@ public class HsAjaxController {
 	}
 	
 	
-	@RequestMapping(value = "camp_list5000.do", produces = "text/xml; charset=utf-8")
+	@RequestMapping(value = "camp_list_in_ms.do", produces = "text/xml; charset=utf-8")
 	@ResponseBody
-	public String campList5000(@RequestParam(defaultValue = "1") int pageNo,
+	public String campListInMapSearch(@RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam int numOfRows) {
 		BufferedReader rd = null;
 		HttpURLConnection conn = null;
