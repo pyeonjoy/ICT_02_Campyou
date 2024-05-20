@@ -7,8 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <style type="text/css">
-@charset "UTF-8";
-
+body {
+	background-color: #F6FFF1;
+}
 .grid_container{
   display: grid;
   justify-content: center;
@@ -33,7 +34,7 @@
   padding: .8rem 1rem;
   background-color: #032805;
   color: white;
-  width: 100%;
+  width: 1200px;
 }
 .grid_title{
   display: block;
@@ -73,14 +74,14 @@ width: 100%;
 	padding: 0 0.5rem;
 	margin: 0 0.5rem;
 	text-decoration: none;
-	background-color: white;
+	background-color: #F6FFF1;
 	color: #FFBA34;
 	font-size: 1.4rem;
 }
 .nowpage{
 	padding: 0 0.5rem;
 	margin: 0 0.5rem;
-	background-color: white;
+	background-color: #F6FFF1;
 	color: black;
 	text-decoration: none;
 	font-size: 1.4rem;
@@ -139,8 +140,8 @@ width: 2.7rem;
 						<div class="grid_row grid_row_content">
 							<a href="admin_member_detail.do?member_idx=${k.reportmember_idx}">${k.report_content }</a>
 						</div>
-						<div class="grid_row grid_row_content">${k.member_idx }</div>
-						<div class="grid_row grid_row_content">${k.reportmember_idx }</div>
+						<div class="grid_row grid_row_content">${k.nickname1 }</div>
+						<div class="grid_row grid_row_content">${k.nickname2 }</div>
 						<c:choose>
 							<c:when test="${k.report_status==0}">
 								<div class="grid_row grid_row_content">처리중</div>

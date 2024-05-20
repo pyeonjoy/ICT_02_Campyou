@@ -32,6 +32,11 @@ public interface AdminService {
 	public List<AdminMemberVO> getreportSearch(String searchType, String keyword, int offset, int limit);
 	public int getTotalCount2();
 	public int getTotalCount3();
+
+	/*
+	 * public String nickname1(String member_idx); public String nickname2(String
+	 * member_idx);
+	 */
 	public List<AdminMemberVO> getmemberSearch(String searchType, String keyword, int offset, int limit);
 	public int getadminreport(String report_day, String report_idx, String admin_idx, String reportmember_idx);
 	public int getadminreportall(AdminMemberVO amvo);

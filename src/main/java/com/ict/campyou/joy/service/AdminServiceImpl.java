@@ -205,7 +205,14 @@ public class AdminServiceImpl implements AdminService{
 	public int getmainadminreport() {
 		return admindao.getmainadminreport();
 	}
-
+	/*
+	 * @Override public String nickname1(String member_idx) { return
+	 * admindao.nickname1(member_idx); }
+	 * 
+	 * @Override public String nickname2(String member_idx) { return
+	 * admindao.nickname2(member_idx); }
+	 */
+	
 	@Override
 	public List<AdminMemberVO> allreport(int offset, int limit) {
 		return admindao.allreport(offset, limit);

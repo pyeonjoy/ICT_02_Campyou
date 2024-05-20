@@ -179,8 +179,17 @@
 	
 	<!-- 씬고  테이블 전체 불러오기 -->
 	<select id="allreport" parameterType="Map" resultType="amvo">
-		SELECT *
-		FROM admin_report limit #{limit} offset #{offset}
+		SELECT 
+    ar.*, 
+    m1.member_nickname AS nickname1, 
+    m2.member_nickname AS nickname2
+FROM 
+    admin_report ar
+JOIN 
+    members m1 ON ar.member_idx = m1.member_idx
+JOIN 
+    members m2 ON ar.reportmember_idx = m2.member_idx
+     limit #{limit} offset #{offset}
 	</select>
 	
 	<!-- ===========================================================회원정보====================================================== -->
@@ -263,6 +272,9 @@
 		FROM admin_stop
 		where member_idx =#{member_idx}
 	</select>
+	
+	
+	
 	
 	<!-- 신고 처리시 신고데이 설정 -->
 	<update id="adminreport" parameterType="map">
