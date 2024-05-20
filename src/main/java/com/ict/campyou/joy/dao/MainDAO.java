@@ -41,9 +41,9 @@ public class MainDAO {
 		}
 		return -1;
 	}
-	public int getStart(MemberVO mvo) {
+	public int addStar(MemberVO mvo) {
 		try {
-			return sqlSessionTemplate.update("joy.getstar",mvo);
+			return sqlSessionTemplate.update("joy.addStar",mvo);
 		} catch (Exception e) {
 			System.out.println(e);
 		}

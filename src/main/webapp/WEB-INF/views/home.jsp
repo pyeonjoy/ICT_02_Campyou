@@ -25,9 +25,9 @@
 <meta name="generator" content="Hugo 0.88.1">
 <title>임시 메인페이지</title>
 <style>
-#header {
+/* #header {
    background-color: rgba(5, 54, 16, 0.7);
-}
+} */
 
 .bd-placeholder-img {
 	font-size: 1.125rem;

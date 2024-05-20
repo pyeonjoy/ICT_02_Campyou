@@ -31,8 +31,8 @@ public class MainServiceImpl implements MainService{
 		}
 
 		@Override
-		public int addStart(MemberVO mvo) {
-			return maindao.getStart(mvo);
+		public int addStar(MemberVO mvo) {
+			return maindao.addStar(mvo);
 		}
 	
 	

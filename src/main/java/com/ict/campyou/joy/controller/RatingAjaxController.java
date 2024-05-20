@@ -17,12 +17,13 @@ public class RatingAjaxController {
 	@Autowired
 	private MainService mainservice; 
 	
-	@RequestMapping(value = "addStar.do", produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "addstarok.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String addReview(@RequestBody MemberVO mvo, HttpSession session) {
 		MemberVO mvo2 = (MemberVO) session.getAttribute("memberInfo");
-		mvo.setMember_idx(mvo2.getMember_idx());
-		int res = mainservice.addStart(mvo);
+		mvo2.setMember_idx(mvo2.getMember_idx());
+		int res = mainservice.addStar(mvo);
+		System.out.println("오나?");
 		if (res > 0) {
 			return String.valueOf(res);
 		}

@@ -1,23 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Document</title>
 <script>
 $(document).ready(function() {
 	 $('#star_form').submit(function(e) {
 	        e.preventDefault();
 
-	        let rating = $("input[name='rating']:checked").val();
+	        /* let member_idx = "${member_idx}"; */
+	        let member_idx = 2;
+	        let new_rating = $("input[name='rating']:checked").val();
 	        let requestData = {
-	            rating: rating,
+	        	new_rating: new_rating,
+	        	member_idx: 2
 	        };
 
 	        $.ajax({
-	            url: 'addstart.do', 
+	            url: 'addstarok.do', 
 	            type: 'post',
 	            contentType: 'application/json',
 	            data: JSON.stringify(requestData),
@@ -29,6 +35,10 @@ $(document).ready(function() {
 	                    alert("오류가 발생하였습니다.");
 	                }
 	            },
+	            error: function() {
+	                alert("로그인 후 이용 부탁드립니다.");
+	                location.href='login_form.do';
+	            }
 	        });
 	    });	
 });
@@ -80,7 +90,8 @@ $(document).ready(function() {
 	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 .wrap {
-    min-height: 400px;
+/*     height: 100vh;
+    min-height: 400px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,7 +106,7 @@ h1 {
 
 .rating {
     float: none;
-    width: 200px;
+    width: 240px;
     display: flex;
 }
 
@@ -115,13 +126,13 @@ h1 {
     display: block;
     position: relative;
     left: 0;
-    background-image: url(../images/ico-star-empty.svg);
+    background-image: url(${path}/resources/images/ico-star.png);
     background-repeat: no-repeat;
     background-size: 40px;
 }
 
 .rating__label .star-icon.filled {
-    background-image: url(../images/ico-star.svg);
+    background-image: url(${path}/resources/images/ico-star-empty.png);
 }
 
 .rating__label--full .star-icon {
@@ -137,6 +148,7 @@ h1 {
     cursor: default;
 }
 
+}
 
     </style>
 </head>
@@ -145,8 +157,8 @@ h1 {
 		<div class="modal_popup">
 			<div class="wrap">
 				<h1>Star rating</h1>
-				<div class="rating">
-				<form id="star_form">
+				<div>
+				<form id="star_form" class="rating">
 					<label class="rating__label rating__label--half" for="starhalf">
 						<input type="radio" id="starhalf" class="rating__input" name="rating" value="1"> <span class="star-icon"></span>
 					</label> 
@@ -192,8 +204,8 @@ h1 {
 			</div>
 		</div>
 	</div>
-	<button type="button" class="modal_btn">신고 처리</button>
-	<script type="text/javascript">
+	<button type="button" class="modal_btn">별점 주기</button>
+ 	<script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
             const modalOpenButtons = document.querySelectorAll('.modal_btn');
             const modalCloseButtons = document.querySelectorAll('.close_btn');
@@ -222,6 +234,32 @@ h1 {
         opacityHover = '1'; // 호버 시 불투명도
 
 let stars = document.querySelectorAll('.rating .star-icon'); // 모든 star-icon 요소
+
+function checkedRate() {
+    let checkedRadio = document.querySelectorAll('.rating input[type="radio"]:checked'); // 체크된 라디오 버튼
+
+    initStars(); // 모든 별 초기화
+    checkedRadio.forEach(radio => {
+        let previousSiblings = prevAll(radio);
+
+        for (let i = 0; i < previousSiblings.length; i++) {
+            previousSiblings[i].querySelector('.star-icon').classList.add('filled'); // 체크된 라디오 버튼 이전 별들 채움
+        }
+
+        radio.nextElementSibling.classList.add('filled'); // 체크된 라디오 버튼의 별 채움
+
+        function prevAll() {
+            let radioSiblings = [],
+                prevSibling = radio.parentElement.previousElementSibling; // 이전 형제 요소
+
+            while (prevSibling) {
+                radioSiblings.push(prevSibling); // 이전 형제 요소 추가
+                prevSibling = prevSibling.previousElementSibling; // 다음 이전 형제 요소
+            }
+            return radioSiblings;
+        }
+    });
+}
 
 checkedRate(); // 초기 별점 설정
 
@@ -261,31 +299,7 @@ function filledRate(index, length) {
     }
 }
 
-function checkedRate() {
-    let checkedRadio = document.querySelectorAll('.rating input[type="radio"]:checked'); // 체크된 라디오 버튼
 
-    initStars(); // 모든 별 초기화
-    checkedRadio.forEach(radio => {
-        let previousSiblings = prevAll(radio);
-
-        for (let i = 0; i < previousSiblings.length; i++) {
-            previousSiblings[i].querySelector('.star-icon').classList.add('filled'); // 체크된 라디오 버튼 이전 별들 채움
-        }
-
-        radio.nextElementSibling.classList.add('filled'); // 체크된 라디오 버튼의 별 채움
-
-        function prevAll() {
-            let radioSiblings = [],
-                prevSibling = radio.parentElement.previousElementSibling; // 이전 형제 요소
-
-            while (prevSibling) {
-                radioSiblings.push(prevSibling); // 이전 형제 요소 추가
-                prevSibling = prevSibling.previousElementSibling; // 다음 이전 형제 요소
-            }
-            return radioSiblings;
-        }
-    });
-}
 
 function initStars() {
     for (let i = 0; i < stars.length; i++) {

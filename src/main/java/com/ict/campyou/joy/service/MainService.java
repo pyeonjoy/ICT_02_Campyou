@@ -11,5 +11,5 @@ public interface MainService {
 		public List<AdminVO> getwithboard();
 		public List<CampVO> getcamphit();
 		public int getReportWrite(AdminVO avo);
-		int addStart(MemberVO mvo);
+		int addStar(MemberVO mvo);
 }
