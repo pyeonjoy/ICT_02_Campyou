@@ -48,11 +48,17 @@
 }
 .thul2{
 	width: 30%;
-	height: 100px;
 	display: grid;
 	grid-template-columns: 20% 35% 15% 15% 15%;
 	list-style: none;
 	padding: 0.7rem 0;
+	align-items: center;
+	justify-content: center;
+}
+.thul3{
+	width: 30%;
+	margin: 2rem;
+	display: flex;
 	align-items: center;
 	justify-content: center;
 }
@@ -69,11 +75,9 @@
 	text-align: center;
 }
 .partnerListButtonDiv{
-	margin: 3rem 0;
-	width: 100%;
-	grid-column: 5;
-/* 	display: flex; */
-/* 	justify-content: flex-end; */
+	width: 50%;
+	display: flex;
+	justify-content: flex-end;
 }
 .thul5{
 	width: 50%;
