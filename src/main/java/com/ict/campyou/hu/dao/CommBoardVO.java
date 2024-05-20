@@ -4,9 +4,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 //admin_idx 추가
 public class CommBoardVO {
-	private String b_idx, member_idx, admin_idx, b_type, b_subject, member_nickname, admin_nickname, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name, b_active, old_f_name;
+	private String b_idx, member_idx, admin_idx, b_type, b_subject, member_nickname, admin_nickname, member_grade, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name, b_active, old_f_name;
 	public String getAdmin_nickname() {
 		return admin_nickname;
+	}
+	public String getMember_grade() {
+		return member_grade;
+	}
+	public void setMember_grade(String member_grade) {
+		this.member_grade = member_grade;
 	}
 	public void setAdmin_nickname(String admin_nickname) {
 		this.admin_nickname = admin_nickname;

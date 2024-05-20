@@ -3,9 +3,25 @@ package com.ict.campyou.hu.dao;
 import org.springframework.web.multipart.MultipartFile;
 
 public class MemberVO {
-	private String member_idx, member_id, member_name, member_nickname, member_dob, member_email, member_pwd,
-			member_phone, member_img, member_active, member_regdate, member_old_img,member_grade, member_login, 
-			new_rating, rating_count, member_rating,member_rating_all ;
+	private String member_idx, member_id, admin_idx, member_name, member_nickname, member_dob, member_email,
+			member_gender, member_pwd, member_phone, member_img, member_active, member_regdate, member_old_img,
+			member_grade, member_login, new_rating, rating_count, member_rating, member_rating_all;
+
+	public String getAdmin_idx() {
+		return admin_idx;
+	}
+
+	public String getMember_gender() {
+		return member_gender;
+	}
+
+	public void setMember_gender(String member_gender) {
+		this.member_gender = member_gender;
+	}
+
+	public void setAdmin_idx(String admin_idx) {
+		this.admin_idx = admin_idx;
+	}
 
 	public String getMember_rating_all() {
 		return member_rating_all;
@@ -37,7 +53,6 @@ public class MemberVO {
 
 	public void setMember_rating(String member_rating) {
 		this.member_rating = member_rating;
-
 	}
 
 	public String getMember_login() {
@@ -73,7 +88,6 @@ public class MemberVO {
 	public void setMember_img(String member_img) {
 		this.member_img = member_img;
 	}
-
 
 	public MultipartFile getFile() {
 		return file;
