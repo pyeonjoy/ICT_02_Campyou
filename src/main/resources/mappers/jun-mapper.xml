@@ -30,6 +30,12 @@
     select *
     from camp_list 
     <where>
+        <if test="s_sido != null and s_sido != ''">
+    		AND donm = #{s_sido}
+    	</if>
+    	<if test="s_sigungu != null and s_sigungu != ''">
+    		AND sigungunm = #{s_sigungu}
+    	</if>
         <if test="keyword != null and keyword != ''">
             AND (facltnm LIKE CONCAT('%', #{keyword}, '%'))
         </if>
@@ -43,12 +49,18 @@
             AND sbrscl = #{sbrscl}
         </if>
     </where>
-        limit #{limit} offset #{offset}
-</select>
+			limit #{limit} offset #{offset}
+	</select>
 <select id="searchCount" parameterType="Map" resultType="int">
     select count(*)
     from camp_list 
     <where>
+        <if test="s_sido != null and s_sido != ''">
+    		AND donm = #{s_sido}
+    	</if>
+    	<if test="s_sigungu != null and s_sigungu != ''">
+    		AND sigungunm = #{s_sigungu}
+    	</if>
         <if test="keyword != null and keyword != ''">
             AND (facltnm LIKE CONCAT('%', #{keyword}, '%'))
         </if>
