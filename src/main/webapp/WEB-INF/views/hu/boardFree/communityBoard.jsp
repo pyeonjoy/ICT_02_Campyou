@@ -16,7 +16,6 @@
 	function commBoard_write_alert(){
 		alert("회원님만 글쓰기 하실수 있습니다.\n회원가입이나 로그인 해주세요");
 	}
-	
 	function board_free_list_go(f) {
 		f.action="board_free_list_go.do";
 		f.submit();
@@ -50,7 +49,8 @@
 						<c:forEach var="k" items="${commBoard_list}" varStatus="vs">
 							<tr>
 							    <c:choose>
-							        <c:when test="${k.b_type == '공지사항'}">
+							       <%--  <c:when test="${k.b_type == '공지사항'}"> --%>
+							       <c:when test="${k.admin_nickname == '관리자'}">
 							        <td class="admin-write-color" style="background-color: lightyellow;">공지</td>
 							          <%--   <td class="admin-write-color" style="background-color: lightyellow;">${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td> --%>
 							            <td class="admin-write-color" style="background-color: lightyellow;">${k.b_type}</td>
@@ -69,7 +69,7 @@
 							            <td class="admin-write-color" style="background-color: lightyellow;">
 							                <c:choose>
 							                    <c:when test="${not empty adminInfo}">
-							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${adminInfo.admin_nickname}</a>
+							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.admin_nickname}</a>
 							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname}</a>
 							                    </c:when>
 							                    <c:otherwise>
@@ -189,7 +189,7 @@
 				</td>
 				<td>
 					<c:choose>
-						<c:when test="${memberInfo != null || adminInfo != null}">
+						<c:when test="${memberInfo != null || adminInfo != null || kakaoMemberInfo != null}">
 							<input type="button" id="btnWrite" value="글쓰기" onclick="commBoard_write()">
 						</c:when>
 						<c:otherwise>

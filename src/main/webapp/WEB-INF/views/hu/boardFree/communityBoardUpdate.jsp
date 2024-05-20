@@ -29,7 +29,7 @@
 	function comm_board_update_ok(f) {
 		for (var i = 0; i < f.elements.length; i++) {
 			if (f.elements[i].value == "") {
-				if (i == 3) continue;
+				if (i == 2 || i == 3) continue;
 				if(i == 6) break;
 				alert(f.elements[i].name + "를 입력하세요");
 				f.elements[i].focus();
@@ -55,7 +55,7 @@
 					<tr align="center">
 						<td bgcolor="#003300" style="color: white;">유형</td>
 						<c:choose>
-							<c:when test="${cbvo.member_nickname == 'admin'}">
+							<c:when test="${cbvo.admin_nickname == '관리자'}">
 								<td>
 									<select name="b_type">
 										<option value="공지사항">공지사항</option>
@@ -86,7 +86,7 @@
 					</tr>
 					<tr align="center">
 						<td bgcolor="#003300" style="color: white;">별명</td>
-						<td align="left">${cbvo.member_nickname}
+						<td align="left">${cbvo.member_nickname} ${cbvo.admin_nickname}
 						<input type="hidden" name="member_nickname" value="${cbvo.member_nickname}">
 						</td>
 					</tr>

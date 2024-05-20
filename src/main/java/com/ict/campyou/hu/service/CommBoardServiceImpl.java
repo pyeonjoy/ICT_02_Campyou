@@ -1,6 +1,7 @@
 package com.ict.campyou.hu.service;
 
 import java.util.List;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +51,6 @@ public class CommBoardServiceImpl implements CommBoardService {
 		return commBoardDAO.getCommBoardUpdate(cbvo);
 	}
 
-	
-
 	@Override
 	public int getReplyInsert(CommBoardVO cbvo) {
 		return commBoardDAO.getReplyInsert(cbvo);
@@ -64,56 +63,46 @@ public class CommBoardServiceImpl implements CommBoardService {
 
 	@Override
 	public List<CommentVO> getCommBoardList2(String b_idx) {
-		
 		return commBoardDAO.getCommBoardList2(b_idx);
 	}
 	
 	@Override
 	public int getCommentInsert(CommentVO cvo) {
-	
 		return commBoardDAO.getCommentInsert(cvo);
 	}
 
 	@Override
 	public int getCommentDelete(String c_idx) {
-
 		return commBoardDAO.getCommentDelete(c_idx);
 	}
 
 	@Override
 	public int getCommentUpdate(CommentVO cvo) {
-	
 		return commBoardDAO.getCommentUpdate(cvo);
 	}
 
 	@Override
 	public int getCommBoardAdminDelete(String b_idx) {
-		
 		return commBoardDAO.getCommBoardAdminDelete(b_idx);
 	}
 
 	@Override
 	public List<CommentVO> getCommentReplyList(String b_idx) {
-		
 		return commBoardDAO.getCommentReplyList(b_idx);
 	}
 
 	@Override
 	public int getLevUpdate(Map<String, Integer> map) {
-		
 		return commBoardDAO.getLevUpdate(map);
 	}
 
 	@Override
 	public int getAnsInsert(CommentVO cvo) {
-		
 		return commBoardDAO.getAnsInsert(cvo);
 	}
 
 	@Override
 	public CommentVO getCommentReplyDetail(String c_idx) {
-		
 		return commBoardDAO.getCommentReplyDetail(c_idx);
 	}
-
 }

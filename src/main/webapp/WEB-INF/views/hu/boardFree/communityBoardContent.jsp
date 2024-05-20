@@ -145,7 +145,7 @@ textarea {
 	</tr>
 	<tr>
 		<th bgcolor="#003300" style="color: white;">닉네임</th>
-		<td> ${cbvo.member_nickname}</td>
+		<td> ${cbvo.member_nickname} ${cbvo.admin_nickname}</td>
 	</tr>
 	<tr>
 		<th bgcolor="#003300" style="color: white;">날짜</th>

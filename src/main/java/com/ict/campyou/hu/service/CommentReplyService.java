@@ -7,7 +7,6 @@ import com.ict.campyou.hu.dao.CommentVO;
 public interface CommentReplyService {
 	public CommentVO getCommentReplyDetail(String b_idx);
 	
-	//¥Ò±€¿« ¥Ò±€
 	public int getLevUpdate(Map<String, Integer> map);
 	
 	public int getAnsInsert(CommentVO cvo3);

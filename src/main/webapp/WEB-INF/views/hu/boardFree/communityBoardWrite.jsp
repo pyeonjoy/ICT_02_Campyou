@@ -79,24 +79,20 @@
 					
 					<c:choose>
 						<c:when test="${adminInfo != null}">
-							<td align="left">${adminInfo.admin_nickname}
-							<input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}">
-							<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
+							<td align="left">
+							<select name="admin_nickname">
+									<option value="${adminInfo.admin_nickname}">${adminInfo.admin_nickname}</option>
+									<option value="관리자">관리자</option>
+							</select>
+							<%-- <input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}"> --%>
+							<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}"></td>
 						</c:when>
 						<c:otherwise>
 							<td align="left">${memberInfo.member_nickname}
 							<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
-							<input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}">
+							<input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}"></td>
 						</c:otherwise>
 					</c:choose>
-					
-					
-		
-					
-					
-					
-					
-					</td>
 				</tr>
 				<tr>
 					<th bgcolor="#003300" style="color: white;">첨부파일</th>

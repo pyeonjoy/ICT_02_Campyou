@@ -3,8 +3,16 @@ package com.ict.campyou.hu.dao;
 import org.springframework.web.multipart.MultipartFile;
 
 public class MemberVO {
-	private String member_idx, member_id, member_name, member_nickname, member_dob, member_email, member_pwd,
+	private String member_idx, member_id, admin_idx, member_name, member_nickname, member_dob, member_email, member_pwd,
 			member_phone, member_img, member_active, member_regdate, member_old_img,member_grade, member_login ;
+  
+	public String getAdmin_idx() {
+		return admin_idx;
+	}
+
+	public void setAdmin_idx(String admin_idx) {
+		this.admin_idx = admin_idx;
+	}
 
 	public String getMember_login() {
 		return member_login;

@@ -25,13 +25,11 @@ public class CommentReplyServiceImpl implements CommentReplyService {
 
 	@Override
 	public int getAnsInsert(CommentVO cvo3) {
-		
 		return commentReplyDAO.getAnsInsert(cvo3);
 	}
 
 	@Override
 	public int getCommentReplyInsert(CommentVO cvo) {
-		
 		return commentReplyDAO.getCommentReplyInsert(cvo);
 	}
 }

@@ -1,7 +1,6 @@
 package com.ict.campyou.hu.sns;
 
 public class AddrVO {
-	
 	private String  md_idx, member_idx, postcode,address,detailAddress,extraAddress, base_addr, memo;
 
 	public String getMd_idx() {
@@ -67,5 +66,4 @@ public class AddrVO {
 	public void setExtraAddress(String extraAddress) {
 		this.extraAddress = extraAddress;
 	}
-	
 }
