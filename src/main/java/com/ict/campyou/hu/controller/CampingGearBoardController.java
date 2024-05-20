@@ -1,6 +1,7 @@
 package com.ict.campyou.hu.controller;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -26,14 +27,11 @@ import com.ict.campyou.common.Paging;
 import com.ict.campyou.hu.dao.CampingGearBoardVO;
 import com.ict.campyou.hu.dao.CampingGearSearchVO;
 import com.ict.campyou.hu.dao.AdminMembVO;
-import com.ict.campyou.hu.dao.BoardFreeVO;
+
 import com.ict.campyou.hu.dao.CampingGearBoardCommentVO;
-import com.ict.campyou.hu.dao.CommBoardVO;
-import com.ict.campyou.hu.dao.CommentVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.hu.service.CampingGearBoardService;
 import com.ict.campyou.hu.service.CampingGearSearchService;
-import com.ict.campyou.hu.service.MemberService;
 
 @Controller
 public class CampingGearBoardController {
@@ -209,11 +207,8 @@ public class CampingGearBoardController {
 			  int result = campingGearBoardService.getCampingGearHit(cp_idx);
 			  
 			  if(memberInfo != null) {
-		
 				  CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
-				  
 				  cgbvo.setMember_idx(memberInfo.getMember_idx());
-				  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
 				  if(result > 0 && cgbvo != null && cgbvo.getMember_idx().equals(memberInfo.getMember_idx())) {
 					  mv.addObject("cgbvo", cgbvo);
@@ -230,7 +225,6 @@ public class CampingGearBoardController {
 					  mv.addObject("cgbvo", cgbvo);
 					  mv.addObject("memberInfo", memberInfo);
 					  mv.addObject("adminInfo", adminInfo);
-					  //mv.addObject("member_nickname", memberInfo.getMember_nickname());
 					  return mv;
 				  }  
 			  }
@@ -259,8 +253,7 @@ public class CampingGearBoardController {
 	  }
 	  
 	  @RequestMapping("camping_gear_update.do")
-	  public ModelAndView getCampingGearUpdate(@ModelAttribute("cPage") String cPage, @ModelAttribute("cp_idx") String cp_idx) {
-		  
+	  public ModelAndView getCampingGearUpdate(@ModelAttribute("cPage") String cPage, @ModelAttribute("cp_idx") String cp_idx) {		  
 		  ModelAndView mv = new ModelAndView("hu/campingGearBoard/campingGearUpdate");
 		  
 		  CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
@@ -382,7 +375,6 @@ public class CampingGearBoardController {
 					CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
 					  
 					cgbvo.setMember_idx(memberInfo.getMember_idx());
-					//cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
 					if(result > 0 && cgbvo != null && cgbvo.getMember_idx().equals(memberInfo.getMember_idx())) {
 						List<CampingGearBoardCommentVO> camping_gear_list2 = campingGearBoardService.getCampingGearList2(cp_idx);
@@ -455,11 +447,9 @@ public class CampingGearBoardController {
 			  
 			   //hit 카운트 계산
 			   int result = campingGearBoardService.getCampingGearHit(cp_idx);
-			  
-			   //CommBoardVO cbvo = campingGearBoardService.getCommBoardDetail(cp_idx);
+			 
 			   CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
 			  
-				
 			   if(result>0 && cgbvo != null) {
 				   List<CampingGearBoardCommentVO> camping_gear_list2 = campingGearBoardService.getCampingGearList2(cp_idx);
 				   mv.addObject("camping_gear_list2", camping_gear_list2);
@@ -481,7 +471,6 @@ public class CampingGearBoardController {
 				 
 				List<CampingGearBoardCommentVO> lcgbcvo = campingGearBoardService.getCampingGearCommentReplyList(cp_idx);
 				
-				//CommentVO cvo2 = commBoardService.getCommentReplyDetail(cvo.getC_idx());
 				CampingGearBoardCommentVO cgbvo2 = campingGearBoardService.getCampingGearDetail2(cgbvo.getC_idx());
 				
 				int groups = Integer.parseInt(cgbvo2.getGroups());
@@ -529,20 +518,6 @@ public class CampingGearBoardController {
 			   return new ModelAndView("hu/campingGearBoard/error");
 		   }
 		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-	
 		   @RequestMapping("camping_gear_search.do")
 		   public ModelAndView getCampingGearSearchList(@ModelAttribute("cp_idx")String cp_idx, String keyword) {
 			   try {
@@ -556,20 +531,5 @@ public class CampingGearBoardController {
 					System.out.println(e);
 				}
 			   return new ModelAndView("hu/campingGearBoard/error");
-		   }
-		   
-		    
-	
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
-		   
+		   }	   
 }

@@ -1,6 +1,7 @@
 package com.ict.campyou.hu.dao;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -152,10 +153,13 @@ public class CommBoardDAO {
 		return 0;
 	}
 	
-	//¡÷¿« ø‰∏¡~~~
 	public List<CommentVO> getCommentReplyList(String b_idx) {
-		
-		return sqlSessionTemplate.selectList("member.comment_reply_list", b_idx);
+		try {
+			return sqlSessionTemplate.selectList("member.comment_reply_list", b_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	public int getAnsInsert(CommentVO cvo) {
@@ -168,8 +172,11 @@ public class CommBoardDAO {
 	}
 	
 	public CommentVO getCommentReplyDetail(String c_idx) {
-		
-		return sqlSessionTemplate.selectOne("member.commet_reply_detail", c_idx);
+		try {
+			return sqlSessionTemplate.selectOne("member.commet_reply_detail", c_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
-
 }

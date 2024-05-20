@@ -1,6 +1,7 @@
 package com.ict.campyou.hu.sns.kakao;
 
 import java.io.BufferedReader;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -46,7 +47,6 @@ public class KakaoAjaxController {
 				conn.setRequestProperty(header.getKey(), header.getValue());
 			}
 			
-			//	200 �씠硫� �꽦怨듦낵 媛숈� �쓽誘� (HttpURLConnection.HTTP_OK)
 			int responseCode = conn.getResponseCode();
 			if (responseCode == HttpURLConnection.HTTP_OK) {
 				System.out.println("�꽦怨�");
@@ -57,10 +57,9 @@ public class KakaoAjaxController {
 			}
 			
 		} catch (Exception e) {
-			System.out.println("�뿰寃곗떎�뙣");
+			System.out.println(e);
 		} finally {
 			try {
-				//	�젒�냽 �걡湲�
 				conn.disconnect();
 			} catch (Exception e2) {
 			}
@@ -82,7 +81,7 @@ public class KakaoAjaxController {
 			return sb.toString();
 			
 		} catch (Exception e) {
-			System.out.println("API �쓳�떟�쓣 �씫�뒗�뜲 �떎�뙣");
+			System.out.println("API error");
 		}
 		return null;
 	}

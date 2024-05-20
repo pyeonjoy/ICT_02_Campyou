@@ -16,7 +16,6 @@
 	function commBoard_write_alert(){
 		alert("회원님만 글쓰기 하실수 있습니다.\n회원가입이나 로그인 해주세요");
 	}
-	
 	function board_free_list_go(f) {
 		f.action="board_free_list_go.do";
 		f.submit();
@@ -190,7 +189,7 @@
 				</td>
 				<td>
 					<c:choose>
-						<c:when test="${memberInfo != null || adminInfo != null}">
+						<c:when test="${memberInfo != null || adminInfo != null || kakaoMemberInfo != null}">
 							<input type="button" id="btnWrite" value="글쓰기" onclick="commBoard_write()">
 						</c:when>
 						<c:otherwise>

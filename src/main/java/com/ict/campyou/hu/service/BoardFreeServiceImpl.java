@@ -2,6 +2,7 @@ package com.ict.campyou.hu.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +16,11 @@ public class BoardFreeServiceImpl implements BoardFreeService {
 
 	@Override
 	public List<BoardFreeVO> getBoardFreeList() {
-		
 		return boardFreeDAO.getBoardFreeList();
 	}
 
 	@Override
 	public List<BoardFreeVO> getBoardFreeSearchList(String searchType, String searchValue) {
-	
 		return boardFreeDAO.getBoardFreeSearchList(searchType, searchValue);
 	}
 }

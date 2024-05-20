@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>Insert title here</title>
+<title>관리자 페이지</title>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/adminBoard.css">
 <%@ include file="../hs/header.jsp" %>
 <script type="text/javascript">
@@ -25,7 +25,6 @@ function permissionBtn(f) {
 		f.submit();
     }
  }
- 
 function assistant_admin_account(f) {
     f.action="admin_signup_page_go.do";
 	f.submit();
@@ -168,7 +167,7 @@ function update_admin(f) {
 					<form method="post">
 						<c:choose>
 							<c:when test="${adminInfo.admin_id == 'admin'}">
-								<input type="button" id="btnWrite" name="admin_idx" value="관리자 가입" onclick="assistant_admin_account(this.form)">
+								<input type="button" id="btnWrite" name="admin_idx" value="관리자 생성" onclick="assistant_admin_account(this.form)">
 							</c:when>
 							<c:otherwise>
 							</c:otherwise>

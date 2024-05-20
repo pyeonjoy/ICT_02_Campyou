@@ -1,6 +1,7 @@
 package com.ict.campyou.hu.dao;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -118,15 +119,5 @@ public class AdminMembDAO {
 			System.out.println(e);
 		}
 		return 0;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 }

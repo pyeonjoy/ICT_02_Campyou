@@ -56,20 +56,22 @@ public class EmailController {
                     sb.append(randomNumber);
                     randomNumber = sb.toString();
                 }
-                System.out.println("ÀÓ½Ã ºñ¹Ð¹øÈ£ : " + randomNumber);
+                System.out.println("ìž„ì‹œë²ˆí˜¸: " + randomNumber);
 
                 String pwd = passwordEncoder.encode(randomNumber);
                 mvo.setMember_pwd(pwd);
-                //mvo.setMember_id(mvo.getMember_id());
               
                 int result = memberService.getTempPwdUpdate(mvo);
                 System.out.println(result);
                 if(result>0) {
 	                mailService.sendEmail(randomNumber, mvo.getMember_email());
-	                mv.addObject("msg", "ÀÓ½Ã ºñ¹Ð¹øÈ£°¡ ¹ß¼ÛµÇ¾ú½À´Ï´Ù.");
+	                mv.addObject("msg", "ï¿½Ó½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ß¼ÛµÇ¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 	                mv.setViewName("hu/loginForm");
 	                return mv;
                 }
+            }else {
+            	 mv.setViewName("redirect:find_pwd_go.do");
+	             return mv;
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -90,13 +92,17 @@ public class EmailController {
 	
 	@PostMapping("id_send_ok.do")
     public ModelAndView findUserId(String member_name, String email,  HttpServletRequest request) {
-        try {   
+        try {
+        	ModelAndView mv = new ModelAndView();
             MemberVO mvo = memberService.getMyID(member_name);
             if (mvo != null) {
                 String userId = mvo.getMember_id();
                 mailService.sendMyIDEmail(userId, email);
                 return new ModelAndView("hu/loginForm");
-            }
+            }else {
+           	 	mv.setViewName("redirect:find_id_go.do");
+	            return mv;
+           }
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -28,10 +28,9 @@
 			<div class="header_right">
 				<ul>
 					<c:choose>
-						<c:when test="${empty memberInfo && empty admin}">
+						<c:when test="${empty memberInfo && empty admin && empty kakaoMemberInfo && empty naverMemberInfo}">
 							<li><a href="login_form.do">로그인</a></li>
 							<li><a href="sign_up_page_go.do">회원가입</a></li>
-
 						</c:when>
 						<c:otherwise>
 							<li><a href="javascript:void(0)" onclick="openChat()"><img class="icon chat"
@@ -41,7 +40,21 @@
 							<c:if test="${admin != null}">
 								<li><a href="admin_page.do"><img class="icon admin" src="resources/img/icon_admin.png" alt="management"></a></li>
 							</c:if>
-							<li><a href="logout_form.do">로그아웃</a></li>
+								<c:choose>
+									<c:when test="${kakaoMemberInfo != null }">
+										<a href="https://kauth.kakao.com/oauth/logout?client_id=4a601447a1662d2919cfc432b342bc38&logout_redirect_uri=http://localhost:8090/kakaologout.do">로그아웃</a>
+									</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${naverMemberInfo != null }">
+											<a href="naverlogout2.do">로그아웃</a>
+										</c:when>
+										<c:otherwise>
+											<li><a href="logout_form.do">로그아웃</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</ul>

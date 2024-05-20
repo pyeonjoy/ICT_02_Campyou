@@ -74,7 +74,6 @@ $(document).ready(function() {
 					$("#m_id").attr("disabled","disabled");
 					$("#idSpan").text("(중복된 아이디 입니다)");
 				}
-				
 				//중복된 이름과 별명이 하나라도 있으면 회원가입 비활성화 코드!
 				checkSignUpButton();
 			},

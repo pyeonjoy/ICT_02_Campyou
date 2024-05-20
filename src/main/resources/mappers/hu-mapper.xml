@@ -10,6 +10,28 @@
 			values(#{member_id}, #{member_name},#{member_pwd},#{member_nickname},#{member_dob}, #{member_phone},#{member_email}, sysdate())
 	</insert>
 	
+	<!-- 카카오 로그인 -->
+	<select id="search_kakao_id_in_db" parameterType="Map" resultType="mvo">
+    	select * from members where member_id =#{member_id}
+    </select>
+	
+	 <!-- 카카오 로그인 -->
+	 <insert id="insert_kakao_info_for_log_in" parameterType="Map">
+        insert into members(member_id, member_name, member_pwd, member_nickname, member_dob, member_phone, member_email, member_regdate)
+        	values(#{member_id}, #{member_name}, #{member_pwd}, #{member_nickname}, #{member_dob}, #{member_phone}, #{member_email}, sysdate())
+    </insert>
+    
+    <!-- 네이버 로그인 -->
+	<select id="search_naver_id_in_db" parameterType="Map" resultType="mvo">
+    	select * from members where member_id =#{member_id}
+    </select>
+	
+	 <!-- 네이버 로그인 -->
+	 <insert id="insert_naver_info_for_log_in" parameterType="Map">
+        insert into members(member_id, member_name, member_pwd, member_nickname, member_dob, member_phone, member_email, member_regdate)
+        	values(#{member_id}, #{member_name}, #{member_pwd}, #{member_nickname}, #{member_dob}, #{member_phone}, #{member_email}, sysdate())
+    </insert>
+    
 	<insert id="admin_insert" parameterType="admvo">
 		insert into admin(admin_id, admin_pwd, admin_name, admin_nickname, admin_phone, admin_email, admin_status, groups, step, lev)
 			values(#{admin_id}, #{admin_pwd},#{admin_name},#{admin_nickname},#{admin_phone}, #{admin_email}, 0, 0, 0, 0)
@@ -377,10 +399,6 @@
  		select * from c_comment where c_idx = #{c_idx}
  	</select>
  	
- 	
- 	
- 	
- 	
  	<!-- 캠핑추천 검색 -->
  	<select id="camping_gear_search_list" resultType="cgsvo">
  		select * from board_camp where bf_no &gt;= 1 and bf_no &lt;= 100  order by bf_no
@@ -404,16 +422,4 @@
 	    
 	    select * from board_camp by groups desc, lev asc  limit #{limit} offset #{offset}  
 	</select>
- 	
- 	
- 
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
 </mapper>

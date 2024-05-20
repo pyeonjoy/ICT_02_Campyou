@@ -1,46 +1,25 @@
 package com.ict.campyou.hu.controller;
 
-import java.io.File;
 import java.util.List;
-import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.ict.campyou.common.Paging;
 import com.ict.campyou.hu.dao.AdminMembVO;
-import com.ict.campyou.hu.dao.CommBoardVO;
-import com.ict.campyou.hu.dao.CommentVO;
-import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.hu.service.AdminMembService;
-import com.ict.campyou.hu.service.BoardFreeService;
-import com.ict.campyou.hu.service.CommBoardService;
-import com.ict.campyou.hu.service.CommentReplyService;
-import com.ict.campyou.hu.service.MemberService;
-import com.ict.campyou.joy.dao.AdminMemberVO;
 
 @Controller
 public class AdministratorController {
-	@Autowired
-	private CommBoardService commBoardService;
-	
 	@Autowired
 	private AdminMembService adminMembService;
 
 	@Autowired
 	private Paging paging;
-	
 	
 	  @RequestMapping("admin_page.do")
 	  public ModelAndView getCommunityBoard(HttpServletRequest request, HttpSession session) {

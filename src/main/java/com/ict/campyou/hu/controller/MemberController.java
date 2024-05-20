@@ -32,7 +32,6 @@ import com.ict.campyou.hu.dao.AdminMembVO;
 import com.ict.campyou.hu.service.AdminMembService;
 import com.ict.campyou.hu.service.BoardFreeService;
 import com.ict.campyou.hu.service.CommBoardService;
-import com.ict.campyou.hu.service.CommentReplyService;
 import com.ict.campyou.hu.service.MemberService;
 
 @Controller
@@ -44,17 +43,11 @@ public class MemberController {
 	private CommBoardService commBoardService;
 	
 	@Autowired
-	private CommentReplyService comReplyService;
-	
-	@Autowired
 	private BoardFreeService boardFreeService;
 	
 	@Autowired
 	private AdminMembService adminMembService;
-	
-	//@Autowired
-	//private CampingGearService campingGearService;
-	
+
 	@Autowired
 	private Paging paging;
 	
@@ -191,7 +184,7 @@ public class MemberController {
 			  int result = adminMembService.getAdminSignUp(admvo2);
 			  
 			  if(result > 0) {
-				  mv.setViewName("hu/adminLoginForm");
+				  mv.setViewName("redirect:admin_page.do");
 				  return mv;
 			  }
 		  }catch (Exception e) {
@@ -250,42 +243,65 @@ public class MemberController {
 		  return new ModelAndView("hu/error");
 	  }
 	  
-
-	  /*
-	  @RequestMapping("kakaologin3.do")
-	  public ModelAndView getKakaoLogin(HttpServletRequest request, MemberVO vo) {
+	  //카카오 로그인
+	  @RequestMapping("kakaologin.do")
+	  public ModelAndView getKakaoLogin(String code, MemberVO vo, HttpSession session) {
 		  try {
-			  HttpSession session = request.getSession();
-	          ModelAndView mv = new ModelAndView();
-	          
-	          MemberVO vo2 = memberService.getLogInOK(vo);
-	          
-	          
-	          if(vo2 == null || !passwordEncoder.matches(vo.getMember_pwd(), vo2.getMember_pwd()) && (vo.getMember_id() != vo2.getMember_id()) ) {
-	        	  mv.setViewName("redirect:login_form.do");
-	        	  //mv.addObject("pwdchk", "fail");
-	              return mv;
-	          }else {
-	        	  if(vo2 != null && vo2.getMember_active().equals("1")){
-	        		  session.setAttribute("admin", "ok"); 
-				  }		 
-				  session.setAttribute("memberInfo", vo2);
-				  mv.setViewName("redirect:/");
-				  return mv;  
-	          }
-		  }catch (Exception e) {
+			//카카오 로그인 access token 받아오기
+			String access_token = memberService.getKakaoAccessToken(code);
+			
+			//System.out.println("kakao access token: " + access_token);
+			
+			//카카오 로그인 회원정보 받아오기
+			MemberVO kakao_mvo = memberService.getKakaoLogInOk(access_token);
+			
+			//System.out.println("test: " + mvo.getMember_email());
+			
+			//카카오 회원 세션
+			if(kakao_mvo != null) {
+				session.setAttribute("access_token", access_token);
+				session.setAttribute("kakaoMemberInfo", kakao_mvo);
+				return new ModelAndView("redirect:/");
+			}
+		} catch (Exception e) {
 			System.out.println(e);
 		}
-		  return new ModelAndView("hu/error");
+		return null;
 	  }
-	  */
+	  
+	  //네이버 로그인
+	  @RequestMapping("naverlogin.do")
+	  public ModelAndView getNaverLogin(String code, MemberVO vo, HttpSession session) {
+		  try {
+			//네이버 로그인 access token 받아오기
+			String access_token = memberService.getNaverAccessToken(code);
+			
+			//System.out.println("naver access token: " + access_token);
+			
+			//네이버 로그인 회원정보 받아오기
+			MemberVO naver_mvo = memberService.getNaverLogInOk(access_token);
+			
+			//네이버 회원 세션
+			if(naver_mvo != null) {
+				session.setAttribute("naverMemberInfo", naver_mvo);
+				session.setAttribute("access_token", access_token);
+				return new ModelAndView("redirect:/");
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	  }
 	  
 	   @RequestMapping("logout_form.do")
 	   public ModelAndView getLogOut(HttpSession session) {
 		   try {
 			   ModelAndView mv = new ModelAndView("home");
+			   
 			   session.removeAttribute("memberInfo");
 			   session.removeAttribute("admin");
+			   session.removeAttribute("kakaoMemberInfo");
+			   session.removeAttribute("naverMemberInfo");
 			   return mv;
 		    } catch (Exception e) {
 		  	   System.out.println(e);
@@ -353,9 +369,10 @@ public class MemberController {
 			  
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			
 			  CommBoardVO cbvo = new CommBoardVO();
 		
-			  
 			  if(memberInfo != null) {
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 			  }
@@ -369,6 +386,7 @@ public class MemberController {
 					mv.addObject("paging", paging);
 					mv.addObject("memberInfo", memberInfo);
 					mv.addObject("adminInfo", adminInfo);
+					mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
 					return mv;
 				}
 				return new ModelAndView("hu/boardFree/error");
@@ -385,6 +403,7 @@ public class MemberController {
 			  
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
 
 			  if(memberInfo != null) {
 				  mv.addObject("memberInfo", memberInfo);
@@ -392,6 +411,10 @@ public class MemberController {
 			  }
 			  if(adminInfo != null) {
 				  mv.addObject("adminInfo", adminInfo);
+				  return mv;
+			  }
+			  if(kakaoMemberInfo != null) {
+				  mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
 				  return mv;
 			  }
 		  } catch (Exception e) {
@@ -469,15 +492,12 @@ public class MemberController {
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 			  
-			 
 			  int result = commBoardService.getCommBoardHit(b_idx);
 			  
 			  if(memberInfo != null) {
 				  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
-				  
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
-				  //cbvo.setMember_nickname(memberInfo.getMember_nickname());
-
+				  
 				  if(result > 0 && cbvo != null && cbvo.getMember_idx().equals(memberInfo.getMember_idx())) {  
 					  mv.addObject("cbvo", cbvo);
 					  mv.addObject("memberInfo", memberInfo);
@@ -493,7 +513,6 @@ public class MemberController {
 					  mv.addObject("cbvo", cbvo);
 					  mv.addObject("memberInfo", memberInfo);
 					  mv.addObject("adminInfo", adminInfo);
-					  //mv.addObject("member_nickname", memberInfo.getMember_nickname());
 					  return mv;
 				  }  
 			  }
@@ -550,7 +569,6 @@ public class MemberController {
 			return mv;
 		}
 		
-		
 		@RequestMapping("comment_update.do")
 		public ModelAndView getCommentUpdate(CommentVO cvo, String c_idx, String cPage, String content, @ModelAttribute("b_idx")String b_idx) {
 			ModelAndView mv =  new ModelAndView("redirect:comm_board_reply_ok.do");
@@ -562,7 +580,6 @@ public class MemberController {
 			}
 			return new ModelAndView("hu/boardFree/error");
 		}
-	  
 	  
 	  @RequestMapping("comm_board_delete.do")
 	  public ModelAndView getBoardDelete(@ModelAttribute("cPage") String cPage, @ModelAttribute("b_idx") String b_idx) {
@@ -686,16 +703,13 @@ public class MemberController {
 				}
 				if(memberInfo != null) {
 					CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
-					  
 					cbvo.setMember_idx(memberInfo.getMember_idx());
-					//cbvo.setMember_nickname(memberInfo.getMember_nickname());
 
 					if(result > 0 && cbvo != null && cbvo.getMember_idx().equals(memberInfo.getMember_idx())) {
 						List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
 						mv.addObject("commBoard_list2", commBoard_list2);
 						mv.addObject("cbvo", cbvo);
 						mv.addObject("memberInfo", memberInfo);
-					    // mv.addObject("member_nickname", memberInfo.getMember_nickname());
 						return mv;
 					}  
 				}
@@ -728,13 +742,10 @@ public class MemberController {
 			  
 			   //hit 카운트 계산
 			   int result = commBoardService.getCommBoardHit(b_idx);
-			  
-			   
+			  			   
 			   CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 			  
-				
 			   if(result>0 && cbvo != null) {
-				   
 				   List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
 				   mv.addObject("commBoard_list2", commBoard_list2);
 				   mv.addObject("memberInfo", memberInfo);
@@ -745,47 +756,7 @@ public class MemberController {
 			   }
 			   return new ModelAndView("hu/boardFree/error");
 		   }
-
-	  	
-	  	
-	  	/*
-	  	@RequestMapping("comment_reply_ok.do")
-		public ModelAndView getBoardAnsWrite(CommentVO cvo3, @ModelAttribute("cPage") String cPage, @ModelAttribute("bo_idx") String b_idx) {
-	    	try {
-	    		 CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
-	    		
-	    		int groups = Integer.parseInt(cbvo.getGroups());
-	    		int step = Integer.parseInt(cbvo.getStep());
-				int lev = Integer.parseInt(cbvo.getLev());
-	    		
-				step++;
-				lev++;
-	    		
-				Map<String, Integer> map = new HashMap<String, Integer>();
-				map.put("groups", groups);
-				map.put("lev", lev);
-				
-				int result = comReplyService.getLevUpdate(map);
-				
-				cvo3.setGroups(String.valueOf(groups));
-				cvo3.setStep(String.valueOf(step));
-				cvo3.setLev(String.valueOf(lev));
-	    		
-				//ModelAndView mv = new ModelAndView("redirect:commBoard_content.do");
-				ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardContent");
-				
-				int result2 = comReplyService.getAnsInsert(cvo3);
-				if(result2 > 0) {
-					mv.addObject("cvo", cvo3);
-					return mv;
-				}
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-	    	return new ModelAndView("hu/boardFree/error");
-		}
-	  		*/
-	  	
+	
 		@RequestMapping("comment_reply_insert.do")
 		public ModelAndView getCommentReplyInsert(CommentVO cvo, String cPage, @ModelAttribute("b_idx")String b_idx, HttpSession session) {
 			ModelAndView mv = new ModelAndView("redirect:comm_board_reply_ok.do");
@@ -801,7 +772,6 @@ public class MemberController {
     		int step = Integer.parseInt(cvo2.getStep());
 			int lev = Integer.parseInt(cvo2.getLev());
 			
-		
 			step++;
 			lev++;
 		
