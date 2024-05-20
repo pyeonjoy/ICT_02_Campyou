@@ -2,8 +2,20 @@ package com.ict.campyou.joy.dao;
 
 public class AdminMemberVO {
  private String  member_idx, report_content,report_date,report_now_date,admin_idx, report_ok_date, report_status, report_idx, report_day, reportmember_idx;
- private String  stop_content,stop_date,stop_now_date, stop_ok_date, stop_status, stop_idx, stop_day;
- public String getStop_content() {
+ private String  stop_content,stop_date,stop_now_date, stop_ok_date, stop_status, stop_idx, stop_day, nickname1, nickname2;
+ public String getNickname1() {
+	return nickname1;
+}
+public void setNickname1(String nickname1) {
+	this.nickname1 = nickname1;
+}
+public String getNickname2() {
+	return nickname2;
+}
+public void setNickname2(String nickname2) {
+	this.nickname2 = nickname2;
+}
+public String getStop_content() {
 	return stop_content;
 }
 public void setStop_content(String stop_content) {

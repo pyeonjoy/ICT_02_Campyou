@@ -383,5 +383,13 @@ public class AdminDAO {
 		}
 		return -1;
 	}
+	/*
+	 * public String nickname1(String member_idx) { try { return
+	 * sqlSessionTemplate.selectOne("joy.nickname1",member_idx); } catch (Exception
+	 * e) { System.out.println(e); } return null; } public String nickname2(String
+	 * member_idx) { try { return
+	 * sqlSessionTemplate.selectOne("joy.nickname2",member_idx); } catch (Exception
+	 * e) { System.out.println(e); } return null; }
+	 */
 	
 }
