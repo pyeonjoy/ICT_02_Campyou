@@ -2,22 +2,20 @@ package com.ict.campyou.hu.service;
 
 import java.io.BufferedReader;
 
-import java.io.BufferedWriter;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 import com.ict.campyou.hu.dao.MemberDAO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.hu.sns.kakao.KakaoUserVO;
-import com.ict.campyou.hu.sns.kakao.KakaoVO;
 import com.ict.campyou.hu.sns.naver.NaverUserVO;
-import com.ict.campyou.hu.sns.naver.NaverVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -64,66 +62,19 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.getNickNameChk(member_nickname);
 	}
 	
-	//카카오 로그인 access token 받아오기
+	//카카오 회원 insert 하기
 	@Override
-	public String getKakaoAccessToken(String code) {
-		String reqURL = "https://kauth.kakao.com/oauth/token";
-		try {
-			URL url = new URL(reqURL);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-			conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-
-			StringBuffer sb = new StringBuffer();
-			sb.append("grant_type=authorization_code");
-			sb.append("&client_id=4a601447a1662d2919cfc432b342bc38");
-			sb.append("&redirect_uri=http://localhost:8090/kakaologin.do");
-			sb.append("&code="+code);
-			bw.write(sb.toString());
-			bw.flush();
-			
-			int responseCode = conn.getResponseCode();
-
-			if (responseCode == HttpURLConnection.HTTP_OK) {
-				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-				String line = "";
-				StringBuffer sb2 = new StringBuffer();
-				while ((line = br.readLine()) != null) {
-					sb2.append(line);
-				}
-				String result = sb2.toString();
-				// System.out.println(result);
-
-				Gson gson = new Gson();
-				KakaoVO kvo = gson.fromJson(result, KakaoVO.class);
-				String access_token = kvo.getAccess_token();
-				//String refresh_token = kvo.getRefresh_token();
-				//String token_type = kvo.getToken_type();
-
-				return access_token;
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
-	}
-	
-	@Override
-	public int getInsertKakaoId(String access_token) {
+	public int getInsertKakaoId(HttpSession session) {
+		String access_token = (String) session.getAttribute("access_token");
+		
 		 Map<String, String> map = new HashMap<String, String>();
 	        String apiURL = "https://kapi.kakao.com/v2/user/me";
-
 	        try {
 	            URL url = new URL(apiURL);
 	            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 	            conn.setRequestMethod("POST");
 	            conn.setDoOutput(true);
-
 	            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	            conn.setRequestProperty("Authorization", "Bearer " + access_token);
 
@@ -156,7 +107,14 @@ public class MemberServiceImpl implements MemberService {
 	                map.put("member_dob", "Kakao: Not Provided");
 	                map.put("member_phone", "Kakao: Not Provided");   
 	                
-	               return memberDAO.getInsertKakaoId(map);               
+	                
+	                //카카오 맴버 데이터베이스에 존재하나 체크
+	                MemberVO mvo = memberDAO.getKakaoMemberById(map);
+	                
+	                //존재하지 않으면 insert
+	                if(mvo == null){
+	                	return memberDAO.getInsertKakaoId(map);
+	                }
 	            }
 	        } catch (Exception e) {
 	        	System.out.println(e);
@@ -166,17 +124,17 @@ public class MemberServiceImpl implements MemberService {
 	
 	//카카오 로그인 회원정보 받아오기
 	@Override
-	public MemberVO getKakaoLogInOk(String access_token) {
+	public MemberVO getKakaoLogInOk(HttpSession session) {
 		 Map<String, String> map = new HashMap<String, String>();
 	        String apiURL = "https://kapi.kakao.com/v2/user/me";
-
+	        
+	        String access_token = (String) session.getAttribute("access_token");
 	        try {
 	            URL url = new URL(apiURL);
 	            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 	            conn.setRequestMethod("POST");
 	            conn.setDoOutput(true);
-
 	            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	            conn.setRequestProperty("Authorization", "Bearer " + access_token);
 
@@ -209,6 +167,7 @@ public class MemberServiceImpl implements MemberService {
 	                map.put("member_dob", "Kakao: Not Provided");
 	                map.put("member_phone", "Kakao: Not Provided");   
 	                
+	                //카카오 로그인
 	                return memberDAO.getKakaoLogInOk(map);
 	            }
 	        } catch (Exception e) {
@@ -217,59 +176,12 @@ public class MemberServiceImpl implements MemberService {
 			return null;
 	    }
 	
-	
-	
-	//네이버 로그인 access token 받아오기
+	//네이버 회원 insert 하기
 	@Override
-	public String getNaverAccessToken(String code) {
-		String reqURL = "https://nid.naver.com/oauth2.0/token";
-		try {
-			URL url = new URL(reqURL);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-			conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-
-			StringBuffer sb = new StringBuffer();
-			sb.append("grant_type=authorization_code");
-			sb.append("&client_id=Yg5gbW0JV9cs8cbMiejA");
-			sb.append("&client_secret=N0wncgpOA_");
-			sb.append("&code="+code);
-			sb.append("&state=logintest");
-			bw.write(sb.toString());
-			bw.flush();
-
-			int responseCode = conn.getResponseCode();
-			if (responseCode == HttpURLConnection.HTTP_OK) {
-				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-				String line = "";
-				StringBuffer sb2 = new StringBuffer();
-				while ((line = br.readLine()) != null) {
-					sb2.append(line);
-				}
-				String result = sb2.toString();
-				Gson gson = new Gson();
-				NaverVO nvo = gson.fromJson(result, NaverVO.class);
-				String access_token = nvo.getAccess_token();
-				//String refresh_token = nvo.getRefresh_token();
-				//String token_type = nvo.getToken_type();
-
-				return access_token;
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
-	}
-	
-	//네이버 회원 데이터베이스에 삽입
-	@Override
-	public int getInsertNaverId(String access_token) {
+	public int getInsertNaverId(HttpSession session) {
 		Map<String, String> map = new HashMap<String, String>();
+		
+		String access_token = (String) session.getAttribute("access_token");
 		
 		String apiURL = "https://openapi.naver.com/v1/nid/me";
 		try {
@@ -313,9 +225,13 @@ public class MemberServiceImpl implements MemberService {
                 map.put("member_pwd", "Naver: Not Provided");
                 map.put("member_dob", " Naver: Not Provided");
                 map.put("member_phone", "Naver: Not Provided");
-
-               return memberDAO.getInsertNaverId(map);
-           
+                
+               //네이버 맴버 데이터베이스에 존재하나 체크
+               MemberVO mvo = memberDAO.getNaverMemberById(map);
+               //존재하지 않으면 insert
+               if(mvo == null) {
+            	   return memberDAO.getInsertNaverId(map);
+               }
 			}		
 		} catch (Exception e) {
 			System.out.println(e);
@@ -325,9 +241,10 @@ public class MemberServiceImpl implements MemberService {
 	
 	//네이버 로그인 회원정보 받아오기
 	@Override
-	public MemberVO getNaverLogInOk(String access_token) {
+	public MemberVO getNaverLogInOk(HttpSession session) {
 		Map<String, String> map = new HashMap<String, String>();
 		
+		String access_token = (String) session.getAttribute("access_token");
 		String apiURL = "https://openapi.naver.com/v1/nid/me";
 		try {
 			URL url = new URL(apiURL);
@@ -371,7 +288,7 @@ public class MemberServiceImpl implements MemberService {
                 map.put("member_dob", " Naver: Not Provided");
                 map.put("member_phone", "Naver: Not Provided");
 		
-                //없으면 db 에 새로운 네이버 아이디 저장
+                //네이버 로그인
                 return memberDAO.getNaverLogInOk(map);
             
 			}		
@@ -379,5 +296,11 @@ public class MemberServiceImpl implements MemberService {
 			System.out.println(e);
 		}
 		return null;	
+	}
+	
+	//자유 게시판과 캠핑게시판 글쓸때 마다 member_free 등급 올리기
+	@Override
+	public int getMemberFreeUpdate(String member_idx) {
+		return memberDAO.getMemberFreeUpdate(member_idx);
 	}
 }
