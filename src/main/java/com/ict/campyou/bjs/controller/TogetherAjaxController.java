@@ -250,6 +250,7 @@ public class TogetherAjaxController {
 				case "1": pvo.setPm_state("수락"); break;
 				case "-1": pvo.setPm_state("거절"); break;
 				case "2": pvo.setPm_state("동행완료"); break;
+				case "3": pvo.setPm_state("추방"); break;
 			}
 				
 				int promiseCount = togetherService.getPomiseCount(pvo.getT_idx());
@@ -301,6 +302,7 @@ public class TogetherAjaxController {
 					case "1": pvo.setPm_state("수락"); break;
 					case "-1": pvo.setPm_state("거절"); break;
 					case "2": pvo.setPm_state("동행완료"); break;
+					case "3": pvo.setPm_state("추방"); break;
 				}
 				int promiseCount = togetherService.getPomiseCount(pvo.getT_idx());
 				pvo.setPromise_count(promiseCount);

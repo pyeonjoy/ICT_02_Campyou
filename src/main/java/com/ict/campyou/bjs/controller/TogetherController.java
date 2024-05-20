@@ -191,12 +191,14 @@ public class TogetherController {
 	}
 	
 	@RequestMapping("together_partner.do")
-	public ModelAndView getTogetherPartner(@RequestParam("member_idx")String member_idx, @RequestParam(value = "cPage", required = false)String cPage) throws Exception {
+	public ModelAndView getTogetherPartner(@RequestParam("member_idx")String member_idx, @RequestParam(value = "cPage", required = false)String cPage, @RequestParam(value = "promise_status", required = false)String promise_status) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bjs/together_partner");
 		mv.addObject("member_idx", member_idx);
-		if(cPage != null) {
+		if(cPage != null && promise_status != null) {
+			System.out.println("컨트롤러 실행?");
 			mv.addObject("cPage", cPage);
+			mv.addObject("promise_status", promise_status);
 		}
 		return mv;
 	}
@@ -207,6 +209,7 @@ public class TogetherController {
 		mv.setViewName("bjs/together_people_detail");
 		mv.addObject("tvo", tvo);
 		mv.addObject("cPage", cPage);
+		System.out.println("컨트롤러status:" + tvo.getPromise_status());
 		return mv;
 	}
 	

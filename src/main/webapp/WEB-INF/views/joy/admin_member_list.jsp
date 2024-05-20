@@ -8,16 +8,19 @@
 <link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
 <%@ include file="../hs/admin_menu.jsp" %>
 <style type="text/css">
-
+body {
+	background-color: #F6FFF1;
+}
 #bbs{
 padding: 200px 100px 300px 100px;
 }
 #bbs table {
-	width:1200px;
+	width:1500px;
 	margin:0 auto;
 	margin-top:20px;
 	border-collapse: collapse;
 	font-size: 14px;
+	background-color: #F6FFF1;
 }
 
 #bbs table caption {
@@ -29,16 +32,18 @@ padding: 200px 100px 300px 100px;
 #bbs table th, #bbs table td {
 	text-align: center;
 	padding: 14px 10px;
-	width: 9%;
+	
 }
 #bbs table th{
   background-color: #032805;
   color: white;
+   width: 1500px;
 }
 #bbs table td{
 	border-bottom: 1px solid black;
   background-color: white;
   color: #032805;
+  background-color: #F6FFF1;
 }
 
 .pwrapper{
@@ -62,14 +67,14 @@ padding: 200px 100px 300px 100px;
 	padding: 0 0.5rem;
 	margin: 0 0.5rem;
 	text-decoration: none;
-	background-color: white;
+	background-color: #F6FFF1;
 	color: #FFBA34;
 	font-size: 1.4rem;
 }
 .nowpage{
 	padding: 0 0.5rem;
 	margin: 0 0.5rem;
-	background-color: white;
+	background-color: #F6FFF1;
 	color: black;
 	text-decoration: none;
 	font-size: 1.4rem;

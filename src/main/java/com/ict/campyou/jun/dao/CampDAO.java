@@ -54,6 +54,14 @@ public class CampDAO {
 		}
 		return -1;
 	}
+
+	public int countReview(String contentid) {
+		return sqlSessionTemplate.selectOne("jun.countReview",contentid);
+	}
+
+	public int addRating(String contentid) {
+		return sqlSessionTemplate.selectOne("jun.addRating",contentid);
+	}
 	
 	
 }
