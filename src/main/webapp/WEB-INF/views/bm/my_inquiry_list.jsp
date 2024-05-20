@@ -34,7 +34,7 @@
      <h3 class="nolist"> 문의 내역이 없습니다. </h3> 
     </c:when>
 	<c:otherwise>
-			<c:forEach var="list" items="${list}" varStatus="vs" begin="1">
+			<c:forEach var="list" items="${list}" varStatus="vs">
 			      <div class="grid_row grid_row_content">${paging.totalRecord - ((paging.nowPage-1)* paging.numPerPage + vs.index)}</div>
 			      <div class="grid_row grid_row_content"><a href="my_inquiry.do?qna_idx=${list.qna_idx}">${list.qna_title }</a></div>
 			      <div class="grid_row grid_row_content">${nickname }</div>

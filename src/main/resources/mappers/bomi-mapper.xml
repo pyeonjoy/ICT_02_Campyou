@@ -63,7 +63,6 @@ select * from qna where member_idx=#{member_idx} order by qna_idx desc limit #{l
 
 <select id="count" resultType="int" parameterType="String">
 select count(*) from qna where member_idx=#{member_idx}
-
 </select>
 
 <insert id="addChat" parameterType="chvo">

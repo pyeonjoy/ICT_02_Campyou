@@ -24,6 +24,7 @@ margin: auto;
   align-items: center;
   justify-content: center;
   transform: translateY(10rem);
+      width: 70%;
 }
 .user_img_container {
   display: inline-flex;
