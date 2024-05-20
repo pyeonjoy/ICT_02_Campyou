@@ -84,5 +84,9 @@ public class MainController {
 		return new ModelAndView("board/error");
 	}
 	
-	
+	@RequestMapping("addstar.do")
+	public ModelAndView star(){
+		ModelAndView mv = new ModelAndView("joy/ratingstar");
+		return mv;
+		}
 }

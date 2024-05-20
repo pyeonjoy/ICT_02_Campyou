@@ -1,7 +1,5 @@
 package com.ict.campyou.hu.sns.kakao;
 
-import java.util.Properties;
-
 public class KakaoUserVO {
 	private String id, connected_at;
 	private KakaoProperties properties;

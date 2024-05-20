@@ -25,7 +25,7 @@ public class NaverAjaxController {
 	@RequestMapping(value = "naverUser.do", produces="text/plain; charset=utf-8")
 	@ResponseBody
 	public  String memberChk(HttpSession session) {
-	   // access_token瑜� 媛�吏�怨� �궗�슜�옄 �젙蹂대�� 媛��졇�삱 �닔 �엳�떎.
+	   
 		String access_token = (String)session.getAttribute("access_token");
 		
 		String apiURL = "https://openapi.naver.com/v1/nid/me";
@@ -63,14 +63,12 @@ public class NaverAjaxController {
 				String naver_name = nvo.getResponse().getName();
 				String naver_profile_image = nvo.getResponse().getProfile_image();
 				
-				// DB�뿉 ���옣�븯湲�
-				
 				return naver_id+"/"+naver_nickname+"/"+naver_email+"/"+naver_mobile+"/"+naver_name+"/"+naver_profile_image;
 				
 			}
 			
 		} catch (Exception e) {
-			System.out.println("�뿰寃� �떎�뙣");
+			System.out.println(e);
 		}
 		return null;
 	}

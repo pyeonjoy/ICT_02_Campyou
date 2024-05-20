@@ -126,7 +126,6 @@ public class TogetherController {
 	public ModelAndView getTogetherDetail(@ModelAttribute("cPage")String cPage, String t_idx, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
-//		System.out.println(memberUser.getMember_img());
 		TogetherVO tvo = togetherService.getTogetherDetail(t_idx);
 		int proCount = togetherService.getPomiseCount(t_idx);
 		
@@ -188,6 +187,26 @@ public class TogetherController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bjs/together_history");
 		mv.addObject("member_idx", member_idx);
+		return mv;
+	}
+	
+	@RequestMapping("together_partner.do")
+	public ModelAndView getTogetherPartner(@RequestParam("member_idx")String member_idx, @RequestParam(value = "cPage", required = false)String cPage) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bjs/together_partner");
+		mv.addObject("member_idx", member_idx);
+		if(cPage != null) {
+			mv.addObject("cPage", cPage);
+		}
+		return mv;
+	}
+	
+	@RequestMapping("together_people_detail.do")
+	public ModelAndView getTogetherPeopleDetail(@ModelAttribute("cPage")String cPage, TogetherVO tvo) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bjs/together_people_detail");
+		mv.addObject("tvo", tvo);
+		mv.addObject("cPage", cPage);
 		return mv;
 	}
 	

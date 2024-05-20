@@ -2,6 +2,7 @@ package com.ict.campyou.joy.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import com.ict.campyou.joy.dao.AdminVO;
 import com.ict.campyou.common.Paging;
 import com.ict.campyou.common.Paging2;
 import com.ict.campyou.common.Paging3;
+import com.ict.campyou.hu.dao.AdminMembVO;
 import com.ict.campyou.hu.dao.CampingGearSearchVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.joy.dao.AdminMemberVO;
@@ -38,21 +40,20 @@ public class AdminController {
 	@RequestMapping("admin_main.do")
 	public ModelAndView boardList(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("joy/admin_main");
-		HttpSession session = request.getSession();
-		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-		mvo.setMember_idx(mvo.getMember_idx());
+//		HttpSession session = request.getSession();
+//		AdminMembVO admin = (AdminMembVO) session.getAttribute("admin");
+//		admin.setAdmin_idx(admin.getAdmin_idx());
 		List<AdminVO> admin_member = adminService.getadminmainmember();
 		List<AdminVO> admin_board = adminService.getadminboard();
 		int admin_qna = adminService.getadminqna();
 		int admin_report = adminService.getmainadminreport();
 		int admin_match = adminService.getadminmatch();
-		System.out.println("admin_report"+admin_report);
+		//System.out.println("admin_idx"+admin);
 		if (admin_member != null) {
 			mv.addObject("member", admin_member);
 			mv.addObject("board", admin_board);
 			mv.addObject("qna", admin_qna);
 			mv.addObject("report", admin_report);
-			mv.addObject("match", admin_match);
 			return mv;
 		}
 		return new ModelAndView("board/error");

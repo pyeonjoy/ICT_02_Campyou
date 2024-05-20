@@ -178,9 +178,9 @@
 	</select>
 	
 	<!-- 씬고  테이블 전체 불러오기 -->
-	<select id="allreport" resultType="amvo">
+	<select id="allreport" parameterType="Map" resultType="amvo">
 		SELECT *
-		FROM admin_report
+		FROM admin_report limit #{limit} offset #{offset}
 	</select>
 	
 	<!-- ===========================================================회원정보====================================================== -->
@@ -349,5 +349,13 @@
 			SET member_active = -1
 			WHERE member_idx = #{member_idx}
 	</update>
-	
+	<update id="addStar" parameterType="mvo">
+	UPDATE members
+	SET member_rating = (member_rating_all + #{new_rating}) / (rating_count + 1),
+	    rating_count = rating_count + 1,
+	    member_rating_all = member_rating_all + #{new_rating}
+	WHERE member_idx = 2
+<!-- 	WHERE member_idx = #{member_idx} -->
+</update>
+
 </mapper>

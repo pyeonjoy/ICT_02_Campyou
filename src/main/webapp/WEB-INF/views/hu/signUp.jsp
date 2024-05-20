@@ -125,6 +125,45 @@ $(document).ready(function() {
        }
    }
 });
+$(document).ready(function() {
+    $("#member_id").keyup(function() {
+        var member_id = $(this).val().trim();
+        
+        //admin 이 포함되어 있는지 확인
+        if (member_id.toLowerCase().includes("admin") || member_id.toUpperCase().includes("ADMIN") || member_id.includes("관리")) {
+            alert("아이디에 'admin'을 포함할 수 없습니다.");
+            $("#idSpan").text("(사용가능한 아이디 입니다)").css("display", "none");
+            $(this).val("");
+        }else{
+        	$("#idSpan").text("(사용가능한 아이디 입니다)").css("display", "inline");
+        }
+    });
+});
+$(document).ready(function() {
+    $("#member_nickname").keyup(function() {
+        var member_nickname = $(this).val().trim();
+        
+        //admin 이 포함되어 있는지 확인
+        if (member_nickname.toLowerCase().includes("admin") || member_nickname.toUpperCase().includes("ADMIN") || member_nickname.includes("관리")) {
+            alert("아이디에 admin 과 관리자 를 포함할 수 없습니다.");
+            $("#nickNameSpan").text("(사용가능한 별명 입니다)").css("display", "none");
+            $(this).val("");
+        }else{
+        	$("#nickNameSpan").text("(중복된 별명 입니다)").css("display", "inline");
+        }
+    });
+});
+$(document).ready(function() {
+    $("#member_name").keyup(function() {
+        var member_name = $(this).val().trim();
+        
+        //admin 이 포함되어 있는지 확인
+        if (member_name.toLowerCase().includes("admin") || member_name.toUpperCase().includes("ADMIN") || member_name.includes("관리")) {
+            alert("이름에 admin 과 관리자 를 포함할 수 없습니다.");
+            $(this).val("");
+        }
+    });
+});
 </script>
 </head>
 <body>

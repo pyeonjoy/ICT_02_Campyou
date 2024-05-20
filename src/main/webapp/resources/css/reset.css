@@ -96,8 +96,8 @@ a, a:visited, a:hover {
 }
 @charset "UTF-8";
 
-input[type="button"], input[type="submit"], input[type="reset"], button
-	{
+input[type="button"], input[type="submit"], input[type="reset"], button {
+	font-weight: bold;
 	border-radius: 5px;
 	background-color: #FFFBB9;
 	color: black;

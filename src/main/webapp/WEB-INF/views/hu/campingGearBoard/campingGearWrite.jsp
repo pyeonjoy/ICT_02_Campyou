@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자유게시판</title>
+<title>켐핑게시판</title>
 <!-- summer note -->
 <link rel="stylesheet" href="resources/css/summernote-lite.css">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardWrite.css">
@@ -19,8 +19,8 @@
 	function camping_gear_board(f) {
 		for (var i = 0; i < f.elements.length; i++) {
 			if (f.elements[i].value == "") {
-				if (i == 2) continue;
-				if(i == 5) break;
+				if (i == 2 || i == 3) continue;
+				if(i == 6) break;
 				alert(f.elements[i].name + "를 입력하세요");
 				f.elements[i].focus();
 				return; //수행 중단
@@ -37,12 +37,10 @@
 </head>
 <body>
 	<div>
-		<h2>자유게시판 글쓰기</h2>
+		<h2>캠핑게시판 글쓰기</h2>
 		<hr>
-		<p><a href="camping_gear_board.do">자유게시판 돌아가기</a></p>
+		<p><a href="camping_gear_board.do">캠핑게시판 돌아가기</a></p>
 		<form action="camping_gear_write_ok.do" method="post" enctype="multipart/form-data">
-		
-		
 			<table>
 				<tr align="center">
 					<td bgcolor="#003300" style="color: white;">제목</td>
@@ -50,9 +48,23 @@
 				</tr>
 				<tr align="center">
 					<td bgcolor="#003300" style="color: white;">별명</td>
-					<td align="left">${memberInfo.member_nickname}
-					<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
-					</td>
+					<c:choose>
+						<c:when test="${adminInfo != null}">
+							<td align="left">
+							<select name="admin_nickname">
+									<option value="${adminInfo.admin_nickname}">${adminInfo.admin_nickname}</option>
+									<option value="관리자">관리자</option>
+							</select>
+							
+							<%-- <input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}"> --%>
+							<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}"></td>
+						</c:when>
+						<c:otherwise>
+							<td align="left">${memberInfo.member_nickname}
+							<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
+							<input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}"></td>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 				<tr>
 					<th bgcolor="#003300" style="color: white;">첨부파일</th>

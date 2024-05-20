@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	const page_num_count = 4;
-    const numOfRows = 10;
+    const numOfRows = 5;
     let pageNo = 1;
     let totalCount = 0;
 	let last_page = 0; 
@@ -10,25 +10,31 @@ $(document).ready(function() {
     let markers = new Array();
     let infoWindows = new Array();
     
-    // 지도 
+    //  -------------- 지도 -------------- 
     let mapDiv = document.getElementById('map');
 
 	let map = new naver.maps.Map(mapDiv,{
 			center: new naver.maps.LatLng(35.907757, 127.766922),
+			mapTypeId: naver.maps.MapTypeId.TERRAIN,
+			mapTypeControl: true,
+		    mapTypeControlOptions: {
+		        style: naver.maps.MapTypeControlStyle.DROPDOWN,
+		    },
 			zoom: 8
 		}
 	);
 	
-	// 지도 정보창 닫기
-	naver.maps.Event.addListener(map, 'click', function() {
-    	closeInfoWindow();
-	});
-
+	// 정보창 닫기
 	function closeInfoWindow() {
 	    for (let i = 0; i < infoWindows.length; i++) {
 	        infoWindows[i].close();
     	}
 	}
+	
+	// 다른 부분 눌렀을 때
+	naver.maps.Event.addListener(map, 'click', function() {
+    	closeInfoWindow();
+	});
 	
 	// 마커 초기화
 	function marker_empty(){
@@ -41,7 +47,7 @@ $(document).ready(function() {
         infoWindows.length = 0;
 	}
 	
-	// 항목 생성
+	//  -------------- 캠프 항목 생성 -------------- 
 	function createCampItem(item){
         let firstImageUrl = $(item).find("firstImageUrl").text();
         let doNm = $(item).find("doNm").text();
@@ -56,12 +62,15 @@ $(document).ready(function() {
         let campItem = "<div class='camp_item'>";
         campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
         campItem += "<div class='camp_info'>";
-        campItem += "<p> ["+ doNm + " " + sigunguNm+"] </p>";
-        campItem += "<h4>" + facltNm + "</h4><span>" + induty + "</span>";
-        campItem += "<p>" + addr1 + "</p>";
-        campItem += "<p>" + tel + "</p>";
+        campItem += "<p class='location'> ["+ doNm + " " + sigunguNm+"] </p>";
+        campItem += "<h4>" + facltNm + "</h4>";
+        campItem += "<p class='induty'>" + induty + "</p>";
+        campItem += "<p class='addr'>" + addr1 + "</p>";
+        campItem += "<p class='tel'>" + tel + "</p>";
         campItem += "</div>";
-        campItem += "<div class='button_container'><button onclick=\"window.open('camp_detail.do?contentid=" + contentid +"')\">상세보기</button></div>";
+        campItem += "<div class='button_container'>"
+		campItem += "<button onclick=\"window.open('camp_detail.do?contentid=" + contentid +"')\">상세보기</button></div>";
+		campItem += "<div class='Heart_button'></div>";
         campItem += "</div>";
         
         // 지도
@@ -73,7 +82,7 @@ $(document).ready(function() {
         return campItem;
 	}
 	
-	// 마커 생성
+	//  -------------- 마커 생성 -------------- 
 	function marker_show() {
 		for (let i = 0; i < markerArr.length; i++) {
         	let LatLng = new naver.maps.LatLng(markerArr[i].lat, markerArr[i].lng);
@@ -96,7 +105,19 @@ $(document).ready(function() {
         	infoWindows.push(infoWindow)
    		}
    		
-   		 function getClickHandler(seq) {
+  		 // 마커들의 중심 좌표
+  		 let sumLat = 0, sumLng = 0;
+  		 
+  		 for (let i = 0; i < markerArr.length; i++) {
+  			 sumLat += parseFloat(markerArr[i].lat);
+  			 sumLng += parseFloat(markerArr[i].lng);
+  		 }
+  		 
+  		 let centerLatLng = new naver.maps.LatLng(sumLat / markerArr.length, sumLng / markerArr.length);
+  		 map.setCenter(centerLatLng);
+		
+		// 마커 클릭시 정보창 보이기
+   		function getClickHandler(seq) {
 			return function(e) { 
                 let marker = markers[seq],
                     infoWindow = infoWindows[seq]; 
@@ -109,26 +130,30 @@ $(document).ready(function() {
 			}
 		}
 
-	    for (let i = 0; i < markers.length; i++) {
+   		 for (let i = 0; i < markers.length; i++) {
 	        naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
 	    }
 	}
 
-	// 캠핑 리스트
+	//  -------------- 캠핑 리스트 -------------- 
     function camp_all_list() {
     	camp_list_option = "camp_all_list";
     	marker_empty();
         $.ajax({
-            url: "camp_list.do",
+            url: "camp_list5000.do",
             method: "post",
-            data: { pageNo: pageNo },
+            data: { pageNo: pageNo, numOfRows: numOfRows  },
             dataType: "xml",
             success: function(data) {
                 $("#camp_list_show").empty();
                 totalCount = $(data).find('totalCount').text();
+                $(".totalCount").text(totalCount);
                 
                 $(data).find("item").each(function(i, k) {
                 	 $("#camp_list_show").append(createCampItem(this));
+                	 let contentid = $(this).find("contentId").text();
+                	 let $container = $("#camp_list_show").find(".Heart_button:last");
+                     loadHeart(contentid, $container);
                 });
                 pageNumbers();
                 marker_show();
@@ -140,8 +165,85 @@ $(document).ready(function() {
     }
    	camp_all_list();
 
-   	// 캠핑 검색
+   	
+
+	//  -------------- 하트 -------------- 
+	function loadHeart(contentid, $container) {
+	    $.ajax({
+	        url: "checkHeart.do",
+	        type: "get",
+	        data: { contentid: contentid },
+	        dataType: "json",
+	        success: function(data) {
+	        	let detailButton = "";
+	            if (data === true) {
+	                detailButton += "<input type='button'  class='heart-button' value='🤍' data-contentid='"+ contentid + "'>";
+	            } else if (data === false) {
+	            	detailButton += "<input type='button' class='heart-button' value='❤️' data-contentid='"+ contentid + "'>";
+	            } else {
+	                alert("찜 여부를 확인하는 중 오류가 발생했습니다.");
+	            }
+                $container.html(detailButton);
+                
+	        },
+	        error: function() {
+	        	let detailButton = "<input type='button' class='heart-button' value='🤍' data-contentid='"+ contentid + "'>";
+	            $container.html(detailButton);
+	        }
+	    });
+	}
+	
+	function delHeart(contentid) {
+		 let $container = $(".camp_item").find(".Heart_button").filter("[data-contentid='" + contentid + "']");
+		$.ajax({
+			url:"delHeart.do",
+			method: "post",
+			data: {contentid: contentid},
+			success: function(data){
+				if (data != "error") {
+					alert("관심캠핑장에서 제거하였습니다.");
+					$(".camp_item").find(".Heart_button[data-contentid='" + contentid + "']").html("<input type='button' class='heart-button' value='🤍' data-contentid='"+ contentid + "' onclick='delHeart(" + contentid + ")'>");
+				}
+			}
+		});
+	}
+	
+	function Heart(contentid) {
+		let $container = $(".camp_item").find(".Heart_button").filter("[data-contentid='" + contentid + "']");
+	    $.ajax({
+	        url: "addHeart.do",
+	        method: "post",
+	        data: { contentid: contentid },
+	        success: function(data) {
+	            if(data != "error") {
+	                alert("관심 캠핑장에 등록이 되었습니다.");
+	                $(".camp_item").find(".Heart_button[data-contentid='" + contentid + "']").html("<input type='button' class='heart-button' value='❤️' data-contentid='"+ contentid + "' onclick='Heart(" + contentid + ")'>");
+	            } else {
+		            delHeart(contentid);
+	            }
+	        },
+	        error: function() {
+	            alert("로그인 후 이용 부탁드립니다.");
+	            location.href='login_form.do';
+	        }
+	    });
+	}
+   	
+    $(document).on("click", ".heart-button", function() {
+        let contentid = $(this).data("contentid");
+        if ($(this).hasClass("filled")) {
+            delHeart(contentid);
+            $(this).removeClass("filled").addClass("empty").val("🤍");
+        } else {
+            Heart(contentid);
+            $(this).removeClass("empty").addClass("filled").val("❤️");
+        }
+    });
+	
+   	
+   	// -------------- 캠핑 검색 -------------- 
    	function ajaxData(url, dataObj, successCallback) {
+   		$("#camp_list_show").empty();
    	    $.ajax({
    	        url: url,
    	        method: "post",
@@ -179,7 +281,7 @@ $(document).ready(function() {
         });
 
         $("input[name='sbrscl']:checked").each(function() {
-            selectedSbrscl.push($(this).val());
+        	selectedSbrscl.push($(this).val());
         });
         
        	function datailFilter(item) {
@@ -193,11 +295,12 @@ $(document).ready(function() {
     		const indutyArr = s_induty.split(",");
     		const sbrsclArr = s_sbrscl.split(",");
     		 
+    		
     		if ((sido_search == "" || sido_search == s_doNm ) && 
     			(sigungu_search == "" || sigungu_search == s_sigunguNm) &&
     			(selectedLctCl.length === 0 || selectedLctCl.some(k => lctClArr.includes(k))) &&
     			(selectedInduty.length === 0 || selectedInduty.some(k => indutyArr.includes(k))) &&
-    			(selectedSbrscl.length === 0 || selectedSbrscl.some(k => sbrsclArr.includes(k))))
+    			(selectedSbrscl.length === 0 || selectedSbrscl.every(k => sbrsclArr.includes(k))))
     		{
     			searchDataItems.push(createCampItem(item)); 
     		    totalCount += 1;
@@ -206,15 +309,16 @@ $(document).ready(function() {
         
         // 키워드 검색
         if (keywordInput != "") {
+        	$(".keyword").text("\"" + keywordInput + "\"");
 	        if((selectedLctCl.length + selectedInduty.length + selectedSbrscl.length) == 0 && sido_search == "") {
 	        	ajaxData("camp_list_keyword_detail.do",
 	        			{ keyword: keywordInput, numOfRows: numOfRows,	pageNo: pageNo },
 	        			function(data) {
-			            	$("#camp_list_show").empty();
 		            		totalCount = $(data).find('totalCount').text();
 		            		$(data).find("item").each(function () {
 		                    	$("#camp_list_show").append(createCampItem(this));
 		                    });
+		            		$(".totalCount").text(totalCount);
 		               		pageNumbers();
 		                	marker_show();
 			            });
@@ -222,12 +326,12 @@ $(document).ready(function() {
 	        	ajaxData("camp_list_keyword_detail.do",
 	        			{ keyword: keywordInput, numOfRows: 5000 },
 	        			function(data) {
-	        				$("#camp_list_show").empty();
 	        				$(data).find("item").each(function (i, k) {
 	        					datailFilter(this);
 	        				});
 	        				pageNumbers();
 	        				$("#camp_list_show").append(searchResultSlice(searchDataItems));
+	        				$(".totalCount").text(totalCount);
 		                	marker_show();
 			            });
 	        }
@@ -236,12 +340,13 @@ $(document).ready(function() {
         	ajaxData("camp_list5000.do",
         			{ numOfRows: 5000 },
         			function(data) {
-        				$("#camp_list_show").empty();
+        				$(".totalCount").text(totalCount);
         				$(data).find("item").each(function (i, k) {
         					datailFilter(this);
         				});
         				pageNumbers();
         				$("#camp_list_show").append(searchResultSlice(searchDataItems));
+        				$(".totalCount").text(totalCount);
 	                	marker_show();
 		            });
         } else {
@@ -250,13 +355,6 @@ $(document).ready(function() {
         }
     }
     
-    // 검색 버튼 클릭시
-    $("#search_button").on("click",  function() {
-    	search_camp();
-    	pageNo = 1;
-    });
-    
-    
     // 검색 페이지 이동
  	function searchResultSlice(items){
  		let showSearchResult = items.slice((pageNo - 1) * numOfRows, (pageNo - 1) * numOfRows + numOfRows);
@@ -264,7 +362,8 @@ $(document).ready(function() {
  		return showSearchResult;
  	}
     
-	// 페이지 번호
+	//  -------------- 페이징-------------- 
+ 	// 페이지 html 생성
 	function pageNumbers(){
 		$(".camp_list_page").empty();
 		last_page = Math.ceil(totalCount / numOfRows);
@@ -291,7 +390,7 @@ $(document).ready(function() {
     }
  	
 	
-	// 페이지 이동
+	// 페이지 이동 계산
 	$(document).on("click", ".camp_list_next, .camp_list_before, .nowpage, .camp_list_last, .camp_list_first", function() {
 		if ($(this).hasClass("camp_list_next")) {
         	pageNo = Math.ceil(pageNo / page_num_count) * page_num_count + 1;
@@ -322,10 +421,9 @@ $(document).ready(function() {
 	    pageNumbers();
 	});
     
-    // 캠프 div 클릭시 해당 캠핑장 마커로 이동
+    //  -------------- 캠프 div 클릭시 해당 캠핑장 마커로 이동 -------------- 
 	$(document).on("click", ".camp_item",  function() {
 		let facltNm = $(this).find(".camp_info h4").text();
-		
 		function getClickHandler(seq) {
 			return function(e) { 
                 let marker = markers[seq],
@@ -338,14 +436,12 @@ $(document).ready(function() {
 	        if (markerArr[i].facltNm === facltNm) {
 	            let LatLng = new naver.maps.LatLng(markerArr[i].lat, markerArr[i].lng);
 	            map.setCenter(LatLng);
+	            map.setZoom(12);
 	            naver.maps.Event.trigger(markers[i], 'click',  getClickHandler(i));
 	            break; 
 	        }
     	}
     });
-    
-	
-	
     
 	// 엔터키 입력시
     $("#keyword_input").keypress(function(event) {
@@ -354,4 +450,16 @@ $(document).ready(function() {
             pageNo = 1;
         }
     });
+    
+	 // 검색 버튼
+	window.list_search = function()  {
+		$(".keyword").empty();
+		search_camp();
+		pageNo = 1;
+	}
 });
+
+// 리스트로 검색 
+function go_list() {
+	window.location = 'camplist.do';
+}

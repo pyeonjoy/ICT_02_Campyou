@@ -6,7 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시판 검색</title>
+<%-- <%@ include file="../../hs/header.jsp" %> --%>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/boardFreeSearchlist.css">
 <script type="text/javascript">
     // 전체 페이지를 계산하는 함수
@@ -19,14 +20,14 @@
         const paginationDiv = document.querySelector(".pagination");
         paginationDiv.innerHTML = ''; // Clear existing buttons
 
-        // Previous button
+        //이전버튼
         const prevButton = document.createElement("button");
         prevButton.classList.add("prev");
         prevButton.textContent = "이전";
         prevButton.onclick = prevPage;
         paginationDiv.appendChild(prevButton);
 
-        // Page buttons
+        //페이지버튼
         let startPage = Math.max(1, currentPage - 1);
         let endPage = Math.min(totalPages, startPage + 2);
         for (let i = startPage; i <= endPage; i++) {
@@ -40,8 +41,7 @@
             };
             paginationDiv.appendChild(button);
         }
-
-        // Next button
+      	//다음버튼
         const nextButton = document.createElement("button");
         nextButton.classList.add("next");
         nextButton.textContent = "다음";
@@ -71,7 +71,7 @@
         document.getElementById("page" + pageNumber).classList.add("active");
     }
 
-    // 3개글당 한 페이지
+    // 2개글당 한 페이지
     const pageSize = 2; 
     let currentPage = 1;
     let totalPages;
@@ -86,8 +86,6 @@
         // 첫번째 페이지 구현
         goToPage(currentPage, pageSize);
     };
-
-    // Function to navigate to the next block of page buttons
     function nextPage() {
         let paginationDiv = document.querySelector(".pagination");
         if (currentPage + 3 <= totalPages) {
@@ -97,8 +95,6 @@
             goToPage(currentPage, pageSize);
         }
     }
-
-    // Function to navigate to the previous block of page buttons
     function prevPage() {
         let paginationDiv = document.querySelector(".pagination");
         if (currentPage - 3 > 0) {
@@ -136,11 +132,7 @@
             </tbody>
         </table>
     </article>
-
-    <!-- Pagination -->
     <div class="pagination">
-        <!-- Pagination buttons will be dynamically added here -->
     </div>
-    
 </body>
 </html>
