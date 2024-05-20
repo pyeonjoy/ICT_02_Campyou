@@ -16,31 +16,33 @@ import com.ict.campyou.jun.service.CampService;
 @Controller
 public class CampController {
 
-		@Autowired
-		private CampService campService;
-	
-	  @GetMapping("camplist.do")
-	  public ModelAndView getCampList() {
-		  return new ModelAndView("jun/camp_list");
-	  }
-	  @GetMapping("camp_map.do")
-	  public ModelAndView getCampMap() {
-		  return new ModelAndView("jun/camp_map");
-	  }
-	  @RequestMapping("camp_detail.do")
-	  public ModelAndView getCampDetail(@RequestParam()String contentid,CampVO cvo,HttpSession session) {
-		  ModelAndView mv = new ModelAndView("jun/camp_detail");
-		  MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-		  mv.addObject("mvo",mvo);
-		  CampVO info = campService.getCampInfo(cvo,contentid); // DB에 저장된 캠핑리스트 정보 받아오기 
-		  if (info != null) {
-			  int hit = campService.updateHit(contentid); // 조회수 늘려주는거
-			  mv.addObject("info", info); // JSP에 넣기
-			  return mv;
-		}else {
+	@Autowired
+	private CampService campService;
+
+	@GetMapping("camplist.do")
+	public ModelAndView getCampList() {
+		return new ModelAndView("jun/camp_list");
+	}
+
+	@GetMapping("camp_map.do")
+	public ModelAndView getCampMap() {
+		return new ModelAndView("jun/camp_map");
+	}
+
+	@RequestMapping("camp_detail.do")
+	public ModelAndView getCampDetail(@RequestParam() String contentid, CampVO cvo, HttpSession session) {
+		ModelAndView mv = new ModelAndView("jun/camp_detail");
+		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+		mv.addObject("mvo", mvo);
+		CampVO info = campService.getCampInfo(cvo, contentid); // DB에 저장된 캠핑리스트 정보 받아오기
+		if (info != null) {
+			int hit = campService.updateHit(contentid); // 조회수 늘려주는거
+			mv.addObject("info", info); // JSP에 넣기
+			return mv;
+		} else {
 			return null;
 		}
-		  
-	  }
-	  
+
+	}
+
 }

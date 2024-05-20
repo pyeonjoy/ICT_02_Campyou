@@ -67,5 +67,15 @@ public class CampServiceImpl implements CampService{
 		return campDAO.searchCount(keyword,lctCl,induty,sbrscl, s_sido, s_sigungu);
 	}
 
+	@Override
+	public int countReview(String contentid) {
+		return campDAO.countReview(contentid);
+	}
+
+	@Override
+	public int addRating(String contentid) {
+		return campDAO.addRating(contentid);
+	}
+
 
 }
