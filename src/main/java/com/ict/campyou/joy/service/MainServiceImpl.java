@@ -32,7 +32,7 @@ public class MainServiceImpl implements MainService{
 
 		@Override
 		public int addStart(MemberVO mvo) {
-			return maindao.addStart(mvo);
+			return maindao.getStart(mvo);
 		}
 	
 	
