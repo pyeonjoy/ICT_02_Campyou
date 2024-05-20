@@ -14,7 +14,53 @@
 <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
 <%@ include file="../hs/header.jsp" %>
 <%@ include file="../hs/mypage_menu.jsp"%>
+</head>
+<body>
+	<form method="post" class="thcontainer">
+   		<input type="hidden" id="t_idx" value="${tvo.t_idx }">
+   		<input type="hidden" id="member_idx" value="${tvo.member_idx }">
+        <input type="hidden" id="cPage" value="${cPage }">
+        <input type="hidden" id="t_campname" value="${tvo.t_campname }">
+        <input type="hidden" id="t_subject" value="${tvo.t_subject }">
+        <input type="hidden" id="t_startdate" value="${tvo.t_startdate }">
+        <input type="hidden" id="t_enddate" value="${tvo.t_enddate }">
+        <input type="hidden" id="t_induty" value="${tvo.t_induty }">
+        <input type="hidden" id="promise_count" value="${tvo.promise_count }">
+        <input type="hidden" id="t_numpeople" value="${tvo.t_numpeople }">
+        <input type="hidden" id="promise_status" value="${tvo.promise_status }">
+		<div class="thwrapper">
+			<h3>${tvo.t_campname } 동행 모집현황</h3>
+			<h4>${tvo.promise_count } / ${tvo.t_numpeople } 명</h4>
+			<div class="thDiv">
+				<p>${tvo.t_startdate } - ${tvo.t_enddate }</p>
+				<p>${tvo.t_induty }</p>
+			</div>
+			<ul class="thul1">
+				<li class="thli th1">이미지</li>
+				<li class="thli th1">닉네임</li>
+				<li class="thli th1">나이대</li>
+				<li class="thli th1">동행경험</li>
+				<li class="thli th1">비 고</li>
+			</ul>
+			<div class="thul2">
+<%-- 				<ul><li class="th1 thliImage"><a href="qa_detail.do?qa_idx=${k.qa_idx}&cPage=${paging.nowPage}" class="qa11">사진</a></li></ul> --%>
+<%-- 				<ul><li class="th1"><a href="qa_detail.do?qa_idx=${k.qa_idx}&cPage=${paging.nowPage}" class="qa11">깡패(20대)(5)</a></li></ul> --%>
+<%-- 				<ul><li class="th1"><a href="qa_detail.do?qa_idx=${k.qa_idx}&cPage=${paging.nowPage}" class="qa11">서울난지캠핑장</a></li></ul> --%>
+<%-- 	            <ul><li class="th1"><a href="qa_detail.do?qa_idx=${k.qa_idx}&cPage=${paging.nowPage}" class="qa11">2024/05/08-2024/05/09</a></li></ul> --%>
+<%-- 	            <ul><li class="th1"><a href="qa_detail.do?qa_idx=${k.qa_idx}&cPage=${paging.nowPage}" class="qa11">2 / 5</a></li></ul> --%>
+<%-- 	<%--                 <li class="th1"><a href="qa_detail.do?qa_idx=${k.qa_idx}&cPage=${paging.nowPage}" class="th11">신청중</a></li> --%>
+<!-- 				<div class="thul2Div"> -->
+<!-- 					<button type="button" value="" class="thul2DivButton" onclick="">수락</button> -->
+<!-- 					<button type="button" value="" class="thul2DivButton" onclick="">거절</button> -->
+<!-- 	     		</div> -->
+     		</div>
+     		<div class="thul3">
+     		</div>
+		</div>
+	</form>
 <script type="text/javascript">
+	let promiseStatus = document.getElementById("promise_status").value;
+	console.log("jspstatus 확인: ", promiseStatus);
 $(function() {
 	promisePeopleDetail();
     
@@ -81,14 +127,22 @@ function promisePeopleDetail() {
                     if(proPeopleDetail.pm_master == 1){
                     	html += '<ul><li class="th1">방장(나)</li></ul>';
                     }else{
-                   		html += '<button type="button" class="thul2DivButton" onclick="banishMember(' + proPeopleDetail.member_idx + ')">추방하기</button>';
+                    	if(promiseStatus == 'end'){
+                    		html += '<button type="button" class="thul2DivButton">별 점</button>';
+                    	}else {
+	                   		html += '<button type="button" class="thul2DivButton" onclick="banishMember(' + proPeopleDetail.member_idx + ')">추방하기</button>';
+                    	}
                     }
                     html += '</div>';
                 }
-                html += '<div class="partnerListButtonDiv">';
-                html += '<button type="button" class="thul2DivButton" onclick="partner_list(' + page + ',' + memberIdx + ')">목 록</button>';
-                html += '</div>';
          		$('.thul2').append(html);
+                let html2 = '<div class="partnerListButtonDiv">';
+                if(promiseStatus == 'ready'){
+                	html2 += '<button type="button" class="thul2DivButton" onclick="confirm_partner()" style="margin-right: 3rem;">동행 완료</button>';
+                }
+                html2 += '<button type="button" class="thul2DivButton" onclick="partner_list(' + page + ',' + memberIdx + ',\'' + promiseStatus + '\')">목 록</button>';
+                html2 += '</div>';
+         		$('.thul3').append(html2);
         	} else {
                 html += '<div class="thul5">';
         		html += '<div class="no-data-message">';
@@ -96,7 +150,7 @@ function promisePeopleDetail() {
         		html += '</div>';
         		html += '</div>';
         		html += '<div class="partnerListButtonDiv">';
-                html += '<button type="button" class="thul2DivButton" onclick="partner_list(' + page + ',' + memberIdx + ')">목 록</button>';
+                html += '<button type="button" class="thul2DivButton" onclick="partner_list(' + page + ',' + memberIdx + ',\'' + promiseStatus + '\')">목 록</button>';
                 html += '</div>';
                 $('.thul2').replaceWith(html);
             }
@@ -130,51 +184,10 @@ function banishMember(memberIdx) {
     	return;
     }
 }
-function partner_list(page, memberIdx) {
-    location.href="together_partner.do?cPage=" + page + "&member_idx=" + memberIdx;
+function partner_list(page, memberIdx, promiseStatus) {
+	location.href = "together_partner.do?cPage=" + page + "&member_idx=" + memberIdx + "&promise_status='" + promiseStatus + "'";
 }
 </script>
-</head>
-<body>
-	<form method="post" class="thcontainer">
-		<div class="thwrapper">
-			<h3>${tvo.t_campname } 동행 모집현황</h3>
-			<h4>${tvo.promise_count } / ${tvo.t_numpeople } 명</h4>
-			<div class="thDiv">
-				<p>${tvo.t_startdate } - ${tvo.t_enddate }</p>
-				<p>${tvo.t_induty }</p>
-			</div>
-			<ul class="thul1">
-				<li class="thli th1">이미지</li>
-				<li class="thli th1">닉네임</li>
-				<li class="thli th1">나이대</li>
-				<li class="thli th1">동행경험</li>
-				<li class="thli th1">비 고</li>
-			</ul>
-			<div class="thul2">
-<%-- 				<ul><li class="th1 thliImage"><a href="qa_detail.do?qa_idx=${k.qa_idx}&cPage=${paging.nowPage}" class="qa11">사진</a></li></ul> --%>
-<%-- 				<ul><li class="th1"><a href="qa_detail.do?qa_idx=${k.qa_idx}&cPage=${paging.nowPage}" class="qa11">깡패(20대)(5)</a></li></ul> --%>
-<%-- 				<ul><li class="th1"><a href="qa_detail.do?qa_idx=${k.qa_idx}&cPage=${paging.nowPage}" class="qa11">서울난지캠핑장</a></li></ul> --%>
-<%-- 	            <ul><li class="th1"><a href="qa_detail.do?qa_idx=${k.qa_idx}&cPage=${paging.nowPage}" class="qa11">2024/05/08-2024/05/09</a></li></ul> --%>
-<%-- 	            <ul><li class="th1"><a href="qa_detail.do?qa_idx=${k.qa_idx}&cPage=${paging.nowPage}" class="qa11">2 / 5</a></li></ul> --%>
-<%-- 	<%--                 <li class="th1"><a href="qa_detail.do?qa_idx=${k.qa_idx}&cPage=${paging.nowPage}" class="th11">신청중</a></li> --%>
-<!-- 				<div class="thul2Div"> -->
-<!-- 					<button type="button" value="" class="thul2DivButton" onclick="">수락</button> -->
-<!-- 					<button type="button" value="" class="thul2DivButton" onclick="">거절</button> -->
-<!-- 	     		</div> -->
-     		</div>
-		</div>
-   		<input type="hidden" id="t_idx" value="${tvo.t_idx }">
-   		<input type="hidden" id="member_idx" value="${tvo.member_idx }">
-        <input type="hidden" id="cPage" value="${cPage }">
-        <input type="hidden" id="t_campname" value="${tvo.t_campname }">
-        <input type="hidden" id="t_subject" value="${tvo.t_subject }">
-        <input type="hidden" id="t_startdate" value="${tvo.t_startdate }">
-        <input type="hidden" id="t_enddate" value="${tvo.t_enddate }">
-        <input type="hidden" id="t_induty" value="${tvo.t_induty }">
-        <input type="hidden" id="promise_count" value="${tvo.promise_count }">
-        <input type="hidden" id="t_numpeople" value="${tvo.t_numpeople }">
-	</form>
 <%@ include file="../hs/footer.jsp" %>
 </body>
 </html>

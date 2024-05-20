@@ -28,13 +28,24 @@
 // });
 $(function() {
 	let cpage = document.getElementById("cPage").value;
-	if(cpage != null){
-		toPromiseIng(cpage);
+	let proStatus = document.getElementById("promiseStatus").value;
+	if(cpage != ''){
+		if(proStatus === "'ing'"){
+			toPromiseIng(cpage);
+		}else if(proStatus === "'ready'"){
+			toPromiseReady(cpage);
+		}else if(proStatus === "'end'"){
+			toPromiseEnd(cpage);
+		}
 	}else{
 		toPromiseIng();
 	}
 });
+
+let pro_status = '';
+
 function toPromiseIng(page) {
+	pro_status = 'ing';
 	let memberIdx = document.getElementById("member_idx").value;
    	$('.toContent, .thwrapper1').empty();
     $.ajax({
@@ -94,6 +105,7 @@ function toPromiseIng(page) {
                     html += '<input type="hidden" name="promise_count" value="' + PromiseIng.promise_count + '">';
                     html += '<input type="hidden" name="t_numpeople" value="' + PromiseIng.t_numpeople + '">';
                     html += '<input type="hidden" name="member_idx" value="' + memberIdx + '">';
+                    html += '<input type="hidden" name="promise_status" value="' + pro_status + '">';
                     html += '</form>';
                     html += '</div>';
                     html += '</div>';
@@ -141,14 +153,8 @@ function toPromiseIng(page) {
         }
     });
 }
-function to_detail(t_idx, nowPage) {
-    location.href = 'together_detail.do?t_idx=' + t_idx + '&cPage=' + nowPage;
-}
-function to_people_detail(f) {
-	f.action="together_people_detail.do";
-	f.submit();
-}
 function toPromiseReady(page) {
+	pro_status = 'ready';
 	let memberIdx = document.getElementById("member_idx").value;
    	$('.toContent, .thwrapper1').empty();
     $.ajax({
@@ -208,6 +214,7 @@ function toPromiseReady(page) {
                     html += '<input type="hidden" name="promise_count" value="' + promiseReady.promise_count + '">';
                     html += '<input type="hidden" name="t_numpeople" value="' + promiseReady.t_numpeople + '">';
                     html += '<input type="hidden" name="member_idx" value="' + memberIdx + '">';
+                    html += '<input type="hidden" name="promise_status" value="' + pro_status + '">';
                     html += '</form>';
                     html += '</div>';
                     html += '</div>';
@@ -229,15 +236,15 @@ function toPromiseReady(page) {
                 pagingHtml += '<li class="to_disable"><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
                 pagingHtml += '<li class="to_disable"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
             } else {
-                pagingHtml += '<li><a href="javascript:toPromiseIng(1)" class="to_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
-                pagingHtml += '<li><a href="javascript:toPromiseIng(' + (paging.beginBlock - paging.pagePerBlock) + ')" class="to_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseReady(1)" class="to_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseReady(' + (paging.beginBlock - paging.pagePerBlock) + ')" class="to_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
             }
             // 페이지번호들
             for (let k = paging.beginBlock; k <= paging.endBlock; k++) {
                 if (k === paging.nowPage) {
                     pagingHtml += '<li class="nowpagecolor">' + k + '</li>';
                 } else {
-                    pagingHtml += '<li><a href="javascript:toPromiseIng(' + k + ')" class="nowpage">' + k + '</a></li>';
+                    pagingHtml += '<li><a href="javascript:toPromiseReady(' + k + ')" class="nowpage">' + k + '</a></li>';
                 }
             }
             // 이후 버튼
@@ -245,8 +252,8 @@ function toPromiseReady(page) {
                 pagingHtml += '<li class="to_disable"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
                 pagingHtml += '<li class="to_disable"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
             } else {
-                pagingHtml += '<li><a href="javascript:toPromiseIng(' + (paging.beginBlock + paging.pagePerBlock) + ')" class="to_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
-                pagingHtml += '<li><a href="javascript:toPromiseIng(' + paging.totalPage + ')" class="to_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseReady(' + (paging.beginBlock + paging.pagePerBlock) + ')" class="to_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseReady(' + paging.totalPage + ')" class="to_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
             }
             $('.to_paging').append(pagingHtml);
         },
@@ -256,6 +263,7 @@ function toPromiseReady(page) {
     });
 }
 function toPromiseEnd(page) {
+	pro_status = 'end';
 	let memberIdx = document.getElementById("member_idx").value;
    	$('.toContent, .thwrapper1').empty();
     $.ajax({
@@ -276,45 +284,46 @@ function toPromiseEnd(page) {
                 let html = '';
         	if (toPromiseEnd != null && toPromiseEnd.length > 0) {
         		for (let i = 0; i < toPromiseEnd.length; i++) {
-                    let PromiseEnd = toPromiseEnd[i];
+                    let promiseEnd = toPromiseEnd[i];
                     html += '<div class="toContentOne">';
                     html += '<div>';
                     html += '<div class="toContentOne1">';
-                    html += '<div class="to_list_subject">' + PromiseEnd.t_subject + '</div>';
+                    html += '<div class="to_list_subject">' + promiseEnd.t_subject + '</div>';
                     html += '<div>';
                     html += '<div class="toContentOne1span toContentOne1span2">';
-                    html += '<span>' + PromiseEnd.t_campname + '</span>';
-                    html += '<span class="to_campdate">' + PromiseEnd.t_startdate + '-' + PromiseEnd.t_enddate + '</span>';
+                    html += '<span>' + promiseEnd.t_campname + '</span>';
+                    html += '<span class="to_campdate">' + promiseEnd.t_startdate + '-' + promiseEnd.t_enddate + '</span>';
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
                     html += '<div class="toContentOne2">';
-                    if (!PromiseEnd.tf_name) {
+                    if (!promiseEnd.tf_name) {
                         html += '<img src="${path}/resources/images/to_camp.jpg" class="toContentOne2img">';
                     } else {
-                        html += '<img src="' + PromiseEnd.tf_name + '" class="toContentOne2img">';
+                        html += '<img src="' + promiseEnd.tf_name + '" class="toContentOne2img">';
                     }
-                    html += '<span class="toContentOne2sub2">' + PromiseEnd.t_induty + '</span>';
+                    html += '<span class="toContentOne2sub2">' + promiseEnd.t_induty + '</span>';
                     html += '</div>';
                     html += '<div>';
                     html += '<div class="toContentOne3">';
-                    html += '<p>조회수 : ' + PromiseEnd.t_hit + '</p>';
-                    html += '<p>모집 : ' + PromiseEnd.promise_count + ' / ' + PromiseEnd.t_numpeople + '명' + '</p>';
+                    html += '<p>조회수 : ' + promiseEnd.t_hit + '</p>';
+                    html += '<p>모집 : ' + promiseEnd.promise_count + ' / ' + promiseEnd.t_numpeople + '명' + '</p>';
                     html += '</div>';
                     html += '<form method="post" class="toContentOne4">';
-                    html += '<button type="button" class="toContentOne2" onclick="to_detail(' + PromiseEnd.t_idx + ',' + data.paging.nowPage + ')">상세 보기<button>';
+                    html += '<button type="button" class="toContentOne2" onclick="to_detail(' + promiseEnd.t_idx + ',' + data.paging.nowPage + ')">상세 보기<button>';
                     html += '<button type="button" class="toContentOne2" onclick="to_people_detail(this.form)">인원 보기<button>';
-                    html += '<input type="hidden" name="t_idx" value="' + PromiseEnd.t_idx + '">';
+                    html += '<input type="hidden" name="t_idx" value="' + promiseEnd.t_idx + '">';
                     html += '<input type="hidden" name="cPage" value="' + data.paging.nowPage + '">';
-                    html += '<input type="hidden" name="t_campname" value="' + PromiseEnd.t_campname + '">';
-                    html += '<input type="hidden" name="t_subject" value="' + PromiseEnd.t_subject + '">';
-                    html += '<input type="hidden" name="t_startdate" value="' + PromiseEnd.t_startdate + '">';
-                    html += '<input type="hidden" name="t_enddate" value="' + PromiseEnd.t_enddate + '">';
-                    html += '<input type="hidden" name="t_induty" value="' + PromiseEnd.t_induty + '">';
-                    html += '<input type="hidden" name="promise_count" value="' + PromiseEnd.promise_count + '">';
-                    html += '<input type="hidden" name="t_numpeople" value="' + PromiseEnd.t_numpeople + '">';
+                    html += '<input type="hidden" name="t_campname" value="' + promiseEnd.t_campname + '">';
+                    html += '<input type="hidden" name="t_subject" value="' + promiseEnd.t_subject + '">';
+                    html += '<input type="hidden" name="t_startdate" value="' + promiseEnd.t_startdate + '">';
+                    html += '<input type="hidden" name="t_enddate" value="' + promiseEnd.t_enddate + '">';
+                    html += '<input type="hidden" name="t_induty" value="' + promiseEnd.t_induty + '">';
+                    html += '<input type="hidden" name="promise_count" value="' + promiseEnd.promise_count + '">';
+                    html += '<input type="hidden" name="t_numpeople" value="' + promiseEnd.t_numpeople + '">';
                     html += '<input type="hidden" name="member_idx" value="' + memberIdx + '">';
+                    html += '<input type="hidden" name="promise_status" value="' + pro_status + '">';
                     html += '</form>';
                     html += '</div>';
                     html += '</div>';
@@ -336,15 +345,15 @@ function toPromiseEnd(page) {
                 pagingHtml += '<li class="to_disable"><i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
                 pagingHtml += '<li class="to_disable"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
             } else {
-                pagingHtml += '<li><a href="javascript:toPromiseIng(1)" class="to_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
-                pagingHtml += '<li><a href="javascript:toPromiseIng(' + (paging.beginBlock - paging.pagePerBlock) + ')" class="to_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseEnd(1)" class="to_able"><i class="fa-solid fa-angles-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseEnd(' + (paging.beginBlock - paging.pagePerBlock) + ')" class="to_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
             }
             // 페이지번호들
             for (let k = paging.beginBlock; k <= paging.endBlock; k++) {
                 if (k === paging.nowPage) {
                     pagingHtml += '<li class="nowpagecolor">' + k + '</li>';
                 } else {
-                    pagingHtml += '<li><a href="javascript:toPromiseIng(' + k + ')" class="nowpage">' + k + '</a></li>';
+                    pagingHtml += '<li><a href="javascript:toPromiseEnd(' + k + ')" class="nowpage">' + k + '</a></li>';
                 }
             }
             // 이후 버튼
@@ -352,8 +361,8 @@ function toPromiseEnd(page) {
                 pagingHtml += '<li class="to_disable"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
                 pagingHtml += '<li class="to_disable"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
             } else {
-                pagingHtml += '<li><a href="javascript:toPromiseIng(' + (paging.beginBlock + paging.pagePerBlock) + ')" class="to_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
-                pagingHtml += '<li><a href="javascript:toPromiseIng(' + paging.totalPage + ')" class="to_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseEnd(' + (paging.beginBlock + paging.pagePerBlock) + ')" class="to_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
+                pagingHtml += '<li><a href="javascript:toPromiseEnd(' + paging.totalPage + ')" class="to_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
             }
             $('.to_paging').append(pagingHtml);
         },
@@ -362,12 +371,27 @@ function toPromiseEnd(page) {
         }
     });
 }
+
+function to_detail(t_idx, nowPage) {
+    location.href = 'together_detail.do?t_idx=' + t_idx + '&cPage=' + nowPage;
+}
+function to_people_detail(f) {
+// 	let hiddenInput = document.createElement("input");
+//     hiddenInput.type = "hidden";
+//     hiddenInput.name = "promise_status";
+//     hiddenInput.value = pro_status;
+//     console.log("컨트롤러넘기기status : "+ pro_status);
+//     f.appendChild(hiddenInput);
+	f.action="together_people_detail.do";
+	f.submit();
+}
 </script>
 </head>
 <body>
     <div class="toContainer">
         <input type="hidden" id="member_idx" value="${member_idx }">
         <input type="hidden" id="cPage" value="${cPage }">
+        <input type="hidden" id="promiseStatus" value="${promise_status }">
         <div class="thwrapper1">
 <!--             <button type="button" class="thwrapper1Button thwrapper1Button_active" onclick="toPromiseing()">모집중인 동행</button> -->
 <!--             <button type="button" class="thwrapper1Button" onclick="toPromiseReady()">진행중인 동행</button> -->

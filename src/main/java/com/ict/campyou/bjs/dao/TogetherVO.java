@@ -1,7 +1,7 @@
 package com.ict.campyou.bjs.dao;
 
 public class TogetherVO {
-	private String t_idx, member_idx, t_subject, t_content, t_campname, t_postcode, t_address, t_address_detail, t_startdate, t_enddate, tf_name, t_regdate, t_hit, t_active, t_notice, member_dob, member_nickname, t_numpeople, member_img, t_mapx, t_mapy, t_induty, t_facltdivnm, t_mangedivnm;
+	private String t_idx, member_idx, t_subject, t_content, t_campname, t_postcode, t_address, t_address_detail, t_startdate, t_enddate, tf_name, t_regdate, t_hit, t_active, t_notice, member_dob, member_nickname, t_numpeople, member_img, t_mapx, t_mapy, t_induty, t_facltdivnm, t_mangedivnm, promise_status;
 	private int promise_count;
 	
 	public String getT_idx() {
@@ -204,5 +204,13 @@ public class TogetherVO {
 		this.promise_count = promise_count;
 	}
 
+	public String getPromise_status() {
+		return promise_status;
+	}
+
+	public void setPromise_status(String promise_status) {
+		this.promise_status = promise_status;
+	}
+	
 	
 }
