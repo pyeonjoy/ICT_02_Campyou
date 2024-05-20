@@ -22,11 +22,14 @@
 /* align contents with grid  */
 .my_camping{
 text-align: center;
+margin-bottom: 3rem;
 }
 .camping_container{
    position: relative;
    display: grid;
    grid-template-columns: 1fr 1fr 1fr 1fr ;
+   width: 70%;
+   margin-left:10rem;
 }
 
 .fav_list{

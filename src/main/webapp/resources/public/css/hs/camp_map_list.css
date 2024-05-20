@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 .camp_list_container {
 	display: flex;
 	flex-direction: column;
@@ -7,15 +6,20 @@
 }
 
 .result_info {
-	padding: 5px;
+	padding: 0 5px;
 }
 .totalCount {
 	color: orange;
 }
 
+.keyword {
+	font-weight: 300;
+}
+
 .result_info_line {
 	width: 90vw;
 	display: flex;
+	line-height: 30px;
 	justify-content: space-between;
 }
 
@@ -67,10 +71,10 @@
 
 .camp_item {
 	display: flex;
-	position: relative; height : 135px; padding : 10px;
+	position: relative; 
+	height : 135px; 
+	padding : 10px;
 	border-bottom: 1px solid #ccc;
-	padding: 10px;
-	height: 135px;
 }
 
 .camp_item img {
@@ -94,7 +98,7 @@
 }
 
 .camp_info p {
-	margin-bottom: 0.6rem;
+	margin-bottom: 0.4rem;
 }
 
 .camp_info .addr, .camp_info .tel {
@@ -106,21 +110,24 @@
 	color: #666;
 }
 
-.camp_item .button_container {
+.button_container button {
+	width: 80px;
+	padding: 5px;
+}
+
+.button_container, .Heart_button  {
 	position: absolute;
 	right: 10px;
 }
-
-.camp_item button {
-	width: 80px;
-	padding: 5px;
+.Heart_button {
+	bottom: 10px;
 }
 
 .page_button {
 	display: flex;
 	height: 100%;
+	
 }
-
 .camp_list_page {
 	display: flex;
 	width: 100%;

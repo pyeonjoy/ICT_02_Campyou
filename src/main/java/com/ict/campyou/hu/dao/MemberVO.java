@@ -37,6 +37,7 @@ public class MemberVO {
 
 	public void setMember_rating(String member_rating) {
 		this.member_rating = member_rating;
+
 	}
 
 	public String getMember_login() {

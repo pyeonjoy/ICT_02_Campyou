@@ -1,6 +1,7 @@
 package com.ict.campyou.hu.dao;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,5 @@ public class BoardFreeDAO {
 		map.put("searchValue", searchValue);
 		
 		return sqlSessionTemplate.selectList("member.board_free_search_list", map);
-		
-	
 	}
 }

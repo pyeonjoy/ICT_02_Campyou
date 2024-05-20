@@ -26,9 +26,5 @@ public class NaverUserVO {
 	}
 	public void setResponse(NaverResponse response) {
 		this.response = response;
-	}
-
-	
-	
-	
+	}	
 }

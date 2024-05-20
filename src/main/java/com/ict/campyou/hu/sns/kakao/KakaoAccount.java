@@ -1,7 +1,6 @@
 package com.ict.campyou.hu.sns.kakao;
 
 public class KakaoAccount {
-	
 	private String email;
 
 	public KakaoAccount(String email) {

@@ -1,0 +1,72 @@
+@charset "UTF-8";
+
+@charset "UTF-8";
+
+a { 
+	text-decoration: none;
+}
+a:link {
+	color:black;
+}
+a:visited {
+ 	color:black;
+}
+a:hover {
+ 	color:black;
+}
+a:active {
+ 	color:black;
+}
+
+h2 {
+    margin-top: 70px; 
+}
+
+table{
+	width: 800px; 
+	border-collapse:collapse; 
+	text-align: center;
+}
+
+table,th,td{
+	border: 1px solid black; 
+	padding: 5px;
+	border-collapse: collapse;
+}
+
+div{
+	width: 800px; 
+	margin:auto; 
+	text-align: center;
+}
+
+#listId{
+	border-radius: 5px;
+	padding: 0.5rem 0.9rem;
+	background: #003300;
+	font-weight: bold;
+	color: white;
+}
+#inputId{
+	border-radius: 5px;
+	padding: 0.5rem 0.9rem;
+	background: #003300;
+	font-weight: bold;
+	color: white;
+}
+
+#cancelId{
+	border-radius: 5px;
+	padding: 0.5rem 0.9rem;
+	background: #003300;
+	font-weight: bold;
+	color: white;
+}
+
+input[type="button"]:hover, input[type="reset"]:hover {
+    background-color: #005500;
+}
+	
+select {
+	float: left;
+}

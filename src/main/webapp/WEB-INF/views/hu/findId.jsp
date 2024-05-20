@@ -5,13 +5,25 @@
 <head>
 <meta charset="UTF-8">
 <title>아이디 찾기</title>
+<%@ include file="../hs/header.jsp" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script type="text/javascript">
-	function findId(f) {
-		f.action="id_send_ok.do";
-		f.submit();
-	}
-</script> 
+function findId(f) {
+	if(f.email.value === ""){
+		 alert("이메일을 입력하세요.");
+		 f.email.focus();
+		 return;
+	 }
+	 if(f.member_name.value === ""){
+		 alert("이름을 입력하세요.");
+		 f.member_name.focus();
+		 return;
+	 }
+	 alert("귀하의 아이디를 보냈습니다.\n이메일을 확인해 주세요");
+	 f.action="id_send_ok.do";
+	 f.submit();
+}
+</script>
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -30,8 +42,6 @@
 	            <input type="email" id="email" name="email" class="form-control form-control-lg" />
 	            <label class="form-label" for="email">이메일</label>
 	          </div>
-	
-	
 	          <div data-mdb-input-init class="form-outline mb-4">
 	            <input type="text" id="member_name" name="member_name" class="form-control form-control-lg" />
 	            <label class="form-label" for="member_name">이름</label>
@@ -42,5 +52,6 @@
     </div>
   </div>
 </section>
+ <%@ include file="../hs/footer.jsp" %>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.ict.campyou.hu.dao;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,24 +15,28 @@ public class CampingGearSearchDAO {
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	public List<CampingGearSearchVO> getCampingGearSearchList() {
-		
-		return sqlSessionTemplate.selectList("member.camping_gear_search_list");
+		try {
+			return sqlSessionTemplate.selectList("member.camping_gear_search_list");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	public List<CampingGearSearchVO> getCampingGearSearchListOk(String searchType, String searchValue) {
-		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("searchType", searchType);
-		map.put("searchValue", searchValue);
-		
-		return sqlSessionTemplate.selectList("member.camping_gear_search_list_ok", map);
+		try {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("searchType", searchType);
+			map.put("searchValue", searchValue);
+			return sqlSessionTemplate.selectList("member.camping_gear_search_list_ok", map);
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
-	
-	
-	
 	public List<CampingGearSearchVO> getCampingGearSearchList2(int offset, int limit) {
-		//게시판 내 검색 기능
 		try {
 			Map<String, Integer> map = new HashMap<String, Integer>();
 			map.put("offset", offset);
