@@ -29,12 +29,19 @@ public interface MemberService {
 	 //카카오 로그인 access token 받아오기
 	 public String getKakaoAccessToken(String code);
 	 
+	 //카카오 회원 insert 하기
+	 public int getInsertKakaoId(String access_token);
+		 
 	 //카카오 로그인 회원정보 받아오기
 	 public MemberVO getKakaoLogInOk(String access_token);
 	 
 	 //네이버 로그인 access token 받아오기
 	 public String getNaverAccessToken(String code);
 	 
+	 public int getInsertNaverId(String access_token);
+	 
 	 //네이버 로그인 회원정보 받아오기
 	 public MemberVO getNaverLogInOk(String access_token);
+	
+	 
 }
