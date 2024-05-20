@@ -64,46 +64,48 @@ public class BomiController {
 		ModelAndView mv = new ModelAndView("bm/my_main");
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
 		String member_idx = mvo.getMember_idx();
-		List<HeartVO> favlist = myService.getFavList(member_idx);
 		List<CommBoardVO> board1 = myService.getBoard1(member_idx);
 		List<CampingGearBoardVO> board2 = myService.getBoard2(member_idx);
-		List<BoardsVO> boardsList = new ArrayList<>();
-		Map<String, String> map = new HashMap<>();
-		 int count = 0; 
-		 for (HeartVO heart : favlist) {
-		     if (count < 4) { 
-		         CampVO cvo = myService.getMyFavoriteCamp(heart.getContentid());
-		         map.put(heart.getContentid(), cvo.getFacltnm());
-		         count++;
-		     } else {
-		         break; 
-		     }
-		 }
-		 
-		 for (CommBoardVO board : board1) {
-	            BoardsVO boardsVO = new BoardsVO();
-	            boardsVO.setBoard_idx(board.getB_idx());
-	            boardsVO.setMember_idx(member_idx);
-	            boardsVO.setB_subject(board.getB_subject());
-	            boardsVO.setB_regdate(board.getB_regdate());
-	            boardsVO.setBoard_type("1");
-	            boardsList.add(boardsVO);
-	        }
-
-        for (CampingGearBoardVO board : board2) {
-            BoardsVO boardsVO = new BoardsVO();
-            boardsVO.setBoard_idx(board.getCp_idx());
-            boardsVO.setMember_idx(board.getMember_idx());
-            boardsVO.setB_subject(board.getCp_subject());
-            boardsVO.setB_regdate(board.getCp_regdate());
-            boardsVO.setBoard_type("2");
-            boardsList.add(boardsVO);
-        }
-	        
-	    List<BoardsVO> selectedList = myService.getSelectFour(boardsList);
+		int count = board1.size()+board2.size(); 
+	   
+//		List<HeartVO> favlist = myService.getFavList(member_idx);
+//		List<BoardsVO> boardsList = new ArrayList<>();
+//		Map<String, String> map = new HashMap<>();
+//		 for (HeartVO heart : favlist) {
+//		     if (count < 4) { 
+//		         CampVO cvo = myService.getMyFavoriteCamp(heart.getContentid());
+//		         map.put(heart.getContentid(), cvo.getFacltnm());
+//		         count++;
+//		     } else {
+//		         break; 
+//		     }
+//		 }
+//		 
+//		 for (CommBoardVO board : board1) {
+//	            BoardsVO boardsVO = new BoardsVO();
+//	            boardsVO.setBoard_idx(board.getB_idx());
+//	            boardsVO.setMember_idx(member_idx);
+//	            boardsVO.setB_subject(board.getB_subject());
+//	            boardsVO.setB_regdate(board.getB_regdate());
+//	            boardsVO.setBoard_type("1");
+//	            boardsList.add(boardsVO);
+//	        }
+//
+//        for (CampingGearBoardVO board : board2) {
+//            BoardsVO boardsVO = new BoardsVO();
+//            boardsVO.setBoard_idx(board.getCp_idx());
+//            boardsVO.setMember_idx(board.getMember_idx());
+//            boardsVO.setB_subject(board.getCp_subject());
+//            boardsVO.setB_regdate(board.getCp_regdate());
+//            boardsVO.setBoard_type("2");
+//            boardsList.add(boardsVO);
+//        }
+//	        
+//	    List<BoardsVO> selectedList = myService.getSelectFour(boardsList);
+//	    mv.addObject("selectedList", selectedList);
+//		mv.addObject("campMap", map); 
 		mv.addObject("mvo", mvo);
-		mv.addObject("campMap", map); 
-		mv.addObject("selectedList", selectedList);
+		mv.addObject("count", count);
 
 		return mv;
 	}
