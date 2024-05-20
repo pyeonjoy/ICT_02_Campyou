@@ -110,7 +110,7 @@ public class MemberDAO {
 	}
 	
 	//데이터베이스에 카카오 맴버 저장되어있나 확인. 저장되어 있으면 불러오기
-	public MemberVO getKakaoIdInDatabase(Map<String, String> map) {
+	public MemberVO getKakaoLogInOk(Map<String, String> map) {
 		try {
 			return sqlSessionTemplate.selectOne("member.search_kakao_id_in_db", map);
 		} catch (Exception e) {
@@ -120,7 +120,7 @@ public class MemberDAO {
 	}
 	
 	//데이터베이스에 카카오 맴버 저장되어있나 확인. 없으면 데이터베이스에 insert 하기
-	public int getInsertKakaoInfoForLogIn(Map<String, String> map) {
+	public int getInsertKakaoId(Map<String, String> map) {
 		try {
 			return sqlSessionTemplate.insert("member.insert_kakao_info_for_log_in", map);
 		} catch (Exception e) {
@@ -129,23 +129,23 @@ public class MemberDAO {
 		return 0;
 	}
 	
+	//데이터베이스에 네이버 맴버 저장되어있나 확인. 없으면 데이터베이스에 insert 하기
+		public int getInsertNaverId(Map<String, String> map) {
+			try {
+				return sqlSessionTemplate.insert("member.insert_naver_info_for_log_in", map);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			return 0;
+		}
+	
 	//데이터베이스에 네이버 맴버 저장되어있나 확인. 저장되어 있으면 불러오기
-	public MemberVO getNaverIdInDatabase(Map<String, String> map) {
+	public MemberVO getNaverLogInOk(Map<String, String> map) {
 		try {
 			return sqlSessionTemplate.selectOne("member.search_naver_id_in_db", map);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return null;
-	}
-	
-	//데이터베이스에 네이버 맴버 저장되어있나 확인. 없으면 데이터베이스에 insert 하기
-	public int getInsertNaverInfoForLogIn(Map<String, String> map) {
-		try {
-			return sqlSessionTemplate.insert("member.insert_naver_info_for_log_in", map);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return 0;
 	}	
 }

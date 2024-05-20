@@ -250,19 +250,16 @@ public class MemberController {
 			//카카오 로그인 access token 받아오기
 			String access_token = memberService.getKakaoAccessToken(code);
 			
-			//System.out.println("kakao access token: " + access_token);
+			int result = memberService.getInsertKakaoId(access_token);
 			
 			//카카오 로그인 회원정보 받아오기
 			MemberVO kakao_mvo = memberService.getKakaoLogInOk(access_token);
 			
-			//System.out.println("test: " + mvo.getMember_email());
+		   //카카오 회원 세션
+		  if(kakao_mvo != null) { session.setAttribute("access_token", access_token);
+		  session.setAttribute("kakaoMemberInfo", kakao_mvo); return new
+		  ModelAndView("redirect:/"); }
 			
-			//카카오 회원 세션
-			if(kakao_mvo != null) {
-				session.setAttribute("access_token", access_token);
-				session.setAttribute("kakaoMemberInfo", kakao_mvo);
-				return new ModelAndView("redirect:/");
-			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -276,7 +273,7 @@ public class MemberController {
 			//네이버 로그인 access token 받아오기
 			String access_token = memberService.getNaverAccessToken(code);
 			
-			//System.out.println("naver access token: " + access_token);
+			int result = memberService.getInsertNaverId(access_token);
 			
 			//네이버 로그인 회원정보 받아오기
 			MemberVO naver_mvo = memberService.getNaverLogInOk(access_token);

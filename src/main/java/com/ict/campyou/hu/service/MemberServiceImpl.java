@@ -112,6 +112,58 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 	
+	@Override
+	public int getInsertKakaoId(String access_token) {
+		 Map<String, String> map = new HashMap<String, String>();
+	        String apiURL = "https://kapi.kakao.com/v2/user/me";
+
+	        try {
+	            URL url = new URL(apiURL);
+	            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+	            conn.setRequestMethod("POST");
+	            conn.setDoOutput(true);
+
+	            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	            conn.setRequestProperty("Authorization", "Bearer " + access_token);
+
+	            int responseCode = conn.getResponseCode();
+	            if (responseCode == HttpURLConnection.HTTP_OK) {
+	                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	                String line = "";
+	                StringBuffer sb = new StringBuffer();
+	                while ((line = br.readLine()) != null) {
+	                    sb.append(line);
+	                }
+	                String result = sb.toString();
+
+	                Gson gson = new Gson();
+	                KakaoUserVO kvo = gson.fromJson(result, KakaoUserVO.class);
+
+	                String kakao_id = kvo.getId();
+	                String kakao_nickname = kvo.getProperties().getNickname();
+	                String kakao_email = kvo.getKakao_account().getEmail();
+	                
+	                //System.out.println(kakao_nickname);
+	                // 카카오에서 제공하는 정보
+	                map.put("member_id", kakao_id);
+	                map.put("member_nickname", kakao_nickname);
+	                map.put("member_email", kakao_email);
+	                
+	                // 카카오에서 제공하지 않는 정보
+	                map.put("member_name", "Kakao: Not Provided");
+	                map.put("member_pwd", "Kakao: Not Provided");
+	                map.put("member_dob", "Kakao: Not Provided");
+	                map.put("member_phone", "Kakao: Not Provided");   
+	                
+	               return memberDAO.getInsertKakaoId(map);               
+	            }
+	        } catch (Exception e) {
+	        	System.out.println(e);
+	        }
+			return 0;
+	}
+	
 	//카카오 로그인 회원정보 받아오기
 	@Override
 	public MemberVO getKakaoLogInOk(String access_token) {
@@ -157,23 +209,15 @@ public class MemberServiceImpl implements MemberService {
 	                map.put("member_dob", "Kakao: Not Provided");
 	                map.put("member_phone", "Kakao: Not Provided");   
 	                
-	                //카카오 아이디가 데이터베이스에 있나 확인
-	                MemberVO mvo = memberDAO.getKakaoIdInDatabase(map);
-	                
-	                if(mvo != null) {
-	                	//db 에 있으면 저장되 있는 카카오 아이디 불러오기
-	                	return memberDAO.getKakaoIdInDatabase(map);
-	                }
-	                //없으면 db 에 새로운 카카오 아이디 저장
-	                memberDAO.getInsertKakaoInfoForLogIn(map);
-	                //insert 후 카카오정보 부르기
-	                return memberDAO.getKakaoIdInDatabase(map);
+	                return memberDAO.getKakaoLogInOk(map);
 	            }
 	        } catch (Exception e) {
 	        	System.out.println(e);
 	        }
 			return null;
 	    }
+	
+	
 	
 	//네이버 로그인 access token 받아오기
 	@Override
@@ -220,6 +264,63 @@ public class MemberServiceImpl implements MemberService {
 			System.out.println(e);
 		}
 		return null;
+	}
+	
+	//네이버 회원 데이터베이스에 삽입
+	@Override
+	public int getInsertNaverId(String access_token) {
+		Map<String, String> map = new HashMap<String, String>();
+		
+		String apiURL = "https://openapi.naver.com/v1/nid/me";
+		try {
+			URL url = new URL(apiURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+		
+			conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			conn.setRequestProperty("Authorization", "Bearer " + access_token);
+				
+			int responeseCode = conn.getResponseCode();
+			if(responeseCode == HttpURLConnection.HTTP_OK) {
+				BufferedReader br =
+						new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				
+				String line ="";
+				StringBuffer sb = new StringBuffer();
+				while((line=br.readLine()) !=null) {
+					sb.append(line);
+				}
+				String result = sb.toString();
+				
+				Gson gson = new Gson();
+				NaverUserVO nvo = gson.fromJson(result, NaverUserVO.class);
+				 
+				String naver_id = nvo.getResponse().getId();
+				//String naver_nickname = nvo.getResponse().getNickname();
+				String naver_email = nvo.getResponse().getEmail();
+				//String naver_mobile = nvo.getResponse().getMobile();
+				String naver_name = nvo.getResponse().getName();
+				//String naver_profile_image = nvo.getResponse().getProfile_image();
+				
+				map.put("member_id", naver_id);
+				map.put("member_name", naver_name);
+                map.put("member_email", naver_email);
+                
+                //네이버에서 제공하지 하는데 필요없는 정보
+                map.put("member_nickname", "Naver: Not Provided");
+                map.put("member_pwd", "Naver: Not Provided");
+                map.put("member_dob", " Naver: Not Provided");
+                map.put("member_phone", "Naver: Not Provided");
+
+               return memberDAO.getInsertNaverId(map);
+           
+			}		
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return 0;	
 	}
 	
 	//네이버 로그인 회원정보 받아오기
@@ -269,18 +370,10 @@ public class MemberServiceImpl implements MemberService {
                 map.put("member_pwd", "Naver: Not Provided");
                 map.put("member_dob", " Naver: Not Provided");
                 map.put("member_phone", "Naver: Not Provided");
-				
-                //네이버 아이디가 데이터베이스에 있나 확인
-                MemberVO mvo = memberDAO.getNaverIdInDatabase(map);
-                
-                if(mvo != null) {
-                	//db 에 있으면 저장되 있는 네이버 아이디 불러오기
-                	return memberDAO.getNaverIdInDatabase(map);
-                }
+		
                 //없으면 db 에 새로운 네이버 아이디 저장
-                memberDAO.getInsertNaverInfoForLogIn(map);
-                //insert 후 네이버정보 부르기
-                return memberDAO.getNaverIdInDatabase(map);
+                return memberDAO.getNaverLogInOk(map);
+            
 			}		
 		} catch (Exception e) {
 			System.out.println(e);
