@@ -25,5 +25,9 @@ public interface CampService {
 
 	int searchCount(String keyword, String lctCl, String induty, String sbrscl,String s_sido,String s_sigungu);
 
+	int countReview(String contentid);
+
+	int addRating(String contentid);
+
 
 }
