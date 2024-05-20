@@ -12,7 +12,21 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>마이페이지</title>
 <script>
+document.addEventListener('DOMContentLoaded', () => {
+	  const emojiElement = document.querySelector('.emoji');
+	  const grade = emojiElement.id;
+	  let emoji;
 
+	  if (grade === '0') emoji = '🥉';
+	  else if (grade === '1') emoji = '🥈';
+	  else if (grade === '2') emoji = '🥇';
+	  else if (grade === '3') emoji = '🎖️';
+	  else if (grade === '4') emoji = '🏆';
+
+	  if (emoji) {
+	    emojiElement.innerHTML = emoji;
+	  }
+	});
 $(document).ready(function() {
     promiseApplyList();
 //     setInterval(promiseApplyList, 5000);
@@ -122,7 +136,7 @@ function promiseApplyList() {
 
 	<div class="mypage">
 		<div class="welcome">
-			<div class="user_img">
+			<div>
 				<c:choose>
 					<c:when test="${empty mvo.member_img}">
 						<img src="${path}/resources/img/cat.png" alt="user_img"
@@ -130,11 +144,11 @@ function promiseApplyList() {
 					</c:when>
 					<c:otherwise>
 						<img src="${path}/resources/uploadUser_img/${mvo.member_img}"
-							alt="user_img" class="user_img">
+							alt="user_img" class="user_fullImg">
 					</c:otherwise>
 				</c:choose>
 			</div>
-			<h2 class="welcome_user">${mvo.member_name}님, 환영합니다.</h2>
+			<h2 class="welcome_user">${mvo.member_name}<span class="emoji" id="${mvo.member_grade}"></span>님, 환영합니다.</h2>
 		</div>
 		
 		<div class="list_container">
@@ -146,8 +160,24 @@ function promiseApplyList() {
 					<p class="grade"> 매너점수 : ${mvo.member_grade}점</p>						
 				</div>
 			</div>
+		<div class="my_list my_camping_list">
+				<h4 class="my_title">내 리뷰</h4>
+				<button class="more_list"
+					onclick="handleMyFavList(${mvo.member_idx})">+</button>
+				<div class="my_list_summery">
+				<c:choose>
+						<c:when test="${empty campMap }">
+							<p class="nolist">리뷰가 없습니다.</p>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="entry" items="${campMap}">
+					<a class="my_list_camping" href="campDetail.do?contentid=${entry.key}"> ${entry.value}</a>
+					</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
 		</div>
-		
 		
 		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
 		<div class="accompany_container">

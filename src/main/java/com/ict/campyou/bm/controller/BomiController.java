@@ -258,7 +258,6 @@ public class BomiController {
 		            }
 		        }
 				String old_userImg = mvo.getMember_old_img();
-				System.out.println(file);
 				if (file.isEmpty()) {
 					mvo.setMember_img(old_userImg);
 
@@ -271,9 +270,7 @@ public class BomiController {
 					File out = new File(path, filename);
 					FileCopyUtils.copy(in, out);
 				}
-
 				int res = myService.changeUserInfo(mvo);
-				System.out.println(res);
 				if (res > 0) {
 					return mv;
 				}			
