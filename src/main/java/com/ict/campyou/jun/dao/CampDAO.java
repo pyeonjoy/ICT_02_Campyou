@@ -21,7 +21,7 @@ public class CampDAO {
 		return sqlSessionTemplate.update("jun.updateHit",contentid);
 	}
 
-	public List<CampVO> searchCampDetail(String keyword, String lctCl, String induty, String sbrscl,int offset, int limit) {
+	public List<CampVO> searchCampDetail(String keyword, String lctCl, String induty, String sbrscl,int offset, int limit,String s_sido,String s_sigungu) {
 		try {
 			Map<String, Object> map = new HashMap<>();
 			map.put("keyword", keyword);
@@ -30,6 +30,8 @@ public class CampDAO {
 			map.put("sbrscl", sbrscl);
 			map.put("offset",offset);
 			map.put("limit",limit);
+			map.put("s_sido",s_sido);
+			map.put("s_sigungu",s_sigungu);
 			return sqlSessionTemplate.selectList("jun.searchDetail",map);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -37,13 +39,15 @@ public class CampDAO {
 		return null;
 	}
 
-	public int searchCount(String keyword, String lctCl, String induty, String sbrscl) {
+	public int searchCount(String keyword, String lctCl, String induty, String sbrscl,String s_sido,String s_sigungu) {
 		try {
 			Map<String, String> map = new HashMap<>();
 			map.put("keyword", keyword);
 			map.put("lctCl", lctCl);
 			map.put("induty", induty);
 			map.put("sbrscl", sbrscl);
+			map.put("s_sido",s_sido);
+			map.put("s_sigungu",s_sigungu);
 			return sqlSessionTemplate.selectOne("jun.searchCount",map);
 		} catch (Exception e) {
 			System.out.println(e);

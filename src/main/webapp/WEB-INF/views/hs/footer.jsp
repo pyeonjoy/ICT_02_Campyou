@@ -29,7 +29,7 @@
 						</ul>
 					</div>
 					<div class="footer_text">
-						<span> <a href="admin_login_form.do">캠프유</a><a href="admin_signup_page_go.do">(주)</a> | 대표이사: 노준형 | 사업자등록번호: 123-12-12345 | 주소:
+						<span> <a href="admin_login_form.do">캠프유(주)</a> | 대표이사: 노준형 | 사업자등록번호: 123-12-12345 | 주소:
 							서울특별시 마포구 백범로 23, 3층 <br>
 						</span>
 					</div>

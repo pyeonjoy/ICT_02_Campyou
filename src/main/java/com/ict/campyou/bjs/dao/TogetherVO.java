@@ -2,7 +2,8 @@ package com.ict.campyou.bjs.dao;
 
 public class TogetherVO {
 	private String t_idx, member_idx, t_subject, t_content, t_campname, t_postcode, t_address, t_address_detail, t_startdate, t_enddate, tf_name, t_regdate, t_hit, t_active, t_notice, member_dob, member_nickname, t_numpeople, member_img, t_mapx, t_mapy, t_induty, t_facltdivnm, t_mangedivnm;
-
+	private int promise_count;
+	
 	public String getT_idx() {
 		return t_idx;
 	}
@@ -193,6 +194,14 @@ public class TogetherVO {
 
 	public void setT_mangedivnm(String t_mangedivnm) {
 		this.t_mangedivnm = t_mangedivnm;
+	}
+
+	public int getPromise_count() {
+		return promise_count;
+	}
+
+	public void setPromise_count(int promise_count) {
+		this.promise_count = promise_count;
 	}
 
 	

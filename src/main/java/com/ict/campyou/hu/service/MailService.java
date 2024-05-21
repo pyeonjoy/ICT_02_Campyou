@@ -1,6 +1,7 @@
 package com.ict.campyou.hu.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -9,27 +10,27 @@ public class MailService {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	// Controller¿¡¼­ È£Ãâ
-	// ºñ¹ø Ã£±â
+	// Controllerì—ì„œ í˜¸ì¶œ
+	// ë¹„ë²ˆ ì°¾ê¸°
 	public void sendEmail(String randomNumber, String toMail) {
 		try {
 			MailHandler sendMail = new MailHandler(mailSender);
-			// ¸ŞÀÏ Á¦¸ñ
-			sendMail.setSubject("[ICT EDU ÀÎÁõ ¸ŞÀÏÀÔ´Ï´Ù]");
+			// ë©”ì¼ ì œëª©
+			sendMail.setSubject("[CAMPYOU ì¸ì¦ ë©”ì¼ì…ë‹ˆë‹¤]");
 			
-			// ¸ŞÀÏ ³»¿ë
-			// ³»¿ë
+			// ë©”ì¼ ë‚´ìš©
+			// ë‚´ìš©
 			sendMail.setText("<table><tbody>"
-					+ "<tr><td><h2>ICT EDU ¸ŞÀÏ ÀÎÁõ</h2></td></tr>"
-					+ "<tr><td><h3>ICT EDU</h3></td></tr>"
-					+ "<tr><td><font size='5px'>ÀÎÁõ¹øÈ£ ¾È³»ÀÔ´Ï´Ù</font></td></tr>"
-					+ "<tr><td><font size='8px'>È®ÀÎ¹øÈ£ : "+randomNumber +"</font></td></tr>"
+					+ "<tr><td><h2>CAMPYOU ë©”ì¼ ì¸ì¦</h2></td></tr>"
+					+ "<tr><td><h3>CAMPYOU</h3></td></tr>"
+					+ "<tr><td><font size='5px'>ì¸ì¦ë²ˆí˜¸ ì•ˆë‚´ì…ë‹ˆë‹¤</font></td></tr>"
+					+ "<tr><td><font size='8px'>ì„ì‹œë¹„ë°€ë²ˆí˜¸ : "+randomNumber +"</font></td></tr>"
 					+ "</tbody></table>");
 			
-			// º¸³»´Â ÀÌ
+			// ë³´ë‚´ëŠ” ì´
 			sendMail.setFrom("ictsamjo@gmail.com", "hchoi");
 			
-			// ¹Ş´Â ÀÌ
+			// ë°›ëŠ” ì´
 			sendMail.setTo(toMail);
 			sendMail.send();
 		} catch (Exception e) {
@@ -37,26 +38,26 @@ public class MailService {
 		}
 	}
 	
-	//¾ÆÀÌµğ Ã£±â
+	//ì•„ì´ë”” ì°¾ê¸°
 	public void sendMyIDEmail(String userId, String toMail) {
 		try {
 			MailHandler sendMail = new MailHandler(mailSender);
-			// ¸ŞÀÏ Á¦¸ñ
-			sendMail.setSubject("[ICT EDU ÀÎÁõ ¸ŞÀÏÀÔ´Ï´Ù]");
+			// ë©”ì¼ ì œëª©
+			sendMail.setSubject("[CAMPYOU ì¸ì¦ ë©”ì¼ì…ë‹ˆë‹¤]");
 			
-			// ¸ŞÀÏ ³»¿ë
-			// ³»¿ë
+			// ë©”ì¼ ë‚´ìš©
+			// ë‚´ìš©
 			sendMail.setText("<table><tbody>"
-					+ "<tr><td><h2>ICT EDU ¸ŞÀÏ ÀÎÁõ</h2></td></tr>"
-					+ "<tr><td><h3>ICT EDU</h3></td></tr>"
-					+ "<tr><td><font size='5px'>¾ÆÀÌµğ ¾È³»ÀÔ´Ï´Ù</font></td></tr>"
-					+ "<tr><td><font size='8px'>È®ÀÎ ¾ÆÀÌµğ : "+userId +"</font></td></tr>"
+					+ "<tr><td><h2>CAMPYOU ë©”ì¼ ì¸ì¦</h2></td></tr>"
+					+ "<tr><td><h3>CAMPYOU</h3></td></tr>"
+					+ "<tr><td><font size='5px'>ì•„ì´ë”” ì•ˆë‚´ì…ë‹ˆë‹¤</font></td></tr>"
+					+ "<tr><td><font size='8px'>í™•ì¸ ì•„ì´ë”” : "+userId +"</font></td></tr>"
 					+ "</tbody></table>");
 			
-			// º¸³»´Â ÀÌ
+			// ë³´ë‚´ëŠ” ì´
 			sendMail.setFrom1("ictsamjo@gmail.com", "hchoi");
 			
-			// ¹Ş´Â ÀÌ
+			// ë°›ëŠ” ì´
 			sendMail.setTo1(toMail);
 			sendMail.send();
 		} catch (Exception e) {

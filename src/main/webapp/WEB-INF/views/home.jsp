@@ -5,7 +5,14 @@
 <%@ page import="com.google.gson.Gson"%>
 
 <c:set var="path" value="${pageContext.request.contextPath}" />
-<%@ include file="hs/header.jsp"%>
+<c:choose>
+    <c:when test="${empty admin}">
+        <%@ include file="hs/header.jsp" %>
+    </c:when>
+    <c:otherwise>
+        <%@ include file="hs/admin_header.jsp" %>
+    </c:otherwise>
+</c:choose>
 
 <!doctype html>
 <html lang="ko">
@@ -18,9 +25,9 @@
 <meta name="generator" content="Hugo 0.88.1">
 <title>임시 메인페이지</title>
 <style>
-#header {
+/* #header {
    background-color: rgba(5, 54, 16, 0.7);
-}
+} */
 
 .bd-placeholder-img {
 	font-size: 1.125rem;
@@ -51,7 +58,7 @@ body {
 
 .wrap {
 	margin: auto;
-	width: 1200px;
+	width: 1500px;
 	text-align: center;
 	font-weight: bold;
 	color: #FFFDDE;
@@ -108,10 +115,13 @@ button {
 
 .find {
 	margin: 50px;
-	color: black;
+	color: white;
 	height: 40px;
 	line-height: 40px;
-	background-color: #FFFDDE;
+	background-color: #032805;
+	width: 1000px;
+    margin: 20px auto;
+
 }
 
 #footer {
@@ -119,6 +129,94 @@ button {
 	position: absolute;
 	left: 0px;
 }
+.popularinner{
+	display: flex;
+	justify-content: center;
+
+	
+}
+.show{
+padding-left: 60px;
+padding-right: 60px;
+background-color: #FFBA34;
+    margin-top: 35px;
+}
+/* slider__wrap */
+        .slider__wrap {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slider__img { /* 이미지가 보이는 영역 */
+            position: relative;
+            width: 1100px;
+		    height: 550px;
+		    top: 50px;
+            overflow: hidden;
+        }
+        .slider__inner { /* 이미지 움직이는 영역 */
+            display: flex;
+            flex-wrap: wrap;
+            width: 5500px;  /* 총 이미지가 4800px */
+            height: 550px;
+        }
+        .slider { /* 개별적인 이미지 */
+            position: relative;
+            width: 1100px;
+            height: 550px;
+        }
+        .slider__btn a {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background-color: #041601;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        .slider__btn a:hover {
+            border-radius: 50%;
+            background-color: #FFBA34;
+            color: #black;
+        }
+        .slider__btn a.prev {
+            left: 320px;
+    		top: 520px;
+    		color: white;
+    		    font-size: 2rem;
+    line-height: 42.5px;
+        }
+        .slider__btn a.next {
+            right: 320px;
+    		top: 520px;
+    		color: white;
+    		    font-size: 2rem;
+    line-height: 42.5px;
+        }
+        .slider__dot {
+            position: absolute;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+        }
+        .slider__dot .dot {
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+            display: inline-block;
+            border-radius: 50%;
+            text-indent: -9999px;
+            transition: all 0.3s;
+            margin: 2px;
+        }
+        .slider__dot .dot.active {
+            background-color: rgba(255, 255, 255, 1);
+        }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
@@ -139,7 +237,7 @@ $(document).ready(function() {
             
         }); 
     });
-/*  
+ 
  
 
 // 	$(function() {
@@ -251,11 +349,28 @@ $(document).ready(function() {
 	    });
 	}
 });
-     */
+   
 </script>
 
 </head>
 <body>
+<main id="main">
+    <div class="slider__wrap">
+        <div class="slider__img">
+            <div class="slider__inner">
+                <div class="slider s1"><img src="${path}/resources/images/main1.png" alt="이미지1"></div>
+                <div class="slider s2"><img src="${path}/resources/images/main2.png" alt="이미지2"></div>
+                <div class="slider s3"><img src="${path}/resources/images/main3.png" alt="이미지3"></div>
+                <div class="slider s4"><img src="${path}/resources/images/main4.png" alt="이미지4"></div>
+                <div class="slider s5"><img src="${path}/resources/images/main5.png" alt="이미지5"></div>
+            </div>
+        </div>
+        <div class="slider__btn">
+            <a href="#" class="prev" title="<"><</a>
+            <a href="#" class="next" title=">">></a>
+        </div>
+    </div>
+</main>
 
 	<div id="layer_popup1" class="layer_popup"
 		style=" background-color: white;">
@@ -273,54 +388,41 @@ $(document).ready(function() {
 		</div>
 	</div>
 
-
-
-	<h1 class="display-4 fw-normal" style="padding: 200px;">.</h1>
-	<h1 class="display-4 fw-normal">
-		<button onclick="location.href='together_list.do'">준수</button>
-	</h1>
-	<h1 class="display-4 fw-normal">
-		<button onclick="location.href='inquiry_form.do'">보미</button>
-	</h1>
-	<h1 class="display-4 fw-normal">
-		<button onclick="location.href='inquiry_form.do'">해성</button>
-	</h1>
-	<h1 class="display-4 fw-normal">
-		<button onclick="location.href='sign_up_page_go.do'">한욱</button>
-	</h1>
-	<h1 class="display-4 fw-normal">
-		<button onclick="location.href='admin_main.do'">조이</button>
-	</h1>
-	<h1 class="display-4 fw-normal">
-		<button onclick="location.href='camplist.do'">준형</button>
-	</h1>
-	<a href="inquiry_form.do">1:1문의작성</a>
-	<a href="my_info.do">내정보</a>
-	<a href="my_faq.do">faq</a>
-	<a href="my_main.do">마이페이지</a>
-	<a href="together_list.do">동행</a>
 	<div class="wrap">
 		<div class="popular">
-			<h3>Popular campsites</h3>
-
+			<h3>인기 캠핑장</h3>
+			<div class="popularinner">
 			<c:forEach var="c" items="${camphit}">
-				<a href="camp_detail.do?contentid=${c.contentid}"> <img
-					class="popularimg" src="${c.firstimageurl}"></a>
+			    <div>
+			        <div style="position: relative;">
+			            <a href="camp_detail.do?contentid=${c.contentid}">
+			                <img class="popularimg" src="${c.firstimageurl}">
+			            </a>
+			            <div class="popularimg" style="position: absolute; top: 30px;
+    left: 30px;
+    width: 83.5%;
+    height: 89%; background-color: rgba(4, 22, 1, 0.3);"></div>
+			            <h4 style="position: absolute; bottom: 105px; left: 50px; color: white; padding: 5px; text-align: left;">${c.facltnm}</h4>
+			            <p style="position: absolute; bottom: 73px; left: 50px; color: white; padding: 5px; text-align: left; width: 250px; line-height: 24px;">${c.addr1}</p>
+			        </div>
+			    </div>
 			</c:forEach>
+
+			</div>
 			<p>
-				<button onclick="location.href='camplist.do'">Show More</button>
+				<button class="show" onclick="location.href='camplist.do'"><h4>Show More</h4></button>
 			</p>
 		</div>
 		<div class="popular">
-			<div style="paddig-top: 500px;">
-				<h3>Find camping mates</h3>
+			<div style="width: 1000px;     margin: 0 auto;">
+				<h3 style="margin-bottom: 20px;" >동행 찾기</h3>
 				<c:forEach var="k" items="${board}" varStatus="vs">
 					<a href="together_detail.do?t_idx=${k.t_idx}"><p class="find">${k.t_subject }</p></a>
 				</c:forEach>
 			</div>
 			<p>
-				<button onclick="location.href='together_list.do'">Show
-					More</button>
+				<button  class="show" onclick="location.href='together_list.do'"><h4>Show
+					More</h4></button>
 			</p>
 		</div>
 	</div>
@@ -375,6 +477,48 @@ $(document).ready(function() {
 	    }
 	}
 </script>
+<!--  -->
+<script type="text/javascript">
+const sliderWrap = document.querySelector(".slider__wrap");
+const sliderImg = sliderWrap.querySelector(".slider__img");             // 보여지는 영역
+const sliderInner = sliderWrap.querySelector(".slider__inner");         // 움직이는 영역
+const slider = sliderWrap.querySelectorAll(".slider");                  // 개별 이미지
+const sliderDot = sliderWrap.querySelector(".slider__dot");             // 닷 메뉴
+const sliderBtn = sliderWrap.querySelectorAll(".slider__btn a");        // 버튼 
+
+let currentIndex = 0;                                                   // 현재 보이는 이미지
+let sliderCount = slider.length;                                        // 이미지 갯수
+let sliderInterval = 2000;                                              // 이미지 변경 간격 시간
+let sliderWidth = slider[0].clientWidth;                                // 이미지 가로값 구하기
+let dotIndex = "";
+</script>
+<script type="text/javascript">
+//이미지 이동시키기
+function gotoSlider(num){
+    sliderInner.style.transition = "all 400ms";
+    sliderInner.style.transform = "translateX(" + -sliderWidth * num + "px)";
+    currentIndex = num;
+
+    // 닷 메뉴 활성화하기
+    let dotActive = document.querySelectorAll(".slider__dot .dot");
+    dotActive.forEach((active) => active.classList.remove("active"));
+    dotActive[num].classList.add("active");
+}
+//버튼을 클릭했을 때
+sliderBtn.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+        let prevIndex = (currentIndex + (sliderCount-1)) % sliderCount;
+        let nextIndex = (currentIndex+1) % sliderCount;
+
+        if(btn.classList.contains("prev")){
+            gotoSlider(prevIndex);
+        } else {
+            gotoSlider(nextIndex);
+        }
+    });
+});
+</script>
+
 
 <%@ include file="hs/footer.jsp"%>
 </html>

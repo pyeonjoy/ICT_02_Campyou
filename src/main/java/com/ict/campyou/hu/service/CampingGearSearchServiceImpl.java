@@ -15,19 +15,16 @@ public class CampingGearSearchServiceImpl implements CampingGearSearchService {
 
 	@Override
 	public List<CampingGearSearchVO> getCampingGearSearchList() {
-		
 		return campingGearSearchDAO.getCampingGearSearchList();
 	}
 
 	@Override
 	public List<CampingGearSearchVO> getCampingGearSearchListOk(String searchType, String searchValue) {
-		
 		return campingGearSearchDAO.getCampingGearSearchListOk(searchType, searchValue);
 	}
 
 	@Override
 	public List<CampingGearSearchVO> getCampingGearSearchList2(int offset, int limit) {
-		//게시판 내 검색 기능
 		return campingGearSearchDAO.getCampingGearSearchList2(offset, limit);
 	}
 }

@@ -38,9 +38,49 @@
 	<!-- <beans:bean id="log_inter" class="com.ict.common.LoginInterceptor"/> -->
 <!-- 	<interceptors>
 		<interceptor>
-			<mapping path="/gb_list.do"/>
-			<mapping path="/board_list.do"/>
-			<mapping path="/bbs_write.do"/> 읽을수는 있지만 쓸수는 없다. 
+			//조이			
+			<mapping path="/member_search.do"/>
+			<mapping path="/admin_member_list.do"/>
+			<mapping path="/admin_member_detail.do"/>
+			<mapping path="/member_edit.do"/>
+			<mapping path="/member_edit_ok.do"/>
+			<mapping path="/member_stop.do"/>
+			<mapping path="/member_stopcancel.do"/>
+			<mapping path="/member_upgrade.do"/>
+			<mapping path="/removeimg.do"/>
+			<mapping path="/report_search.do"/>
+			<mapping path="/report_list.do"/>
+			<mapping path="/admin_report.do"/>
+			<mapping path="/report_write2.do"/>
+			<mapping path="/report_writeok2.do"/>
+			<mapping path="/report_write.do"/>
+			<mapping path="/report_writeok.do"/>
+			<mapping path="/report_search.do"/>
+			<mapping path="/popup.do"/>
+			<mapping path="/popup_write.do"/>
+			<mapping path="/popup_write_ok.do"/>
+			<mapping path="/popup_delete.do"/>
+			<mapping path="/popup_update.do"/>
+			
+			준수
+			<mapping path="/popup_update.do"/>
+			
+			보미
+			<mapping path="/popup_update.do"/>
+			
+			해성
+			<mapping path="/popup_update.do"/>
+			
+			한욱
+			<mapping path="/popup_update.do"/>
+			
+			준형
+			<mapping path="/popup_update.do"/>
+			
+			
+			
+			
+			
 			
 			위에 만들어진놈을 참조하는 놈
 			<beans:ref bean="log_inter"/>

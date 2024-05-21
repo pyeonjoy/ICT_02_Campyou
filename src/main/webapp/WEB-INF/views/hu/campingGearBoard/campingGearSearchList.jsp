@@ -6,27 +6,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시판 검색</title>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/boardFreeSearchlist.css">
 <script type="text/javascript">
     // 전체 페이지를 계산하는 함수
     function calculateTotalPages(totalItems, pageSize) {
         return Math.ceil(totalItems / pageSize);
     }
-
     // 페이지 버튼 생성 함수
     function generatePaginationButtons(totalPages, currentPage) {
         const paginationDiv = document.querySelector(".pagination");
-        paginationDiv.innerHTML = ''; // Clear existing buttons
+        paginationDiv.innerHTML = ''; 
 
-        // Previous button
+        //이전버튼
         const prevButton = document.createElement("button");
         prevButton.classList.add("prev");
         prevButton.textContent = "이전";
         prevButton.onclick = prevPage;
         paginationDiv.appendChild(prevButton);
-
-        // Page buttons
+        //현재버튼
         let startPage = Math.max(1, currentPage - 1);
         let endPage = Math.min(totalPages, startPage + 2);
         for (let i = startPage; i <= endPage; i++) {
@@ -40,8 +38,7 @@
             };
             paginationDiv.appendChild(button);
         }
-
-        // Next button
+        //다음버튼
         const nextButton = document.createElement("button");
         nextButton.classList.add("next");
         nextButton.textContent = "다음";
@@ -62,7 +59,6 @@
                 row.style.display = "none";
             }
         });
-
         // 페이지 버튼 업데이트
         let paginationButtons = document.querySelectorAll(".pagination-button");
         paginationButtons.forEach(function(button) {
@@ -86,8 +82,6 @@
         // 첫번째 페이지 구현
         goToPage(currentPage, pageSize);
     };
-
-    // Function to navigate to the next block of page buttons
     function nextPage() {
         let paginationDiv = document.querySelector(".pagination");
         if (currentPage + 3 <= totalPages) {
@@ -97,8 +91,6 @@
             goToPage(currentPage, pageSize);
         }
     }
-
-    // Function to navigate to the previous block of page buttons
     function prevPage() {
         let paginationDiv = document.querySelector(".pagination");
         if (currentPage - 3 > 0) {
@@ -111,8 +103,7 @@
 </script>
 </head>
 <body>
-	<!-- 여기서부터 해더 푸터 만들어보기  -->
-	<div id="aa"> <!-- aa는 이건 내가 만든것 -->
+	<div id="aa">
         <h2><a href="camping_gear_board.do">게시판 돌아가기</a></h2>
         <article>
             <table>
@@ -138,12 +129,6 @@
                 </tbody>
             </table>
         </article>
-        <form action="post">
-       <!--  <span id="btn-position">
-            <input id="btn" type="button" value="목록" onclick="camping_gear_board(this.form)" />
-        </span> -->
-        </form>
-	    <!-- Pagination -->
 	    <div class="pagination">
 	    </div>
     </div>

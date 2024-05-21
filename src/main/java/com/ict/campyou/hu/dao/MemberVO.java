@@ -4,7 +4,41 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class MemberVO {
 	private String member_idx, member_id, member_name, member_nickname, member_dob, member_email, member_pwd,
-			member_phone, member_img, member_active, member_regdate, member_old_img,member_grade, member_login ;
+			member_phone, member_img, member_active, member_regdate, member_old_img,member_grade, member_login, 
+			new_rating, rating_count, member_rating,member_rating_all ;
+
+	public String getMember_rating_all() {
+		return member_rating_all;
+	}
+
+	public void setMember_rating_all(String member_rating_all) {
+		this.member_rating_all = member_rating_all;
+	}
+
+	public String getNew_rating() {
+		return new_rating;
+	}
+
+	public void setNew_rating(String new_rating) {
+		this.new_rating = new_rating;
+	}
+
+	public String getRating_count() {
+		return rating_count;
+	}
+
+	public void setRating_count(String rating_count) {
+		this.rating_count = rating_count;
+	}
+
+	public String getMember_rating() {
+		return member_rating;
+	}
+
+	public void setMember_rating(String member_rating) {
+		this.member_rating = member_rating;
+
+	}
 
 	public String getMember_login() {
 		return member_login;

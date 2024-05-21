@@ -1,9 +1,14 @@
 function list_search(page) {
+
+		
         let keywordInput = $("#keyword_input").val();
         let selectedLctCl = [];
         let selectedInduty = [];
         let selectedSbrscl = [];
 
+		let sido_search = $("#sido_search").val();
+        let sigungu_search = $("#sigungu_search").val();
+		
         $("input[name='lctCl']:checked").each(function() {
             selectedLctCl.push($(this).val());
         });
@@ -24,6 +29,8 @@ $.ajax({
         lctCl: selectedLctCl.join(),
         induty: selectedInduty.join(),
         sbrscl: selectedSbrscl.join(),
+        s_sido: sido_search,
+        s_sigungu: sigungu_search,
         cPage: page
     },
     dataType: "json",
@@ -39,7 +46,9 @@ $.ajax({
             let tel = camp.tel;
             let homepage = camp.homepage;
             let contentid = camp.contentid;
-            
+            if (data.cvo.length === 1) {
+                $("#camp_list_show").addClass("1_result");
+            }
             let campItem = "<div class='camp_item'>";
             if (firstImageUrl != null && firstImageUrl !== "") {
                 campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
@@ -73,9 +82,9 @@ $.ajax({
                 pagingHtml += '<li><a href="javascript:list_search(' + (paging.beginBlock - paging.pagePerBlock) + ')" class="search_th_able"><i class="fa-solid fa-chevron-right fa-rotate-180" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
             }
             // 페이지번호들
-            for (let k = paging.beginBlock; k <= paging.endBlock; k++) {
+            for (let k = paging.beginBlock; k <= paging.endBlock && k <= paging.totalPage; k++) {
                 if (k === paging.nowPage) {
-                    pagingHtml += '<li class="search_nowpagecolor" style="color: #041601;">' + k + '</li>';
+                    pagingHtml += '<li class="search_nowpagecolor">' + k + '</li>';
                 } else {
                     pagingHtml += '<li><a href="javascript:list_search(' + k + ')" class="search_nowpage">' + k + '</a></li>';
                 }
@@ -91,7 +100,7 @@ $.ajax({
             $('.th_paging').append(pagingHtml);
         },
         error: function() {
-            alert("검색 실패");
+        	alert("검색 결과가 존재하지 않습니다.");
         }
     });
     }
@@ -188,7 +197,7 @@ $(document).ready(function() {
             }
             campItem += "<div class='camp_info' onclick='location.href=\"camp_detail.do?contentid=" + contentid + "\"'>";
             campItem += "<p> [" + doNm + sigunguNm + "] </p>";
-            campItem += "<h4>" + facltNm + "</h4><span>" + induty + "</span>";
+            campItem += "<h4 style=\'display: inline;'>" + facltNm + "</h4><p style=\'display: inline;font-weight: bold;'>" + " / "+ induty + "</p>";
             campItem += "<p>" + addr1 + "</p>";
             campItem += "<p>" + tel + "</p>";
             campItem += "</div>";

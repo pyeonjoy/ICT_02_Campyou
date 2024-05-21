@@ -66,8 +66,8 @@
 	display: flex;
 	align-items: center;
 	position: absolute;
-	top: 9.7rem;
-	right: 17.7rem;
+	bottom: 8rem;
+	right: 14.5rem;
 }
 
 .together_list {
@@ -158,7 +158,7 @@
 }
 
 .list_title {
-	font-size: .8rem
+	font-size: .7rem
 }
 
 .list_type {

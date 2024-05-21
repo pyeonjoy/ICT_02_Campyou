@@ -5,9 +5,22 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호찾기</title>
+<%@ include file="../hs/header.jsp" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script type="text/javascript">
 	function findPwd(f) {
+		if(f.email.value === ""){
+			 alert("이메일을 입력하세요.");
+			 f.email.focus();
+			 return;
+		 }
+		 if(f.member_id.value === ""){
+			 alert("아이디를 입력하세요.");
+			 f.member_id.focus();
+			 return;
+		 }
+		alert("임시 비밀번호를 보냈습니다.\n귀하의 이메일을 확인해 주세요");
+		
 		f.action="email_send_ok.do";
 		f.submit();
 	}
@@ -40,5 +53,6 @@
     </div>
   </div>
 </section>
+<%@ include file="../hs/footer.jsp" %>
 </body>
 </html>
