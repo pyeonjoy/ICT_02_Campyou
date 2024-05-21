@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="resources/public/css/bjs/together_list.css">
 <script src="resources/public/js/hs/camp_map_list.js" ></script>
 <title>CAMPYOU:지도로 검색</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <jsp:include page="../hs/header.jsp" />

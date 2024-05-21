@@ -7,6 +7,8 @@
 <head>
 <meta charset=UTF-8>
 <title>Insert title here</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoard.css">
 <%@ include file="../../hs/header.jsp" %>
 <script type="text/javascript">

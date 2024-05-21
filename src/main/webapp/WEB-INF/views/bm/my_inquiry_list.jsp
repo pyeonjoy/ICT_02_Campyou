@@ -15,6 +15,8 @@
   }
   </script>
 <title>1:1문의내역</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
 		<%@ include file="../hs/mypage_menu.jsp"%>

@@ -10,6 +10,8 @@
 <script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
 
 <title>캠핑장리스트</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <style type="text/css">
 .camp_list_container {
 	display: flex;

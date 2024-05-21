@@ -11,6 +11,8 @@
 
 </script>
 <title>관리자 - 1:1 문의</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
 

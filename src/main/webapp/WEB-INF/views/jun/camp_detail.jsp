@@ -338,6 +338,8 @@ function loadHeart() {
 	}
 </script>
 <title>캠핑장 상세 페이지</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
 	<div id="modal_show"></div>
