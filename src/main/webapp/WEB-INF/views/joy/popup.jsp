@@ -8,6 +8,8 @@
 <head>
 <meta charset="utf-8">
 <title>팝업</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <style>
 @font-face {
     font-family: 'JalnanGothic';
@@ -121,11 +123,6 @@ table th, #bbs table td {
 	padding: 10px;
 }
 
-tfoot tr {
-    text-align: center;
-    padding: 10px; /* 중복된 padding 속성을 하나로 통합 */
-    border: 5px solid #F6FFF1;
-}
 
 .no {
 	width: 15%

@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Chat List</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/bm/chatroom.css" />
 <script defer src="${path}/resources/public/js/bm/chat-list.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.min.js"></script>

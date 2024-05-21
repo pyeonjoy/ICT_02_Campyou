@@ -11,6 +11,8 @@
   <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>마이페이지</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 	  const emojiElement = document.querySelector('.emoji');

@@ -8,6 +8,8 @@
 <link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
 <%@ include file="../hs/admin_menu.jsp" %>
 <title>회원 검색</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <style type="text/css">
 body {
 	background-color: #F6FFF1;

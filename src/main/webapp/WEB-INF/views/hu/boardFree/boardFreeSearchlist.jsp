@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판 검색</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <%-- <%@ include file="../../hs/header.jsp" %> --%>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/boardFreeSearchlist.css">
 <script type="text/javascript">

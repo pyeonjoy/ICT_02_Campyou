@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글 내용</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardContent.css">
 <script type="text/javascript">
 	function camping_gear_board_list(f) {

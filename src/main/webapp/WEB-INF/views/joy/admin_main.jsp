@@ -6,6 +6,8 @@
 <html lang="ko">
 <head>
     <title>관리자 페이지 메인</title>
+    <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link href="resources/css/reset.css" rel="stylesheet" />
     <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
