@@ -170,6 +170,14 @@ public class TogetherAjaxController {
 				list.setMember_dob(ageGroup);
 				int promiseCount = togetherService.getPromiseMyCount(list.getMember_idx());
 				list.setPromise_count(promiseCount);
+				
+				switch (list.getMember_grade()) {
+				case "1": list.setMember_grade("grade1.png"); break;
+				case "2": list.setMember_grade("grade2.png"); break;
+				case "3": list.setMember_grade("grade3.png"); break;
+				case "4": list.setMember_grade("grade4.png"); break;
+				case "5": list.setMember_grade("grade5.png"); break;
+				}
 			}
 		}
 		return result;
@@ -251,7 +259,14 @@ public class TogetherAjaxController {
 				case "-1": pvo.setPm_state("거절"); break;
 				case "2": pvo.setPm_state("동행완료"); break;
 				case "3": pvo.setPm_state("추방"); break;
-			}
+				}
+				switch (pvo.getMember_grade()) {
+				case "1": pvo.setMember_grade("grade1.png"); break;
+				case "2": pvo.setMember_grade("grade2.png"); break;
+				case "3": pvo.setMember_grade("grade3.png"); break;
+				case "4": pvo.setMember_grade("grade4.png"); break;
+				case "5": pvo.setMember_grade("grade5.png"); break;
+				}
 				
 				int promiseCount = togetherService.getPomiseCount(pvo.getT_idx());
 				int promiseMyCount = togetherService.getPromiseMyCount(pvo.getMember_idx());
@@ -322,6 +337,15 @@ public class TogetherAjaxController {
 	        memberUser = new MemberVO();
 	    }
 		List<TogetherCommentVO> toCommentList = togetherService.getToCommentList(t_idx);
+		for (TogetherCommentVO k : toCommentList) {
+			switch (k.getMember_grade()) {
+			case "1": k.setMember_grade("grade1.png"); break;
+			case "2": k.setMember_grade("grade2.png"); break;
+			case "3": k.setMember_grade("grade3.png"); break;
+			case "4": k.setMember_grade("grade4.png"); break;
+			case "5": k.setMember_grade("grade5.png"); break;
+			}
+		}
 		Map<String, Object> response = new HashMap<>();
 	    response.put("memberUser", memberUser);
 	    response.put("toCommentList", toCommentList);
@@ -349,10 +373,23 @@ public class TogetherAjaxController {
 				if(wc_step == 1 && wc_lev == 1) {
 					int maxStep = togetherService.getToCommentMaxStep(map);
 					wc_step = maxStep + 1;
-					map.put("wc_groups", wc_groups);
-					map.put("wc_step", wc_step);
 				}else {
-					wc_step++;
+					int groupStep = 0;
+					boolean found = false;
+					List<TogetherCommentVO> groupList = togetherService.getGroupList(map);
+					for (TogetherCommentVO k : groupList) {
+						if(wc_lev > Integer.parseInt(k.getWc_lev())) {
+							groupStep = Integer.parseInt(k.getWc_step());
+							found = true;
+							break;
+						}
+					}
+					// 반복문이 끝난 후 작은 값을 찾지 못한 경우
+					if (!found && !groupList.isEmpty()) {
+					    TogetherCommentVO lastElement = groupList.get(groupList.size() - 1);
+					    groupStep = Integer.parseInt(lastElement.getWc_step()) + 1;
+					}
+					wc_step = groupStep;
 					map.put("wc_groups", wc_groups);
 					map.put("wc_step", wc_step);
 					int GSUpdate = togetherService.getToCommentGSUpdate(map);
@@ -459,6 +496,14 @@ public class TogetherAjaxController {
 				}
 				pvo.setMember_dob(ageGroup);
 				
+				switch (pvo.getMember_grade()) {
+				case "1": pvo.setMember_grade("grade1.png"); break;
+				case "2": pvo.setMember_grade("grade2.png"); break;
+				case "3": pvo.setMember_grade("grade3.png"); break;
+				case "4": pvo.setMember_grade("grade4.png"); break;
+				case "5": pvo.setMember_grade("grade5.png"); break;
+				}
+				
 				int proOKCount = togetherService.getPromiseMyCount(pvo.getMember_idx());
 				pvo.setPromise_my_count(proOKCount);
 			}
@@ -556,5 +601,22 @@ public class TogetherAjaxController {
 		response.put("toPromiseEnd", toPromiseEnd);
 		response.put("paging", paging);
 		return response;
+	}
+	
+	@RequestMapping(value = "confirm_partner.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getConfirmPartner(PromiseVO pvo, @RequestParam("member_idx")List<String> memberIdxArray) throws Exception {
+		if(pvo.getT_enddate() != null) {
+			int res = togetherService.getEnddateUpdate(pvo.getT_idx());
+		}
+		int totalUpdated = 0;
+		for (String memberIdx : memberIdxArray) {
+			pvo.setMember_idx(memberIdx);
+			int result = togetherService.getConfirmPartner(pvo);
+			if(result > 0) {
+				totalUpdated += result;
+			}
+	    }
+		return totalUpdated;
 	}
 }

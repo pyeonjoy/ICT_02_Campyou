@@ -11,7 +11,14 @@
 	margin: 0;
 	padding: 0;
 }
-
+.list_nickname{
+	display: flex;
+	align-items: center;
+}
+.member_gradeImg{
+	width: 18px;
+	height: 18px;
+}
 .mypage {
 	width: 70%;
 	height: 80vh;

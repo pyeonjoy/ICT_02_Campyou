@@ -7,7 +7,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<title>together_history</title>
+<title>동행 현황</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -107,6 +107,7 @@ function promisePeopleDetail() {
 	let tIdx = document.getElementById("t_idx").value;
 	let memberIdx = document.getElementById("member_idx").value;
 	let page = document.getElementById("cPage").value;
+	let tEnddate = document.getElementById("t_enddate").value;
    	$('.thul2').empty();
     $.ajax({
         url: 'promise_people_detail.do',
@@ -117,12 +118,14 @@ function promisePeopleDetail() {
         dataType: 'json',
         success: function(data) {
 			let html = '';
+			let memberIdxArray = [];
         	if (data != null && data.length > 0) {
 //                 let imgSrc = data.proPeopleDetail.member_img === null || data.proPeopleDetail.member_img === '' || data.proPeopleDetail.member_img === 'user2.png' ? '${path}/resources/images/user2.png' : '${path}/resources/images/' + data.proPeopleDetail.member_img;
                 for (let i = 0; i < data.length; i++) {
                     let proPeopleDetail = data[i];
-	                html += '<div class="thliImage3"><img src="${path}/resources/images/' + proPeopleDetail.member_img + '" class="thliImage2"></div>';
-	                html += '<ul><li class="th1">' + proPeopleDetail.member_nickname + '</li></ul>';
+                    memberIdxArray.push(proPeopleDetail.member_idx);
+	                html += '<div class="thliImage3"><img src="${path}/resources/images/' + proPeopleDetail.member_img + '" class="thliImage2 profile_show"></div>';
+	                html += '<ul><li class="th1 member_gradeLi profile_show">' + proPeopleDetail.member_nickname + '<img src="${path}/resources/images/' + proPeopleDetail.member_grade + '" class="member_gradeImg" ></li></ul>';
 	                html += '<ul><li class="th1">' + proPeopleDetail.member_dob + '</li></ul>';
 	                html += '<ul><li class="th1">' + proPeopleDetail.promise_my_count + '</li></ul>';
                     html += '<div class="thul2Div">';
@@ -140,7 +143,8 @@ function promisePeopleDetail() {
          		$('.thul2').append(html);
                 let html2 = '<div class="partnerListButtonDiv">';
                 if(promiseStatus == 'ready'){
-                	html2 += '<button type="button" class="thul2DivButton" onclick="confirm_partner()" style="margin-right: 3rem;">동행 완료</button>';
+//                 	html2 += '<button type="button" class="thul2DivButton" onclick="confirm_partner(' + tIdx + ',' + memberIdx + ',\'' + tEnddate + '\',' + JSON.stringify(memberIdxArray) + ')" style="margin-right: 3rem;">동행 완료</button>';
+					html2 += '<button type="button" class="thul2DivButton" onclick="confirm_partner(' + tIdx + ',' + memberIdx + ',\'' + tEnddate + '\', \'' + JSON.stringify(memberIdxArray).replace(/"/g, '&quot;') + '\')" style="margin-right: 3rem;">동행 완료</button>';
                 }
                 html2 += '<button type="button" class="thul2DivButton" onclick="partner_list(' + page + ',' + memberIdx + ',\'' + promiseStatus + '\')">목 록</button>';
                 html2 += '</div>';
@@ -188,6 +192,39 @@ function banishMember(memberIdx) {
 }
 function partner_list(page, memberIdx, promiseStatus) {
 	location.href = "together_partner.do?cPage=" + page + "&member_idx=" + memberIdx + "&promise_status='" + promiseStatus + "'";
+}
+function confirm_partner(tIdx, memberIdx, tEnddate, memberIdxArray) {
+	let currentDate = new Date();
+	let endDate = new Date(tEnddate);
+	
+	let message = '';
+	if (currentDate < endDate) {
+		message = '*주의* 동행 날짜가 맞지 않습니다. 동행 완료하시겠습니까?';
+	} else {
+		message = '동행 완료하시겠습니까?';
+	}
+	if(confirm(message)){
+		let parseMemberIdxArray = JSON.parse(memberIdxArray);
+		$.ajax({
+	        url: 'confirm_partner.do',
+	        type: 'post',
+	        data: {
+	            t_idx: tIdx,
+	            member_idx: parseMemberIdxArray,
+	            t_enddate: tEnddate
+	        },
+	        traditional: true, // 배열 데이터를 전송할 때 사용
+	        success: function(response) {
+// 	        	location.href="together_partner.do?member_idx=" + memberIdx + "&cPage=1&promise_status=" + 'end' + ""
+	        	partner_list(1, memberIdx, 'end');
+	        },
+	        error: function(xhr, status, error) {
+	            console.error(error);
+	        }
+	    });
+	}else{
+		return;
+	}
 }
 </script>
 <%@ include file="../hs/footer.jsp" %>

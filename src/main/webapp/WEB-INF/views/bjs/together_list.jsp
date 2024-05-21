@@ -7,7 +7,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>동행게시판</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -91,12 +91,13 @@
 						                    <div class="toContentOne1">
 						                    	<a href="report_write.do?member_idx=${k.member_idx}">
 						                        <div class="userImage">
-						                        	<img src="${path}/resources/images/${k.member_img }" class="userImage2">
+						                        	<img src="${path}/resources/images/${k.member_img }" class="userImage2 profile_show">
 						                        </div>
 						                     </a>
 						                        <div>
 							                        <div class="toContentOne1span1">
-														    <span class="to_member_nickname">${k.member_nickname}</span>
+													    <span class="to_member_nickname profile_show">${k.member_nickname}</span>
+													   	<img src="${path}/resources/images/${k.member_grade}" class="member_gradeImg">
 							                            <span class="to_member_age">(${k.member_dob })</span>
 							                        </div>
 							                        <div class="toContentOne1span toContentOne1span2">
@@ -128,10 +129,11 @@
 						            <div class="toContentOne">
 						                <div>
 						                    <div class="toContentOne1">
-						                        <div class="userImage"><img src="${path}/resources/images/${k.member_img }" class="userImage2"></div>
+						                        <div class="userImage"><img src="${path}/resources/images/${k.member_img }" class="userImage2 profile_show"></div>
 						                        <div>
 							                        <div class="toContentOne1span1">
-							                            <span class="to_member_nickname">${k.member_nickname }</span>
+							                            <span class="to_member_nickname profile_show">${k.member_nickname }</span>
+							                            <img src="${path}/resources/images/${k.member_grade}" class="member_gradeImg" >
 							                            <span class="to_member_age">(${k.member_dob })</span>
 							                        </div>
 							                        <div class="toContentOne1span toContentOne1span2">

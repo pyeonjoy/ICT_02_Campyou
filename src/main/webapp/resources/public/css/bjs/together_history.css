@@ -40,6 +40,15 @@
 .thwrapper1Button:first-child{
 	margin-right: 1rem;
 }
+.member_gradeLi{
+	display: flex;
+	align-items: center;
+	margin-left: 0.5rem;
+}
+.member_gradeImg{
+	width: 18px;
+	height: 18px;
+}
 .thul1{
 	width: 50%;
 	display: grid;

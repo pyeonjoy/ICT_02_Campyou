@@ -7,7 +7,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>동행글 작성</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <%@ include file="../hs/header.jsp" %>
