@@ -21,6 +21,7 @@
 		 <div class="inquiry">
  <h3 class="grid_title">내가 작성한 글</h3>
   <div class="grid_container">
+    <div class="grid_table">
     <div class="grid_col2 grid_header">
       <div class="grid_row grid_row1">번호</div>
       <div class="grid_row grid_row2">게시판</div>
@@ -36,34 +37,34 @@
     </c:when>
 			<c:otherwise>
 				<c:forEach var="list" items="${list }" varStatus="vs">
-     <!--  <div class="grid_row grid_row_content">${paging.totalRecord - ((paging.nowPage-1)* paging.numPerPage + vs.index)}</div> -->
-     <div class="grid_row grid_row_content">${vs.index+1}</div>
+       <div class="grid_row grid_row_content">${paging.totalRecord - ((paging.nowPage-1)* paging.numPerPage + vs.index)}</div> 
       <div class="grid_row grid_row_content">
        <c:choose>
        <c:when test="${list.board_type==1}"> 자유게시판</c:when>
        <c:otherwise> 캠핑제품추천 </c:otherwise>
        </c:choose>
       </div>
-      <div class="grid_row grid_row_content"><a href="my_inquiry.do?board_idx=${list.board_idx}">${list.b_subject }</a></div>
+      <div class="grid_row grid_row_content"><a href="boardDetail.do?board_idx=${list.board_idx}&board_type=${list.board_type}">${list.b_subject }</a></div>
       <div class="grid_row grid_row_content">${list.b_regdate }</div>
       <div class="grid_row grid_row_content">${list.hit }</div>
       				</c:forEach>
 			</c:otherwise>
 	</c:choose>
     </div>
+    </div>
     <div class="paging">
-    <c:choose>
+    	<c:choose>
 			<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
-			<li class ="disable"><</li>
+			<li class ="disable paging_list paging_prev">&#8249;</li>
 			</c:when>
 			<c:otherwise>
 			<li>
-			<a href="qna_list.do?cPage=${paging.beginBlock-paging.pagePerBlock}"><</a>
+			<a href="my_board.do?cPage=${paging.beginBlock-paging.pagePerBlock}" class="paging_list paging_prev">&#8249;</a>
 			</li>
 			</c:otherwise>
 		</c:choose>
       
-      <!-- 페이지번호들
+      <!-- 페이지번호들 -->
 		<c:forEach begin="${paging.beginBlock }"
 			end="${paging.endBlock }" step="1" var="k">
 			<c:choose>
@@ -71,23 +72,21 @@
 				<li class="paging_list paging_num">${k }</li> 
 				</c:when>
 			<c:otherwise>
-				<li class="paging_list paging_num"><a href="qna_list.do?cPage=${k}">${k}</a></li>
+				<li class="paging_list paging_num"><a href="my_board.do?cPage=${k}">${k}</a></li>
 			</c:otherwise>
 			</c:choose>
 		</c:forEach>
- 
     
 		<c:choose>
 			<c:when test="${paging.endBlock >= paging.totalPage }">
-			<li class = "disable">next</li>
+			<li class = "disable paging_list paging_next">&#8250;</li>
 			</c:when>
 			<c:otherwise>
 			<li>
-			<a href="qna_list.do?cPage=${paging.beginBlock+paging.pagePerBlock}">next</a>
+			<a href="my_board.do?cPage=${paging.beginBlock+paging.pagePerBlock}" class="paging_list paging_next">&#8250;</a>
 			</li>
 			</c:otherwise>
 		</c:choose>
- -->
     </div>
   </div>
   </div>

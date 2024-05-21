@@ -21,6 +21,7 @@
 <div class="inquiry">
 <h3 class="grid_title">1:1문의 내역</h3>
   <div class="grid_container">
+  <div class="grid_table">
     <div class="grid_col grid_header">
       <div class="grid_row grid_row1">번호</div>
       <div class="grid_row grid_row2">제목</div>
@@ -50,6 +51,7 @@
 			</c:forEach>
 	</c:otherwise>
 	</c:choose>
+    </div>
     </div>
     <div class="grid_last_row">
       <div class="paging">
