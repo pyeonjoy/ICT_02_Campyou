@@ -75,4 +75,10 @@
         </if>
     </where>
 </select>
+<select id="countReview" parameterType="String" resultType="int">
+	select count(*) from camp_review where contentid = #{contentid}
+</select>
+<select id="addRating" parameterType="String" resultType="int">
+	select sum(rating) from camp_review where contentid = #{contentid}
+</select>
 </mapper>

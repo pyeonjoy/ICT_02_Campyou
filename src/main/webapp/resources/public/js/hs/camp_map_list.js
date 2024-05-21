@@ -10,7 +10,7 @@ $(document).ready(function() {
     let markers = new Array();
     let infoWindows = new Array();
     
-    // 지도 
+    //  -------------- 지도 -------------- 
     let mapDiv = document.getElementById('map');
 
 	let map = new naver.maps.Map(mapDiv,{
@@ -47,7 +47,7 @@ $(document).ready(function() {
         infoWindows.length = 0;
 	}
 	
-	// 캠프 항목 생성
+	//  -------------- 캠프 항목 생성 -------------- 
 	function createCampItem(item){
         let firstImageUrl = $(item).find("firstImageUrl").text();
         let doNm = $(item).find("doNm").text();
@@ -82,7 +82,7 @@ $(document).ready(function() {
         return campItem;
 	}
 	
-	// 마커 생성
+	//  -------------- 마커 생성 -------------- 
 	function marker_show() {
 		for (let i = 0; i < markerArr.length; i++) {
         	let LatLng = new naver.maps.LatLng(markerArr[i].lat, markerArr[i].lng);
@@ -135,12 +135,12 @@ $(document).ready(function() {
 	    }
 	}
 
-	// 캠핑 리스트
+	//  -------------- 캠핑 리스트 -------------- 
     function camp_all_list() {
     	camp_list_option = "camp_all_list";
     	marker_empty();
         $.ajax({
-            url: "camp_list5000.do",
+            url: "camp_list_in_ms.do",
             method: "post",
             data: { pageNo: pageNo, numOfRows: numOfRows  },
             dataType: "xml",
@@ -165,22 +165,107 @@ $(document).ready(function() {
     }
    	camp_all_list();
 
-   	// 캠핑 검색
+   	
+
+	//  -------------- 하트 -------------- 
+	function loadHeart(contentid, $container) {
+	    $.ajax({
+	        url: "checkHeart.do",
+	        type: "get",
+	        data: { contentid: contentid },
+	        dataType: "json",
+	        success: function(data) {
+	        	let detailButton = "";
+	            if (data === true) {
+	                detailButton += "<input type='button'  class='heart-button' value='🤍' data-contentid='"+ contentid + "'>";
+	            } else if (data === false) {
+	            	detailButton += "<input type='button' class='heart-button' value='❤️' data-contentid='"+ contentid + "'>";
+	            } else {
+	                alert("찜 여부를 확인하는 중 오류가 발생했습니다.");
+	            }
+                $container.html(detailButton);
+                
+	        },
+	        error: function() {
+	        	let detailButton = "<input type='button' class='heart-button' value='🤍' data-contentid='"+ contentid + "'>";
+	            $container.html(detailButton);
+	        }
+	    });
+	}
+	
+	function delHeart(contentid) {
+		 let $container = $(".camp_item").find(".Heart_button").filter("[data-contentid='" + contentid + "']");
+		$.ajax({
+			url:"delHeart.do",
+			method: "post",
+			data: {contentid: contentid},
+			success: function(data){
+				if (data != "error") {
+					alert("관심캠핑장에서 제거하였습니다.");
+					$(".camp_item").find(".Heart_button[data-contentid='" + contentid + "']").html("<input type='button' class='heart-button' value='🤍' data-contentid='"+ contentid + "' onclick='delHeart(" + contentid + ")'>");
+				}
+			}
+		});
+	}
+	
+	function Heart(contentid) {
+		let $container = $(".camp_item").find(".Heart_button").filter("[data-contentid='" + contentid + "']");
+	    $.ajax({
+	        url: "addHeart.do",
+	        method: "post",
+	        data: { contentid: contentid },
+	        success: function(data) {
+	            if(data != "error") {
+	                alert("관심 캠핑장에 등록이 되었습니다.");
+	                $(".camp_item").find(".Heart_button[data-contentid='" + contentid + "']").html("<input type='button' class='heart-button' value='❤️' data-contentid='"+ contentid + "' onclick='Heart(" + contentid + ")'>");
+	            } else {
+		            delHeart(contentid);
+	            }
+	        },
+	        error: function() {
+	            alert("로그인 후 이용 부탁드립니다.");
+	            location.href='login_form.do';
+	        }
+	    });
+	}
+   	
+    $(document).on("click", ".heart-button", function() {
+        let contentid = $(this).data("contentid");
+        if ($(this).hasClass("filled")) {
+            delHeart(contentid);
+            $(this).removeClass("filled").addClass("empty").val("🤍");
+        } else {
+            Heart(contentid);
+            $(this).removeClass("empty").addClass("filled").val("❤️");
+        }
+    });
+	
+   	
+   	// -------------- 캠핑 검색 -------------- 
+    // API
    	function ajaxData(url, dataObj, successCallback) {
    		$("#camp_list_show").empty();
+   		$(".totalCount").empty();
    	    $.ajax({
    	        url: url,
    	        method: "post",
    	        dataType: "xml",
    	        traditional: true,
    	        data: dataObj,
-   	        success: successCallback,
+   	        success: function(data) {
+   	            successCallback(data);
+   	            $(".totalCount").text(totalCount);
+   	            pageNumbers();
+   	            marker_show();
+   	        },
    	        error: function () {
    	            alert("검색 실패");
    	        },
    	    });
    	}
    	
+   	
+   	// 검색 함수
     function search_camp() {
     	totalCount = 0;
     	marker_empty();
@@ -205,7 +290,7 @@ $(document).ready(function() {
         });
 
         $("input[name='sbrscl']:checked").each(function() {
-            selectedSbrscl.push($(this).val());
+        	selectedSbrscl.push($(this).val());
         });
         
        	function datailFilter(item) {
@@ -219,17 +304,17 @@ $(document).ready(function() {
     		const indutyArr = s_induty.split(",");
     		const sbrsclArr = s_sbrscl.split(",");
     		 
+    		
     		if ((sido_search == "" || sido_search == s_doNm ) && 
     			(sigungu_search == "" || sigungu_search == s_sigunguNm) &&
     			(selectedLctCl.length === 0 || selectedLctCl.some(k => lctClArr.includes(k))) &&
     			(selectedInduty.length === 0 || selectedInduty.some(k => indutyArr.includes(k))) &&
-    			(selectedSbrscl.length === 0 || selectedSbrscl.some(k => sbrsclArr.includes(k))))
+    			(selectedSbrscl.length === 0 || selectedSbrscl.every(k => sbrsclArr.includes(k))))
     		{
     			searchDataItems.push(createCampItem(item)); 
     		    totalCount += 1;
     		}
        	}
-        
         // 키워드 검색
         if (keywordInput != "") {
         	$(".keyword").text("\"" + keywordInput + "\"");
@@ -241,9 +326,6 @@ $(document).ready(function() {
 		            		$(data).find("item").each(function () {
 		                    	$("#camp_list_show").append(createCampItem(this));
 		                    });
-		            		$(".totalCount").text(totalCount);
-		               		pageNumbers();
-		                	marker_show();
 			            });
 	        } else if((selectedLctCl.length + selectedInduty.length + selectedSbrscl.length) > 0 || sido_search != ""){
 	        	ajaxData("camp_list_keyword_detail.do",
@@ -252,25 +334,19 @@ $(document).ready(function() {
 	        				$(data).find("item").each(function (i, k) {
 	        					datailFilter(this);
 	        				});
-	        				pageNumbers();
 	        				$("#camp_list_show").append(searchResultSlice(searchDataItems));
-	        				$(".totalCount").text(totalCount);
-		                	marker_show();
 			            });
 	        }
-	        // 옵션으로만 검색
+	    // 옵션으로만 검색
         } else if (keywordInput == "" && ((selectedLctCl.length + selectedInduty.length + selectedSbrscl.length) > 0 || sido_search != "")) {
-        	ajaxData("camp_list5000.do",
+        	ajaxData("camp_list_in_ms.do",
         			{ numOfRows: 5000 },
         			function(data) {
         				$(".totalCount").text(totalCount);
         				$(data).find("item").each(function (i, k) {
         					datailFilter(this);
         				});
-        				pageNumbers();
         				$("#camp_list_show").append(searchResultSlice(searchDataItems));
-        				$(".totalCount").text(totalCount);
-	                	marker_show();
 		            });
         } else {
         	camp_all_list();
@@ -285,35 +361,46 @@ $(document).ready(function() {
  		return showSearchResult;
  	}
     
-	// 페이지 번호
-	function pageNumbers(){
-		$(".camp_list_page").empty();
-		last_page = Math.ceil(totalCount / numOfRows);
-	    c_page_index = Math.floor((pageNo - 1) / page_num_count) * page_num_count; 
-	    
-	    let pageShow = (pageNo <= page_num_count) ? '<li class="to_disable camp_list_first">' : '<li class="to_able camp_list_first">';
-	    pageShow += '<i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
-		pageShow += (pageNo <= page_num_count) ? '<li class="to_disable' : '<li class="to_able';
-		pageShow +=	' camp_list_before"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
-	    
-	    for (i = c_page_index; i < c_page_index + page_num_count ; i++){
-	    	if (i >= last_page) { break; }
-	    	pageNums = i + 1;
-        	pageShow += (pageNums == pageNo) ? '<li class="nowpagecolor">' + pageNums : '<li class="nowpage">' + pageNums;
-        	pageShow += '</li>';
-	    }
-	    
-	    pageShow += (pageNo > last_page - (last_page % page_num_count) ) ? '<li class="to_disable' : '<li class="to_able';
-	    pageShow += ' camp_list_next"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
-	    pageShow += (pageNo > last_page - (last_page % page_num_count) ) ? '<li class="to_disable' : '<li class="to_able';
-		pageShow +=	' camp_list_last"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
-	    
-        $(".camp_list_page").append(pageShow);
+	//  -------------- 페이징-------------- 
+ 	// 페이지 html 생성
+ 	let isLoading = false; 
+ 	
+ 	function pageNumbers(){
+ 		if (!isLoading) {
+ 		$(".camp_list_page").empty(); 		
+        if(totalCount > 0) {
+			last_page = Math.ceil(totalCount / numOfRows);
+		    c_page_index = Math.floor((pageNo - 1) / page_num_count) * page_num_count; 
+		    l_page_index = Math.floor((last_page - 1) / page_num_count) * page_num_count; 
+		    
+		    let pageShow = (pageNo <= page_num_count) ? '<li class="to_disable camp_list_first">' : '<li class="to_able camp_list_first">';
+		    pageShow += '<i class="fa-solid fa-angles-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+			pageShow += (pageNo <= page_num_count) ? '<li class="to_disable' : '<li class="to_able';
+			pageShow +=	' camp_list_before"><i class="fa-solid fa-chevron-right fa-rotate-180" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+		    
+		    for (i = c_page_index; i < c_page_index + page_num_count ; i++){
+		    	if (i >= last_page) { break; }
+		    	pageNums = i + 1;
+	        	pageShow += (pageNums == pageNo) ? '<li class="nowpagecolor">' + pageNums : '<li class="nowpage">' + pageNums;
+	        	pageShow += '</li>';
+		    }
+		    
+		    pageShow += (c_page_index == l_page_index) ? '<li class="to_disable' : '<li class="to_able';
+		    pageShow += ' camp_list_next"><i class="fa-solid fa-chevron-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+		    pageShow += (c_page_index == l_page_index) ? '<li class="to_disable' : '<li class="to_able';
+			pageShow +=	' camp_list_last"><i class="fa-solid fa-angles-right" style="border-radius: 50%; font-size: 1.2rem;"></i></li>';
+		    
+	        $(".camp_list_page").append(pageShow);
+        } else {
+        	$(".camp_list_page").append("검색 결과가 없습니다.");
+        }
+ 		}
     }
  	
 	
-	// 페이지 이동
+	// 페이지 이동 계산
 	$(document).on("click", ".camp_list_next, .camp_list_before, .nowpage, .camp_list_last, .camp_list_first", function() {
+		isLoading = true;
 		if ($(this).hasClass("camp_list_next")) {
         	pageNo = Math.ceil(pageNo / page_num_count) * page_num_count + 1;
         	
@@ -341,9 +428,10 @@ $(document).ready(function() {
 	    	search_camp();
 	    }
 	    pageNumbers();
+	    isLoading = false;
 	});
     
-    // 캠프 div 클릭시 해당 캠핑장 마커로 이동
+    //  -------------- 캠프 div 클릭시 해당 캠핑장 마커로 이동 -------------- 
 	$(document).on("click", ".camp_item",  function() {
 		let facltNm = $(this).find(".camp_info h4").text();
 		function getClickHandler(seq) {
@@ -368,79 +456,16 @@ $(document).ready(function() {
 	// 엔터키 입력시
     $("#keyword_input").keypress(function(event) {
         if (event.which === 13) {
-            search_camp();
-            pageNo = 1;
+        	list_search();
         }
     });
     
-	 // 검색 버튼
-	window.list_search = function()  {
+	// 검색 onclick 함수
+    window.list_search = function() {
 		$(".keyword").empty();
 		search_camp();
 		pageNo = 1;
 	}
-	
-	// 하트
-	function loadHeart(contentid, $container) {
-	    $.ajax({
-	        url: "checkHeart.do",
-	        type: "get",
-	        data: { contentid: contentid },
-	        dataType: "json",
-	        success: function(data) {
-	            $("#detail_button").empty();
-	            if (data === true) {
-	                let detailButton = "<input type='button' name='page' value='🤍' data-contentid='"+ contentid + "'>";
-	                $("#detail_button").append(detailButton);
-	            } else if (data === false) {
-	            	let detailButton = "<input type='button' id='Heart' name='page' value='❤️' data-contentid='"+ contentid + "'>";
-	            } else {
-	                alert("찜 여부를 확인하는 중 오류가 발생했습니다.");
-	            }
-                $container.html(detailButton);
-	        },
-	        error: function() {
-	        	let detailButton = "<input type='button' id='Heart' name='page' value='🤍' data-contentid='"+ contentid + "'>";
-	            $container.html(detailButton);
-	        }
-	    });
-	}
-	
-	function delHeart() {
-		$.ajax({
-			url:"delHeart.do",
-			method: "post",
-			data: {contentid: contentid},
-			success: function(data){
-				if (data != "error") {
-					alert("관심캠핑장에서 제거하였습니다.");
-					loadHeart();
-				}
-			}
-		});
-	}
-	
-	function Heart() {
-	    $.ajax({
-	        url: "addHeart.do",
-	        method: "post",
-	        data: { contentid: contentid },
-	        success: function(data) {
-	            if(data != "error") {
-	                alert("관심 캠핑장에 등록이 되었습니다.");
-	                loadHeart();
-	            } else {
-		            delHeart();
-		            loadHeart();
-	            }
-	        },
-	        error: function() {
-	            alert("로그인 후 이용 부탁드립니다.");
-	            location.href='login_form.do';
-	        }
-	    });
-	}
-	
 });
 
 // 리스트로 검색 

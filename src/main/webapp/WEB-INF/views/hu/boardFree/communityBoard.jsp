@@ -107,18 +107,20 @@
 							            <td>
 							                <c:choose>
 							                    <c:when test="${not empty adminInfo}">
-							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>
-							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a> 
+							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>${k.member_grade}	
+							                       ${k.member_grade}
 							                    </c:when>
 							                    <c:otherwise>
 							                        <c:choose>
 							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}">
-							                              <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>
-							                         	  <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                              <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a> 
+							                         	  <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>${k.member_grade}	
 							                            </c:when>
 							                            <c:otherwise>
 							                            	${k.admin_nickname}
 							                            	${k.member_nickname}
+							                            	${k.member_grade}						                    
 							                            </c:otherwise>
 							                        </c:choose>
 							                    </c:otherwise>

@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -200,13 +199,17 @@ public class CampAjaxController {
 
 	@RequestMapping(value = "loadReview.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public List<ReviewVO> loadReview(@RequestParam() String contentid) {
+	public Map<String, Object> loadReview(@RequestParam() String contentid) {
 		List<ReviewVO> res = campService.loadReview(contentid);
-		if (res == null) {
-			return Collections.emptyList();
-		} else {
-			return res;
-		}
+		int count = campService.countReview(contentid);
+		
+        double avgRating = campService.addRating(contentid);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("reviews", res);
+        response.put("avgRating", avgRating);
+        response.put("count",count);
+        return response;
 	}
 
 	@RequestMapping(value = "checkHeart.do", produces = "application/json; charset=utf-8")

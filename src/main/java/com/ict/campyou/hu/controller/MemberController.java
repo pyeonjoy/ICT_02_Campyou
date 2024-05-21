@@ -78,6 +78,7 @@ public class MemberController {
 			  String member_nickname = request.getParameter("member_nickname");
 			  String member_dob = request.getParameter("member_dob");
 			  String member_email = request.getParameter("member_email");
+			  String member_gender = request.getParameter("member_gender");
 			  String member_pwd = request.getParameter("member_pwd");
 			  String member_phone = request.getParameter("member_phone");
 			  
@@ -89,6 +90,7 @@ public class MemberController {
 			  vo.setMember_nickname(member_nickname);
 			  vo.setMember_dob(member_dob);
 			  vo.setMember_email(member_email);
+			  vo.setMember_gender(member_gender);
 			  vo.setMember_pwd(member_encrypt_pwd);
 			  vo.setMember_phone(member_phone);
 			  
@@ -244,44 +246,52 @@ public class MemberController {
 	  }
 	  
 	  //카카오 로그인
-	  @RequestMapping("kakaologin.do")
-	  public ModelAndView getKakaoLogin(String code, MemberVO vo, HttpSession session) {
+	  @RequestMapping("kakaologinok.do")
+	  public ModelAndView getKakaoLogin(HttpSession session) {
 		  try {
-			//카카오 로그인 access token 받아오기
-			String access_token = memberService.getKakaoAccessToken(code);
+			 //카카오 로그인 access token 받아오기
+			 String access_token = (String) session.getAttribute("access_token");
 			
-			int result = memberService.getInsertKakaoId(access_token);
+			//access_token 세션
+			if(access_token != null) {
+				 session.setAttribute("access_token", access_token);
+			}
+			
+			//카카오 회원 insert 하기
+			int result = memberService.getInsertKakaoId(session);
 			
 			//카카오 로그인 회원정보 받아오기
-			MemberVO kakao_mvo = memberService.getKakaoLogInOk(access_token);
+			MemberVO kakao_mvo = memberService.getKakaoLogInOk(session);
 			
-		   //카카오 회원 세션
-		  if(kakao_mvo != null) { session.setAttribute("access_token", access_token);
-		  session.setAttribute("kakaoMemberInfo", kakao_mvo); return new
-		  ModelAndView("redirect:/"); }
-			
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
+			//카카오 회원 세션
+			if(kakao_mvo != null) { 
+				session.setAttribute("kakaoMemberInfo", kakao_mvo); 
+				return new ModelAndView("redirect:/"); }
+		  } catch (Exception e) {
+			  System.out.println(e);
+		  }
+		  return null;
 	  }
 	  
 	  //네이버 로그인
-	  @RequestMapping("naverlogin.do")
-	  public ModelAndView getNaverLogin(String code, MemberVO vo, HttpSession session) {
+	  @RequestMapping("naverloginok.do")
+	  public ModelAndView getNaverLogin(HttpSession session) {
 		  try {
 			//네이버 로그인 access token 받아오기
-			String access_token = memberService.getNaverAccessToken(code);
+			String access_token = (String) session.getAttribute("access_token");
 			
-			int result = memberService.getInsertNaverId(access_token);
+			if(access_token != null) {
+				 session.setAttribute("access_token", access_token);
+			}
+			//네이버 회원 insert 하기
+			int result = memberService.getInsertNaverId(session);
 			
 			//네이버 로그인 회원정보 받아오기
-			MemberVO naver_mvo = memberService.getNaverLogInOk(access_token);
+			MemberVO naver_mvo = memberService.getNaverLogInOk(session);
 			
 			//네이버 회원 세션
 			if(naver_mvo != null) {
 				session.setAttribute("naverMemberInfo", naver_mvo);
-				session.setAttribute("access_token", access_token);
 				return new ModelAndView("redirect:/");
 			}
 		} catch (Exception e) {
@@ -294,11 +304,11 @@ public class MemberController {
 	   public ModelAndView getLogOut(HttpSession session) {
 		   try {
 			   ModelAndView mv = new ModelAndView("home");
-			   
+			   //session.invalidate();
 			   session.removeAttribute("memberInfo");
 			   session.removeAttribute("admin");
 			   session.removeAttribute("kakaoMemberInfo");
-			   session.removeAttribute("naverMemberInfo");
+			   //session.removeAttribute("naverMemberInfo");
 			   return mv;
 		    } catch (Exception e) {
 		  	   System.out.println(e);
@@ -447,8 +457,12 @@ public class MemberController {
 					  FileCopyUtils.copy(in, out);
 				  }	
 				  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));
+				  
 				  int result = commBoardService.getCommBoardInsert(cbvo);
 				  if(result > 0) {
+					  //자유 게시판에 글쓸때 마다 member_free 등급 올리기
+					  String member_idx = cbvo.getMember_idx();
+					  int result2 = memberService.getMemberFreeUpdate(member_idx);
 					  return mv;
 				  } 
 			  }

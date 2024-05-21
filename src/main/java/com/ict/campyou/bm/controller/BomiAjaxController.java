@@ -35,22 +35,20 @@ public class BomiAjaxController {
 	private MyService myService;
 	
 
-//	@RequestMapping(value = "pwdCheck.do", produces = "application/json; charset=utf-8")
-//	public ResponseEntity<String> checkPassword(@RequestBody PasswordCheckRequest request, HttpSession session) {
-//
-//	    String inputPassword = request.getPassword();
-//	    String memberId = request.getMemberId();
-//	    MemberVO member = myService.getMemberPwd(memberId);
-//
-//	    boolean isPasswordMatch = passwordEncoder.matches(inputPassword, member.getMember_pwd());
-//	   System.out.println(isPasswordMatch);
-//	    if (isPasswordMatch) {
-//	    	session.setAttribute("authenticatedMember", member);
-//	    	  return ResponseEntity.ok("success");
-//	    }
-//
-//	    return ResponseEntity.ok("fail");
-//	}
+	@RequestMapping(value = "pwdCheck.do", produces = "application/json; charset=utf-8")
+	public ResponseEntity<String> checkPassword(@RequestBody PasswordCheckRequest request, HttpSession session) {
+
+	    String inputPassword = request.getPassword();
+	    String memberId = request.getMemberId();
+	    MemberVO member = myService.getMemberPwd(memberId);
+	    boolean isPasswordMatch = passwordEncoder.matches(inputPassword, member.getMember_pwd());
+	    if (isPasswordMatch) {
+	    	session.setAttribute("authenticatedMember", member);
+	    	  return ResponseEntity.ok("success");
+	    }
+
+	    return ResponseEntity.ok("fail");
+	}
 
 	@GetMapping(value="my_fav_list.do", produces="application/json; charset=utf-8")
 	@ResponseBody

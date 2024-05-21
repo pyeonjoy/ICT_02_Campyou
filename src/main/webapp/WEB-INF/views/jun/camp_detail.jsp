@@ -249,16 +249,21 @@ function loadReview(){
         data: {contentid : contentId},
         dataType: "json",
         success: function(data) {
-        	console.log(data.length);
+            let avgRating = data.avgRating; // 합계
+            let count = data.count; // 갯수
+            console.log(count);
+            let resAvg = Math.round((avgRating / count) * 10) / 10;
+            
+            $("#avg_rating").text(resAvg);
         	if (Array.isArray(data) && data.length === 0) {
         		$("#comment_list").empty();
 				let commentItem = "<div>"
-				commentItem += "<p style='text-ali gn:center; font-size:25px;'>작성된 리뷰가 없습니다. 리뷰를 작성해주세요 !</p>"
+				commentItem += "<p style='text-align:center; font-size:25px;'>작성된 리뷰가 없습니다. 리뷰를 작성해주세요 !</p>"
 				commentItem += "</div>"
 				$("#comment_list").append(commentItem);
 			}else{
             $("#comment_list").empty();
-            $.each(data, function(index, review) {
+            $.each(data.reviews, function(index, review) {
                 let commentItem = "<div>";
                 let stars = "";
                 let member_profile_img = "/resources/images/"
@@ -404,14 +409,12 @@ function loadHeart() {
 		<div id="review_section">
 			<form id="review_form" class="mb-3">
 				<fieldset>
-					<span class="text-bold">별점을 선택해주세요</span> <input type="radio"
-						value="5" name="rating" id="rate1"><label for="rate1">★</label>
-					<input type="radio" value="4" name="rating" id="rate2"><label
-						for="rate2">★</label> <input type="radio" value="3" name="rating"
-						id="rate3"><label for="rate3">★</label> <input
-						type="radio" value="2" name="rating" id="rate4"><label
-						for="rate4">★</label> <input type="radio" value="1" name="rating"
-						id="rate5"><label for="rate5">★</label>
+					<span class="text-bold">평균 별점 : <span id ="avg_rating"> </span></span>
+					<input type="radio" value="5" name="rating" id="rate1"><label for="rate1">★</label>
+					<input type="radio" value="4" name="rating" id="rate2"><label for="rate2">★</label>
+					<input type="radio" value="3" name="rating" id="rate3"><label for="rate3">★</label>
+					<input type="radio" value="2" name="rating" id="rate4"><label for="rate4">★</label>
+					<input type="radio" value="1" name="rating" id="rate5"><label for="rate5">★</label>
 				</fieldset>
 				<div>
 					<textarea class="col-auto form-control" id="r_comment"

@@ -168,7 +168,9 @@ function delHeart(contentid) {
         }
     });
 }
-
+function go_map(){
+	window.location = 'camp_map_list.do';
+}
 $(document).ready(function() {
     const page_num_count = 4;
     const numOfRows = 10;
