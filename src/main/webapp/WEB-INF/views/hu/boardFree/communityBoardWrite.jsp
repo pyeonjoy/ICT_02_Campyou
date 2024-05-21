@@ -19,8 +19,8 @@
 	function board_write_ok(f) {
 		for (var i = 0; i < f.elements.length; i++) {
 			if (f.elements[i].value == "") {
-				if (i == 3 || i == 4) continue;
-				if(i == 6  || i == 7 ||i == 9) break;
+				if (i == 2 || i == 3 || i == 4 || i == 5 || i == 6)  continue;
+				if(i == 7  || i == 8 ||i == 9) break;
 				alert(f.elements[i].name + "를 입력하세요");
 				f.elements[i].focus();
 				return; //수행 중단
@@ -76,7 +76,6 @@
 				</tr>
 				<tr align="center">
 					<td bgcolor="#003300" style="color: white;">별명</td>
-					
 					<c:choose>
 						<c:when test="${adminInfo != null}">
 							<td align="left">
@@ -85,12 +84,27 @@
 									<option value="관리자">관리자</option>
 							</select>
 							<%-- <input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}"> --%>
-							<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}"></td>
+							<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
+							<%-- <input type="hidden" name="member_nickname" value="${kakaoMemberInfo.member_nickname}"> --%>
 						</c:when>
 						<c:otherwise>
-							<td align="left">${memberInfo.member_nickname}
-							<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
-							<input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}"></td>
+							<td align="left">${memberInfo.member_nickname} ${kakaoMemberInfo.member_nickname}
+							<c:choose>
+								<c:when test="${memberInfo != null}">
+									<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+							<input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}">
+							<input type="hidden" name="member_grade" value="${memberInfo.member_grade}"></td>
+							<c:choose>
+								<c:when test="${kakaoMemberInfo != null}">
+									<input type="hidden" name="member_nickname" value="${kakaoMemberInfo.member_nickname}">
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</tr>

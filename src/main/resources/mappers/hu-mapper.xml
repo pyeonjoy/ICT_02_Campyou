@@ -130,22 +130,6 @@
  		select count(*) from board_free
  	</select>
  	
- 	<!-- commBoard  -->
- 	<!-- <select id="comm_board_list" parameterType="Map" resultType="cbvo">
- 		select * from board_free order by groups member_grade  limit #{limit} offset #{offset}
-		select * from board_free order by groups desc, lev asc  limit #{limit} offset #{offset} 
- 	</select> -->
- 	
- 	<!-- <select id="comm_board_list" parameterType="Map" resultType="cbvo">
-	    select * from board_free 
-	    where b_type = '공지사항'
-	    union 
-	    select * from board_free 
-	    where b_type != '공지사항' 
-	    order by b_type = '공지사항' desc, groups desc, lev asc 
-	    limit #{limit} offset #{offset}
-	</select> -->
-	
 	<select id="comm_board_list" parameterType="Map" resultType="cbvo">
 		    select * from board_free 
 		    where admin_nickname = '관리자'
@@ -179,8 +163,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM board_free
  		</selectKey>
- 		insert into board_free(member_idx, admin_idx, b_type, b_subject, member_nickname, admin_nickname, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name)
- 			values(#{member_idx}, #{admin_idx}, #{b_type}, #{b_subject}, #{member_nickname}, #{admin_nickname}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{bf_name})
+ 		insert into board_free(member_idx, admin_idx, b_type, b_subject, member_nickname, admin_nickname, member_grade, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name)
+ 			values(#{member_idx}, #{admin_idx}, #{b_type}, #{b_subject}, #{member_nickname}, #{admin_nickname}, #{member_grade}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{bf_name})
  	</insert>
  	
  	<select id="comm_board_detail" parameterType="String" resultType="cbvo">
@@ -328,8 +312,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(cp_idx),0)+1) as groups FROM board_camp
  		</selectKey>
- 		insert into board_camp(member_idx, admin_idx, cp_subject, member_nickname, admin_nickname, cp_content, cp_pwd, cpf_name, cp_regdate, cp_hit, cp_active, cp_notice, groups, step, lev)
- 			values(#{member_idx}, #{admin_idx}, #{cp_subject}, #{member_nickname}, #{admin_nickname}, #{cp_content},#{cp_pwd},#{cpf_name}, sysdate(), 0, 0, 0, #{groups}, 0, 0)
+ 		insert into board_camp(member_idx, admin_idx, cp_subject, member_nickname, admin_nickname, member_grade, cp_content, cp_pwd, cpf_name, cp_regdate, cp_hit, cp_active, cp_notice, groups, step, lev)
+ 			values(#{member_idx}, #{admin_idx}, #{cp_subject}, #{member_nickname}, #{admin_nickname}, #{member_grade}, #{cp_content},#{cp_pwd},#{cpf_name}, sysdate(), 0, 0, 0, #{groups}, 0, 0)
  	</insert>
  	
  	

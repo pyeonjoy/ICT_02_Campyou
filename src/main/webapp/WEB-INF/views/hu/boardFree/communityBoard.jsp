@@ -25,6 +25,11 @@
 		f.submit();
 	}
 </script>
+<style type="text/css">
+.member-grade {
+	vertical-align: middle; 
+}
+</style>
 </head>
 <body>
 	<div id="board-free" align="center">
@@ -69,17 +74,17 @@
 							            <td class="admin-write-color" style="background-color: lightyellow;">
 							                <c:choose>
 							                    <c:when test="${not empty adminInfo}">
-							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.admin_nickname}</a>
+							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.admin_nickname}</a> 
 							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname}</a>
 							                    </c:when>
 							                    <c:otherwise>
 							                        <c:choose>
 							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}">
-							                            	<a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${adminInfo.admin_nickname}</a>
-							                                <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname}</a>
+							                            	<a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${adminInfo.admin_nickname}11</a>
+							                                <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname}11</a>             
 							                            </c:when>
 							                            <c:otherwise>
-							                            	<span style="color: black;">${k.admin_nickname}</span>
+							                            	<span style="color: black;">${k.admin_nickname}</span> 
 							                                <span style="color: black;">${k.member_nickname}</span>
 							                            </c:otherwise>
 							                        </c:choose>
@@ -107,20 +112,65 @@
 							            <td>
 							                <c:choose>
 							                    <c:when test="${not empty adminInfo}">
-							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a> 
-							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>${k.member_grade}	
-							                       ${k.member_grade}
+							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>
+							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                       <c:if test="${k.member_grade == 1}">
+													    <img class="member-grade" alt="a" src="resources/images/grade1.png" style="width: 17px; height: 17px;">
+												   </c:if>
+												   <c:if test="${k.member_grade == 2}">
+													    <img class="member-grade" alt="a" src="resources/images/grade2.png" style="width: 17px; height: 17px;">
+												   </c:if>
+												   <c:if test="${k.member_grade == 3}">
+													    <img class="member-grade" alt="a" src="resources/images/grade3.png" style="width: 17px; height: 17px;">
+												   </c:if>
+												   <c:if test="${k.member_grade == 4}">
+													    <img class="member-grade" alt="a" src="resources/images/grade4.png" style="width: 17px; height: 17px;">
+												   </c:if>
+												    <c:if test="${k.member_grade == 5}">
+													    <img class="member-grade" alt="a" src="resources/images/grade5.png" style="width: 17px; height: 17px;">
+												   </c:if>
 							                    </c:when>
 							                    <c:otherwise>
 							                        <c:choose>
-							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}">
-							                              <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a> 
-							                         	  <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>${k.member_grade}	
+							                            <c:when test="${memberInfo.member_nickname == k.member_nickname || kakaoMemberInfo.member_nickname == k.member_nickname}">
+							                              <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>
+							                         	  <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                         	  
+							                         	  
+							                         	  <c:if test="${k.member_grade == 1}">
+															    <img class="member-grade" alt="a" src="resources/images/grade1.png" style="width: 17px; height: 17px;">
+														  </c:if>
+														  <c:if test="${k.member_grade == 2}">
+															    <img class="member-grade" alt="a" src="resources/images/grade2.png" style="width: 17px; height: 17px;">
+														  </c:if>
+														  <c:if test="${k.member_grade == 3}">
+															    <img class="member-grade" alt="a" src="resources/images/grade3.png" style="width: 17px; height: 17px;">
+														  </c:if>
+														  <c:if test="${k.member_grade == 4}">
+															    <img class="member-grade" alt="a" src="resources/images/grade4.png" style="width: 17px; height: 17px;">
+														  </c:if>
+														   <c:if test="${k.member_grade == 5}">
+															    <img class="member-grade" alt="a" src="resources/images/grade5.png" style="width: 17px; height: 17px;">
+														  </c:if>
 							                            </c:when>
 							                            <c:otherwise>
 							                            	${k.admin_nickname}
 							                            	${k.member_nickname}
-							                            	${k.member_grade}						                    
+							                            	<c:if test="${k.member_grade == 1}">
+															    <img class="member-grade" alt="a" src="resources/images/grade1.png" style="width: 17px; height: 17px;">
+														  	</c:if>
+														 	<c:if test="${k.member_grade == 2}">
+															    <img class="member-grade" alt="a" src="resources/images/grade2.png" style="width: 17px; height: 17px;">
+														  	</c:if>
+														  	<c:if test="${k.member_grade == 3}">
+															    <img class="member-grade" alt="a" src="resources/images/grade3.png" style="width: 17px; height: 17px;">
+														  	</c:if>
+														  	<c:if test="${k.member_grade == 4}">
+															    <img class="member-grade" alt="a" src="resources/images/grade4.png" style="width: 17px; height: 17px;">
+														  	</c:if>
+														    <c:if test="${k.member_grade == 5}">
+															    <img class="member-grade" alt="a" src="resources/images/grade5.png" style="width: 17px; height: 17px;">
+														  	</c:if>						                    
 							                            </c:otherwise>
 							                        </c:choose>
 							                    </c:otherwise>

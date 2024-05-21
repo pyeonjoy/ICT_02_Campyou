@@ -183,7 +183,7 @@ textarea {
      		</c:when>
      		<c:otherwise>
      			<c:choose>			
-     				<c:when test="${memberInfo.member_nickname eq cbvo.member_nickname}">
+     				<c:when test="${memberInfo.member_nickname eq cbvo.member_nickname || kakaoMemberInfo.member_nickname eq cbvo.member_nickname}">
      					<input type="hidden" value="${cbvo.b_idx}" name="b_idx">
      					<input type="hidden" value="${cPage}" name="cPage">
         				<input class="contentBtn" type="button" value="목록" onclick="comm_board_list(this.form)" />
