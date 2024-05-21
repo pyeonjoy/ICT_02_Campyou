@@ -117,9 +117,8 @@ function promiseApplyList() {
 };
 </script>
 </head>
-<body>
+<body class="body">
 		<%@ include file="../hs/mypage_menu.jsp"%>
-
 	<div class="mypage">
 		<div class="welcome">		
 				<c:choose>
@@ -168,6 +167,8 @@ function promiseApplyList() {
 		<div class="accompany_container">
 		</div>
 	</div>
+	<footer class="footer">
 	  <%@ include file="../hs/footer.jsp"%>
+	</footer>
 </body>
 </html>

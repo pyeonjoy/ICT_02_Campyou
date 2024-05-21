@@ -138,8 +138,8 @@ public class BomiController {
 		mv.setViewName("bm/chat_list");
 		mv.addObject("list", list);
 		mv.addObject("member_idx", member_idx);
-		Gson gson = new Gson();
-		String json = gson.toJson(list);
+//		Gson gson = new Gson();
+//		String json = gson.toJson(list);
 		return mv;
 	}
 
@@ -307,12 +307,10 @@ public class BomiController {
 	public ModelAndView qnaUpload(QnaVO qvo, @RequestParam("member_idx") String member_idx) {
 		ModelAndView mv = new ModelAndView("redirect:my_inquiry_list.do?member_idx=" + member_idx);
 		int res = myService.uploadQna(qvo);
-		System.out.println(res);
 		if (res > 0) {
 			return mv;
 		}
 		return new ModelAndView("error");
-
 	}
 
 	// User's inquiry list

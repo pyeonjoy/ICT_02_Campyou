@@ -11,10 +11,13 @@
 	margin: 0;
 	padding: 0;
 }
-
+.body{
+	  display: flex;
+    flex-direction: column;
+}
 .mypage {
 	width: 70%;
-	height: 80vh;
+	height: 100vh;
 	margin: auto;
 	display: grid;
 	gap: 3rem;
