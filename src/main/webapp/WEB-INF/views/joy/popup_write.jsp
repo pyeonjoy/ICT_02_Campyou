@@ -7,7 +7,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>관리자 페이지 메인</title>
+<title>팝업 글쓰기</title>
 <style>
 @font-face {
     font-family: 'JalnanGothic';

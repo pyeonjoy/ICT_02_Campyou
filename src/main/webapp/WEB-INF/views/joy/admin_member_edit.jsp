@@ -9,7 +9,7 @@
 <%@ include file="../hs/admin_menu.jsp" %>
 <head>
 <meta charset="utf-8">
-<title>회원관리 상세</title>
+<title>회원관리 편집</title>
 <style>
 .wrqp {
 height: 475px;}

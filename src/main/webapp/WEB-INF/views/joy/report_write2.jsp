@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>관리자 페이지 메인</title>
+<title>정지 하기</title>
 <style>
 body{
 background-color: #F6FFF1; 

@@ -5,8 +5,12 @@
 <!doctype html>
 <html lang="ko">
 <link href="resources/css/reset.css" rel="stylesheet" />
+<link rel="shortcut icon" href="${path}/resources/favicon.ico" type="image/x-icon">
+<link rel="icon" href="${path}/resources/favicon.ico" type="image/x-icon">
 <link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
 <%@ include file="../hs/admin_menu.jsp" %>
+<head>
+<title>회원 리스트</title>
 <style type="text/css">
 body {
 	background-color: #F6FFF1;
@@ -44,6 +48,13 @@ padding: 200px 100px 300px 100px;
   background-color: white;
   color: #032805;
   background-color: #F6FFF1;
+}
+
+
+tfoot tr {
+    text-align: center;
+    padding: 10px; /* 중복된 padding 속성을 하나로 통합 */
+    border: 5px solid #F6FFF1;
 }
 
 .pwrapper{

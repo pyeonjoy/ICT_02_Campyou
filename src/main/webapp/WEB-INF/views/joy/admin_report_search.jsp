@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>신고 검색</title>
 <style type="text/css">
 @charset "UTF-8";
 
