@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	  if (emoji) {
 	    emojiElement.innerHTML = emoji;
 	  }
+	  
+	  const gradeEl = document.querySelector('.grade');
+	  const gradeInNum = +gradeEl.id +1
+	  gradeEl.innerHTML = '등급 : LV.'+gradeInNum + emoji;
 	});
 $(document).ready(function() {
     promiseApplyList();
@@ -136,7 +140,7 @@ function promiseApplyList() {
 
 	<div class="mypage">
 		<div class="welcome">
-			<div>
+		
 				<c:choose>
 					<c:when test="${empty mvo.member_img}">
 						<img src="${path}/resources/img/cat.png" alt="user_img"
@@ -147,7 +151,7 @@ function promiseApplyList() {
 							alt="user_img" class="user_fullImg">
 					</c:otherwise>
 				</c:choose>
-			</div>
+			
 			<h2 class="welcome_user">${mvo.member_name}<span class="emoji" id="${mvo.member_grade}"></span>님, 환영합니다.</h2>
 		</div>
 
@@ -155,23 +159,24 @@ function promiseApplyList() {
 			<div class="my_list my_board_list">
 				<h4 class="my_title">활동내역</h4>
 				<div class="my_list_summery">
-					<p class="my_list_title">작성글 : ${count}</p>
-					<p class="grade"> 등급 : ${mvo.member_grade}</p>						
-					<p class="grade"> 매너점수 : ${mvo.member_grade}점</p>						
+					<p class="my_list_title">작성글 : <a href="my_board.do?member_idx=${member_idx}">${count}</a></p>
+					<p class="lineHeight grade" id="${mvo.member_grade}" > </p>						
+					<p class="lineHeight rank"> 매너점수 : ${mvo.member_grade}점</p>						
 				</div>
 			</div>
-		<div class="my_list my_camping_list">
+		<div class="my_list my_review_list">
 				<h4 class="my_title">내 리뷰</h4>
-				<button class="more_list"
-					onclick="handleMyFavList(${mvo.member_idx})">+</button>
 				<div class="my_list_summery">
 				<c:choose>
-						<c:when test="${empty campMap }">
+						<c:when test="${empty reviews }">
 							<p class="nolist">리뷰가 없습니다.</p>
 						</c:when>
 						<c:otherwise>
-							<c:forEach var="entry" items="${campMap}">
-					<a class="my_list_camping" href="campDetail.do?contentid=${entry.key}"> ${entry.value}</a>
+							<c:forEach var="r" items="${reviews}">
+							<div class="each-review">
+					<a class="my_reviews" href="campDetail.do?contentid=${r.contentid}"><span class="camp">${r.camp_site}</span> ${r.review_comment} </a>
+					<span class="rating-stars"><c:forEach var="i" begin="1" end="${r.rating}">&#9733;</c:forEach></span>
+							</div>
 					</c:forEach>
 						</c:otherwise>
 					</c:choose>

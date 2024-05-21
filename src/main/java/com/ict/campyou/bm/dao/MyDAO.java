@@ -17,6 +17,7 @@ import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.HeartVO;
+import com.ict.campyou.jun.dao.ReviewVO;
 
 @Repository
 public class MyDAO {
@@ -78,7 +79,17 @@ public class MyDAO {
 		}
 		return 0;
 	}
-
+	
+	public List<ReviewVO> getReviewList(String member_idx) {
+		try {
+			
+			return sqlSessionTemplate.selectList("bomi.getReviews",member_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+	}
+		return null;
+	}
+	
 	public int uploadQna(QnaVO qvo) {
 		try {
 			System.out.println("dao: " + qvo.getMember_idx());

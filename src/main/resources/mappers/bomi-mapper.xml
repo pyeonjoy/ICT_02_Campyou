@@ -112,4 +112,8 @@ select * from m_chat where msg_room=#{msg_room} ORDER BY msg_idx DESC
  select * from board_camp where cp_idx=#{board_idx} 
 </select>
 
+<select id="getReviews" parameterType="String" resultType="rvo">
+ select * from camp_review where member_idx=#{member_idx} 
+</select>
+
 </mapper>
