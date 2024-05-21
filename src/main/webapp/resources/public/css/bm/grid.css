@@ -33,7 +33,13 @@ text-align: center;
   margin-bottom: .6rem;
   text-align: center;
 }
-
+.grid_col2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 2fr 1fr;
+  margin-bottom: .6rem;
+  text-align: center;
+  width: 60rem;
+}
 .nolist{
   grid-column: 1 /6;
   width: 60rem;

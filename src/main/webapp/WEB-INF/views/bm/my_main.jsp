@@ -12,7 +12,25 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>마이페이지</title>
 <script>
+document.addEventListener('DOMContentLoaded', () => {
+	  const emojiElement = document.querySelector('.emoji');
+	  const grade = emojiElement.id;
+	  let emoji;
 
+	  if (grade === '0') emoji = '🥉';
+	  else if (grade === '1') emoji = '🥈';
+	  else if (grade === '2') emoji = '🥇';
+	  else if (grade === '3') emoji = '🎖️';
+	  else if (grade === '4') emoji = '🏆';
+
+	  if (emoji) {
+	    emojiElement.innerHTML = emoji;
+	  }
+	  
+	  const gradeEl = document.querySelector('.grade');
+	  const gradeInNum = +gradeEl.id +1
+	  gradeEl.innerHTML = '등급 : LV.'+gradeInNum + emoji;
+	});
 $(document).ready(function() {
     promiseApplyList();
 //     setInterval(promiseApplyList, 5000);
@@ -122,7 +140,7 @@ function promiseApplyList() {
 
 	<div class="mypage">
 		<div class="welcome">
-			<div class="user_img">
+		
 				<c:choose>
 					<c:when test="${empty mvo.member_img}">
 						<img src="${path}/resources/img/cat.png" alt="user_img"
@@ -130,24 +148,41 @@ function promiseApplyList() {
 					</c:when>
 					<c:otherwise>
 						<img src="${path}/resources/uploadUser_img/${mvo.member_img}"
-							alt="user_img" class="user_img">
+							alt="user_img" class="user_fullImg">
 					</c:otherwise>
 				</c:choose>
-			</div>
-			<h2 class="welcome_user">${mvo.member_name}님, 환영합니다.</h2>
+			
+			<h2 class="welcome_user">${mvo.member_name}<span class="emoji" id="${mvo.member_grade}"></span>님, 환영합니다.</h2>
 		</div>
 
 		<div class="list_container">
 			<div class="my_list my_board_list">
 				<h4 class="my_title">활동내역</h4>
 				<div class="my_list_summery">
-					<p class="my_list_title">작성글 : ${count}</p>
-					<p class="grade"> 등급 : ${mvo.member_grade}</p>						
-					<p class="grade"> 매너점수 : ${mvo.member_grade}점</p>						
+					<p class="my_list_title">작성글 : <a href="my_board.do?member_idx=${member_idx}">${count}</a></p>
+					<p class="lineHeight grade" id="${mvo.member_grade}" > </p>						
+					<p class="lineHeight rank"> 매너점수 : ${mvo.member_grade}점</p>						
+				</div>
+			</div>
+		<div class="my_list my_review_list">
+				<h4 class="my_title">내 리뷰</h4>
+				<div class="my_list_summery">
+				<c:choose>
+						<c:when test="${empty reviews }">
+							<p class="nolist">리뷰가 없습니다.</p>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="r" items="${reviews}">
+							<div class="each-review">
+					<a class="my_reviews" href="campDetail.do?contentid=${r.contentid}"><span class="camp">${r.camp_site}</span> ${r.review_comment} </a>
+					<span class="rating-stars"><c:forEach var="i" begin="1" end="${r.rating}">&#9733;</c:forEach></span>
+							</div>
+					</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
-		
 		
 		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
 		<div class="accompany_container">
