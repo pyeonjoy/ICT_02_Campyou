@@ -98,6 +98,14 @@ public class TogetherController {
 		        default: ageGroup = "80대 이상"; break;
 		    }
 		    tvo.setMember_dob(ageGroup);
+		    
+		    switch (tvo.getMember_grade()) {
+			case "1": tvo.setMember_grade("grade1.png"); break;
+			case "2": tvo.setMember_grade("grade2.png"); break;
+			case "3": tvo.setMember_grade("grade3.png"); break;
+			case "4": tvo.setMember_grade("grade4.png"); break;
+			case "5": tvo.setMember_grade("grade5.png"); break;
+			}
 		}
 		
 		mv.setViewName("bjs/together_list");
@@ -148,6 +156,14 @@ public class TogetherController {
 	        default: ageGroup = "80대 이상"; break;
 	    }
 	    tvo.setMember_dob(ageGroup);
+	    
+	    switch (tvo.getMember_grade()) {
+		case "1": tvo.setMember_grade("grade1.png"); break;
+		case "2": tvo.setMember_grade("grade2.png"); break;
+		case "3": tvo.setMember_grade("grade3.png"); break;
+		case "4": tvo.setMember_grade("grade4.png"); break;
+		case "5": tvo.setMember_grade("grade5.png"); break;
+		}
 		
 		if(tvo != null) {
 			mv.setViewName("bjs/together_detail");

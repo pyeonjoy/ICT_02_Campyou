@@ -21,6 +21,14 @@
     object-fit: cover;
     width: 100%;
 }
+.member_gradeImg{
+	width: 18px;
+	height: 18px;
+}
+.member_nicknameP{
+	display: flex;
+	align-items: center;
+}
 .toDetailContent{
     width: 50%;
 }

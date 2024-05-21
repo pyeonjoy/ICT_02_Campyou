@@ -154,6 +154,11 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 	
 	@Override
+	public List<TogetherCommentVO> getGroupList(Map<String, Integer> map) throws Exception {
+		return togetherDAO.getGroupList(map);
+	}
+	
+	@Override
 	public int getToCommentGSUpdate(Map<String, Integer> map) throws Exception {
 		return togetherDAO.getToCommentGSUpdate(map);
 	}
@@ -211,5 +216,15 @@ public class TogetherServiceImpl implements TogetherService{
 	@Override
 	public List<TogetherVO> getPromiseEnd(String member_idx, int offset, int limit) throws Exception {
 		return togetherDAO.getPromiseEnd(member_idx, offset, limit);
+	}
+	
+	@Override
+	public int getEnddateUpdate(String t_idx) throws Exception {
+		return togetherDAO.getEnddateUpdate(t_idx);
+	}
+
+	@Override
+	public int getConfirmPartner(PromiseVO pvo) throws Exception {
+		return togetherDAO.getConfirmPartner(pvo);
 	}
 }

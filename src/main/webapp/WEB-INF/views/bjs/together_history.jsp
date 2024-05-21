@@ -7,7 +7,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<title>together_history</title>
+<title>동행 신청 내역</title>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_history.css">
@@ -92,8 +92,8 @@ function promiseApplyList(page) {
                 for (let i = 0; i < toHistory.length; i++) {
                     let promise = toHistory[i];
 	                let html2 = '<div class="thul2">';
-	                html2 += '<ul class="thliImage3"><li class="th1 thliImage"><img src="${path}/resources/images/' + promise.member_img + '" class="qa11 thliImage2"></a></li></ul>';
-	                html2 += '<ul><li class="th1">' + promise.member_nickname + '(' + promise.member_dob + ')(' + promise.promise_my_count + ')</li></ul>';
+	                html2 += '<ul class="thliImage3 profile_show"><li class="th1 thliImage"><img src="${path}/resources/images/' + promise.member_img + '" class="qa11 thliImage2"></a></li></ul>';
+	                html2 += '<ul><li class="th1 member_gradeLi profile_show">' + promise.member_nickname + '<img src="${path}/resources/images/' + promise.member_grade + '" class="member_gradeImg" >(' + promise.member_dob + ')(' + promise.promise_my_count + ')</li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_campname + '</a></li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11 compare">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
@@ -197,7 +197,7 @@ function promiseApplySendList(page) {
                 for (let i = 0; i < toSendHistory.length; i++) {
                     let promise = toSendHistory[i];
 	                let html2 = '<div class="thul4">';
-	                html2 += '<ul><li class="th1">' + promise.member_nickname + '</li></ul>';
+	                html2 += '<ul><li class="th1 profile_show">' + promise.member_nickname + '</li></ul>';
 
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_campname + '</a></li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
