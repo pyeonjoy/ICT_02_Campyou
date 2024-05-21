@@ -81,4 +81,10 @@
 <select id="addRating" parameterType="String" resultType="int">
 	select sum(rating) from camp_review where contentid = #{contentid}
 </select>
+<select id="getUseFAQLoad" parameterType="String" resultType="a2vo">
+	select * from faq
+</select>
+<select id="getPromiseFAQLoad" parameterType="String" resultType="a2vo">
+	select * from faq2
+</select>
 </mapper>
