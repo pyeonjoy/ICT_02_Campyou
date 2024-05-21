@@ -5,6 +5,8 @@
 <html>
 <head>
 <title>회원가입</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -32,7 +34,7 @@
 		const member_pwdCheck = f.member_pwdCheck.value.trim();
 		const member_phone = f.member_phone.value.trim();
 
-        if (member_id === "" || member_name === "" || member_nickname === "" || member_dob === "" || member_email === "" || member_pwd === "" || member_pwdCheck === "" || member_phone === "") {
+        if (member_id === "" || member_name === "" || member_nickname === "" || member_dob === "" || member_email === "" || member_pwd === "" || member_pwdCheck === "" || member_phone === "" || member_gender === "") {
             alert("모든 필수 항목을 입력하세요.");
             return false; 
         }
@@ -208,7 +210,18 @@ $(document).ready(function() {
 						 <div class="form-outline mb-2">
 						  <label class="form-label" for="member_phone">전화번호<sup>*</sup></label>
 		                  <input type="text" id="member_phone" name="member_phone" class="form-control form-control-lg" placeholder="예) 010-0000-0000"/>
-		                </div>
+		                </div><br>
+		                <div class="form-outline mb-2">
+		                	<label class="form-label" for="member_phone">성별<sup>*</sup></label>&nbsp;&nbsp;
+			                <div class="form-check form-check-inline">
+								  <input class="form-check-input" type="radio" name="member_gender" id="member_gender" value="남" checked>
+								  <label class="form-check-label" for="inlineRadio1">남</label>
+							</div>
+							<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="radio" name="member_gender" id="member_gender" value="여">
+								  <label class="form-check-label" for="inlineRadio2">여</label>
+							</div>
+ 						</div>
 		             	<div class="form-check d-flex justify-content-center mb-4">
 		                  <input class="form-check-input me-2" type="checkbox" value="" id="chkbox" name="chkbox" />
 		                  <label class="form-check-label" for="chkbox"> 이용약관에 동의합니다. <a href="terms_of_use_go.do" target="_blank" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); return false;" class="text-body"><u>이용약관</u></a></label>

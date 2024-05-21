@@ -10,6 +10,8 @@
 <script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
 
 <title>캠핑장리스트</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <style type="text/css">
 .camp_list_container {
 	display: flex;
@@ -26,7 +28,7 @@
 }
 #camp_list_show img{
     width: 40%;
-    height: 100%;
+    height: 300px;
     object-fit: cover;
     flex-shrink: 0;
 }
@@ -113,6 +115,25 @@
 	color: #FFBA34;
 }
 
+.go_map_button input[type="button"]{
+	font-weight: 600;
+	width: 100px;
+	height: 36px;
+	background-color: #FFBA34;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	margin-left: 84vw;
+}
+
+.go_map_button input[type="button"]:hover{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
 </style>
 </head>
 <body>
@@ -120,6 +141,9 @@
 	<div style="height: 100px;"></div>
 	<div class="camp_list_container">
 		<jsp:include page="../hs/camp_search_box.jsp" />
+		<div class="go_map_button">
+			<input type="button" value="지도로 검색" onclick="go_map()">
+		</div>
 		<div id="camp_list_show"></div>
 		<div class="page_button">
 			<ul class="to_paging camp_list_page">

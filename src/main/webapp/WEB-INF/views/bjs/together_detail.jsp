@@ -9,6 +9,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <title>동행글 상세보기</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_detail.css">
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>

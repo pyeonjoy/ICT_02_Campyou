@@ -5,17 +5,21 @@
 <%@ page import="com.google.gson.Gson"%>
 
 <c:set var="path" value="${pageContext.request.contextPath}" />
-<c:choose>
-    <c:when test="${empty admin}">
-        <%@ include file="hs/header.jsp" %>
-    </c:when>
-    <c:otherwise>
-        <%@ include file="hs/admin_header.jsp" %>
-    </c:otherwise>
-</c:choose>
 
 <!doctype html>
 <html lang="ko">
+<head>
+<title>HOME</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+<c:choose>
+    <c:when test="${admin != null}">
+        <%@ include file="hs/admin_header.jsp" %>
+    </c:when>
+    <c:otherwise>
+        <%@ include file="hs/header.jsp" %>
+    </c:otherwise>
+</c:choose>
 <link href="${path}/resources/css/reset.css" rel="stylesheet" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,11 +27,10 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, 그리고 Bootstrap 기여자들">
 <meta name="generator" content="Hugo 0.88.1">
-<title>임시 메인페이지</title>
 <style>
-#header {
+/* #header {
    background-color: rgba(5, 54, 16, 0.7);
-}
+} */
 
 .bd-placeholder-img {
 	font-size: 1.125rem;
@@ -155,6 +158,7 @@ background-color: #FFBA34;
 		    height: 550px;
 		    top: 50px;
             overflow: hidden;
+                border-radius: 20px;
         }
         .slider__inner { /* 이미지 움직이는 영역 */
             display: flex;
@@ -219,9 +223,11 @@ background-color: #FFBA34;
         }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
+<!-- <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
+
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb&submodules=geocoder"></script>
-<script  type="text/javascript" src="resources/js/MarkerClustering.js"></script>
+ --><script  type="text/javascript" src="resources/js/MarkerClustering.js"></script>
+
 <!-- 이펙트  -->
 <script type="text/javascript">
 $(document).ready(function() {
@@ -352,17 +358,27 @@ $(document).ready(function() {
    
 </script>
 
+
 </head>
 <body>
 <main id="main">
     <div class="slider__wrap">
         <div class="slider__img">
             <div class="slider__inner">
-                <div class="slider s1"><img src="${path}/resources/images/main1.png" alt="이미지1"></div>
-                <div class="slider s2"><img src="${path}/resources/images/main2.png" alt="이미지2"></div>
-                <div class="slider s3"><img src="${path}/resources/images/main3.png" alt="이미지3"></div>
-                <div class="slider s4"><img src="${path}/resources/images/main4.png" alt="이미지4"></div>
-                <div class="slider s5"><img src="${path}/resources/images/main5.png" alt="이미지5"></div>
+                <div class="slider s1">
+                <c:forEach var="c" items="${camphit}">
+                <a href="camp_detail.do?contentid=${c.contentid}">
+                <img src="${path}/resources/images/main-01.png" alt="이미지1"></a>
+                </c:forEach>
+                </div>
+                <div class="slider s2">
+                <a href='together_list.do'>
+                <img src="${path}/resources/images/main-02.png" alt="이미지2">
+                </a>
+                </div>
+                <div class="slider s3"><a href="camplist.do"><img src="${path}/resources/images/main-03.png" alt="이미지3"></a></div>
+                <div class="slider s4"><a href="camp_map_list.do"><img src="${path}/resources/images/main-04.png" alt="이미지4"></a></div>
+                <div class="slider s5"><a href="community_board.do"><img src="${path}/resources/images/main-05.png" alt="이미지5"></a></div>
             </div>
         </div>
         <div class="slider__btn">

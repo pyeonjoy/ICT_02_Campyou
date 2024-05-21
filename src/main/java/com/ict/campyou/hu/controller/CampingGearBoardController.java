@@ -2,6 +2,7 @@ package com.ict.campyou.hu.controller;
 
 import java.io.File;
 
+
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -32,6 +33,7 @@ import com.ict.campyou.hu.dao.CampingGearBoardCommentVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.hu.service.CampingGearBoardService;
 import com.ict.campyou.hu.service.CampingGearSearchService;
+import com.ict.campyou.hu.service.MemberService;
 
 @Controller
 public class CampingGearBoardController {
@@ -40,6 +42,9 @@ public class CampingGearBoardController {
 	
 	@Autowired
 	private CampingGearSearchService campingGearSearchService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -165,6 +170,9 @@ public class CampingGearBoardController {
 				  cgbvo.setCp_pwd(passwordEncoder.encode(cgbvo.getCp_pwd()));
 				  int result = campingGearBoardService.getCampingGearWriteInsert(cgbvo);
 				  if(result > 0) {
+					  //캠핑 게시판에 글쓸때 마다 member_free 등급 올리기
+					  String member_idx = cgbvo.getMember_idx();
+					  int result2 = memberService.getMemberFreeUpdate(member_idx);
 					  return mv;
 				  } 
 			  }

@@ -1,9 +1,9 @@
 :root { -
-	-primary-color: #032805; -
-	-primary-color-yellow: #FFBA34; -
-	-primary-color-light: #FFFDDE; -
-	-text-white: #fff; -
-	-text-black: #000;
+	--primary-color: #032805; 
+	--primary-color-yellow: #FFBA34; 
+	--primary-color-light: #FFFDDE; 
+	--text-white: #fff; 
+	--text-black: #000;
 }
 
 * {
@@ -25,15 +25,13 @@
 	margin: auto;
 	display: grid;
 	gap: 3rem;
-	align-items: center;
 	justify-content: center;
-	transform: translateY(4rem);
-	width: 70%;
-    margin: 0 auto;
+	transform: translateY(6rem);
 }
 /* align contents with grid  */
 .welcome {
 	display: flex;
+	gap:0;
 	grid-column: 1/5;
 	gap: 1rem;
 	justify-content: center;
@@ -46,15 +44,16 @@
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 	position: relative;
 }
-
-.list_container {
-	grid-column: 1 / 5;
-    width: 60rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
-    margin-bottom: 5rem;
+.accompany_list {
+	width: 12rem;
+	height: 16rem;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	font-size: .7rem;
+	border-radius: 1rem;
+	padding: 1rem .5rem;
+	margin-right: .5rem;
 }
+
 .no-data-message{
 	grid-column: 1/5;
 	width: 800px;
@@ -66,16 +65,12 @@
 .no-data-messageP{
 	font: 32px;
 }
-.my_camping_list, .my_board_list{
-	width: 400px;
-	height: 80px;
-}
 
 .together_listA {
 	display: flex;
 	align-items: center;
 	position: absolute;
-	top: 8rem;
+	bottom: 8rem;
 	right: 14.5rem;
 }
 
@@ -84,64 +79,23 @@
 	font-weight: bold;
 	margin-bottom: 0.3rem;
 }
-
 .list_go {
 	font-weight: normal;
 	font-size: 13px;
 }
-/* title */
-.user_img {
-	width: 100px;
-	height: 100px;
-	border: 1px solid var(- -text-black);
-	border-radius: 50%;
-	overflow: hidden;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
 
-.otheruser_img {
-	border: 1px solid var(- -text-black);
-	border-radius: 50%;
-	overflow: hidden;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 2rem;
-	height: 2rem;
+.list_container {
+	grid-column: 1 / 5;
+    width: 60rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    margin-bottom: 5rem;
 }
-
-.welcome_user {
-	line-height: 80px;
+.my_list{
+	width: 400px;
+	height: 80px;
 }
-
-.accompany_list {
-	width: 12rem;
-	height: 16rem;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-	font-size: .7rem;
-	border-radius: 1rem;
-	padding: 1rem .5rem;
-	margin-right: .5rem;
-}
-
-.list_header {
-	display: flex;
-	margin-bottom: .5rem;
-	align-items: center;
-}
-
-.list_summery {
-	margin-left: .5rem;
-	font-weight: 700;
-}
-
-.list_item {
-	position: relative;
-	width: 180px;
-}
-
 .list_image_container {
 	position: relative;
 	width: 180px;
@@ -184,6 +138,56 @@
 	font-size: .8rem;
 }
 
+
+/* title */
+.user_fullImg {
+	width: 120px;
+	height: 120px;
+	border: 2px solid var(--primary-color);
+	border-radius: 50%;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.otheruser_img {
+	border: 1px solid var(--text-black);
+	border-radius: 50%;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 2rem;
+	height: 2rem;
+}
+
+.welcome_user {
+    line-height: 120px; 
+    margin-left: 10px; 
+}
+
+.list_header {
+	display: flex;
+	margin-bottom: .5rem;
+	align-items: center;
+}
+
+.list_summery {
+	margin-left: .5rem;
+	font-weight: 700;
+}
+
+.list_item {
+	position: relative;
+	width: 180px;
+}
+.camp{
+	color: var(--primary-color);
+	font-weight: 600;
+}
+.rating-stars{
+	color: var(--primary-color-yellow);
+}
 .btn-container {
 	display: flex;
 	justify-content: center;
@@ -236,48 +240,27 @@
 	padding: 2px;
 	font-size: 1rem;
 }
-.my_list_title, .my_list_camping{
+.my_review_list{
+	overflow-y: scroll;
+}
+.each-review{
+	margin:2px;
+	display:flex;
+	justify-content:space-between;
+}
+.my_list_title, .my_reviews{
 	margin-bottom: 5px;
 } 
+
 .my_list_summery {
 	padding-top: 1rem;
 	padding-bottom: 1rem;
 	font-size: .9rem;
-	display: flex;
     flex-direction: column;
 }
 
-.more_list {
-	border: none;
-	background-color: transparent;
-	font-size: 1.5rem;
-	font-weight: 800;
-	position: absolute;
-	top: -0.1rem;
-	right: 0.5rem;
-	cursor: pointer;
-}
-
-.nolist {
+.lineHeight {
 	font-size: 1rem;
 	font-weight: 600;
-}
-
-.arrow {
-	width: 2rem;
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	cursor: pointer;
-}
-
-.arrow-left {
-	transform: rotateY(180deg);
-	left: -40px;
-}
-
-.arrow-right {
-	right: -30px;
-	transform: translateY(0);
-	cursor: pointer;
+	line-height: 1.4rem;
 }

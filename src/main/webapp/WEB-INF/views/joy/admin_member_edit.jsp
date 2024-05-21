@@ -9,7 +9,9 @@
 <%@ include file="../hs/admin_menu.jsp" %>
 <head>
 <meta charset="utf-8">
-<title>회원관리 상세</title>
+<title>회원관리 편집</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <style>
 .wrqp {
 height: 475px;}
@@ -20,6 +22,7 @@ height: 475px;}
 </head>
 <body>
 	<h3 class="head">회원 관리 상세</h3>
+	
 	<div class="wrap">
 		<c:forEach var="m" items="${member}"> 
 			<div class="left">

@@ -7,6 +7,8 @@
 <head>
 <meta charset=UTF-8>
 <title>Insert title here</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoard.css">
 <%@ include file="../../hs/header.jsp" %>
 <script type="text/javascript">
@@ -107,18 +109,20 @@
 							            <td>
 							                <c:choose>
 							                    <c:when test="${not empty adminInfo}">
-							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>
-							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a> 
+							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>${k.member_grade}	
+							                       ${k.member_grade}
 							                    </c:when>
 							                    <c:otherwise>
 							                        <c:choose>
 							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}">
-							                              <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>
-							                         	  <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                              <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a> 
+							                         	  <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>${k.member_grade}	
 							                            </c:when>
 							                            <c:otherwise>
 							                            	${k.admin_nickname}
 							                            	${k.member_nickname}
+							                            	${k.member_grade}						                    
 							                            </c:otherwise>
 							                        </c:choose>
 							                    </c:otherwise>

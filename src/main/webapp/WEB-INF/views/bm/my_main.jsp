@@ -11,15 +11,28 @@
   <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>마이페이지</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <script>
-function handleMyBoardList(member_idx){
-	href.location="my_acc_history.do?member_idx"+member_idx;
-}
+document.addEventListener('DOMContentLoaded', () => {
+	  const emojiElement = document.querySelector('.emoji');
+	  const grade = emojiElement.id;
+	  let emoji;
 
-function handleMyFavList(member_idx){
-	
-}
+	  if (grade === '0') emoji = '🥉';
+	  else if (grade === '1') emoji = '🥈';
+	  else if (grade === '2') emoji = '🥇';
+	  else if (grade === '3') emoji = '🎖️';
+	  else if (grade === '4') emoji = '🏆';
 
+	  if (emoji) {
+	    emojiElement.innerHTML = emoji;
+	  }
+	  
+	  const gradeEl = document.querySelector('.grade');
+	  const gradeInNum = +gradeEl.id +1
+	  gradeEl.innerHTML = '등급 : LV.'+gradeInNum + emoji;
+	});
 $(document).ready(function() {
     promiseApplyList();
 //     setInterval(promiseApplyList, 5000);
@@ -121,7 +134,7 @@ function promiseApplyList() {
         error: function(xhr, status, error) {
         	console.error(error);
         }
-    });
+    });4
 };
 </script>
 </head>
@@ -130,7 +143,7 @@ function promiseApplyList() {
 
 	<div class="mypage">
 		<div class="welcome">
-			<div class="user_img">
+		
 				<c:choose>
 					<c:when test="${empty mvo.member_img}">
 						<img src="${path}/resources/img/cat.png" alt="user_img"
@@ -138,59 +151,46 @@ function promiseApplyList() {
 					</c:when>
 					<c:otherwise>
 						<img src="${path}/resources/uploadUser_img/${mvo.member_img}"
-							alt="user_img" class="user_img">
+							alt="user_img" class="user_fullImg">
 					</c:otherwise>
 				</c:choose>
-			</div>
-			<h2 class="welcome_user">${mvo.member_name}님, 환영합니다.</h2>
-		</div>
-		<input type="hidden" id="memberIdx" value="${mvo.member_idx }">
-		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
-		<div class="accompany_container">
-
-			<%--        <img src="${path}/resources/img/right.png" alt="arrow-left" class="arrow arrow-left"> --%>
-			<%--        <img src="${path}/resources/img/right.png" alt="arrow-right" class="arrow arrow-right">     --%>
+			
+			<h2 class="welcome_user">${mvo.member_name}<span class="emoji" id="${mvo.member_grade}"></span>님, 환영합니다.</h2>
 		</div>
 
 		<div class="list_container">
 			<div class="my_list my_board_list">
-				<h4 class="my_title">내가 쓴 글</h4>
-				<button class="more_list"
-					onclick="handleMyBoardList(${mvo.member_idx})">+</button>
+				<h4 class="my_title">활동내역</h4>
 				<div class="my_list_summery">
-
-					<c:choose>
-						<c:when test="${empty selectedList }">
-							<p class="nolist">작성 내역이 없습니다.</p>
-						</c:when>
-						<c:otherwise>
-							<c:forEach var="list" items="${selectedList}">
-								<a href="boardDetail.do?board_idx=${list.board_idx}&board_type=${list.board_type}">
-								<p class="my_list_title">${list.b_subject}</p></a>
-							</c:forEach>
-						</c:otherwise>
-					</c:choose>
+					<p class="my_list_title">작성글 : <a href="my_board.do?member_idx=${member_idx}">${count}</a></p>
+					<p class="lineHeight grade" id="${mvo.member_grade}" > </p>						
+					<p class="lineHeight rank"> 매너점수 : ${mvo.member_grade}점</p>						
 				</div>
 			</div>
-			<div class="my_list my_camping_list">
-				<h4 class="my_title">관심 캠핑장</h4>
-				<button class="more_list"
-					onclick="handleMyFavList(${mvo.member_idx})">+</button>
+		<div class="my_list my_review_list">
+				<h4 class="my_title">내 리뷰</h4>
 				<div class="my_list_summery">
 				<c:choose>
-						<c:when test="${empty campMap }">
-							<h4 class="nolist">관심캠핑장이 없습니다.</h4>
+						<c:when test="${empty reviews }">
+							<p class="nolist">리뷰가 없습니다.</p>
 						</c:when>
 						<c:otherwise>
-							<c:forEach var="entry" items="${campMap}">
-					<a class="my_list_camping" href="campDetail.do?contentid=${entry.key}"> ${entry.value}</a>
+							<c:forEach var="r" items="${reviews}">
+							<div class="each-review">
+					<a class="my_reviews" href="campDetail.do?contentid=${r.contentid}"><span class="camp">${r.camp_site}</span> ${r.review_comment} </a>
+					<span class="rating-stars"><c:forEach var="i" begin="1" end="${r.rating}">&#9733;</c:forEach></span>
+							</div>
 					</c:forEach>
 						</c:otherwise>
 					</c:choose>
 				</div>
 			</div>
-
 		</div>
+		
+		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
+		<div class="accompany_container">
+		</div>
+
 	</div>
 	  <%@ include file="../hs/footer.jsp"%>
 </body>

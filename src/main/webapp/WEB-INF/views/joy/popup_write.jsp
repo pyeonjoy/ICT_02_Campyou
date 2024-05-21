@@ -7,7 +7,9 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>관리자 페이지 메인</title>
+<title>팝업 글쓰기</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <style>
 @font-face {
     font-family: 'JalnanGothic';

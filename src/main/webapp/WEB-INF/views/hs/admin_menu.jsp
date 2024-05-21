@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link href="/resources/css/menu_aside.css" rel="stylesheet" />
 </head>
 <body>
@@ -31,9 +33,9 @@
 				<h4>유저 관리</h4>
 				<ul>
 					<li><a href="admin_member_list.do">회원 관리</a></li>
-					<li><a href="#">문의 내역</a></li>
+					<li><a href="admin_inquiry.do">문의 내역</a></li>
 					<li><a href="report_list.do">신고 내역</a></li>
-					<li><a href="#">FAQ 관리</a></li>
+					<li><a href="admin_faq.do">FAQ 관리</a></li>
 				</ul>
 			</div>
 		</div>

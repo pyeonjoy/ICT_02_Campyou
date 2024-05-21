@@ -19,6 +19,7 @@ import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.HeartVO;
+import com.ict.campyou.jun.dao.ReviewVO;
 
 @Service
 public class MyServiceImpl implements MyService{
@@ -129,6 +130,10 @@ public class MyServiceImpl implements MyService{
 	@Override
 	public CampingGearBoardVO getBoard2ByIdx(String board_idx) {		
 		return myDao.getBoard2ByIdx(board_idx);
+	}
+	@Override
+	public List<ReviewVO> getReviewList(String member_idx) {
+		return myDao.getReviewList(member_idx);
 	}
 
 }

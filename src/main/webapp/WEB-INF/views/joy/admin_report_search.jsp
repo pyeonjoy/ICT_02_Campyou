@@ -6,6 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>신고 검색</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <style type="text/css">
 @charset "UTF-8";
 

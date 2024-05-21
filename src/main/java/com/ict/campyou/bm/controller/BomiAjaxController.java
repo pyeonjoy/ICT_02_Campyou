@@ -41,9 +41,7 @@ public class BomiAjaxController {
 //	    String inputPassword = request.getPassword();
 //	    String memberId = request.getMemberId();
 //	    MemberVO member = myService.getMemberPwd(memberId);
-//
 //	    boolean isPasswordMatch = passwordEncoder.matches(inputPassword, member.getMember_pwd());
-//	   System.out.println(isPasswordMatch);
 //	    if (isPasswordMatch) {
 //	    	session.setAttribute("authenticatedMember", member);
 //	    	  return ResponseEntity.ok("success");
