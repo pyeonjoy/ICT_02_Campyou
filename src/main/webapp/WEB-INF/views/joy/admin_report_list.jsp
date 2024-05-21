@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>신고 리스트</title>
 <style type="text/css">
 body {
 	background-color: #F6FFF1;

@@ -7,6 +7,7 @@
 <link href="resources/css/reset.css" rel="stylesheet" />
 <link href="resources/css/joy/admin_member_detail.css" rel="stylesheet" />
 <%@ include file="../hs/admin_menu.jsp" %>
+<title>회원 검색</title>
 <style type="text/css">
 body {
 	background-color: #F6FFF1;
@@ -137,7 +138,7 @@ width: 2.7rem;
 			<tbody>
 				<c:choose>
 					<c:when test="${empty searchmember }">
-						<tr><td colspan="5"><h3>게시물이 존재하지 않습니다.</h3></td></tr>
+						<tr><td colspan="12"><h3>게시물이 존재하지 않습니다.</h3></td></tr>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="k" items="${searchmember}" varStatus="vs">

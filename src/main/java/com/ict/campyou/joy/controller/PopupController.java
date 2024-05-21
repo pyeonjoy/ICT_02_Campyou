@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ict.campyou.common.Paging;
 import com.ict.campyou.common.Paging2;
 import com.ict.campyou.common.Paging3;
+import com.ict.campyou.hu.dao.AdminMembVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.joy.dao.AdminVO;
 import com.ict.campyou.joy.service.AdminService;
@@ -34,9 +35,9 @@ public class PopupController {
 	@RequestMapping("popup.do")
 	public ModelAndView boardList(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("joy/popup");
-//		HttpSession session = request.getSession();
-//		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-//		mvo.setMember_idx(mvo.getMember_idx());
+		HttpSession session = request.getSession();
+		AdminMembVO admin = (AdminMembVO) session.getAttribute("admin");
+		admin.setAdmin_idx(admin.getAdmin_idx());
 		// 페이징 기법
 		// 전체 게시물의 수
 		int count = adminService.getTotalCount();
@@ -92,10 +93,12 @@ public class PopupController {
 	@RequestMapping("popup_write.do")
 	public ModelAndView popupwrite(HttpServletRequest request){
 		ModelAndView mv = new ModelAndView("joy/popup_write");
+		
 		HttpSession session = request.getSession();
-		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-		System.out.println(mvo.getMember_idx());
-		mv.addObject("mvo",mvo.getMember_name());
+		AdminMembVO admin = (AdminMembVO) session.getAttribute("admin");
+		admin.setAdmin_idx(admin.getAdmin_idx());
+		
+		mv.addObject("mvo",admin.getAdmin_nickname());
 		return mv;
 		}
 	
@@ -103,9 +106,9 @@ public class PopupController {
 	public ModelAndView popupwriteOK(AdminVO avo, HttpServletRequest request) {
 		try {
 			ModelAndView mv = new ModelAndView("redirect:popup.do");
-//			HttpSession session = request.getSession();
-//			MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-//			mvo.setMember_idx(mvo.getMember_idx());
+			HttpSession session = request.getSession();
+			AdminMembVO admin = (AdminMembVO) session.getAttribute("admin");
+			admin.setAdmin_idx(admin.getAdmin_idx());
 			String path = request.getSession().getServletContext().getRealPath("/resources/popup");
 			System.out.println(path);
 			MultipartFile file = avo.getFile();
@@ -133,9 +136,9 @@ public class PopupController {
 	@RequestMapping("popup_delete.do")
 	public ModelAndView popupdelete(HttpServletRequest request,String popidx){
 		ModelAndView mv = new ModelAndView();
-//		HttpSession session = request.getSession();
-//		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-//		mvo.setMember_idx(mvo.getMember_idx());
+		HttpSession session = request.getSession();
+		AdminMembVO admin = (AdminMembVO) session.getAttribute("admin");
+		admin.setAdmin_idx(admin.getAdmin_idx());
 		int result = adminService.getPopDelete(popidx);
 		if (result > 0) {
 			mv.setViewName("redirect:popup.do");
@@ -146,9 +149,9 @@ public class PopupController {
 	
 	@RequestMapping("popup_update.do")
 	public ModelAndView popupupdate(AdminVO avo, HttpServletRequest request){
-//		HttpSession session = request.getSession();
-//		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-//		mvo.setMember_idx(mvo.getMember_idx());
+		HttpSession session = request.getSession();
+		AdminMembVO admin = (AdminMembVO) session.getAttribute("admin");
+		admin.setAdmin_idx(admin.getAdmin_idx());
 		ModelAndView mv = new ModelAndView();
 		int result = adminService.getpopupdate(avo);
 		System.out.println(result);
