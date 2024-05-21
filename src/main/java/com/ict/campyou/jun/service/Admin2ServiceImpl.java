@@ -16,14 +16,50 @@ public class Admin2ServiceImpl implements Admin2Service{
 	
 	
 	@Override
-	public List<Admin2VO> getUseFAQLoad(Admin2VO a2vo) {
-		return admin2DAO.getUseFAQLoad(a2vo);
+	public List<Admin2VO> getUseFAQLoad(Admin2VO a2vo,int offset, int limit) {
+		return admin2DAO.getUseFAQLoad(a2vo,offset,limit);
 	}
 
 
 	@Override
-	public List<Admin2VO> getPromiseFAQLoad(Admin2VO a2vo) {
-		return admin2DAO.getPromiseFAQLoad(a2vo);
+	public List<Admin2VO> getPromiseFAQLoad(Admin2VO a2vo,int offset, int limit) {
+		return admin2DAO.getPromiseFAQLoad(a2vo,offset,limit);
+	}
+
+
+	@Override
+	public int writeUserFAQ(Admin2VO a2vo) {
+		return admin2DAO.writeUserFAQ(a2vo);
+	}
+
+
+	@Override
+	public int writePromiseFAQ(Admin2VO a2vo) {
+		return admin2DAO.writePromiseFAQ(a2vo);
+	}
+
+
+	@Override
+	public int StatusUserChange(List<Integer> faq_idx) {
+		return admin2DAO.StatusUserChange(faq_idx);
+	}
+
+
+	@Override
+	public int StatusPromiseChange(List<Integer> faq_idx) {
+		return admin2DAO.StatusPromiseChange(faq_idx);
+	}
+
+
+	@Override
+	public int getUseFAQCount(Admin2VO a2vo) {
+		return admin2DAO.getUseFAQCount(a2vo);
+	}
+
+
+	@Override
+	public int getPromiseFAQCount(Admin2VO a2vo) {
+		return admin2DAO.getPromiseFAQCount(a2vo);
 	}
 
 }
