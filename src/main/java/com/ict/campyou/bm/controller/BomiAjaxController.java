@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.ict.campyou.bm.dao.ChatVO;
 import com.ict.campyou.bm.dao.PasswordCheckRequest;
 import com.ict.campyou.bm.service.MyService;
 import com.ict.campyou.hu.dao.MemberVO;
@@ -35,20 +33,20 @@ public class BomiAjaxController {
 	private MyService myService;
 	
 
-//	@RequestMapping(value = "pwdCheck.do", produces = "application/json; charset=utf-8")
-//	public ResponseEntity<String> checkPassword(@RequestBody PasswordCheckRequest request, HttpSession session) {
-//
-//	    String inputPassword = request.getPassword();
-//	    String memberId = request.getMemberId();
-//	    MemberVO member = myService.getMemberPwd(memberId);
-//	    boolean isPasswordMatch = passwordEncoder.matches(inputPassword, member.getMember_pwd());
-//	    if (isPasswordMatch) {
-//	    	session.setAttribute("authenticatedMember", member);
-//	    	  return ResponseEntity.ok("success");
-//	    }
-//
-//	    return ResponseEntity.ok("fail");
-//	}
+	@RequestMapping(value = "my_pwdCheck.do", produces = "application/json; charset=utf-8")
+	public ResponseEntity<String> checkPassword(@RequestBody PasswordCheckRequest request, HttpSession session) {
+
+	    String inputPassword = request.getPassword();
+	    String memberId = request.getMemberId();
+	    MemberVO member = myService.getMemberPwd(memberId);
+	    boolean isPasswordMatch = passwordEncoder.matches(inputPassword, member.getMember_pwd());
+	    if (isPasswordMatch) {
+	    	session.setAttribute("authenticatedMember", member);
+	    	  return ResponseEntity.ok("success");
+	    }
+
+	    return ResponseEntity.ok("fail");
+	}
 
 	@GetMapping(value="my_fav_list.do", produces="application/json; charset=utf-8")
 	@ResponseBody
