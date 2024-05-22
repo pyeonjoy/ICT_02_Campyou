@@ -37,13 +37,14 @@
     position: relative;
     display: flex;
     margin-bottom: 40px;
-    padding: 20px;
+    padding: 35px;
     border: 1px solid black;
     box-sizing: border-box;
-    margin-right: 4%;
+    margin-right: 2%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 45%;
     max-width: 45%; 
+    border-radius: 20px;
 }
 
 .camp_info {
@@ -133,7 +134,10 @@
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
 }
-
+button {
+	    padding: 10px;
+	    margin: 20px;
+}
 </style>
 </head>
 <body>

@@ -120,7 +120,7 @@ width: 2.7rem;
 <body>
 	<div id="bbs" align="center">
 		<table summary="게시판 목록">
-			<caption  style="margin-bottom:100px;"><h3>게시판 목록</h3></caption>
+			<caption  style="margin-bottom:100px;"><h3>회원 목록</h3></caption>
 			<thead>
 				<tr class="title">
 					<th class="no">선택</th>
@@ -140,7 +140,7 @@ width: 2.7rem;
 			<tbody>
 				<c:choose>
 					<c:when test="${empty searchmember }">
-						<tr><td colspan="12"><h3>게시물이 존재하지 않습니다.</h3></td></tr>
+						<tr><td colspan="12"><h3>회원이 존재하지 않습니다.</h3></td></tr>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="k" items="${searchmember}" varStatus="vs">
