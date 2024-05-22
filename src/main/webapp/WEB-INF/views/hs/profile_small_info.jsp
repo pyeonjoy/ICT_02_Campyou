@@ -1,16 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
-<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('.userImage2').click(function(event) {
+		$('.profile_show').click(function(event) {
+			let member_idx = this.getAttribute('data-memberidx'); 
+			console.log(member_idx);
+			console.log( $(this));
+			
+			var imageSrc = this.getAttribute('src');
+			console.log(imageSrc);
+			
+			$.ajax({
+			    url: "getProfile.do",
+			    method: "post",
+			    dataType: "xml",
+			    data: { member_idx:member_idx },
+			    success: function(data) {
+			    	
+			    },
+			    error: function() {
+			    	console.log("읽기 실패");
+			    }
+			});
+			
+			
 			$('.profile_small_info_container').css('display', 'block');
 		});
 
@@ -18,14 +39,15 @@
 	        const target = $(event.target).offset(); 
 	        const click_position_top = target.top + 60;
 	        const click_position_left = target.left;
-	        console.log(click_position_top)
-	        console.log(click_position_left)
             $('.profile_small_info_container').css('top', click_position_top+'px');
             $('.profile_small_info_container').css('left', click_position_left+'px');
-	        if (!$('.profile_small_info_container').is(event.target) && !$('.userImage2').is(event.target)) {
+	        if (!$('.profile_small_info_container').is(event.target) && !$('.profile_show').is(event.target)) {
 	            $('.profile_small_info_container').css('display', 'none');
 	        }
 	    });
+	    
+	    
+	    
 	});
 </script>
 <style type="text/css">
@@ -79,8 +101,60 @@
 .bottom_info {
 	font-size: 14px;
 	line-height: 25px;
-	margin-left: 5px;
 }
+</style>
+<style>
+.rating_wrap {
+	width: 200px;
+    height: 40px;
+}
+
+.rating_stars {
+	display: flex;
+}
+.rating {
+	display:flex;
+    overflow: hidden;
+    width: 200px;
+    height: 40px;
+   	position: relative;
+}
+.rating_empty {
+	display:flex;
+    overflow: hidden;
+    width: 200px;
+    height: 40px;
+   	position: relative;
+}
+
+.rating__label {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    position: relative;
+}
+
+.empty, .filled {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.empty {
+    background-image: url(${path}/resources/images/ico-star-empty.png);
+}
+
+.filled {
+    background-image: url(${path}/resources/images/ico-star.png);
+    z-index: 5;
+}
+.asd {
+	position: absolute;
+}
+
 </style>
 </head>
 <body>
@@ -93,16 +167,46 @@
 				</div>
 				<span class="member_age">20대</span>
 				<div>
-					<input type="button" value="채팅">
-					<input type="button" value="신고" onclick="location.href='report_write.do?member_idx=${k.member_idx}'">
-
+					<input type="button" value="채팅"> <input type="button"
+						value="신고"
+						onclick="location.href='report_write.do?member_idx=${k.member_idx}'">
 				</div>
 			</div>
 			<hr>
 			<div class="bottom_info">
-				<span>게시글 개수: </span><br> <span>동행글 개수: </span>
+				<div class="rating_wrap">
+					<div class="asd">
+						<div class="rating_empty">
+							<c:forEach var="i" begin="1" end="5">
+							    <div class="rating__label rating__label--full">
+							        <span class="star-icon empty" id="star${i}" ></span>
+							    </div>
+							</c:forEach>
+						</div>
+					</div>
+					<div class="asd">
+						<div class="rating">
+							<div class="rating_stars">
+								<c:forEach var="i" begin="1" end="5">
+								    <div class="rating__label rating__label--full">
+								        <span class="star-icon filled" id="star${i}" ></span>
+								    </div>
+								</c:forEach>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+<script>
+$(document).ready(function(){
+    const member_rating = 2.5; 
+    const full_rating = 10;
+    const partialWidth = member_rating / full_rating * 100;
+
+    $(".rating").css("width", partialWidth + "%");
+});
+</script>
 </body>
 </html>
