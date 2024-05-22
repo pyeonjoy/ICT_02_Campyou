@@ -66,7 +66,8 @@ function naverLogIn() {
 	            <br><br>
 	            <p class="small mb-5 pb-lg-2"><a class="text-muted" href="find_pwd_go.do">비밀번호 찾기</a> &nbsp;
 	           	<a class="text-muted" href="find_id_go.do">아이디 찾기</a></p>
-	           	<p class="text-center text-muted mt-5 mb-1">회원이 아니신가요?&nbsp;<a href="sign_up_page_go.do"class="fw-bold text-body">회원가입</a></p>
+	           	<p class="text-center text-muted mt-5 mb-1">회원이 아니신가요?&nbsp;<a href="sign_up_page_go.do"class="fw-bold text-body">회원가입</a></p><br>
+	            <a class="text-muted" href="admin_login_form.do">관리자 로그인(임시)</a>
 	            <hr class="my-4">  
 			</form>
 				<a id="a-color" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=4a601447a1662d2919cfc432b342bc38&redirect_uri=http://localhost:8090/kakaologin.do">

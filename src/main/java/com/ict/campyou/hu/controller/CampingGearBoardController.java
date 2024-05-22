@@ -95,10 +95,16 @@ public class CampingGearBoardController {
 			  
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			  
 			  CampingGearBoardVO cgbvo = new CampingGearBoardVO();
 			  
 			  if(memberInfo != null) {
 				  cgbvo.setMember_idx(memberInfo.getMember_idx());
+			  }
+			  
+			  if(memberInfo != null) {
+				  cgbvo.setMember_grade(memberInfo.getMember_grade());
 			  }
 			  
 			  if(adminInfo != null) {
@@ -110,6 +116,7 @@ public class CampingGearBoardController {
 					mv.addObject("paging", paging);
 					mv.addObject("memberInfo", memberInfo);
 					mv.addObject("adminInfo", adminInfo);
+					mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
 					return mv;
 				}
 				return new ModelAndView("hu/campingGearBoard/error");
@@ -126,6 +133,7 @@ public class CampingGearBoardController {
 			  
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
 			  
 			  if(memberInfo != null) {
 				  mv.addObject("memberInfo", memberInfo);
@@ -133,6 +141,10 @@ public class CampingGearBoardController {
 			  }
 			  if(adminInfo != null) {
 				  mv.addObject("adminInfo", adminInfo);
+				  return mv;
+			  }
+			  if(kakaoMemberInfo != null) {
+				  mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
 				  return mv;
 			  }
 		  } catch (Exception e) {
@@ -155,6 +167,7 @@ public class CampingGearBoardController {
 			  //일반회원 글쓰기
 			  if(memberInfo != null) {
 				  cgbvo.setMember_idx(memberInfo.getMember_idx());
+				  cgbvo.setMember_grade(memberInfo.getMember_grade());
 				  
 				  if(file.isEmpty()) {
 					  cgbvo.setCpf_name("");

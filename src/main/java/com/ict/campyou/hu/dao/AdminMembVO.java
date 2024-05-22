@@ -2,7 +2,7 @@ package com.ict.campyou.hu.dao;
 
 public class AdminMembVO {
 	
-	private String admin_idx, admin_id, admin_pwd, admin_name, admin_nickname, admin_phone, admin_email, admin_status;
+	private String admin_idx, admin_id, admin_pwd, admin_name, admin_nickname, member_grade, admin_phone, admin_email, admin_status;
 
 	public String getAdmin_idx() {
 		return admin_idx;
@@ -10,6 +10,14 @@ public class AdminMembVO {
 
 	public void setAdmin_idx(String admin_idx) {
 		this.admin_idx = admin_idx;
+	}
+
+	public String getMember_grade() {
+		return member_grade;
+	}
+
+	public void setMember_grade(String member_grade) {
+		this.member_grade = member_grade;
 	}
 
 	public String getAdmin_id() {

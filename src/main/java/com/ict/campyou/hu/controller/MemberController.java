@@ -384,6 +384,10 @@ public class MemberController {
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
 			  }
 			  
+			  if(memberInfo != null) {
+				  cbvo.setMember_grade(memberInfo.getMember_grade());
+			  }
+			  
 			  if(adminInfo != null) {
 				  cbvo.setMember_idx(adminInfo.getAdmin_idx());
 			  }
@@ -437,14 +441,17 @@ public class MemberController {
 			  
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
-			  
+			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			 
 			  String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 			  MultipartFile file = cbvo.getFile();
 			  
 			  //일반회원 글쓰기
 			  if(memberInfo != null) {
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
-				  
+				  //cbvo.setMember_idx(kakaoMemberInfo.getMember_idx());
+				  cbvo.setMember_grade(memberInfo.getMember_grade());
+			   
 				  if(file.isEmpty()) {
 					  cbvo.setBf_name(""); 
 				  }else {
@@ -457,8 +464,36 @@ public class MemberController {
 					  FileCopyUtils.copy(in, out);
 				  }	
 				  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));
-				  
+				  System.out.println("cbvo: " + cbvo.getMember_nickname());
 				  int result = commBoardService.getCommBoardInsert(cbvo);
+				  if(result > 0) {
+					  //자유 게시판에 글쓸때 마다 member_free 등급 올리기
+					  String member_idx = cbvo.getMember_idx();
+					  int result2 = memberService.getMemberFreeUpdate(member_idx);
+					  return mv;
+				  } 
+			  }
+			  
+			  //카카오회원 글쓰기
+			  if(kakaoMemberInfo != null) {
+				  cbvo.setMember_idx(kakaoMemberInfo.getMember_idx());
+				 //cbvo.setMember_grade(memberInfo.getMember_grade());
+				  
+				  if(file.isEmpty()) {
+					  cbvo.setBf_name(""); 
+				  }else {
+					  UUID uuid = UUID.randomUUID();
+					  String f_name = uuid.toString() + "_" + file.getOriginalFilename();
+					  cbvo.setBf_name(f_name);
+					  
+					  byte[] in = file.getBytes();
+					  File out = new File(path, f_name);
+					  FileCopyUtils.copy(in, out);
+				  }	
+				  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));				  				  
+				  
+				  int result = commBoardService.getCommBoardInsert(cbvo);			
+				  
 				  if(result > 0) {
 					  //자유 게시판에 글쓸때 마다 member_free 등급 올리기
 					  String member_idx = cbvo.getMember_idx();
@@ -470,6 +505,7 @@ public class MemberController {
 			  //관리자 글쓰기
 			  if(adminInfo != null) {
 				  cbvo.setAdmin_idx(adminInfo.getAdmin_idx());
+				  cbvo.setMember_grade("0");
 				  
 				  if(file.isEmpty()) {
 					  cbvo.setBf_name(""); 
@@ -502,6 +538,7 @@ public class MemberController {
 		
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
 			  
 			  int result = commBoardService.getCommBoardHit(b_idx);
 			  
@@ -524,6 +561,18 @@ public class MemberController {
 					  mv.addObject("cbvo", cbvo);
 					  mv.addObject("memberInfo", memberInfo);
 					  mv.addObject("adminInfo", adminInfo);
+					  return mv;
+				  }  
+			  }
+			  if(kakaoMemberInfo != null) {
+				  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
+				  cbvo.setMember_idx(kakaoMemberInfo.getMember_idx());
+				  
+				  if(result > 0 && cbvo != null && cbvo.getMember_idx().equals(kakaoMemberInfo.getMember_idx())) {
+					  mv.addObject("cbvo", cbvo);
+					  mv.addObject("memberInfo", memberInfo);
+					  mv.addObject("adminInfo", adminInfo);
+					  mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
 					  return mv;
 				  }  
 			  }
@@ -698,10 +747,11 @@ public class MemberController {
 	  			ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardContent");
 				MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 				AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+				MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
 				  
 				int result = commBoardService.getCommBoardHit(b_idx);
 				  
-				if(memberInfo == null && adminInfo == null) {
+				if(memberInfo == null && adminInfo == null && kakaoMemberInfo == null) {
 					CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 					List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
 					 
@@ -733,6 +783,18 @@ public class MemberController {
 						mv.addObject("commBoard_list2", commBoard_list2);
 						mv.addObject("cbvo", cbvo);
 						mv.addObject("adminInfo", adminInfo);
+						return mv;
+					}  
+				}
+				if(kakaoMemberInfo != null) {
+					CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);  
+					cbvo.setMember_idx(kakaoMemberInfo.getMember_idx());
+					
+					if(result > 0 && cbvo != null && cbvo.getMember_idx().equals(kakaoMemberInfo.getMember_idx())) {
+						List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
+						mv.addObject("commBoard_list2", commBoard_list2);
+						mv.addObject("cbvo", cbvo);
+						mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
 						return mv;
 					}  
 				}
