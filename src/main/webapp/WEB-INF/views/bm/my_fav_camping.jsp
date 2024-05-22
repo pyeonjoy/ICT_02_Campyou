@@ -18,16 +18,15 @@ const path = "${path}";
  <script defer src="${path}/resources/public/js/jun/camp_list.js"></script>
 </head>
 <body>
-	<%@ include file="../hs/mypage_menu.jsp"%>
-<div class="body">	
+	<%@ include file="../hs/mypage_menu.jsp"%>	
  <div class="mypage">
       <h3 class="my_camping"> 관심 캠핑장 </h3>
-
-      <div class="camping_container"> 
-    
+      <div class="camping_container">   		
       </div>
+      <footer class="foot">
+  		<%@include file="../hs/footer.jsp"%>
+      </footer>
   </div>
-    <%@ include file="../hs/footer.jsp"%>
- </div>
+
 </body>
 </html>
