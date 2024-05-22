@@ -127,8 +127,7 @@ public class MemberController {
 	          
 	          MemberVO vo2 = memberService.getLogInOK(vo);
 	          
-	          
-	          if(vo2 == null || !passwordEncoder.matches(vo.getMember_pwd(), vo2.getMember_pwd()) && (vo.getMember_id() != vo2.getMember_id()) ) {
+	          if(vo2.getMember_active().equals("-2") || vo2 == null || !passwordEncoder.matches(vo.getMember_pwd(), vo2.getMember_pwd()) && (vo.getMember_id() != vo2.getMember_id()) ) {
 	        	  mv.setViewName("redirect:login_form.do");
 	        	  //mv.addObject("pwdchk", "fail");
 	              return mv;

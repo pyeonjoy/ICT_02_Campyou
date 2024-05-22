@@ -276,7 +276,6 @@ public class BomiController {
 		MemberVO mvo = myService.getMember(member_idx);
 		mvo.setMember_pwd(passwordEncoder.encode(newPassword));
 		int res = myService.changeUserPW(mvo);
-		System.out.println(res);
 		if (res > 0) {
 			return mv;
 		}
@@ -284,10 +283,14 @@ public class BomiController {
 	}
 
 	// Delete User
-	@GetMapping("deleteUser.do")
-	public ModelAndView changeUserPw(@RequestParam("member_idx") String member_idx) {
+	@PostMapping("deleteUser.do")
+	public ModelAndView changeUserPw(HttpSession session, @RequestParam("member_idx") String member_idx) {
 		ModelAndView mv = new ModelAndView("redirect:home.do");
-		int res = myService.deletMember(member_idx);
+		MemberVO mvo = myService.getMember(member_idx);
+		int res = myService.deletMember(mvo);
+		System.out.println("delete:"
+				+res);
+		session.removeAttribute("memberInfo");
 		return mv;
 	}
 
