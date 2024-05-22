@@ -73,7 +73,7 @@
 			end="${paging.endBlock }" step="1" var="k">
 			<c:choose>
 			<c:when test="${ k== paging.nowPage}">
-				<li class="paging_list paging_num">${k}</li> 
+				<li class="paging_list paging_active">${k}</li> 
 				</c:when>
 			<c:otherwise>
 				<li class="paging_list paging_num"><a href="my_inquiry_list.do?cPage=${k}">${k}</a></li>

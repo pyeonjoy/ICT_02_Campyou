@@ -13,10 +13,10 @@
     <result property="msg_read" column="msg_read"/>   
 </resultMap>
 <select id="faq_lists" resultType="fvo">
-select * from faq order by faq_idx
+select * from faq where faq_status=1 order by faq_idx 
 </select>
 <select id="faq_lists2" resultType="fvo">
-select * from faq2 order by faq_idx
+select * from faq2 where faq_status=1 order by faq_idx
 </select>
 
 <select id="getPw" resultType="mvo" parameterType="String">
