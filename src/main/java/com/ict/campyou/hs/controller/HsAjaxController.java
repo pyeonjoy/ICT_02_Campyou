@@ -177,4 +177,21 @@ public class HsAjaxController {
 		}
 		return null;
 	}
+	
+	@RequestMapping(value = "getProfile.do", produces = "text/xml; charset=utf-8")
+	@ResponseBody
+	public String getProfile(@RequestParam String member_idx) {
+		try {
+			System.out.println(member_idx);
+			//List<CampVO> local = hsService.getProfile();
+
+			StringBuffer sb = new StringBuffer();
+			sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			return sb.toString();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "fail";
+	}
+	
 }
