@@ -22,8 +22,17 @@ function enterChatRoom(t_idx){
 	    "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=400, height=670, right=0, top=0, location=no, titlebar=no");
 }
 function to_list_go(f) {
-	f.action="together_list.do";
-	f.submit();
+	let promiseStatus = f.querySelector('input[name="promise_status"]').value;
+    console.log(promiseStatus);
+    if (promiseStatus === null || promiseStatus === '') {
+        f.action = "together_list.do";
+    } else if(promiseStatus === "ing" || promiseStatus === "ready" || promiseStatus === "end"){
+        f.action = "together_partner.do";
+    } else if(promiseStatus === "apply" || promiseStatus === "send"){
+    	f.action = "together_history.do";
+    }
+    
+    f.submit();
 }
 
 $(function() {
@@ -202,7 +211,7 @@ function to_comment() {
             		commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/user2.png" class="userImage32 profile_show"></div>';
             		commentHTML += '<input type="text" value="" id="" class="toDetailInputBox" placeholder="로그인 후 작성가능합니다" readonly>';
             	}
-            	commentHTML += '<input type="button" value="입력" id="" class="toDetailInputSubmit" onclick="">';
+            	commentHTML += '<input type="button" value="입력" id="" class="toDetailInputSubmit" onclick="submitComment()">';
             	commentHTML += '</div>';
             	commentHTML += '</form>';
             	for (let i = 0; i < data.toCommentList.length; i++) {
@@ -254,7 +263,7 @@ function to_comment() {
            	        commentHTML += '<div class="toDetailInput">';
            	        commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32"></div>';
            	        commentHTML += '<input type="text" value="" id="" class="toDetailInputBox">';
-           	        commentHTML += '<input type="button" value="입 력" id="" class="toDetailInputSubmit">';
+           	        commentHTML += '<input type="button" value="입 력" id="" class="toDetailInputSubmit" onclick="submitComment()">';
            	        commentHTML += '<input type="hidden" value="' + comment.wc_idx + '" id="wc_idx" >';
            	        commentHTML += '<input type="hidden" value="' + comment.wc_groups + '" id="wc_groups" >';
            	        commentHTML += '<input type="hidden" value="' + comment.wc_step + '" id="wc_step" >';
@@ -421,7 +430,7 @@ $(document).on("click", ".toDetailContent4Sub2Sub2ButtonX", function() {
                 <div class="toContentOne1span">
                     <span class="to_member_nickname profile_show">${tvo.member_nickname }</span>
                     <img src="${path}/resources/images/${tvo.member_grade}" class="member_gradeImg" >
-					<span class="to_member_age">(${tvo.member_dob })</span>
+					<span class="to_member_age">(${tvo.member_dob } ${tvo.member_gender })</span>
                 </div>
 
 <!--                 <input type="button" value="1:1 채팅하기" id="" onclick="" class="toDetailContent1Button toDetailContent1Button1"> -->
@@ -485,6 +494,7 @@ $(document).on("click", ".toDetailContent4Sub2Sub2ButtonX", function() {
             	</c:choose>
                 <input type="button" value="목 록" id="" onclick="to_list_go(this.form)" class="toDetailContent3Button">
                 <input type="hidden" name="cPage" value="${cPage }" >
+                <input type="hidden" name="promise_status" id="promiseStatus" value="${promise_status }" >
             </div>
             <div class="toDetailContent4">
 <!--                 <p class="toDetailContent4Sub1">댓글</p> -->

@@ -31,12 +31,14 @@
 $(function() {
 	let cpage = document.getElementById("cPage").value;
 	let proStatus = document.getElementById("promiseStatus").value;
+	console.log(proStatus);
+	console.log(cpage);
 	if(cpage != ''){
-		if(proStatus === "'ing'"){
+		if(proStatus === "ing"){
 			toPromiseIng(cpage);
-		}else if(proStatus === "'ready'"){
+		}else if(proStatus === "ready"){
 			toPromiseReady(cpage);
-		}else if(proStatus === "'end'"){
+		}else if(proStatus === "end"){
 			toPromiseEnd(cpage);
 		}
 	}else{
@@ -47,7 +49,7 @@ $(function() {
 let pro_status = '';
 
 function toPromiseIng(page) {
-	pro_status = 'ing';
+	pro_status = "ing";
 	let memberIdx = document.getElementById("member_idx").value;
    	$('.toContent, .thwrapper1').empty();
     $.ajax({
@@ -95,7 +97,7 @@ function toPromiseIng(page) {
                     html += '<p>모집 : ' + PromiseIng.promise_count + ' / ' + PromiseIng.t_numpeople + '명' + '</p>';
                     html += '</div>';
                     html += '<form method="post" class="toContentOne4">';
-                    html += '<button type="button" class="toContentOne2" onclick="to_detail(' + PromiseIng.t_idx + ',' + data.paging.nowPage + ')">상세 보기<button>';
+                    html += '<button type="button" class="toContentOne2" onclick="to_detail(' + PromiseIng.t_idx + ',' + data.paging.nowPage + ',\'' + pro_status + '\')">상세 보기<button>';
                     html += '<button type="button" class="toContentOne2" onclick="to_people_detail(this.form)">인원 보기<button>';
                     html += '<input type="hidden" name="t_idx" value="' + PromiseIng.t_idx + '">';
                     html += '<input type="hidden" name="cPage" value="' + data.paging.nowPage + '">';
@@ -156,7 +158,7 @@ function toPromiseIng(page) {
     });
 }
 function toPromiseReady(page) {
-	pro_status = 'ready';
+	pro_status = "ready";
 	let memberIdx = document.getElementById("member_idx").value;
    	$('.toContent, .thwrapper1').empty();
     $.ajax({
@@ -204,7 +206,7 @@ function toPromiseReady(page) {
                     html += '<p>모집 : ' + promiseReady.promise_count + ' / ' + promiseReady.t_numpeople + '명' + '</p>';
                     html += '</div>';
                     html += '<form method="post" class="toContentOne4">';
-                    html += '<button type="button" class="toContentOne2" onclick="to_detail(' + promiseReady.t_idx + ',' + data.paging.nowPage + ')">상세 보기<button>';
+                    html += '<button type="button" class="toContentOne2" onclick="to_detail(' + promiseReady.t_idx + ',' + data.paging.nowPage + ',\'' + pro_status + '\')">상세 보기<button>';
                     html += '<button type="button" class="toContentOne2" onclick="to_people_detail(this.form)">인원 보기<button>';
                     html += '<input type="hidden" name="t_idx" value="' + promiseReady.t_idx + '">';
                     html += '<input type="hidden" name="cPage" value="' + data.paging.nowPage + '">';
@@ -313,7 +315,7 @@ function toPromiseEnd(page) {
                     html += '<p>모집 : ' + promiseEnd.promise_count + ' / ' + promiseEnd.t_numpeople + '명' + '</p>';
                     html += '</div>';
                     html += '<form method="post" class="toContentOne4">';
-                    html += '<button type="button" class="toContentOne2" onclick="to_detail(' + promiseEnd.t_idx + ',' + data.paging.nowPage + ')">상세 보기<button>';
+                    html += '<button type="button" class="toContentOne2" onclick="to_detail(' + promiseEnd.t_idx + ',' + data.paging.nowPage + ',\'' + pro_status + '\')">상세 보기<button>';
                     html += '<button type="button" class="toContentOne2" onclick="to_people_detail(this.form)">인원 보기<button>';
                     html += '<input type="hidden" name="t_idx" value="' + promiseEnd.t_idx + '">';
                     html += '<input type="hidden" name="cPage" value="' + data.paging.nowPage + '">';
@@ -374,8 +376,8 @@ function toPromiseEnd(page) {
     });
 }
 
-function to_detail(t_idx, nowPage) {
-    location.href = 'together_detail.do?t_idx=' + t_idx + '&cPage=' + nowPage;
+function to_detail(t_idx, nowPage, promiseStatus) {
+    location.href = "together_detail.do?t_idx=" + t_idx + "&cPage=" + nowPage + "&promise_status=" + promiseStatus;
 }
 function to_people_detail(f) {
 // 	let hiddenInput = document.createElement("input");

@@ -1,7 +1,7 @@
 package com.ict.campyou.bjs.dao;
 
 public class TogetherCommentVO {
-	private String wc_idx, t_idx, member_idx, member_grade, wc_content, wc_groups, wc_comment_idx, wc_step, wc_lev, wc_regdate, wc_active, member_nickname, member_img;
+	private String wc_idx, t_idx, member_idx, member_gender, member_grade, wc_content, wc_groups, wc_comment_idx, wc_step, wc_lev, wc_regdate, wc_active, member_nickname, member_img;
 
 	public String getWc_idx() {
 		return wc_idx;
@@ -27,6 +27,14 @@ public class TogetherCommentVO {
 		this.member_idx = member_idx;
 	}
 	
+	public String getMember_gender() {
+		return member_gender;
+	}
+
+	public void setMember_gender(String member_gender) {
+		this.member_gender = member_gender;
+	}
+
 	public String getMember_grade() {
 		return member_grade;
 	}

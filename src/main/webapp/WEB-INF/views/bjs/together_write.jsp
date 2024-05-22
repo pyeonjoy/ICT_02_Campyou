@@ -30,7 +30,6 @@
 			height : 300,
 			focus : true,
 			placeholder: '최대3000자까지 쓸 수 있습니다'	,
-// 				disableHtmlResizing: true, // <p> 태그 자동 생성 비활성화
 			callbacks : {
 				onImageUpload : function(files, editor) {
 					for (var i = 0; i < files.length; i++) {
@@ -40,10 +39,6 @@
 			}
 		});
 	});
-	//	var extract_html = content.replace(/(<([^>]+)>)/ig,"");
-	//	if (extract_html == "") {
-	//	    alert("내용없음");
-	//	}
 	$(function() {
 	  $('input[name="datetimes"]').daterangepicker({
 		    "locale": {
@@ -87,10 +82,6 @@
             alert("내용을 입력하세요.");
             return;
         }
-// 	    if (!t_induty) {
-// 	        alert("캠핑 타입을 선택해주세요.");
-// 	        return;
-// 	    }
 	    if (!t_mapx && !t_mapy) {
 	        alert("동행할 캠핑장 위치를 선택해주세요.");
 	        return;
@@ -122,13 +113,6 @@
 	    return false;
 	}
 	
-// 	$(document).ready(function() {
-// 	    $('.togetherSub1Button').click(function() {
-// 	        $('.togetherSub1Button').removeClass('active');
-// 	        $(this).addClass('active');
-// 	    });
-// 	});
-		
 	
 	
 	let map;
@@ -170,15 +154,15 @@
                     });
                     infoWindow.open(map, position);
                     
-                    $('.togetherSub1DivP').val(addr);
-                    $('.togetherSub1DivP1').val(campName);
-                    t_induty = $('.togetherCampType').text(induty);
-                    campImageUrl = imageUrl;
-                    t_mapx = mapx;
-                    t_mapy = mapy;
-                    t_induty = induty;
-                    t_facltdivnm = facltdivnm;
-                    t_mangedivnm = mangedivnm;
+                    $('.togetherSub1DivP').val(camp.addr1);
+                    $('.togetherSub1DivP1').val(camp.facltnm);
+                    t_induty = $('.togetherCampType').text(camp.induty);
+                    campImageUrl = camp.firstimageurl;
+                    t_mapx = camp.mapx;
+                    t_mapy = camp.mapy;
+                    t_induty = camp.induty;
+                    t_facltdivnm = camp.facltdivnm;
+                    t_mangedivnm = camp.mangedivnm;
                 	
                 	$(".searchbar").val("");
                 } 
@@ -216,7 +200,7 @@
 	                        title: camp.facltnm, // 지역구 이름 
 	                        position: position
 	                    });
-// 	                    console.log(i, marker.getTitle);
+	                    
 	                    /* 정보창 */
 	                    let infoWindow = new naver.maps.InfoWindow({
 	                        content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + camp.firstimageurl + '" alt="" style="width:100%;" /><b>' + camp.facltnm + '</b><br><br> ' + camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
@@ -301,11 +285,6 @@
 	        <div class="togetherWriteSelect">
 	            <span class="togetherSub5Strong">캠핑타입</span>
 				<span class="togetherCampType"></span>
-<!-- 	            <div class="togetherSub1"> -->
-<!-- 	            	<button type="button" name="카라반" value="카라반" class="togetherSub1Button">카라반</button> -->
-<!-- 	            	<button type="button" name="글램핑" value="글램핑" class="togetherSub1Button">글램핑</button> -->
-<!-- 	            	<button type="button" name="야영지" value="야영지" class="togetherSub1Button">야영지</button> -->
-<!-- 	            </div> -->
 	            <div class="togetherSub1">
 	                <strong class="togetherSub5Strong">캠핑장</strong>
 	                <div class="togetherSub1Div">

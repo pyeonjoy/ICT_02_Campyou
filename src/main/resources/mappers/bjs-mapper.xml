@@ -22,7 +22,7 @@
 	    </choose>
 	</select>
 	<select id="to_list" resultType="tvo">
-		select b.*, m.member_nickname, m.member_dob, m.member_img, m.member_grade
+		select b.*, m.member_nickname, m.member_dob, m.member_img, m.member_grade, m.member_gender
 		from board_with b
 		inner join members m on b.member_idx = m.member_idx
 		where b.t_active = 0
@@ -36,7 +36,7 @@
 		select count(*) from with_promise where t_idx = #{t_idx} and pm_state != -1 and	pm_state != 0 and pm_state != 3
 	</select>
 	<select id="to_detail" parameterType="String" resultType="tvo">
-		select b.*, m.member_nickname, m.member_dob, m.member_img, m.member_grade
+		select b.*, m.member_nickname, m.member_dob, m.member_img, m.member_grade, m.member_gender
 		from board_with b
 		left join members m on b.member_idx = m.member_idx 
 		where t_idx = #{t_idx}
@@ -71,7 +71,7 @@
 		select * from camp_list where replace(facltnm, ' ', '') = #{campName}
 	</select>
 	<select id="to_list_search" parameterType="Map" resultType="tvo">
-	    select b.*, m.member_nickname, m.member_dob, m.member_img, m.member_grade
+	    select b.*, m.member_nickname, m.member_dob, m.member_img, m.member_grade, m.member_gender
 	    from board_with b
 	    join members m on b.member_idx = m.member_idx
 	    where 
@@ -107,7 +107,7 @@
 		update board_with set t_active = 1 where t_idx = #{t_idx}
 	</update>
 	<select id="promise_list" parameterType="String" resultType="pvo">
-		select b.tf_name, b.t_startdate, b.t_enddate, b.t_campname, b.t_numpeople, p.*, m.member_img, m.member_dob, m.member_nickname, m.member_grade
+		select b.tf_name, b.t_startdate, b.t_enddate, b.t_campname, b.t_numpeople, p.*, m.member_img, m.member_dob, m.member_nickname, m.member_grade, m.member_gender
 	    from with_promise p
 	    join board_with b on p.t_idx = b.t_idx
 	    join members m on p.member_idx = m.member_idx
@@ -130,7 +130,7 @@
 	    where p.pm_master = 0 and p.t_idx in (select t_idx from board_with where member_idx = #{member_idx} and t_active = 0)
 	</select>
 	<select id="together_history" parameterType="Map" resultType="pvo">
-		select b.t_startdate, b.t_enddate, b.t_campname, b.t_numpeople, p.*, m.member_img, m.member_dob, m.member_nickname, m.member_grade
+		select b.t_startdate, b.t_enddate, b.t_campname, b.t_numpeople, p.*, m.member_img, m.member_dob, m.member_nickname, m.member_grade, m.member_gender
 	    from with_promise p
 	    join board_with b on p.t_idx = b.t_idx
 	    join members m on p.member_idx = m.member_idx
@@ -196,7 +196,7 @@
 		select * from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate > now() order by t_idx desc limit #{limit} offset #{offset}
 	</select>
 	<select id="promise_people_detail" parameterType="String" resultType="pvo">
-	    select wp.*, m.member_img, m.member_dob, m.member_nickname, m.member_grade
+	    select wp.*, m.member_img, m.member_dob, m.member_nickname, m.member_grade, m.member_gender
 	    from with_promise wp 
 	    join members m on wp.member_idx = m.member_idx
 	    where wp.t_idx = #{t_idx} and wp.pm_state in (1, 2)

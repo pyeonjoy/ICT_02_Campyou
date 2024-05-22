@@ -157,6 +157,9 @@ function promiseApplyList() {
 			<h2 class="welcome_user">${mvo.member_name}<span class="emoji" id="${mvo.member_grade}"></span>님, 환영합니다.</h2>
 		</div>
 		<input type="hidden" id="memberIdx" value="${mvo.member_idx }">
+		<div class="accompany_container">
+		
+		</div>
 		<div class="list_container">
 			<div class="my_list my_board_list">
 				<h4 class="my_title">활동내역</h4>
@@ -187,8 +190,6 @@ function promiseApplyList() {
 		</div>
 		
 		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
-		<div class="accompany_container">
-		</div>
 
 	</div>
 	  <%@ include file="../hs/footer.jsp"%>

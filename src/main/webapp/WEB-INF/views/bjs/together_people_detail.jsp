@@ -16,41 +16,7 @@
 <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
 <%@ include file="../hs/header.jsp" %>
 <%@ include file="../hs/mypage_menu.jsp"%>
-<script>
-$(document).ready(function() {
-	 $('#star_form').submit(function(e) {
-	        e.preventDefault();
-
-	        /* let member_idx = "${member_idx}"; */
-	        let member_idx = 2;
-	        let new_rating = $("input[name='rating']:checked").val();
-	        let requestData = {
-	        	new_rating: new_rating,
-	        	member_idx: 2
-	        };
-
-	        $.ajax({
-	            url: 'addstarok.do', 
-	            type: 'post',
-	            contentType: 'application/json',
-	            data: JSON.stringify(requestData),
-	            success:function(data){
-					if(data != "error") {
-	                    alert("별점이 정상적으로 등록되었습니다.");
-	                    $("input[name='rating']").prop('checked', false);
-	                } else {
-	                    alert("오류가 발생하였습니다.");
-	                }
-	            },
-	            error: function() {
-	                alert("로그인 후 이용 부탁드립니다.");
-	                location.href='login_form.do';
-	            }
-	        });
-	    });	
-});
-</script>
-    <style>
+<style>
 /*모달 팝업 영역 스타일링*/
 .modal {
 	/*팝업 배경*/
@@ -157,7 +123,7 @@ h1 {
 
 }
 
-    </style>
+</style>
 </head>
 <body>
 	<form method="post" class="thcontainer">
@@ -210,43 +176,43 @@ h1 {
 				<div>
 				<form id="star_form" class="rating">
 					<label class="rating__label rating__label--half" for="starhalf">
-						<input type="radio" id="starhalf" class="rating__input" name="rating" value="1"> <span class="star-icon"></span>
+						<input type="radio" id="starhalf" class="rating__input" name="new_rating" value="1"> <span class="star-icon"></span>
 					</label> 
 					
 					<label class="rating__label rating__label--full" for="star1">
-						<input type="radio" id="star1" class="rating__input" name="rating" value="2"> <span class="star-icon"></span>
+						<input type="radio" id="star1" class="rating__input" name="new_rating" value="2"> <span class="star-icon"></span>
 					</label> 
 					
 					<label class="rating__label rating__label--half" for="star1half">
-						<input type="radio" id="star1half" class="rating__input" name="rating" value="3"> <span class="star-icon"></span>
+						<input type="radio" id="star1half" class="rating__input" name="new_rating" value="3"> <span class="star-icon"></span>
 					</label> 
 					
 					<label class="rating__label rating__label--full" for="star2">
-						<input type="radio" id="star2" class="rating__input" name="rating" value="4"> <span class="star-icon"></span>
+						<input type="radio" id="star2" class="rating__input" name="new_rating" value="4"> <span class="star-icon"></span>
 					</label> 
 					
 					<label class="rating__label rating__label--half" for="star2half">
-						<input type="radio" id="star2half" class="rating__input" name="rating" value="5"> <span class="star-icon"></span>
+						<input type="radio" id="star2half" class="rating__input" name="new_rating" value="5"> <span class="star-icon"></span>
 					</label> 
 					
 					<label class="rating__label rating__label--full" for="star3">
-						<input type="radio" id="star3" class="rating__input" name="rating" value="6"> <span class="star-icon"></span>
+						<input type="radio" id="star3" class="rating__input" name="new_rating" value="6"> <span class="star-icon"></span>
 					</label> 
 					
 					<label class="rating__label rating__label--half" for="star3half">
-						<input type="radio" id="star3half" class="rating__input" name="rating" value="7" checked> <span class="star-icon"></span>
+						<input type="radio" id="star3half" class="rating__input" name="new_rating" value="7" checked> <span class="star-icon"></span>
 					</label> 
 					
 					<label class="rating__label rating__label--full" for="star4">
-						<input type="radio" id="star4" class="rating__input" name="rating" value="8"> <span class="star-icon"></span>
+						<input type="radio" id="star4" class="rating__input" name="new_rating" value="8"> <span class="star-icon"></span>
 					</label> 
 					
 					<label class="rating__label rating__label--half" for="star4half">
-						<input type="radio" id="star4half" class="rating__input" name="rating" value="9"> <span class="star-icon"></span>
+						<input type="radio" id="star4half" class="rating__input" name="new_rating" value="9"> <span class="star-icon"></span>
 					</label> 
 					
 					<label class="rating__label rating__label--full" for="star5">
-						<input type="radio" id="star5" class="rating__input" name="rating" value="10"> <span class="star-icon"></span>
+						<input type="radio" id="star5" class="rating__input" name="new_rating" value="10"> <span class="star-icon"></span>
 					</label>
 					<input type="submit" value="선택"/>
 				</form> 
@@ -255,28 +221,51 @@ h1 {
 		</div>
 	</div>
 <script type="text/javascript">
-$(document).on('click', '.modal_btn', function() {
-    $('.modal').css('display', 'block');
+$(document).ready(function() {
+	$(document).on('click', '.modal_btn', function() {
+		let memberIdx = $(this).siblings('#memberIdx').val();
+	    $('#star_form').data('memberIdx', memberIdx);
+	    $('.modal').css('display', 'block');
+	});
+	
+	$('#star_form').submit(function(e) {
+        e.preventDefault();
+
+        let member_idx = $(this).data('memberIdx');
+        let new_rating = $("input[name='new_rating']:checked").val();
+        let requestData = {
+            new_rating: new_rating,
+            member_idx: member_idx
+        };
+
+        $.ajax({
+            url: 'addstarok.do',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            success: function(data) {
+                if (data != "error") {
+                    alert("별점이 등록되었습니다.");
+                    $("input[name='new_rating']").prop('checked', false);
+                    $('.modal').css('display', 'none');
+                } else {
+                    alert("오류가 발생하였습니다.");
+                }
+            },
+            error: function(xhr, status, error) {
+//                 console.error(error);
+//                 alert("로그인 후 이용 부탁드립니다.");
+//                 location.href = 'login_form.do';
+            }
+        });
+    });
+	
+	$(document).on('click', function(event) {
+        if (!$(event.target).closest('.modal_popup').length && !$(event.target).closest('.modal_btn').length) {
+            $('.modal').css('display', 'none');
+        }
+    });
 });
-//     document.addEventListener("DOMContentLoaded", function() {
-//         const modalOpenButtons = document.querySelectorAll('.modal_btn');
-//         const modalCloseButtons = document.querySelectorAll('.close_btn');
-//         const modal = document.querySelector('.modal');
-
-//         // 열기 버튼을 눌렀을 때 모달팝업이 열림
-//         modalOpenButtons.forEach(function(button) {
-//             button.addEventListener('click', function() {
-//                 modal.style.display = 'block';
-//             });
-//         });
-
-//         // 닫기 버튼을 눌렀을 때 모달팝업이 닫힘
-//         modalCloseButtons.forEach(function(button) {
-//             button.addEventListener('click', function() {
-//                 modal.style.display = 'none';
-//             });
-//         });
-//     });
 </script>
 <script>
         const rateWrap = document.querySelectorAll('.rating'), // 모든 rating 요소
@@ -351,15 +340,12 @@ function filledRate(index, length) {
     }
 }
 
-
-
 function initStars() {
     for (let i = 0; i < stars.length; i++) {
         stars[i].classList.remove('filled'); // 모든 별 초기화
     }
 }
 </script>
-
 <script type="text/javascript">
 	let promiseStatus = document.getElementById("promise_status").value;
 $(function() {
@@ -395,7 +381,7 @@ function promisePeopleDetail() {
                     if(proPeopleDetail.pm_master == 1){
                     	html += '<ul><li class="th1">방장(나)</li></ul>';
                     }else{
-                    	if(promiseStatus == 'end'){
+                    	if(promiseStatus == "end"){
                     		html += '<button type="button" class="thul2DivButton modal_btn" id="modal_btn">별 점</button>';
                     		html += '<input type="hidden" id="memberIdx" value="' + proPeopleDetail.member_idx + '">';
                     	}else {
@@ -406,7 +392,7 @@ function promisePeopleDetail() {
                 }
          		$('.thul2').append(html);
                 let html2 = '<div class="partnerListButtonDiv">';
-                if(promiseStatus == 'ready'){
+                if(promiseStatus == "ready"){
 //                 	html2 += '<button type="button" class="thul2DivButton" onclick="confirm_partner(' + tIdx + ',' + memberIdx + ',\'' + tEnddate + '\',' + JSON.stringify(memberIdxArray) + ')" style="margin-right: 3rem;">동행 완료</button>';
 					html2 += '<button type="button" class="thul2DivButton" onclick="confirm_partner(' + tIdx + ',' + memberIdx + ',\'' + tEnddate + '\', \'' + JSON.stringify(memberIdxArray).replace(/"/g, '&quot;') + '\')" style="margin-right: 3rem;">동행 완료</button>';
                 }

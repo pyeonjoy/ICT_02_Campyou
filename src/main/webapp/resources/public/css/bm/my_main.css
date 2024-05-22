@@ -21,7 +21,7 @@
 }
 .mypage {
 	width: 70%;
-	height: 80vh;
+	height: 100vh;
 	margin: auto;
 	display: grid;
 	gap: 3rem;

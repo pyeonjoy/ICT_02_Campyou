@@ -9,18 +9,6 @@
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link href="/resources/css/menu_aside.css" rel="stylesheet" />
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script type="text/javascript">
-	const member_idx = "${sessionScope.memberInfo.member_idx}";
-	
-	$(document).ready(function() {
-	    $("a[href='together_history.do'], a[href='together_partner.do']").click(function(e) {
-	        e.preventDefault();
-	        let href = $(this).attr("href");
-	        href += "?member_idx=" + member_idx;
-	        window.location.href = href;
-	    });
-	});
-</script>
 </head>
 <body>
 	<div class="mypage_menu_header">
