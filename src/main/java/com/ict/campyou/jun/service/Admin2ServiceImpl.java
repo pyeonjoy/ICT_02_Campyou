@@ -62,4 +62,16 @@ public class Admin2ServiceImpl implements Admin2Service{
 		return admin2DAO.getPromiseFAQCount(a2vo);
 	}
 
+
+	@Override
+	public int loadInquiryCount(Admin2VO a2vo) {
+		return admin2DAO.loadInquiryCount(a2vo);
+	}
+
+
+	@Override
+	public List<Admin2VO> loadInquiry(Admin2VO a2vo, int offset, int limit) {
+		return admin2DAO.loadInquiry(a2vo,offset,limit);
+	}
+
 }

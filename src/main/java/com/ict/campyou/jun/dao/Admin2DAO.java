@@ -54,6 +54,18 @@ public class Admin2DAO {
 		return sqlSessionTemplate.selectOne("jun.getPromiseFAQCount",a2vo);
 	}
 
+	public int loadInquiryCount(Admin2VO a2vo) {
+		return sqlSessionTemplate.selectOne("jun.loadInquiryCount",a2vo);
+	}
+
+	public List<Admin2VO> loadInquiry(Admin2VO a2vo, int offset, int limit) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("a2vo",a2vo);
+		map.put("offset",offset);
+		map.put("limit",limit);
+		return sqlSessionTemplate.selectList("jun.loadInquiry",map);
+	}
+
 	
 	
 	

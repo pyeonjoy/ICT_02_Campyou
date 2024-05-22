@@ -22,6 +22,10 @@ public interface Admin2Service {
 
 	int getPromiseFAQCount(Admin2VO a2vo);
 
+	int loadInquiryCount(Admin2VO a2vo);
+
+	List<Admin2VO> loadInquiry(Admin2VO a2vo, int offset, int limit);
+
 
 
 }

@@ -124,5 +124,17 @@
 <select id="getPromiseFAQCount" resultType="int">
 	select count(*) from faq2
 </select>
+<select id="loadInquiryCount" resultType="int">
+	select count(*) from qna
+</select>
+<select id="loadInquiry" parameterType="a2vo" resultType="map">
+    select q.qna_idx, q.member_idx, q.qna_title, q.qna_content, 
+           date_format(q.qna_date, '%Y-%m-%d') as qna_date, q.qna_status, 
+           m.member_nickname as member_nickname
+    from qna q
+    join members m ON q.member_idx = m.member_idx
+    where q.member_idx = m.member_idx
+    limit #{limit} offset #{offset}
+</select>
 
 </mapper>
