@@ -71,6 +71,16 @@ public class MyDAO {
 		return 0;
 	}
 
+	public int deletMember(MemberVO mvo) {
+		try {
+			return sqlSessionTemplate.delete("bomi.getDeleteUser", mvo);
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return 0;
+	}
+
 	public int changeUserPW(MemberVO mvo) {
 		try {
 			return sqlSessionTemplate.update("bomi.updatePw", mvo);
@@ -152,16 +162,6 @@ public class MyDAO {
 			System.out.println(e);
 		}
 		return null;
-	}
-
-	public int deletMember(String member_idx) {
-		try {
-			return sqlSessionTemplate.delete("bomi.getDeleteUser", member_idx);
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return 0;
 	}
 
 	public int addChatMsg(ChatVO chvo) {

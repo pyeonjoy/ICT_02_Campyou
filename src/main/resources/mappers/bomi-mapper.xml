@@ -36,9 +36,9 @@ update members set member_nickname=#{member_nickname}, member_phone=#{member_pho
 update members set member_pwd = #{member_pwd} where member_idx = #{member_idx}
 </update>
 
-<delete id="getDeleteUser" parameterType="String">
- delete from members where member_idx=#{member_idx}
-</delete>
+<update id="getDeleteUser" parameterType="mvo">
+ update members set member_active = -2 where member_idx=#{member_idx}
+</update>
 
 <select id="getOne" resultType="qvo" parameterType="String">
 select * from qna where qna_idx=#{qna_idx}
