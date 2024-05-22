@@ -140,7 +140,6 @@ function promiseApplyList() {
 </head>
 <body>
 		<%@ include file="../hs/mypage_menu.jsp"%>
-
 	<div class="mypage">
 		<div class="welcome">
 		
@@ -157,7 +156,7 @@ function promiseApplyList() {
 			
 			<h2 class="welcome_user">${mvo.member_name}<span class="emoji" id="${mvo.member_grade}"></span>님, 환영합니다.</h2>
 		</div>
-
+		<input type="hidden" id="memberIdx" value="${mvo.member_idx }">
 		<div class="list_container">
 			<div class="my_list my_board_list">
 				<h4 class="my_title">활동내역</h4>
