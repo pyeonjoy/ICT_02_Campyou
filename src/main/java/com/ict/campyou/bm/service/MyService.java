@@ -49,7 +49,7 @@ public interface MyService {
 
 	public List<ChatVO> getOneRoom(String msg_room);
 	
-	public int updateMsgRead(String msg_idx);
+	public int updateMsgRead(ChatVO chvo);
 	
 	public List<HeartVO> getFavList(String member_idx);
 	

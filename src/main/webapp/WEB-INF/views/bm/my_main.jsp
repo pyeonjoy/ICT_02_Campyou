@@ -134,22 +134,24 @@ function promiseApplyList() {
 							alt="user_img" class="user_fullImg">
 					</c:otherwise>
 				</c:choose>			
-			<h2 class="welcome_user">${mvo.member_name}<span class="emoji" id="${mvo.member_grade}"></span>님, 환영합니다.</h2>
+			<h2 class="welcome_user">${mvo.member_name}님, 환영합니다.</h2>
 		</div>
 		<div class="list_container">
 			<div class="my_list my_board_list">
 				<h4 class="my_title">활동내역</h4>
-				<div class="my_list_summery">
+				<div class="my_list_summery my_list_summery1">
+				 <div class="summery1">
 					<p class="lineHeight my_list_title">작성글 : <a class="count" href="my_board.do?member_idx=${member_idx}">${count}</a>
 					<span class="hidden-text">내가 작성한 글 보러가기 👉</span>
 					</p>
-					<p class="lineHeight grade" id="${mvo.member_grade}" > </p>						
-					<p class="lineHeight rank"> 매너점수 : ${mvo.member_grade}점</p>						
+					<p class="lineHeight rank"> 매너점수 : ${mvo.member_grade}점</p>
+				</div>						
+					<p class="grade" id="${mvo.member_grade}" ><img src="${path}/resources/images/grade${mvo.member_grade+1}.png" alt="level"> </p>						
 				</div>
 			</div>
 		<div class="my_list my_review_list">
 				<h4 class="my_title">내 리뷰</h4>
-				<div class="my_list_summery">
+				<div class="my_list_summery my_list_summery2">
 				<c:choose>
 						<c:when test="${empty reviews }">
 							<p class="nolist">리뷰가 없습니다.</p>

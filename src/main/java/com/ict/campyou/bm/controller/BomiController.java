@@ -154,11 +154,14 @@ public class BomiController {
 		List<ChatVO> chatList = myService.getOneRoom(msg_room);
 		MemberVO joiner = myService.getMember(join_idx); // 나
 		MemberVO opener = myService.getMember(open_idx); // 상대방
-
+		// 0 = read 1 = unread
 		for (ChatVO chat : chatList) {
-			if (!chat.getSend_idx().equals(my_idx)) {
-				int res = myService.updateMsgRead(chat.getMsg_idx());
-			}
+			  if (!chat.getSend_idx().equals(my_idx) && chat.getMsg_read() == "1") {
+		            int res = myService.updateMsgRead(chat);
+		            System.out.println("res"+res);
+		            System.out.println("msg updated"+chat.getMsg_room());
+		            
+		        }
 		}
 
 		mv.addObject("chatList", chatList);

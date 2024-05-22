@@ -209,9 +209,9 @@ public class MyDAO {
 		return null;
 	}
 
-	public int updateMsgRead(String msg_idx) {
+	public int updateMsgRead(ChatVO chvo) {
 		try {
-			return sqlSessionTemplate.update("bomi.msgRead", msg_idx);
+			return sqlSessionTemplate.update("bomi.msgRead", chvo);
 			
 		} catch (Exception e) {
 			System.out.println(e);

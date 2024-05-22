@@ -265,9 +265,22 @@
 	padding-top: 1rem;
 	padding-bottom: 1rem;
 	font-size: .9rem;
-    flex-direction: column;
+	display:flex;
 }
-
+.my_list_summery2 {
+	flex-direction:column;    
+	
+}
+.my_list_summery1{
+	position: relative;
+	flex-direction:row;
+		justify-content:space-between;
+}
+.grade{
+	position: absolute;
+	top:0;
+	right:0;
+}
 .lineHeight {
 	font-size: 1rem;
 	font-weight: 600;
