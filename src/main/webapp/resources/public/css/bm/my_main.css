@@ -11,6 +11,7 @@
 	margin: 0;
 	padding: 0;
 }
+
 .list_nickname{
 	display: flex;
 	align-items: center;
@@ -19,9 +20,13 @@
 	width: 18px;
 	height: 18px;
 }
+.body{
+	  display: flex;
+    flex-direction: column;
+}
 .mypage {
 	width: 70%;
-	height: 80vh;
+	height: 100vh;
 	margin: auto;
 	display: grid;
 	gap: 3rem;
@@ -195,8 +200,8 @@
 }
 
 .btn {
-	background-color: var(- -text-white);
-	border: 1px solid var(- -text-black);
+	background-color: var(--text-white);
+	border: 1px solid var(--text-black);
 	width: 3rem;
 	height: 1.5rem;
 	border-radius: 2px;
@@ -206,19 +211,19 @@
 }
 
 .btn:hover {
-	background-color: var(- -primary-color-light);
+	background-color: var(--primary-color-light);
 }
 
 .type_yellow {
-	background-color: var(- -primary-color-yellow);
+	background-color: var(--primary-color-yellow);
 }
 
 .type_green {
-	background-color: var(- -primary-color);
+	background-color: var(--primary-color);
 }
 
 .type_light {
-	background-color: var(- -primary-color-light);
+	background-color: var(--primary-color-light);
 }
 
 .list_title {
@@ -248,9 +253,13 @@
 	display:flex;
 	justify-content:space-between;
 }
-.my_list_title, .my_reviews{
-	margin-bottom: 5px;
-} 
+
+.hidden-text {
+    visibility: hidden; 
+    white-space: nowrap; 
+    margin-left: 10px; 
+    color: var(--primary-color-yellow);
+}
 
 .my_list_summery {
 	padding-top: 1rem;

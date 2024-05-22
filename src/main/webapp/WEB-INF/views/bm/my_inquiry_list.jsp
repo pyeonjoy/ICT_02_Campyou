@@ -23,6 +23,7 @@
 <div class="inquiry">
 <h3 class="grid_title">1:1문의 내역</h3>
   <div class="grid_container">
+  <div class="grid_table">
     <div class="grid_col grid_header">
       <div class="grid_row grid_row1">번호</div>
       <div class="grid_row grid_row2">제목</div>
@@ -53,6 +54,7 @@
 	</c:otherwise>
 	</c:choose>
     </div>
+    </div>
     <div class="grid_last_row">
       <div class="paging">
       	<c:choose>
@@ -71,7 +73,7 @@
 			end="${paging.endBlock }" step="1" var="k">
 			<c:choose>
 			<c:when test="${ k== paging.nowPage}">
-				<li class="paging_list paging_num">${k}</li> 
+				<li class="paging_list paging_active">${k}</li> 
 				</c:when>
 			<c:otherwise>
 				<li class="paging_list paging_num"><a href="my_inquiry_list.do?cPage=${k}">${k}</a></li>

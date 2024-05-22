@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -137,8 +138,8 @@ public class BomiController {
 		mv.setViewName("bm/chat_list");
 		mv.addObject("list", list);
 		mv.addObject("member_idx", member_idx);
-		Gson gson = new Gson();
-		String json = gson.toJson(list);
+//		Gson gson = new Gson();
+//		String json = gson.toJson(list);
 		return mv;
 	}
 
@@ -306,12 +307,10 @@ public class BomiController {
 	public ModelAndView qnaUpload(QnaVO qvo, @RequestParam("member_idx") String member_idx) {
 		ModelAndView mv = new ModelAndView("redirect:my_inquiry_list.do?member_idx=" + member_idx);
 		int res = myService.uploadQna(qvo);
-		System.out.println(res);
 		if (res > 0) {
 			return mv;
 		}
 		return new ModelAndView("error");
-
 	}
 
 	// User's inquiry list
@@ -395,37 +394,6 @@ public class BomiController {
 	public ModelAndView goToAccompanyHistoryList(@RequestParam("member_idx") String member_idx,
 			HttpServletRequest req) {
 		ModelAndView mv = new ModelAndView("bm/my_board");
-
-		int count = myService.getTotalCount(member_idx);
-		paging.setTotalRecord(count);
-
-		if (paging.getTotalRecord() <= paging.getNumPerPage()) {
-			paging.setTotalPage(1);
-		} else {
-			paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-			if (paging.getTotalRecord() % paging.getNumPerPage() != 0) {
-				paging.setTotalPage(paging.getTotalPage() + 1);
-			}
-		}
-
-		String cPage = req.getParameter("cPage");
-		if (cPage == null) {
-			paging.setNowPage(1);
-		} else {
-			paging.setNowPage(Integer.parseInt(cPage));
-		}
-
-		paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
-
-		paging.setBeginBlock(
-				(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
-
-		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
-
-		if (paging.getEndBlock() > paging.getTotalBlock()) {
-			paging.setEndBlock(paging.getTotalPage());
-		}
-
 		List<CommBoardVO> board1 = myService.getBoard1(member_idx);
 		List<CampingGearBoardVO> board2 = myService.getBoard2(member_idx);
 		List<BoardsVO>boardsList = new ArrayList<BoardsVO>();
@@ -451,10 +419,31 @@ public class BomiController {
 			boardsVO.setHit(board.getCp_hit());
 			boardsList.add(boardsVO);
 		}
+		int totalRecord = boardsList.size();
+		paging.setTotalRecord(totalRecord);
 
-	//	List<BoardsVO> list = myService.getMyAcc_List(member_idx, paging.getOffset(), paging.getNumPerPage());
-	//	mv.addObject("paging", paging);
-		mv.addObject("list", boardsList);
+		int totalPage = (int) Math.ceil((double)totalRecord / paging.getNumPerPage());
+		paging.setTotalPage(totalPage);
+		
+		String cPage = req.getParameter("cPage");
+		int nowPage = (cPage == null) ? 1: Integer.parseInt(cPage);
+		paging.setNowPage(nowPage);
+		
+		int offset = (nowPage -1) * paging.getNumPerPage();
+		paging.setOffset(offset);
+
+		paging.setBeginBlock((int) ((nowPage - 1) / paging.getPagePerBlock()) 
+				* paging.getPagePerBlock() + 1);
+
+		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+
+		if (paging.getEndBlock() > totalPage) {
+			paging.setEndBlock(totalPage);
+		}
+	List<BoardsVO> list = boardsList.stream().skip(offset).limit(paging.getNumPerPage())
+			.collect(Collectors.toList());
+		mv.addObject("paging", paging);
+		mv.addObject("list", list);
 		return mv;
 
 	}
