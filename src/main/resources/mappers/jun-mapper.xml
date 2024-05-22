@@ -81,10 +81,48 @@
 <select id="addRating" parameterType="String" resultType="int">
 	select sum(rating) from camp_review where contentid = #{contentid}
 </select>
-<select id="getUseFAQLoad" parameterType="String" resultType="a2vo">
-	select * from faq
+<select id="getUseFAQLoad" parameterType="a2vo" resultType="map">
+	select * from faq limit #{limit} offset #{offset}
 </select>
-<select id="getPromiseFAQLoad" parameterType="String" resultType="a2vo">
-	select * from faq2
+<select id="getPromiseFAQLoad" parameterType="a2vo" resultType="map">
+	select * from faq2 limit #{limit} offset #{offset}
 </select>
+<insert id ="writeUserFAQ" parameterType="a2vo">
+	insert into faq(faq_title,faq_content)
+	values(#{faq_title},#{faq_content})
+</insert>
+<insert id ="writePromiseFAQ" parameterType="a2vo">
+	insert into faq2(faq_title,faq_content)
+	values(#{faq_title},#{faq_content})
+</insert>
+<update id="StatusUserChange">
+    update faq
+    set faq_status = case
+        when faq_status = '0' then '1'
+        when faq_status = '1' then '0'
+    end
+    where faq_idx in
+    <foreach collection="list" item="faq_idx" open="(" close=")" separator=",">
+        #{faq_idx}
+    </foreach>
+</update>
+
+<update id="StatusPromiseChange">
+    update faq2
+    set faq_status = case
+        when faq_status = '0' then '1'
+        when faq_status = '1' then '0'
+    end
+    where faq_idx in
+    <foreach collection="list" item="faq_idx" open="(" close=")" separator=",">
+        #{faq_idx}
+    </foreach>
+</update>
+<select id="getUseFAQCount" resultType="int">
+	select count(*) from faq
+</select>
+<select id="getPromiseFAQCount" resultType="int">
+	select count(*) from faq2
+</select>
+
 </mapper>

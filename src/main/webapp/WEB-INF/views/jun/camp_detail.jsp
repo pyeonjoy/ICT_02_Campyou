@@ -270,7 +270,7 @@ function loadReview(){
                 for (let i = 0; i < review.rating; i++) {
                     stars += "⭐";
                 }
-                commentItem += "<img src="+member_profile_img+review.member_img+" class="profile_show">";
+                commentItem += "<img src="+member_profile_img+review.member_img+" class='profile_show'>";
                 commentItem += "<p><b>작성자 : </b>" +review.member_nickname +"<br>";
                 commentItem += "<b>별점 : </b>" + stars + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
                 let regDate = new Date(review.r_regdate);
