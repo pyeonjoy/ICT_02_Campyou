@@ -27,6 +27,9 @@ text-align: center;
   justify-content: center;
   align-items: center;
 }
+.grid_table{
+height: 40vh;
+}
 .grid_col{
   display: grid;
   grid-template-columns: 1fr 2fr 2fr 1fr 1fr;
