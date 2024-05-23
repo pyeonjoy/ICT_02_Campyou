@@ -423,4 +423,62 @@
  	 	set member_free = member_free + 1
  	 	where member_idx = #{member_idx}  	 
  	 </update>
+ 	 
+ 	 <update id="member_grade_update" parameterType="String">
+ 	 	update members 
+ 	 	set member_grade = 1
+ 	 	where member_idx = #{member_idx}  	 
+ 	 </update>
+ 	 
+  	 <update id="member_grade_update2" parameterType="String">
+ 	 	update members 
+ 	 	set member_grade = 2
+ 	 	where member_idx = #{member_idx}  	 
+ 	 </update>
+ 	 
+ 	 <update id="member_grade_update3" parameterType="String">
+ 	 	update members 
+ 	 	set member_grade = 3
+ 	 	where member_idx = #{member_idx}  	 
+ 	 </update>
+ 	 
+ 	 <update id="member_grade_update4" parameterType="String">
+ 	 	update members 
+ 	 	set member_grade = 4
+ 	 	where member_idx = #{member_idx}  	 
+ 	 </update>
+ 	 
+ 	 <update id="member_grade_update5" parameterType="String">
+ 	 	update members 
+ 	 	set member_grade = 5
+ 	 	where member_idx = #{member_idx}  	 
+ 	 </update>
+ 	  
+ 	 <select id="member_detail" parameterType="String" resultType="mvo">
+ 		select * from members where member_idx = #{member_idx}
+ 	 </select>
+ 	 
+ 	 <!-- 자유 게시판 최대 권한 구하기 --> 
+ 	 <select id="getGread" parameterType="String" resultType="int">
+ 	 	SELECT max(member_grade) FROM board_free 	where member_idx = #{member_idx}
+ 	 </select>
+ 	 
+ 	 <!-- 자유 게시판 쵀대 권한으로 업데이트 하기 -->
+ 	 <update id="MemberGradeUpdate" parameterType="Map">
+ 	 	update board_free 
+ 	 	set member_grade = #{res}
+ 	 	where member_idx = #{member_idx}
+ 	 </update>
+ 	 
+ 	 <!-- 캠핑보드 게시판 최대 권한 구하기 --> 
+ 	 <select id="get_Gear_Grade" parameterType="String" resultType="int">
+ 	 	SELECT max(member_grade) FROM board_camp 	where member_idx = #{member_idx}
+ 	 </select>
+ 	 
+ 	 <!-- 캠핑보드 게시판 쵀대 권한으로 업데이트 하기 -->
+ 	 <update id="gear_Grade_Update" parameterType="Map">
+ 	 	update board_camp 
+ 	 	set member_grade = #{res}
+ 	 	where member_idx = #{member_idx}
+ 	 </update>
 </mapper>

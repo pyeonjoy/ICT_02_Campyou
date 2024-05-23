@@ -249,7 +249,7 @@ textarea {
             		
             	<c:choose>
 					<c:when test="${not empty adminInfo}">
-						<span>별명 : ${k.admin_nickname} ${k.member_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+						<span>별명 : ${k.admin_nickname} ${k.member_nickname} ${kakaoMemberInfo.member_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
 		                <span>날짜 : ${k.write_date.substring(0,10)}</span>
 		                <p>${k.content}</p>
 		               <%--  <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
@@ -265,7 +265,7 @@ textarea {
 		                <input type="hidden" name="b_idx" value="${k.b_idx}">
 					</c:when>
 					<c:otherwise>
-						<span>별명 : ${k.admin_nickname} ${k.member_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+						<span>별명 : ${k.admin_nickname} ${k.member_nickname} ${kakaoMemberInfo.member_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
 		                <span>날짜 : ${k.write_date.substring(0,10)}</span>
 		                <p>${k.content}</p>
 		               <%--  <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
@@ -289,12 +289,12 @@ textarea {
 	<c:otherwise>
 		<c:choose>
 			<%-- 댓글 입력 --%>
-			<c:when test="${memberInfo.member_nickname != null}">
+			<c:when test="${memberInfo.member_nickname != null || kakaoMemberInfo.member_nickname != null}">
 				<div class="reply-function">
 					<form method="post">
 						<fieldset>
 							<p>별명 : <input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
-									${memberInfo.member_nickname}
+									${memberInfo.member_nickname}${kakaoMemberInfo.member_nickname}
 							</p>
 							<p><textarea id="textarea2" rows="3" cols="40" name="content"></textarea>
 							<input style="margin-left: 20px" type="button" value="댓글저장" onclick="comment_insert(this.form)"></p>
@@ -309,7 +309,7 @@ textarea {
 					<c:forEach var="k" items="${commBoard_list2}">
 						<div class="reply-output2" >
 							<form method="post">
-								<span>별명 : ${k.member_nickname} ${k.admin_nickname}</span> &nbsp;&nbsp;&nbsp;&nbsp;
+								<span>별명 : ${k.member_nickname} ${k.admin_nickname} ${kakaoMemberInfo.member_nickname} </span> &nbsp;&nbsp;&nbsp;&nbsp;
 								<span>날짜 : ${k.write_date.substring(0,10)}</span>
 								<p>${k.content}</p>
 								
@@ -348,7 +348,7 @@ textarea {
 					<c:forEach var="k" items="${commBoard_list2}">
 						<div class="reply-output2">
 							<form method="post">
-								<span>별명 : ${k.member_nickname} ${k.admin_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+								<span>별명 : ${k.member_nickname} ${k.admin_nickname} ${kakaoMemberInfo.member_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
 								<span>날짜 : ${k.write_date.substring(0,10)}</span>
 								<p>${k.content}</p>
 								<!-- <input type="button" value="댓글삭제" onclick="comment_delete(this.form)"> -->

@@ -156,4 +156,17 @@ public class CampingGearBoardDAO {
 		
 		return sqlSessionTemplate.selectOne("member.camping_gear_reply_detail", c_idx);
 	}
+	
+	// 최대 권한 구하기
+	public int getGrade(String member_idx) {
+		return sqlSessionTemplate.selectOne("member.get_Gear_Grade", member_idx);
+	}
+	
+	// 쵀대 권한으로 업데이트 하기
+	public int getGradeUpdate(String member_idx2, int res) {
+		Map<String,String> map = new HashMap<>();
+		map.put("member_idx", member_idx2);
+		map.put("res", String.valueOf(res));
+		return sqlSessionTemplate.update("member.gear_Grade_Update", map);
+	}
 }

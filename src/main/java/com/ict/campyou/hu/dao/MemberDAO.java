@@ -178,4 +178,56 @@ public class MemberDAO {
 		}
 		return 0;
 	}
+	
+	
+	public int getUpdateMemberGrade(String member_idx) {
+		return sqlSessionTemplate.update("member.member_grade_update", member_idx);
+	}
+	
+
+	public int getUpdateMemberGrade2(String member_idx) {
+		
+		return sqlSessionTemplate.update("member.member_grade_update2", member_idx);
+	}
+
+	public int getUpdateMemberGrade3(String member_idx) {
+		
+		return sqlSessionTemplate.update("member.member_grade_update3", member_idx);
+	}
+
+	
+	public int getUpdateMemberGrade4(String member_idx) {
+		
+		return sqlSessionTemplate.update("member.member_grade_update4", member_idx);
+	}
+
+	
+	public int getUpdateMemberGrade5(String member_idx) {
+		
+		return sqlSessionTemplate.update("member.member_grade_update5", member_idx);
+	}
+	
+	
+	
+	//맴버 디테일
+	public MemberVO getMemeberDetail(String member_idx) {
+		
+		return sqlSessionTemplate.selectOne("member.member_detail", member_idx);
+	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

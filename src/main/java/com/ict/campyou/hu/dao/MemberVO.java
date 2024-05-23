@@ -6,6 +6,16 @@ public class MemberVO {
 	private String member_idx, member_id, admin_idx, member_name, member_nickname, member_dob, member_email, member_gender, member_pwd,
 			member_phone, member_img, member_active, member_regdate, member_old_img,member_grade, member_login ;
   
+	private int member_free;
+
+	public int getMember_free() {
+		return member_free;
+	}
+
+	public void setMember_free(int member_free) {
+		this.member_free = member_free;
+	}
+
 	public String getAdmin_idx() {
 		return admin_idx;
 	}

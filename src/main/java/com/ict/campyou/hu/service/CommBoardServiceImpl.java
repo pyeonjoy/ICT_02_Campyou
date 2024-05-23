@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ict.campyou.hu.dao.CommBoardDAO;
 import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.CommentVO;
+import com.ict.campyou.hu.dao.MemberVO;
 
 @Service
 public class CommBoardServiceImpl implements CommBoardService {
@@ -105,4 +106,16 @@ public class CommBoardServiceImpl implements CommBoardService {
 	public CommentVO getCommentReplyDetail(String c_idx) {
 		return commBoardDAO.getCommentReplyDetail(c_idx);
 	}
+	
+	// 최대 권한 구하기
+	@Override
+	public int getGread(String member_idx2) {
+		return commBoardDAO.getGread(member_idx2);
+	}
+	
+	// 쵀대 권한으로 업데이트 하기
+	@Override
+	public int getGreadUpdate(String member_idx2, int res) {
+		return commBoardDAO.getGreadUpdate(member_idx2, res);
+	}	
 }

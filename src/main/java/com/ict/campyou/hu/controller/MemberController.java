@@ -123,14 +123,15 @@ public class MemberController {
 	  public ModelAndView getLogin(HttpServletRequest request, MemberVO vo) {
 		  try {
 			  HttpSession session = request.getSession();
-	          ModelAndView mv = new ModelAndView();
+	          ModelAndView mv = new ModelAndView("hu/loginForm");
 	          
 	          MemberVO vo2 = memberService.getLogInOK(vo);
 	          
 	          
 	          if(vo2 == null || !passwordEncoder.matches(vo.getMember_pwd(), vo2.getMember_pwd()) && (vo.getMember_id() != vo2.getMember_id()) ) {
-	        	  mv.setViewName("redirect:login_form.do");
-	        	  //mv.addObject("pwdchk", "fail");
+	        	  //mv.setViewName("redirect:login_form.do");
+	        	  //mv.setViewName("hu/loginForm");
+	        	  mv.addObject("pwdchk", "fail");
 	              return mv;
 	          }else {
 	        	  if(vo2 != null && vo2.getMember_active().equals("1")){
@@ -377,7 +378,7 @@ public class MemberController {
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
-			
+			  
 			  CommBoardVO cbvo = new CommBoardVO();
 		
 			  if(memberInfo != null) {
@@ -435,7 +436,7 @@ public class MemberController {
 	  }
 	  
 	  @RequestMapping("comm_board_write_ok.do")
-	  public ModelAndView getCommBoardWriteOk(CommBoardVO cbvo, HttpServletRequest request, HttpSession session) {
+	  public ModelAndView getCommBoardWriteOk(CommBoardVO cbvo, String b_idx, HttpServletRequest request, HttpSession session) {
 		  try {
 			  ModelAndView mv = new ModelAndView("redirect:community_board.do");
 			  
@@ -464,18 +465,52 @@ public class MemberController {
 					  FileCopyUtils.copy(in, out);
 				  }	
 				  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));
-				  System.out.println("cbvo: " + cbvo.getMember_nickname());
-				  int result = commBoardService.getCommBoardInsert(cbvo);
-				  if(result > 0) {
+				  
+				  if(true) {				  
 					  //자유 게시판에 글쓸때 마다 member_free 등급 올리기
+					  //String member_idx = cbvo.getMember_idx();
 					  String member_idx = cbvo.getMember_idx();
 					  int result2 = memberService.getMemberFreeUpdate(member_idx);
+					  
+					  String member_idx2 = memberInfo.getMember_idx();
+					  MemberVO mvo = memberService.getMemeberDetail(member_idx2);
+					  cbvo.setMember_grade(mvo.getMember_grade());
+				
+					  if(mvo.getMember_free() < 2) {
+						  int result3 = memberService.getUpdateMemberGrade(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 2 && mvo.getMember_free() < 4) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade2(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() >= 4 && mvo.getMember_free() < 6) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade3(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 6 && mvo.getMember_free() < 8) {  
+						  
+						  int result3 = memberService.getUpdateMemberGrade4(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() > 8) {	  
+						  
+						  int result3 = memberService.getUpdateMemberGrade5(member_idx2);
+					  } 
+					  cbvo.setMember_grade(mvo.getMember_grade());
+					  int result = commBoardService.getCommBoardInsert(cbvo);
+					  
+					  if(result > 0) {
+						 // 최대 권한 구하기 
+						 int res = commBoardService.getGread(member_idx2);
+						 
+						 // 쵀대 권한으로 업데이트 하기 
+						 int res2 = commBoardService.getGreadUpdate(member_idx2, res);
+					  }
 					  return mv;
-				  } 
+				  }
 			  }
-			  
 			  //카카오회원 글쓰기
 			  if(kakaoMemberInfo != null) {
+				  
 				  cbvo.setMember_idx(kakaoMemberInfo.getMember_idx());
 				 //cbvo.setMember_grade(memberInfo.getMember_grade());
 				  
@@ -490,14 +525,47 @@ public class MemberController {
 					  File out = new File(path, f_name);
 					  FileCopyUtils.copy(in, out);
 				  }	
-				  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));				  				  
+				  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));				  				  			
 				  
-				  int result = commBoardService.getCommBoardInsert(cbvo);			
-				  
-				  if(result > 0) {
+				  if(true) {
+				
 					  //자유 게시판에 글쓸때 마다 member_free 등급 올리기
 					  String member_idx = cbvo.getMember_idx();
 					  int result2 = memberService.getMemberFreeUpdate(member_idx);
+					  
+					  String member_idx2 = kakaoMemberInfo.getMember_idx();
+					  MemberVO mvo = memberService.getMemeberDetail(member_idx2);
+					  cbvo.setMember_grade(mvo.getMember_grade());
+					  
+					  if(mvo.getMember_free() < 2) {
+						  int result3 = memberService.getUpdateMemberGrade(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 2 && mvo.getMember_free() < 4) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade2(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() >= 4 && mvo.getMember_free() < 6) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade3(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 6 && mvo.getMember_free() < 8) {  
+						  
+						  int result3 = memberService.getUpdateMemberGrade4(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() > 8) {	  
+						  
+						  int result3 = memberService.getUpdateMemberGrade5(member_idx2);
+					  }
+					  cbvo.setMember_grade(mvo.getMember_grade());
+					  int result = commBoardService.getCommBoardInsert(cbvo);
+					  
+					  if(result > 0) {
+						 // 최대 권한 구하기 
+						 int res = commBoardService.getGread(member_idx2);
+						 
+						 // 쵀대 권한으로 업데이트 하기 
+						 int res2 = commBoardService.getGreadUpdate(member_idx2, res);
+					  }				  
 					  return mv;
 				  } 
 			  }

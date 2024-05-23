@@ -6,12 +6,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
+import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberDAO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.hu.sns.kakao.KakaoUserVO;
@@ -303,4 +305,46 @@ public class MemberServiceImpl implements MemberService {
 	public int getMemberFreeUpdate(String member_idx) {
 		return memberDAO.getMemberFreeUpdate(member_idx);
 	}
+
+	@Override
+	public int getUpdateMemberGrade(String member_idx) {
+		
+		return memberDAO.getUpdateMemberGrade(member_idx);
+	}
+
+	@Override
+	public int getUpdateMemberGrade2(String member_idx) {
+		// TODO Auto-generated method stub
+		return memberDAO.getUpdateMemberGrade2(member_idx);
+	}
+
+	@Override
+	public int getUpdateMemberGrade3(String member_idx) {
+		// TODO Auto-generated method stub
+		return memberDAO.getUpdateMemberGrade3(member_idx);
+	}
+
+	@Override
+	public int getUpdateMemberGrade4(String member_idx) {
+		// TODO Auto-generated method stub
+		return memberDAO.getUpdateMemberGrade4(member_idx);
+	}
+
+	@Override
+	public int getUpdateMemberGrade5(String member_idx) {
+		// TODO Auto-generated method stub
+		return memberDAO.getUpdateMemberGrade5(member_idx);
+	}
+	
+	
+	
+	
+	//맴버 디테일
+	@Override
+	public MemberVO getMemeberDetail(String member_idx) {
+		
+		return memberDAO.getMemeberDetail(member_idx);
+	}
+
+	
 }
