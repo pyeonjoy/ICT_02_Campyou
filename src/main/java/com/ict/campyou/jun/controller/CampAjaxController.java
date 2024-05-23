@@ -127,6 +127,7 @@ public class CampAjaxController {
 		List<CampVO> cvo = campService.searchCampDetail(keyword, lctCl, induty, sbrscl,paging.getOffset(), paging.getNumPerPage(),s_sido,s_sigungu);
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("cvo", cvo);
+	    response.put("count", count);
 	    response.put("paging", paging);
 
 	    return response;
