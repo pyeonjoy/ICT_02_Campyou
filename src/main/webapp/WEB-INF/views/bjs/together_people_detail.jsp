@@ -387,8 +387,8 @@ function promisePeopleDetail() {
                 for (let i = 0; i < data.length; i++) {
                     let proPeopleDetail = data[i];
                     memberIdxArray.push(proPeopleDetail.member_idx);
-	                html += '<div class="thliImage3"><img src="${path}/resources/images/' + proPeopleDetail.member_img + '" class="thliImage2 profile_show"></div>';
-	                html += '<ul><li class="th1 member_gradeLi profile_show">' + proPeopleDetail.member_nickname + '<img src="${path}/resources/images/' + proPeopleDetail.member_grade + '" class="member_gradeImg" ></li></ul>';
+	                html += '<div class="thliImage3"><img src="${path}/resources/images/' + proPeopleDetail.member_img + '" class="thliImage2 profile_show" data-memberidx="'+proPeopleDetail.member_idx+'"></div>';
+	                html += '<ul><li class="th1 member_gradeLi profile_show" data-memberidx="' + proPeopleDetail.member_idx + '">' + proPeopleDetail.member_nickname + '<img src="${path}/resources/images/' + proPeopleDetail.member_grade + '" class="member_gradeImg" ></li></ul>';
 	                html += '<ul><li class="th1">' + proPeopleDetail.member_dob + '</li></ul>';
 	                html += '<ul><li class="th1">' + proPeopleDetail.promise_my_count + '</li></ul>';
                     html += '<div class="thul2Div">';
@@ -494,5 +494,6 @@ function confirm_partner(tIdx, memberIdx, tEnddate, memberIdxArray) {
 
 </script>
 <%@ include file="../hs/footer.jsp" %>
+<%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>

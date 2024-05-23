@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ict.campyou.hs.service.HsService;
+import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 
 @Controller
@@ -178,20 +179,16 @@ public class HsAjaxController {
 		return null;
 	}
 	
-	@RequestMapping(value = "getProfile.do", produces = "text/xml; charset=utf-8")
+	@RequestMapping(value = "getProfile.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String getProfile(@RequestParam String member_idx) {
+	public MemberVO getProfile(@RequestParam String member_idx) {
 		try {
-			System.out.println(member_idx);
-			//List<CampVO> local = hsService.getProfile();
-
-			StringBuffer sb = new StringBuffer();
-			sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-			return sb.toString();
+			MemberVO mvo = hsService.getMember(member_idx);  
+			return mvo;
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return "fail";
+		return null;
 	}
 	
 }

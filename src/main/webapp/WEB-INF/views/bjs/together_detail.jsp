@@ -196,10 +196,10 @@ function to_comment() {
             	commentHTML += '<form method="post">';
             	commentHTML += '<div class="toDetailInput">';
             	if(data.memberUser && data.memberUser.member_img != null){
-	                commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32 profile_show"></div>';
+	                commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32 profile_show" data-memberidx="' + data.memberUser.member_idx + '"></div>';
             		commentHTML += '<input type="text" value="" id="" class="toDetailInputBox">';
             	}else{
-            		commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/user2.png" class="userImage32 profile_show"></div>';
+            		commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/user2.png" class="userImage32 profile_show" data-memberidx="' + data.memberUser.member_idx + '"></div>';
             		commentHTML += '<input type="text" value="" id="" class="toDetailInputBox" placeholder="로그인 후 작성가능합니다" readonly>';
             	}
             	commentHTML += '<input type="button" value="입력" id="" class="toDetailInputSubmit" onclick="">';
@@ -222,9 +222,9 @@ function to_comment() {
            	    	}
            	        commentHTML += '<div class="toDetailContent4Sub2Sub1">';
            	        commentHTML += '<div class="toDetailContent4Sub2Sub1Div">';
-           	        commentHTML += '<div class="userImageDiv"><img src="${path}/resources/images/' + comment.member_img + '" class="userImage3 profile_show"></div>';
+           	        commentHTML += '<div class="userImageDiv"><img src="${path}/resources/images/' + comment.member_img + '" class="userImage3 profile_show" data-memberidx="' + comment.member_idx + '"></div>';
            	        commentHTML += '<div>';
-           	        commentHTML += '<p class="member_nicknameP profile_show">' + comment.member_nickname + '<img src="${path}/resources/images/' + comment.member_grade + '" class="member_gradeImg" ></p>';
+           	        commentHTML += '<p class="member_nicknameP profile_show" data-memberidx="' + comment.member_idx + '">' + comment.member_nickname + '<img src="${path}/resources/images/' + comment.member_grade + '" class="member_gradeImg" ></p>';
            	        commentHTML += '<p>' + comment.wc_regdate + '</p>';
            	        commentHTML += '</div>';
            	        commentHTML += '</div>';
@@ -417,9 +417,9 @@ $(document).on("click", ".toDetailContent4Sub2Sub2ButtonX", function() {
         </div>
         <form class="toDetailContent" method="post">
             <div class="toDetailContent1">
-                <div class="userImage"><img src="${path}/resources/images/${tvo.member_img }" class="userImage2 profile_show"></div>
+                <div class="userImage"><img src="${path}/resources/images/${tvo.member_img }" class="userImage2 profile_show" data-memberidx="${tvo.member_idx }"></div>
                 <div class="toContentOne1span">
-                    <span class="to_member_nickname profile_show">${tvo.member_nickname }</span>
+                    <span class="to_member_nickname profile_show" data-memberidx="${tvo.member_idx }">${tvo.member_nickname }</span>
                     <img src="${path}/resources/images/${tvo.member_grade}" class="member_gradeImg" >
 					<span class="to_member_age">(${tvo.member_dob })</span>
                 </div>
@@ -523,5 +523,6 @@ $(document).on("click", ".toDetailContent4Sub2Sub2ButtonX", function() {
         </form>
     </div>
 <%@ include file="../hs/footer.jsp" %>
+<%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>
