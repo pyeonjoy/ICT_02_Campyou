@@ -16,13 +16,10 @@ function connect() {
 }
 
 function showNewMessageIndicator(msgRoom) {
-  // msgRoom을 기반으로 특정 리스트 항목을 선택
   const listElement = document.querySelector(`.chat_list[data-msg-room="${msgRoom}"]`);
   if (listElement) {
-    // 기존의 new 요소가 있는지 확인
     let newIndicator = listElement.querySelector('.new');
     if (!newIndicator) {
-      // new 요소가 없으면 새로 생성하여 추가
       newIndicator = document.createElement('div');
       newIndicator.classList.add('new');
       newIndicator.textContent = 'N';
@@ -31,12 +28,10 @@ function showNewMessageIndicator(msgRoom) {
   }
 }
 
-// 예제 메시지 수신 처리
 function onMessageReceived(msgRoom) {
   showNewMessageIndicator(msgRoom);
 }
 
-// 소켓 연결
 connect();
 
 cancel.addEventListener("click", function() {
