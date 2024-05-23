@@ -66,6 +66,28 @@ public class Admin2DAO {
 		return sqlSessionTemplate.selectList("jun.loadInquiry",map);
 	}
 
+	public int SearchInquiryCount(Admin2VO a2vo, String keywordInput, String searchType) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("a2vo",a2vo);
+		map.put("keywordInput",keywordInput);
+		map.put("searchType",searchType);
+		return sqlSessionTemplate.selectOne("jun.SearchInquiryCount",map);
+	}
+
+	public List<Admin2VO> SearchInquiry(Admin2VO a2vo, String keywordInput, String searchType, int offset, int limit) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("a2vo",a2vo);
+		map.put("keywordInput",keywordInput);
+		map.put("searchType",searchType);
+		map.put("offset",offset);
+		map.put("limit",limit);
+		return sqlSessionTemplate.selectList("jun.SearchInquiry",map);
+	}
+
+	public Admin2VO getInquiryDetail(String qna_idx) {
+		return sqlSessionTemplate.selectOne("jun.getInquiryDetail",qna_idx);
+	}
+
 	
 	
 	

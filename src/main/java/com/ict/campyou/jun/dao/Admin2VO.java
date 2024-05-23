@@ -1,8 +1,16 @@
 package com.ict.campyou.jun.dao;
 
 public class Admin2VO {
-	private String faq_idx, faq_title, faq_content, faq_status, qna_idx, member_idx,member_name, qna_title, qna_content, qna_date,
+	private String faq_idx, faq_title, faq_content, faq_status, qna_idx, member_idx,member_name,member_nickname, qna_title, qna_content, qna_date,
 			qna_status;
+
+	public String getMember_nickname() {
+		return member_nickname;
+	}
+
+	public void setMember_nickname(String member_nickname) {
+		this.member_nickname = member_nickname;
+	}
 
 	public String getMember_name() {
 		return member_name;

@@ -136,5 +136,52 @@
     where q.member_idx = m.member_idx
     limit #{limit} offset #{offset}
 </select>
+<select id ="SearchInquiryCount" parameterType="Map" resultType="int">
+    select count(*)
+    from qna q
+    join members m ON q.member_idx = m.member_idx
+    <where>
+        <if test="keywordInput != null and searchType != null">
+            and
+            <choose>
+                <when test="searchType == 'nickname'">
+                    member_nickname like concat('%', #{keywordInput}, '%')
+                </when>
+                <when test="searchType == 'content'">
+                    qna_content like concat('%', #{keywordInput}, '%')
+                </when>
+            </choose>
+        </if>
+    </where>
+</select>
 
+<select id="SearchInquiry" parameterType="a2vo" resultType="map">
+    select q.qna_idx, q.member_idx, q.qna_title, q.qna_content, 
+           date_format(q.qna_date, '%Y-%m-%d') as qna_date, q.qna_status, 
+           m.member_nickname as member_nickname
+    from qna q
+    join members m ON q.member_idx = m.member_idx
+    <where>
+        <if test="keywordInput != null and searchType != null">
+            and
+            <choose>
+                <when test="searchType == 'nickname'">
+                    member_nickname like concat('%', #{keywordInput}, '%')
+                </when>
+                <when test="searchType == 'content'">
+                    qna_content like concat('%', #{keywordInput}, '%')
+                </when>
+            </choose>
+        </if>
+    </where>
+    limit #{limit} offset #{offset}
+</select>
+<select id="getInquiryDetail" parameterType="String" resultType="a2vo">
+    select q.qna_idx, q.member_idx, q.qna_title, q.qna_content, 
+           date_format(q.qna_date, '%Y-%m-%d') as qna_date, q.qna_status, 
+           m.member_nickname as member_nickname
+    from qna q
+    join members m ON q.member_idx = m.member_idx
+    where q.member_idx = m.member_idx and qna_idx = #{qna_idx}
+</select>
 </mapper>

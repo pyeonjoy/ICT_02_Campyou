@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -185,5 +186,58 @@ public class AdminAjaxController {
 
 		    return response;
 		}
-	
+		@RequestMapping(value = "inquiry_search.do", produces = "application/json; charset=utf-8")
+		@ResponseBody
+		public Map<String, Object> SearchInquiry(Admin2VO a2vo,HttpServletRequest request,@RequestParam()String keywordInput,@RequestParam()String searchType){
+			int count = adminService.SearchInquiryCount(a2vo , keywordInput, searchType);
+			paging.setTotalRecord(count);
+			if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+				paging.setTotalPage(1);
+			}else {
+				paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+				if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+					paging.setTotalPage(paging.getTotalPage() +1);
+				}
+			}
+			
+			String cPage = request.getParameter("cPage");
+			if(cPage == null) {
+				paging.setNowPage(1);
+			}else {
+				paging.setNowPage(Integer.parseInt(cPage));
+			}
+			
+			paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
+			
+			paging.setBeginBlock((paging.getNowPage() - 1) / paging.getPagePerBlock() * paging.getPagePerBlock() + 1);
+			paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+
+			if (paging.getEndBlock() > paging.getTotalPage()) {
+			    paging.setEndBlock(paging.getTotalPage());
+			}
+			if (paging.getTotalRecord() == 0) {
+			    paging.setTotalPage(1);
+			} else {
+			    paging.setTotalPage((int)Math.ceil((double)paging.getTotalRecord() / paging.getNumPerPage()));
+			}
+
+			
+			List<Admin2VO> res = adminService.SearchInquiry(a2vo,keywordInput,searchType,paging.getOffset(), paging.getNumPerPage());
+		    Map<String, Object> response = new HashMap<>();
+			
+		    response.put("res", res);
+		    response.put("paging", paging);
+
+		    return response;
+		}
+		
+		@RequestMapping(value = "inquiry_detail.do", produces = "application/json; charset=utf-8")
+		@ResponseBody
+		public Admin2VO get_inquiry_detail(@RequestParam()String qna_idx){
+			Admin2VO res = adminService.getInquiryDetail(qna_idx);
+			/*
+			 * Map<String, Object> response = new HashMap<>(); response.put("res", res);
+			 */
+			return res;
+		}
 }

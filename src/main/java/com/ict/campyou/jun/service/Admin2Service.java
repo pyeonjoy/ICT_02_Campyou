@@ -26,6 +26,13 @@ public interface Admin2Service {
 
 	List<Admin2VO> loadInquiry(Admin2VO a2vo, int offset, int limit);
 
+	int SearchInquiryCount(Admin2VO a2vo, String keywordInput, String searchType);
+
+	List<Admin2VO> SearchInquiry(Admin2VO a2vo, String keywordInput, String searchType, int offset, int limit);
+
+	Admin2VO getInquiryDetail(String qna_idx);
+
+
 
 
 }

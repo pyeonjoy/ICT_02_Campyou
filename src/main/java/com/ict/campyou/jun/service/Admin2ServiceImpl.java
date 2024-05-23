@@ -74,4 +74,24 @@ public class Admin2ServiceImpl implements Admin2Service{
 		return admin2DAO.loadInquiry(a2vo,offset,limit);
 	}
 
+
+	
+	@Override
+	public int SearchInquiryCount(Admin2VO a2vo, String keyword, String searchType) {
+		return admin2DAO.SearchInquiryCount(a2vo,keyword,searchType);
+	}
+	
+
+
+	@Override
+	public List<Admin2VO> SearchInquiry(Admin2VO a2vo, String keywordInput, String searchType,int offset, int limit) {
+		return admin2DAO.SearchInquiry(a2vo,keywordInput,searchType,offset,limit);
+	}
+
+
+	@Override
+	public Admin2VO getInquiryDetail(String qna_idx) {
+		return admin2DAO.getInquiryDetail(qna_idx);
+	}
+
 }
