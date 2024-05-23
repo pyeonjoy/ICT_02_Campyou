@@ -99,7 +99,7 @@ function promiseApplyList() {
 	                html += '<img src="' + imgSrc + '" alt="user_img" class="otheruser_img">';
 	                html += '<div class="list_summery">';
 	                html += '<p class="list_nickname">' + promise.member_nickname + '<img src="${path}/resources/images/' + promise.member_grade + '" class="member_gradeImg" ></p>';
-	                html += '<p class="list_go">' + promise.member_dob + '</p>';
+	                html += '<p class="list_go">' + promise.member_dob + ' ' + promise.member_gender + '</p>';
 	                html += '<p class="list_go">동행횟수 ' + promise.promise_count + '</p>';
 	                html += '</div>';
 	                html += '</div>';

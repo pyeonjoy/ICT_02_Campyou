@@ -40,24 +40,54 @@
 		});
 	});
 	$(function() {
-	  $('input[name="datetimes"]').daterangepicker({
-		    "locale": {
-		        "format": "YYYY/MM/DD",
-		        "separator": " ~ ",
-		        "applyLabel": "확인",
-		        "cancelLabel": "취소",
-		        "fromLabel": "From",
-		        "toLabel": "To",
-		        "customRangeLabel": "Custom",
-		        "weekLabel": "W",
-		        "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
-		        "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-		    },
-		    "startDate": new Date(),
-		    "endDate": new Date(),
-		    "drops": "auto"
-	  });
+	    $('input[name="datetimes"]').daterangepicker({
+	        "locale": {
+	            "format": "YYYY/MM/DD",
+	            "separator": " ~ ",
+	            "applyLabel": "확인",
+	            "cancelLabel": "취소",
+	            "fromLabel": "From",
+	            "toLabel": "To",
+	            "customRangeLabel": "Custom",
+	            "weekLabel": "W",
+	            "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+	            "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+	        },
+	        "startDate": new Date(),
+	        "endDate": new Date(),
+	        "drops": "auto"
+// 	    }
+// 	    }, function(start, end, label) {
+// 	        fetchWeatherInfo(start.format('20240522'), end.format('20240523'));
+	    });
 	});
+
+// 	function fetchWeatherInfo(startDate, endDate) {
+// 	    let lat = 37;
+// 	    let lon = 126;
+// 		console.log("날씨ajax왔나")
+// 	    $.ajax({
+// 	        url: 'weather_search.do',
+// 	        type: 'post',
+// 	        data: {
+// 	            lat: lat,
+// 	            lon: lon,
+// 	            startDate: startDate,
+// 	            endDate: endDate
+// 	        },
+// 	        dataType: 'json',
+// 	        success: function(data) {
+// 	            console.log(data);
+// 	            displayWeatherInfo(data); // 날씨 정보를 표시하는 함수
+// 	        },
+// 	        error: function(xhr, status, error) {
+// 	            console.error(error);
+// 	        }
+// 	    });
+// 	}
+// 	function displayWeatherInfo(data) {
+// 	    $('#weatherInfo').html(weatherHTML);
+// 	}
 	
 	let campImageUrl;
 	let t_mapx;
@@ -269,6 +299,32 @@
 	window.onload = function() {
 	  selectBox();
 	}
+	
+	
+// 	var apiURI = "http://api.openweathermap.org/data/2.5/weather?q=seoul&appid="+"b00ec7b574ad2d29c4a0cba2566fc717";
+//     $.ajax({
+//         url: apiURI,
+//         dataType: "json",
+//         type: "GET",
+//         async: "false",
+//         success: function(resp) {
+//             console.log(resp);
+//             console.log("현재온도 : "+ (resp.main.temp- 273.15) );
+//             console.log("현재습도 : "+ resp.main.humidity);
+//             console.log("날씨 : "+ resp.weather[0].main );
+//             console.log("상세날씨설명 : "+ resp.weather[0].description );
+//             console.log("날씨 이미지 : "+ resp.weather[0].icon );
+//             console.log("바람   : "+ resp.wind.speed );
+//             console.log("나라   : "+ resp.sys.country );
+//             console.log("도시이름  : "+ resp.name );
+//             console.log("구름  : "+ (resp.clouds.all) +"%" );   
+//             var imgURL = "http://openweathermap.org/img/w/" + resp.weather[0].icon + ".png";
+//             $("html컴포넌트").attr("src", imgURL);
+//         }
+//     })
+    
+    
+
 </script>
 </head>
 <body>
@@ -308,6 +364,7 @@
 	                <strong class="togetherSub5Strong">캠핑기간</strong>
 	                <p><input type="text" name="datetimes" value="" class="datetimes" /></p>
 	            </div>
+	            <div id="weatherInfo"></div>
 	        </div>
 	    </form>
 	</div>

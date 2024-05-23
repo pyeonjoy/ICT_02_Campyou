@@ -20,35 +20,41 @@
 $(function() {
 	let cpage = document.getElementById("cPage").value;
 	let proStatus = document.getElementById("promiseStatus").value;
-	console.log(proStatus);
-	console.log(cpage);
 	if(cpage != ''){
 		console.log(15);
 		if(proStatus === "apply"){
-			console.log(124);
 			promiseApplyList(cpage);
 		}else if(proStatus === "send"){
-			console.log(235);
 			promiseApplySendList(cpage);
 		}
-		console.log(236);
 	}else{
-		console.log(1546335);
 		promiseApplyList();
 	}
-	console.log(99999335);
-    
 });
+
 $('.thwrapper').on('click', '.acceptButton', function() {
 	let pmIdx = $(this).closest('.thul2').find("#pm_idx").val();
 	let promiseText = $(this).closest('.thul2').find(".compare").text();
     let promiseCount = promiseText.split('/')[0];
     let totalNumPeople = promiseText.split('/')[1];
-    if (parseInt(promiseCount) >= parseInt(totalNumPeople)) {
-        alert("정원이 초과되었습니다.");
-        return;
-    }
-    updatePromiseStatus(pmIdx, '수락');
+    
+//     let endDateStr = $thul2.find("#t_endDate").attr("value");
+//     let endDateStr = $(this).closest('.thul2').find("#t_endDate").val();
+//     let endDate = new Date(endDateStr);
+//     console.log(endDateStr);
+//     console.log(endDate);
+//     let currentDate = new Date();
+//     console.log(currentDate);
+//     if (currentDate > endDate) {
+//         alert("마감된 동행입니다.");
+//         return;
+//     }else{
+	    if (parseInt(promiseCount) >= parseInt(totalNumPeople)) {
+	        alert("정원이 초과되었습니다.");
+	        return;
+	    }
+   		updatePromiseStatus(pmIdx, '수락');
+//     }
 });
 
 $('.thwrapper').on('click', '.rejectButton', function() {
@@ -124,6 +130,8 @@ function promiseApplyList(page) {
 	                    html2 += '<button type="button" class="thul2DivButton acceptButton" onclick="">수락</button>';
 	                    html2 += '<button type="button" class="thul2DivButton rejectButton" onclick="">거절</button>';
 	                    html2 += '<input type="hidden" id="pm_idx" value="' + promise.pm_idx + '">';
+	                    console.log(promise.t_enddate);
+	                    html2 += '<input type="hidden" id="t_endDate" value="' + promise.t_enddate + '">';
 	                    html2 += '</div>';
 	                } else {
 	                    html2 += '<ul><li class="th1">' + promise.pm_state + '</li></ul>';

@@ -30,7 +30,7 @@
     </textarea> 
     <div class="form_btn">
         <input type="hidden" id="memberIdx" name="member_idx" value="${member_idx}">
-        <button class="btn btn-modi" type="submit" onclick="handleUp(this.form)">저장</button>       
+        <button class="btn btn-modi" type="submit" onclick="handleUp(this.form)">저장</button>
         <button class="btn btn-cancel" onclick="history.back()">취소</button>
     </div>
   </form>
