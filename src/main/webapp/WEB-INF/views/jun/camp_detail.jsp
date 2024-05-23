@@ -13,7 +13,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const contentId = urlParams.get('contentid');
 $(document).ready(function() {
-	
     if (contentId) {
         $.ajax({
             url: "camp_detail_img.do",
@@ -270,7 +269,7 @@ function loadReview(){
                 for (let i = 0; i < review.rating; i++) {
                     stars += "⭐";
                 }
-                commentItem += "<img src="+member_profile_img+review.member_img+" class='profile_show'>";
+                commentItem += "<img src="+member_profile_img+review.member_img+" class='profile_show' data-memberidx='" + review.member_idx + "'>";
                 commentItem += "<p><b>작성자 : </b>" +review.member_nickname +"<br>";
                 commentItem += "<b>별점 : </b>" + stars + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
                 let regDate = new Date(review.r_regdate);
@@ -431,5 +430,6 @@ function loadHeart() {
 		</div>
 	</div>
 	<jsp:include page="../hs/footer.jsp" />
+	<%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>
