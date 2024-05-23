@@ -32,6 +32,10 @@ public interface Admin2Service {
 
 	Admin2VO getInquiryDetail(String qna_idx);
 
+	int redirect_qna(String qna_idx, String qna_title, String qna_content);
+
+	int updateStatus(String qna_idx);
+
 
 
 

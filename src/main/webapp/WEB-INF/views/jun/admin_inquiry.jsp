@@ -7,8 +7,6 @@
 <%@ include file="../hs/admin_menu.jsp"%>
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-<script defer src="${path}/resources/public/js/bm/lang/summernote-ko-KR.js"></script>
-<script defer src="${path}/resources/public/js/bm/summernote-lite.js"></script>
 <style type="text/css">
 body {
 	background-color: #F6FFF1;
@@ -150,15 +148,57 @@ body {
 .search_nowpage:hover {
 	color: #FFBA34;
 }
+.qna_re_form {
+	margin-top: 20px;
+	background-color: rgba(255, 255, 255, 0.8);
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	width: 50%;
+	margin: 20px auto;
+}
+
+#qna_re_form input, #qna_re_form textarea {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	outline: none;
+}
+#qna_content {
+    height: 500px;
+    width: 680px;
+    resize: none;
+}
+.qna_re_form label {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="/resources/public/js/bm/lang/summernote-ko-KR.js"></script>
+<script src="/resources/public/js/bm/summernote-lite.js"></script>
 <script src="https://kit.fontawesome.com/80123590ac.js"
 	crossorigin="anonymous"></script>
+	
+<link rel="stylesheet" href="/resources/css/summernote-lite.css">
 <script type="text/javascript">
-	$(document).ready(function() {
-		load_inquiry();
+$(document).ready(function() {
+	load_inquiry();
+});
+
+function initializeSummernote() {
+	$('#summernote').summernote({
+		disable: true,
+		height: 300,
+		maxheight: 300,
+		focus: true,
+		resize: false,
+		lang: "ko-KR",
+		disableResizeEditor: true,
 	});
+}
+
 
 	function load_inquiry(page) {
 		$.ajax({
@@ -338,33 +378,66 @@ body {
 	                $("#qna_list").empty();
 	                $('.th_paging').empty();
 	                $('.search_th_paging').empty();
-	                $('.search').empty();
+	                $('.search').hide();
 	                console.log(data);
 	                let list = '';
 	                list += '<div class="detail_info">';
-	                list += '<p><strong>번호:</strong> ' + data.qna_idx + '</p>';
-	                list += '<p><strong>닉네임:</strong> ' + data.member_nickname + '</p>';
-	                list += '<p><strong>제목:</strong> ' + data.qna_title + '</p>';
-	                list += '<p><strong>내용:</strong> ' + data.qna_content + '</p>';
-	                list += '<p><strong>날짜:</strong> ' + data.qna_date + '</p>';
 					if (data.qna_status === '0') {
-						list += '<p>처리중</p>';
+						list += '<h3>처리중</h3><br>';
 					} else if (data.qna_status === '1') {
-						list += '<p>처리완료</p>';
+						list += '<h3>처리완료</h3><br>';
 					} else {
-						list += '<p>알 수 없음</p>';
+						list += '<h3>알 수 없음</h3><br>';
 					}
+	                list += '<p>번호: ' + data.qna_idx + '</p><br>';
+	                list += '<p>닉네임: ' + data.member_nickname + '</p><br>';
+	                list += '<p>제목:' + data.qna_title + '</p><br>';
+	                list += '<p>날짜: ' + data.qna_date + '</p><br>';
+	                list += '<textarea id="summernote" name="qna_content" value='+data.qna_content+'></textarea><br><br><br><br>';
 					list += '</div>';
-					list += 
+					list += '<div class ="qna_re_form">';
+					list += '<h3 style="text-align: center;">답변하기</h3>';
+					list += '<label for="qna_title">제목</label><input type="text" id="qna_title" name="qna_title"><br><br>';
+					list += '<label for="qna_content">내용</label><textarea id="qna_content" name="qna_content"></textarea>';
+					list += '<button type="button" onclick="redirect_qna('+data.qna_idx+')">답변하기</button>';
+					list += '<button type="button" onclick="load_inquiry()">뒤로가기</button>';
+					list += '</div>';
 	                $("#qna_list").html(list);
+					setTimeout(function() {
+						initializeSummernote();
+					}, 100);
 	            },
 	            error: function() {
 	                console.log("실패");
 	            }
 	        });
 	    }
-
+function redirect_qna(qna_idx){
+    let qna_content = $("#qna_content").val();
+    let qna_title = $("#qna_title").val();
+/* 	console.log(qna_content+"내용");
+	console.log(qna_title+"제목");
+	console.log(qna_idx+"idx"); */
+	$.ajax({
+        url: "redirect_qna.do",
+        method: "get",
+        data: { qna_idx: qna_idx,
+        	qna_title:qna_title,
+        	qna_content:qna_content},
+        dataType: "json",
+        success: function(data) {
+        	console.log("성공");
+        	alert("답변이 완료되었습니다.");
+        	load_inquiry();
+        	$('.search').show();
+        },
+        error: function(){
+        	alert("서버오류.");
+        	console.log("오류");
+        }
+	})
 	
+}
 </script>
 
 

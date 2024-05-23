@@ -88,6 +88,18 @@ public class Admin2DAO {
 		return sqlSessionTemplate.selectOne("jun.getInquiryDetail",qna_idx);
 	}
 
+	public int redirect_qna(String qna_idx, String qna_title, String qna_content) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("qna_idx",qna_idx);
+		map.put("qna_title",qna_title);
+		map.put("qna_content",qna_content);
+		return sqlSessionTemplate.insert("jun.redirect_qna",map);
+	}
+
+	public int updateStatus(String qna_idx) {
+		return sqlSessionTemplate.update("jun.updateStatus",qna_idx);
+	}
+
 	
 	
 	

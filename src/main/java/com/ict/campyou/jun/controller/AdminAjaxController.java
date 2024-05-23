@@ -235,9 +235,17 @@ public class AdminAjaxController {
 		@ResponseBody
 		public Admin2VO get_inquiry_detail(@RequestParam()String qna_idx){
 			Admin2VO res = adminService.getInquiryDetail(qna_idx);
-			/*
-			 * Map<String, Object> response = new HashMap<>(); response.put("res", res);
-			 */
 			return res;
+		}
+		
+		@RequestMapping(value = "redirect_qna.do", produces = "application/json; charset=utf-8")
+		@ResponseBody
+		public int redirect_qna(@RequestParam()String qna_idx,@RequestParam()String qna_title,@RequestParam()String qna_content){
+			int res = adminService.redirect_qna(qna_idx,qna_title,qna_content);
+			if (res > 0) {
+				int res2 = adminService.updateStatus(qna_idx);
+				return res;
+			}
+			return 0;
 		}
 }
