@@ -42,7 +42,6 @@ function connect() {
     stompClient.subscribe(queueName, function (messageOutput) {
       const chvo = JSON.parse(messageOutput.body);
       showMessageOutput(chvo);
-      onMessageReceived();
     });
   });
 }
@@ -75,16 +74,6 @@ function sendMessage(form, e) {
   return false;
 }
 
-function showNewMessageIndicator() {
-	  const newIndicator = document.querySelector('.new');
-	  if (newIndicator) {
-	    newIndicator.style.display = 'block'; 
-	  }
-	}
-function onMessageReceived() {
-	  showNewMessageIndicator();
-	}
-
 function showMessageOutput(chvo) {
   const isOwnMessage = chvo.send_idx === my_idx;
   const messageClass = isOwnMessage ? "user--2-message" : "user--1-message";
@@ -100,3 +89,7 @@ function showMessageOutput(chvo) {
 function redirectToChatList(){
  window.location.href = "chat-list.do";
 }
+
+back.addEventListener("click", function() {
+	  window.location.href = "chat-list.do";
+	});

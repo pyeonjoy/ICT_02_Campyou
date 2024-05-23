@@ -86,8 +86,8 @@ SELECT * FROM m_chat WHERE msg_room REGEXP CONCAT('^', #{member_idx}, '-|-', #{m
 select * from m_chat where msg_room=#{msg_room} ORDER BY msg_idx DESC   
 </select>
 
-<update id="msgRead" parameterType="chvo">
- update m_chat set msg_read=0 where msg_idx=#{msg_idx}
+<update id="msgRead" parameterType="String">
+    update m_chat set msg_read=0 where msg_idx=#{msg_idx}
 </update>
 
 <select id="getFavList" parameterType="String" resultType="hvo">

@@ -154,7 +154,7 @@ public class BomiController {
 		// 0 = read 1 = unread
 		for (ChatVO chat : chatList) {
 			  if (!chat.getSend_idx().equals(my_idx) && chat.getMsg_read() == "1") {
-		            int res = myService.updateMsgRead(chat);		            
+		            int res = myService.updateMsgRead(chat.getMsg_idx());		            
 		        }
 		}
 		mv.addObject("chatList", chatList);
