@@ -42,6 +42,7 @@ function connect() {
     stompClient.subscribe(queueName, function (messageOutput) {
       const chvo = JSON.parse(messageOutput.body);
       showMessageOutput(chvo);
+      onMessageReceived();
     });
   });
 }
@@ -73,6 +74,16 @@ function sendMessage(form, e) {
   form.elements["msg_content"].value = '';
   return false;
 }
+
+function showNewMessageIndicator() {
+	  const newIndicator = document.querySelector('.new');
+	  if (newIndicator) {
+	    newIndicator.style.display = 'block'; 
+	  }
+	}
+function onMessageReceived() {
+	  showNewMessageIndicator();
+	}
 
 function showMessageOutput(chvo) {
   const isOwnMessage = chvo.send_idx === my_idx;

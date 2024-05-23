@@ -68,7 +68,6 @@ public class BomiController {
 		int count = board1.size() + board2.size();
 
 		List<ReviewVO> reviewList = myService.getReviewList(member_idx);
-		System.out.println(reviewList.size());
 		List<ReVO> reviews = new ArrayList<>();
 
 		for (ReviewVO review : reviewList) {
@@ -138,8 +137,6 @@ public class BomiController {
 		mv.setViewName("bm/chat_list");
 		mv.addObject("list", list);
 		mv.addObject("member_idx", member_idx);
-//		Gson gson = new Gson();
-//		String json = gson.toJson(list);
 		return mv;
 	}
 
@@ -157,13 +154,9 @@ public class BomiController {
 		// 0 = read 1 = unread
 		for (ChatVO chat : chatList) {
 			  if (!chat.getSend_idx().equals(my_idx) && chat.getMsg_read() == "1") {
-		            int res = myService.updateMsgRead(chat);
-		            System.out.println("res"+res);
-		            System.out.println("msg updated"+chat.getMsg_room());
-		            
+		            int res = myService.updateMsgRead(chat);		            
 		        }
 		}
-
 		mv.addObject("chatList", chatList);
 		mv.addObject("msg_room", msg_room);
 		mv.addObject("joiner", joiner);
@@ -291,8 +284,6 @@ public class BomiController {
 		ModelAndView mv = new ModelAndView("redirect:home.do");
 		MemberVO mvo = myService.getMember(member_idx);
 		int res = myService.deletMember(mvo);
-		System.out.println("delete:"
-				+res);
 		session.removeAttribute("memberInfo");
 		return mv;
 	}

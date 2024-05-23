@@ -28,7 +28,6 @@ public class StompController {
 	for (ChatVO message : messagesToUpdate) {
 		if (message.getSend_idx() != my_idx && message.getSend_date().compareTo(chvo.getSend_date()) < 0) {
 			myService.updateMsgRead(message);
-			System.out.println("updated msg");
         }
 		     }
 		    

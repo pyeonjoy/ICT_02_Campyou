@@ -32,7 +32,7 @@
 				<c:otherwise>
 					<c:forEach var="chat" items="${list}">
 					<a href="selectOneRoom.do?msg_room=${chat.msg_room}">
-						<div class="chat_list" >
+						<div class="chat_list" data-msg-room="${chat.msg_room}">
 							<div class="chat-imgs">
 								<img src="${path}/resources/img/cat.png" alt="user_img"
 									class="user_img" />
