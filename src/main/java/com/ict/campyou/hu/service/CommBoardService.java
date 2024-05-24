@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.CommentVO;
+import com.ict.campyou.hu.dao.MemberVO;
 
 public interface CommBoardService {
 	public int getTotalCount();
@@ -43,4 +44,10 @@ public interface CommBoardService {
 	public int getAnsInsert(CommentVO cvo);
 	
 	public CommentVO getCommentReplyDetail(String c_idx);
+	
+	// 최대 권한 구하기
+	public int getGread(String member_idx2);
+	
+	// 쵀대 권한으로 업데이트 하기 
+	public  int getGreadUpdate(String member_idx2, int res);
 }

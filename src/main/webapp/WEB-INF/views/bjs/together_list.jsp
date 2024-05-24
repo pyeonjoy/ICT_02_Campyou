@@ -88,10 +88,10 @@
 			            <div class="toContentOne">
 			                <div>
 			                    <div class="toContentOne1">
-			                        <div class="userImage"><img src="${path}/resources/images/${k.member_img }" class="userImage2 profile_show"></div>
+			                        <img src="${path}/resources/images/${k.member_img }" class="userImage2 profile_show" id="${k.member_idx}" data-memberidx="${k.member_idx}">
 			                        <div>
 				                        <div class="toContentOne1span1">
-				                            <span class="to_member_nickname profile_show">${k.member_nickname }</span>
+				                            <span class="to_member_nickname profile_show" data-memberidx="${k.member_idx}">${k.member_nickname}</span>
 				                            <img src="${path}/resources/images/${k.member_grade}" class="member_gradeImg" >
 				                            <span class="to_member_age">(${k.member_dob } ${k.member_gender })</span>
 				                        </div>
@@ -233,5 +233,6 @@
         </div>
     </div>
 <%@ include file="../hs/footer.jsp" %>
+<%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>

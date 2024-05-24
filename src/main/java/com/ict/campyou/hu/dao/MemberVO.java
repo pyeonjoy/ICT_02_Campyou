@@ -3,9 +3,26 @@ package com.ict.campyou.hu.dao;
 import org.springframework.web.multipart.MultipartFile;
 
 public class MemberVO {
-	private String member_idx, member_id, admin_idx, member_name, member_nickname, member_dob, member_email,
-			member_gender, member_pwd, member_phone, member_img, member_active, member_regdate, member_old_img,
-			member_grade, member_login, new_rating, rating_count, member_rating, member_rating_all;
+	private String member_idx, member_id, admin_idx, member_name, member_nickname, kakao_nickname, member_dob, member_email, member_gender, member_pwd,
+			member_phone, member_img, member_active, member_regdate, member_old_img,member_grade, member_login ;
+  
+	private int member_free;
+
+	public int getMember_free() {
+		return member_free;
+	}
+
+	public String getKakao_nickname() {
+		return kakao_nickname;
+	}
+
+	public void setKakao_nickname(String kakao_nickname) {
+		this.kakao_nickname = kakao_nickname;
+	}
+
+	public void setMember_free(int member_free) {
+		this.member_free = member_free;
+	}
 
 	public String getAdmin_idx() {
 		return admin_idx;
@@ -21,38 +38,6 @@ public class MemberVO {
 
 	public void setAdmin_idx(String admin_idx) {
 		this.admin_idx = admin_idx;
-	}
-
-	public String getMember_rating_all() {
-		return member_rating_all;
-	}
-
-	public void setMember_rating_all(String member_rating_all) {
-		this.member_rating_all = member_rating_all;
-	}
-
-	public String getNew_rating() {
-		return new_rating;
-	}
-
-	public void setNew_rating(String new_rating) {
-		this.new_rating = new_rating;
-	}
-
-	public String getRating_count() {
-		return rating_count;
-	}
-
-	public void setRating_count(String rating_count) {
-		this.rating_count = rating_count;
-	}
-
-	public String getMember_rating() {
-		return member_rating;
-	}
-
-	public void setMember_rating(String member_rating) {
-		this.member_rating = member_rating;
 	}
 
 	public String getMember_login() {
@@ -88,6 +73,7 @@ public class MemberVO {
 	public void setMember_img(String member_img) {
 		this.member_img = member_img;
 	}
+
 
 	public MultipartFile getFile() {
 		return file;

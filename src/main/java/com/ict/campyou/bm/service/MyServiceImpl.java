@@ -47,8 +47,8 @@ public class MyServiceImpl implements MyService{
 		return myDao.changeUserPW(mvo);
 	}
 	@Override
-	public int deletMember(String member_idx) {
-		return myDao.deletMember(member_idx);
+	public int deletMember(MemberVO mvo) {
+		return myDao.deletMember(mvo);
 	}
 	@Override
 	public MemberVO getMember(String member_idx) {

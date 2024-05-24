@@ -9,30 +9,12 @@
 <link rel="stylesheet" href="${path}/resources/public/css/bm/my_main.css">
   <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
   <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
+  <script defer src="${path}/resources/public/js/bm/my_main.js"></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>마이페이지</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-	  const emojiElement = document.querySelector('.emoji');
-	  const grade = emojiElement.id;
-	  let emoji;
-
-	  if (grade === '0') emoji = '🥉';
-	  else if (grade === '1') emoji = '🥈';
-	  else if (grade === '2') emoji = '🥇';
-	  else if (grade === '3') emoji = '🎖️';
-	  else if (grade === '4') emoji = '🏆';
-
-	  if (emoji) {
-	    emojiElement.innerHTML = emoji;
-	  }
-	  
-	  const gradeEl = document.querySelector('.grade');
-	  const gradeInNum = +gradeEl.id +1
-	  gradeEl.innerHTML = '등급 : LV.'+gradeInNum + emoji;
-	});
 $(document).ready(function() {
     promiseApplyList();
 //     setInterval(promiseApplyList, 5000);
@@ -138,11 +120,10 @@ function promiseApplyList() {
 };
 </script>
 </head>
-<body>
+<body class="body">
 		<%@ include file="../hs/mypage_menu.jsp"%>
 	<div class="mypage">
-		<div class="welcome">
-		
+		<div class="welcome">		
 				<c:choose>
 					<c:when test="${empty mvo.member_img}">
 						<img src="${path}/resources/img/cat.png" alt="user_img"
@@ -152,10 +133,10 @@ function promiseApplyList() {
 						<img src="${path}/resources/uploadUser_img/${mvo.member_img}"
 							alt="user_img" class="user_fullImg">
 					</c:otherwise>
-				</c:choose>
-			
-			<h2 class="welcome_user">${mvo.member_name}<span class="emoji" id="${mvo.member_grade}"></span>님, 환영합니다.</h2>
+				</c:choose>			
+			<h2 class="welcome_user">${mvo.member_name}님, 환영합니다.</h2>
 		</div>
+
 		<input type="hidden" id="memberIdx" value="${mvo.member_idx }">
 		<div class="accompany_container">
 		
@@ -163,15 +144,19 @@ function promiseApplyList() {
 		<div class="list_container">
 			<div class="my_list my_board_list">
 				<h4 class="my_title">활동내역</h4>
-				<div class="my_list_summery">
-					<p class="my_list_title">작성글 : <a href="my_board.do?member_idx=${member_idx}">${count}</a></p>
-					<p class="lineHeight grade" id="${mvo.member_grade}" > </p>						
-					<p class="lineHeight rank"> 매너점수 : ${mvo.member_grade}점</p>						
+				<div class="my_list_summery my_list_summery1">
+				 <div class="summery1">
+					<p class="lineHeight my_list_title">작성글 : <a class="count" href="my_board.do?member_idx=${member_idx}">${count}</a>
+					<span class="hidden-text">내가 작성한 글 보러가기 👉</span>
+					</p>
+					<p class="lineHeight rank"> 매너점수 : ${mvo.member_grade}점</p>
+				</div>						
+					<p class="grade" id="${mvo.member_grade}" ><img src="${path}/resources/images/grade${mvo.member_grade+1}.png" alt="level"> </p>						
 				</div>
 			</div>
 		<div class="my_list my_review_list">
 				<h4 class="my_title">내 리뷰</h4>
-				<div class="my_list_summery">
+				<div class="my_list_summery my_list_summery2">
 				<c:choose>
 						<c:when test="${empty reviews }">
 							<p class="nolist">리뷰가 없습니다.</p>
@@ -179,7 +164,7 @@ function promiseApplyList() {
 						<c:otherwise>
 							<c:forEach var="r" items="${reviews}">
 							<div class="each-review">
-					<a class="my_reviews" href="campDetail.do?contentid=${r.contentid}"><span class="camp">${r.camp_site}</span> ${r.review_comment} </a>
+					<a class="lineHeight my_reviews" href="campDetail.do?contentid=${r.contentid}"><span class="camp">${r.camp_site}</span> ${r.review_comment} </a>
 					<span class="rating-stars"><c:forEach var="i" begin="1" end="${r.rating}">&#9733;</c:forEach></span>
 							</div>
 					</c:forEach>
@@ -187,11 +172,11 @@ function promiseApplyList() {
 					</c:choose>
 				</div>
 			</div>
-		</div>
-		
+		</div>		
 		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
-
 	</div>
+	<footer class="footer">
 	  <%@ include file="../hs/footer.jsp"%>
+	</footer>
 </body>
 </html>

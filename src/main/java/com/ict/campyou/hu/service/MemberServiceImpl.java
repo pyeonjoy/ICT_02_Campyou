@@ -6,12 +6,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
+import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberDAO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.hu.sns.kakao.KakaoUserVO;
@@ -98,12 +100,16 @@ public class MemberServiceImpl implements MemberService {
 	                //System.out.println(kakao_nickname);
 	                // 카카오에서 제공하는 정보
 	                map.put("member_id", kakao_id);
-	                map.put("member_nickname", kakao_nickname);
+	                //map.put("member_nickname", kakao_nickname);
+	                map.put("kakao_nickname", kakao_nickname);
 	                map.put("member_email", kakao_email);
 	                
+	                System.out.println(kakao_nickname);
+	               
 	                // 카카오에서 제공하지 않는 정보
 	                map.put("member_name", "Kakao: Not Provided");
 	                map.put("member_pwd", "Kakao: Not Provided");
+	                map.put("member_nickname", "Kakao: Not Provided");
 	                map.put("member_dob", "Kakao: Not Provided");
 	                map.put("member_phone", "Kakao: Not Provided");   
 	                
@@ -152,18 +158,21 @@ public class MemberServiceImpl implements MemberService {
 	                KakaoUserVO kvo = gson.fromJson(result, KakaoUserVO.class);
 
 	                String kakao_id = kvo.getId();
-	                String kakao_nickname = kvo.getProperties().getNickname();
+	                String kakao_nickname = kvo.getProperties().getNickname(); 
 	                String kakao_email = kvo.getKakao_account().getEmail();
 	                
 	                //System.out.println(kakao_nickname);
 	                // 카카오에서 제공하는 정보
 	                map.put("member_id", kakao_id);
-	                map.put("member_nickname", kakao_nickname);
+	                map.put("kakao_nickname", kakao_nickname);
 	                map.put("member_email", kakao_email);
+	                
+	               
 	                
 	                // 카카오에서 제공하지 않는 정보
 	                map.put("member_name", "Kakao: Not Provided");
 	                map.put("member_pwd", "Kakao: Not Provided");
+	                map.put("member_nickname", "Kakao: Not Provided");
 	                map.put("member_dob", "Kakao: Not Provided");
 	                map.put("member_phone", "Kakao: Not Provided");   
 	                
@@ -217,6 +226,7 @@ public class MemberServiceImpl implements MemberService {
 				//String naver_profile_image = nvo.getResponse().getProfile_image();
 				
 				map.put("member_id", naver_id);
+				//map.put("member_nickname", naver_nickname);
 				map.put("member_name", naver_name);
                 map.put("member_email", naver_email);
                 
@@ -273,12 +283,14 @@ public class MemberServiceImpl implements MemberService {
 				 
 				String naver_id = nvo.getResponse().getId();
 				//String naver_nickname = nvo.getResponse().getNickname();
+				
 				String naver_email = nvo.getResponse().getEmail();
 				//String naver_mobile = nvo.getResponse().getMobile();
 				String naver_name = nvo.getResponse().getName();
 				//String naver_profile_image = nvo.getResponse().getProfile_image();
 				
 				map.put("member_id", naver_id);
+				//map.put("member_nickname", naver_nickname);
 				map.put("member_name", naver_name);
                 map.put("member_email", naver_email);
                 
@@ -303,4 +315,46 @@ public class MemberServiceImpl implements MemberService {
 	public int getMemberFreeUpdate(String member_idx) {
 		return memberDAO.getMemberFreeUpdate(member_idx);
 	}
+
+	@Override
+	public int getUpdateMemberGrade(String member_idx) {
+		
+		return memberDAO.getUpdateMemberGrade(member_idx);
+	}
+
+	@Override
+	public int getUpdateMemberGrade2(String member_idx) {
+		// TODO Auto-generated method stub
+		return memberDAO.getUpdateMemberGrade2(member_idx);
+	}
+
+	@Override
+	public int getUpdateMemberGrade3(String member_idx) {
+		// TODO Auto-generated method stub
+		return memberDAO.getUpdateMemberGrade3(member_idx);
+	}
+
+	@Override
+	public int getUpdateMemberGrade4(String member_idx) {
+		// TODO Auto-generated method stub
+		return memberDAO.getUpdateMemberGrade4(member_idx);
+	}
+
+	@Override
+	public int getUpdateMemberGrade5(String member_idx) {
+		// TODO Auto-generated method stub
+		return memberDAO.getUpdateMemberGrade5(member_idx);
+	}
+	
+	
+	
+	
+	//맴버 디테일
+	@Override
+	public MemberVO getMemeberDetail(String member_idx) {
+		
+		return memberDAO.getMemeberDetail(member_idx);
+	}
+
+	
 }

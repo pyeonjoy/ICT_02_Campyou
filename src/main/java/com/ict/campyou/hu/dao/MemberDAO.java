@@ -112,6 +112,7 @@ public class MemberDAO {
 	//데이터베이스에 카카오 맴버 저장되어있나 확인. 없으면 데이터베이스에 insert 하기
 	public int getInsertKakaoId(Map<String, String> map) {
 		try {
+			System.out.println(map.get(map));
 			return sqlSessionTemplate.insert("member.insert_kakao_info_for_log_in", map);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -178,4 +179,56 @@ public class MemberDAO {
 		}
 		return 0;
 	}
+	
+	
+	public int getUpdateMemberGrade(String member_idx) {
+		return sqlSessionTemplate.update("member.member_grade_update", member_idx);
+	}
+	
+
+	public int getUpdateMemberGrade2(String member_idx) {
+		
+		return sqlSessionTemplate.update("member.member_grade_update2", member_idx);
+	}
+
+	public int getUpdateMemberGrade3(String member_idx) {
+		
+		return sqlSessionTemplate.update("member.member_grade_update3", member_idx);
+	}
+
+	
+	public int getUpdateMemberGrade4(String member_idx) {
+		
+		return sqlSessionTemplate.update("member.member_grade_update4", member_idx);
+	}
+
+	
+	public int getUpdateMemberGrade5(String member_idx) {
+		
+		return sqlSessionTemplate.update("member.member_grade_update5", member_idx);
+	}
+	
+	
+	
+	//맴버 디테일
+	public MemberVO getMemeberDetail(String member_idx) {
+		
+		return sqlSessionTemplate.selectOne("member.member_detail", member_idx);
+	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

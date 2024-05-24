@@ -68,8 +68,13 @@ $.ajax({
             let $container = $("#camp_list_show").find(".Heart_button:last");
             loadHeart(contentid, $container);
             });
+			
             // 페이징 처리
             let paging = data.paging;
+            let totalCount = data.count;
+            console.log(data.count);
+            $('.total_count').empty();
+            $(".total_count").text(totalCount);
             $('.th_paging').empty();
             $('.page_button').empty();
             let pagingHtml = '';
@@ -190,7 +195,8 @@ $(document).ready(function() {
             let tel = $(this).find("tel").text();
             let homepage = $(this).find("homepage").text();
             let contentid = $(this).find("contentId").text();
-
+			let totalCount = $(data).find("totalCount").text();
+			
             let campItem = "<div class='camp_item'>";
             if (firstImageUrl != null && firstImageUrl !== "") {
                 campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
@@ -211,6 +217,8 @@ $(document).ready(function() {
             let $container = $("#camp_list_show").find(".Heart_button:last");
             loadHeart(contentid, $container);
         });
+		let totalCount = $(data).find("totalCount").text();
+		$(".total_count").text(totalCount);
     }
 
     function camp_all_list() {

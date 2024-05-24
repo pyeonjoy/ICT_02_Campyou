@@ -13,10 +13,10 @@
     <result property="msg_read" column="msg_read"/>   
 </resultMap>
 <select id="faq_lists" resultType="fvo">
-select * from faq order by faq_idx
+select * from faq where faq_status=1 order by faq_idx 
 </select>
 <select id="faq_lists2" resultType="fvo">
-select * from faq2 order by faq_idx
+select * from faq2 where faq_status=1 order by faq_idx
 </select>
 
 <select id="getPw" resultType="mvo" parameterType="String">
@@ -36,15 +36,15 @@ update members set member_nickname=#{member_nickname}, member_phone=#{member_pho
 update members set member_pwd = #{member_pwd} where member_idx = #{member_idx}
 </update>
 
-<delete id="getDeleteUser" parameterType="String">
- delete from members where member_idx=#{member_idx}
-</delete>
+<update id="getDeleteUser" parameterType="mvo">
+ update members set member_active = -2 where member_idx=#{member_idx}
+</update>
 
 <select id="getOne" resultType="qvo" parameterType="String">
 select * from qna where qna_idx=#{qna_idx}
 </select>
 
-<update id="modiQna" parameterType="String" >
+<update id="modiQna" parameterType="qvo" >
 update qna set qna_title=#{qna_title}, qna_content=#{qna_content} where qna_idx=#{qna_idx}
 </update>
 <!--  
@@ -87,7 +87,7 @@ select * from m_chat where msg_room=#{msg_room} ORDER BY msg_idx DESC
 </select>
 
 <update id="msgRead" parameterType="String">
- update m_chat set msg_read=0
+    update m_chat set msg_read=0 where msg_idx=#{msg_idx}
 </update>
 
 <select id="getFavList" parameterType="String" resultType="hvo">

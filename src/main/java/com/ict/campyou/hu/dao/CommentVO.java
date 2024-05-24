@@ -1,10 +1,18 @@
 package com.ict.campyou.hu.dao;
 
 public class CommentVO {
-	private String c_idx, member_nickname, admin_nickname, content, write_date, b_idx, groups, step, lev;
+	private String c_idx, member_nickname, kakao_nickname, member_name, admin_nickname, content, write_date, b_idx, groups, step, lev;
 
 	public String getC_idx() {
 		return c_idx;
+	}
+
+	public String getKakao_nickname() {
+		return kakao_nickname;
+	}
+
+	public void setKakao_nickname(String kakao_nickname) {
+		this.kakao_nickname = kakao_nickname;
 	}
 
 	public String getAdmin_nickname() {
@@ -25,6 +33,14 @@ public class CommentVO {
 
 	public void setGroups(String groups) {
 		this.groups = groups;
+	}
+
+	public String getMember_name() {
+		return member_name;
+	}
+
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
 	}
 
 	public String getMember_nickname() {

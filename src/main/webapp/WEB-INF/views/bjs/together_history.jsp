@@ -120,11 +120,12 @@ function promiseApplyList(page) {
                 for (let i = 0; i < toHistory.length; i++) {
                     let promise = toHistory[i];
 	                let html2 = '<div class="thul2">';
-	                html2 += '<ul class="thliImage3 profile_show"><li class="th1 thliImage"><img src="${path}/resources/images/' + promise.member_img + '" class="qa11 thliImage2"></a></li></ul>';
-	                html2 += '<ul><li class="th1 member_gradeLi profile_show">' + promise.member_nickname + '<img src="${path}/resources/images/' + promise.member_grade + '" class="member_gradeImg" >(' + promise.member_dob + ')(' + promise.promise_my_count + ')</li></ul>';
+                  html2 += '<ul class="thliImage3 profile_show" data-memberidx="' + promise.member_idx + '"><li class="th1 thliImage"><img src="${path}/resources/images/' + promise.member_img + '" class="qa11 thliImage2"></a></li></ul>';
+	                html2 += '<ul><li class="th1 member_gradeLi profile_show" data-memberidx="' + promise.member_idx + '">' + promise.member_nickname + '<img src="${path}/resources/images/' + promise.member_grade + '" class="member_gradeImg" >(' + promise.member_dob + ')(' + promise.promise_my_count + ')</li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.t_campname + '</a></li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11 compare">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
+
 	                if (promise.pm_state === "신청중") {
 	                    html2 += '<div class="thul2Div">';
 	                    html2 += '<button type="button" class="thul2DivButton acceptButton" onclick="">수락</button>';
@@ -228,7 +229,7 @@ function promiseApplySendList(page) {
                 for (let i = 0; i < toSendHistory.length; i++) {
                     let promise = toSendHistory[i];
 	                let html2 = '<div class="thul4">';
-	                html2 += '<ul><li class="th1 profile_show">' + promise.member_nickname + '</li></ul>';
+	                html2 += '<ul><li class="th1 profile_show" data-memberidx="' + promise.member_idx + '">' + promise.member_nickname + '</li></ul>';
 
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.t_campname + '</a></li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
@@ -377,5 +378,6 @@ function promiseApplySendList(page) {
 		</div>	
 	</div>
 <%@ include file="../hs/footer.jsp" %>
+<%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>

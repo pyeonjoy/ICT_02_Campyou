@@ -9,8 +9,18 @@
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <%@ include file="../hs/header.jsp" %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/member.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		let pwdchk = "${pwdchk}";
+		if(pwdchk == 'fail'){
+			alert("비밀번호 틀립니다. 다시 입력해 주세요");
+			return;
+			
+		}
+	});
+</script>
 <script type="text/javascript">
 function logIn(f) {
 	if(f.member_id.value === ""){
@@ -25,12 +35,6 @@ function logIn(f) {
 	 }
 	f.action="login_go_ok.do";
 	f.submit();
-}
-function kakaoLogIn() {
-	alert("Coming Soon!!")
-}
-function naverLogIn() {
-	alert("Coming Soon!!")
 }
 </script>
 <style>
@@ -66,7 +70,8 @@ function naverLogIn() {
 	            <br><br>
 	            <p class="small mb-5 pb-lg-2"><a class="text-muted" href="find_pwd_go.do">비밀번호 찾기</a> &nbsp;
 	           	<a class="text-muted" href="find_id_go.do">아이디 찾기</a></p>
-	           	<p class="text-center text-muted mt-5 mb-1">회원이 아니신가요?&nbsp;<a href="sign_up_page_go.do"class="fw-bold text-body">회원가입</a></p>
+	           	<p class="text-center text-muted mt-5 mb-1">회원이 아니신가요?&nbsp;<a href="sign_up_page_go.do"class="fw-bold text-body">회원가입</a></p><br>
+	            <a class="text-muted" href="admin_login_form.do">관리자 로그인(임시)</a>
 	            <hr class="my-4">  
 			</form>
 				<a id="a-color" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=4a601447a1662d2919cfc432b342bc38&redirect_uri=http://localhost:8090/kakaologin.do">

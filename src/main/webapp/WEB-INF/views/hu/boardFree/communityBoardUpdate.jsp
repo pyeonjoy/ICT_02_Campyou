@@ -12,6 +12,7 @@
 <!-- summer note -->
 <link rel="stylesheet" href="resources/css/summernote-lite.css">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardUpdate.css">
+<link rel="stylesheet" href="${path}/resources/public/css/hu/summernote.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -88,7 +89,7 @@
 					</tr>
 					<tr align="center">
 						<td bgcolor="#003300" style="color: white;">별명</td>
-						<td align="left">${cbvo.member_nickname} ${cbvo.admin_nickname}
+						<td align="left">${cbvo.member_nickname} ${cbvo.admin_nickname}${cbvo.member_name}
 						<input type="hidden" name="member_nickname" value="${cbvo.member_nickname}">
 						</td>
 					</tr>
@@ -123,23 +124,13 @@
 <script src="resources/js/summernote-lite.js" ></script>
 <script src="resources/js/lang/summernote-ko-KR.js" ></script>
 <script type="text/javascript">
-	$(function() {
-		$("#b_content").summernote({
-			lang : 'ko-KR',
-			height : 300,
-			focus : true,
-			placeholder: '최대3000자까지 쓸 수 있습니다'	, //placeholder 설정
-			callbacks : {
-				onImageUpload : function(files, editor) {
-					for (var i = 0; i < files.length; i++) {
-						console.log("i = " , files)
-							sendImage(files[i], editor);						
-					}
-				}
-			}
-		});
-		// $("#content").summernote("lineHeight",.7);
-	});
+$(document).ready(function () {
+    $('#b_content').summernote({
+        placeholder: '내용을 작성하세요',
+        height: 400,
+        maxHeight: 400
+    });
+});
 </script>	
 </body>
 </html>

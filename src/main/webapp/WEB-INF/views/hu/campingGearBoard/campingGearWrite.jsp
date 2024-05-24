@@ -21,8 +21,8 @@
 	function camping_gear_board(f) {
 		for (var i = 0; i < f.elements.length; i++) {
 			if (f.elements[i].value == "") {
-				if (i == 2 || i == 3) continue;
-				if(i == 6) break;
+				if (i == 2 || i == 4) continue;
+				if(i == 7) break;
 				alert(f.elements[i].name + "를 입력하세요");
 				f.elements[i].focus();
 				return; //수행 중단
@@ -64,7 +64,8 @@
 						<c:otherwise>
 							<td align="left">${memberInfo.member_nickname}
 							<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
-							<input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}"></td>
+							<input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}">
+							<input type="hidden" name="member_grade" value="${memberInfo.member_grade}"></td>
 						</c:otherwise>
 					</c:choose>
 				</tr>

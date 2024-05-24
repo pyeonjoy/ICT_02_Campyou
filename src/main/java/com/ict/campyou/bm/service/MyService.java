@@ -29,7 +29,7 @@ public interface MyService {
 
 	public int changeUserPW(MemberVO mvo);
 
-	public int deletMember(String member_idx);
+	public int deletMember(MemberVO mvo);
 
 	public int uploadQna(QnaVO qvo);
 

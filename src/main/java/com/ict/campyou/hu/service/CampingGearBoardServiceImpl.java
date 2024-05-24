@@ -96,4 +96,16 @@ public class CampingGearBoardServiceImpl implements CampingGearBoardService {
 	public CampingGearBoardCommentVO getCampingGearDetail2(String c_idx) {
 		return campingGearBoardDAO.getCampingGearDetail2(c_idx);
 	}
+	
+	// 최대 권한 구하기
+	@Override
+	public int getGrade(String member_idx2) {
+		return campingGearBoardDAO.getGrade(member_idx2);
+	}
+	
+	// 쵀대 권한으로 업데이트 하기
+	@Override
+	public int getGradeUpdate(String member_idx2, int res) {
+		return campingGearBoardDAO.getGradeUpdate(member_idx2, res);
+	}
 }

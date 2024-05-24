@@ -235,6 +235,9 @@ width: 2.7rem;
 					            <option value="nickname">닉네임</option>
 					        </select>
 					    	<input type="text" name="keyword">
+					    	<input type="hidden" name="offset" value="1">
+						    <input type="hidden" name="limit" value="10">
+						    <input type="hidden" name="cPage" id="cPage" value="1">
 					        <button type="submit" name="search"  class="searchbtn">검색</button>
 					    </div>
 					    <input type="hidden" name="offset" value="1">
