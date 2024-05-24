@@ -200,18 +200,19 @@ public class CampAjaxController {
 
 	@RequestMapping(value = "loadReview.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public Map<String, Object> loadReview(@RequestParam() String contentid) {
-		List<ReviewVO> res = campService.loadReview(contentid);
-		int count = campService.countReview(contentid);
-		
-        double avgRating = campService.addRating(contentid);
-        
-        Map<String, Object> response = new HashMap<>();
-        response.put("reviews", res);
-        response.put("avgRating", avgRating);
-        response.put("count",count);
-        return response;
+	public Map<String, Object> loadReview(@RequestParam() String contentid) throws Exception {
+	    List<ReviewVO> res = campService.loadReview(contentid);
+	    int count = campService.countReview(contentid);
+	    double avgRating = campService.addRating(contentid);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("reviews", res);
+	    response.put("avgRating", avgRating);
+	    response.put("count", count);
+
+	    return response;
 	}
+
 
 	@RequestMapping(value = "checkHeart.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
