@@ -100,7 +100,15 @@ public class Admin2DAO {
 		return sqlSessionTemplate.update("jun.updateStatus",qna_idx);
 	}
 
-	
-	
-	
+	public int w_board_count(Admin2VO a2vo) {
+		return sqlSessionTemplate.selectOne("jun.w_board_count",a2vo);
+	}
+
+	public List<Admin2VO> loadBoardList(Admin2VO a2vo, int offset, int limit) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("a2vo",a2vo);
+		map.put("offset",offset);
+		map.put("limit",limit);
+		return sqlSessionTemplate.selectList("jun.loadBoardList",map);
+	}
 }

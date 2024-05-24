@@ -194,4 +194,14 @@
 <update id="updateStatus">
 	update qna set qna_status = 1 where qna_idx = #{qna_idx} 
 </update>
+<select id="w_board_count" parameterType="a2vo" resultType="int">
+	select count(*) from board_with
+</select>
+<select id="loadBoardList" parameterType="a2vo" resultType="map">
+	select w.t_idx, w.member_idx, w.t_subject, w.t_content, w.t_campname,w.t_regdate,t_active, m.member_nickname as member_nickname
+	from board_with w
+	join members m ON w.member_idx = m.member_idx
+	where w.member_idx = m.member_idx
+	limit #{limit} offset #{offset}
+</select>
 </mapper>

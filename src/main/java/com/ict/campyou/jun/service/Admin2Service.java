@@ -36,6 +36,10 @@ public interface Admin2Service {
 
 	int updateStatus(String qna_idx);
 
+	int w_board_count(Admin2VO a2vo);
+
+	List<Admin2VO> loadBoardList(Admin2VO a2vo, int offset, int limit);
+
 
 
 

@@ -89,4 +89,15 @@ public class Admin2ServiceImpl implements Admin2Service {
 		return admin2DAO.updateStatus(qna_idx);
 	}
 
+	@Override
+	public int w_board_count(Admin2VO a2vo) {
+		return admin2DAO.w_board_count(a2vo);
+	}
+
+	@Override
+	public List<Admin2VO> loadBoardList(Admin2VO a2vo, int offset, int limit) {
+		return admin2DAO.loadBoardList(a2vo,offset,limit);
+	}
+
+
 }

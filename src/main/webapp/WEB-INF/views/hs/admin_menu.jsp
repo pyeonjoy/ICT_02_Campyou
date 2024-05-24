@@ -24,9 +24,8 @@
 			<div class="side board_menu">
 			<h4>커뮤니티 관리</h4>
 			<ul>
-				<li><a href="#">자유게시판</a></li>
-				<li><a href="#">추천게시판</a></li>
-				<li><a href="#">동행게시판</a></li>
+				<li><a href="admin_board.do">게시판 관리</a></li>
+
 			</ul>
 			</div>
 			<div class="side user_menu">

@@ -16,4 +16,8 @@ public class AdminPageController {
 	public ModelAndView getAdmin_Inquiry() {
 		return new ModelAndView("jun/admin_inquiry");
 	}
+	@GetMapping("admin_board.do")
+	public ModelAndView getAllBoard() {
+		return new ModelAndView("jun/admin_board_with");
+	}
 }
