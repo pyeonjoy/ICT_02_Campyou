@@ -68,4 +68,15 @@ public class ViewController {
 		return null;
 	}
 
+	@RequestMapping("weather_jsp.do")
+    public ModelAndView weather_jsp() {
+        try {
+            ModelAndView mv = new ModelAndView("hs/weather_info");
+            return mv;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+	
 }
