@@ -136,6 +136,9 @@ function promiseApplyList() {
 				</c:choose>			
 			<h2 class="welcome_user">${mvo.member_name}님, 환영합니다.</h2>
 		</div>
+
+		<input type="hidden" id="memberIdx" value="${mvo.member_idx }">
+
 		<div class="list_container">
 			<div class="my_list my_board_list">
 				<h4 class="my_title">활동내역</h4>

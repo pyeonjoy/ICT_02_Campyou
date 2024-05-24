@@ -20,10 +20,6 @@
 	width: 18px;
 	height: 18px;
 }
-.body{
-	  display: flex;
-    flex-direction: column;
-}
 .mypage {
 	width: 70%;
 	height: 100vh;
