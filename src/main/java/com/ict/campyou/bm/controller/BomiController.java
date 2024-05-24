@@ -280,7 +280,7 @@ public class BomiController {
 
 	// Delete User
 	@PostMapping("deleteUser.do")
-	public ModelAndView changeUserPw(HttpSession session, @RequestParam("member_idx") String member_idx) {
+	public ModelAndView DeleteUser(HttpSession session, @RequestParam("member_idx") String member_idx) {
 		ModelAndView mv = new ModelAndView("redirect:home.do");
 		MemberVO mvo = myService.getMember(member_idx);
 		int res = myService.deletMember(mvo);
