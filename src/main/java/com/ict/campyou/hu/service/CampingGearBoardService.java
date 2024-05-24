@@ -40,4 +40,10 @@ public interface CampingGearBoardService {
 	public int getAnsInsert(CampingGearBoardCommentVO cgbvo);
 	
 	public CampingGearBoardCommentVO getCampingGearDetail2(String c_idx);
+	
+	// 최대 권한 구하기
+	public int getGrade(String member_idx2);
+	 
+	// 쵀대 권한으로 업데이트 하기 
+	public int getGradeUpdate(String member_idx2, int res);
 }

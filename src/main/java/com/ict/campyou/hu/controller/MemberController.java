@@ -123,13 +123,15 @@ public class MemberController {
 	  public ModelAndView getLogin(HttpServletRequest request, MemberVO vo) {
 		  try {
 			  HttpSession session = request.getSession();
-	          ModelAndView mv = new ModelAndView();
+	          ModelAndView mv = new ModelAndView("hu/loginForm");
 	          
 	          MemberVO vo2 = memberService.getLogInOK(vo);
 	          
-	          if(vo2.getMember_active().equals("-2") || vo2 == null || !passwordEncoder.matches(vo.getMember_pwd(), vo2.getMember_pwd()) && (vo.getMember_id() != vo2.getMember_id()) ) {
-	        	  mv.setViewName("redirect:login_form.do");
-	        	  //mv.addObject("pwdchk", "fail");
+	          
+	          if(vo2 == null || !passwordEncoder.matches(vo.getMember_pwd(), vo2.getMember_pwd()) && (vo.getMember_id() != vo2.getMember_id()) ) {
+	        	  //mv.setViewName("redirect:login_form.do");
+	        	  //mv.setViewName("hu/loginForm");
+	        	  mv.addObject("pwdchk", "fail");
 	              return mv;
 	          }else {
 	        	  if(vo2 != null && vo2.getMember_active().equals("1")){
@@ -262,6 +264,7 @@ public class MemberController {
 			//카카오 로그인 회원정보 받아오기
 			MemberVO kakao_mvo = memberService.getKakaoLogInOk(session);
 			
+			
 			//카카오 회원 세션
 			if(kakao_mvo != null) { 
 				session.setAttribute("kakaoMemberInfo", kakao_mvo); 
@@ -307,7 +310,7 @@ public class MemberController {
 			   session.removeAttribute("memberInfo");
 			   session.removeAttribute("admin");
 			   session.removeAttribute("kakaoMemberInfo");
-			   //session.removeAttribute("naverMemberInfo");
+			   session.removeAttribute("naverMemberInfo");
 			   return mv;
 		    } catch (Exception e) {
 		  	   System.out.println(e);
@@ -376,7 +379,8 @@ public class MemberController {
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
-			
+			  MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
+			  
 			  CommBoardVO cbvo = new CommBoardVO();
 		
 			  if(memberInfo != null) {
@@ -397,6 +401,7 @@ public class MemberController {
 					mv.addObject("memberInfo", memberInfo);
 					mv.addObject("adminInfo", adminInfo);
 					mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
+					mv.addObject("naverMemberInfo", naverMemberInfo);
 					return mv;
 				}
 				return new ModelAndView("hu/boardFree/error");
@@ -414,6 +419,7 @@ public class MemberController {
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			  MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 
 			  if(memberInfo != null) {
 				  mv.addObject("memberInfo", memberInfo);
@@ -427,6 +433,10 @@ public class MemberController {
 				  mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
 				  return mv;
 			  }
+			  if(naverMemberInfo != null) {
+				  mv.addObject("naverMemberInfo", naverMemberInfo);
+				  return mv;
+			  }
 		  } catch (Exception e) {
 			  System.out.println(e);
 		  }
@@ -434,13 +444,14 @@ public class MemberController {
 	  }
 	  
 	  @RequestMapping("comm_board_write_ok.do")
-	  public ModelAndView getCommBoardWriteOk(CommBoardVO cbvo, HttpServletRequest request, HttpSession session) {
+	  public ModelAndView getCommBoardWriteOk(CommBoardVO cbvo, String b_idx, HttpServletRequest request, HttpSession session) {
 		  try {
 			  ModelAndView mv = new ModelAndView("redirect:community_board.do");
 			  
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			  MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 			 
 			  String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 			  MultipartFile file = cbvo.getFile();
@@ -463,18 +474,52 @@ public class MemberController {
 					  FileCopyUtils.copy(in, out);
 				  }	
 				  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));
-				  System.out.println("cbvo: " + cbvo.getMember_nickname());
-				  int result = commBoardService.getCommBoardInsert(cbvo);
-				  if(result > 0) {
+				  
+				  if(true) {				  
 					  //자유 게시판에 글쓸때 마다 member_free 등급 올리기
+					  //String member_idx = cbvo.getMember_idx();
 					  String member_idx = cbvo.getMember_idx();
 					  int result2 = memberService.getMemberFreeUpdate(member_idx);
+					  
+					  String member_idx2 = memberInfo.getMember_idx();
+					  MemberVO mvo = memberService.getMemeberDetail(member_idx2);
+					  cbvo.setMember_grade(mvo.getMember_grade());
+				
+					  if(mvo.getMember_free() < 2) {
+						  int result3 = memberService.getUpdateMemberGrade(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 2 && mvo.getMember_free() < 4) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade2(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() >= 4 && mvo.getMember_free() < 6) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade3(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 6 && mvo.getMember_free() < 8) {  
+						  
+						  int result3 = memberService.getUpdateMemberGrade4(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() > 8) {	  
+						  
+						  int result3 = memberService.getUpdateMemberGrade5(member_idx2);
+					  } 
+					  cbvo.setMember_grade(mvo.getMember_grade());
+					  int result = commBoardService.getCommBoardInsert(cbvo);
+					  
+					  if(result > 0) {
+						 // 최대 권한 구하기 
+						 int res = commBoardService.getGread(member_idx2);
+						 
+						 // 쵀대 권한으로 업데이트 하기 
+						 int res2 = commBoardService.getGreadUpdate(member_idx2, res);
+					  }
 					  return mv;
-				  } 
+				  }
 			  }
-			  
 			  //카카오회원 글쓰기
 			  if(kakaoMemberInfo != null) {
+				  
 				  cbvo.setMember_idx(kakaoMemberInfo.getMember_idx());
 				 //cbvo.setMember_grade(memberInfo.getMember_grade());
 				  
@@ -489,14 +534,109 @@ public class MemberController {
 					  File out = new File(path, f_name);
 					  FileCopyUtils.copy(in, out);
 				  }	
-				  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));				  				  
+				  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));				  				  			
 				  
-				  int result = commBoardService.getCommBoardInsert(cbvo);			
-				  
-				  if(result > 0) {
+				  if(true) {
+				
 					  //자유 게시판에 글쓸때 마다 member_free 등급 올리기
 					  String member_idx = cbvo.getMember_idx();
 					  int result2 = memberService.getMemberFreeUpdate(member_idx);
+					  
+					  String member_idx2 = kakaoMemberInfo.getMember_idx();
+					  MemberVO mvo = memberService.getMemeberDetail(member_idx2);
+					  cbvo.setMember_grade(mvo.getMember_grade());
+					  
+					  if(mvo.getMember_free() < 2) {
+						  int result3 = memberService.getUpdateMemberGrade(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 2 && mvo.getMember_free() < 4) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade2(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() >= 4 && mvo.getMember_free() < 6) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade3(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 6 && mvo.getMember_free() < 8) {  
+						  
+						  int result3 = memberService.getUpdateMemberGrade4(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() > 8) {	  
+						  
+						  int result3 = memberService.getUpdateMemberGrade5(member_idx2);
+					  }
+					  cbvo.setMember_grade(mvo.getMember_grade());
+					  int result = commBoardService.getCommBoardInsert(cbvo);
+					  
+					  if(result > 0) {
+						 // 최대 권한 구하기 
+						 int res = commBoardService.getGread(member_idx2);
+						 
+						 // 쵀대 권한으로 업데이트 하기 
+						 int res2 = commBoardService.getGreadUpdate(member_idx2, res);
+					  }				  
+					  return mv;
+				  } 
+			  }
+			  
+			  //네이버회원 글쓰기
+			  if(naverMemberInfo != null) {
+				  
+				  cbvo.setMember_idx(naverMemberInfo.getMember_idx());
+				 //cbvo.setMember_grade(memberInfo.getMember_grade());
+				  
+				  if(file.isEmpty()) {
+					  cbvo.setBf_name(""); 
+				  }else {
+					  UUID uuid = UUID.randomUUID();
+					  String f_name = uuid.toString() + "_" + file.getOriginalFilename();
+					  cbvo.setBf_name(f_name);
+					  
+					  byte[] in = file.getBytes();
+					  File out = new File(path, f_name);
+					  FileCopyUtils.copy(in, out);
+				  }	
+				  cbvo.setB_pwd(passwordEncoder.encode(cbvo.getB_pwd()));				  				  			
+				  
+				  if(true) {
+				
+					  //자유 게시판에 글쓸때 마다 member_free 등급 올리기
+					  String member_idx = cbvo.getMember_idx();
+					  int result2 = memberService.getMemberFreeUpdate(member_idx);
+					  
+					  String member_idx2 = naverMemberInfo.getMember_idx();
+					  MemberVO mvo = memberService.getMemeberDetail(member_idx2);
+					  cbvo.setMember_grade(mvo.getMember_grade());
+					  
+					  if(mvo.getMember_free() < 2) {
+						  int result3 = memberService.getUpdateMemberGrade(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 2 && mvo.getMember_free() < 4) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade2(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() >= 4 && mvo.getMember_free() < 6) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade3(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 6 && mvo.getMember_free() < 8) {  
+						  
+						  int result3 = memberService.getUpdateMemberGrade4(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() > 8) {	  
+						  
+						  int result3 = memberService.getUpdateMemberGrade5(member_idx2);
+					  }
+					  cbvo.setMember_grade(mvo.getMember_grade());
+					  int result = commBoardService.getCommBoardInsert(cbvo);
+					  
+					  if(result > 0) {
+						 // 최대 권한 구하기 
+						 int res = commBoardService.getGread(member_idx2);
+						 
+						 // 쵀대 권한으로 업데이트 하기 
+						 int res2 = commBoardService.getGreadUpdate(member_idx2, res);
+					  }				  
 					  return mv;
 				  } 
 			  }
@@ -534,10 +674,10 @@ public class MemberController {
 		  try {
 			  ModelAndView mv = new ModelAndView("hu/boardFree/communityBoardDetail");
 			  
-		
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			  MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 			  
 			  int result = commBoardService.getCommBoardHit(b_idx);
 			  
@@ -572,6 +712,18 @@ public class MemberController {
 					  mv.addObject("memberInfo", memberInfo);
 					  mv.addObject("adminInfo", adminInfo);
 					  mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
+					  return mv;
+				  }  
+			  }
+			  if(naverMemberInfo != null) {
+				  CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
+				  cbvo.setMember_idx(naverMemberInfo.getMember_idx());
+				  
+				  if(result > 0 && cbvo != null && cbvo.getMember_idx().equals(naverMemberInfo.getMember_idx())) {
+					  mv.addObject("cbvo", cbvo);
+					  mv.addObject("memberInfo", memberInfo);
+					  mv.addObject("adminInfo", adminInfo);
+					  mv.addObject("naverMemberInfo", naverMemberInfo);
 					  return mv;
 				  }  
 			  }
@@ -747,10 +899,11 @@ public class MemberController {
 				MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 				AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 				MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+				MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 				  
 				int result = commBoardService.getCommBoardHit(b_idx);
 				  
-				if(memberInfo == null && adminInfo == null && kakaoMemberInfo == null) {
+				if(memberInfo == null && adminInfo == null && kakaoMemberInfo == null && naverMemberInfo == null) {
 					CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);
 					List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
 					 
@@ -797,6 +950,19 @@ public class MemberController {
 						return mv;
 					}  
 				}
+				if(naverMemberInfo != null) {
+					CommBoardVO cbvo = commBoardService.getCommBoardDetail(b_idx);  
+					cbvo.setMember_idx(naverMemberInfo.getMember_idx());
+					cbvo.setMember_name(naverMemberInfo.getMember_name());
+					
+					if(result > 0 && cbvo != null && cbvo.getMember_idx().equals(naverMemberInfo.getMember_idx())) {
+						List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
+						mv.addObject("commBoard_list2", commBoard_list2);
+						mv.addObject("cbvo", cbvo);
+						mv.addObject("naverMemberInfo", naverMemberInfo);
+						return mv;
+					}  
+				}
 			 } catch (Exception e) {
 				 	System.out.println(e);
 			 }
@@ -811,6 +977,8 @@ public class MemberController {
 			  
 			   MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			   AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+			   MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			   MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 			  
 			   //hit 카운트 계산
 			   int result = commBoardService.getCommBoardHit(b_idx);
@@ -821,6 +989,8 @@ public class MemberController {
 				   List<CommentVO> commBoard_list2 = commBoardService.getCommBoardList2(b_idx);
 				   mv.addObject("commBoard_list2", commBoard_list2);
 				   mv.addObject("memberInfo", memberInfo);
+				   mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
+				   mv.addObject("naverMemberInfo", naverMemberInfo);
 				   mv.addObject("adminInfo", adminInfo);
 				   mv.addObject("cbvo", cbvo);
 				   mv.addObject("cPage", cPage);
@@ -835,6 +1005,8 @@ public class MemberController {
 			
 			MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+			MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 			 
 			List<CommentVO> lcvo = commBoardService.getCommentReplyList(b_idx);
 			
@@ -861,6 +1033,8 @@ public class MemberController {
 			if(result2 > 0) {
 				mv.addObject("lcvo", lcvo);
 				mv.addObject("memberInfo", memberInfo);
+				mv.addObject("adminInfo", adminInfo);
+				mv.addObject("naverMemberInfo", naverMemberInfo);
 				mv.addObject("adminInfo", adminInfo);
 				mv.addObject("cPage", cPage);
 				return mv;

@@ -131,7 +131,7 @@ public class SnsController {
 	@RequestMapping("naverlogout2.do")
 	public ModelAndView getSnsLogout(HttpSession session) {
 		try {
-			// session.invalidate();
+			 //session.invalidate();
 			 session.removeAttribute("naverMemberInfo");
 		     return new ModelAndView("home");
 		   }catch (Exception e) {

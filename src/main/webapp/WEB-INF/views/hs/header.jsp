@@ -44,7 +44,9 @@
 							</c:if>
 								<c:choose>
 									<c:when test="${kakaoMemberInfo != null }">
-										<a href="https://kauth.kakao.com/oauth/logout?client_id=4a601447a1662d2919cfc432b342bc38&logout_redirect_uri=http://localhost:8090/kakaologout.do">로그아웃</a>
+										<!-- 밑에 주석처리한것 지우지 말아 주세요  -->
+										<!-- <a href="https://kauth.kakao.com/oauth/logout?client_id=4a601447a1662d2919cfc432b342bc38&logout_redirect_uri=http://localhost:8090/kakaologout.do">로그아웃</a> -->
+										<a href="kakaologout.do">로그아웃</a>
 									</c:when>
 								<c:otherwise>
 									<c:choose>

@@ -9,8 +9,18 @@
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <%@ include file="../hs/header.jsp" %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/member.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		let pwdchk = "${pwdchk}";
+		if(pwdchk == 'fail'){
+			alert("비밀번호 틀립니다. 다시 입력해 주세요");
+			return;
+			
+		}
+	});
+</script>
 <script type="text/javascript">
 function logIn(f) {
 	if(f.member_id.value === ""){
@@ -25,12 +35,6 @@ function logIn(f) {
 	 }
 	f.action="login_go_ok.do";
 	f.submit();
-}
-function kakaoLogIn() {
-	alert("Coming Soon!!")
-}
-function naverLogIn() {
-	alert("Coming Soon!!")
 }
 </script>
 <style>

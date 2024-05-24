@@ -181,11 +181,45 @@ public class CampingGearBoardController {
 					  FileCopyUtils.copy(in, out);
 				  }	
 				  cgbvo.setCp_pwd(passwordEncoder.encode(cgbvo.getCp_pwd()));
-				  int result = campingGearBoardService.getCampingGearWriteInsert(cgbvo);
-				  if(result > 0) {
+				 
+				  if(true) {
 					  //캠핑 게시판에 글쓸때 마다 member_free 등급 올리기
 					  String member_idx = cgbvo.getMember_idx();
 					  int result2 = memberService.getMemberFreeUpdate(member_idx);
+					  
+					  String member_idx2 = memberInfo.getMember_idx();
+					  MemberVO mvo = memberService.getMemeberDetail(member_idx2);
+					  cgbvo.setMember_grade(mvo.getMember_grade());
+					  
+					  if(mvo.getMember_free() < 2) {
+						  int result3 = memberService.getUpdateMemberGrade(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 2 && mvo.getMember_free() < 4) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade2(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() >= 4 && mvo.getMember_free() < 6) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade3(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 6 && mvo.getMember_free() < 8) {  
+						  
+						  int result3 = memberService.getUpdateMemberGrade4(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() > 8) {	  
+						  
+						  int result3 = memberService.getUpdateMemberGrade5(member_idx2);
+					  }
+					  cgbvo.setMember_grade(mvo.getMember_grade());
+					  int result = campingGearBoardService.getCampingGearWriteInsert(cgbvo);
+					  
+					  if(result > 0) {
+						 // 최대 권한 구하기 
+						 int res = campingGearBoardService.getGrade(member_idx2);
+						 
+						 // 쵀대 권한으로 업데이트 하기 
+						 int res2 = campingGearBoardService.getGradeUpdate(member_idx2, res);
+					  }
 					  return mv;
 				  } 
 			  }

@@ -5,6 +5,7 @@
 <html>
 <head>
 <title>회원가입</title>
+<%@ include file="../hs/header.jsp" %>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -25,6 +26,7 @@
         return dobPattern.test(dob);
 	}
 	function save_go(f) {
+		event.preventDefault();
 		const member_id = f.member_id.value.trim();
 		const member_name = f.member_name.value.trim();
 		const member_nickname = f.member_nickname.value.trim();
@@ -169,47 +171,48 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
+<br><br><br>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <section class="vh-100 bg-image" style="background-image: url('https://img.kr.news.samsung.com/kr/wp-content/uploads/2014/10/043.jpg');">
   <div class="mask d-flex align-items-center h-100 gradient-custom-3">
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+        <div class="col-12 col-md-7 col-lg-5 col-xl-5">
           <div class="card" style="border-radius: 15px;">
-            <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">회원가입</h2>
+            <div class="card-body p-3">
+              <h2 class="text-uppercase text-center mb-3">회원가입</h2>
 	              <form>
 		               	<div class="form-outline mb-2">
 		               	  <label class="form-label" for="member_id">아이디<sup>*</sup></label> &nbsp; <span id="idSpan"></span>
-		                  <input type="text" id="member_id" name="member_id" class="form-control form-control-lg" placeholder="아이디 4자이상"/>
+		                  <input type="text" id="member_id" name="member_id" class="form-control form-control-sm" placeholder="아이디 4자이상"/>
 		                </div>
 		                <div class="form-outline mb-2">
 		                  <label class="form-label" for="member_name">이름<sup>*</sup></label>
-		                  <input type="text" id="member_name" name="member_name" class="form-control form-control-lg" />
+		                  <input type="text" id="member_name" name="member_name" class="form-control form-control-sm" />
 		                </div> 
 		                <div class="form-outline mb-2">
 		                  <label class="form-label" for="member_nickname">별명<sup>*</sup></label> &nbsp; <span id="nickNameSpan"></span>
-		                  <input type="text" id="member_nickname" name="member_nickname" class="form-control form-control-lg" />
+		                  <input type="text" id="member_nickname" name="member_nickname" class="form-control form-control-sm" />
 		                </div>
 		                <div class="form-outline mb-2">
 		                  <label class="form-label" for="member_dob">생년월일<sup>*</sup></label>
-		                  <input type="text" id="member_dob" name="member_dob" class="form-control form-control-lg" placeholder="예)  yyyy-mm-dd" />
+		                  <input type="text" id="member_dob" name="member_dob" class="form-control form-control-sm" placeholder="예)  yyyy-mm-dd" />
 		                </div>
 		                <div class="form-outline mb-2">
 		                  <label class="form-label" for="member_email">이메일<sup>*</sup></label>
-		                  <input type="email" id="member_email" name="member_email" class="form-control form-control-lg" placeholder="예) jejudo@naver.com"/>
+		                  <input type="email" id="member_email" name="member_email" class="form-control form-control-sm" placeholder="예) jejudo@naver.com"/>
 		                </div>
 		                <div class="form-outline mb-2">
 		                  <label class="form-label" for="member_pwd">비밀번호<sup>*</sup></label>
-		                  <input type="password" id="member_pwd" name="member_pwd" class="form-control form-control-lg" />
+		                  <input type="password" id="member_pwd" name="member_pwd" class="form-control form-control-sm" />
 		                </div>
 		                <div class="form-outline mb-2">
 		                  <label class="form-label" for="member_pwdCheck">비밀번호 확인<sup>*</sup></label>
-		                  <input type="password" id="member_pwdCheck" name="member_pwdCheck" class="form-control form-control-lg" />
+		                  <input type="password" id="member_pwdCheck" name="member_pwdCheck" class="form-control form-control-sm" />
 		                </div>
 						 <div class="form-outline mb-2">
 						  <label class="form-label" for="member_phone">전화번호<sup>*</sup></label>
-		                  <input type="text" id="member_phone" name="member_phone" class="form-control form-control-lg" placeholder="예) 010-0000-0000"/>
+		                  <input type="text" id="member_phone" name="member_phone" class="form-control form-control-sm" placeholder="예) 010-0000-0000"/>
 		                </div><br>
 		                <div class="form-outline mb-2">
 		                	<label class="form-label" for="member_phone">성별<sup>*</sup></label>&nbsp;&nbsp;
@@ -222,14 +225,14 @@ $(document).ready(function() {
 								  <label class="form-check-label" for="inlineRadio2">여</label>
 							</div>
  						</div>
-		             	<div class="form-check d-flex justify-content-center mb-4">
+		             	<div class="form-check d-flex justify-content-center mb-3">
 		                  <input class="form-check-input me-2" type="checkbox" value="" id="chkbox" name="chkbox" />
 		                  <label class="form-check-label" for="chkbox"> 이용약관에 동의합니다. <a href="terms_of_use_go.do" target="_blank" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=700'); return false;" class="text-body"><u>이용약관</u></a></label>
 		                </div> 
 		                <div class="d-flex justify-content-center">
-		                  <button type="submit" id="m_id" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onclick="save_go(this.form)" >회원가입</button>
+		                  <button type="submit" id="m_id" class="btn btn-success btn-block btn-sm gradient-custom-4 text-body" onclick="save_go(this.form)" >회원가입</button>
 		                </div>
-		                <p class="text-center text-muted mt-5 mb-0">이미 회원이신가요?<a href="login_form.do"class="fw-bold text-body"><u>로그인</u></a></p>
+		                <p class="text-center text-muted mt-3 mb-0">이미 회원이신가요?<a href="login_form.do"class="fw-bold text-body"><u>로그인</u></a></p>
 	              </form>
             </div>
           </div>
@@ -238,5 +241,7 @@ $(document).ready(function() {
     </div>
   </div>
 </section>
+<%@ include file="../hs/footer.jsp" %>
 </body>
+
 </html>
