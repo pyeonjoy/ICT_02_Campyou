@@ -26,7 +26,8 @@
     justify-content: center;
     width: 100%;
 }
-#camp_list_show img{
+
+#camp_list_show .firstImg{
     width: 40%;
     height: 300px;
     object-fit: cover;
@@ -67,11 +68,6 @@
 	margin: 0 10px;
 }
 
-.Heart_button {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-}
 .page_button_space {
 	display: flex;
 	justify-content: center;
@@ -123,7 +119,7 @@
     width: 100%;
     }
 .go_map_button h4{
-    margin-left: 22.8px;
+	margin-left: 57px;
     width: 34%;
 }
 .go_map_button input[type="button"]{
@@ -135,7 +131,7 @@
 	border-top-right-radius: 5px;
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
-	margin-right: 86px;
+	margin-right: 97px;
 }
 
 .go_map_button input[type="button"]:hover{
@@ -161,6 +157,12 @@
 	display: flex;
 	line-height: 30px;
 	justify-content: space-between;
+}
+.heart-button{
+    position: absolute;
+    bottom: 30px;
+    right: 15px;
+    width: 30px;
 }
 </style>
 </head>

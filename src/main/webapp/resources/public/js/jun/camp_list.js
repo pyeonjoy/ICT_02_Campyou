@@ -36,6 +36,10 @@ $.ajax({
     dataType: "json",
     success: function(data) {
         $("#camp_list_show").empty();
+        if (data.cvo.length === 0) {
+        	alert("검색 결과가 존재하지않습니다.");
+            return ;
+        }
         $.each(data.cvo, function(index, camp) {
             let firstImageUrl = camp.firstimageurl;
             let doNm = camp.donm;
@@ -51,9 +55,9 @@ $.ajax({
             }
             let campItem = "<div class='camp_item'>";
             if (firstImageUrl != null && firstImageUrl !== "") {
-                campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
+                campItem += "<img class='firstImg' src='" + firstImageUrl + "' alt='이미지'>";
             } else {
-                campItem += "<img src='/resources/images/2.jpg' alt='대체 이미지'>";
+                campItem += "<img class='firstImg' src='/resources/images/2.jpg' alt='대체 이미지'>";
             }
             campItem += "<div class='camp_info' onclick='location.href=\"camp_detail.do?contentid=" + contentid + "\"'>";
             campItem += "<p> [" + doNm + sigunguNm + "] </p>";
@@ -109,6 +113,16 @@ $.ajax({
         }
     });
     }
+let filledHeartHtml = function(contentid) {
+    console.log("f: " + contentid);
+    return "<img class='heart-button' src='resources/images/heart_fill.png' data-contentid='" + contentid + "' alt='하트'>";
+};
+
+let emptyHeartHtml = function(contentid) {
+    console.log("e: " + contentid);
+    return "<img class='heart-button' src='resources/images/heart_empty.png' data-contentid='" + contentid + "' alt='빈하트'>";
+};
+
 function loadHeart(contentid, $container) {
     $.ajax({
         url: "checkHeart.do",
@@ -120,9 +134,9 @@ function loadHeart(contentid, $container) {
         success: function(data) {
             let detailButton = "<div class='Heart_button'>";
             if (data === true) {
-                detailButton += "<button class='heart-button' data-contentid='" + contentid + "'>🤍</button>";
+                detailButton += emptyHeartHtml(contentid);
             } else if (data === false) {
-                detailButton += "<button class='heart-button' data-contentid='" + contentid + "'>❤️</button>";
+                detailButton += filledHeartHtml(contentid);
             } else {
                 alert("찜 여부를 확인하는 중 오류가 발생했습니다.");
             }
@@ -131,7 +145,7 @@ function loadHeart(contentid, $container) {
         },
         error: function() {
             let detailButton = "<div class='Heart_button'>";
-            detailButton += "<button class='heart-button' data-contentid='" + contentid + "'>🤍</button>";
+            detailButton += emptyHeartHtml(contentid);
             detailButton += "</div>";
             $container.html(detailButton);
         }
@@ -147,7 +161,7 @@ function Heart(contentid) {
         success: function(data) {
             if (data != "error") {
                 alert("관심 캠핑장에 등록이 되었습니다.");
-                $(".camp_item").find(".Heart_button[data-contentid='" + contentid + "']").html("<button data-contentid='" + contentid + "' onclick='delHeart(" + contentid + ")'>❤️</button>");
+                $(".camp_item").find(".Heart_button[data-contentid='" + contentid + "']").html(filledHeartHtml(contentid));
             } else {
                 delHeart(contentid);
             }
@@ -168,11 +182,12 @@ function delHeart(contentid) {
         success: function(data) {
             if (data != "error") {
                 alert("관심캠핑장에서 제거하였습니다.");
-                $(".camp_item").find(".Heart_button[data-contentid='" + contentid + "']").html("<button data-contentid='" + contentid + "' onclick='Heart(" + contentid + ")'>🤍</button>");
+                $(".camp_item").find(".Heart_button[data-contentid='" + contentid + "']").html(emptyHeartHtml(contentid));
             }
         }
     });
 }
+
 function go_map(){
 	window.location = 'camp_map_list.do';
 }
@@ -199,9 +214,9 @@ $(document).ready(function() {
 			
             let campItem = "<div class='camp_item'>";
             if (firstImageUrl != null && firstImageUrl !== "") {
-                campItem += "<img src='" + firstImageUrl + "' alt='이미지'>";
+                campItem += "<img class='firstImg' src='" + firstImageUrl + "' alt='이미지'>";
             } else {
-                campItem += "<img src='/resources/images/2.jpg' alt='대체 이미지'>";
+                campItem += "<img class='firstImg' src='/resources/images/2.jpg' alt='대체 이미지'>";
             }
             campItem += "<div class='camp_info' onclick='location.href=\"camp_detail.do?contentid=" + contentid + "\"'>";
             campItem += "<p> [" + doNm + sigunguNm + "] </p>";
@@ -290,7 +305,15 @@ $(document).ready(function() {
         camp_all_list();
         
     });
+    let filledHeartHtml = function(contentid) {
+        console.log("f: " + contentid);
+        return "<img class='heart-button' src='resources/images/heart_fill.png' data-contentid='" + contentid + "' alt='하트'>";
+    };
 
+    let emptyHeartHtml = function(contentid) {
+        console.log("e: " + contentid);
+        return "<img class='heart-button' src='resources/images/heart_empty.png' data-contentid='" + contentid + "' alt='빈하트'>";
+    };
     function loadHeart(contentid, $container) {
         $.ajax({
             url: "checkHeart.do",
@@ -302,9 +325,9 @@ $(document).ready(function() {
             success: function(data) {
                 let detailButton = "<div class='Heart_button'>";
                 if (data === true) {
-                    detailButton += "<button class='heart-button' data-contentid='" + contentid + "'>🤍</button>";
+                    detailButton += emptyHeartHtml(contentid);
                 } else if (data === false) {
-                    detailButton += "<button class='heart-button' data-contentid='" + contentid + "'>❤️</button>";
+                    detailButton += filledHeartHtml(contentid);
                 } else {
                     alert("찜 여부를 확인하는 중 오류가 발생했습니다.");
                 }
@@ -313,7 +336,7 @@ $(document).ready(function() {
             },
             error: function() {
                 let detailButton = "<div class='Heart_button'>";
-                detailButton += "<button class='heart-button' data-contentid='" + contentid + "'>🤍</button>";
+                detailButton += emptyHeartHtml(contentid);
                 detailButton += "</div>";
                 $container.html(detailButton);
             }
@@ -329,7 +352,7 @@ $(document).ready(function() {
             success: function(data) {
                 if (data != "error") {
                     alert("관심 캠핑장에 등록이 되었습니다.");
-                    $(".camp_item").find(".Heart_button[data-contentid='" + contentid + "']").html("<button data-contentid='" + contentid + "' onclick='delHeart(" + contentid + ")'>❤️</button>");
+                    $(".camp_item").find(".Heart_button[data-contentid='" + contentid + "']").html(filledHeartHtml(contentid));
                 } else {
                     delHeart(contentid);
                 }
@@ -350,7 +373,7 @@ $(document).ready(function() {
             success: function(data) {
                 if (data != "error") {
                     alert("관심캠핑장에서 제거하였습니다.");
-                    $(".camp_item").find(".Heart_button[data-contentid='" + contentid + "']").html("<button data-contentid='" + contentid + "' onclick='Heart(" + contentid + ")'>🤍</button>");
+                    $(".camp_item").find(".Heart_button[data-contentid='" + contentid + "']").html(emptyHeartHtml(contentid));
                 }
             }
         });
@@ -358,12 +381,12 @@ $(document).ready(function() {
 
     $(document).on("click", ".heart-button", function() {
         let contentid = $(this).data("contentid");
-        if ($(this).hasClass("filled")) {
+        if ($(this).attr("src") === 'resources/images/heart_fill.png') {
             delHeart(contentid);
-            $(this).removeClass("filled").addClass("empty").html("🤍");
+            $(this).attr("src", 'resources/images/heart_empty.png');
         } else {
             Heart(contentid);
-            $(this).removeClass("empty").addClass("filled").html("❤️");
+            $(this).attr("src", 'resources/images/heart_fill.png');
         }
     });
     

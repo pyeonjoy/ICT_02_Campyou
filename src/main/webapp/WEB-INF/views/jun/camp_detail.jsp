@@ -241,56 +241,58 @@ $(document).ready(function() {
 
 
 
-function loadReview(){
+function loadReview() {
     $.ajax({
         url: "loadReview.do",
         type: "get",
-        data: {contentid : contentId},
+        data: {contentid: contentId},
         dataType: "json",
         success: function(data) {
-            let avgRating = data.avgRating; // 합계
-            let count = data.count; // 갯수
+            if (!data) {
+                data = { avgRating: 0, count: 0, reviews: [] };
+            }
+
+            let avgRating = data.avgRating;
+            let count = data.count;
             console.log(count);
             let resAvg = Math.round((avgRating / count) * 10) / 10;
             
-            $("#avg_rating").text(resAvg);
-        	if (Array.isArray(data) && data.length === 0) {
-        		$("#comment_list").empty();
-				let commentItem = "<div>"
-				commentItem += "<p style='text-align:center; font-size:25px;'>작성된 리뷰가 없습니다. 리뷰를 작성해주세요 !</p>"
-				commentItem += "</div>"
-				$("#comment_list").append(commentItem);
-			}else{
+            console.log(resAvg);
+            
             $("#comment_list").empty();
-            $.each(data.reviews, function(index, review) {
+            if (data.reviews.length === 0) {
                 let commentItem = "<div>";
-                let stars = "";
-                let member_profile_img = "/resources/images/"
-                for (let i = 0; i < review.rating; i++) {
-                    stars += "⭐";
-                }
-                commentItem += "<img src="+member_profile_img+review.member_img+" class='profile_show' data-memberidx='" + review.member_idx + "'>";
-                commentItem += "<p><b>작성자 : </b>" +review.member_nickname +"<br>";
-                commentItem += "<b>별점 : </b>" + stars + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
-                let regDate = new Date(review.r_regdate);
-                let formattedDate = regDate.getFullYear() + "년 " +
-                					(regDate.getMonth() + 1).toString().padStart(2, '0') + "월 " +
-                					regDate.getDate().toString().padStart(2, '0') + "일 " +
-                					regDate.getHours().toString().padStart(2, '0') + "시 " +
-                					regDate.getMinutes().toString().padStart(2, '0') + "분";
-                commentItem += ""+formattedDate+"</p>";
-                commentItem += "<p> " + review.r_comment + "</p>";
+                commentItem += "<p style='text-align:center; font-size:25px;'>작성된 리뷰가 없습니다. 리뷰를 작성해주세요 !</p>";
                 commentItem += "</div>";
                 $("#comment_list").append(commentItem);
-            
-            });
-			}
-        },
-        error: function() {
-            alert("리뷰를 불러오는 중 오류가 발생했습니다.");
+            } else {
+            $("#avg_rating").text(resAvg);
+                $.each(data.reviews, function(index, review) {
+                    let commentItem = "<div>";
+                    let stars = "";
+                    let member_profile_img = "/resources/images/";
+                    for (let i = 0; i < review.rating; i++) {
+                        stars += "⭐";
+                    }
+                    commentItem += "<img src=" + member_profile_img + review.member_img + " class='profile_show' data-memberidx='" + review.member_idx + "'>";
+                    commentItem += "<p><b>작성자 : </b>" + review.member_nickname + "<br>";
+                    commentItem += "<b>별점 : </b>" + stars + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+                    let regDate = new Date(review.r_regdate);
+                    let formattedDate = regDate.getFullYear() + "년 " +
+                                        (regDate.getMonth() + 1).toString().padStart(2, '0') + "월 " +
+                                        regDate.getDate().toString().padStart(2, '0') + "일 " +
+                                        regDate.getHours().toString().padStart(2, '0') + "시 " +
+                                        regDate.getMinutes().toString().padStart(2, '0') + "분";
+                    commentItem += "" + formattedDate + "</p>";
+                    commentItem += "<p> " + review.r_comment + "</p>";
+                    commentItem += "</div>";
+                    $("#comment_list").append(commentItem);
+                });
+            }
         }
     });
 }
+
 function loadHeart() {
     $.ajax({
         url: "checkHeart.do",
