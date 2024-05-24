@@ -4,8 +4,57 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class MemberVO {
 	private String member_idx, member_id, admin_idx, member_name, member_nickname, member_dob, member_email, member_gender, member_pwd,
-			member_phone, member_img, member_active, member_regdate, member_old_img,member_grade, member_login ;
+			member_phone, member_img, member_active, member_regdate, member_old_img,member_grade, member_login, member_free, member_with, member_camp, member_rating, rating_count, member_rating_all ;
   
+	
+	public String getMember_free() {
+		return member_free;
+	}
+
+	public void setMember_free(String member_free) {
+		this.member_free = member_free;
+	}
+
+	public String getMember_with() {
+		return member_with;
+	}
+
+	public void setMember_with(String member_with) {
+		this.member_with = member_with;
+	}
+
+	public String getMember_camp() {
+		return member_camp;
+	}
+
+	public void setMember_camp(String member_camp) {
+		this.member_camp = member_camp;
+	}
+
+	public String getMember_rating() {
+		return member_rating;
+	}
+
+	public void setMember_rating(String member_rating) {
+		this.member_rating = member_rating;
+	}
+
+	public String getRating_count() {
+		return rating_count;
+	}
+
+	public void setRating_count(String rating_count) {
+		this.rating_count = rating_count;
+	}
+
+	public String getMember_rating_all() {
+		return member_rating_all;
+	}
+
+	public void setMember_rating_all(String member_rating_all) {
+		this.member_rating_all = member_rating_all;
+	}
+
 	public String getAdmin_idx() {
 		return admin_idx;
 	}
