@@ -489,8 +489,8 @@ $(document).on("click", ".toDetailContent4Sub2Sub2ButtonX", function() {
         </div>
         <form class="toDetailContent" method="post">
             <div class="toDetailContent1">
-                <div class="userImage"><img src="${path}/resources/images/${tvo.member_img }" class="userImage2 profile_show" data-memberidx="${tvo.member_idx }"></div>
-                <div class="toContentOne1span">
+                <div class="deatailUserImage"><img src="${path}/resources/images/${tvo.member_img }" class="deataiUserImage2 profile_show" data-memberidx="${tvo.member_idx }"></div>
+                <div class="toDetailContentOne1span">
                     <span class="to_member_nickname profile_show" data-memberidx="${tvo.member_idx }">${tvo.member_nickname }</span>
                     <img src="${path}/resources/images/${tvo.member_grade}" class="member_gradeImg" >
 					<span class="to_member_age">(${tvo.member_dob } ${tvo.member_gender })</span>

@@ -80,7 +80,7 @@ function promiseApplyList() {
 	                html += '<div class="list_header">';
 	                html += '<img src="' + imgSrc + '" alt="user_img" class="otheruser_img">';
 	                html += '<div class="list_summery">';
-	                html += '<p class="list_nickname">' + promise.member_nickname + '<img src="${path}/resources/images/' + promise.member_grade + '" class="member_gradeImg" ></p>';
+	                html += '<p class="list_nickname profile_show" data-memberidx="' + promise.member_idx + '">' + promise.member_nickname + '<img src="${path}/resources/images/' + promise.member_grade + '" class="member_gradeImg" ></p>';
 	                html += '<p class="list_go">' + promise.member_dob + ' ' + promise.member_gender + '</p>';
 	                html += '<p class="list_go">동행횟수 ' + promise.promise_count + '</p>';
 	                html += '</div>';
@@ -178,5 +178,6 @@ function promiseApplyList() {
 	<footer class="footer">
 	  <%@ include file="../hs/footer.jsp"%>
 	</footer>
+	<%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>

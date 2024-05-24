@@ -17,7 +17,6 @@
 <%@ include file="../hs/header.jsp" %>
 <%@ include file="../hs/mypage_menu.jsp"%>
 <style>
-/*모달 팝업 영역 스타일링*/
 .modal {
 	/*팝업 배경*/
 	display: none;
@@ -63,8 +62,6 @@
 	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 .wrap {
-/*     height: 100vh;
-    min-height: 400px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -358,6 +355,7 @@ function promisePeopleDetail() {
 	let page = document.getElementById("cPage").value;
 	let tEnddate = document.getElementById("t_enddate").value;
    	$('.thul2').empty();
+   	$('.thul3').empty();
     $.ajax({
         url: 'promise_people_detail.do',
         type: 'post',
@@ -391,7 +389,8 @@ function promisePeopleDetail() {
                     html += '</div>';
                 }
          		$('.thul2').append(html);
-                let html2 = '<div class="partnerListButtonDiv">';
+         		let html2 = '';
+                html2 += '<div class="partnerListButtonDiv">';
                 if(promiseStatus == "ready"){
 //                 	html2 += '<button type="button" class="thul2DivButton" onclick="confirm_partner(' + tIdx + ',' + memberIdx + ',\'' + tEnddate + '\',' + JSON.stringify(memberIdxArray) + ')" style="margin-right: 3rem;">동행 완료</button>';
 					html2 += '<button type="button" class="thul2DivButton" onclick="confirm_partner(' + tIdx + ',' + memberIdx + ',\'' + tEnddate + '\', \'' + JSON.stringify(memberIdxArray).replace(/"/g, '&quot;') + '\')" style="margin-right: 3rem;">동행 완료</button>';
@@ -441,7 +440,7 @@ function banishMember(memberIdx) {
     }
 }
 function partner_list(page, memberIdx, promiseStatus) {
-	location.href = "together_partner.do?cPage=" + page + "&member_idx=" + memberIdx + "&promise_status='" + promiseStatus + "'";
+	location.href = "together_partner.do?cPage=" + page + "&promise_status=" + promiseStatus;
 }
 function confirm_partner(tIdx, memberIdx, tEnddate, memberIdxArray) {
 	let currentDate = new Date();
@@ -465,7 +464,6 @@ function confirm_partner(tIdx, memberIdx, tEnddate, memberIdxArray) {
 	        },
 	        traditional: true, // 배열 데이터를 전송할 때 사용
 	        success: function(response) {
-// 	        	location.href="together_partner.do?member_idx=" + memberIdx + "&cPage=1&promise_status=" + 'end' + ""
 	        	partner_list(1, memberIdx, 'end');
 	        },
 	        error: function(xhr, status, error) {

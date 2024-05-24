@@ -18,6 +18,8 @@
 <%@ include file="../hs/mypage_menu.jsp"%>
 <script type="text/javascript">
 $(function() {
+	let pro_status = '';
+	
 	let cpage = document.getElementById("cPage").value;
 	let proStatus = document.getElementById("promiseStatus").value;
 	if(cpage != ''){
@@ -30,14 +32,16 @@ $(function() {
 	}else{
 		promiseApplyList();
 	}
-});
+
+
 
 $('.thwrapper').on('click', '.acceptButton', function() {
 	let pmIdx = $(this).closest('.thul2').find("#pm_idx").val();
 	let promiseText = $(this).closest('.thul2').find(".compare").text();
     let promiseCount = promiseText.split('/')[0];
     let totalNumPeople = promiseText.split('/')[1];
-    
+    console.log(promiseCount);
+    console.log(totalNumPeople);
 //     let endDateStr = $thul2.find("#t_endDate").attr("value");
 //     let endDateStr = $(this).closest('.thul2').find("#t_endDate").val();
 //     let endDate = new Date(endDateStr);
@@ -53,13 +57,14 @@ $('.thwrapper').on('click', '.acceptButton', function() {
 	        alert("정원이 초과되었습니다.");
 	        return;
 	    }
-   		updatePromiseStatus(pmIdx, '수락');
+	    console.log("수락오나");
+   		updatePromiseStatus(pmIdx, "수락");
 //     }
 });
 
 $('.thwrapper').on('click', '.rejectButton', function() {
 	let pmIdx = $(this).closest('.thul2').find("#pm_idx").val();
-    updatePromiseStatus(pmIdx, '거절');
+    updatePromiseStatus(pmIdx, "거절");
 });
 
 function updatePromiseStatus(pmIdx, status) {
@@ -85,7 +90,10 @@ function updatePromiseStatus(pmIdx, status) {
     });
 }
 
-let pro_status = '';
+
+
+
+});
 
 function promiseApplyList(page) {
 	pro_status = "apply";
@@ -128,8 +136,8 @@ function promiseApplyList(page) {
 
 	                if (promise.pm_state === "신청중") {
 	                    html2 += '<div class="thul2Div">';
-	                    html2 += '<button type="button" class="thul2DivButton acceptButton" onclick="">수락</button>';
-	                    html2 += '<button type="button" class="thul2DivButton rejectButton" onclick="">거절</button>';
+	                    html2 += '<button type="button" class="thul2DivButton acceptButton">수락</button>';
+	                    html2 += '<button type="button" class="thul2DivButton rejectButton">거절</button>';
 	                    html2 += '<input type="hidden" id="pm_idx" value="' + promise.pm_idx + '">';
 	                    console.log(promise.t_enddate);
 	                    html2 += '<input type="hidden" id="t_endDate" value="' + promise.t_enddate + '">';
@@ -176,6 +184,7 @@ function promiseApplyList(page) {
             }
             // 페이지번호들
             for (let k = paging.beginBlock; k <= paging.endBlock; k++) {
+            	console.log(k);
                 if (k === paging.nowPage) {
                 	pagingHtml += '<li class="nowpagecolor">' + k + '</li>';
                 } else {
@@ -229,6 +238,7 @@ function promiseApplySendList(page) {
                 for (let i = 0; i < toSendHistory.length; i++) {
                     let promise = toSendHistory[i];
 	                let html2 = '<div class="thul4">';
+	                console.log(promise.member_idx);
 	                html2 += '<ul><li class="th1 profile_show" data-memberidx="' + promise.member_idx + '">' + promise.member_nickname + '</li></ul>';
 
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.t_campname + '</a></li></ul>';

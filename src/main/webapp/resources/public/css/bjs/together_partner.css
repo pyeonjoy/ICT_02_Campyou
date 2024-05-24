@@ -53,7 +53,7 @@
     .toContentOne{
     	width:100%;
         display: grid;
-        grid-template-rows: 5rem 13rem 5rem;
+        grid-template-rows: 6rem 13rem 5rem;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
         border-radius: 10%;
         padding: 1rem;
