@@ -66,6 +66,8 @@ public interface MyService {
 	public CampingGearBoardVO getBoard2ByIdx(String board_idx);
 	
 	public List<ReviewVO> getReviewList(String member_idx);
+	
+	public QnaVO getQnaReply(String qna_idx);
 }
 
 	

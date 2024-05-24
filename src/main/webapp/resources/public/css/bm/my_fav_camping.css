@@ -15,7 +15,8 @@
 }
 
 .mypage {
-  width: 70%; 
+  width: 70%;
+ height: 80vh; 
   margin: 0 auto;
   transform: translateY(10rem);  
   flex: 1;

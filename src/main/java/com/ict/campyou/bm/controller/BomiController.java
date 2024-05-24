@@ -361,7 +361,9 @@ public class BomiController {
 	public ModelAndView getMyOneQna(@RequestParam("qna_idx") String qna_idx) {
 		ModelAndView mv = new ModelAndView("bm/my_inquiry");
 		QnaVO qvo = myService.getMyOneQna(qna_idx);
+		QnaVO qvo2 = myService.getQnaReply(qna_idx);
 		mv.addObject("qvo", qvo);
+		mv.addObject("qvo2", qvo2);
 		return mv;
 	}
 
