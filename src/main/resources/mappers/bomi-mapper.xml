@@ -44,7 +44,7 @@ update members set member_pwd = #{member_pwd} where member_idx = #{member_idx}
 select * from qna where qna_idx=#{qna_idx}
 </select>
 
-<update id="modiQna" parameterType="String" >
+<update id="modiQna" parameterType="qvo" >
 update qna set qna_title=#{qna_title}, qna_content=#{qna_content} where qna_idx=#{qna_idx}
 </update>
 <!--  
@@ -87,7 +87,7 @@ select * from m_chat where msg_room=#{msg_room} ORDER BY msg_idx DESC
 </select>
 
 <update id="msgRead" parameterType="String">
- update m_chat set msg_read=0
+    update m_chat set msg_read=0 where msg_idx=#{msg_idx}
 </update>
 
 <select id="getFavList" parameterType="String" resultType="hvo">

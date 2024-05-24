@@ -35,7 +35,7 @@
 							<li><a href="sign_up_page_go.do">회원가입</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="javascript:void(0)" onclick="openChat()"><img class="icon chat"
+							<li><a href="javascript:void(0)" onclick="openChat()" class="chatlink"><img class="icon chat"
 									src="resources/img/icon_chat.png" alt="CampYou"></a></li>
 							<li><a href="my_main.do"><img class="icon user"
 									src="resources/img/icon_user.png" alt="mypage"></a></li>

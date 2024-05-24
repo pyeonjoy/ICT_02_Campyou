@@ -27,14 +27,14 @@
       <div class="chat-container">
         <div class="form-header">
           <button class="back" onclick="redirectToChatList()"><img src="${path}/resources/img/right.png" alt="back-button" class="left-arrow"></button>
-     		<c:choose>
-     		 <c:when test="${my_idx} == ${opener.member_idx}">
+			<c:choose>
+    <c:when test="${my_idx eq opener.member_idx}">
         <span class="chatroom">${joiner.member_nickname}</span> 
-        </c:when>
-  	<c:otherwise>
-        <span class="chatroom">${ opener.member_nickname}</span>
- </c:otherwise>
- </c:choose>
+    </c:when>
+    <c:otherwise>
+        <span class="chatroom">${opener.member_nickname}</span>
+    </c:otherwise>
+</c:choose>
         </div>
         <div class="message-container">        
         </div>

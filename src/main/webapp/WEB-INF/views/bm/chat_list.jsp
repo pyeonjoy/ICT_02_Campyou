@@ -32,11 +32,11 @@
 				<c:otherwise>
 					<c:forEach var="chat" items="${list}">
 					<a href="selectOneRoom.do?msg_room=${chat.msg_room}">
-						<div class="chat_list" >
+						<div class="chat_list" data-msg-room="${chat.msg_room}" data-msg-idx="${chat.msg_idx}">
 							<div class="chat-imgs">
 								<img src="${path}/resources/img/cat.png" alt="user_img"
 									class="user_img" />
-										<c:if test="${chat.send_idx != member_idx && chat.msg_read == 0}">
+										<c:if test="${chat.send_idx != member_idx && chat.msg_read == '1'}">
 										    <div class="new">N</div>
 										</c:if>
 							</div>

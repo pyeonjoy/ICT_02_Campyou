@@ -89,3 +89,7 @@ function showMessageOutput(chvo) {
 function redirectToChatList(){
  window.location.href = "chat-list.do";
 }
+
+back.addEventListener("click", function() {
+	  window.location.href = "chat-list.do";
+	});
