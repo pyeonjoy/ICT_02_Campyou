@@ -90,8 +90,11 @@
 	    order by b.t_idx desc
 		limit #{limit} offset #{offset}
 	</select>
-	<select id="promise_chk" parameterType="pvo" resultType="int">
-		select count(*) from with_promise where t_idx = #{t_idx} and member_idx = #{member_idx}
+	<select id="promise_chk" parameterType="pvo" resultType="String">
+		select pm_state from with_promise where t_idx = #{t_idx} and member_idx = #{member_idx}
+	</select>
+	<select id="pm_state_chk" parameterType="pvo" resultType="int">
+		select count(*) from with_promise where t_idx = #{t_idx} and member_idx = #{member_idx} and pm_state = 3
 	</select>
 	<insert id="promise" parameterType="pvo">
 		insert into with_promise(t_idx, member_idx, pm_regdate)

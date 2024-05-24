@@ -100,14 +100,18 @@ public class TogetherAjaxController {
 			return "me";
 		}else {
 			pvo.setMember_idx(memberUser.getMember_idx());
-			int promiseChk = togetherService.getPromiseChk(pvo);
-			if(promiseChk > 0) {
-				return "ok";
+			String promiseChk = togetherService.getPromiseChk(pvo);
+			if(promiseChk != null) {
+				if(promiseChk.equals("0") || promiseChk.equals("1")) {
+					return "ok";
+				}else if(promiseChk.equals("2") || promiseChk.equals("3")) {
+					return "no";
+				}
 			}else {
 				return "no";
 			}
 		}
-//		return "";
+		return "error";
 	}
 	
 	@RequestMapping(value = "to_promise.do", produces = "application/plain; charset=utf-8", method = RequestMethod.POST)
@@ -117,10 +121,15 @@ public class TogetherAjaxController {
         if (memberUser == null) {
             return "로그인 후 가능합니다.";
         } else {
-        	int result = togetherService.getToPomise(pvo);
-        	if(result > 0) {
-        		int pvo2 = togetherService.getPomiseCount(pvo.getT_idx());
-        		return String.valueOf(pvo2);
+        	int pmStateChk = togetherService.getPmStateChk(pvo);
+        	if(pmStateChk > 0) {
+        		return "ban";
+        	}else {
+        		int result = togetherService.getToPomise(pvo);
+        		if(result > 0) {
+        			int pvo2 = togetherService.getPomiseCount(pvo.getT_idx());
+        			return String.valueOf(pvo2);
+        		}
         	}
         }
 		return "error";
