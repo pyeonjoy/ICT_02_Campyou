@@ -18,24 +18,48 @@
 <%@ include file="../hs/mypage_menu.jsp"%>
 <script type="text/javascript">
 $(function() {
-    promiseApplyList();
-    
-    $('.thwrapper').on('click', '.acceptButton', function() {
-    	let pmIdx = $(this).closest('.thul2').find("#pm_idx").val();
-    	let promiseText = $(this).closest('.thul2').find(".compare").text();
-        let promiseCount = promiseText.split('/')[0];
-        let totalNumPeople = promiseText.split('/')[1];
-        if (parseInt(promiseCount) >= parseInt(totalNumPeople)) {
-            alert("정원이 초과되었습니다.");
-            return;
-        }
-        updatePromiseStatus(pmIdx, '수락');
-    });
+	let cpage = document.getElementById("cPage").value;
+	let proStatus = document.getElementById("promiseStatus").value;
+	if(cpage != ''){
+		console.log(15);
+		if(proStatus === "apply"){
+			promiseApplyList(cpage);
+		}else if(proStatus === "send"){
+			promiseApplySendList(cpage);
+		}
+	}else{
+		promiseApplyList();
+	}
+});
 
-    $('.thwrapper').on('click', '.rejectButton', function() {
-    	let pmIdx = $(this).closest('.thul2').find("#pm_idx").val();
-        updatePromiseStatus(pmIdx, '거절');
-    });
+$('.thwrapper').on('click', '.acceptButton', function() {
+	let pmIdx = $(this).closest('.thul2').find("#pm_idx").val();
+	let promiseText = $(this).closest('.thul2').find(".compare").text();
+    let promiseCount = promiseText.split('/')[0];
+    let totalNumPeople = promiseText.split('/')[1];
+    
+//     let endDateStr = $thul2.find("#t_endDate").attr("value");
+//     let endDateStr = $(this).closest('.thul2').find("#t_endDate").val();
+//     let endDate = new Date(endDateStr);
+//     console.log(endDateStr);
+//     console.log(endDate);
+//     let currentDate = new Date();
+//     console.log(currentDate);
+//     if (currentDate > endDate) {
+//         alert("마감된 동행입니다.");
+//         return;
+//     }else{
+	    if (parseInt(promiseCount) >= parseInt(totalNumPeople)) {
+	        alert("정원이 초과되었습니다.");
+	        return;
+	    }
+   		updatePromiseStatus(pmIdx, '수락');
+//     }
+});
+
+$('.thwrapper').on('click', '.rejectButton', function() {
+	let pmIdx = $(this).closest('.thul2').find("#pm_idx").val();
+    updatePromiseStatus(pmIdx, '거절');
 });
 
 function updatePromiseStatus(pmIdx, status) {
@@ -61,8 +85,10 @@ function updatePromiseStatus(pmIdx, status) {
     });
 }
 
+let pro_status = '';
 
 function promiseApplyList(page) {
+	pro_status = "apply";
 	let memberIdx = document.getElementById("member_idx").value;
     	$('.thwrapper').empty();
     $.ajax({
@@ -94,16 +120,19 @@ function promiseApplyList(page) {
                 for (let i = 0; i < toHistory.length; i++) {
                     let promise = toHistory[i];
 	                let html2 = '<div class="thul2">';
-	                html2 += '<ul class="thliImage3 profile_show" data-memberidx="' + promise.member_idx + '"><li class="th1 thliImage"><img src="${path}/resources/images/' + promise.member_img + '" class="qa11 thliImage2"></a></li></ul>';
+                  html2 += '<ul class="thliImage3 profile_show" data-memberidx="' + promise.member_idx + '"><li class="th1 thliImage"><img src="${path}/resources/images/' + promise.member_img + '" class="qa11 thliImage2"></a></li></ul>';
 	                html2 += '<ul><li class="th1 member_gradeLi profile_show" data-memberidx="' + promise.member_idx + '">' + promise.member_nickname + '<img src="${path}/resources/images/' + promise.member_grade + '" class="member_gradeImg" >(' + promise.member_dob + ')(' + promise.promise_my_count + ')</li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_campname + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11 compare">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.t_campname + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11 compare">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
+
 	                if (promise.pm_state === "신청중") {
 	                    html2 += '<div class="thul2Div">';
 	                    html2 += '<button type="button" class="thul2DivButton acceptButton" onclick="">수락</button>';
 	                    html2 += '<button type="button" class="thul2DivButton rejectButton" onclick="">거절</button>';
 	                    html2 += '<input type="hidden" id="pm_idx" value="' + promise.pm_idx + '">';
+	                    console.log(promise.t_enddate);
+	                    html2 += '<input type="hidden" id="t_endDate" value="' + promise.t_enddate + '">';
 	                    html2 += '</div>';
 	                } else {
 	                    html2 += '<ul><li class="th1">' + promise.pm_state + '</li></ul>';
@@ -169,6 +198,7 @@ function promiseApplyList(page) {
     });
 };
 function promiseApplySendList(page) {
+	pro_status = "send";
 	let memberIdx = document.getElementById("member_idx").value;
     	$('.thwrapper').empty();
     $.ajax({
@@ -201,11 +231,11 @@ function promiseApplySendList(page) {
 	                let html2 = '<div class="thul4">';
 	                html2 += '<ul><li class="th1 profile_show" data-memberidx="' + promise.member_idx + '">' + promise.member_nickname + '</li></ul>';
 
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_campname + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.pm_regdate + '</a></li></ul>';
-	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=1" class="qa11">' + promise.pm_state + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.t_campname + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.t_startdate + '-' + promise.t_enddate + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.promise_count + '/' + promise.t_numpeople + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.pm_regdate + '</a></li></ul>';
+	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.pm_state + '</a></li></ul>';
 	                html2 += '</div>';
 	                html += html2;
                 }
@@ -298,6 +328,8 @@ function promiseApplySendList(page) {
 <!--      		</div> -->
 		</div>
    		<input type="hidden" id="member_idx" value="${member_idx }">
+   		<input type="hidden" id="cPage" value="${cPage }">
+        <input type="hidden" id="promiseStatus" value="${promise_status }">
 		<div class="thwrapper2">
 			<ul class="th_paging">
 <%-- 				<c:choose> --%>

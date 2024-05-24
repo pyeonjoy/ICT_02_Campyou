@@ -93,8 +93,12 @@ public class TogetherDAO {
 		return sqlSessionTemplate.selectList("bjs.to_list_search", map);
 	}
 	
-	public int getPromiseChk(PromiseVO pvo) {
+	public String getPromiseChk(PromiseVO pvo) {
 		return sqlSessionTemplate.selectOne("bjs.promise_chk", pvo);
+	}
+	
+	public int getPmStateChk(PromiseVO pvo) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.pm_state_chk", pvo);
 	}
 	
 	public int getToPomise(PromiseVO pvo) throws Exception {

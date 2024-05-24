@@ -366,8 +366,7 @@ JOIN
 	SET member_rating = (member_rating_all + #{new_rating}) / (rating_count + 1),
 	    rating_count = rating_count + 1,
 	    member_rating_all = member_rating_all + #{new_rating}
-	WHERE member_idx = 2
-<!-- 	WHERE member_idx = #{member_idx} -->
+	WHERE member_idx = #{member_idx}
 </update>
 
 </mapper>
