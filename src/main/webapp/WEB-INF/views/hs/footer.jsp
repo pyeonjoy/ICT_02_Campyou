@@ -14,7 +14,7 @@
 	<div class="footer" id="footer">
 		<div class="footer_wrap">
 			<div class="logo">
-				<img class="logo-03" src="resources/img/logo-03.png"
+				<img class="logo-03" src="resources/images/campyou.png"
 					alt="CampYou">
 			</div>
 			<div class="footer_text_container">

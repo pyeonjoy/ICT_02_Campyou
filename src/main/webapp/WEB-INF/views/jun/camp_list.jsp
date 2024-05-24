@@ -8,7 +8,7 @@
 <script src="/resources/public/js/jun/camp_list.js"></script>
 <link rel="stylesheet" href="resources/public/css/bjs/together_list.css">
 <script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
-
+<%@ include file="../hs/profile_small_info.jsp" %>
 <title>캠핑장리스트</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
@@ -37,13 +37,14 @@
     position: relative;
     display: flex;
     margin-bottom: 40px;
-    padding: 20px;
+    padding: 35px;
     border: 1px solid black;
     box-sizing: border-box;
-    margin-right: 4%;
+    margin-right: 2%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 45%;
     max-width: 45%; 
+    border-radius: 20px;
 }
 
 .camp_info {
@@ -115,6 +116,16 @@
 	color: #FFBA34;
 }
 
+.go_map_button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    }
+.go_map_button h4{
+    margin-left: 22.8px;
+    width: 34%;
+}
 .go_map_button input[type="button"]{
 	font-weight: 600;
 	width: 100px;
@@ -124,7 +135,7 @@
 	border-top-right-radius: 5px;
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
-	margin-left: 84vw;
+	margin-right: 86px;
 }
 
 .go_map_button input[type="button"]:hover{
@@ -134,6 +145,23 @@
 	border-bottom-right-radius: 0px;
 }
 
+.result_info {
+	padding: 0 5px;
+}
+.total_count {
+	color: orange;
+}
+
+.keyword {
+	font-weight: 300;
+}
+
+.result_info_line {
+	width: 90vw;
+	display: flex;
+	line-height: 30px;
+	justify-content: space-between;
+}
 </style>
 </head>
 <body>
@@ -142,6 +170,7 @@
 	<div class="camp_list_container">
 		<jsp:include page="../hs/camp_search_box.jsp" />
 		<div class="go_map_button">
+			<h4><span class="keyword"></span> 검색 결과 <span class="total_count"></span></h4>	
 			<input type="button" value="지도로 검색" onclick="go_map()">
 		</div>
 		<div id="camp_list_show"></div>

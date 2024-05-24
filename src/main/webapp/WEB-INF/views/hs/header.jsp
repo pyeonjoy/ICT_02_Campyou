@@ -16,7 +16,7 @@
 	<div class="header" id="header">
 		<div class="header_wrap">
 			<div class="header_left">
-				<a href="/"> <img class="logo-03" src="resources/img/logo-03.png" alt="CampYou">
+				<a href="/"> <img class="logo-03" src="resources/images/campyou.png" alt="CampYou">
 				</a>
 				<ul>
 					<li><a href="camplist.do">캠핑장 검색</a></li>

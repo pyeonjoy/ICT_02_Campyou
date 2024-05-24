@@ -70,6 +70,7 @@ public class AdminController {
 				// 전체 게시물의 수
 				int count = adminService.getTotalCount2();
 				paging.setTotalRecord(count);
+				System.out.println("count"+count);
 				System.out.println("전체게시글"+paging.getTotalRecord());
 				System.out.println("paging.getBeginBlock()"+paging.getBeginBlock());
 				System.out.println("paging.getPagePerBlock()"+paging.getPagePerBlock());
