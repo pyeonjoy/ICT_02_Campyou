@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 변경</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
  <link rel="stylesheet" href="${path}/resources/public/css/bm/change_pw.css">
    <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
      <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>

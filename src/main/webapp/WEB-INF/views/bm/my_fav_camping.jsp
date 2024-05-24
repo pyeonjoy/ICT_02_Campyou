@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>관심캠핑장</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <script>
 let data = ${jsonString}; 
 const path = "${path}";
@@ -18,15 +20,15 @@ const path = "${path}";
  <script defer src="${path}/resources/public/js/jun/camp_list.js"></script>
 </head>
 <body>
-	<%@ include file="../hs/mypage_menu.jsp"%>
-	
+	<%@ include file="../hs/mypage_menu.jsp"%>	
  <div class="mypage">
       <h3 class="my_camping"> 관심 캠핑장 </h3>
-
-    <div class="camping_container"> 
-    
-    </div>
+      <div class="camping_container">   		
+      </div>
+      <footer class="foot">
+  		<%@include file="../hs/footer.jsp"%>
+      </footer>
   </div>
-    <%@ include file="../hs/footer.jsp"%>
+
 </body>
 </html>

@@ -9,10 +9,12 @@
 <link rel="stylesheet" href="${path}/resources/public/css/bm/my_main.css">
   <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
   <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
+  <script defer src="${path}/resources/public/js/bm/my_main.js"></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>마이페이지</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <script>
-
 $(document).ready(function() {
     promiseApplyList();
 //     setInterval(promiseApplyList, 5000);
@@ -78,7 +80,8 @@ function promiseApplyList() {
 	                html += '<div class="list_header">';
 	                html += '<img src="' + imgSrc + '" alt="user_img" class="otheruser_img">';
 	                html += '<div class="list_summery">';
-	                html += '<p class="list_nickname">' + promise.member_nickname + '(' + promise.member_dob + ')' + '</p>';
+	                html += '<p class="list_nickname">' + promise.member_nickname + '<img src="${path}/resources/images/' + promise.member_grade + '" class="member_gradeImg" ></p>';
+	                html += '<p class="list_go">' + promise.member_dob + '</p>';
 	                html += '<p class="list_go">동행횟수 ' + promise.promise_count + '</p>';
 	                html += '</div>';
 	                html += '</div>';
@@ -117,12 +120,10 @@ function promiseApplyList() {
 };
 </script>
 </head>
-<body>
+<body class="body">
 		<%@ include file="../hs/mypage_menu.jsp"%>
-
 	<div class="mypage">
-		<div class="welcome">
-			<div class="user_img">
+		<div class="welcome">		
 				<c:choose>
 					<c:when test="${empty mvo.member_img}">
 						<img src="${path}/resources/img/cat.png" alt="user_img"
@@ -130,30 +131,52 @@ function promiseApplyList() {
 					</c:when>
 					<c:otherwise>
 						<img src="${path}/resources/uploadUser_img/${mvo.member_img}"
-							alt="user_img" class="user_img">
+							alt="user_img" class="user_fullImg">
 					</c:otherwise>
-				</c:choose>
-			</div>
+				</c:choose>			
 			<h2 class="welcome_user">${mvo.member_name}님, 환영합니다.</h2>
 		</div>
+
+		<input type="hidden" id="memberIdx" value="${mvo.member_idx }">
 
 		<div class="list_container">
 			<div class="my_list my_board_list">
 				<h4 class="my_title">활동내역</h4>
-				<div class="my_list_summery">
-					<p class="my_list_title">작성글 : ${count}</p>
-					<p class="grade"> 등급 : ${mvo.member_grade}</p>						
-					<p class="grade"> 매너점수 : ${mvo.member_grade}점</p>						
+				<div class="my_list_summery my_list_summery1">
+				 <div class="summery1">
+					<p class="lineHeight my_list_title">작성글 : <a class="count" href="my_board.do?member_idx=${member_idx}">${count}</a>
+					<span class="hidden-text">내가 작성한 글 보러가기 👉</span>
+					</p>
+					<p class="lineHeight rank"> 매너점수 : ${mvo.member_grade}점</p>
+				</div>						
+					<p class="grade" id="${mvo.member_grade}" ><img src="${path}/resources/images/grade${mvo.member_grade+1}.png" alt="level"> </p>						
 				</div>
 			</div>
-		</div>
-		
-		
+		<div class="my_list my_review_list">
+				<h4 class="my_title">내 리뷰</h4>
+				<div class="my_list_summery my_list_summery2">
+				<c:choose>
+						<c:when test="${empty reviews }">
+							<p class="nolist">리뷰가 없습니다.</p>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="r" items="${reviews}">
+							<div class="each-review">
+					<a class="lineHeight my_reviews" href="campDetail.do?contentid=${r.contentid}"><span class="camp">${r.camp_site}</span> ${r.review_comment} </a>
+					<span class="rating-stars"><c:forEach var="i" begin="1" end="${r.rating}">&#9733;</c:forEach></span>
+							</div>
+					</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+		</div>		
 		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
 		<div class="accompany_container">
 		</div>
-
 	</div>
+	<footer class="footer">
 	  <%@ include file="../hs/footer.jsp"%>
+	</footer>
 </body>
 </html>

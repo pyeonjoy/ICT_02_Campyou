@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link href="resources/css/header.css" rel="stylesheet" />
 <link rel="stylesheet" href="${path}/resources/public/css/bm/chatroom.css" />
 <script defer src="${path}/resources/public/js/bm/header_chat.js"></script>
@@ -14,7 +16,7 @@
 	<div class="header" id="header">
 		<div class="header_wrap">
 			<div class="header_left">
-				<a href="/"> <img class="logo-03" src="resources/img/logo-03.png" alt="CampYou">
+				<a href="/"> <img class="logo-03" src="resources/images/campyou.png" alt="CampYou">
 				</a>
 				<ul>
 					<li><a href="camplist.do">캠핑장 검색</a></li>
@@ -33,7 +35,7 @@
 							<li><a href="sign_up_page_go.do">회원가입</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="javascript:void(0)" onclick="openChat()"><img class="icon chat"
+							<li><a href="javascript:void(0)" onclick="openChat()" class="chatlink"><img class="icon chat"
 									src="resources/img/icon_chat.png" alt="CampYou"></a></li>
 							<li><a href="my_main.do"><img class="icon user"
 									src="resources/img/icon_user.png" alt="mypage"></a></li>

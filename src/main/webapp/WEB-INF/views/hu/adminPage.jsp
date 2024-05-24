@@ -7,6 +7,8 @@
 <head>
 <meta charset=UTF-8>
 <title>관리자 페이지</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/adminBoard.css">
 <%@ include file="../hs/header.jsp" %>
 <script type="text/javascript">

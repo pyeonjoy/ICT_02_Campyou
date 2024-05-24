@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>WebSocket Chat</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/bm/chatroom.css" />
 <script defer src="${path}/resources/public/js/bm/chatroom.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.min.js"></script>
@@ -25,14 +27,14 @@
       <div class="chat-container">
         <div class="form-header">
           <button class="back" onclick="redirectToChatList()"><img src="${path}/resources/img/right.png" alt="back-button" class="left-arrow"></button>
-     		<c:choose>
-     		 <c:when test="${my_idx} == ${opener.member_idx}">
+			<c:choose>
+    <c:when test="${my_idx eq opener.member_idx}">
         <span class="chatroom">${joiner.member_nickname}</span> 
-        </c:when>
-  	<c:otherwise>
-        <span class="chatroom">${ opener.member_nickname}</span>
- </c:otherwise>
- </c:choose>
+    </c:when>
+    <c:otherwise>
+        <span class="chatroom">${opener.member_nickname}</span>
+    </c:otherwise>
+</c:choose>
         </div>
         <div class="message-container">        
         </div>

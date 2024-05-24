@@ -36,6 +36,7 @@ public interface TogetherService {
 	public List<TogetherCommentVO> getToCommentList(String t_idx) throws Exception;
 	public int getToCommentMaxStep(Map<String, Integer> map) throws Exception;
 	public int getToCommentSame(Map<String, Integer> map) throws Exception;
+	public List<TogetherCommentVO> getGroupList(Map<String, Integer> map) throws Exception;
 	public int getToCommentGSUpdate(Map<String, Integer> map) throws Exception;
 	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception;
 	public int getToCommentDelete(String wc_idx) throws Exception;
@@ -48,4 +49,6 @@ public interface TogetherService {
 	public List<TogetherVO> getPromiseReady(String member_idx, int offset, int limit) throws Exception;
 	public int getBoardWithCountEnd(String member_idx) throws Exception;
 	public List<TogetherVO> getPromiseEnd(String member_idx, int offset, int limit) throws Exception;
+	public int getEnddateUpdate(String t_idx) throws Exception;
+	public int getConfirmPartner(PromiseVO pvo) throws Exception;
 }

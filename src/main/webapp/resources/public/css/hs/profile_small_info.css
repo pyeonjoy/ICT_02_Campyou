@@ -1,0 +1,120 @@
+@charset "UTF-8";
+
+.profile_small_info_container {
+	border: 1px solid lightgray;
+	width: 330px;
+	position: absolute;
+	background-color: white;
+	z-index: 30;
+	display: none;
+	border-radius: 15px;
+}
+
+.profile_small_info_wrap {
+	padding: 20px;
+	position: relative;
+}
+
+.profile_img {
+	width: 4rem;
+	height: 4rem;
+	background-color: white;
+	border-radius: 100%;
+	border: 1px solid black;
+	float: left;
+	position: relative;
+	margin-right: 10px;
+}
+
+.top_info strong {
+	font-size: 16px;
+}
+
+#member_grade {
+	height: 18px;
+	width: 18px;
+}
+
+#member_rating {
+	font-size: 26px;
+	margin: auto;
+}
+
+.gray_font {
+	color: gray;
+	font-size: 12px;
+}
+
+.top_info {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+	height: 4rem;
+}
+
+.top_info input[type="button"] {
+	float: right;
+	margin-left: 5px;
+	text-align: center;
+	padding: 3px 20px;
+	font-size: 12px;
+}
+
+.bottom_info {
+	font-size: 14px;
+	line-height: 25px;
+}
+
+/* 별 */
+.bottom_info .rating_wrap {
+	display: flex;
+	text-align: center;
+}
+
+.bottom_info .stars_wrap {
+	width: 200px;
+	height: 40px;
+}
+
+.bottom_info .rating_stars {
+	display: flex;
+}
+
+.bottom_info .rating, .bottom_info .rating_empty {
+	display: flex;
+	overflow: hidden;
+	width: 200px;
+	height: 40px;
+	position: relative;
+}
+
+.bottom_info .rating__label {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	position: relative;
+}
+
+.bottom_info .empty, .bottom_info .filled {
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	width: 100%;
+}
+
+.bottom_info .empty {
+	background-image: url(/resources/images/ico-star-empty.png);
+	z-index: 34;
+}
+
+.bottom_info .filled {
+	background-image: url(/resources/images/ico-star.png);
+	z-index: 35;
+}
+
+.bottom_info .stars {
+	position: absolute;
+}

@@ -14,6 +14,8 @@
 
 </style>
 <title>회원관리 상세</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
 	<h3 class="head" style="">회원 관리 상세</h3>

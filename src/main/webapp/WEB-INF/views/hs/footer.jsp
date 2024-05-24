@@ -6,13 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link href="resources/css/footer.css" rel="stylesheet" />
 </head>
 <body>
 	<div class="footer" id="footer">
 		<div class="footer_wrap">
 			<div class="logo">
-				<img class="logo-03" src="resources/img/logo-03.png"
+				<img class="logo-03" src="resources/images/campyou.png"
 					alt="CampYou">
 			</div>
 			<div class="footer_text_container">

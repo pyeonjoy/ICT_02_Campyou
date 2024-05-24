@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Chat List</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/bm/chatroom.css" />
 <script defer src="${path}/resources/public/js/bm/chat-list.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.min.js"></script>
@@ -30,11 +32,11 @@
 				<c:otherwise>
 					<c:forEach var="chat" items="${list}">
 					<a href="selectOneRoom.do?msg_room=${chat.msg_room}">
-						<div class="chat_list" >
+						<div class="chat_list" data-msg-room="${chat.msg_room}" data-msg-idx="${chat.msg_idx}">
 							<div class="chat-imgs">
 								<img src="${path}/resources/img/cat.png" alt="user_img"
 									class="user_img" />
-										<c:if test="${chat.send_idx != member_idx && chat.msg_read == 0}">
+										<c:if test="${chat.send_idx != member_idx && chat.msg_read == '1'}">
 										    <div class="new">N</div>
 										</c:if>
 							</div>

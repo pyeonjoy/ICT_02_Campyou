@@ -5,7 +5,9 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>관리자 페이지 메인</title>
+<title>신고하기</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <style>
 .head{
     text-align: center;

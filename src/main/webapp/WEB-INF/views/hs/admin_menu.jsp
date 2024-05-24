@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link href="/resources/css/menu_aside.css" rel="stylesheet" />
 </head>
 <body>

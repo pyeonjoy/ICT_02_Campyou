@@ -48,6 +48,21 @@ public class TogetherDAO {
 	
 	public int getTogetherWriteOK(TogetherVO tvo) throws Exception {
 		sqlSessionTemplate.update("bjs.write_count", tvo.getMember_idx());
+		Map<String, Integer> writeAllCount = sqlSessionTemplate.selectOne("bjs.writeAll_count", tvo.getMember_idx());
+		int memberGrade = writeAllCount.get("member_grade");
+		int writeCountSum = writeAllCount.get("member_free") + writeAllCount.get("member_with") + writeAllCount.get("member_camp");
+		if(writeCountSum % 10 == 0) {
+			switch (writeCountSum) {
+			case 10: tvo.setMember_grade(String.valueOf(memberGrade + 1));
+					 sqlSessionTemplate.update("bjs.member_grade_update", tvo); break;
+			case 20: tvo.setMember_grade(String.valueOf(memberGrade + 1));
+					 sqlSessionTemplate.update("bjs.member_grade_update", tvo); break;
+			case 30: tvo.setMember_grade(String.valueOf(memberGrade + 1));
+					 sqlSessionTemplate.update("bjs.member_grade_update", tvo); break;
+			case 40: tvo.setMember_grade(String.valueOf(memberGrade + 1));
+					 sqlSessionTemplate.update("bjs.member_grade_update", tvo); break;
+			}
+		}
 		sqlSessionTemplate.insert("bjs.to_insert", tvo);
 		int t_idx = sqlSessionTemplate.selectOne("bjs.write_t_idx");
 		return t_idx;
@@ -151,6 +166,10 @@ public class TogetherDAO {
 		return result;
 	}
 	
+	public List<TogetherCommentVO> getGroupList(Map<String, Integer> map) throws Exception {
+		return sqlSessionTemplate.selectList("bjs.group_list", map);
+	}
+	
 	public int getToCommentGSUpdate(Map<String, Integer> map) throws Exception {
 		return sqlSessionTemplate.update("bjs.to_comment_gs_update", map);
 	}
@@ -213,5 +232,13 @@ public class TogetherDAO {
 		map.put("offset", offset);
 		map.put("limit", limit);
 		return sqlSessionTemplate.selectList("bjs.promise_End", map);
+	}
+	
+	public int getEnddateUpdate(String t_idx) throws Exception {
+		return sqlSessionTemplate.update("bjs.enddate_update", t_idx);
+	}
+	
+	public int getConfirmPartner(PromiseVO pvo) throws Exception {
+		return sqlSessionTemplate.update("bjs.confirm_partner", pvo);
 	}
 }

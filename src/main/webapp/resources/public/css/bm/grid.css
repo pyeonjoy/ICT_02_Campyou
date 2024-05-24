@@ -27,13 +27,23 @@ text-align: center;
   justify-content: center;
   align-items: center;
 }
+.grid_table{
+height: 40vh;
+}
+
 .grid_col{
   display: grid;
   grid-template-columns: 1fr 2fr 2fr 1fr 1fr;
   margin-bottom: .6rem;
   text-align: center;
 }
-
+.grid_col2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 2fr 1fr;
+  margin-bottom: .6rem;
+  text-align: center;
+  width: 60rem;
+}
 .nolist{
   grid-column: 1 /6;
   width: 60rem;
@@ -83,6 +93,8 @@ width: 100%;
 .paging_active {
  background-color:var(--primary-color);
  color: var(--text-white);
+     width: 18px;
+    height: 18px;
 }
 .paging_next{
   margin-left: 1rem;

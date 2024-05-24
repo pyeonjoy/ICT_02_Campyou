@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link href="/resources/css/header.css" rel="stylesheet" />
 </head>
 <body>
@@ -20,11 +22,18 @@
             </ul>
         </div>
         <div class="header_right">
-            <ul><c:choose>
-                <c:when test="${empty memberInfo && empty admin}">
+            <ul>
+            <c:if test="${admin != null}">
+								<li><a href="admin_main.do"><img class="icon admin" src="resources/img/icon_admin.png" alt="management"></a></li>
+			</c:if>
+            <c:choose>
+                <c:when test="${admin != null}">
+				<li><a href="logout_form.do">로그아웃</a></li>
+				</c:when>
+						<c:otherwise>
 							<li><a href="login_form.do">로그인</a></li>
 							<li><a href="sign_up_page_go.do">회원가입</a></li>
-						</c:when>
+						</c:otherwise>
 				</c:choose>
             </ul>
        </div>

@@ -17,6 +17,7 @@ import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.HeartVO;
+import com.ict.campyou.jun.dao.ReviewVO;
 
 @Repository
 public class MyDAO {
@@ -70,6 +71,16 @@ public class MyDAO {
 		return 0;
 	}
 
+	public int deletMember(MemberVO mvo) {
+		try {
+			return sqlSessionTemplate.delete("bomi.getDeleteUser", mvo);
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return 0;
+	}
+
 	public int changeUserPW(MemberVO mvo) {
 		try {
 			return sqlSessionTemplate.update("bomi.updatePw", mvo);
@@ -78,7 +89,17 @@ public class MyDAO {
 		}
 		return 0;
 	}
-
+	
+	public List<ReviewVO> getReviewList(String member_idx) {
+		try {
+			
+			return sqlSessionTemplate.selectList("bomi.getReviews",member_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+	}
+		return null;
+	}
+	
 	public int uploadQna(QnaVO qvo) {
 		try {
 			System.out.println("dao: " + qvo.getMember_idx());
@@ -141,16 +162,6 @@ public class MyDAO {
 			System.out.println(e);
 		}
 		return null;
-	}
-
-	public int deletMember(String member_idx) {
-		try {
-			return sqlSessionTemplate.delete("bomi.getDeleteUser", member_idx);
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return 0;
 	}
 
 	public int addChatMsg(ChatVO chvo) {

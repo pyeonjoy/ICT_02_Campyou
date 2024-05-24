@@ -7,7 +7,9 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>관리자 페이지 메인</title>
+<title>팝업</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <style>
 @font-face {
     font-family: 'JalnanGothic';
@@ -118,9 +120,9 @@ table th, #bbs table td {
 	text-align: center;
 	padding: 4px 10px;
 	border-collapse: collapse;
-	border-bottom: 1px solid black;
 	padding: 10px;
 }
+
 
 .no {
 	width: 15%
@@ -151,51 +153,46 @@ table th, #bbs table td {
 	background: silver
 }
 
-/* paging */
-table tfoot ol.paging {
+
+
+.paging{
+	display: flex;
+	width: 100%;
+	justify-content: center;
 	list-style: none;
+	margin: 1rem 0;
+	align-items: center;
 }
 
-table tfoot ol.paging li {
-	float: left;
-	margin-right: 8px;
-}
-
-table tfoot ol.paging li a {
-	display: block;
-	padding: 3px 7px;
-	border: 1px solid #041601;
+.nowpagecolor{
+	padding: 0 0.5rem;
+	margin: 0 0.5rem;
+	text-decoration: none;
+	background-color: #F6FFF1;
 	color: #FFBA34;
-	font-weight: bold;
+	font-size: 1.4rem;
 }
-
-table tfoot ol.paging li a:hover {
-	background: #00B3DC;
-	color: white;
-	font-weight: bold;
+.nowpage{
+	padding: 0 0.5rem;
+	margin: 0 0.5rem;
+	background-color: #F6FFF1;
+	color: black;
+	text-decoration: none;
+	font-size: 1.4rem;
 }
-
-.disable {
-	padding: 3px 7px;
-	border: 1px solid silver;
+.disable{
 	color: silver;
+	margin: 0 1rem;
+	text-decoration: none;
+	border-radius: 50%; font-size: 2rem;
 }
-
-.now {
-	padding: 3px 7px;
-	border: 1px solid #041601;
-	background: #041601;
-	color: white;
-	font-weight: bold;
+.to_able{
+	color: black;
+	margin: 0 1rem;
+	text-decoration: none;
 }
-
-.paging {
-	margin: 20px auto;
-	width: 247px;
-}
-
-.bottom {
-	text-align: center;
+.nowpage:hover{
+	color: #FFBA34;
 }
 </style>
 </head>
@@ -257,7 +254,7 @@ table tfoot ol.paging li a:hover {
 									<!-- 이전 버튼 -->
 									<c:choose>
 										<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
-											<li class="disable">이전으로</li>
+											<li class="disable"><</li>
 										</c:when>
 										<c:otherwise>
 											<li><a
@@ -269,10 +266,10 @@ table tfoot ol.paging li a:hover {
 										end="${paging.endBlock }" step="1" var="k">
 										<c:choose>
 											<c:when test="${k == paging.nowPage }">
-												<li class="now">${k}</li>
+												<li class="nowpagecolor">${k}</li>
 											</c:when>
 											<c:otherwise>
-												<li><a href="popup.do?cPage=${k}">${k }</a></li>
+												<li><a href="popup.do?cPage=${k}" class="nowpage">${k }</a></li>
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
@@ -280,7 +277,7 @@ table tfoot ol.paging li a:hover {
 									<!-- 이후 버튼 -->
 									<c:choose>
 										<c:when test="${paging.endBlock >= paging.totalPage }">
-											<li class="disable">다음으로</li>
+											<li class="disable">></li>
 										</c:when>
 										<c:otherwise>
 											<li><a

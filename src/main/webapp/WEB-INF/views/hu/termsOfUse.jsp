@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/termsOfUse.css">
 <script src="${path}/resources/public/js/hu/termsOfUse.js" defer></script>
 <script type="text/javascript">

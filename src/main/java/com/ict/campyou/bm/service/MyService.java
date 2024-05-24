@@ -12,6 +12,7 @@ import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.HeartVO;
+import com.ict.campyou.jun.dao.ReviewVO;
 
 public interface MyService {
 
@@ -28,7 +29,7 @@ public interface MyService {
 
 	public int changeUserPW(MemberVO mvo);
 
-	public int deletMember(String member_idx);
+	public int deletMember(MemberVO mvo);
 
 	public int uploadQna(QnaVO qvo);
 
@@ -63,6 +64,8 @@ public interface MyService {
 	public CommBoardVO getBoard1ByIdx(String board_idx);
 
 	public CampingGearBoardVO getBoard2ByIdx(String board_idx);
+	
+	public List<ReviewVO> getReviewList(String member_idx);
 }
 
 	

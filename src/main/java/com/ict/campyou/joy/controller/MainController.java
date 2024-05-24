@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ict.campyou.joy.dao.AdminVO;
 import com.ict.campyou.bjs.service.TogetherService;
 import com.ict.campyou.common.Paging3;
+import com.ict.campyou.hu.dao.AdminMembVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.joy.dao.AdminMemberVO;
 import com.ict.campyou.joy.service.AdminService;
@@ -41,7 +42,7 @@ public class MainController {
 	private Paging3 paging;
 	
 	@RequestMapping("/")
-	public ModelAndView mainwithboard() throws Exception {
+	public ModelAndView mainwithboard(HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("home");
 		List<AdminVO> with_board = mainService.getwithboard();
 		List<CampVO> camphit = mainService.getcamphit();

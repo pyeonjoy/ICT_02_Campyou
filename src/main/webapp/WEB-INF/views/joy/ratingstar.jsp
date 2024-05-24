@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Document</title>
+    <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <script>
 $(document).ready(function() {
 	 $('#star_form').submit(function(e) {
@@ -126,13 +128,13 @@ h1 {
     display: block;
     position: relative;
     left: 0;
-    background-image: url(${path}/resources/images/ico-star.png);
+    background-image: url(${path}/resources/images/ico-star-empty.png);
     background-repeat: no-repeat;
     background-size: 40px;
 }
 
 .rating__label .star-icon.filled {
-    background-image: url(${path}/resources/images/ico-star-empty.png);
+    background-image: url(${path}/resources/images/ico-star.png);
 }
 
 .rating__label--full .star-icon {
@@ -148,9 +150,7 @@ h1 {
     cursor: default;
 }
 
-}
-
-    </style>
+</style>
 </head>
 <body>
 	<div class="modal">

@@ -8,7 +8,9 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>동행글 상세보기</title>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/bjs/together_detail.css">
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
@@ -194,10 +196,10 @@ function to_comment() {
             	commentHTML += '<form method="post">';
             	commentHTML += '<div class="toDetailInput">';
             	if(data.memberUser && data.memberUser.member_img != null){
-	                commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32"></div>';
+	                commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32 profile_show" data-memberidx="' + data.memberUser.member_idx + '"></div>';
             		commentHTML += '<input type="text" value="" id="" class="toDetailInputBox">';
             	}else{
-            		commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/user2.png" class="userImage32"></div>';
+            		commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/user2.png" class="userImage32 profile_show" data-memberidx="' + data.memberUser.member_idx + '"></div>';
             		commentHTML += '<input type="text" value="" id="" class="toDetailInputBox" placeholder="로그인 후 작성가능합니다" readonly>';
             	}
             	commentHTML += '<input type="button" value="입력" id="" class="toDetailInputSubmit" onclick="">';
@@ -220,9 +222,9 @@ function to_comment() {
            	    	}
            	        commentHTML += '<div class="toDetailContent4Sub2Sub1">';
            	        commentHTML += '<div class="toDetailContent4Sub2Sub1Div">';
-           	        commentHTML += '<div class="userImageDiv"><img src="${path}/resources/images/' + comment.member_img + '" class="userImage3"></div>';
+           	        commentHTML += '<div class="userImageDiv"><img src="${path}/resources/images/' + comment.member_img + '" class="userImage3 profile_show" data-memberidx="' + comment.member_idx + '"></div>';
            	        commentHTML += '<div>';
-           	        commentHTML += '<p>' + comment.member_nickname + '</p>';
+           	        commentHTML += '<p class="member_nicknameP profile_show" data-memberidx="' + comment.member_idx + '">' + comment.member_nickname + '<img src="${path}/resources/images/' + comment.member_grade + '" class="member_gradeImg" ></p>';
            	        commentHTML += '<p>' + comment.wc_regdate + '</p>';
            	        commentHTML += '</div>';
            	        commentHTML += '</div>';
@@ -415,9 +417,10 @@ $(document).on("click", ".toDetailContent4Sub2Sub2ButtonX", function() {
         </div>
         <form class="toDetailContent" method="post">
             <div class="toDetailContent1">
-                <div class="userImage"><img src="${path}/resources/images/${tvo.member_img }" class="userImage2"></div>
+                <div class="userImage"><img src="${path}/resources/images/${tvo.member_img }" class="userImage2 profile_show" data-memberidx="${tvo.member_idx }"></div>
                 <div class="toContentOne1span">
-                    <span class="to_member_nickname">${tvo.member_nickname }</span>
+                    <span class="to_member_nickname profile_show" data-memberidx="${tvo.member_idx }">${tvo.member_nickname }</span>
+                    <img src="${path}/resources/images/${tvo.member_grade}" class="member_gradeImg" >
 					<span class="to_member_age">(${tvo.member_dob })</span>
                 </div>
 
@@ -484,41 +487,42 @@ $(document).on("click", ".toDetailContent4Sub2Sub2ButtonX", function() {
                 <input type="hidden" name="cPage" value="${cPage }" >
             </div>
             <div class="toDetailContent4">
-                <p class="toDetailContent4Sub1">댓글</p>
-                <form method="post">
-                    <div class="toDetailInput">
-                        <div class="userImageDiv2"><img src="${path}/resources/images/tree-4.jpg" class="userImage32"></div>
-                        <input type="text" value="" id="" class="toDetailInputBox">
-                        <input type="button" value="입력" id="" class="toDetailInputBox toDetailInputSubmit" onclick="">
-                    </div>
-                </form>
-                <div class="toDetailContent4Sub2">
-                    <div class="toDetailContent4Sub3">
-                        <div class="toDetailContent4Sub2Sub1">
-                            <div class="toDetailContent4Sub2Sub1Div">
-                                <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div>
-                                <div>
-                                    <strong>짱구</strong>
-                                    <p>2024-04-23 16:53</p>
-                                </div>
-                            </div>
-                            <div class="toDetailContent4Sub2Sub2">
-                                <input type="button" value="답글 달기" id="" onclick="to_coment_write(this.form)" class="toDetailContent4Sub2Sub2Button">
-                            </div>
-                        </div>
-                        <div class="toDetailContent4Sub2Sub3">
-                            <div class="toDetailContent2Sub1Div2">
-                                <span class="toDetailContent2Sub1Div2Span">언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요?</span>
-                            </div>
-                            <div>
-                                <input type="button" value="X" id="" onclick="" class="toDetailContent4Sub2Sub2Button">
-                            </div>
-                        </div>
-                    </div>
+<!--                 <p class="toDetailContent4Sub1">댓글</p> -->
+<!--                 <form method="post"> -->
+<!--                     <div class="toDetailInput"> -->
+<%--                         <div class="userImageDiv2"><img src="${path}/resources/images/tree-4.jpg" class="userImage32"></div> --%>
+<!--                         <input type="text" value="" id="" class="toDetailInputBox"> -->
+<!--                         <input type="button" value="입력" id="" class="toDetailInputBox toDetailInputSubmit" onclick=""> -->
+<!--                     </div> -->
+<!--                 </form> -->
+<!--                 <div class="toDetailContent4Sub2"> -->
+<!--                     <div class="toDetailContent4Sub3"> -->
+<!--                         <div class="toDetailContent4Sub2Sub1"> -->
+<!--                             <div class="toDetailContent4Sub2Sub1Div"> -->
+<%--                                 <div class="userImageDiv"><img src="${path}/resources/images/tree-4.jpg" class="userImage3"></div> --%>
+<!--                                 <div> -->
+<!--                                     <strong>짱구</strong> -->
+<!--                                     <p>2024-04-23 16:53</p> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                             <div class="toDetailContent4Sub2Sub2"> -->
+<!--                                 <input type="button" value="답글 달기" id="" onclick="to_coment_write(this.form)" class="toDetailContent4Sub2Sub2Button"> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="toDetailContent4Sub2Sub3"> -->
+<!--                             <div class="toDetailContent2Sub1Div2"> -->
+<!--                                 <span class="toDetailContent2Sub1Div2Span">언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요? 언제 어디서 몇시에 무슨차로 어떻게 출발하나요?</span> -->
+<!--                             </div> -->
+<!--                             <div> -->
+<!--                                 <input type="button" value="X" id="" onclick="" class="toDetailContent4Sub2Sub2Button"> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </div> -->
                 </div>
             </div>
         </form>
     </div>
 <%@ include file="../hs/footer.jsp" %>
+<%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>
