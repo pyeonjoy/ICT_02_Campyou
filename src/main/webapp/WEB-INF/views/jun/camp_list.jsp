@@ -116,6 +116,16 @@
 	color: #FFBA34;
 }
 
+.go_map_button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    }
+.go_map_button h4{
+    margin-left: 22.8px;
+    width: 34%;
+}
 .go_map_button input[type="button"]{
 	font-weight: 600;
 	width: 100px;
@@ -125,7 +135,7 @@
 	border-top-right-radius: 5px;
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
-	margin-left: 84vw;
+	margin-right: 86px;
 }
 
 .go_map_button input[type="button"]:hover{
@@ -134,9 +144,23 @@
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
 }
-button {
-	    padding: 10px;
-	    margin: 20px;
+
+.result_info {
+	padding: 0 5px;
+}
+.total_count {
+	color: orange;
+}
+
+.keyword {
+	font-weight: 300;
+}
+
+.result_info_line {
+	width: 90vw;
+	display: flex;
+	line-height: 30px;
+	justify-content: space-between;
 }
 </style>
 </head>
@@ -146,6 +170,7 @@ button {
 	<div class="camp_list_container">
 		<jsp:include page="../hs/camp_search_box.jsp" />
 		<div class="go_map_button">
+			<h4><span class="keyword"></span> 검색 결과 <span class="total_count"></span></h4>	
 			<input type="button" value="지도로 검색" onclick="go_map()">
 		</div>
 		<div id="camp_list_show"></div>

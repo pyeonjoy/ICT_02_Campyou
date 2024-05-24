@@ -47,10 +47,6 @@ body {
 	margin-bottom: 20px;
 }
 
-.write_button {
-	text-align: right;
-}
-
 .faq_form {
 	display: none;
 	margin-top: 20px;
@@ -228,6 +224,13 @@ body {
     height: 40px;
     margin-right: 30px;
 }
+.write_button button{
+    float: right;
+}
+.choose_button button{
+	float: left;
+	margin-left: 10px;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -265,8 +268,8 @@ body {
 					}
 					list += '</tr>';
 				});
-				list += '<tr><td colspan="3" class="write_button"><button onclick="promise_faq_write()">동행FAQ작성</button></td>';
-				list += '<td colspan="2"><button id="checkAllButton">전체선택 / 해제</button> <button id="PromiseShowOrHide">활성화/비활성화</button></td></tr>';
+				list += '<tr><td colspan="3" class="choose_button"><button id="checkAllButton">전체선택 / 해제</button> <button id="PromiseShowOrHide">활성화/비활성화</button></td>';
+				list += '<td colspan="2" class="write_button"><button onclick="promise_faq_write()">동행FAQ작성</button></td></tr>';
 				list += '</tbody></table></div>';
 				$("#faq_list").html(list);
 	            let paging = data.paging;
@@ -330,8 +333,8 @@ body {
 					}
 					list += '</tr>';
 				});
-				list += '<tr><td colspan="3" class="write_button"><button onclick="user_faq_write()">유저FAQ작성</button></td>';
-				list += '<td colspan="2"><button id="checkAllButton">전체선택 / 해제</button> <button id="UserShowOrHide">활성화/비활성화</button></td></tr>';
+				list += '<tr><td colspan="3" class="choose_button"><button id="checkAllButton">전체선택 / 해제</button> <button id="UserShowOrHide">활성화/비활성화</button></td>';
+				list += '<td colspan="2" class="write_button"><button onclick="user_faq_write()">유저FAQ작성</button></td></tr>';
 				list += '</tbody></table></div>';
 				$("#faq_list").html(list);
 				 let paging = data.paging;
@@ -385,12 +388,16 @@ body {
 	function user_faq_write() {
 		console.log("버튼정상작동?");
 		$("#faq_list").hide();
+		$('.page_button').empty();
+		$('.page_button2').empty();
 		$("#user_faq_show").show();
 	}
 
 	function promise_faq_write() {
 		console.log("동행정상작동?");
 		$("#faq_list").hide();
+		$('.page_button').empty();
+		$('.page_button2').empty();
 		$("#promise_faq_show").show();
 	}
 
@@ -505,7 +512,7 @@ body {
 </head>
 <body>
 	<div class="faq_wrapper">
-		<h3 style="text-align: center;">FAQ</h3>
+		<h3 style="text-align: center;">FAQ 관리</h3>
 			<div class="switch_menu">
 			<button id="user">사용자 이용 문의</button>
 			<button id="promise">동행</button>
@@ -556,5 +563,4 @@ body {
 			</form>
 		</div>
 </body>
-<jsp:include page="../hs/footer.jsp" />
 </html>
