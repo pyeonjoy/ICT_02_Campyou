@@ -1,8 +1,8 @@
 "use strict";
 
-const btnCheck = document.querySelector(".btn-check");
 let response;
-
+const btnCheck = document.querySelector(".btn-check");
+const passwordError = document.getElementById("passwordError");
 function formatPhoneNumber(phoneNumber) {
   if (phoneNumber.length < 10) alert("번호를 다시 확인해주세요");
   phoneNumber = phoneNumber.replace(/[^\d]/g, "");
@@ -30,7 +30,7 @@ function checkPassword(e) {
 
   const passwordInput = document.getElementById("password");
   const password = passwordInput.value.trim();
-const memberId = document.getElementById("id").value;
+  const memberId = document.getElementById("id").value;
   if (!password) {
     alert("비밀번호를 입력해주세요.");
     passwordInput.focus();
@@ -60,6 +60,7 @@ const memberId = document.getElementById("id").value;
             btnCheck.innerHTML = "확인";
              btnCheck.style.color = "green";
             btnCheck.style.border = "none";
+            passwordError.innerText = "";
           btnCheck.removeEventListener("click", checkPassword);
         } else {
           passwordInput.focus();
@@ -74,57 +75,59 @@ const memberId = document.getElementById("id").value;
   };
 }
 
-function handleChangeInfo(f) {
+function handleChangeInfo(f, e) {
+	 e.preventDefault();
   const passwordInput = document.getElementById("password");
   const password = passwordInput.value.trim();
 
   if (!password) {
-    alert("비밀번호를 입력해주세요.");
     passwordInput.focus();
+    passwordInput.style.border = "2px solid red"; 
     return;
   }
 
   if (password && response === "success") {
   console.log("form submitted")
-    f.submit();
-    f.action = "changeInfo.do";
+  f.action = "changeInfo.do";
+  f.submit();
   }
 }
 
-function handle_pwd(memberIdx, f) {
-
+function handle_pwd(memberIdx, f, e) {
+	 e.preventDefault();
   const passwordInput = document.getElementById("password");
   const password = passwordInput.value.trim();
 
   if (!password) {
-    alert("비밀번호를 입력해주세요.");
-    passwordInput.focus();
+	  passwordInput.focus();
+	    passwordInput.style.border = "2px solid red"; 
+	    passwordError.innerText = "비밀번호를 입력해주세요.";
     return;
   }
     if (password && response === "success") {
+    	f.action = "my_change_pw.do?member_idx="+memberIdx;
         f.submit();
-        f.action = "my_change_pw.do?member_idx="+memberIdx;
     }  
 }
 
 
-function handle_delete(memberIdx,form) {
+function handle_delete(memberIdx,form, e) {
+	 e.preventDefault();
 	 const passwordInput = document.getElementById('password');
     const password = passwordInput.value.trim();
     
     if (!password) {
-        alert('비밀번호를 입력해주세요.');
-        passwordInput.focus();
+    	  passwordInput.focus();
+    	    passwordInput.style.border = "2px solid red"; 
         return;
     }  
      if (password && response === "success") {
 
-	form.submit()
     form.action = "deleteUser.do?member_idx="+memberIdx; 
+	form.submit()
     }   
 }
 
 document.querySelector('.btn_change').addEventListener('click', handleChangeInfo);
 btnCheck.addEventListener('click', checkPassword);
 document.querySelector('.btn_pwdreset').addEventListener('click', handle_pwd);
-
