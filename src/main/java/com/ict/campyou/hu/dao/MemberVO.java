@@ -3,13 +3,21 @@ package com.ict.campyou.hu.dao;
 import org.springframework.web.multipart.MultipartFile;
 
 public class MemberVO {
-	private String member_idx, member_id, admin_idx, member_name, member_nickname, member_dob, member_email, member_gender, member_pwd,
+	private String member_idx, member_id, admin_idx, member_name, member_nickname, kakao_nickname, member_dob, member_email, member_gender, member_pwd,
 			member_phone, member_img, member_active, member_regdate, member_old_img,member_grade, member_login ;
   
 	private int member_free;
 
 	public int getMember_free() {
 		return member_free;
+	}
+
+	public String getKakao_nickname() {
+		return kakao_nickname;
+	}
+
+	public void setKakao_nickname(String kakao_nickname) {
+		this.kakao_nickname = kakao_nickname;
 	}
 
 	public void setMember_free(int member_free) {

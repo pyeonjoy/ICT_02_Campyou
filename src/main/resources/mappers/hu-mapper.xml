@@ -6,8 +6,8 @@
 
 	<!-- Create Account & Login & find ID and Pwd -->
 	<insert id="insert" parameterType="mvo">
-		insert into members(member_id, member_name, member_pwd, member_nickname, member_dob, member_phone, member_email, member_gender, member_regdate)
-			values(#{member_id}, #{member_name},#{member_pwd},#{member_nickname},#{member_dob}, #{member_phone},#{member_email}, #{member_gender}, sysdate())
+		insert into members(member_id, member_name, member_pwd, member_nickname, kakao_nickname, member_dob, member_phone, member_email, member_gender, member_regdate)
+			values(#{member_id}, #{member_name},#{member_pwd},#{member_nickname}, #{kakao_nickname}, #{member_dob}, #{member_phone},#{member_email}, #{member_gender}, sysdate())
 	</insert>
 	
 	<!-- 카카오 로그인 -->
@@ -17,8 +17,8 @@
 	
 	 <!-- 카카오 맴버 insert -->
 	 <insert id="insert_kakao_info_for_log_in" parameterType="Map">
-        insert into members(member_id, member_name, member_pwd, member_nickname, member_dob, member_phone, member_email, member_regdate)
-        	values(#{member_id}, #{member_name}, #{member_pwd}, #{member_nickname}, #{member_dob}, #{member_phone}, #{member_email}, sysdate())
+        insert into members(member_id, member_name, member_pwd, kakao_nickname, member_dob, member_phone, member_email, member_regdate)
+        	values(#{member_id}, #{member_name}, #{member_pwd}, #{kakao_nickname}, #{member_dob}, #{member_phone}, #{member_email}, sysdate())
     </insert>
     
   	<!-- 카카오 맴버 체크 -->
@@ -163,8 +163,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM board_free
  		</selectKey>
- 		insert into board_free(member_idx, admin_idx, b_type, b_subject, member_nickname, admin_nickname, member_grade, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name)
- 			values(#{member_idx}, #{admin_idx}, #{b_type}, #{b_subject}, #{member_nickname}, #{admin_nickname}, #{member_grade}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{bf_name})
+ 		insert into board_free(member_idx, admin_idx, b_type, b_subject, member_name,  member_nickname, kakao_nickname, admin_nickname, member_grade, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name)
+ 			values(#{member_idx}, #{admin_idx}, #{b_type}, #{b_subject}, #{member_name}, #{member_nickname}, #{kakao_nickname}, #{admin_nickname}, #{member_grade}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{bf_name})
  	</insert>
  	
  	<select id="comm_board_detail" parameterType="String" resultType="cbvo">
@@ -217,8 +217,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM f_comment
  		</selectKey>
- 		insert into f_comment(member_nickname, admin_nickname, content, write_date, b_idx, groups, step, lev)
- 			values(#{member_nickname}, #{admin_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, 0, 0)
+ 		insert into f_comment(member_nickname, kakao_nickname, member_name, admin_nickname, content, write_date, b_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{kakao_nickname}, #{member_name}, #{admin_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, 0, 0)
  	</insert>
  	
  	<delete id="comment_delete" parameterType="String">
@@ -241,8 +241,8 @@
  	
  	 <!-- 수정했음 -->
  	 <insert id="comment_reply_insert" parameterType="covo">
- 	 	insert into f_comment(member_nickname, admin_nickname, content, write_date, b_idx, group, step, lev)
- 			values(#{member_nickname}, #{admin_nickname}, #{content}, sysdate(), #{b_idx}, #{group}, #{step}, #{lev})
+ 	 	insert into f_comment(member_nickname, member_name, admin_nickname, content, write_date, b_idx, group, step, lev)
+ 			values(#{member_nickname}, #{member_name}, #{admin_nickname}, #{content}, sysdate(), #{b_idx}, #{group}, #{step}, #{lev})
  	 </insert>
  	 
  	 

@@ -7,14 +7,15 @@
 <head>
 <title>로그인</title>
 <%@ include file="../hs/header.jsp" %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/member.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		let pwdchk = "${pwdchk}";
 		if(pwdchk == 'fail'){
 			alert("비밀번호 틀립니다. 다시 입력해 주세요");
 			return;
+			
 		}
 	});
 </script>

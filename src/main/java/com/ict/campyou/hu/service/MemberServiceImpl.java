@@ -100,12 +100,16 @@ public class MemberServiceImpl implements MemberService {
 	                //System.out.println(kakao_nickname);
 	                // 카카오에서 제공하는 정보
 	                map.put("member_id", kakao_id);
-	                map.put("member_nickname", kakao_nickname);
+	                //map.put("member_nickname", kakao_nickname);
+	                map.put("kakao_nickname", kakao_nickname);
 	                map.put("member_email", kakao_email);
 	                
+	                System.out.println(kakao_nickname);
+	               
 	                // 카카오에서 제공하지 않는 정보
 	                map.put("member_name", "Kakao: Not Provided");
 	                map.put("member_pwd", "Kakao: Not Provided");
+	                map.put("member_nickname", "Kakao: Not Provided");
 	                map.put("member_dob", "Kakao: Not Provided");
 	                map.put("member_phone", "Kakao: Not Provided");   
 	                
@@ -154,18 +158,21 @@ public class MemberServiceImpl implements MemberService {
 	                KakaoUserVO kvo = gson.fromJson(result, KakaoUserVO.class);
 
 	                String kakao_id = kvo.getId();
-	                String kakao_nickname = kvo.getProperties().getNickname();
+	                String kakao_nickname = kvo.getProperties().getNickname(); 
 	                String kakao_email = kvo.getKakao_account().getEmail();
 	                
 	                //System.out.println(kakao_nickname);
 	                // 카카오에서 제공하는 정보
 	                map.put("member_id", kakao_id);
-	                map.put("member_nickname", kakao_nickname);
+	                map.put("kakao_nickname", kakao_nickname);
 	                map.put("member_email", kakao_email);
+	                
+	               
 	                
 	                // 카카오에서 제공하지 않는 정보
 	                map.put("member_name", "Kakao: Not Provided");
 	                map.put("member_pwd", "Kakao: Not Provided");
+	                map.put("member_nickname", "Kakao: Not Provided");
 	                map.put("member_dob", "Kakao: Not Provided");
 	                map.put("member_phone", "Kakao: Not Provided");   
 	                
@@ -219,6 +226,7 @@ public class MemberServiceImpl implements MemberService {
 				//String naver_profile_image = nvo.getResponse().getProfile_image();
 				
 				map.put("member_id", naver_id);
+				//map.put("member_nickname", naver_nickname);
 				map.put("member_name", naver_name);
                 map.put("member_email", naver_email);
                 
@@ -275,12 +283,14 @@ public class MemberServiceImpl implements MemberService {
 				 
 				String naver_id = nvo.getResponse().getId();
 				//String naver_nickname = nvo.getResponse().getNickname();
+				
 				String naver_email = nvo.getResponse().getEmail();
 				//String naver_mobile = nvo.getResponse().getMobile();
 				String naver_name = nvo.getResponse().getName();
 				//String naver_profile_image = nvo.getResponse().getProfile_image();
 				
 				map.put("member_id", naver_id);
+				//map.put("member_nickname", naver_nickname);
 				map.put("member_name", naver_name);
                 map.put("member_email", naver_email);
                 

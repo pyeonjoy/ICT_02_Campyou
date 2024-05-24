@@ -36,7 +36,7 @@
 					</tr>
 					<tr>
 						<th bgcolor="#003300" style="color: white;">닉네임</th>
-						<td> ${cbvo.member_nickname} ${cbvo.admin_nickname}</td>
+						<td> ${cbvo.member_nickname} ${cbvo.admin_nickname} ${cbvo.member_name} ${cbvo.kakao_nickname}</td>
 					</tr>
 					<tr>
 						<th bgcolor="#003300" style="color: white;">날짜</th>

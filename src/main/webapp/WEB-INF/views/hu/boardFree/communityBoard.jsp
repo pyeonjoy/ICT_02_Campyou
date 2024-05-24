@@ -24,6 +24,7 @@
 		f.action="board_free_search.do";
 		f.submit();
 	}
+	console.log("${kakaoMemberInfo.kakao_nickname}")
 </script>
 <style type="text/css">
 .member-grade {
@@ -75,13 +76,13 @@
 							                <c:choose>
 							                    <c:when test="${not empty adminInfo}">
 							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.admin_nickname}</a> 
-							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname}</a>
+							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname} ${k.member_name} ${k.kakao_nickname}</a>
 							                    </c:when>
 							                    <c:otherwise>
 							                        <c:choose>
 							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}">
-							                            	<a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${adminInfo.admin_nickname}11</a>
-							                                <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname}11</a>             
+							                            	<a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${adminInfo.admin_nickname}</a>
+							                                <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname} ${k.kakao_nickname}</a>             
 							                            </c:when>
 							                            <c:otherwise>
 							                            	<span style="color: black;">${k.admin_nickname}</span> 
@@ -113,7 +114,7 @@
 							                <c:choose>
 							                    <c:when test="${not empty adminInfo}">
 							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>
-							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
+							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname} ${k.member_name} ${k.kakao_nickname}</a>
 							                       <c:if test="${k.member_grade == 1}">
 													    <img class="member-grade" alt="a" src="resources/images/grade1.png" style="width: 17px; height: 17px;">
 												   </c:if>
@@ -132,11 +133,11 @@
 							                    </c:when>
 							                    <c:otherwise>
 							                        <c:choose>
-							                            <c:when test="${memberInfo.member_nickname == k.member_nickname || kakaoMemberInfo.member_nickname == k.member_nickname}">
+							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}"> 
 							                              <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>
 							                         	  <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname}</a>
-							                         	  
-							                         	  
+							                         	  ${k.member_name} ${k.kakao_nickname}
+
 							                         	  <c:if test="${k.member_grade == 1}">
 															    <img class="member-grade" alt="a" src="resources/images/grade1.png" style="width: 17px; height: 17px;">
 														  </c:if>
@@ -152,10 +153,12 @@
 														   <c:if test="${k.member_grade == 5}">
 															    <img class="member-grade" alt="a" src="resources/images/grade5.png" style="width: 17px; height: 17px;">
 														  </c:if>
-							                            </c:when>
+							                            </c:when>						                    
 							                            <c:otherwise>
 							                            	${k.admin_nickname}
 							                            	${k.member_nickname}
+							                            	${k.member_name}
+							                            	${k.kakao_nickname}
 							                            	<c:if test="${k.member_grade == 1}">
 															    <img class="member-grade" alt="a" src="resources/images/grade1.png" style="width: 17px; height: 17px;">
 														  	</c:if>
@@ -241,7 +244,7 @@
 				</td>
 				<td>
 					<c:choose>
-						<c:when test="${memberInfo != null || adminInfo != null || kakaoMemberInfo != null}">
+						<c:when test="${memberInfo != null || adminInfo != null || kakaoMemberInfo != null || naverMemberInfo != null}">
 							<input type="button" id="btnWrite" value="글쓰기" onclick="commBoard_write()">
 						</c:when>
 						<c:otherwise>

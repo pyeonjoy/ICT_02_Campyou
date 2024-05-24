@@ -112,6 +112,7 @@ public class MemberDAO {
 	//데이터베이스에 카카오 맴버 저장되어있나 확인. 없으면 데이터베이스에 insert 하기
 	public int getInsertKakaoId(Map<String, String> map) {
 		try {
+			System.out.println(map.get(map));
 			return sqlSessionTemplate.insert("member.insert_kakao_info_for_log_in", map);
 		} catch (Exception e) {
 			System.out.println(e);

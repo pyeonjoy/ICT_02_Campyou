@@ -10,6 +10,7 @@
 <!-- summer note -->
 <link rel="stylesheet" href="resources/css/summernote-lite.css">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardWrite.css">
+<link rel="stylesheet" href="${path}/resources/public/css/hu/summernote.css">
  <style type="text/css">
 	/* summernote toolbar 수정 */
 	.note-btn-group{width: auto;}
@@ -88,7 +89,7 @@
 							<%-- <input type="hidden" name="member_nickname" value="${kakaoMemberInfo.member_nickname}"> --%>
 						</c:when>
 						<c:otherwise>
-							<td align="left">${memberInfo.member_nickname} ${kakaoMemberInfo.member_nickname}
+							<td align="left">${memberInfo.member_nickname} ${kakaoMemberInfo.kakao_nickname} ${naverMemberInfo.member_name}
 							<c:choose>
 								<c:when test="${memberInfo != null}">
 									<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
@@ -100,11 +101,19 @@
 							<input type="hidden" name="member_grade" value="${memberInfo.member_grade}"></td>
 							<c:choose>
 								<c:when test="${kakaoMemberInfo != null}">
-									<input type="hidden" name="member_nickname" value="${kakaoMemberInfo.member_nickname}">
+									<input type="hidden" name="kakao_nickname" value="${kakaoMemberInfo.kakao_nickname}">
 								</c:when>
 								<c:otherwise>
 								</c:otherwise>
 							</c:choose>
+							<c:choose>
+								<c:when test="${naverMemberInfo != null}">
+									<input type="hidden" name="member_name" value="${naverMemberInfo.member_name}">
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+							
 						</c:otherwise>
 					</c:choose>
 				</tr>
@@ -136,42 +145,13 @@
 <script src="resources/js/summernote-lite.js" ></script>
 <script src="resources/js/lang/summernote-ko-KR.js" ></script>
 <script type="text/javascript">
-	$(function() {
-		$("#b_content").summernote({
-			lang : 'ko-KR',
-			height : 300,
-			focus : true,
-			placeholder: '최대3000자까지 쓸 수 있습니다'	, //placeholder 설정
-			callbacks : {
-				onImageUpload : function(files, editor) {
-					for (var i = 0; i < files.length; i++) {
-						console.log("i = " , files)
-							sendImage(files[i], editor);						
-					}
-				}
-			}
-			  
-		});
-		// $("#content").summernote("lineHeight",.7);
-	});
-	
-	/* function sendImage(file, editor) {
-		let frm = new FormData();
-		frm.append("s_file", file);
-		$.ajax({
-			url : "saveImg.do",
-			data : frm,
-			type : "post",
-			contentType : false,
-			processData : false,
-			cache: false,
-			dataType : "json"
-		}).done(function(data) {
-			const path = data.path;
-			const fname = data.fname;
-			$("#b_content").summernote("editor.insertImage", path+"/"+fname);
-		});
-	} */
+$(document).ready(function () {
+    $('#b_content').summernote({
+        placeholder: '내용을 작성하세요',
+        height: 400,
+        maxHeight: 400
+    });
+});
 </script>	
 </body>
 </html>
