@@ -160,6 +160,10 @@ body {
 	width: 80%;
 	height: 80%;
 }
+.active_button{
+    position: absolute;
+    right: 15%;
+}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -283,89 +287,101 @@ body {
 	}
 
 	function w_board_detail(t_idx) {
-		$
-				.ajax({
-					url : "w_board_detail.do",
-					method : "get",
-					data : {
-						t_idx : t_idx
-					},
-					dataType : "json",
-					success : function(data) {
-						$("#board_list").empty();
-						$('.th_paging').empty();
-						$('.search_th_paging').empty();
-						$('.search').hide();
-						$('.warpper_title').hide();
-						console.log(data);
-						let list = '';
-						list += '<div class="detail_info">';
-						list += '<h3 style="text-align: center;">게시글 상세보기</h3>'
-						list += '<p>번호    : ' + data.board.t_idx + '</p><br>';
-						list += '<p>닉네임    : ' + data.board.member_nickname
-								+ '</p><br>';
-						list += '<p>제목:     ' + data.board.t_subject
-								+ '</p><br>';
-						list += '<p>게시글 작성일: ' + data.board.t_regdate
-								+ '</p><br>';
-						list += '<p>내용 : </p><textarea id="summernote" name="qna_content">'
-								+ data.board.t_content
-								+ '</textarea><br><br><br><br>';
-						if (data.board.t_active === '0') {
-							list += '<h3 style="display: inline-block;">게시중</h3><button onclick="hide_post('
-									+ data.board.t_idx
-									+ ')" style="display: inline-block; margin-left: 10px;">삭제(숨김)</button><button onclick="w_board_load()" style="display: inline-block; margin-left: 10px;">뒤로가기</button>';
-						} else if (data.board.t_active === '1') {
-							list += '<h3 style="display: inline-block;">숨김처리</h3><button onclick="show_post('
-									+ data.board.t_idx
-									+ ')" style="display: inline-block; margin-left: 10px;">복원(보이기)</button><button onclick="w_board_load()" style="display: inline-block; margin-left: 10px;">뒤로가기</button>';
-						} else {
-							list += '<h3 style="display: inline-block;">알 수 없음</h3><button onclick="hide_post('
-									+ data.board.t_idx
-									+ ')" style="display: inline-block; margin-left: 10px;">삭제</button><button onclick="w_board_load()" style="display: inline-block; margin-left: 10px;">뒤로가기</button>';
-						}
+	    $.ajax({
+	        url: "w_board_detail.do",
+	        method: "get",
+	        data: {
+	            t_idx: t_idx
+	        },
+	        dataType: "json",
+	        success: function(data) {
+	            $("#board_list").empty();
+	            $('.th_paging').empty();
+	            $('.search_th_paging').empty();
+	            $('.search').hide();
+	            $('.warpper_title').hide();
 
-						if (data.comments.length === 0) {
-							list += '<hr>'
-							list += '<h3 style="text-align: center;">댓글이 존재하지 않습니다.</h3>';
-						} else {
-							list += '<h3 style="text-align: center;">댓글 리스트</h3><br>';
-							list += '<hr>'
-							$.each(data.comments, function(index, comment) {
-								list += '<p>댓글 작성자: ' + comment.member_nickname
-										+ '</p>';
-								list += '<p>댓글 내용: ' + comment.wc_content
-										+ '</p>';
-								list += '<p>댓글 작성시각 ' + comment.wc_regdate
-										+ '</p>';
-								if (comment.wc_active == 0) {
-									list += '<button onclick="comment_hide('
-											+ data.board.t_idx + ', '
-											+ comment.wc_idx
-											+ ')">숨김(삭제)</button>';
-								} else {
-									list += '<button onclick="comment_show('
-											+ data.board.t_idx + ', '
-											+ comment.wc_idx
-											+ ')">복원(보이기)</button>';
-								}
-								list += '<hr>';
-							});
-						}
+	            console.log(data);
 
-						list += '</div>';
-						$("#board_list").html(list);
+	            let list = '';
+	            list += '<div class="detail_info">';
+	            list += '<h3 style="text-align: center;">게시글 상세보기</h3>';
+	            list += '<p>번호: ' + (data.board.t_idx) + '</p><br>';
+	            list += '<p>닉네임: ' + (data.board.member_nickname) + '</p><br>';
+	            list += '<p>제목: ' + (data.board.t_subject) + '</p><br>';
+	            list += '<p>게시글 작성일: ' + (data.board.t_regdate) + '</p><br>';
+	            list += '<p>내용: </p><textarea id="summernote" name="qna_content">' + (data.board.t_content) + '</textarea><br><br><br><br>';
 
-						setTimeout(function() {
-							initializeSummernote();
-						}, 100);
+	            if (data.board.t_active === '0') {
+	                list += '<h3 style="display: inline-block;">게시중</h3>';
+	                list += '<button onclick="hide_post(' + data.board.t_idx + ')" style="display: inline-block; margin-left: 10px;">삭제(숨김)</button>';
+	                list += '<button onclick="w_board_load()" style="display: inline-block; margin-left: 10px;">뒤로가기</button>';
+	            } else if (data.board.t_active === '1') {
+	                list += '<h3 style="display: inline-block;">숨김처리</h3>';
+	                list += '<button onclick="show_post(' + data.board.t_idx + ')" style="display: inline-block; margin-left: 10px;">복원(보이기)</button>';
+	                list += '<button onclick="w_board_load()" style="display: inline-block; margin-left: 10px;">뒤로가기</button>';
+	            } else {
+	                list += '<h3 style="display: inline-block;">알 수 없음</h3>';
+	                list += '<button onclick="hide_post(' + data.board.t_idx + ')" style="display: inline-block; margin-left: 10px;">삭제</button>';
+	                list += '<button onclick="w_board_load()" style="display: inline-block; margin-left: 10px;">뒤로가기</button>';
+	            }
 
-					},
-					error : function() {
-						console.log("에러");
-					}
-				});
+	            if (Array.isArray(data.comments)) {
+	                console.log("댓글 목록:", data.comments);
+	                for (let i = 0; i < data.comments.length; i++) {
+	                    let comment = data.comments[i];
+	                    let indentation = '';
+
+	                    if (comment.wc_step > 0) {
+	                        for (let j = 1; j <= comment.wc_lev; j++) {
+	                            indentation += '&nbsp;&nbsp;&nbsp;&nbsp;';
+	                        }
+	                        indentation += '';
+	                    }
+
+	                    list += '<div class="toDetailContent4Sub3">';
+	                    list += '<div class="toDetailContent4Sub2Sub1">';
+	                    list += '<div class="toDetailContent4Sub2Sub1Div">';
+	                    list += '</div>';
+	                    list += '</div>';
+	                    list += '</div>';
+	                    list += '<div class="toDetailContent4Sub2Sub3">';
+	                    list += '<div class="toDetailContent2Sub1Div2">';
+	                    list += '<p>'+indentation+'작성자 : '+comment.member_nickname+'</p><br>';
+	                    list += '<p>'+indentation+'작성일 : '+comment.wc_regdate+'</p><br>';
+	                    list += '<span class="toDetailContent2Sub1Div2Span">' + indentation + 'ㄴ' + comment.wc_content + '</span>';
+	                    if (comment.wc_active == 0) {
+	                        list += '<button class="active_button" onclick="comment_hide(' + data.board.t_idx + ', ' + comment.wc_idx + ')"">삭제(숨김)</button><hr>';
+	                    } else {
+	                        list += '<button class="active_button" onclick="comment_show(' + data.board.t_idx + ', ' + comment.wc_idx + ')"">복원(보이기)</button><hr>';
+	                    }
+	                    list += '</div>';
+	                    list += '<div class="toDetailContent4Sub2Sub2">';
+	                    list += '</div>';
+	                    list += '</div>';
+	                }
+	            } else {
+	                console.log("댓글이 없습니다.");
+	            }
+
+
+	            list += '</div>';
+	            $("#board_list").html(list);
+	            
+	            setTimeout(function() {
+	                initializeSummernote();
+	            }, 100);
+	        },
+	        error: function() {
+	            console.log("에러");
+	        }
+	    });
 	}
+
+
+
+
+
 	function hide_post(t_idx) {
 		$.ajax({
 			url : "hide_post.do",
@@ -410,6 +426,8 @@ body {
 				wc_idx : wc_idx
 			},
 			success : function(data) {
+				console.log(t_idx);
+				console.log(wc_idx);
 				alert("댓글 숨김 처리 완료");
 				w_board_detail(t_idx);
 			},

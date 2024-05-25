@@ -212,10 +212,11 @@
 	where w.member_idx = m.member_idx and w.t_idx = #{t_idx}
 </select>
     <select id="w_board_detail_comment" parameterType="String" resultType="a2vo">
-	select c.t_idx, c.member_idx, c.wc_content, c.wc_idx,c.wc_regdate, c.wc_active, m.member_nickname as member_nickname
+	select c.t_idx, c.member_idx, c.wc_content, c.wc_idx,c.wc_regdate, c.wc_active,c.wc_groups,c.wc_step,c.wc_lev, m.member_nickname as member_nickname
 	from board_with_comment c
 	join members m ON c.member_idx = m.member_idx
 	where c.member_idx = m.member_idx and c.t_idx = #{t_idx}
+	order by c.wc_groups, c.wc_step, c.wc_lev DESC;
     </select>
 <update id="hide_post">
 	update board_with set t_active = 1 where t_idx = #{t_idx} 
