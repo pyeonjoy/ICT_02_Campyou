@@ -111,4 +111,46 @@ public class Admin2DAO {
 		map.put("limit",limit);
 		return sqlSessionTemplate.selectList("jun.loadBoardList",map);
 	}
+
+	public Admin2VO w_board_detail(String t_idx) {
+		return sqlSessionTemplate.selectOne("jun.w_board_detail",t_idx);
+	}
+
+	public List<Admin2VO> w_board_detail_comment(String t_idx) {
+		return sqlSessionTemplate.selectList("jun.w_board_detail_comment",t_idx);
+	}
+
+	public int hide_post(Object t_idx) {
+		return sqlSessionTemplate.update("jun.hide_post",t_idx);
+	}
+
+	public int show_post(String t_idx) {
+		return sqlSessionTemplate.update("jun.show_post",t_idx);
+	}
+
+	public int comment_show(String wc_idx) {
+		return sqlSessionTemplate.update("jun.comment_show",wc_idx);
+	}
+
+	public int comment_hide(String wc_idx) {
+		return sqlSessionTemplate.update("jun.comment_hide",wc_idx);
+	}
+
+	public int Search_W_board_count(Admin2VO a2vo, String keywordInput, String searchType) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("a2vo",a2vo);
+		map.put("keywordInput",keywordInput);
+		map.put("searchType",searchType);
+		return sqlSessionTemplate.selectOne("jun.Search_W_board_count",map);
+	}
+
+	public List<Admin2VO> SearchWithBoard(Admin2VO a2vo, String keywordInput, String searchType, int offset, int limit) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("a2vo",a2vo);
+		map.put("keywordInput",keywordInput);
+		map.put("searchType",searchType);
+		map.put("offset",offset);
+		map.put("limit",limit);
+		return sqlSessionTemplate.selectList("jun.SearchWithBoard",map);
+	}
 }

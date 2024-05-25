@@ -204,4 +204,68 @@
 	where w.member_idx = m.member_idx
 	limit #{limit} offset #{offset}
 </select>
+
+<select id="w_board_detail" parameterType="String" resultType="a2vo">
+	select w.t_idx, w.member_idx, w.t_subject, w.t_content, w.t_campname,w.t_regdate,t_active, m.member_nickname as member_nickname
+	from board_with w
+	join members m ON w.member_idx = m.member_idx
+	where w.member_idx = m.member_idx and w.t_idx = #{t_idx}
+</select>
+    <select id="w_board_detail_comment" parameterType="String" resultType="a2vo">
+	select c.t_idx, c.member_idx, c.wc_content, c.wc_idx,c.wc_regdate, c.wc_active, m.member_nickname as member_nickname
+	from board_with_comment c
+	join members m ON c.member_idx = m.member_idx
+	where c.member_idx = m.member_idx and c.t_idx = #{t_idx}
+    </select>
+<update id="hide_post">
+	update board_with set t_active = 1 where t_idx = #{t_idx} 
+</update>
+<update id="show_post">
+	update board_with set t_active = 0 where t_idx = #{t_idx} 
+</update>
+<update id="comment_hide">
+	update board_with_comment set wc_active = 1 where wc_idx = #{wc_idx} 
+</update>
+<update id="comment_show">
+	update board_with_comment set wc_active = 0 where wc_idx = #{wc_idx} 
+</update>
+<select id ="Search_W_board_count" parameterType="Map" resultType="int">
+    select count(*)
+    from board_with w
+    join members m ON w.member_idx = m.member_idx
+    <where>
+        <if test="keywordInput != null and searchType != null">
+            and
+            <choose>
+                <when test="searchType == 'nickname'">
+                    member_nickname like concat('%', #{keywordInput}, '%')
+                </when>
+                <when test="searchType == 'content'">
+                    t_content like concat('%', #{keywordInput}, '%')
+                </when>
+            </choose>
+        </if>
+    </where>
+</select>
+
+<select id ="SearchWithBoard" parameterType="Map" resultType="Map">
+    select w.t_idx, w.member_idx, w.t_subject, w.t_content, w.t_campname,w.t_regdate,t_active, m.member_nickname as member_nickname
+	from board_with w
+    join members m ON w.member_idx = m.member_idx
+    <where>
+        <if test="keywordInput != null and searchType != null">
+            and
+            <choose>
+                <when test="searchType == 'nickname'">
+                    member_nickname like concat('%', #{keywordInput}, '%')
+                </when>
+                <when test="searchType == 'content'">
+                    t_content like concat('%', #{keywordInput}, '%')
+                </when>
+            </choose>
+        </if>
+    </where>
+    limit #{limit} offset #{offset}
+</select>
+
 </mapper>

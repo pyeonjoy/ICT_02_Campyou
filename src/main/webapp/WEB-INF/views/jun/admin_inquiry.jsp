@@ -173,6 +173,10 @@ body {
 	font-weight: bold;
 	margin-bottom: 5px;
 }
+.detail_info {
+	width: 80%;
+	height: 80%;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -189,13 +193,18 @@ $(document).ready(function() {
 
 function initializeSummernote() {
 	$('#summernote').summernote({
-		disable: true,
-		height: 300,
-		maxheight: 300,
-		focus: true,
-		resize: false,
-		lang: "ko-KR",
-		disableResizeEditor: true,
+		height : 300,
+		maxHeight : 300,
+		focus : true,
+		lang : "ko-KR",
+		toolbar : false, // 툴바 비활성화
+		disableDragAndDrop : true, // 드래그 앤 드롭 비활성화
+		callbacks : {
+			onInit : function() {
+				$('.note-editable').attr('contenteditable', false); // 내용 수정 불가능하게 설정
+				$('.note-editable').addClass('note-editable-readonly'); // CSS 클래스 추가
+			}
+		}
 	});
 }
 
@@ -393,7 +402,7 @@ function initializeSummernote() {
 	                list += '<p>닉네임: ' + data.member_nickname + '</p><br>';
 	                list += '<p>제목:' + data.qna_title + '</p><br>';
 	                list += '<p>날짜: ' + data.qna_date + '</p><br>';
-	                list += '<textarea id="summernote" name="qna_content" value='+data.qna_content+'></textarea><br><br><br><br>';
+	                list += '<textarea id="summernote" name="qna_content">'+data.qna_content+'</textarea><br><br><br><br>';
 					list += '</div>';
 					list += '<div class ="qna_re_form">';
 					list += '<h3 style="text-align: center;">답변하기</h3>';
@@ -415,9 +424,6 @@ function initializeSummernote() {
 function redirect_qna(qna_idx){
     let qna_content = $("#qna_content").val();
     let qna_title = $("#qna_title").val();
-/* 	console.log(qna_content+"내용");
-	console.log(qna_title+"제목");
-	console.log(qna_idx+"idx"); */
 	$.ajax({
         url: "redirect_qna.do",
         method: "get",

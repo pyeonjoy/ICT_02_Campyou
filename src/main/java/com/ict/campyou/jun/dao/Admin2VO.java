@@ -3,7 +3,39 @@ package com.ict.campyou.jun.dao;
 public class Admin2VO {
 	private String faq_idx, faq_title, faq_content, faq_status, qna_idx, member_idx, member_name, member_nickname,
 			qna_title, qna_content, qna_date, qna_status, t_subject, t_content, t_campname, t_address, t_startdate,
-			t_enddate_t_numpeople, tf_name, t_regdate, t_active, t_idx;
+			t_enddate_t_numpeople, tf_name, t_regdate, t_active, t_idx, wc_idx, wc_content, wc_regdate, wc_active;
+
+	public String getWc_idx() {
+		return wc_idx;
+	}
+
+	public void setWc_idx(String wc_idx) {
+		this.wc_idx = wc_idx;
+	}
+
+	public String getWc_content() {
+		return wc_content;
+	}
+
+	public void setWc_content(String wc_content) {
+		this.wc_content = wc_content;
+	}
+
+	public String getWc_regdate() {
+		return wc_regdate;
+	}
+
+	public void setWc_regdate(String wc_regdate) {
+		this.wc_regdate = wc_regdate;
+	}
+
+	public String getWc_active() {
+		return wc_active;
+	}
+
+	public void setWc_active(String wc_active) {
+		this.wc_active = wc_active;
+	}
 
 	public String getT_active() {
 		return t_active;

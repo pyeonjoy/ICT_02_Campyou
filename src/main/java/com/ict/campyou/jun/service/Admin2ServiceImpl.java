@@ -99,5 +99,45 @@ public class Admin2ServiceImpl implements Admin2Service {
 		return admin2DAO.loadBoardList(a2vo,offset,limit);
 	}
 
+	@Override
+	public Admin2VO w_board_detail(String t_idx) {
+		return admin2DAO.w_board_detail(t_idx);
+	}
+
+	@Override
+	public List<Admin2VO> w_board_detail_comment(String t_idx) {
+		return admin2DAO.w_board_detail_comment(t_idx);
+	}
+
+	@Override
+	public int hide_post(String t_idx) {
+		return admin2DAO.hide_post(t_idx);
+	}
+
+	@Override
+	public int show_post(String t_idx) {
+		return admin2DAO.show_post(t_idx);
+	}
+
+	@Override
+	public int comment_hide(String wc_idx) {
+		return admin2DAO.comment_hide(wc_idx);
+	}
+
+	@Override
+	public int comment_show(String wc_idx) {
+		return admin2DAO.comment_show(wc_idx);
+	}
+
+	@Override
+	public int Search_W_board_count(Admin2VO a2vo, String keywordInput, String searchType) {
+		return admin2DAO.Search_W_board_count(a2vo,keywordInput,searchType);
+	}
+
+	@Override
+	public List<Admin2VO> SearchWithBoard(Admin2VO a2vo, String keywordInput, String searchType, int offset, int limit) {
+		return admin2DAO.SearchWithBoard(a2vo,keywordInput,searchType,offset,limit);
+	}
+
 
 }
