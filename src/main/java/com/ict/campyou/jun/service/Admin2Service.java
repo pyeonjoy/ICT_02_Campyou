@@ -36,6 +36,26 @@ public interface Admin2Service {
 
 	int updateStatus(String qna_idx);
 
+	int w_board_count(Admin2VO a2vo);
+
+	List<Admin2VO> loadBoardList(Admin2VO a2vo, int offset, int limit);
+
+	Admin2VO w_board_detail(String t_idx);
+
+	List<Admin2VO> w_board_detail_comment(String t_idx);
+
+	int hide_post(String t_idx);
+
+	int show_post(String t_idx);
+
+	int comment_hide(String wc_idx);
+
+	int comment_show(String wc_idx);
+
+	int Search_W_board_count(Admin2VO a2vo, String keywordInput, String searchType);
+
+	List<Admin2VO> SearchWithBoard(Admin2VO a2vo, String keywordInput, String searchType, int offset, int limit);
+
 
 
 

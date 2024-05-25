@@ -26,7 +26,7 @@
 			<ul>
 				<li><a href="#">자유게시판</a></li>
 				<li><a href="#">추천게시판</a></li>
-				<li><a href="#">동행게시판</a></li>
+				<li><a href="admin_board_w.do">동행게시판</a></li>
 			</ul>
 			</div>
 			<div class="side user_menu">

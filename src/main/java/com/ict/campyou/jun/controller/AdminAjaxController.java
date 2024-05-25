@@ -248,4 +248,138 @@ public class AdminAjaxController {
 			}
 			return 0;
 		}
+		
+		@RequestMapping(value = "w_board_load.do", produces = "application/json; charset=utf-8")
+		@ResponseBody
+		public Map<String, Object> f_board_load(Admin2VO a2vo,HttpServletRequest request){
+			int count = adminService.w_board_count(a2vo);
+			paging.setTotalRecord(count);
+			if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+				paging.setTotalPage(1);
+			}else {
+				paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+				if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+					paging.setTotalPage(paging.getTotalPage() +1);
+				}
+			}
+			
+			String cPage = request.getParameter("cPage");
+			if(cPage == null) {
+				paging.setNowPage(1);
+			}else {
+				paging.setNowPage(Integer.parseInt(cPage));
+			}
+			
+			paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
+			
+			paging.setBeginBlock((paging.getNowPage() - 1) / paging.getPagePerBlock() * paging.getPagePerBlock() + 1);
+			paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+
+			if (paging.getEndBlock() > paging.getTotalPage()) {
+			    paging.setEndBlock(paging.getTotalPage());
+			}
+			if (paging.getTotalRecord() == 0) {
+			    paging.setTotalPage(1);
+			} else {
+			    paging.setTotalPage((int)Math.ceil((double)paging.getTotalRecord() / paging.getNumPerPage()));
+			}
+			
+			List<Admin2VO> res = adminService.loadBoardList(a2vo,paging.getOffset(), paging.getNumPerPage());
+		    Map<String, Object> response = new HashMap<>();
+		    response.put("res", res);
+		    response.put("paging", paging);
+
+		    return response;
+		}
+		@RequestMapping(value = "w_board_detail.do", produces = "application/json; charset=utf-8")
+		@ResponseBody
+		public Map<String, Object> getW_board_detail(@RequestParam()String t_idx){
+		    Map<String, Object> map = new HashMap<>();
+		    
+		    Admin2VO res = adminService.w_board_detail(t_idx);
+		    List<Admin2VO> res2 = adminService.w_board_detail_comment(t_idx);
+		    
+		    map.put("board", res);
+		    map.put("comments", res2);
+		    
+		    return map;
+		}
+		
+		@RequestMapping(value = "hide_post.do", produces = "application/json; charset=utf-8")
+		@ResponseBody
+		public int hide_post(@RequestParam()String t_idx){
+			
+			int res = adminService.hide_post(t_idx);
+			return res;
+		}
+		
+		@RequestMapping(value = "show_post.do", produces = "application/json; charset=utf-8")
+		@ResponseBody
+		public int show_post(@RequestParam()String t_idx){
+			
+			int res = adminService.show_post(t_idx);
+			return res;
+		}
+		
+		@RequestMapping(value = "comment_hide.do", produces = "application/json; charset=utf-8")
+		@ResponseBody
+		public int comment_hide(@RequestParam()String wc_idx){
+			
+			int res = adminService.comment_hide(wc_idx);
+			return res;
+		}
+		
+		@RequestMapping(value = "comment_show.do", produces = "application/json; charset=utf-8")
+		@ResponseBody
+		public int comment_show(@RequestParam()String wc_idx){
+			
+			int res = adminService.comment_show(wc_idx);
+			return res;
+		}
+		@RequestMapping(value = "w_board_search.do", produces = "application/json; charset=utf-8")
+		@ResponseBody
+		public Map<String, Object> w_board_search(Admin2VO a2vo,HttpServletRequest request,@RequestParam()String keywordInput,@RequestParam()String searchType){
+			int count = adminService.Search_W_board_count(a2vo , keywordInput, searchType);
+			paging.setTotalRecord(count);
+			if(paging.getTotalRecord() <= paging.getNumPerPage()) {
+				paging.setTotalPage(1);
+			}else {
+				paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+				if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+					paging.setTotalPage(paging.getTotalPage() +1);
+				}
+			}
+			
+			String cPage = request.getParameter("cPage");
+			if(cPage == null) {
+				paging.setNowPage(1);
+			}else {
+				paging.setNowPage(Integer.parseInt(cPage));
+			}
+			
+			paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() -1));
+			
+			paging.setBeginBlock((paging.getNowPage() - 1) / paging.getPagePerBlock() * paging.getPagePerBlock() + 1);
+			paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+			
+			if (paging.getEndBlock() > paging.getTotalPage()) {
+				paging.setEndBlock(paging.getTotalPage());
+			}
+			if (paging.getTotalRecord() == 0) {
+				paging.setTotalPage(1);
+			} else {
+				paging.setTotalPage((int)Math.ceil((double)paging.getTotalRecord() / paging.getNumPerPage()));
+			}
+			
+			
+			List<Admin2VO> res = adminService.SearchWithBoard(a2vo,keywordInput,searchType,paging.getOffset(), paging.getNumPerPage());
+			Map<String, Object> response = new HashMap<>();
+			
+			response.put("res", res);
+			response.put("paging", paging);
+			
+			return response;
+		}
+
+
 }
