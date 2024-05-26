@@ -166,8 +166,7 @@ public class TogetherDAO {
 	}
 	
 	public int getToCommentSame(Map<String, Integer> map) throws Exception {
-		int result = sqlSessionTemplate.selectOne("bjs.to_comment_same", map);
-		return result;
+		return sqlSessionTemplate.selectOne("bjs.to_comment_same", map);
 	}
 	
 	public List<TogetherCommentVO> getGroupList(Map<String, Integer> map) throws Exception {
@@ -210,6 +209,10 @@ public class TogetherDAO {
 		return sqlSessionTemplate.selectList("bjs.promise_people_detail", t_idx);
 	}
 	
+	public int getStarRatingCheck(StarRatingVO srvo) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.star_rating_check", srvo);
+	}
+	
 	public int getPromiseBanMember(PromiseVO pvo) throws Exception {
 		return sqlSessionTemplate.update("bjs.promise_ban_member", pvo);
 	}
@@ -245,4 +248,5 @@ public class TogetherDAO {
 	public int getConfirmPartner(PromiseVO pvo) throws Exception {
 		return sqlSessionTemplate.update("bjs.confirm_partner", pvo);
 	}
+	
 }

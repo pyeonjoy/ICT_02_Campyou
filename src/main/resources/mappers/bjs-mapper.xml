@@ -164,16 +164,16 @@
 		order by wc.wc_groups, wc.wc_step, wc.wc_lev desc
 	</select>
 	<select id="to_comment_same" parameterType="Map" resultType="int">
-		select count(*) from board_with_comment where wc_groups = #{wc_groups} and wc_step = #{wc_step} and wc_lev = #{wc_lev}
+		select count(*) from board_with_comment where t_idx = #{t_idx} and wc_groups = #{wc_groups} and wc_step = #{wc_step} and wc_lev = #{wc_lev}
 	</select>
 	<select id="to_step_max" parameterType="Map" resultType="int">
-    	select max(wc_step) from board_with_comment where wc_groups = #{wc_groups} and wc_lev = #{wc_lev}
+    	select max(wc_step) from board_with_comment where t_idx = #{t_idx} and wc_groups = #{wc_groups}
 	</select>
 	<select id="group_list" parameterType="Map" resultType="tcvo">
-		select * from board_with_comment where wc_groups = #{wc_groups} and wc_step > #{wc_step} order by wc_step
+		select * from board_with_comment where t_idx = #{t_idx} and wc_groups = #{wc_groups} and wc_step >= #{wc_step} order by wc_step
 	</select>
 	<update id="to_comment_gs_update" parameterType="Map">
-		update board_with_comment set wc_step = wc_step + 1 where wc_groups = #{wc_groups} and wc_step >= #{wc_step}
+		update board_with_comment set wc_step = wc_step + 1 where t_idx = #{t_idx} and wc_groups = #{wc_groups} and wc_step >= #{wc_step}
 	</update>
 	<insert id="to_comment_write" parameterType="tcvo">
 	        <selectKey keyProperty="wc_groups" resultType="String" order="BEFORE">
@@ -196,7 +196,11 @@
 		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate > now()
 	</select>
 	<select id="promise_ing" parameterType="Map" resultType="tvo">
-		select * from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate > now() order by t_idx desc limit #{limit} offset #{offset}
+	    select bw.*, wp.pm_state, wp.pm_master
+	    from board_with bw
+	    join with_promise wp on bw.t_idx = wp.t_idx
+	    where wp.member_idx = #{member_idx} and wp.pm_state = 1 and bw.t_active = 0 and bw.t_startdate > now()
+	    order by bw.t_startdate desc limit #{limit} offset #{offset}
 	</select>
 	<select id="promise_people_detail" parameterType="String" resultType="pvo">
 	    select wp.*, m.member_img, m.member_dob, m.member_nickname, m.member_grade, m.member_gender
@@ -205,6 +209,9 @@
 	    where wp.t_idx = #{t_idx} and wp.pm_state in (1, 2)
 	    order by wp.pm_master desc
 	</select>
+	<select id="star_rating_check" parameterType="srvo" resultType="int">
+		select count(*) from star_rating where t_idx = #{t_idx} and give_member_idx = #{give_member_idx} and take_member_idx = #{take_member_idx}
+	</select>
 	<update id="promise_ban_member" parameterType="pvo">
 		update with_promise set pm_state = 3 where member_idx = #{member_idx} and t_idx = #{t_idx}
 	</update>
@@ -212,13 +219,21 @@
 		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate &lt;= now() and t_enddate >= now()
 	</select>
 	<select id="promise_ready" parameterType="Map" resultType="tvo">
-		select * from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate &lt;= now() and t_enddate >= now() order by t_idx desc limit #{limit} offset #{offset}
+		select bw.*, wp.pm_state, wp.pm_master
+	    from board_with bw
+	    join with_promise wp on bw.t_idx = wp.t_idx
+	    where wp.member_idx = #{member_idx} and wp.pm_state = 1 and bw.t_active = 0 and bw.t_startdate &lt;= now() and bw.t_enddate >= now()
+	    order by bw.t_startdate desc limit #{limit} offset #{offset}
 	</select>
 	<select id="my_board_with_end_count" parameterType="String" resultType="int">
 		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0 and t_enddate &lt; now()
 	</select>
 	<select id="promise_End" parameterType="Map" resultType="tvo">
-		select * from board_with where member_idx = #{member_idx} and t_active = 0 and t_enddate &lt; now() order by t_enddate desc limit #{limit} offset #{offset}
+		select bw.*, wp.pm_state, wp.pm_master
+	    from board_with bw
+	    join with_promise wp on bw.t_idx = wp.t_idx
+	    where wp.member_idx = #{member_idx} and wp.pm_state = 1 and bw.t_active = 0 and bw.t_enddate &lt; now()
+	    order by bw.t_startdate desc limit #{limit} offset #{offset}
 	</select>
 	<update id="enddate_update" parameterType="String">
 		update board_with set t_enddate = sysdate() where t_idx = #{t_idx}
@@ -226,4 +241,5 @@
 	<update id="confirm_partner" parameterType="pvo">
 		update with_promise set pm_state = 2, pm_regdate_ok = sysdate() where t_idx = #{t_idx} and member_idx = #{member_idx}
 	</update>
+	
 </mapper>

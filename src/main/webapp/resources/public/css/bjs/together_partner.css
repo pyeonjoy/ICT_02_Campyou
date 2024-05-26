@@ -179,17 +179,18 @@
     align-items: center;
 }
 .thul5{
-	width: 50%;
-	height: 100px;
-	display: flex;
-	padding: 0.7rem 0;
-	align-items: center;
-	justify-content: center;
+	grid-column: 2;
+/* 	width: 50%; */
+/* 	height: 100px; */
+/* 	display: flex; */
+/* 	padding: 0.7rem 0; */
+/* 	align-items: center; */
+/* 	justify-content: center; */
 }
 
 .no-data-message{
 /* 	grid-column: 1/5; */
-	width: 800px;
+	width: 600px;
 	height: 256px;
 	display: flex;
 	justify-content: center;

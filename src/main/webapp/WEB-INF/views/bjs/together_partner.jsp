@@ -121,7 +121,7 @@ function toPromiseIng(page) {
                 html += '<p class="no-data-messageP">모집중인 동행이 없습니다</p>';
                 html += '</div>';
                 html += '</div>';
-                $('.toContent').replaceWith(html);
+                $('.toContent').html(html);
             }
             let paging = data.paging;
             $('.to_paging').empty();
@@ -227,10 +227,10 @@ function toPromiseReady(page) {
             } else {
                 html += '<div class="thul5">';
                 html += '<div class="no-data-message">';
-                html += '<p class="no-data-messageP">모집중인 동행이 없습니다</p>';
+                html += '<p class="no-data-messageP">진행중인 동행이 없습니다</p>';
                 html += '</div>';
                 html += '</div>';
-                $('.toContent').replaceWith(html);
+                $('.toContent').html(html);
             }
             let paging = data.paging;
             $('.to_paging').empty();
@@ -336,10 +336,10 @@ function toPromiseEnd(page) {
             } else {
                 html += '<div class="thul5">';
                 html += '<div class="no-data-message">';
-                html += '<p class="no-data-messageP">모집중인 동행이 없습니다</p>';
+                html += '<p class="no-data-messageP">완료된 동행이 없습니다.</p>';
                 html += '</div>';
                 html += '</div>';
-                $('.toContent').replaceWith(html);
+                $('.toContent').html(html);
             }
             let paging = data.paging;
             $('.to_paging').empty();

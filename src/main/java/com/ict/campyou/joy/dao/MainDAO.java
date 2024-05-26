@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ict.campyou.bjs.dao.StarRatingVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 
@@ -41,9 +42,12 @@ public class MainDAO {
 		}
 		return -1;
 	}
-	public int addStar(MemberVO mvo) {
+	public int addStar(StarRatingVO srvo) {
 		try {
-			return sqlSessionTemplate.update("joy.addStar",mvo);
+			int result = sqlSessionTemplate.insert("joy.addStar",srvo);
+			if(result > 0) {
+				return sqlSessionTemplate.update("joy.member_star_update", srvo);
+			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}

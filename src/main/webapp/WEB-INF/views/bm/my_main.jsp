@@ -23,6 +23,16 @@ $(document).ready(function() {
 $(document).on('click', '.btn-accept', function() {
 	let $accompanyList = $(this).closest('.accompany_list');
 	let promiseIdx = $accompanyList.data('pm-idx');
+	let tStartdate = document.getElementById('t_startdate').value;
+	
+	let currentDate = new Date();
+    let startDate = new Date(tStartdate);
+	
+    if (startDate <= currentDate) {
+        alert("동행이 시작되어 수락하실 수 없습니다.");
+        return;
+    }
+    
     $.ajax({
         url: 'acceptPromise.do',
         type: 'post',
@@ -91,6 +101,7 @@ function promiseApplyList() {
 	                html += '<div class="list_text_overlay">';
 	                html += '<p class="list_content">' + promise.t_campname + '</p>';
 	                html += '<h4 class="list_title">' + promise.t_startdate + ' - ' + promise.t_enddate + '</h4>';
+	                html += '<input type="hidden" id="t_startdate" value="' + promise.t_startdate + '"';
 	                html += '</div>';
 	                html += '</div>';
 	                html += '</div>';

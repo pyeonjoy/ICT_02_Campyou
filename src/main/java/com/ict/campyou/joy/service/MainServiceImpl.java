@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ict.campyou.bjs.dao.StarRatingVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.joy.dao.AdminVO;
 import com.ict.campyou.joy.dao.MainDAO;
@@ -31,8 +32,8 @@ public class MainServiceImpl implements MainService{
 		}
 
 		@Override
-		public int addStar(MemberVO mvo) {
-			return maindao.addStar(mvo);
+		public int addStar(StarRatingVO srvo) {
+			return maindao.addStar(srvo);
 		}
 	
 	

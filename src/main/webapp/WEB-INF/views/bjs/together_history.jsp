@@ -40,26 +40,23 @@ $('.thwrapper').on('click', '.acceptButton', function() {
 	let promiseText = $(this).closest('.thul2').find(".compare").text();
     let promiseCount = promiseText.split('/')[0];
     let totalNumPeople = promiseText.split('/')[1];
-    console.log(promiseCount);
-    console.log(totalNumPeople);
-//     let endDateStr = $thul2.find("#t_endDate").attr("value");
-//     let endDateStr = $(this).closest('.thul2').find("#t_endDate").val();
-//     let endDate = new Date(endDateStr);
-//     console.log(endDateStr);
-//     console.log(endDate);
-//     let currentDate = new Date();
-//     console.log(currentDate);
-//     if (currentDate > endDate) {
-//         alert("마감된 동행입니다.");
-//         return;
-//     }else{
-	    if (parseInt(promiseCount) >= parseInt(totalNumPeople)) {
-	        alert("정원이 초과되었습니다.");
-	        return;
-	    }
-	    console.log("수락오나");
-   		updatePromiseStatus(pmIdx, "수락");
-//     }
+    let tStartdate = $(this).closest('.thul2').find("#t_startDate").val();
+    	
+    let currentDate = new Date();
+    let startDate = new Date(tStartdate);
+	console.log(startDate);
+	console.log(currentDate);
+    if (startDate <= currentDate) {
+        alert("동행이 시작되어 수락하실 수 없습니다.");
+        return;
+    }
+    
+    if (parseInt(promiseCount) >= parseInt(totalNumPeople)) {
+        alert("정원이 초과되었습니다.");
+        return;
+    }
+    console.log("수락오나");
+	updatePromiseStatus(pmIdx, "수락");
 });
 
 $('.thwrapper').on('click', '.rejectButton', function() {
@@ -139,8 +136,7 @@ function promiseApplyList(page) {
 	                    html2 += '<button type="button" class="thul2DivButton acceptButton">수락</button>';
 	                    html2 += '<button type="button" class="thul2DivButton rejectButton">거절</button>';
 	                    html2 += '<input type="hidden" id="pm_idx" value="' + promise.pm_idx + '">';
-	                    console.log(promise.t_enddate);
-	                    html2 += '<input type="hidden" id="t_endDate" value="' + promise.t_enddate + '">';
+	                    html2 += '<input type="hidden" id="t_startDate" value="' + promise.t_startdate + '">';
 	                    html2 += '</div>';
 	                } else {
 	                    html2 += '<ul><li class="th1">' + promise.pm_state + '</li></ul>';
@@ -238,7 +234,6 @@ function promiseApplySendList(page) {
                 for (let i = 0; i < toSendHistory.length; i++) {
                     let promise = toSendHistory[i];
 	                let html2 = '<div class="thul4">';
-	                console.log(promise.member_idx);
 	                html2 += '<ul><li class="th1 profile_show" data-memberidx="' + promise.member_idx + '">' + promise.member_nickname + '</li></ul>';
 
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.t_campname + '</a></li></ul>';

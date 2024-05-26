@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ict.campyou.bjs.dao.StarRatingVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.joy.service.MainService;
 import com.ict.campyou.jun.dao.ReviewVO;
@@ -20,8 +21,8 @@ public class RatingAjaxController {
 	
 	@RequestMapping(value = "addstarok.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String addReview(@RequestBody MemberVO mvo, HttpSession session) {
-		int res = mainservice.addStar(mvo);
+	public String addReview(@RequestBody StarRatingVO srvo, HttpSession session) {
+		int res = mainservice.addStar(srvo);
 		if (res > 0) {
 			return String.valueOf(res);
 		}
