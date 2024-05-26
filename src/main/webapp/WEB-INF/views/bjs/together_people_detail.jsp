@@ -17,7 +17,6 @@
 <%@ include file="../hs/header.jsp" %>
 <%@ include file="../hs/mypage_menu.jsp"%>
 <style>
-/*모달 팝업 영역 스타일링*/
 .modal {
 	/*팝업 배경*/
 	display: none;
@@ -63,8 +62,6 @@
 	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 .wrap {
-/*     height: 100vh;
-    min-height: 400px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -224,18 +221,26 @@ h1 {
 $(document).ready(function() {
 	$(document).on('click', '.modal_btn', function() {
 		let memberIdx = $(this).siblings('#memberIdx').val();
+// 		let giveMemberIdx = $(this).siblings('#give_memberIdx').val();
+// 		let tIdx = document.getElementById("t_idx").value;
 	    $('#star_form').data('memberIdx', memberIdx);
+// 	    $('#star_form').data('giveMemberIdx', giveMemberIdx);
+// 	    $('#star_form').data('tIdx', tIdx);
 	    $('.modal').css('display', 'block');
 	});
 	
 	$('#star_form').submit(function(e) {
         e.preventDefault();
-
+        let tIdx = document.getElementById("t_idx").value;
+        let giveMemberIdx = document.getElementById("member_idx").value;
         let member_idx = $(this).data('memberIdx');
+//         let give_member_idx = $(this).data('giveMemberIdx');
         let new_rating = $("input[name='new_rating']:checked").val();
         let requestData = {
             new_rating: new_rating,
-            member_idx: member_idx
+            t_idx: tIdx,
+            take_member_idx: member_idx,
+            give_member_idx: giveMemberIdx
         };
 
         $.ajax({
@@ -248,6 +253,7 @@ $(document).ready(function() {
                     alert("별점이 등록되었습니다.");
                     $("input[name='new_rating']").prop('checked', false);
                     $('.modal').css('display', 'none');
+                    location.reload();
                 } else {
                     alert("오류가 발생하였습니다.");
                 }
@@ -358,43 +364,74 @@ function promisePeopleDetail() {
 	let page = document.getElementById("cPage").value;
 	let tEnddate = document.getElementById("t_enddate").value;
    	$('.thul2').empty();
+   	$('.thul3').empty();
     $.ajax({
         url: 'promise_people_detail.do',
         type: 'post',
         data: {
-            t_idx: tIdx,
+            t_idx: tIdx
         },
         dataType: 'json',
         success: function(data) {
 			let html = '';
 			let memberIdxArray = [];
         	if (data != null && data.length > 0) {
-//                 let imgSrc = data.proPeopleDetail.member_img === null || data.proPeopleDetail.member_img === '' || data.proPeopleDetail.member_img === 'user2.png' ? '${path}/resources/images/user2.png' : '${path}/resources/images/' + data.proPeopleDetail.member_img;
+//                 let imgSrc = data.member_img === null || data.member_img === '' || data.member_img === 'user2.png' ? '${path}/resources/images/user2.png' : '${path}/resources/images/' + data.member_img;
                 for (let i = 0; i < data.length; i++) {
                     let proPeopleDetail = data[i];
+                    console.log(proPeopleDetail.pm_master);
                     memberIdxArray.push(proPeopleDetail.member_idx);
 	                html += '<div class="thliImage3"><img src="${path}/resources/images/' + proPeopleDetail.member_img + '" class="thliImage2 profile_show" data-memberidx="'+proPeopleDetail.member_idx+'"></div>';
-	                html += '<ul><li class="th1 member_gradeLi profile_show" data-memberidx="' + proPeopleDetail.member_idx + '">' + proPeopleDetail.member_nickname + '<img src="${path}/resources/images/' + proPeopleDetail.member_grade + '" class="member_gradeImg" ></li></ul>';
+	                html += '<ul><li class="th1 member_gradeLi profile_show" data-memberidx="' + proPeopleDetail.member_idx + '">';
+	                html += proPeopleDetail.member_nickname;
+	                html += '<img src="${path}/resources/images/' + proPeopleDetail.member_grade + '" class="member_gradeImg">';
+	                if(proPeopleDetail.pm_master == 1) {
+	                    html += '<i class="fa-solid fa-crown" style="color: #FFD43B;"></i>';
+	                }
+	                if(proPeopleDetail.member_idx == memberIdx) {
+	                    html += '<i class="fa-solid fa-user"></i>';
+	                }
+	                html += '</li></ul>';
 	                html += '<ul><li class="th1">' + proPeopleDetail.member_dob + '</li></ul>';
 	                html += '<ul><li class="th1">' + proPeopleDetail.promise_my_count + '</li></ul>';
                     html += '<div class="thul2Div">';
-                    if(proPeopleDetail.pm_master == 1){
-                    	html += '<ul><li class="th1">방장(나)</li></ul>';
-                    }else{
-                    	if(promiseStatus == "end"){
-                    		html += '<button type="button" class="thul2DivButton modal_btn" id="modal_btn">별 점</button>';
-                    		html += '<input type="hidden" id="memberIdx" value="' + proPeopleDetail.member_idx + '">';
-                    	}else {
-	                   		html += '<button type="button" class="thul2DivButton" onclick="banishMember(' + proPeopleDetail.member_idx + ')">추방하기</button>';
-                    	}
-                    }
-                    html += '</div>';
+                   	if(promiseStatus == "end"){
+                   		if (proPeopleDetail.member_idx != memberIdx) {
+	                   		console.log("체크하러?");
+	                   		checkRating(proPeopleDetail.member_idx, tIdx, memberIdx, function(result) {
+	                   			console.log("체크결과", result);
+	                   			let htmlStar = '';
+	                            if(result > 0){
+	                                console.log("결과도착");
+	                                htmlStar += '<ul><li class="th1">별점 완료</li></ul>';
+	                            } else {
+	                            	htmlStar += '<button type="button" class="thul2DivButton modal_btn" id="modal_btn">별 점</button>';
+	                            	htmlStar += '<input type="hidden" id="memberIdx" value="' + proPeopleDetail.member_idx + '">';
+// 		                    		html += '<input type="hidden" id="give_memberIdx" value="' + memberIdx + '">';
+	                            }
+	                            $('.thul2').find('.thul2Div').eq(i).append(htmlStar);
+	                   		});
+                   		}
+                   	}else {
+                   		if(proPeopleDetail.pm_master == 0) {
+                   			html += '<button type="button" class="thul2DivButton banish_button" onclick="banishMember(' + proPeopleDetail.member_idx + ')" style="display:none;">추방하기</button>';
+                   		}
+                   	}
+                   html += '</div>';
                 }
+                
          		$('.thul2').append(html);
-                let html2 = '<div class="partnerListButtonDiv">';
-                if(promiseStatus == "ready"){
-//                 	html2 += '<button type="button" class="thul2DivButton" onclick="confirm_partner(' + tIdx + ',' + memberIdx + ',\'' + tEnddate + '\',' + JSON.stringify(memberIdxArray) + ')" style="margin-right: 3rem;">동행 완료</button>';
-					html2 += '<button type="button" class="thul2DivButton" onclick="confirm_partner(' + tIdx + ',' + memberIdx + ',\'' + tEnddate + '\', \'' + JSON.stringify(memberIdxArray).replace(/"/g, '&quot;') + '\')" style="margin-right: 3rem;">동행 완료</button>';
+                for (let j = 0; j < data.length; j++) {
+                    if (data[j].pm_master == 1 && data[j].member_idx == memberIdx) {
+                        $('.banish_button').css('display', 'block');
+                    }
+                }
+         		let html2 = '';
+                html2 += '<div class="partnerListButtonDiv">';
+                for (let j = 0; j < data.length; j++) {
+                    if (promiseStatus == "ready" && data[j].pm_master == 1 && data[j].member_idx == memberIdx) {
+                        html2 += '<button type="button" class="thul2DivButton" onclick="confirm_partner(' + tIdx + ',' + memberIdx + ',\'' + tEnddate + '\', \'' + JSON.stringify(memberIdxArray).replace(/"/g, '&quot;') + '\')" style="margin-right: 3rem;">동행 완료</button>';
+                    }
                 }
                 html2 += '<button type="button" class="thul2DivButton" onclick="partner_list(' + page + ',' + memberIdx + ',\'' + promiseStatus + '\')">목 록</button>';
                 html2 += '</div>';
@@ -416,6 +453,26 @@ function promisePeopleDetail() {
         }
     });
 };
+
+function checkRating(proPeopleDetailMemberIdx, tIdx, memberIdx, callback) {
+	console.log("체크왔다");
+    $.ajax({
+        url: "star_rating_check.do",
+        type: "POST",
+        data: { 
+        	take_member_idx: proPeopleDetailMemberIdx,
+            t_idx: tIdx,
+            give_member_idx: memberIdx
+        },
+        success: function(response) {
+        	console.log("체크끝났다");
+            callback(response);
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
 
 function banishMember(memberIdx) {
 	let result = confirm("정말 추방하시겠습니까?");
@@ -441,7 +498,7 @@ function banishMember(memberIdx) {
     }
 }
 function partner_list(page, memberIdx, promiseStatus) {
-	location.href = "together_partner.do?cPage=" + page + "&member_idx=" + memberIdx + "&promise_status='" + promiseStatus + "'";
+	location.href = "together_partner.do?cPage=" + page + "&promise_status=" + promiseStatus;
 }
 function confirm_partner(tIdx, memberIdx, tEnddate, memberIdxArray) {
 	let currentDate = new Date();
@@ -465,7 +522,6 @@ function confirm_partner(tIdx, memberIdx, tEnddate, memberIdxArray) {
 	        },
 	        traditional: true, // 배열 데이터를 전송할 때 사용
 	        success: function(response) {
-// 	        	location.href="together_partner.do?member_idx=" + memberIdx + "&cPage=1&promise_status=" + 'end' + ""
 	        	partner_list(1, memberIdx, 'end');
 	        },
 	        error: function(xhr, status, error) {

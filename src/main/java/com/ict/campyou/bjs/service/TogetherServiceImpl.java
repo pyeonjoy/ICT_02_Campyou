@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ict.campyou.bjs.dao.PromiseVO;
+import com.ict.campyou.bjs.dao.StarRatingVO;
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.dao.TogetherDAO;
 import com.ict.campyou.bjs.dao.TogetherCommentVO;
@@ -199,6 +200,11 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 	
 	@Override
+	public int getStarRatingCheck(StarRatingVO srvo) throws Exception {
+		return togetherDAO.getStarRatingCheck(srvo);
+	}
+	
+	@Override
 	public int getPromiseBanMember(PromiseVO pvo) throws Exception {
 		return togetherDAO.getPromiseBanMember(pvo);
 	}
@@ -232,4 +238,5 @@ public class TogetherServiceImpl implements TogetherService{
 	public int getConfirmPartner(PromiseVO pvo) throws Exception {
 		return togetherDAO.getConfirmPartner(pvo);
 	}
+	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ict.campyou.bjs.dao.PromiseVO;
+import com.ict.campyou.bjs.dao.StarRatingVO;
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.dao.TogetherCommentVO;
 import com.ict.campyou.jun.dao.CampVO;
@@ -45,6 +46,7 @@ public interface TogetherService {
 	public int getBoardWithCount(String member_idx) throws Exception;
 	public List<TogetherVO> getPromiseIng(String member_idx, int offset, int limit) throws Exception;
 	public List<PromiseVO> getPromisePeopleDetail(String t_idx) throws Exception;
+	public int getStarRatingCheck(StarRatingVO srvo) throws Exception;
 	public int getPromiseBanMember(PromiseVO pvo) throws Exception;
 	public int getBoardWithCountReady(String member_idx) throws Exception;
 	public List<TogetherVO> getPromiseReady(String member_idx, int offset, int limit) throws Exception;

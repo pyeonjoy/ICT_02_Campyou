@@ -88,7 +88,7 @@
 			            <div class="toContentOne">
 			                <div>
 			                    <div class="toContentOne1">
-			                        <img src="${path}/resources/images/${k.member_img }" class="userImage2 profile_show" id="${k.member_idx}" data-memberidx="${k.member_idx}">
+			                        <img src="${path}/resources/images/${k.member_img }" class="userImage2">
 			                        <div>
 				                        <div class="toContentOne1span1">
 				                            <span class="to_member_nickname profile_show" data-memberidx="${k.member_idx}">${k.member_nickname}</span>
