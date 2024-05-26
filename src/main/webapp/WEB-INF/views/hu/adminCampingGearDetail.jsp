@@ -6,28 +6,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 회원 상세정보</title>
+<title>관리자 게시판 상세보기</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardDetail.css">
 <script type="text/javascript">
 	function camping_gear_board_list(f) {
-		f.action="camping_gear_board.do";
+		f.action="admin_camping_gear_board.do";
 		f.submit()
 	}	
 	function camping_gear_update(f) {
-		f.action="camping_gear_update.do";
+		f.action="admin_camping_gear_update.do";
 		f.submit()
 	}	
-	function camping_gear_delete(f) {
-		f.action="camping_gear_delete.do";
+	function admin_camping_gear_delete(f) {
+		f.action="admin_camping_gear_admin_delete.do";
 		f.submit()
 	}	
 </script>
+<style>
+	body{
+	  background-color: #F6FFF1;
+	}
+</style>
 </head>
 <body>
 	<div>
-		<h2>게시글 회원정보</h2>
+		<h2>관리자: 게시글 회원정보</h2>
 		<hr>
 		<form method="post">
 			<table>
@@ -69,7 +74,7 @@
 					     	<input type="hidden" value="${cPage}" name="cPage">
 					        <input type="button" class="board-member-info" value="목록" onclick="camping_gear_board_list(this.form)" />
 					        <input type="button" class="board-member-info" value="수정" onclick="camping_gear_update(this.form)" />
-					        <input type="button" class="board-member-info" value="삭제" onclick="camping_gear_delete(this.form)" />
+					        <input type="button" class="board-member-info" value="관리자삭제" onclick="admin_camping_gear_delete(this.form)" />
 					     </td>
 					</tr>
 				</tfoot>

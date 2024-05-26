@@ -192,4 +192,35 @@ public class CommBoardDAO {
 		map.put("res", String.valueOf(res));
 		return sqlSessionTemplate.update("member.MemberGradeUpdate", map);
 	}
+	
+	
+	
+	
+	
+	
+	
+	public int getCommunityBoardContentHideUpdate(String b_idx) {
+		
+		return sqlSessionTemplate.update("member.community_board_content_hide_update", b_idx);
+		
+	}
+	
+	public int getCommunityBoardContentShowUpdate(String b_idx) {
+		
+		return sqlSessionTemplate.update("member.community_board_content_show_update", b_idx);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

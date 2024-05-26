@@ -50,4 +50,16 @@ public interface CommBoardService {
 	
 	// 쵀대 권한으로 업데이트 하기 
 	public  int getGreadUpdate(String member_idx2, int res);
+	
+	
+	
+	
+	public int getCommunityBoardContentHideUpdate(String b_idx);
+	public int getCommunityBoardContentShowUpdate(String b_idx);
+	
+	 
+	
+	
+	
+	
 }

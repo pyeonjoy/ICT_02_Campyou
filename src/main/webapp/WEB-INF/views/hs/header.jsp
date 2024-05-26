@@ -40,7 +40,7 @@
 							<li><a href="my_main.do"><img class="icon user"
 									src="resources/img/icon_user.png" alt="mypage"></a></li>
 							<c:if test="${admin != null}">
-								<li><a href="admin_page.do"><img class="icon admin" src="resources/img/icon_admin.png" alt="management"></a></li>
+								<li><img class="icon admin" src="resources/img/icon_admin.png" alt="management"></li>
 							</c:if>
 								<c:choose>
 									<c:when test="${kakaoMemberInfo != null }">

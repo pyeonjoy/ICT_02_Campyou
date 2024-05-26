@@ -312,8 +312,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(cp_idx),0)+1) as groups FROM board_camp
  		</selectKey>
- 		insert into board_camp(member_idx, admin_idx, cp_subject, member_nickname, admin_nickname, member_grade, cp_content, cp_pwd, cpf_name, cp_regdate, cp_hit, cp_active, cp_notice, groups, step, lev)
- 			values(#{member_idx}, #{admin_idx}, #{cp_subject}, #{member_nickname}, #{admin_nickname}, #{member_grade}, #{cp_content},#{cp_pwd},#{cpf_name}, sysdate(), 0, 0, 0, #{groups}, 0, 0)
+ 		insert into board_camp(member_idx, admin_idx, cp_subject, member_name, member_nickname, kakao_nickname, admin_nickname, member_grade, cp_content, cp_pwd, cpf_name, cp_regdate, cp_hit, cp_active, cp_notice, groups, step, lev)
+ 			values(#{member_idx}, #{admin_idx}, #{cp_subject}, #{member_name}, #{member_nickname}, #{kakao_nickname}, #{admin_nickname}, #{member_grade}, #{cp_content},#{cp_pwd},#{cpf_name}, sysdate(), 0, 1, 0, #{groups}, 0, 0)
  	</insert>
  	
  	
@@ -356,8 +356,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(cp_idx),0)+1) as groups FROM c_comment
  		</selectKey>
- 		insert into c_comment(member_nickname, admin_nickname, content, write_date, cp_idx, groups, step, lev)
- 			values(#{member_nickname}, #{admin_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, 0, 0)
+ 		insert into c_comment(member_nickname, kakao_nickname, member_name, admin_nickname, content, write_date, cp_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{kakao_nickname}, #{member_name}, #{admin_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, 0, 0)
  	</insert>
  	
  	<!-- 댓글 삭제 -->
@@ -384,8 +384,8 @@
  	 
  	 <!-- 댓글댓글 -->
  	 <insert id="camping_gear_ans_insert" parameterType="cgbcvo">
- 	 	insert into c_comment(member_nickname, content, write_date, cp_idx, groups, step, lev)
- 			values(#{member_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, #{step}, #{lev})
+ 	 	insert into c_comment(member_nickname, kakao_nickname, member_name, admin_nickname, content, write_date, cp_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{kakao_nickname}, #{member_name}, #{admin_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, #{step}, #{lev})
  	 </insert>
  	 
  	 <!-- 댓글댓글 목록 디테일 가져오기 -->
@@ -480,5 +480,34 @@
  	 	update board_camp 
  	 	set member_grade = #{res}
  	 	where member_idx = #{member_idx}
+ 	 </update>
+ 	 
+ 	 
+ 	 <!-- 관리자가 자유게시판 회원 글 숨기기  -->
+ 	 <update id="community_board_content_hide_update" parameterType="String">
+ 	 	update board_free 
+ 	 	set b_active = 1
+ 	 	where b_idx = #{b_idx}
+ 	 </update>
+ 	 
+ 	 <!-- 관리자가 자유게시판 회원 글 보이게 하기 -->
+ 	 <update id="community_board_content_show_update" parameterType="String">
+ 	 	update board_free 
+ 	 	set b_active = 0
+ 	 	where b_idx = #{b_idx}
+ 	 </update>
+ 	 
+ 	 <!-- 관리자가 캠핑추천 게시판 회원 글 숨기기  -->
+ 	 <update id="camping_gear_board_content_hide_update" parameterType="String">
+ 	 	update board_camp 
+ 	 	set cp_active = 1
+ 	 	where cp_idx = #{cp_idx}
+ 	 </update>
+ 	 
+ 	 <!-- 관리자가 캠핑추천 게시판 회원 글 보이게 하기 -->
+ 	 <update id="camping_gear_board_content_show_update" parameterType="String">
+ 	 	update board_camp 
+ 	 	set cp_active = 0
+ 	 	where cp_idx = #{cp_idx}
  	 </update>
 </mapper>

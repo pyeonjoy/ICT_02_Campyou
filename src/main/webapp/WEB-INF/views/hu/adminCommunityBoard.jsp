@@ -6,40 +6,60 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>Insert title here</title>
+<title>관리자자유게시판</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoard.css">
-<%@ include file="../../hs/header.jsp" %>
+<link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="${path}/resources/public/css/hu/adminBoardFree.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<%@ include file="../hs/header.jsp" %>
 <script type="text/javascript">
 	function commBoard_write() {
-		location.href = "comm_board_write.do";
+		location.href = "admin_comm_board_write.do";
 	}
 	function commBoard_write_alert(){
 		alert("회원님만 글쓰기 하실수 있습니다.\n회원가입이나 로그인 해주세요");
 	}
 	function board_free_list_go(f) {
-		f.action="board_free_list_go.do";
+		f.action="admin_board_free_list_go.do";
 		f.submit();
 	}
 	function board_free_search(f) {
-		f.action="board_free_search.do";
+		f.action="admin_board_free_search.do";
 		f.submit();
 	}
-	console.log("${kakaoMemberInfo.kakao_nickname}")
+</script>
+<script type="text/javascript">
+    function controlMemberContent(f) {
+        var button = f.hideMemberContent;
+        
+        if (button.value === "글숨김") {
+            button.value = "글보임";       
+            f.action = "community_board_content_hide_update.do";
+        } else {
+            button.value = "글숨김";           
+            f.action = "community_board_content_show_update.do";
+        }
+        f.submit();
+    }
 </script>
 <style type="text/css">
+body{
+  background-color: #F6FFF1;
+}
 .member-grade {
 	vertical-align: middle; 
 }
 </style>
 </head>
 <body>
+<jsp:include page="../hs/admin_menu.jsp" />
 	<div id="board-free" align="center">
+	<form method="post">
 		<table id="table1">
-		<caption>자유게시판</caption>
+		<caption>관리자 자유게시판 관리</caption>
 			<thead>
 				<tr class="title">
+					<th class="no">글관리</th>
 					<th class="no">번호</th>
 					<th class="story">유형</th>
 					<th class="subject">제목</th>
@@ -48,10 +68,10 @@
 					<th class="hit">조회수</th>
 				</tr>
 			</thead>
-			<tbody> 
+			<tbody>
 				<c:choose>
 					<c:when test="${empty commBoard_list}">
-						<tr><td colspan="6"><h3>게시물이 존재하지 않습니다.</h3></td></tr>
+						<tr><td colspan="7"><h3>게시물이 존재하지 않습니다.</h3></td></tr>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="k" items="${commBoard_list}" varStatus="vs">
@@ -59,6 +79,22 @@
 							    <c:choose>
 							       <%--  <c:when test="${k.b_type == '공지사항'}"> --%>
 							       <c:when test="${k.admin_nickname == '관리자'}">
+							       	  <td class="admin-write-color" style="background-color: lightyellow;">			     
+									    <form method="post">
+										    <c:choose>
+										        <c:when test="${k.b_active == 0}">
+										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글숨김" onclick="controlMemberContent(this.form)">
+										            <input type="hidden" value="${k.b_idx}" name="b_idx">
+										            <input type="hidden" name="cPage" value="${cPage}">
+										        </c:when>
+										        <c:otherwise>
+										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글보임" onclick="controlMemberContent(this.form)">
+										            <input type="hidden" value="${k.b_idx}" name="b_idx">
+										            <input type="hidden" name="cPage" value="${cPage}">
+										        </c:otherwise>
+										    </c:choose>
+										 </form>
+						      		  </td>
 							        <td class="admin-write-color" style="background-color: lightyellow;">공지</td>
 							          <%--   <td class="admin-write-color" style="background-color: lightyellow;">${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td> --%>
 							            <td class="admin-write-color" style="background-color: lightyellow;">${k.b_type}</td>
@@ -70,14 +106,15 @@
 							                        <span style="color:lightgray">삭제된 게시물입니다</span>
 							                    </c:when>
 							                    <c:otherwise>
-							                        <a href="commBoard_content.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.b_subject}</a>
+							                        <a href="admin_commBoard_content.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.b_subject}</a>
 							                    </c:otherwise>
 							                </c:choose>
 							            </td>
 							            <td class="admin-write-color" style="background-color: lightyellow;">
 							                <c:choose>
 							                    <c:when test="${not empty adminInfo}">
-							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.admin_nickname}</a> 
+							                        <%-- <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.admin_nickname}</a> --%>
+							                        ${k.admin_nickname} 
 							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname} ${k.member_name} ${k.kakao_nickname}</a>
 							                    </c:when>
 							                    <c:otherwise>
@@ -97,7 +134,23 @@
 							            <td class="admin-write-color" style="background-color: lightyellow;">${k.b_regdate.substring(0,10)}</td>
 							            <td class="admin-write-color" style="background-color: lightyellow;">${k.b_hit}</td>
 							        </c:when>						        
-							        <c:otherwise>
+							        <c:otherwise> 
+								     <td>			     
+									    <form method="post">
+										    <c:choose>
+										        <c:when test="${k.b_active == 0}">
+										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글숨김" onclick="controlMemberContent(this.form)">
+										            <input type="hidden" value="${k.b_idx}" name="b_idx">
+										            <input type="hidden" name="cPage" value="${cPage}">
+										        </c:when>
+										        <c:otherwise>
+										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글보임" onclick="controlMemberContent(this.form)">
+										            <input type="hidden" value="${k.b_idx}" name="b_idx">
+										            <input type="hidden" name="cPage" value="${cPage}">
+										        </c:otherwise>
+										    </c:choose>
+										 </form>					
+						      		  </td>
 							            <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>
 							            <td>${k.b_type}</td>
 							            <td>
@@ -108,7 +161,7 @@
 							                        <span style="color:lightgray">삭제된 게시물입니다</span>
 							                    </c:when>
 							                    <c:otherwise>
-							                        <a href="commBoard_content.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.b_subject}</a>
+							                        <a href="admin_commBoard_content.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.b_subject}</a>
 							                    </c:otherwise>
 							                </c:choose>
 							            </td>
@@ -199,6 +252,7 @@
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
+				</form>
 			</tbody>
 		</table>
 		<table id="table2">
@@ -219,7 +273,6 @@
 							</p>
 					</form>
 			     </td>
-				<!-- <td colspan="2"> --> <!-- 원래는 4 -->
 				<td id="paging-pre-next">
 					<ol class="paging">
 						<!-- 이전 버튼 -->
@@ -228,7 +281,7 @@
 								<li class="disable">이전</li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="community_board.do?cPage=${paging.beginBlock - paging.pagePerBlock}">이전으로</a></li>
+								<li><a href="admin_community_board.do?cPage=${paging.beginBlock - paging.pagePerBlock}">이전으로</a></li>
 							</c:otherwise>
 						</c:choose>
 						<!-- 페이지번호들 -->
@@ -238,7 +291,7 @@
 									<li class="now">${k}</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="community_board.do?cPage=${k}">${k}</a></li>
+									<li><a href="admin_community_board.do?cPage=${k}">${k}</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -249,7 +302,7 @@
 								<li class="disable">다음</li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="community_board.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
+								<li><a href="admin_community_board.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
 							</c:otherwise>
 						</c:choose>
 					</ol>	
@@ -258,6 +311,7 @@
 					<c:choose>
 						<c:when test="${memberInfo != null || adminInfo != null || kakaoMemberInfo != null || naverMemberInfo != null}">
 							<input type="button" id="btnWrite" value="글쓰기" onclick="commBoard_write()">
+							<!-- <input type="button" id="submitButton" value="Submit"> -->
 						</c:when>
 						<c:otherwise>
 							<input type="button" id="btnWrite" value="글쓰기" onclick="commBoard_write_alert()">
@@ -267,8 +321,9 @@
 				</tr>
 			</tfoot>	
 		</table>
+		</form>
 	</div>
-<%@ include file="../../hs/footer.jsp" %>
-<%@ include file="../../hs/profile_small_info.jsp" %>
+<%@ include file="../hs/footer.jsp" %>
+<%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>

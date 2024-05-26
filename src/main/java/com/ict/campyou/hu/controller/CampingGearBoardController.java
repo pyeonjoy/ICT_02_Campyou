@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ict.campyou.common.Paging;
 import com.ict.campyou.hu.dao.CampingGearBoardVO;
 import com.ict.campyou.hu.dao.CampingGearSearchVO;
+import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.AdminMembVO;
 
 import com.ict.campyou.hu.dao.CampingGearBoardCommentVO;
@@ -52,7 +54,7 @@ public class CampingGearBoardController {
 	@Autowired
 	private Paging paging;
 	
-	 @RequestMapping("camping_gear_board.do")
+	  @RequestMapping("camping_gear_board.do")
 	  public ModelAndView getCampingGearBoard(HttpServletRequest request, HttpSession session) {
 		  try {
 			  ModelAndView mv = new ModelAndView("hu/campingGearBoard/campingGearBoard");
@@ -73,7 +75,6 @@ public class CampingGearBoardController {
 				  }
 			  }
 			  
-			
 			  String cPage = request.getParameter("cPage");
 			  if(cPage == null) {
 				  paging.setNowPage(1);
@@ -93,9 +94,15 @@ public class CampingGearBoardController {
 			  
 			  List<CampingGearBoardVO> camping_gear_list = campingGearBoardService.getCampingGearList(paging.getOffset(), paging.getNumPerPage());
 			  
+			  // 필터를 써서 골라내기
+	          List<CampingGearBoardVO> selected_Camping_Gear_List = camping_gear_list.stream()
+	                  .filter(k -> "1".equals(k.getCp_active()))
+	                  .collect(Collectors.toList());
+			  
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			  MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 			  
 			  CampingGearBoardVO cgbvo = new CampingGearBoardVO();
 			  
@@ -111,19 +118,67 @@ public class CampingGearBoardController {
 				  cgbvo.setMember_idx(adminInfo.getAdmin_idx());
 			  }
 			  
-			  if (camping_gear_list != null) {
-					mv.addObject("camping_gear_list", camping_gear_list);
+			  if (!selected_Camping_Gear_List.isEmpty()) {
+					mv.addObject("camping_gear_list", selected_Camping_Gear_List);
 					mv.addObject("paging", paging);
 					mv.addObject("memberInfo", memberInfo);
 					mv.addObject("adminInfo", adminInfo);
 					mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
+					mv.addObject("naverMemberInfo", naverMemberInfo);
 					return mv;
 				}
-				return new ModelAndView("hu/campingGearBoard/error");
+				return new ModelAndView("hu/campingGearBoard/campingGearBoard");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return new ModelAndView("hu/campingGearBoard/error");
+	  }
+	  
+	  
+	  //관리자가 캠핑추천 게시판 회원 글 숨기기
+	  @RequestMapping("camping_gear_board_content_hide_update.do")
+	  public ModelAndView getCampingGearBoardContentHideUpdate(String cPage, String cp_idx, CampingGearBoardVO cgbvo, HttpServletRequest request) {
+		  try {
+			ModelAndView mv = new ModelAndView("redirect:admin_camping_gear_board.do");
+			
+			
+			System.out.println("글 숨기는것" + cp_idx);
+			
+			int result = campingGearBoardService.getCampingGearBoardContentHideUpdate(cp_idx);
+			
+			if(result > 0) {
+				mv.addObject("paging", paging);
+				mv.addObject("cp_idx", cp_idx);
+				return mv;
+			}
+					
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	  }
+	  
+	  //관리자가 캠핑추천 게시판 회원 글 보이게 하기
+	  @RequestMapping("camping_gear_board_content_show_update.do")
+	  public ModelAndView getCampingGearContentShowUpdate(String cPage, String cp_idx, CampingGearBoardVO cgbvo, HttpServletRequest request) {
+		  try {
+			ModelAndView mv = new ModelAndView("redirect:admin_camping_gear_board.do");
+			
+			
+			System.out.println("글 보이는것 " + cp_idx);
+			
+			int result = campingGearBoardService.getCampingGearBoardContentShowUpdate(cp_idx);
+			
+			if(result > 0) {
+				mv.addObject("paging", paging);
+				mv.addObject("cp_idx", cp_idx);
+				return mv;
+			}
+					
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	  }
 	 
 	 @RequestMapping("camping_gear_write.do")
@@ -134,6 +189,7 @@ public class CampingGearBoardController {
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
 			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			  MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 			  
 			  if(memberInfo != null) {
 				  mv.addObject("memberInfo", memberInfo);
@@ -145,6 +201,10 @@ public class CampingGearBoardController {
 			  }
 			  if(kakaoMemberInfo != null) {
 				  mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
+				  return mv;
+			  }
+			  if(naverMemberInfo != null) {
+				  mv.addObject("naverMemberInfo", naverMemberInfo);
 				  return mv;
 			  }
 		  } catch (Exception e) {
@@ -160,6 +220,8 @@ public class CampingGearBoardController {
 			  
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			  MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 			  
 			  String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 			  MultipartFile file = cgbvo.getFile();
@@ -224,6 +286,130 @@ public class CampingGearBoardController {
 				  } 
 			  }
 			  
+			  //카카오회원 글쓰기
+			  if(kakaoMemberInfo != null) {
+				  
+				  cgbvo.setMember_idx(kakaoMemberInfo.getMember_idx());
+				 //cgbvo.setMember_grade(memberInfo.getMember_grade());
+				  
+				  if(file.isEmpty()) {
+					  cgbvo.setCpf_name(""); 
+				  }else {
+					  UUID uuid = UUID.randomUUID();
+					  String f_name = uuid.toString() + "_" + file.getOriginalFilename();
+					  cgbvo.setCpf_name(f_name);
+					  
+					  byte[] in = file.getBytes();
+					  File out = new File(path, f_name);
+					  FileCopyUtils.copy(in, out);
+				  }	
+				  cgbvo.setCp_pwd(passwordEncoder.encode(cgbvo.getCp_pwd()));				  				  			
+				  
+				  if(true) {
+				
+					  //자유 게시판에 글쓸때 마다 member_free 등급 올리기
+					  String member_idx = cgbvo.getMember_idx();
+					  int result2 = memberService.getMemberFreeUpdate(member_idx);
+					  
+					  String member_idx2 = kakaoMemberInfo.getMember_idx();
+					  MemberVO mvo = memberService.getMemeberDetail(member_idx2);
+					  cgbvo.setMember_grade(mvo.getMember_grade());
+					  
+					  if(mvo.getMember_free() < 2) {
+						  int result3 = memberService.getUpdateMemberGrade(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 2 && mvo.getMember_free() < 4) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade2(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() >= 4 && mvo.getMember_free() < 6) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade3(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 6 && mvo.getMember_free() < 8) {  
+						  
+						  int result3 = memberService.getUpdateMemberGrade4(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() > 8) {	  
+						  
+						  int result3 = memberService.getUpdateMemberGrade5(member_idx2);
+					  }
+					  cgbvo.setMember_grade(mvo.getMember_grade());
+					  int result = campingGearBoardService.getCampingGearWriteInsert(cgbvo);
+					  
+					  if(result > 0) {
+						 // 최대 권한 구하기 
+						  int res = campingGearBoardService.getGrade(member_idx2);
+						 
+						 // 쵀대 권한으로 업데이트 하기 
+						  int res2 = campingGearBoardService.getGradeUpdate(member_idx2, res);
+					  }				  
+					  return mv;
+				  } 
+			  }
+			  
+			  //네이버회원 글쓰기
+			  if(naverMemberInfo != null) {
+				  
+				  cgbvo.setMember_idx(naverMemberInfo.getMember_idx());
+				 //cbvo.setMember_grade(memberInfo.getMember_grade());
+				  
+				  if(file.isEmpty()) {
+					  cgbvo.setCpf_name(""); 
+				  }else {
+					  UUID uuid = UUID.randomUUID();
+					  String f_name = uuid.toString() + "_" + file.getOriginalFilename();
+					  cgbvo.setCpf_name(f_name);
+					  
+					  byte[] in = file.getBytes();
+					  File out = new File(path, f_name);
+					  FileCopyUtils.copy(in, out);
+				  }	
+				  cgbvo.setCp_pwd(passwordEncoder.encode(cgbvo.getCp_pwd()));				  				  			
+				  
+				  if(true) {
+				
+					  //자유 게시판에 글쓸때 마다 member_free 등급 올리기
+					  String member_idx = cgbvo.getMember_idx();
+					  int result2 = memberService.getMemberFreeUpdate(member_idx);
+					  
+					  String member_idx2 = naverMemberInfo.getMember_idx();
+					  MemberVO mvo = memberService.getMemeberDetail(member_idx2);
+					  cgbvo.setMember_grade(mvo.getMember_grade());
+					  
+					  if(mvo.getMember_free() < 2) {
+						  int result3 = memberService.getUpdateMemberGrade(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 2 && mvo.getMember_free() < 4) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade2(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() >= 4 && mvo.getMember_free() < 6) {	
+						  
+						  int result3 = memberService.getUpdateMemberGrade3(member_idx2);
+						  
+					  }else if(mvo.getMember_free() >= 6 && mvo.getMember_free() < 8) {  
+						  
+						  int result3 = memberService.getUpdateMemberGrade4(member_idx2);	
+						  
+					  }else if(mvo.getMember_free() > 8) {	  
+						  
+						  int result3 = memberService.getUpdateMemberGrade5(member_idx2);
+					  }
+					  cgbvo.setMember_grade(mvo.getMember_grade());
+					  int result = campingGearBoardService.getCampingGearWriteInsert(cgbvo);
+					  
+					  if(result > 0) {
+						 // 최대 권한 구하기 
+						  int res = campingGearBoardService.getGrade(member_idx2);
+						 
+						 // 쵀대 권한으로 업데이트 하기 
+						  int res2 = campingGearBoardService.getGradeUpdate(member_idx2, res);
+					  }				  
+					  return mv;
+				  } 
+			  }
+			  
 			  //관리자 글쓰기
 			  if(adminInfo != null) {
 				  cgbvo.setAdmin_idx(adminInfo.getAdmin_idx());
@@ -258,6 +444,8 @@ public class CampingGearBoardController {
 			  
 			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			  MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 			  
 			  int result = campingGearBoardService.getCampingGearHit(cp_idx);
 			  
@@ -280,6 +468,30 @@ public class CampingGearBoardController {
 					  mv.addObject("cgbvo", cgbvo);
 					  mv.addObject("memberInfo", memberInfo);
 					  mv.addObject("adminInfo", adminInfo);
+					  return mv;
+				  }  
+			  }
+			  if(kakaoMemberInfo != null) {
+				  CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
+				  cgbvo.setMember_idx(kakaoMemberInfo.getMember_idx());
+
+				  if(result > 0 && cgbvo != null && cgbvo.getMember_idx().equals(kakaoMemberInfo.getMember_idx())) {
+					  mv.addObject("cgbvo", cgbvo);
+					  mv.addObject("memberInfo", memberInfo);
+					  mv.addObject("adminInfo", adminInfo);
+					  mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
+					  return mv;
+				  }  
+			  }
+			  if(naverMemberInfo != null) {
+				  CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
+				  cgbvo.setMember_idx(naverMemberInfo.getMember_idx());
+
+				  if(result > 0 && cgbvo != null && cgbvo.getMember_idx().equals(naverMemberInfo.getMember_idx())) {
+					  mv.addObject("cgbvo", cgbvo);
+					  mv.addObject("memberInfo", memberInfo);
+					  mv.addObject("adminInfo", adminInfo);
+					  mv.addObject("naverMemberInfo", naverMemberInfo);
 					  return mv;
 				  }  
 			  }
@@ -412,10 +624,12 @@ public class CampingGearBoardController {
 	  			ModelAndView mv = new ModelAndView("hu/campingGearBoard/campingGearContent");
 				MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 				AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+				MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+				MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 				  
 				int result = campingGearBoardService.getCampingGearHit(cp_idx);
 				  
-				if(memberInfo == null && adminInfo == null) {
+				if(memberInfo == null && adminInfo == null && kakaoMemberInfo == null && naverMemberInfo == null) {
 					CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
 					List<CampingGearBoardCommentVO> camping_gear_list2 = campingGearBoardService.getCampingGearList2(cp_idx);
 					 
@@ -451,6 +665,30 @@ public class CampingGearBoardController {
 						return mv;
 					}  
 				}
+				if(kakaoMemberInfo != null) {
+					CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
+					cgbvo.setMember_idx(kakaoMemberInfo.getMember_idx());
+
+					if(result > 0 && cgbvo != null && cgbvo.getMember_idx().equals(kakaoMemberInfo.getMember_idx())) {
+						List<CampingGearBoardCommentVO> camping_gear_list2 = campingGearBoardService.getCampingGearList2(cp_idx);
+						mv.addObject("camping_gear_list2", camping_gear_list2);
+						mv.addObject("cgbvo", cgbvo);
+						mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
+						return mv;
+					}  
+				}
+				if(naverMemberInfo != null) {
+					CampingGearBoardVO cgbvo = campingGearBoardService.getCampingGearDetail(cp_idx);
+					cgbvo.setMember_idx(naverMemberInfo.getMember_idx());
+
+					if(result > 0 && cgbvo != null && cgbvo.getMember_idx().equals(naverMemberInfo.getMember_idx())) {
+						List<CampingGearBoardCommentVO> camping_gear_list2 = campingGearBoardService.getCampingGearList2(cp_idx);
+						mv.addObject("camping_gear_list2", camping_gear_list2);
+						mv.addObject("cgbvo", cgbvo);
+						mv.addObject("naverMemberInfo", naverMemberInfo);
+						return mv;
+					}  
+				}	
 			} catch (Exception e) {
 				System.out.println(e);
 			}
@@ -499,6 +737,8 @@ public class CampingGearBoardController {
 			  
 			   MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 			   AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+			   MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+			   MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 			  
 			   //hit 카운트 계산
 			   int result = campingGearBoardService.getCampingGearHit(cp_idx);
@@ -509,6 +749,8 @@ public class CampingGearBoardController {
 				   List<CampingGearBoardCommentVO> camping_gear_list2 = campingGearBoardService.getCampingGearList2(cp_idx);
 				   mv.addObject("camping_gear_list2", camping_gear_list2);
 				   mv.addObject("memberInfo", memberInfo);
+				   mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
+				   mv.addObject("naverMemberInfo", naverMemberInfo);
 				   mv.addObject("adminInfo", adminInfo);
 				   mv.addObject("cgbvo", cgbvo);
 				   mv.addObject("cPage", cPage);
@@ -523,6 +765,8 @@ public class CampingGearBoardController {
 				
 				MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
 				AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+				MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+				MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
 				 
 				List<CampingGearBoardCommentVO> lcgbcvo = campingGearBoardService.getCampingGearCommentReplyList(cp_idx);
 				
@@ -550,6 +794,8 @@ public class CampingGearBoardController {
 					mv.addObject("lcgbcvo", lcgbcvo);
 					mv.addObject("memberInfo", memberInfo);
 					mv.addObject("adminInfo", adminInfo);
+					mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
+					mv.addObject("naverMemberInfo", naverMemberInfo);
 					mv.addObject("cPage", cPage);
 					return mv;
 				}
