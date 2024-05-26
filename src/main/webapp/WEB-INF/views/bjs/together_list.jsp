@@ -115,7 +115,7 @@
 			                </a>
 			                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne3">
 			                    <strong class="to_list_subject">${k.t_subject }</strong>
-			                    <span>${k.t_content }</span>
+			                    <span class="contentImageEX">${k.t_content }</span>
 			                </a>
 			            </div>
 				    </c:forEach>

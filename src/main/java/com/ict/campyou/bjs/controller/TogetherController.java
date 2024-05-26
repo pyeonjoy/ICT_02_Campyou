@@ -104,7 +104,8 @@ public class TogetherController {
 			case "2": tvo.setMember_grade("grade2.png"); break;
 			case "3": tvo.setMember_grade("grade3.png"); break;
 			case "4": tvo.setMember_grade("grade4.png"); break;
-			case "5": tvo.setMember_grade("grade5.png"); break;
+			default: tvo.setMember_grade("grade5.png"); break;
+//			case "5": tvo.setMember_grade("grade5.png"); break;
 			}
 		}
 		
@@ -162,7 +163,8 @@ public class TogetherController {
 		case "2": tvo.setMember_grade("grade2.png"); break;
 		case "3": tvo.setMember_grade("grade3.png"); break;
 		case "4": tvo.setMember_grade("grade4.png"); break;
-		case "5": tvo.setMember_grade("grade5.png"); break;
+		default: tvo.setMember_grade("grade5.png"); break;
+//		case "5": tvo.setMember_grade("grade5.png"); break;
 		}
 		
 		if(tvo != null) {
