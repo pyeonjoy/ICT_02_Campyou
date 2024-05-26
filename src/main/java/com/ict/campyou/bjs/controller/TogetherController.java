@@ -131,7 +131,7 @@ public class TogetherController {
 	}
 	
 	@RequestMapping("together_detail.do")
-	public ModelAndView getTogetherDetail(@ModelAttribute("cPage")String cPage, String t_idx, HttpSession session) throws Exception{
+	public ModelAndView getTogetherDetail(@ModelAttribute("cPage")String cPage, String t_idx, @RequestParam(value = "promise_status", required = false)String promise_status, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
 		TogetherVO tvo = togetherService.getTogetherDetail(t_idx);
@@ -170,6 +170,10 @@ public class TogetherController {
 			mv.addObject("tvo", tvo);
 			mv.addObject("memberUser", memberUser);
 			mv.addObject("proCount", proCount);
+			if(promise_status != null) {
+				mv.addObject("cPage", cPage);
+				mv.addObject("promise_status", promise_status);
+			}
 			return mv;
 		}
 		return new ModelAndView("error");
@@ -199,20 +203,25 @@ public class TogetherController {
 	}
 	
 	@RequestMapping("together_history.do")
-	public ModelAndView getTogetherHistory(@RequestParam("member_idx")String member_idx) throws Exception {
+	public ModelAndView getTogetherHistory(@RequestParam(value = "cPage", required = false)String cPage, @RequestParam(value = "promise_status", required = false)String promise_status, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
+		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
 		mv.setViewName("bjs/together_history");
-		mv.addObject("member_idx", member_idx);
+		mv.addObject("member_idx", memberUser.getMember_idx());
+		if(cPage != null && promise_status != null) {
+			mv.addObject("cPage", cPage);
+			mv.addObject("promise_status", promise_status);
+		}
 		return mv;
 	}
 	
 	@RequestMapping("together_partner.do")
-	public ModelAndView getTogetherPartner(@RequestParam("member_idx")String member_idx, @RequestParam(value = "cPage", required = false)String cPage, @RequestParam(value = "promise_status", required = false)String promise_status) throws Exception {
+	public ModelAndView getTogetherPartner(@RequestParam(value = "cPage", required = false)String cPage, @RequestParam(value = "promise_status", required = false)String promise_status, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
+		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
 		mv.setViewName("bjs/together_partner");
-		mv.addObject("member_idx", member_idx);
+		mv.addObject("member_idx", memberUser.getMember_idx());
 		if(cPage != null && promise_status != null) {
-			System.out.println("컨트롤러 실행?");
 			mv.addObject("cPage", cPage);
 			mv.addObject("promise_status", promise_status);
 		}
@@ -225,7 +234,6 @@ public class TogetherController {
 		mv.setViewName("bjs/together_people_detail");
 		mv.addObject("tvo", tvo);
 		mv.addObject("cPage", cPage);
-		System.out.println("컨트롤러status:" + tvo.getPromise_status());
 		return mv;
 	}
 	

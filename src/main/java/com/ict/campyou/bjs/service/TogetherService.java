@@ -20,7 +20,8 @@ public interface TogetherService {
 	public String getSearchCamp(String campName) throws Exception;
 	public CampVO getSearchCampDetail(String campName) throws Exception;
 	public List<TogetherVO> getTogetherListSearch(int offset, int limit, String searchType, String searchKeyword) throws Exception;
-	public int getPromiseChk(PromiseVO pvo) throws Exception;
+	public String getPromiseChk(PromiseVO pvo) throws Exception;
+	public int getPmStateChk(PromiseVO pvo) throws Exception;
 	public int getToPomise(PromiseVO pvo) throws Exception;
 	public int getToPomiseCancel(PromiseVO pvo) throws Exception;
 	public int getTogetherUpdateOK(TogetherVO tvo) throws Exception;

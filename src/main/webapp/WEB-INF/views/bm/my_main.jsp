@@ -81,7 +81,7 @@ function promiseApplyList() {
 	                html += '<img src="' + imgSrc + '" alt="user_img" class="otheruser_img">';
 	                html += '<div class="list_summery">';
 	                html += '<p class="list_nickname">' + promise.member_nickname + '<img src="${path}/resources/images/' + promise.member_grade + '" class="member_gradeImg" ></p>';
-	                html += '<p class="list_go">' + promise.member_dob + '</p>';
+	                html += '<p class="list_go">' + promise.member_dob + ' ' + promise.member_gender + '</p>';
 	                html += '<p class="list_go">동행횟수 ' + promise.promise_count + '</p>';
 	                html += '</div>';
 	                html += '</div>';
@@ -138,7 +138,9 @@ function promiseApplyList() {
 		</div>
 
 		<input type="hidden" id="memberIdx" value="${mvo.member_idx }">
-
+		<div class="accompany_container">
+		
+		</div>
 		<div class="list_container">
 			<div class="my_list my_board_list">
 				<h4 class="my_title">활동내역</h4>
@@ -172,8 +174,6 @@ function promiseApplyList() {
 			</div>
 		</div>		
 		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
-		<div class="accompany_container">
-		</div>
 	</div>
 	<footer class="footer">
 	  <%@ include file="../hs/footer.jsp"%>

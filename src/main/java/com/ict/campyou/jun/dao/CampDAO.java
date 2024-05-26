@@ -60,7 +60,12 @@ public class CampDAO {
 	}
 
 	public int addRating(String contentid) {
-		return sqlSessionTemplate.selectOne("jun.addRating",contentid);
+		try {
+			return sqlSessionTemplate.selectOne("jun.addRating",contentid);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
 	}
 	
 	

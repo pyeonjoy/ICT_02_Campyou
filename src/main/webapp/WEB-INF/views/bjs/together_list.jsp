@@ -78,88 +78,46 @@
 		</c:choose>
         <c:choose>
         	<c:when test="${empty togetherList }">
-        		<h2>게시물이 존재하지 않습니다</h2>
+        		<div class="emptyToListDiv">
+        			<h4 class="emptyToList">게시물이 존재하지 않습니다</h4>
+        		</div>
         	</c:when>
         	<c:otherwise>
 		        <form class="toContent">
 	        		<c:forEach var="k" items="${togetherList }" varStatus="vs">
-		        			<c:choose>
-		        				<c:when test="${k.t_active == 1 }">
-		        					<div class="toContentOne" style="background-color: rgba(128, 128, 128, 0.1);">
-						                <div>
-						                    <div class="toContentOne1">
-						                    	<a href="report_write.do?member_idx=${k.member_idx}">
-						                        <div class="userImage">
-						                        	<img src="${path}/resources/images/${k.member_img }" class="userImage2 profile_show" id="${k.member_idx}" data-memberidx="${k.member_idx}">
-						                        </div>
-						                     </a>
-						                        <div>
-							                        <div class="toContentOne1span1">
-													    <span class="to_member_nickname profile_show" data-memberidx="${k.member_idx}">${k.member_nickname}</span>
-													   	<img src="${path}/resources/images/${k.member_grade}" class="member_gradeImg">
-							                            <span class="to_member_age">(${k.member_dob })</span>
-							                        </div>
-							                        <div class="toContentOne1span toContentOne1span2">
-							                            <span>${k.t_campname }</span>
-							                            <span class="to_campdate">${k.t_startdate }-${k.t_enddate }</span>
-							                        </div>
-						                        </div>
-						                    </div>
-						                </div>
-						                <a href="together_detail.do" class="toContentOne2">
-						                	<c:choose>
-						                		<c:when test="${empty k.tf_name }">
-						                			<img src="${path}${k.tf_name }" class="toContentOne2img">
-						                		</c:when>
-						                		<c:otherwise>
-								                    <img src="${k.tf_name }" class="toContentOne2img">
-						                		</c:otherwise>
-						                	</c:choose>
-						                    <span class="toContentOne2sub2">${k.t_camptype }</span>
-						                    <span class="toContentOne2sub2" style="align-items: center; justify-content: center;">게시 중지된 게시물입니다.</span>
-						                </a>
-						                <a href="together_detail.do" class="toContentOne3">
-						                    <strong>${k.t_subject }</strong>
-						                    <span>${k.t_content }</span>
-						                </a>
-						            </div>
-		        				</c:when>
-		        				<c:otherwise>
-						            <div class="toContentOne">
-						                <div>
-						                    <div class="toContentOne1">
-						                        <div class="userImage"><img src="${path}/resources/images/${k.member_img }" class="userImage2 profile_show" data-memberidx="${k.member_idx }"></div>
-						                        <div>
-							                        <div class="toContentOne1span1">
-							                            <span class="to_member_nickname profile_show" data-memberidx="${k.member_idx}">${k.member_nickname }</span>
-							                            <img src="${path}/resources/images/${k.member_grade}" class="member_gradeImg" >
-							                            <span class="to_member_age">(${k.member_dob })</span>
-							                        </div>
-							                        <div class="toContentOne1span toContentOne1span2">
-							                            <span>${k.t_campname }</span>
-							                            <span class="to_campdate">${k.t_startdate }-${k.t_enddate }</span>
-							                        </div>
-						                        </div>
-						                    </div>
-						                </div>
-						                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne2">
-						                	<c:choose>
-						                		<c:when test="${empty k.tf_name }">
-						                			<img src="${path}/resources/images/to_camp.jpg" class="toContentOne2img">
-						                		</c:when>
-						                		<c:otherwise>
-								                    <img src="${k.tf_name }" class="toContentOne2img">
-						                		</c:otherwise>
-						                	</c:choose>
-						                    <span class="toContentOne2sub2">${k.t_induty }</span>
-						                </a>
-						                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne3">
-						                    <strong class="to_list_subject">${k.t_subject }</strong>
-						                    <span>${k.t_content }</span>
-						                </a>
-						            </div>
-		        				</c:otherwise>
-		        			</c:choose>
+			            <div class="toContentOne">
+			                <div>
+			                    <div class="toContentOne1">
+			                        <img src="${path}/resources/images/${k.member_img }" class="userImage2 profile_show" id="${k.member_idx}" data-memberidx="${k.member_idx}">
+			                        <div>
+				                        <div class="toContentOne1span1">
+				                            <span class="to_member_nickname profile_show" data-memberidx="${k.member_idx}">${k.member_nickname}</span>
+				                            <img src="${path}/resources/images/${k.member_grade}" class="member_gradeImg" >
+				                            <span class="to_member_age">(${k.member_dob } ${k.member_gender })</span>
+				                        </div>
+				                        <div class="toContentOne1span toContentOne1span2">
+				                            <span>${k.t_campname }</span>
+				                            <span class="to_campdate">${k.t_startdate }-${k.t_enddate }</span>
+				                        </div>
+			                        </div>
+			                    </div>
+			                </div>
+			                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne2">
+			                	<c:choose>
+			                		<c:when test="${empty k.tf_name }">
+			                			<img src="${path}/resources/images/to_camp.jpg" class="toContentOne2img">
+			                		</c:when>
+			                		<c:otherwise>
+					                    <img src="${k.tf_name }" class="toContentOne2img">
+			                		</c:otherwise>
+			                	</c:choose>
+			                    <span class="toContentOne2sub2">${k.t_induty }</span>
+			                </a>
+			                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne3">
+			                    <strong class="to_list_subject">${k.t_subject }</strong>
+			                    <span>${k.t_content }</span>
+			                </a>
+			            </div>
 				    </c:forEach>
 		        </form>
         	</c:otherwise>
@@ -172,7 +130,6 @@
         			<option value="캠핑지" ${param.searchType eq '캠핑지' ? 'selected' : ''}>캠핑지</option>
         		</select>
         		<input type="search" name="searchKeyword" class="searchbar" id="searchbar">
-<!--         		<input type="submit" class="res" value="검색" onclick="to_search()"> -->
         		<button type="button" class="res" onclick="to_search()">검색</button>
 			</form>
 	        <div class="towrapper" id="paginationWrapper">

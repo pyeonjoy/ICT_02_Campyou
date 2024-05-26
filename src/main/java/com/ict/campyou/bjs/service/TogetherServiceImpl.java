@@ -73,8 +73,13 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 
 	@Override
-	public int getPromiseChk(PromiseVO pvo) {
+	public String getPromiseChk(PromiseVO pvo) {
 		return togetherDAO.getPromiseChk(pvo);
+	}
+	
+	@Override
+	public int getPmStateChk(PromiseVO pvo) throws Exception {
+		return togetherDAO.getPmStateChk(pvo);
 	}
 	
 	@Override

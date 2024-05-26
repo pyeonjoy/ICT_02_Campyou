@@ -3,6 +3,7 @@ package com.ict.campyou.joy.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,10 +21,7 @@ public class RatingAjaxController {
 	@RequestMapping(value = "addstarok.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String addReview(@RequestBody MemberVO mvo, HttpSession session) {
-		MemberVO mvo2 = (MemberVO) session.getAttribute("memberInfo");
-		mvo2.setMember_idx(mvo2.getMember_idx());
 		int res = mainservice.addStar(mvo);
-		System.out.println("오나?");
 		if (res > 0) {
 			return String.valueOf(res);
 		}
