@@ -175,7 +175,7 @@ public class HsAjaxController {
 		return null;
 	}
 
-	@RequestMapping(value = "get_weather.do", produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "get_weather_3.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String getWeather(@RequestParam String regId) {
 		BufferedReader rd = null;
@@ -204,6 +204,95 @@ public class HsAjaxController {
 				sb.append(line);
 			}	
 			
+			return sb.toString();
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			try {
+				rd.close();
+				conn.disconnect();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	@RequestMapping(value = "get_weather_10tem.do", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String getWeather10(@RequestParam String regId, @RequestParam String tmFc) {
+		BufferedReader rd = null;
+		HttpURLConnection conn = null;
+		StringBuilder sb = new StringBuilder();
+		String line;
+		
+		try {
+			StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa");
+			urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "="
+					+ URLEncoder.encode("C51tJPloTgwrDfnsjWgf/huwUaxCo2qE18OpibrJm6hyCConEt3v8OLGVW0aCEnoBla46Q6PFDCScG1tZ/cumw==", "UTF-8"));
+			urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
+			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8"));
+			urlBuilder.append("&" + URLEncoder.encode("dataType", "UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8"));
+			urlBuilder.append("&" + "regId=" + regId);
+			urlBuilder.append("&" + "tmFc=" + tmFc);
+			URL url = new URL(urlBuilder.toString());
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			
+			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			} else {
+				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+			}
+			
+			while ((line = rd.readLine()) != null) {
+				sb.append(line);
+			}	
+			
+			return sb.toString();
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			try {
+				rd.close();
+				conn.disconnect();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	
+	@RequestMapping(value = "get_weather_10wf.do", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String getWeather10wf(@RequestParam String regId, @RequestParam String tmFc) {
+		BufferedReader rd = null;
+		HttpURLConnection conn = null;
+		StringBuilder sb = new StringBuilder();
+		String line;
+		try {
+			StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst");
+			urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "="
+					+ URLEncoder.encode("C51tJPloTgwrDfnsjWgf/huwUaxCo2qE18OpibrJm6hyCConEt3v8OLGVW0aCEnoBla46Q6PFDCScG1tZ/cumw==", "UTF-8"));
+			urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
+			urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8"));
+			urlBuilder.append("&" + URLEncoder.encode("dataType", "UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8"));
+			urlBuilder.append("&" + "regId=" + regId);
+			urlBuilder.append("&" + "tmFc=" + tmFc);
+			URL url = new URL(urlBuilder.toString());
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			
+			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			} else {
+				rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+			}
+			
+			while ((line = rd.readLine()) != null) {
+				sb.append(line);
+			}	
 			return sb.toString();
 		} catch (Exception e) {
 			System.out.println(e);

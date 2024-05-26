@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="/resources/public/js/jun/camp_list.js"></script>
-<link rel="stylesheet" href="resources/public/css/bjs/together_list.css">
+<script src="${path}/resources/public/js/jun/camp_list.js"></script>
+<link rel="stylesheet" href="${path}/resources/public/css/bjs/together_list.css">
 <script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
 <%@ include file="../hs/profile_small_info.jsp" %>
 <title>캠핑장리스트</title>
