@@ -2,10 +2,26 @@ package com.ict.campyou.hu.dao;
 
 // Camping Gear Board VO
 public class CampingGearBoardCommentVO {
-	private String c_idx, member_nickname, admin_nickname, content, write_date, cp_idx, groups, step, lev;
+	private String c_idx, member_nickname, kakao_nickname, member_name, admin_nickname, content, write_date, cp_idx, groups, step, lev;
 
 	public String getAdmin_nickname() {
 		return admin_nickname;
+	}
+
+	public String getKakao_nickname() {
+		return kakao_nickname;
+	}
+
+	public void setKakao_nickname(String kakao_nickname) {
+		this.kakao_nickname = kakao_nickname;
+	}
+
+	public String getMember_name() {
+		return member_name;
+	}
+
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
 	}
 
 	public void setAdmin_nickname(String admin_nickname) {

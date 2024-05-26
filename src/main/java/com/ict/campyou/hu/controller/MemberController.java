@@ -6,14 +6,17 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -54,18 +57,17 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
-	
-	  @RequestMapping("sign_up_page_go.do") 
-	  public ModelAndView getSignUpPage() { 
-		  try {
-			  	ModelAndView mv = new ModelAndView("hu/signUp"); 
-			  	return mv; 
-		  }
-		  catch (Exception e) { 
-			  System.out.println(e); 
-		  } 
-		  return new ModelAndView("error"); 
-	  }
+	@RequestMapping("sign_up_page_go.do") 
+	public ModelAndView getSignUpPage() { 
+		try {
+			 ModelAndView mv = new ModelAndView("hu/signUp"); 
+			 return mv; 
+		}
+		catch (Exception e) { 
+			System.out.println(e); 
+		} 
+		return new ModelAndView("error"); 
+	}
 	  
 	  //일반회원 회원가입
 	  @RequestMapping("sign_up_go.do")
@@ -342,73 +344,125 @@ public class MemberController {
 	  
 	  @RequestMapping("community_board.do")
 	  public ModelAndView getCommunityBoard(HttpServletRequest request, HttpSession session) {
+	      try {
+	          ModelAndView mv = new ModelAndView("hu/boardFree/communityBoard");
+
+	          int count = commBoardService.getTotalCount();
+	          paging.setTotalRecord(count);
+
+	          if (paging.getTotalRecord() <= paging.getNumPerPage()) {
+	              paging.setTotalPage(1);
+	          } else {
+	              paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+	              if (paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+	                  paging.setTotalPage(paging.getTotalPage() + 1);
+	              }
+	          }
+
+	          String cPage = request.getParameter("cPage");
+	          if (cPage == null) {
+	              paging.setNowPage(1);
+	          } else {
+	              paging.setNowPage(Integer.parseInt(cPage));
+	          }
+
+	          paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
+
+	          paging.setBeginBlock(
+	                  (int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
+	          paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+
+	          if (paging.getEndBlock() > paging.getTotalPage()) {
+	              paging.setEndBlock(paging.getTotalPage());
+	          }
+
+	          List<CommBoardVO> commBoard_list = commBoardService.getCommBoardList(paging.getOffset(), paging.getNumPerPage());
+	          
+	          // 필터를 써서 골라내기
+	          List<CommBoardVO> selected_CommBoard_List = commBoard_list.stream()
+	                  .filter(k -> "1".equals(k.getB_active()))
+	                  .collect(Collectors.toList());
+
+	          MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
+	          AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
+	          MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
+	          MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
+
+	          CommBoardVO cbvo = new CommBoardVO();
+
+	          if (memberInfo != null) {
+	              cbvo.setMember_idx(memberInfo.getMember_idx());
+	          }
+
+	          if (memberInfo != null) {
+	              cbvo.setMember_grade(memberInfo.getMember_grade());
+	          }
+
+	          if (adminInfo != null) {
+	              cbvo.setMember_idx(adminInfo.getAdmin_idx());
+	          }
+
+	          if (!selected_CommBoard_List.isEmpty()) {
+	              mv.addObject("commBoard_list", selected_CommBoard_List);
+	              mv.addObject("paging", paging);
+	              mv.addObject("memberInfo", memberInfo);
+	              mv.addObject("adminInfo", adminInfo);
+	              mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
+	              mv.addObject("naverMemberInfo", naverMemberInfo);
+	              return mv;
+	          } else {
+	              return new ModelAndView("hu/boardFree/communityBoard");
+	          }
+	      } catch (Exception e) {
+	          System.out.println(e);
+	      }
+	      return new ModelAndView("hu/boardFree/error");
+	  }
+
+	  //관리자가 자유게시판 회원 글 숨기기
+	  @RequestMapping("community_board_content_hide_update.do")
+	  public ModelAndView getCommunityBoardContentHideUpdate(String cPage, String b_idx, CommBoardVO cbvo, HttpServletRequest request) {
 		  try {
-			  ModelAndView mv = new ModelAndView("hu/boardFree/communityBoard");
-			  
-			  int count = commBoardService.getTotalCount();
-			  paging.setTotalRecord(count);
-			  
-			  if(paging.getTotalRecord() <= paging.getNumPerPage()) {
-				  paging.setTotalPage(1);
-			  }else {
-				  paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-				  if(paging.getTotalRecord() % paging.getNumPerPage() != 0) {
-					  paging.setTotalPage(paging.getTotalPage() + 1);
-				  }
-			  }
-			  
-			  String cPage = request.getParameter("cPage");
-			  if(cPage == null) {
-				  paging.setNowPage(1);
-			  }else {
-				  paging.setNowPage(Integer.parseInt(cPage));
-			  }
-			  
-			  paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
-			  
-			  paging.setBeginBlock(
-						(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
-				paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
-				
-			  if (paging.getEndBlock() > paging.getTotalPage()) {
-				  paging.setEndBlock(paging.getTotalPage());
-			  }
-			  
-			  List<CommBoardVO> commBoard_list = commBoardService.getCommBoardList(paging.getOffset(), paging.getNumPerPage());
-			  
-			  MemberVO memberInfo = (MemberVO) session.getAttribute("memberInfo");
-			  AdminMembVO adminInfo = (AdminMembVO) session.getAttribute("admin");
-			  MemberVO kakaoMemberInfo = (MemberVO) session.getAttribute("kakaoMemberInfo");
-			  MemberVO naverMemberInfo = (MemberVO) session.getAttribute("naverMemberInfo");
-			  
-			  CommBoardVO cbvo = new CommBoardVO();
-		
-			  if(memberInfo != null) {
-				  cbvo.setMember_idx(memberInfo.getMember_idx());
-			  }
-			  
-			  if(memberInfo != null) {
-				  cbvo.setMember_grade(memberInfo.getMember_grade());
-			  }
-			  
-			  if(adminInfo != null) {
-				  cbvo.setMember_idx(adminInfo.getAdmin_idx());
-			  }
-			  
-			  if (commBoard_list != null) {
-					mv.addObject("commBoard_list", commBoard_list);
-					mv.addObject("paging", paging);
-					mv.addObject("memberInfo", memberInfo);
-					mv.addObject("adminInfo", adminInfo);
-					mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
-					mv.addObject("naverMemberInfo", naverMemberInfo);
-					return mv;
-				}
-				return new ModelAndView("hu/boardFree/error");
+			ModelAndView mv = new ModelAndView("redirect:admin_community_board.do");
+			
+			
+			System.out.println("글 숨기는것" + b_idx);
+			
+			int result = commBoardService.getCommunityBoardContentHideUpdate(b_idx);
+			
+			if(result > 0) {
+				mv.addObject("paging", paging);
+				mv.addObject("b_idx", b_idx);
+				return mv;
+			}
+					
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return new ModelAndView("hu/boardFree/error");
+		return null;
+	  }
+	  
+	  //관리자가 자유 게시판 회원 글 보이게 하기
+	  @RequestMapping("community_board_content_show_update.do")
+	  public ModelAndView getCommunityBoardContentShowUpdate(String cPage, String b_idx, CommBoardVO cbvo, HttpServletRequest request) {
+		  try {
+			ModelAndView mv = new ModelAndView("redirect:admin_community_board.do");
+			
+			
+			System.out.println("글 보이는것 " + b_idx);
+			
+			int result = commBoardService.getCommunityBoardContentShowUpdate(b_idx);
+			
+			if(result > 0) {
+				mv.addObject("paging", paging);
+				mv.addObject("b_idx", b_idx);
+				return mv;
+			}
+					
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	  }
 	  
 	  @RequestMapping("comm_board_write.do")
@@ -1034,6 +1088,7 @@ public class MemberController {
 				mv.addObject("lcvo", lcvo);
 				mv.addObject("memberInfo", memberInfo);
 				mv.addObject("adminInfo", adminInfo);
+				mv.addObject("kakaoMemberInfo", kakaoMemberInfo);
 				mv.addObject("naverMemberInfo", naverMemberInfo);
 				mv.addObject("adminInfo", adminInfo);
 				mv.addObject("cPage", cPage);

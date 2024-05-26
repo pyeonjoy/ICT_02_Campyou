@@ -117,5 +117,27 @@ public class CommBoardServiceImpl implements CommBoardService {
 	@Override
 	public int getGreadUpdate(String member_idx2, int res) {
 		return commBoardDAO.getGreadUpdate(member_idx2, res);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	@Override
+	public int getCommunityBoardContentHideUpdate(String b_idx) {
+		// TODO Auto-generated method stub
+		return commBoardDAO.getCommunityBoardContentHideUpdate(b_idx);
+	}
+
+	@Override
+	public int getCommunityBoardContentShowUpdate(String b_idx) {
+		// TODO Auto-generated method stub
+		return commBoardDAO.getCommunityBoardContentShowUpdate(b_idx);
 	}	
 }

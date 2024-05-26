@@ -6,26 +6,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시글 내용</title>
+<title>관리자 게시글 내용</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardContent.css">
 <script type="text/javascript">
 	function comm_board_list(f) {
-		f.action="community_board.do";
+		f.action="admin_community_board.do";
 		f.submit()
 	}	
 	function comm_board_update(f) {
-		f.action="comm_board_update.do";
+		f.action="admin_comm_board_update.do";
 		f.submit()
 	}	
-	function comm_board_delete(f) {
+	/* function comm_board_delete(f) {
 		f.action="comm_board_delete.do";
 		f.submit()
-	}
+	} */
 	//댓글 삽입
 	function comment_insert(f){
-		f.action="comment_insert.do";
+		f.action="admin_comment_insert.do";
 		f.submit();
 	}
 	//댓글의 댓글
@@ -34,11 +34,11 @@
 	    f.submit();
 	}
 	function comment_delete(f) {
-		f.action="comment_delete.do";
+		f.action="admin_comment_delete.do";
 		f.submit();
 	}
-	function comm_board_admin_delete(f) {
-		f.action="comm_board_admin_delete.do";
+	function admin_comm_board_admin_delete(f) {
+		f.action="admin_comm_board_admin_delete.do";
 		f.submit();
 	}
 	function comment_update(f) {
@@ -54,7 +54,7 @@
 	    updateBtn.value = '수정완료';
 	    updateBtn.onclick = function() {
 	        // 수정된 내용을 서버로 전송
-	        f.action="comment_update.do";
+	        f.action="admin_comment_update.do";
 	        f.submit();
 	    };
 	    f.appendChild(updateBtn);
@@ -123,6 +123,9 @@ console.log("${cbvo.kakao_nickname}")
 console.log("${kakaoMemberInfo.kakao_nickname}")
 </script>
 <style type="text/css">
+body{
+  background-color: #F6FFF1;
+}
 textarea {
     resize: none;
     width: 600px; 
@@ -138,7 +141,7 @@ textarea {
 </head>
 <body>
 <div>
-	<h2>게시글</h2>
+	<h2>관리자 게시글 관리</h2>
 	<hr>
 	<form method="post">
 	<table>
@@ -182,8 +185,8 @@ textarea {
 	     			<input type="hidden" value="${cPage}" name="cPage">
 	        		<input class="contentBtn" type="button" value="목록" onclick="comm_board_list(this.form)" />
 	        		<input class="contentBtn" type="button" value="수정" onclick="comm_board_update(this.form)" />
-	        		<input class="contentBtn" type="button" value="삭제" onclick="comm_board_delete(this.form)" />
-	        		<input class="contentBtn" type="button" value="관리자삭제" onclick="comm_board_admin_delete(this.form)" />  
+	        		<!-- <input class="contentBtn" type="button" value="삭제" onclick="comm_board_delete(this.form)" /> -->
+	        		<input class="contentBtn" type="button" value="관리자삭제" onclick="admin_comm_board_admin_delete(this.form)" />  
      		</c:when>
      		<c:otherwise>
      			<c:choose>			

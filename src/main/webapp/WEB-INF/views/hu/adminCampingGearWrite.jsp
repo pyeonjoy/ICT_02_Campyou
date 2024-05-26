@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>켐핑게시판</title>
+<title>관리자 켐핑게시판</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <!-- summer note -->
@@ -32,6 +32,9 @@
 	}
 </script>
 <style>
+	body{
+	  background-color: #F6FFF1;
+	}
     select {
         float: left;
     }
@@ -39,10 +42,10 @@
 </head>
 <body>
 	<div>
-		<h2>캠핑게시판 글쓰기</h2>
+		<h2>관리자 캠핑게시판 글쓰기</h2>
 		<hr>
-		<p><a href="camping_gear_board.do">캠핑게시판 돌아가기</a></p>
-		<form action="camping_gear_write_ok.do" method="post" enctype="multipart/form-data">
+		<p><a href="admin_camping_gear_board.do">캠핑게시판 돌아가기</a></p>
+		<form action="admin_camping_gear_write_ok.do" method="post" enctype="multipart/form-data">
 			<table>
 				<tr align="center">
 					<td bgcolor="#003300" style="color: white;">제목</td>
@@ -118,50 +121,29 @@
 					</tr>
 				</tfoot>
 			</table>
-			
-			
 		</form>
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
 <script src="resources/js/summernote-lite.js" ></script>
 <script src="resources/js/lang/summernote-ko-KR.js" ></script>
 <script type="text/javascript">
-	$(function() {
-		$("#cp_content").summernote({
-			lang : 'ko-KR',
-			height : 300,
-			focus : true,
-			placeholder: '최대3000자까지 쓸 수 있습니다'	, //placeholder 설정
-			callbacks : {
-				onImageUpload : function(files, editor) {
-					for (var i = 0; i < files.length; i++) {
-						console.log("i = " , files)
-							sendImage(files[i], editor);						
-					}
+$(function() {
+	$("#cp_content").summernote({
+		lang : 'ko-KR',
+		height : 300,
+		focus : true,
+		placeholder: '최대3000자까지 쓸 수 있습니다'	, //placeholder 설정
+		callbacks : {
+			onImageUpload : function(files, editor) {
+				for (var i = 0; i < files.length; i++) {
+					console.log("i = " , files)
+						sendImage(files[i], editor);						
 				}
 			}
-			  
-		});
-		// $("#content").summernote("lineHeight",.7);
+		}
+		  
 	});
-	
-	/* function sendImage(file, editor) {
-		let frm = new FormData();
-		frm.append("s_file", file);
-		$.ajax({
-			url : "saveImg.do",
-			data : frm,
-			type : "post",
-			contentType : false,
-			processData : false,
-			cache: false,
-			dataType : "json"
-		}).done(function(data) {
-			const path = data.path;
-			const fname = data.fname;
-			$("#b_content").summernote("editor.insertImage", path+"/"+fname);
-		});
-	} */
+});
 </script>	
 </body>
 </html>

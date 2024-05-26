@@ -3,11 +3,23 @@ package com.ict.campyou.hu.dao;
 import org.springframework.web.multipart.MultipartFile;
 
 public class CampingGearBoardVO {
-	private String cp_idx, member_idx, admin_idx, cp_subject, member_nickname, admin_nickname, member_grade, cp_content, cp_pwd, cpf_name, cp_regdate, cp_hit, cp_active, cp_notice, groups, step, lev, old_f_name;
+	private String cp_idx, member_idx, admin_idx, cp_subject, member_name, member_nickname, kakao_nickname, admin_nickname, member_grade, cp_content, cp_pwd, cpf_name, cp_regdate, cp_hit, cp_active, cp_notice, groups, step, lev, old_f_name;
 	private MultipartFile file;
 	
 	public String getAdmin_nickname() {
 		return admin_nickname;
+	}
+	public String getMember_name() {
+		return member_name;
+	}
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
+	public String getKakao_nickname() {
+		return kakao_nickname;
+	}
+	public void setKakao_nickname(String kakao_nickname) {
+		this.kakao_nickname = kakao_nickname;
 	}
 	public String getMember_grade() {
 		return member_grade;

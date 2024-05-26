@@ -169,4 +169,24 @@ public class CampingGearBoardDAO {
 		map.put("res", String.valueOf(res));
 		return sqlSessionTemplate.update("member.gear_Grade_Update", map);
 	}
+	
+	//관리자가 캠핑추천 게시판 회원 글 숨기기
+	public int getCampingGearBoardContentHideUpdate(String cp_idx) {
+		try {
+			return sqlSessionTemplate.update("member.camping_gear_board_content_hide_update", cp_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return 0;
+	}
+
+	//관리자가 캠핑추천 게시판 회원 글 보이게 하기
+	public int getCampingGearBoardContentShowUpdate(String cp_idx) {
+		try {
+			return sqlSessionTemplate.update("member.camping_gear_board_content_show_update", cp_idx);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return 0;
+	}
 }

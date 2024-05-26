@@ -40,8 +40,14 @@ function update_admin(f) {
 	f.submit();
  }
 </script>
+<style type="text/css">
+body{
+  background-color: #F6FFF1;
+}
+</style>
 </head>
 <body>
+<jsp:include page="../hs/admin_menu.jsp" />
 	<div id="board-free" align="center">
 		<table id="table1">
 		<caption>관리자</caption>

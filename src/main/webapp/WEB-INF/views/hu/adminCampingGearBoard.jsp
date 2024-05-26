@@ -9,37 +9,58 @@
 <title>Insert title here</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoard.css">
-<%@ include file="../../hs/header.jsp" %>
+<link rel="stylesheet" href="${path}/resources/public/css/hu/adminCampingGearBoard.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<%@ include file="../hs/header.jsp" %>
 <script type="text/javascript">
 	function camping_gear_write() {
-		location.href = "camping_gear_write.do";
+		location.href = "admin_camping_gear_write.do";
 	}
 	function camping_gear_write_alert(){
 		alert("회원님만 글쓰기 하실수 있습니다.\n회원가입이나 로그인 해주세요");
 	}
 	
 	function camping_gear_list_go(f) {
-		f.action="camping_gear_list_go.do";
+		f.action="admin_camping_gear_list_go.do";
 		f.submit();
 	}
 	function camping_gear_search(f) {
-		f.action="camping_gear_search.do";
+		f.action="admin_camping_gear_search.do";
 		f.submit();
 	}
 </script>
+<script type="text/javascript">
+function controlMemberContent1(f) {
+    var button = f.hideMemberContent;
+    
+    if (button.value === "글숨김") {
+        button.value = "글보임";       
+        f.action = "camping_gear_board_content_hide_update.do";
+    } else {
+        button.value = "글숨김";           
+        f.action = "camping_gear_board_content_show_update.do";
+    }
+    f.submit();
+}
+</script>
 <style type="text/css">
+body{
+  background-color: #F6FFF1;
+}
 .member-grade {
 	vertical-align: middle; 
 }
 </style>
 </head>
 <body>
+<jsp:include page="../hs/admin_menu.jsp" />
 	<div id="board-free" align="center">
+	<form method="post">
 		<table id="table1">
-		<caption>캠핑추천게시판</caption>
+		<caption>관리자 캠핑추천게시판 관리</caption>
 			<thead>
 				<tr class="title">
+					<th class="no">글관리</th>
 					<th class="no">번호</th>
 					<th class="subject">제목</th>
 					<th class="writer">닉네임</th>
@@ -57,6 +78,26 @@
 							<tr>
 							    <c:choose>
 							        <c:when test="${k.admin_nickname == '관리자'}">
+							        
+							        
+							        <td class="admin-write-color" style="background-color: lightyellow;">			     
+									    <form method="post">
+										    <c:choose>
+										        <c:when test="${k.cp_active == 0}">
+										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글숨김" onclick="controlMemberContent1(this.form)">
+										            <input type="hidden" value="${k.cp_idx}" name="cp_idx">
+										            <input type="hidden" name="cPage" value="${cPage}">
+										        </c:when>
+										        <c:otherwise>
+										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글보임" onclick="controlMemberContent1(this.form)">
+										            <input type="hidden" value="${k.cp_idx}" name="cp_idx">
+										            <input type="hidden" name="cPage" value="${cPage}">
+										        </c:otherwise>
+										    </c:choose>
+										 </form>					
+						      		  </td>
+						      		  
+						      		  
 							        <td class="admin-write-color" style="background-color: lightyellow;">공지</td>
 							            <td class="admin-write-color" style="background-color: lightyellow;">
 							                <c:choose>
@@ -64,14 +105,15 @@
 							                        <span style="color:lightgray">삭제된 게시물입니다</span>
 							                    </c:when>
 							                    <c:otherwise>
-							                        <a href="camping_gear_content.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.cp_subject}</a>
+							                        <a href="admin_camping_gear_content.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.cp_subject}</a>
 							                    </c:otherwise>
 							                </c:choose>
 							            </td>
 							            <td class="admin-write-color" style="background-color: lightyellow;">
 							            	<c:choose>
 											    <c:when test="${not empty adminInfo}">
-											            <a href="camping_gear_detail.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>     
+											            <%-- <a href="camping_gear_detail.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.admin_nickname}</a>  --%>										            
+											            ${k.admin_nickname}    
 											    </c:when>
 											    <c:otherwise>
 											   	 	${k.admin_nickname}
@@ -82,6 +124,31 @@
 							            <td class="admin-write-color" style="background-color: lightyellow;">${k.cp_hit}</td>
 							        </c:when>						        
 							        <c:otherwise>
+							        
+							        
+							        <td>			     
+									    <form method="post">
+										    <c:choose>
+										        <c:when test="${k.cp_active == 0}">
+										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글숨김" onclick="controlMemberContent1(this.form)">
+										            <input type="hidden" value="${k.cp_idx}" name="cp_idx">
+										            <input type="hidden" name="cPage" value="${cPage}">
+										        </c:when>
+										        <c:otherwise>
+										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글보임" onclick="controlMemberContent1(this.form)">
+										            <input type="hidden" value="${k.cp_idx}" name="cp_idx">
+										            <input type="hidden" name="cPage" value="${cPage}">
+										        </c:otherwise>
+										    </c:choose>
+										 </form>					
+						      		  </td>
+							        
+							        
+							        
+							        
+							        
+							        
+							        
 							            <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>
 							            <td>
 							                <!-- <td style="text-align: left; " /> -->
@@ -91,7 +158,7 @@
 							                        <span style="color:lightgray">삭제된 게시물입니다</span>
 							                    </c:when>
 							                    <c:otherwise>
-							                        <a href="camping_gear_content.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.cp_subject}</a>
+							                        <a href="admin_camping_gear_content.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.cp_subject}</a>
 							                    </c:otherwise>
 							                </c:choose>
 							            </td>
@@ -208,7 +275,7 @@
 								<li class="disable">이전</li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="camping_gear_board.do?cPage=${paging.beginBlock - paging.pagePerBlock}">이전으로</a></li>
+								<li><a href="admin_camping_gear_board.do?cPage=${paging.beginBlock - paging.pagePerBlock}">이전으로</a></li>
 							</c:otherwise>
 						</c:choose>
 						<!-- 페이지번호들 -->
@@ -218,7 +285,7 @@
 									<li class="now">${k}</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="camping_gear_board.do?cPage=${k}">${k}</a></li>
+									<li><a href="admin_camping_gear_board.do?cPage=${k}">${k}</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -229,7 +296,7 @@
 								<li class="disable">다음</li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="camping_gear_board.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
+								<li><a href="admin_camping_gear_board.do?cPage=${paging.beginBlock + paging.pagePerBlock }">다음으로</a></li>
 							</c:otherwise>
 						</c:choose>
 					</ol>	
@@ -247,8 +314,9 @@
 				</tr>
 			</tfoot>	
 		</table>
+		 </form>
 	</div>
-<%@ include file="../../hs/footer.jsp" %>
-<%@ include file="../../hs/profile_small_info.jsp" %>
+<%@ include file="../hs/footer.jsp" %>
+<%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>

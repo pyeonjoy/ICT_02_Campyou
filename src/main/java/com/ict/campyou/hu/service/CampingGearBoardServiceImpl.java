@@ -108,4 +108,16 @@ public class CampingGearBoardServiceImpl implements CampingGearBoardService {
 	public int getGradeUpdate(String member_idx2, int res) {
 		return campingGearBoardDAO.getGradeUpdate(member_idx2, res);
 	}
+	
+	//관리자가 캠핑추천 게시판 회원 글 숨기기
+	@Override
+	public int getCampingGearBoardContentHideUpdate(String cp_idx) {
+		return campingGearBoardDAO.getCampingGearBoardContentHideUpdate(cp_idx);
+	}
+	
+	//관리자가 캠핑추천 게시판 회원 글 보이게 하기
+	@Override
+	public int getCampingGearBoardContentShowUpdate(String cp_idx) {
+		return campingGearBoardDAO.getCampingGearBoardContentShowUpdate(cp_idx);
+	}
 }
