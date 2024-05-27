@@ -62,9 +62,9 @@ $(document).ready(function() {
         let campItem = "<div class='camp_item' data-contentid='" + contentid + "'>";
 
         if (firstImageUrl != null && firstImageUrl !== "") {
-            campItem += "<img class='cmap_img' src='" + firstImageUrl + "' alt='이미지'>";
+            campItem += "<img class='firstImg' src='" + firstImageUrl + "' alt='이미지'>";
         } else {
-            campItem += "<img class='cmap_img' src='/resources/images/2.jpg' alt='대체 이미지'>";
+            campItem += "<img class='firstImg' src='/resources/images/img_not_found.png' alt='대체 이미지'>";
         }
         
         campItem += "<div class='camp_info'>";

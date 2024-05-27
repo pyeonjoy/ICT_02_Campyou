@@ -97,6 +97,16 @@ $(document).ready(function() {
         let comment = $('#r_comment').val();
         let rating = $("input[name='rating']:checked").val();
 		let member_img = "${mvo.member_img}";
+        if (!${mvo.member_idx}) {
+            alert("로그인 후 이용 부탁드립니다.");
+            location.href = 'login_form.do';
+            return;
+        }
+
+        if (!rating) {
+            alert("별점을 선택해주세요.");
+            return;
+        }
         let requestData = {
             r_comment: comment,
             rating: rating,
@@ -110,12 +120,12 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(requestData),
             success:function(data){
-				if(data != "error") {
+					if(data != "error") {
                     alert("리뷰가 정상적으로 등록되었습니다.");
                     $('#r_comment').val('');
                     $("input[name='rating']").prop('checked', false);
                     loadReview();
-                } else {
+                }else {
                     alert("리뷰 작성에 오류가 발생하였습니다.");
                 }
             },
@@ -292,6 +302,14 @@ function loadReview() {
         }
     });
 }
+let filledHeartHtml = function(contentid) {
+    return "<img class='heart-button' src='resources/images/heart_fill.png' data-contentid='" + contentid + "' alt='하트'>";
+};
+
+let emptyHeartHtml = function(contentid) {
+    return "<img class='heart-button' src='resources/images/heart_empty.png' data-contentid='" + contentid + "' alt='빈하트'>";
+};
+
 
 function loadHeart() {
     $.ajax({
@@ -305,14 +323,14 @@ function loadHeart() {
                 let detailButton = "<div>";
                 detailButton += "<input type='button' name='page' value='홈페이지' onclick=\"window.open('${info.homepage}')\">";
                 detailButton += "<input type='button' name='page' value='예약페이지' onclick='resvego()'>";
-                detailButton += "<input type='button' name='page' value='🤍관심등록' onclick='Heart()'>";
+                detailButton += emptyHeartHtml(contentId);
                 detailButton += "</div>";
                 $("#detail_button").append(detailButton);
             } else if (data === false) {
                 let detailButton = "<div>";
                 detailButton += "<input type='button' name='page' value='홈페이지' onclick=\"window.open('${info.homepage}')\">";
                 detailButton += "<input type='button' name='page' value='예약페이지' onclick='resvego()'>";
-                detailButton += "<input type='button' id='Heart' name='page' value='❤️관심해제' onclick='delHeart()'>";
+                detailButton += filledHeartHtml(contentId);
                 detailButton += "</div>";
                 $("#detail_button").append(detailButton);
             } else {
@@ -323,12 +341,14 @@ function loadHeart() {
             let detailButton = "<div>";
             detailButton += "<input type='button' name='page' value='홈페이지' onclick=\"window.open('${info.homepage}')\">";
             detailButton += "<input type='button' name='page' value='예약페이지' onclick='resvego()'>";
-            detailButton += "<input type='button' id='Heart' name='page' value='🤍관심등록' onclick='Heart()'>";
+            detailButton += emptyHeartHtml(contentid);
             detailButton += "</div>";
             $("#detail_button").append(detailButton);
         }
     });
 }
+
+
 	function resvego() {
 		let resveurl = "${info.resveurl}";
 		if (resveurl == "") {
@@ -337,6 +357,16 @@ function loadHeart() {
 			window.open('${info.resveurl}');
 		}
 	}
+    $(document).on("click", ".heart-button", function() {
+        let contentid = $(this).data("contentid");
+        if ($(this).attr("src") === 'resources/images/heart_fill.png') {
+            delHeart(contentid);
+            $(this).attr("src", 'resources/images/heart_empty.png');
+        } else {
+            Heart(contentid);
+            $(this).attr("src", 'resources/images/heart_fill.png');
+        }
+    });
 </script>
 <title>캠핑장 상세 페이지</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
