@@ -60,7 +60,7 @@ $.ajax({
             if (firstImageUrl != null && firstImageUrl !== "") {
                 campItem += "<img class='firstImg' src='" + firstImageUrl + "' alt='이미지'>";
             } else {
-                campItem += "<img class='firstImg' src='/resources/images/2.jpg' alt='대체 이미지'>";
+                campItem += "<img class='firstImg' src='/resources/images/img_not_found.png' alt='대체 이미지'>";
             }
             campItem += "<div class='camp_info' onclick='location.href=\"camp_detail.do?contentid=" + contentid + "\"'>";
             campItem += "<p> [" + doNm + sigunguNm + "] </p>";
@@ -68,7 +68,11 @@ $.ajax({
             campItem += "<p>" + addr1 + "</p>";
             campItem += "<p>" + tel + "</p>";
             campItem += "</div>";
-            campItem += "<div class='button_container'><button onclick=\"window.open('" + homepage + "')\">홈페이지</button></div>";
+            if(homepage != null && homepage !== "") {
+            	campItem += "<div class='button_container'><button onclick=\"window.open('" + homepage + "')\">홈페이지</button></div>";
+            }else {
+            	campItem += "<div class='button_container'><button onclick=\"window.open('https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=" + facltNm + "')\">홈페이지</button></div>";
+            }
             campItem += "<div class='Heart_button'></div>";
             campItem += "</div>";
             $("#camp_list_show").append(campItem);
@@ -219,7 +223,7 @@ $(document).ready(function() {
             if (firstImageUrl != null && firstImageUrl !== "") {
                 campItem += "<img class='firstImg' src='" + firstImageUrl + "' alt='이미지'>";
             } else {
-                campItem += "<img class='firstImg' src='/resources/images/2.jpg' alt='대체 이미지'>";
+                campItem += "<img class='firstImg' src='/resources/images/img_not_found.png' alt='대체 이미지'>";
             }
             campItem += "<div class='camp_info' onclick='location.href=\"camp_detail.do?contentid=" + contentid + "\"'>";
             campItem += "<p> [" + doNm + sigunguNm + "] </p>";
@@ -227,7 +231,11 @@ $(document).ready(function() {
             campItem += "<p>" + addr1 + "</p>";
             campItem += "<p>" + tel + "</p>";
             campItem += "</div>";
-            campItem += "<div class='button_container'><button onclick=\"window.open('" + homepage + "')\">홈페이지</button></div>";
+            if(homepage != null && homepage !== "") {
+            	campItem += "<div class='button_container'><button onclick=\"window.open('" + homepage + "')\">홈페이지</button></div>";
+            }else {
+            	campItem += "<div class='button_container'><button onclick=\"window.open('https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=" + facltNm + "')\">홈페이지</button></div>";
+            }
             campItem += "<div class='Heart_button'></div>";
             campItem += "</div>";
 
