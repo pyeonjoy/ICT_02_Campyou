@@ -31,9 +31,8 @@ $(document).ready(function() {
 	    lang : 'ko-KR',
     	height : 300,
     	focus : true,
-
-	    })
-	})
+    })
+})
 	$(function() {
 	    $('input[name="datetimes"]').daterangepicker({
 	        "locale": {
@@ -111,20 +110,20 @@ function hasBadWords(comment) {
 	    let subject = $("input[name='t_subject']").val();
         let content = $("#summernote").summernote('code');
         
-//         let badWord = hasBadWords(content.replace(/\s+/g, ''));
-//         if (badWord !== null) {
-//             alert("'" + badWord + "'는(은) 사용할수 없습니다. 다시 작성해주세요.");
-//             return;
-//         }
+        let badWord = hasBadWords(content.replace(/\s+/g, ''));
+        if (badWord !== null) {
+            alert("'" + badWord + "'는(은) 사용할수 없습니다. 다시 작성해주세요.");
+            return;
+        }
 
         if (subject.trim() === '') {
             alert("제목을 입력하세요.");
             return;
         }
-//         if (content.trim() === '' || content === '<p><br></p>') {
-//             alert("내용을 입력하세요.");
-//             return;
-//         }
+        if (content.trim() === '' || content === '<p><br></p>') {
+            alert("내용을 입력하세요.");
+            return;
+        }
 	    if (!t_mapx && !t_mapy) {
 	        alert("동행할 캠핑장 위치를 선택해주세요.");
 	        return;
