@@ -168,6 +168,6 @@ margin: 0 auto;
 			</form>
         </div>
     </div>
-   		<jsp:include page="../hs/footer.jsp" />
+<%--    		<jsp:include page="../hs/footer.jsp" /> --%>
     </body>
 </html>

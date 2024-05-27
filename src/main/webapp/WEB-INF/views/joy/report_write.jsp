@@ -50,5 +50,5 @@ padding-right: 10px;
 			</form>
     </div>
     </body>
-    <jsp:include page="../hs/footer.jsp" />
+<%--     <jsp:include page="../hs/footer.jsp" /> --%>
 </html>

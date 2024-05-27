@@ -224,18 +224,18 @@ public class MemberController {
 	        	  //슈퍼관리자 세션
 	        	  if(admvo2 != null && admvo2.getAdmin_status().equals("2")){
 	        		  session.setAttribute("admin", admvo2); 
-	        		  mv.setViewName("redirect:/");
+	        		  mv.setViewName("joy/admin_main");
 					  return mv;
 				  }
 	        	  //일반관리자 세션
 	        	  if(admvo2 != null && admvo2.getAdmin_status().equals("1")){
 	        		  session.setAttribute("admin", admvo2); 
-	        		  mv.setViewName("redirect:/");
+	        		  mv.setViewName("joy/admin_main");
 					  return mv;
 				  }
 	        	  //권한 빼앗긴 관리자 로그인 (로그인 자체 불가)
 	        	  if(admvo2 != null && admvo2.getAdmin_status().equals("0")){
-	        		  mv.setViewName("redirect:/");
+	        		  mv.setViewName("joy/admin_main");
 					  return mv;
 				  }	
 	          }

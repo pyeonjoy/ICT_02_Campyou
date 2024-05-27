@@ -107,6 +107,6 @@ font-size: 15px;
                 <p>신고 내역: ${report}</p>
             </div>
 </div>
-<jsp:include page="../hs/footer.jsp" />
+<%-- <jsp:include page="../hs/footer.jsp" /> --%>
 </body>
 </html>
