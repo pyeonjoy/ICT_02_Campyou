@@ -17,9 +17,35 @@
 	
 	 <!-- 카카오 맴버 insert -->
 	 <insert id="insert_kakao_info_for_log_in" parameterType="Map">
-        insert into members(member_id, member_name, member_pwd, kakao_nickname, member_dob, member_phone, member_email, member_regdate)
+        insert into members(member_id, member_name, member_pwd, member_nickname, member_dob, member_phone, member_email, member_regdate)
         	values(#{member_id}, #{member_name}, #{member_pwd}, #{kakao_nickname}, #{member_dob}, #{member_phone}, #{member_email}, sysdate())
     </insert>
+    
+    <update id="setUpdateSnsInfo" parameterType="mvo">
+		update members
+		set
+		member_name = #{member_name},
+		member_pwd = #{member_pwd},
+		member_dob = #{member_dob},
+		member_phone = #{member_phone},
+		member_gender = #{member_gender}
+	where member_id = #{member_id}
+    </update>
+    
+    <update id="setUpdateSnsInfo_naver" parameterType="mvo">
+		update members
+		set
+		member_nickname = #{member_nickname},
+		member_pwd = #{member_pwd},
+		member_dob = #{member_dob},
+		member_phone = #{member_phone},
+		member_gender = #{member_gender}
+	where member_id = #{member_id}
+    </update>
+    
+    <select id="getinfo" parameterType="mvo" resultType="mvo">
+    	select member_dob from members where member_id = #{member_id}
+    </select>
     
   	<!-- 카카오 맴버 체크 -->
 	<select id="kakao_member_check" parameterType="Map" resultType="mvo">

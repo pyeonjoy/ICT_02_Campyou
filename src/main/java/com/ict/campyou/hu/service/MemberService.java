@@ -1,10 +1,7 @@
 package com.ict.campyou.hu.service;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
-import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
 
 public interface MemberService {
@@ -55,5 +52,12 @@ public interface MemberService {
 	 public int getUpdateMemberGrade2(String member_idx);
 	 public int getUpdateMemberGrade3(String member_idx);
 	 public int getUpdateMemberGrade4(String member_idx);
-	 public int getUpdateMemberGrade5(String member_idx); 
+	 public int getUpdateMemberGrade5(String member_idx);
+
+
+	public int setUpdateSnsInfo(MemberVO vo);
+
+	public MemberVO getinfo(MemberVO vo);
+
+	public int setUpdateSnsInfo_naver(MemberVO vo); 
 }

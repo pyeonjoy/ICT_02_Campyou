@@ -3,6 +3,7 @@ package com.ict.campyou.hu.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -247,7 +248,8 @@ public class MemberController {
 	  
 	  //카카오 로그인
 	  @RequestMapping("kakaologinok.do")
-	  public ModelAndView getKakaoLogin(HttpSession session) {
+	  public ModelAndView getKakaoLogin(HttpSession session,HttpServletResponse response) {
+		  ModelAndView mv = new ModelAndView();
 		  try {
 			 //카카오 로그인 access token 받아오기
 			 String access_token = (String) session.getAttribute("access_token");
@@ -256,18 +258,46 @@ public class MemberController {
 			if(access_token != null) {
 				 session.setAttribute("access_token", access_token);
 			}
-			
 			//카카오 회원 insert 하기
 			int result = memberService.getInsertKakaoId(session);
-			
-			//카카오 로그인 회원정보 받아오기
 			MemberVO kakao_mvo = memberService.getKakaoLogInOk(session);
+			if (result > 0) {
+				session.setAttribute("kakaoMemberInfo", kakao_mvo); 
+				session.setAttribute("memberInfo", kakao_mvo); 
+				mv.addObject("memberInfo",kakao_mvo);
+			    response.setCharacterEncoding("UTF-8");
+		        response.setContentType("text/html; charset=utf-8");
+		        PrintWriter out = response.getWriter();
+		        out.println("<script> alert('추가 정보 입력이 필요합니다. 추가정보 입력칸으로 이동하겠습니다.'); window.location.href='sns_update_form.do';</script>");
+		        out.close();
+				return new ModelAndView("hu/snsInfo");
+			}
 			
 			
 			//카카오 회원 세션
 			if(kakao_mvo != null) { 
 				session.setAttribute("kakaoMemberInfo", kakao_mvo); 
-				return new ModelAndView("redirect:/"); }
+				session.setAttribute("memberInfo", kakao_mvo);
+				String member_id = kakao_mvo.getMember_id();
+				String member_dob = kakao_mvo.getMember_dob();
+				MemberVO vo = new MemberVO();
+				vo.setMember_id(member_id);
+				vo.setMember_dob(member_dob);
+				
+				MemberVO chkinfo = memberService.getinfo(vo);
+				System.out.println(chkinfo);
+				System.out.println(member_id+"아이디..?");
+				if (chkinfo != null) {
+					return new ModelAndView("home"); 
+				}else {
+				    response.setCharacterEncoding("UTF-8");
+			        response.setContentType("text/html; charset=utf-8");
+			        PrintWriter out = response.getWriter();
+			        out.println("<script> alert('추가 정보 입력이 필요합니다. 추가정보 입력칸으로 이동하겠습니다.'); window.location.href='sns_update_form.do';</script>");
+			        out.close();
+					return new ModelAndView("hu/snsInfo");
+				}
+				}
 		  } catch (Exception e) {
 			  System.out.println(e);
 		  }
@@ -276,7 +306,8 @@ public class MemberController {
 	  
 	  //네이버 로그인
 	  @RequestMapping("naverloginok.do")
-	  public ModelAndView getNaverLogin(HttpSession session) {
+	  public ModelAndView getNaverLogin(HttpSession session,HttpServletResponse response) {
+		  ModelAndView mv = new ModelAndView();
 		  try {
 			//네이버 로그인 access token 받아오기
 			String access_token = (String) session.getAttribute("access_token");
@@ -286,14 +317,41 @@ public class MemberController {
 			}
 			//네이버 회원 insert 하기
 			int result = memberService.getInsertNaverId(session);
-			
-			//네이버 로그인 회원정보 받아오기
 			MemberVO naver_mvo = memberService.getNaverLogInOk(session);
-			
+			if (result > 0) {
+				session.setAttribute("naverMemberInfo", naver_mvo); 
+				session.setAttribute("memberInfo", naver_mvo); 
+				mv.addObject("memberInfo",naver_mvo);
+			    response.setCharacterEncoding("UTF-8");
+		        response.setContentType("text/html; charset=utf-8");
+		        PrintWriter out = response.getWriter();
+		        out.println("<script> alert('추가 정보 입력이 필요합니다. 추가정보 입력칸으로 이동하겠습니다.'); window.location.href='sns_update_naver_form.do';</script>");
+		        out.close();
+				return new ModelAndView("hu/snsInfo_naver");
+			}
+
 			//네이버 회원 세션
 			if(naver_mvo != null) {
 				session.setAttribute("naverMemberInfo", naver_mvo);
-				return new ModelAndView("redirect:/");
+				session.setAttribute("memberInfo", naver_mvo);
+				String member_id = naver_mvo.getMember_id();
+				String member_dob = naver_mvo.getMember_dob();
+				System.out.println(member_id);
+				System.out.println(member_dob);
+				MemberVO vo = new MemberVO();
+				vo.setMember_id(member_id);
+				vo.setMember_dob(member_dob);
+				MemberVO chkinfo = memberService.getinfo(vo);
+				if (chkinfo != null) {
+					return new ModelAndView("home"); 
+				}else {
+				    response.setCharacterEncoding("UTF-8");
+			        response.setContentType("text/html; charset=utf-8");
+			        PrintWriter out = response.getWriter();
+			        out.println("<script> alert('추가 정보 입력이 필요합니다. 추가정보 입력칸으로 이동하겠습니다.'); window.location.href='sns_update_naver_form.do';</script>");
+			        out.close();
+					return new ModelAndView("hu/snsInfo_naver");
+				}
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -1124,5 +1182,87 @@ public class MemberController {
 				System.out.println(e);
 			}
 		   return new ModelAndView("hu/boardFree/error");
-	   }	  	  	
+	   }
+	   @RequestMapping("sns_update_form.do")
+		   public ModelAndView sns_update_form() {
+			   return new ModelAndView("hu/snsInfo");
+		   }
+	   @RequestMapping("sns_update_naver_form.do")
+	   public ModelAndView sns_update_naver_form() {
+		   return new ModelAndView("hu/snsInfo_naver");
+	   }
+	   @RequestMapping("sns_update.do")
+	   public ModelAndView setUpdateSnsInfo(MemberVO mvo, HttpServletRequest request,HttpSession session,HttpServletResponse response) {
+			MemberVO mvo2 = (MemberVO) session.getAttribute("memberInfo");
+		   try {
+				  ModelAndView mv = new ModelAndView();
+				  mv.addObject("mvo",mvo2);
+				  String member_id = mvo2.getMember_id();
+				  String member_name = request.getParameter("member_name");
+				  String member_dob = request.getParameter("member_dob");
+				  String member_gender = request.getParameter("member_gender");
+				  String member_pwd = request.getParameter("member_pwd");
+				  String member_phone = request.getParameter("member_phone");
+				  
+				  String member_encrypt_pwd = passwordEncoder.encode(member_pwd);
+				  
+				  MemberVO vo = new MemberVO();
+				  vo.setMember_name(member_name);
+				  vo.setMember_dob(member_dob);
+				  vo.setMember_gender(member_gender);
+				  vo.setMember_pwd(member_encrypt_pwd);
+				  vo.setMember_phone(member_phone);
+				  vo.setMember_id(member_id);
+				  int result = memberService.setUpdateSnsInfo(vo);
+				  if (result > 0) {
+					 response.setCharacterEncoding("UTF-8");
+				     response.setContentType("text/html; charset=utf-8");
+				     PrintWriter out = response.getWriter();
+				     out.println("<script> alert('성공적으로 수정하였습니다 다시 로그인 해주세요.'); window.location.href='logout_form.do';</script>");
+				     out.close();
+				}
+
+			  }catch (Exception e) {
+				System.out.println(e);
+			}
+			return new ModelAndView("home");
+		  }
+	   
+	   @RequestMapping("sns_update_naver.do")
+	   public ModelAndView setUpdateSnsInfo_naver(MemberVO mvo, HttpServletRequest request,HttpSession session,HttpServletResponse response) {
+		   MemberVO mvo2 = (MemberVO) session.getAttribute("memberInfo");
+		   try {
+			   ModelAndView mv = new ModelAndView();
+			   mv.addObject("mvo",mvo2);
+			   String member_id = mvo2.getMember_id();
+			   String member_nickname = request.getParameter("member_nickname");
+			   String member_dob = request.getParameter("member_dob");
+			   String member_gender = request.getParameter("member_gender");
+			   String member_pwd = request.getParameter("member_pwd");
+			   String member_phone = request.getParameter("member_phone");
+			   
+			   String member_encrypt_pwd = passwordEncoder.encode(member_pwd);
+			   
+			   MemberVO vo = new MemberVO();
+			   vo.setMember_nickname(member_nickname);
+			   vo.setMember_dob(member_dob);
+			   vo.setMember_gender(member_gender);
+			   vo.setMember_pwd(member_encrypt_pwd);
+			   vo.setMember_phone(member_phone);
+			   vo.setMember_id(member_id);
+			   int result = memberService.setUpdateSnsInfo_naver(vo);
+			   if (result > 0) {
+				   response.setCharacterEncoding("UTF-8");
+				   response.setContentType("text/html; charset=utf-8");
+				   PrintWriter out = response.getWriter();
+				   out.println("<script> alert('성공적으로 수정하였습니다 다시 로그인 해주세요.'); window.location.href='logout_form.do';</script>");
+				   out.close();
+			   }
+			   
+		   }catch (Exception e) {
+			   System.out.println(e);
+		   }
+		   return new ModelAndView("home");
+	   }
+
 }
