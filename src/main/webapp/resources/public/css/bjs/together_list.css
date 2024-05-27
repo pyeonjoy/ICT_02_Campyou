@@ -98,6 +98,7 @@
     }
     .toContentOne2{
         border: 1px solid black;
+        width: 250.55px;
         border-radius: 10%;
         position: relative;
         margin: 1rem 0;
@@ -117,8 +118,8 @@
         -webkit-box-orient: vertical;
     }
     .toContentOne2img{
-        max-width: 100%;
-     	max-height: 100%;
+/*         max-width: 100%; */
+/*      	max-height: 100%; */
         object-fit: cover;
         width: 100%;
         height: 100%;
@@ -148,6 +149,9 @@
     .to_list_subject{
     	font-weight: bold;
     	margin-bottom: 0.5rem;
+    }
+    .contentImageEX{
+    	width: 252.55px;
     }
     
 .searchForm{

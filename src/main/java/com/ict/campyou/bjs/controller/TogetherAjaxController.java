@@ -186,7 +186,8 @@ public class TogetherAjaxController {
 				case "2": list.setMember_grade("grade2.png"); break;
 				case "3": list.setMember_grade("grade3.png"); break;
 				case "4": list.setMember_grade("grade4.png"); break;
-				case "5": list.setMember_grade("grade5.png"); break;
+				default: list.setMember_grade("grade5.png"); break;
+//				case "5": list.setMember_grade("grade5.png"); break;
 				}
 			}
 		}
@@ -275,7 +276,8 @@ public class TogetherAjaxController {
 				case "2": pvo.setMember_grade("grade2.png"); break;
 				case "3": pvo.setMember_grade("grade3.png"); break;
 				case "4": pvo.setMember_grade("grade4.png"); break;
-				case "5": pvo.setMember_grade("grade5.png"); break;
+				default: pvo.setMember_grade("grade5.png"); break;
+//				case "5": pvo.setMember_grade("grade5.png"); break;
 				}
 				
 				int promiseCount = togetherService.getPomiseCount(pvo.getT_idx());
@@ -353,7 +355,8 @@ public class TogetherAjaxController {
 			case "2": k.setMember_grade("grade2.png"); break;
 			case "3": k.setMember_grade("grade3.png"); break;
 			case "4": k.setMember_grade("grade4.png"); break;
-			case "5": k.setMember_grade("grade5.png"); break;
+			default: k.setMember_grade("grade5.png"); break;
+//			case "5": k.setMember_grade("grade5.png"); break;
 			}
 		}
 		Map<String, Object> response = new HashMap<>();
@@ -513,7 +516,8 @@ public class TogetherAjaxController {
 				case "2": pvo.setMember_grade("grade2.png"); break;
 				case "3": pvo.setMember_grade("grade3.png"); break;
 				case "4": pvo.setMember_grade("grade4.png"); break;
-				case "5": pvo.setMember_grade("grade5.png"); break;
+				default: pvo.setMember_grade("grade5.png"); break;
+//				case "5": pvo.setMember_grade("grade5.png"); break;
 				}
 				
 				int proOKCount = togetherService.getPromiseMyCount(pvo.getMember_idx());
