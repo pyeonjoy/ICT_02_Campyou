@@ -123,5 +123,5 @@ modalClose.addEventListener('click',function(){
 });
 </script>
     </body>
-    <jsp:include page="../hs/footer.jsp" />
+<%--     <jsp:include page="../hs/footer.jsp" /> --%>
 </html>

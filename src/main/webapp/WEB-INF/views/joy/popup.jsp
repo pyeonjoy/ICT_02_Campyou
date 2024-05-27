@@ -296,6 +296,6 @@ table th, #bbs table td {
 			</div>
 		</div>
 	</div>
-		<jsp:include page="../hs/footer.jsp" />
+<%-- 		<jsp:include page="../hs/footer.jsp" /> --%>
 </body>
 </html>

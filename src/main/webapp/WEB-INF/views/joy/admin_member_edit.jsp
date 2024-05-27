@@ -98,6 +98,6 @@ height: 475px;}
 			</div>
 		</c:forEach>
 		</div>
-		<%@ include file="../hs/footer.jsp" %>
+<%-- 		<%@ include file="../hs/footer.jsp" %> --%>
 </body>
 </html>

@@ -222,6 +222,6 @@
 			</table>
 		</div>
 		
-		<jsp:include page="../hs/footer.jsp" />
+<%-- 		<jsp:include page="../hs/footer.jsp" /> --%>
 </body>
 </html>
