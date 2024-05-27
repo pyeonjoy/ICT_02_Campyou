@@ -104,13 +104,11 @@
 										<form action="admin_report.do" method="post">
 										<input type="hidden" name="report_idx" value="${r.report_idx }" >
 										<input type="hidden" name="reportmember_idx" value="${r.reportmember_idx }" >
-										<input type="radio" name="report_day" value="0">${r.report_idx }
 										<input type="radio" name="report_day" value="3">3일
 										<input type="radio" name="report_day" value="7">7일
 										<input type="radio" name="report_day" value="30">30일
 										<input type="radio" name="report_day" value="60">60일
 										<input type="radio" name="report_day" value="90">90일
-										<input type="radio" name="report_day" value="9999">무기한
 										<div style="margin-top: 20px;">
 										<button type="submit" onclick="location.href='admin_report.do?member_idx=${r.member_idx}">확인</button>
 										<button type="button" class="close_btn">닫기</button>

@@ -129,7 +129,6 @@ public class AdminServiceImpl implements AdminService{
 		System.out.println("1:"+ result1);
 		System.out.println("2:"+ result2);
 		if (result1 > 0 && result2 > 0) {
-		System.out.println("오나?");
 			return 1; // 성공
 		} else {
 			return -1; // 실패
@@ -157,11 +156,6 @@ public class AdminServiceImpl implements AdminService{
 		int result2 = admindao.getadminreportadd2(report_day,report_idx,admin_idx,reportmember_idx); 
 		int result3 = admindao.getadminreportadd3(report_day,report_idx,admin_idx,reportmember_idx); 
 		int result4 = admindao.getadminreport(report_day,report_idx); 
-		System.out.println("result1:"+ result1);
-		System.out.println("result2:"+ result2);
-		System.out.println("result3:"+ result3);
-		System.out.println("result4:"+ result4);
-		System.out.println("adminmember_idx:"+ admin_idx);
 		if (result1 > 0 && result2 > 0 && result3 > 0 ) {
 		System.out.println("getadminreportadd2오나?");
 			return 1; // 성공
