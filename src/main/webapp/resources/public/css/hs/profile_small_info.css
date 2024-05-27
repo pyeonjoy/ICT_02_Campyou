@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.profile_show {
+	cursor: pointer;
+}
+
 .profile_small_info_container {
 	border: 1px solid lightgray;
 	width: 330px;
