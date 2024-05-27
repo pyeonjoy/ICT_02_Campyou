@@ -38,6 +38,9 @@ $.ajax({
         $("#camp_list_show").empty();
         if (data.cvo.length === 0) {
         	alert("검색 결과가 존재하지않습니다.");
+            $('.th_paging').empty();
+            $('.page_button').empty();
+            $('.total_count').empty();
             return ;
         }
         $.each(data.cvo, function(index, camp) {
@@ -72,7 +75,6 @@ $.ajax({
             let $container = $("#camp_list_show").find(".Heart_button:last");
             loadHeart(contentid, $container);
             });
-			
             // 페이징 처리
             let paging = data.paging;
             let totalCount = data.count;
@@ -106,6 +108,7 @@ $.ajax({
                 pagingHtml += '<li><a href="javascript:list_search(' + (paging.beginBlock + paging.pagePerBlock) + ')" class="search_th_able"><i class="fa-solid fa-chevron-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
                 pagingHtml += '<li><a href="javascript:list_search(' + paging.totalPage + ')" class="search_th_able"><i class="fa-solid fa-angles-right" style="color: #041601; border-radius: 50%; font-size: 1.2rem;"></i></a></li>';
             }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             $('.th_paging').append(pagingHtml);
         },
         error: function() {
@@ -300,7 +303,7 @@ $(document).ready(function() {
             pageNo = 1;
         } 
         
-        $(".camp_list_container").scrollTop(0); 
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         pageNumbers();
         camp_all_list();
         
