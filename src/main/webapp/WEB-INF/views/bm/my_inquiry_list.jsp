@@ -45,20 +45,15 @@
 									<a href="my_inquiry.do?qna_idx=${list.qna_idx}">${list.qna_title }</a>
 								</div>
 								<div class="grid_row grid_row_content">${nickname }</div>
-								<div class="grid_row grid_row_content">${list.qna_date}</div>
+								<div class="grid_row grid_row_content">${list.qna_date.substring(0,10)}</div>
 								<c:choose>
 									<c:when test="${list.qna_status==0}">
-										<div class="grid_row grid_row_content">처리중</div>
+										<div class="grid_row grid_row_content">대기중</div>
 									</c:when>
 									<c:otherwise>
-										<div class="grid_row grid_row_content">처리완료</div>
+										<div class="grid_row grid_row_content">답변완료</div>
 									</c:otherwise>
 								</c:choose>
-								 <c:if test="${list.qna_status==1}">
-                    <div class="grid_row grid_row_answer">
-                        <strong>답변</strong> 
-                    </div>
-                </c:if>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
