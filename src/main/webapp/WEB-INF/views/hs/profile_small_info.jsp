@@ -8,8 +8,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="/resources/public/js/hs/profile_small_info.js"></script>
-<link rel="stylesheet" href="/resources/public/css/hs/profile_small_info.css">
+<script src="${path}/resources/public/js/hs/profile_small_info.js"></script>
+<link rel="stylesheet" href="${path}/resources/public/css/hs/profile_small_info.css">
 </head>
 <body>
 	<div class="profile_small_info_container">
@@ -23,8 +23,8 @@
 				</div>
 				<div class="gray_font"><span id="member_age"></span> / <span id="member_gender"></span></div>
 				<div>
-					<input type="button" value="채팅" onclick="chat_go()"> 
-					<input type="button" value="신고" onclick="report_go()">
+<!-- 					<input id="chat_go" class="chat" onclick="openChat()" type="button" value="채팅">  -->
+					<input id="report_go" type="button" value="신고">
 				</div>
 			</div>
 			<hr>
