@@ -97,11 +97,6 @@ $(document).ready(function() {
         let comment = $('#r_comment').val();
         let rating = $("input[name='rating']:checked").val();
 		let member_img = "${mvo.member_img}";
-        if (!${mvo.member_idx}) {
-            alert("로그인 후 이용 부탁드립니다.");
-            location.href = 'login_form.do';
-            return;
-        }
 
         if (!rating) {
             alert("별점을 선택해주세요.");
