@@ -137,7 +137,7 @@ function promiseApplyList() {
 		<div class="welcome">		
 				<c:choose>
 					<c:when test="${empty mvo.member_img}">
-						<img src="${path}/resources/img/cat.png" alt="user_img"
+						<img src="${path}/resources/images/${mvo.member_img}.png" alt="user_img"
 							class="user_img">
 					</c:when>
 					<c:otherwise>
@@ -161,8 +161,10 @@ function promiseApplyList() {
 					<span class="hidden-text">내가 작성한 글 보러가기 👉</span>
 					</p>
 					<p class="lineHeight rank"> 매너점수 : ${mvo.member_grade}점</p>
+					
+					<p class="grade" id="${mvo.member_grade}"> <span class="lineHeight"> 멤버등급:</span> <img src="${path}/resources/images/grade${mvo.member_grade+1}.png" alt="level" style="width:40px;"> </p>						
+					
 				</div>						
-					<p class="grade" id="${mvo.member_grade}" ><img src="${path}/resources/images/grade${mvo.member_grade+1}.png" alt="level"> </p>						
 				</div>
 			</div>
 		<div class="my_list my_review_list">

@@ -83,6 +83,7 @@
       <div class="detail pw_detail">
         <label for="password" >비밀번호</label> <input type="password" id="password" name="member_pwd" class="input input_pw" >
       </div>
+        <p id="passwordError"></p>
       
       <div class="detail nickname_detail">
         <label for="nickname" >닉네임</label><input type="text" id="nickname" name="member_nickname"  class="input input_nickname" value="${mvo.member_nickname }">
@@ -95,13 +96,13 @@
       </div>
       <div class="btn_container">
         <input type="hidden" id="memberIdx" name="member_idx" value="${mvo.member_idx}">
-        <button class="btn btn_change" onclick="handleChangeInfo(this.form)">저장</button>
-        <button class="btn btn_pwdreset" onclick="handle_pwd(${mvo.member_idx}, this.form)">비밀번호 변경</button>
+        <button class="btn btn_change" onclick="handleChangeInfo(this.form, event)">저장</button>
+        <button class="btn btn_pwdreset" onclick="handle_pwd(${mvo.member_idx}, this.form, event)">비밀번호 변경</button>
       </div>
       </div>
       <div class="user_info_container_right">
       	<button class="btn btn-check" onclick="checkPassword(event)">확인</button>
-     <button class="btn btn-userDelete" onclick="handle_delete(${mvo.member_idx}, this.form)">회원탈퇴</button>
+     <button class="btn btn-userDelete" onclick="handle_delete(${mvo.member_idx}, this.form, event)">회원탈퇴</button>
       </div>
     </div>
   </form>

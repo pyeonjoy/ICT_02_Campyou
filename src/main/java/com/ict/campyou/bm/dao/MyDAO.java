@@ -277,4 +277,13 @@ public class MyDAO {
 		}
 		return null;
 	}
+	public QnaVO getQnaReply(String qna_idx) {
+		try {
+			return sqlSessionTemplate.selectOne("bomi.getReply", qna_idx);
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 }
