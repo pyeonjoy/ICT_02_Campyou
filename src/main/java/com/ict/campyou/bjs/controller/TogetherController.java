@@ -239,5 +239,12 @@ public class TogetherController {
 		return mv;
 	}
 	
+	@RequestMapping("with_promise_state_update.do")
+	public int getWPStateUpdate(@RequestParam("member_idx")String member_idx) throws Exception {
+		int endCampChk = togetherService.getEndCampChk(member_idx);
+		int res = togetherService.getWPStateUpdate(member_idx);
+		return res;
+	}
+	
 	
 }

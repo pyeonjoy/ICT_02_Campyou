@@ -96,13 +96,13 @@ h1 {
     display: block;
     position: relative;
     left: 0;
-    background-image: url(${path}/resources/images/ico-star.png);
+    background-image: url(${path}/resources/images/ico-star-empty.png);
     background-repeat: no-repeat;
     background-size: 40px;
 }
 
 .rating__label .star-icon.filled {
-    background-image: url(${path}/resources/images/ico-star-empty.png);
+    background-image: url(${path}/resources/images/ico-star.png);
 }
 
 .rating__label--full .star-icon {

@@ -239,4 +239,13 @@ public class TogetherServiceImpl implements TogetherService{
 		return togetherDAO.getConfirmPartner(pvo);
 	}
 	
+	@Override
+	public int getEndCampChk(String member_idx) throws Exception {
+		return togetherDAO.getEndCampChk(member_idx);
+	}
+	
+	@Override
+	public int getWPStateUpdate(String member_idx) throws Exception {
+		return togetherDAO.getWPStateUpdate(member_idx);
+	}
 }

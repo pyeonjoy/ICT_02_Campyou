@@ -249,4 +249,11 @@ public class TogetherDAO {
 		return sqlSessionTemplate.update("bjs.confirm_partner", pvo);
 	}
 	
+	public int getEndCampChk(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectOne("bjs.end_camp_chk", member_idx);
+	}
+	
+	public int getWPStateUpdate(String member_idx) throws Exception {
+		return sqlSessionTemplate.update("bjs.wp_state_update", member_idx);
+	}
 }

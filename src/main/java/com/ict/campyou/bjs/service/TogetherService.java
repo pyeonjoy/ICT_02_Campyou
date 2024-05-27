@@ -54,4 +54,6 @@ public interface TogetherService {
 	public List<TogetherVO> getPromiseEnd(String member_idx, int offset, int limit) throws Exception;
 	public int getEnddateUpdate(String t_idx) throws Exception;
 	public int getConfirmPartner(PromiseVO pvo) throws Exception;
+	public int getEndCampChk(String member_idx) throws Exception;
+	public int getWPStateUpdate(String member_idx) throws Exception;
 }

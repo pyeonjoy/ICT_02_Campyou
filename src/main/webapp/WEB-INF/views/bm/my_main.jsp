@@ -17,6 +17,7 @@
 <script>
 $(document).ready(function() {
     promiseApplyList();
+    with_promise_state_update();
 //     setInterval(promiseApplyList, 5000);
 });
 
@@ -114,7 +115,7 @@ function promiseApplyList() {
 	            }
         	} else {
         		let html = '<div class="no-data-message">';
-        		html += '<p class="no-data-messageP">동행신청이 없습니다.</p>';
+        		html += '<h4 class="no-data-messageP">동행신청이 없습니다.</h4>';
         		html += '</div>';
                 $('.accompany_container').replaceWith(html);
             }
@@ -127,8 +128,13 @@ function promiseApplyList() {
         error: function(xhr, status, error) {
         	console.error(error);
         }
-    });4
+    });
 };
+
+function with_promise_state_update() {
+	let memberIdx = document.getElementById("memberIdx").value;
+	location.href="with_promise_state_update.do?member_idx=" + memberIdx;
+}
 </script>
 </head>
 <body class="body">
