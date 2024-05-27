@@ -84,4 +84,18 @@ $(document).ready(function() {
             return;
         }
     });
+    
 });
+
+let element = document.getElementsByClassName("profile_show");
+let memberIdx = element.dataset.memberidx;
+console.log(memberIdx);
+    function report_go(){
+    	location.href = "report_write.do?member_idx=" + member_idx;
+    }
+
+
+  function report_go(){
+    	console.log("asd");
+    	location.href = "report_write.do?member_idx=" + member_idx;
+    }
