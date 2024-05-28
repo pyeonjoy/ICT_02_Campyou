@@ -135,16 +135,8 @@ function promiseApplyList() {
 		<%@ include file="../hs/mypage_menu.jsp"%>
 	<div class="mypage">
 		<div class="welcome">		
-				<c:choose>
-					<c:when test="${empty mvo.member_img}">
-						<img src="${path}/resources/images/${mvo.member_img}.png" alt="user_img"
-							class="user_img">
-					</c:when>
-					<c:otherwise>
-						<img src="${path}/resources/uploadUser_img/${mvo.member_img}"
-							alt="user_img" class="user_fullImg">
-					</c:otherwise>
-				</c:choose>			
+						<img src="${path}/resources/images/${mvo.member_img}" alt="user_img"
+							class="user_fullImg">		
 			<h2 class="welcome_user">${mvo.member_name}님, 환영합니다.</h2>
 		</div>
 
@@ -187,6 +179,9 @@ function promiseApplyList() {
 			</div>
 		</div>		
 		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
+		<div class="accompany_container">
+		</div>
+		
 	</div>
 	<footer class="footer">
 	  <%@ include file="../hs/footer.jsp"%>
