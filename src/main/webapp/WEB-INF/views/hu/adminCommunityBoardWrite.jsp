@@ -102,7 +102,7 @@ body{
 							<%-- <input type="hidden" name="member_nickname" value="${kakaoMemberInfo.member_nickname}"> --%>
 						</c:when>
 						<c:otherwise>
-							<td align="left">${memberInfo.member_nickname} ${kakaoMemberInfo.kakao_nickname} ${naverMemberInfo.member_name}
+							<td align="left">${memberInfo.member_nickname} ${naverMemberInfo.member_name}
 							<c:choose>
 								<c:when test="${memberInfo != null}">
 									<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
@@ -112,13 +112,6 @@ body{
 							</c:choose>
 							<input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}">
 							<input type="hidden" name="member_grade" value="${memberInfo.member_grade}"></td>
-							<c:choose>
-								<c:when test="${kakaoMemberInfo != null}">
-									<input type="hidden" name="kakao_nickname" value="${kakaoMemberInfo.kakao_nickname}">
-								</c:when>
-								<c:otherwise>
-								</c:otherwise>
-							</c:choose>
 							<c:choose>
 								<c:when test="${naverMemberInfo != null}">
 									<input type="hidden" name="member_name" value="${naverMemberInfo.member_name}">
