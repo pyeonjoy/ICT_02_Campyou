@@ -41,7 +41,7 @@
 }
 
 body {
-	background-image: url(${path}/resources/images/back.png);
+	background-image: url(${path}/resources/images/bg.png);
 	width: 100%
 }
 
