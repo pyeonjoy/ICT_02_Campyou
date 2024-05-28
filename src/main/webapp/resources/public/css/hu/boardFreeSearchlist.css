@@ -5,6 +5,13 @@
   padding: 0;
 }
 
+header {
+    background-color: #003300;
+    color: white;
+    text-align: center;
+    padding: 120px 0; 
+}
+
 h2{
 	marign: 0 auto;
 	background-color: #f8f8f8;

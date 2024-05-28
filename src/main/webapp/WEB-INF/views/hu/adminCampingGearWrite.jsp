@@ -21,9 +21,17 @@
 	function camping_gear_board(f) {
 		for (var i = 0; i < f.elements.length; i++) {
 			if (f.elements[i].value == "") {
-				if (i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6 || i == 8) continue;
+				if (i == 1 || i == 2 || i == 3 || i == 6) continue;
 				if(i == 7) break;
-				alert(f.elements[i].name + "를 입력하세요");
+				
+				var customMessages = {
+						"cp_subject": "제목",
+						"cp_pwd": "비밀번호",
+						"cp_content": "내용"
+					};
+				var message = customMessages[f.elements[i].name] || f.elements[i].name;
+				
+				alert(message + " 을(를) 입력하세요");
 				f.elements[i].focus();
 				return; //수행 중단
 			}

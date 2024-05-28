@@ -217,3 +217,7 @@ input[type="button"]:hover {
 	color: white;
 	cursor: pointer;
 }
+
+.footer {
+    margin-top: 60px;
+}

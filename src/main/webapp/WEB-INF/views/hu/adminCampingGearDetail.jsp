@@ -71,7 +71,7 @@
 					<tr id="foot-tr">
 					     <td colspan="2">
 					     	<input type="hidden" value="${cgbvo.cp_idx}" name="cp_idx">
-					     	<input type="hidden" value="${cPage}" name="cPage">
+					     	<%-- <input type="hidden" value="${cPage}" name="cPage"> --%>
 					        <input type="button" class="board-member-info" value="목록" onclick="camping_gear_board_list(this.form)" />
 					        <input type="button" class="board-member-info" value="수정" onclick="camping_gear_update(this.form)" />
 					        <input type="button" class="board-member-info" value="관리자삭제" onclick="admin_camping_gear_delete(this.form)" />

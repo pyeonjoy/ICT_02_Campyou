@@ -71,7 +71,7 @@ body{
 					<tr id="foot-tr">
 					     <td colspan="2">
 					     	<input type="hidden" value="${cbvo.b_idx}" name="b_idx">
-					     	<input type="hidden" value="${cPage}" name="cPage">
+					     	<%-- <input type="hidden" value="${cPage}" name="cPage">  --%>
 					        <input type="button" class="board-member-info" value="목록" onclick="comm_board_list(this.form)" />
 					        <input type="button" class="board-member-info" value="수정" onclick="comm_board_update(this.form)" />
 					        <!-- <input type="button" class="board-member-info" value="삭제" onclick="comm_board_delete(this.form)" /> -->

@@ -433,6 +433,7 @@ public class MemberController {
 			if(result > 0) {
 				mv.addObject("paging", paging);
 				mv.addObject("b_idx", b_idx);
+				mv.addObject("cPage", cPage);
 				return mv;
 			}
 					
@@ -456,6 +457,7 @@ public class MemberController {
 			if(result > 0) {
 				mv.addObject("paging", paging);
 				mv.addObject("b_idx", b_idx);
+				mv.addObject("cPage", cPage);
 				return mv;
 			}
 					

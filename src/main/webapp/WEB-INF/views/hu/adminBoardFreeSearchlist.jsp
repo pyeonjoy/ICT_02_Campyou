@@ -30,7 +30,7 @@
         paginationDiv.appendChild(prevButton);
 
         //페이지버튼
-        let startPage = Math.max(1, currentPage - 1);
+        let startPage = Math.max(1, currentPage);
         let endPage = Math.min(totalPages, startPage + 2);
         for (let i = startPage; i <= endPage; i++) {
             const button = document.createElement("button");
@@ -129,7 +129,7 @@
                         <c:forEach items="${searchlist}" var="k">
                             <tr>
                                 <td>${k.member_nickname}</td>
-                                <td>${k.b_subject}</td>
+                                <td><a href="admin_commBoard_content.do?b_idx=${k.b_idx}" style="color: black;">${k.b_subject}</a></td>
                                 <td>${k.b_content}</td>
                                 <td>${k.b_regdate.substring(0,10)}</td>
                             </tr>

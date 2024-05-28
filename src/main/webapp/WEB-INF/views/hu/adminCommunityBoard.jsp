@@ -7,11 +7,11 @@
 <head>
 <meta charset=UTF-8>
 <title>관리자자유게시판</title>
+<%@ include file="../hs/header.jsp" %> 
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/adminBoardFree.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<%@ include file="../hs/header.jsp" %>
 <script type="text/javascript">
 	function commBoard_write() {
 		location.href = "admin_comm_board_write.do";
@@ -85,12 +85,12 @@ body{
 										        <c:when test="${k.b_active == 0}">
 										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글숨김" onclick="controlMemberContent(this.form)">
 										            <input type="hidden" value="${k.b_idx}" name="b_idx">
-										            <input type="hidden" name="cPage" value="${cPage}">
+										            <input type="hidden" name="cPage" value="${paging.nowPage}">
 										        </c:when>
 										        <c:otherwise>
 										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글보임" onclick="controlMemberContent(this.form)">
 										            <input type="hidden" value="${k.b_idx}" name="b_idx">
-										            <input type="hidden" name="cPage" value="${cPage}">
+										            <input type="hidden" name="cPage" value="${paging.nowPage}">
 										        </c:otherwise>
 										    </c:choose>
 										 </form>
@@ -135,21 +135,29 @@ body{
 							            <td class="admin-write-color" style="background-color: lightyellow;">${k.b_hit}</td>
 							        </c:when>						        
 							        <c:otherwise> 
-								     <td>			     
+								     <td>	
+								     
+								     
+								     
+								     		     
 									    <form method="post">
 										    <c:choose>
 										        <c:when test="${k.b_active == 0}">
 										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글숨김" onclick="controlMemberContent(this.form)">
 										            <input type="hidden" value="${k.b_idx}" name="b_idx">
-										            <input type="hidden" name="cPage" value="${cPage}">
+										           <input type="hidden" name="cPage" value="${paging.nowPage}">
 										        </c:when>
 										        <c:otherwise>
 										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글보임" onclick="controlMemberContent(this.form)">
 										            <input type="hidden" value="${k.b_idx}" name="b_idx">
-										            <input type="hidden" name="cPage" value="${cPage}">
+										            <input type="hidden" name="cPage" value="${paging.nowPage}"> 
 										        </c:otherwise>
 										    </c:choose>
-										 </form>					
+										 </form>	
+										 
+										 
+										 
+										 				
 						      		  </td>
 							            <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>
 							            <td>${k.b_type}</td>

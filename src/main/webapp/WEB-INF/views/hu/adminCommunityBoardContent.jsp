@@ -7,8 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 게시글 내용</title>
+<%@ include file="../hs/header.jsp" %> 
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardContent.css">
 <script type="text/javascript">
 	function comm_board_list(f) {
@@ -38,6 +39,7 @@
 		f.submit();
 	}
 	function admin_comm_board_admin_delete(f) {
+		alert("정말 삭제하시겠습니까?");
 		f.action="admin_comm_board_admin_delete.do";
 		f.submit();
 	}
@@ -52,6 +54,7 @@
 	    const updateBtn = document.createElement('input');
 	    updateBtn.type = 'button';
 	    updateBtn.value = '수정완료';
+	    updateBtn.className = 'btn-color';
 	    updateBtn.onclick = function() {
 	        // 수정된 내용을 서버로 전송
 	        f.action="admin_comment_update.do";
@@ -140,9 +143,9 @@ textarea {
 </style>
 </head>
 <body>
+<h2>관리자 게시글 관리</h2>
+<hr>
 <div>
-	<h2>관리자 게시글 관리</h2>
-	<hr>
 	<form method="post">
 	<table>
 	<tbody>
@@ -182,7 +185,7 @@ textarea {
      <c:choose>
      		<c:when test="${not empty adminInfo}">
      				<input type="hidden" value="${cbvo.b_idx}" name="b_idx"> 
-	     			<input type="hidden" value="${cPage}" name="cPage">
+	     			<%-- <input type="hidden" value="${cPage}" name="cPage"> --%>
 	        		<input class="contentBtn" type="button" value="목록" onclick="comm_board_list(this.form)" />
 	        		<input class="contentBtn" type="button" value="수정" onclick="comm_board_update(this.form)" />
 	        		<!-- <input class="contentBtn" type="button" value="삭제" onclick="comm_board_delete(this.form)" /> -->
@@ -193,21 +196,21 @@ textarea {
      				<c:when test="${memberInfo.member_nickname eq cbvo.member_nickname}">
      					<input type="hidden" value="${cbvo.b_idx}" name="b_idx">
      					<input type="hidden" value="${cPage}" name="cPage">
-        				<input class="contentBtn" type="button" value="목록" onclick="comm_board_list(this.form)" />
+        				<!-- <input class="contentBtn" type="button" value="목록" onclick="comm_board_list(this.form)" /> -->
         				<input class="contentBtn" type="button" value="수정" onclick="comm_board_update(this.form)" />
         				<input class="contentBtn" type="button" value="삭제" onclick="comm_board_delete(this.form)" />
      				</c:when>
      				<c:otherwise>
      					<c:choose>
      						<c:when test="${memberInfo.member_nickname eq null}">
-     							<input class="contentBtn" type="button" value="목록" onclick="comm_board_list(this.form)" />
-     							<input type="hidden" name="b_idx" value="${cbvo.b_idx}">
-     							<input type="hidden" value="${cPage}" name="cPage">
+     						<!-- 	<input class="contentBtn" type="button" value="목록" onclick="comm_board_list(this.form)" /> -->
+     							<%-- <input type="hidden" name="b_idx" value="${cbvo.b_idx}">
+     							<input type="hidden" value="${cPage}" name="cPage"> --%>
      						</c:when>
      						<c:otherwise>
      							<input type="hidden" name="b_idx" value="${cbvo.b_idx}">
      							<input type="hidden" value="${cPage}" name="cPage">
-     							<input class="contentBtn" type="button" value="목록" onclick="comm_board_list(this.form)" />
+     							<!-- <input class="contentBtn" type="button" value="목록" onclick="comm_board_list(this.form)" /> -->
      						</c:otherwise>
      					</c:choose>
      				</c:otherwise>
@@ -352,5 +355,6 @@ textarea {
 		</c:choose>	
 	</c:otherwise>
 </c:choose>
+<%@ include file="../hs/footer.jsp" %>
 </body>
 </html>

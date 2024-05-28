@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글 내용</title>
+<%@ include file="../../hs/header.jsp" %> 
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardContent.css">
@@ -53,6 +54,7 @@
 	    const updateBtn = document.createElement('input');
 	    updateBtn.type = 'button';
 	    updateBtn.value = '수정완료';
+	    updateBtn.className = 'btn-color';
 	    updateBtn.onclick = function() {
 	        // 수정된 내용을 서버로 전송
 	        f.action="cgb_comment_update.do";
@@ -142,12 +144,22 @@ textarea {
 #textarea2{
 	resize: none;
 }
+.btn-color {
+	margin: 0 5px; /* 각 버튼 사이의 여백 */
+    padding: 4px 8px;
+    background-color: #003300;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 </style>
 </head>
 <body>
+<h2>캠핑추천 게시글</h2>
+<hr>
 <div>
-	<h2>캠핑추천 게시글</h2>
-	<hr>
 	<form method="post">
 	<table>
 	<tbody>
@@ -362,5 +374,6 @@ textarea {
 		</c:choose>	
 	</c:otherwise>
 </c:choose>
+<%@ include file="../../hs/footer.jsp" %>
 </body>
 </html>

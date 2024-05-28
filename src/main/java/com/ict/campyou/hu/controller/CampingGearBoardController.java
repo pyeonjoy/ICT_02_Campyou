@@ -149,6 +149,7 @@ public class CampingGearBoardController {
 			if(result > 0) {
 				mv.addObject("paging", paging);
 				mv.addObject("cp_idx", cp_idx);
+				mv.addObject("cPage", cPage);
 				return mv;
 			}
 					
@@ -172,6 +173,7 @@ public class CampingGearBoardController {
 			if(result > 0) {
 				mv.addObject("paging", paging);
 				mv.addObject("cp_idx", cp_idx);
+				mv.addObject("cPage", cPage);
 				return mv;
 			}
 					
