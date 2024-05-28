@@ -43,12 +43,12 @@
     <c:choose>
 	    <c:when test="${empty mvo.member_img}">
 	     <div class="my_img">
-	        <img src="${path}/resources/img/cat.png" alt="user_img" id="user_img">
+	        <img src="${path}/resources/images/${mvo.member_img}" alt="user_img" id="user_img">
 	      </div>
 	    </c:when>	    
 	    <c:otherwise>	
 	      <div class="my_img">
-	        <img src="${path}/resources/uploadUser_img/${mvo.member_img}" alt="user_img" id="user_img">
+	        <img src="${path}/resources/images/${mvo.member_img}" alt="user_img" id="user_img">
 	      </div>
 	     </c:otherwise>
       </c:choose>    
