@@ -406,7 +406,6 @@ function initializeSummernote() {
 					list += '</div>';
 					list += '<div class ="qna_re_form">';
 					list += '<h3 style="text-align: center;">답변하기</h3>';
-					list += '<label for="qna_title">제목</label><input type="text" id="qna_title" name="qna_title"><br><br>';
 					list += '<label for="qna_content">내용</label><textarea id="qna_content" name="qna_content"></textarea>';
 					list += '<button type="button" onclick="redirect_qna('+data.qna_idx+')">답변하기</button>';
 					list += '<button type="button" onclick="load_inquiry()">뒤로가기</button>';
@@ -423,12 +422,10 @@ function initializeSummernote() {
 	    }
 function redirect_qna(qna_idx){
     let qna_content = $("#qna_content").val();
-    let qna_title = $("#qna_title").val();
 	$.ajax({
         url: "redirect_qna.do",
         method: "get",
         data: { qna_idx: qna_idx,
-        	qna_title:qna_title,
         	qna_content:qna_content},
         dataType: "json",
         success: function(data) {
