@@ -230,13 +230,37 @@ public class TogetherServiceImpl implements TogetherService{
 	}
 	
 	@Override
+	public int getStartdateUpdate(String t_idx) throws Exception {
+		return togetherDAO.getStartdateUpdate(t_idx);
+	}
+	
+	@Override
 	public int getEnddateUpdate(String t_idx) throws Exception {
 		return togetherDAO.getEnddateUpdate(t_idx);
 	}
 
 	@Override
+	public int getPromiseConfirm(PromiseVO pvo) throws Exception {
+		return togetherDAO.getPromiseConfirm(pvo);
+	}
+	
+	@Override
 	public int getConfirmPartner(PromiseVO pvo) throws Exception {
 		return togetherDAO.getConfirmPartner(pvo);
 	}
 	
+	@Override
+	public List<PromiseVO> getStartCampChk(String member_idx) throws Exception {
+		return togetherDAO.getStartCampChk(member_idx);
+	}
+	
+	@Override
+	public List<PromiseVO> getEndCampChk(String member_idx) throws Exception {
+		return togetherDAO.getEndCampChk(member_idx);
+	}
+	
+	@Override
+	public int getWPStateUpdate(String t_idx, int num) throws Exception {
+		return togetherDAO.getWPStateUpdate(t_idx, num);
+	}
 }
