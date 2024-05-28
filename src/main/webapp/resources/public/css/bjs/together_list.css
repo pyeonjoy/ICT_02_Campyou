@@ -71,7 +71,7 @@
         display: grid;
         grid-template-rows: 5rem 13rem 4rem;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
-        border-radius: 10%;
+        border-radius: 25px;
         padding: 1rem;
         transition: transform 0.3s ease;
     }
@@ -99,7 +99,7 @@
     .toContentOne2{
         border: 1px solid black;
         width: 250.55px;
-        border-radius: 10%;
+        border-radius: 25px;
         position: relative;
         margin: 1rem 0;
         color: black;
@@ -123,17 +123,19 @@
         object-fit: cover;
         width: 100%;
         height: 100%;
-        border-radius: 10%;
+        border-radius: 22px;
     }
     .toContentOne2sub2{
         border: 1px solid black;
         padding: 0.2rem;
-        border-radius: 25%;
+        padding-left: 15px;
+        padding-right: 15px;
+        border-radius: 25px;
         background-color: #FAAB12;
-        margin-top: 1rem;
+        margin-top: 10px;
         position:absolute;
         bottom: 1;
-        left: 1rem;
+        left: 10px;
     }
     .toContentOne2sub3{
         padding: 0.2rem;
