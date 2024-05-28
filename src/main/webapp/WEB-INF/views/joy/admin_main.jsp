@@ -88,14 +88,14 @@ font-size: 15px;
             <div class="inner">
 				 <c:forEach var="b" items="${board}">
 				    <h4>금일 커뮤니티 현황</h4>
-				    <p>자유게시판: ${b.totalb_idx}</p>
 				    <p>동행 게시판: ${b.totalt_idx} | 매칭: ${match}</p>
+				    <p>자유게시판: ${b.totalb_idx}</p>
 				    <p>추천게시판: ${b.totalcp_idx}</p>
 				</c:forEach>
 
             </div>
             <div class="inner">
-                <h4>미처리 문의</h4>
+                <h4>문의 내역</h4>
                 <c:choose>
                     <c:when test="${admin_qna == 0}">
                         <p>미처리 문의가 없습니다</p>
