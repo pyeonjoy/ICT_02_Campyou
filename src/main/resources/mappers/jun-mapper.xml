@@ -188,8 +188,8 @@
     where q.member_idx = m.member_idx and qna_idx = #{qna_idx}
 </select>
 <insert id ="redirect_qna" parameterType="Map">
-	insert into qna_re(qna_idx,qna_title,qna_content,qna_date)
-	values(#{qna_idx},#{qna_title},#{qna_content},sysdate())
+	insert into qna_re(qna_idx,qna_content,qna_date)
+	values(#{qna_idx},#{qna_content},sysdate())
 </insert>
 <update id="updateStatus">
 	update qna set qna_status = 1 where qna_idx = #{qna_idx} 
