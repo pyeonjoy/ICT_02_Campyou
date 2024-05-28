@@ -176,11 +176,9 @@ $(document).ready(function() {
 	//  -------------- 하트 -------------- 
    	let filledHeartHtml = function(contentid) {
    	    return "<img class='heart-button' src='resources/images/heart_fill.png' data-contentid='" + contentid + "' alt='하트'>";
-   	    console.log("f: " + contentid);
    	};
 
    	let emptyHeartHtml = function(contentid) {
-   		console.log("e: " + contentid);
    	    return "<img class='heart-button' src='resources/images/heart_empty.png' data-contentid='" + contentid + "' alt='빈하트'>";
    	};
    	
@@ -330,7 +328,6 @@ $(document).ready(function() {
         if (keywordInput != "") {
         	$(".keyword").text("\"" + keywordInput + "\"");
 	        if((selectedLctCl.length + selectedInduty.length + selectedSbrscl.length) == 0 && sido_search == "") {
-	        	console.log("도칙")
 	        	ajaxData("camp_list_keyword_detail.do",
 	        			{ keyword: keywordInput, numOfRows: numOfRows,	pageNo: pageNo },
 	        			function(data) {
@@ -338,7 +335,6 @@ $(document).ready(function() {
 		            		$(data).find("item").each(function () {
 		                    	$("#camp_list_show").append(createCampItem(this));
 		                    	let contentid = $(this).find("contentId").text();
-		                    	console.log("inK: " + contentid);
 			       	        	let $container = $("#camp_list_show").find(".Heart_button:last");
 			       	            loadHeart(contentid, $container);
 		                    });

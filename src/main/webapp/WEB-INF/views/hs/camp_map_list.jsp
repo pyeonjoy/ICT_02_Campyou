@@ -42,6 +42,5 @@
   	</div>
 </div>
 <jsp:include page="../hs/footer.jsp" />
-<jsp:include page="../hs/weather_info.jsp" />
 </body>
 </html>

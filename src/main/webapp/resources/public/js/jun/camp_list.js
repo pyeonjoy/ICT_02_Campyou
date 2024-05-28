@@ -82,7 +82,6 @@ $.ajax({
             // 페이징 처리
             let paging = data.paging;
             let totalCount = data.count;
-            console.log(data.count);
             $('.total_count').empty();
             $(".total_count").text(totalCount);
             $('.th_paging').empty();
@@ -121,12 +120,10 @@ $.ajax({
     });
     }
 let filledHeartHtml = function(contentid) {
-    console.log("f: " + contentid);
     return "<img class='heart-button' src='resources/images/heart_fill.png' data-contentid='" + contentid + "' alt='하트'>";
 };
 
 let emptyHeartHtml = function(contentid) {
-    console.log("e: " + contentid);
     return "<img class='heart-button' src='resources/images/heart_empty.png' data-contentid='" + contentid + "' alt='빈하트'>";
 };
 
@@ -317,12 +314,10 @@ $(document).ready(function() {
         
     });
     let filledHeartHtml = function(contentid) {
-        console.log("f: " + contentid);
         return "<img class='heart-button' src='resources/images/heart_fill.png' data-contentid='" + contentid + "' alt='하트'>";
     };
 
     let emptyHeartHtml = function(contentid) {
-        console.log("e: " + contentid);
         return "<img class='heart-button' src='resources/images/heart_empty.png' data-contentid='" + contentid + "' alt='빈하트'>";
     };
     function loadHeart(contentid, $container) {
