@@ -64,5 +64,6 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="../hs/weather_info.jsp" />
 </body>
 </html>

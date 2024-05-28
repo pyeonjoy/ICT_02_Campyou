@@ -6,10 +6,11 @@
 	background-color: white;
 	border: 1px solid #dee2e6;
 	overflow-y: scroll;
-	position: absolute;
+	position: fixed;
     bottom: 15px;
-    right: 100px;
+    right: 80px;
     display: none; 
+    z-index: 99;
 }
 
 .weather_info_title {
