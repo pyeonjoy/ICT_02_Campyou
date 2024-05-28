@@ -47,7 +47,7 @@
        </c:choose>
       </div>
       <div class="grid_row grid_row_content"><a href="boardDetail.do?board_idx=${list.board_idx}&board_type=${list.board_type}">${list.b_subject }</a></div>
-      <div class="grid_row grid_row_content">${list.b_regdate }</div>
+      <div class="grid_row grid_row_content">${list.b_regdate.substring(0,10) }</div>
       <div class="grid_row grid_row_content">${list.hit }</div>
       				</c:forEach>
 			</c:otherwise>
