@@ -19,31 +19,20 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb&submodules=geocoder"></script>
-<script src="resources/js/summernote-lite.js" ></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="resources/js/lang/summernote-ko-KR.js" ></script>
-<link rel="stylesheet" href="resources/css/summernote-lite.css">
+<script defer src="${path}/resources/public/js/bm/summernote-lite.js"></script>
+<script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/markerclustererplus/dist/markerclusterer.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#t_content").summernote({
-			lang : 'ko-KR',
-			height : 300,
-			focus : true,
-			placeholder: '최대3000자까지 쓸 수 있습니다'	,
-// 				disableHtmlResizing: true, // <p> 태그 자동 생성 비활성화
-			callbacks : {
-				onImageUpload : function(files, editor) {
-					for (var i = 0; i < files.length; i++) {
-						sendImage(files[i], editor);						
-					}
-				}
-			}
-		});
-	});
-	//	var extract_html = content.replace(/(<([^>]+)>)/ig,"");
-	//	if (extract_html == "") {
-	//	    alert("내용없음");
-	//	}
+		$('.summernote').summernote({
+		    lang : 'ko-KR',
+	    	height : 300,
+	    	focus : true,
+	    })
+	})
+	
 	$(function() {
 	  $('input[name="datetimes"]').daterangepicker({
 		    "locale": {
@@ -64,6 +53,18 @@
 	  });
 	});
 	
+	var badWords = new Array("시발", "병신", "개새끼");
+
+	function hasBadWords(comment) {
+		const lowercaseComment = comment.trim().toLowerCase();
+		for (let i = 0; i < badWords.length; i++) {
+		    if (lowercaseComment.includes(badWords[i].toLowerCase())) {
+		        return badWords[i];
+		    }
+		}
+		return null;
+	}
+	
 	let campImageUrl;
 	let t_mapx;
 	let t_mapy;
@@ -75,11 +76,24 @@
 		let formData = new FormData(document.getElementsByClassName('togetherWriteForm')[0]);
 	    let startDate = $('input[name="datetimes"]').data('daterangepicker').startDate.format('YYYY/MM/DD');
 	    let endDate = $('input[name="datetimes"]').data('daterangepicker').endDate.format('YYYY/MM/DD');
+	    
+	    let subject = $("input[name='t_subject']").val();
+        let content = $("#summernote").summernote('code');
+        
+        let badWord = hasBadWords(content.replace(/\s+/g, ''));
+        if (badWord !== null) {
+            alert("'" + badWord + "'는(은) 사용할수 없습니다. 다시 작성해주세요.");
+            return;
+        }
 
-// 	    if (!t_induty) {
-// 	        alert("캠핑 타입을 선택해주세요.");
-// 	        return;
-// 	    }
+        if (subject.trim() === '') {
+            alert("제목을 입력하세요.");
+            return;
+        }
+        if (content.trim() === '' || content === '<p><br></p>') {
+            alert("내용을 입력하세요.");
+            return;
+        }
 	    if (!t_mapx && !t_mapy) {
 	        alert("동행할 캠핑장 위치를 선택해주세요.");
 	        return;
@@ -217,10 +231,6 @@
 	                        content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + camp.firstimageurl + '" alt="" style="width:100%;" /><b>' + camp.facltnm + '</b><br><br> ' + camp.induty + '<br>(' + camp.facltdivnm + '/' + camp.mangedivnm + ') <br><br></div>',
 	                        disableAutoPan: true // 정보창열릴때 지도이동 안함
 	                    });
-// 	                    let infoWindow2 = new naver.maps.InfoWindow({
-// 	                        content: '<div style="width:220px;text-align:center;padding:10px;"><img src="' + selectedImage + '" alt="" style="width:100%;" /><b>' + selectedCampname + '</b><br><br> ' + selectedInduty + '<br>(' + selectedFacltdivnm + '/' + selectedMangedivnm + ') <br><br></div>',
-// 	                        disableAutoPan: true // 정보창열릴때 지도이동 안함
-// 	                    });
 
 	                    markers.push(marker);
 	                    infoWindows.push(infoWindow);
@@ -300,7 +310,7 @@
 	                <h2>동 행 수정하기</h2>
 	            </div>
 	            <input type="text" name="t_subject" class="togetherWriteInput1" value="${tvo.t_subject }" placeholder="제목을 입력하세요" required>
-	            <textarea class="togetherWriteInput2" name="t_content" id="t_content" placeholder="내용을 입력하세요" required>${tvo.t_content }</textarea>
+	            <textarea class="togetherWriteInput2 summernote" name="t_content" id="summernote" placeholder="내용을 입력하세요" required>${tvo.t_content }</textarea>
 	            <input type="button" value="수정하기" class="togetherWriteInputSubmit" onclick="together_update_ok()">
 	            <input type="hidden" name="t_idx" id="t_idx" value="${tvo.t_idx }">
 	            <input type="hidden" name="cPage" id="cPage" value="${cPage }" >
@@ -329,8 +339,6 @@
 	                <input type="hidden" name="t_mapxh" value="${tvo.t_mapx }">
 	                <input type="hidden" name="t_mapyh" value="${tvo.t_mapy }">
 	                <input type="hidden" name="tf_nameh" value="${tvo.tf_name }">
-<%-- 	                <input type="hidden" name="t_campname" value="${tvo.t_campname }"> --%>
-<%-- 	                <input type="hidden" name="t_indutyh" value="${tvo.t_induty }"> --%>
 	                <input type="hidden" name="t_facltdivnmh" value="${tvo.t_facltdivnm }">
 	                <input type="hidden" name="t_mangedivnmh" value="${tvo.t_mangedivnm }">
 	            </div>

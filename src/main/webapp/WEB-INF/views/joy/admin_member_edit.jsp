@@ -55,7 +55,7 @@ height: 475px;}
 						<th>이메일</th>
 					</tr>
 					<tr>
-						<td><input type="text" name="member_regdate" value="${m.member_regdate }"></td>
+						<td><input type="hidden" name="member_regdate" value="${m.member_regdate }">${m.member_regdate }</td>
 						<td><input type="text" name="member_dob" value="${m.member_dob }"></td>
 						<td><input type="text" name="member_phone" value="${m.member_phone }"></td>
 						<td><input type="text" name="member_email" value="${m.member_email }"></td>
@@ -98,6 +98,6 @@ height: 475px;}
 			</div>
 		</c:forEach>
 		</div>
-		<%@ include file="../hs/footer.jsp" %>
+<%-- 		<%@ include file="../hs/footer.jsp" %> --%>
 </body>
 </html>

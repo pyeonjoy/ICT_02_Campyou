@@ -92,7 +92,6 @@ padding-right: 10px;
 										<input type="radio" name="stop_day" value="30">30일
 										<input type="radio" name="stop_day" value="60">60일
 										<input type="radio" name="stop_day" value="90">90일
-										<input type="radio" name="stop_day" value="9999">무기한
 									<div style="margin-top: 20px;">
 											<button type="submit" onclick="location.href='report_writeok2.do?member_idx=${m.member_idx}">확인</button>
 											<button type="button" class="close_btn">닫기</button>
@@ -124,5 +123,5 @@ modalClose.addEventListener('click',function(){
 });
 </script>
     </body>
-    <jsp:include page="../hs/footer.jsp" />
+<%--     <jsp:include page="../hs/footer.jsp" /> --%>
 </html>

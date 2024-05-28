@@ -88,7 +88,7 @@
 			            <div class="toContentOne">
 			                <div>
 			                    <div class="toContentOne1">
-			                        <img src="${path}/resources/images/${k.member_img }" class="userImage2 profile_show" id="${k.member_idx}" data-memberidx="${k.member_idx}">
+			                        <img src="${path}/resources/images/${k.member_img }" class="userImage2">
 			                        <div>
 				                        <div class="toContentOne1span1">
 				                            <span class="to_member_nickname profile_show" data-memberidx="${k.member_idx}">${k.member_nickname}</span>
@@ -115,7 +115,7 @@
 			                </a>
 			                <a href="together_detail.do?t_idx=${k.t_idx}&cPage=${paging.nowPage}" class="toContentOne3">
 			                    <strong class="to_list_subject">${k.t_subject }</strong>
-			                    <span>${k.t_content }</span>
+			                    <span class="contentImageEX">${k.t_content }</span>
 			                </a>
 			            </div>
 				    </c:forEach>

@@ -1,7 +1,6 @@
 package com.ict.campyou.hu.dao;
 
 import java.util.List;
-
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -214,6 +213,20 @@ public class MemberDAO {
 	public MemberVO getMemeberDetail(String member_idx) {
 		
 		return sqlSessionTemplate.selectOne("member.member_detail", member_idx);
+	}
+
+	public int setUpdateSnsInfo(MemberVO vo) {
+		return sqlSessionTemplate.update("member.setUpdateSnsInfo",vo);
+	}
+
+	public MemberVO getinfo(MemberVO vo) {
+		System.out.println(vo.getMember_id()+"dao");
+		System.out.println(vo.getMember_dob()+"dao");
+		return sqlSessionTemplate.selectOne("member.getinfo",vo);
+	}
+
+	public int setUpdateSnsInfo_naver(MemberVO vo) {
+		return sqlSessionTemplate.update("member.setUpdateSnsInfo_naver",vo);
 	}
 	
 

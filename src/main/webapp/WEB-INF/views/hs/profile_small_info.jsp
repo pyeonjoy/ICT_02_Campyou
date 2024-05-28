@@ -8,15 +8,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="/resources/public/js/hs/profile_small_info.js"></script>
-<link rel="stylesheet" href="/resources/public/css/hs/profile_small_info.css">
-<link rel="stylesheet" href="${path}/resources/public/css/bjs/together_list.css">
+<script src="${path}/resources/public/js/hs/profile_small_info.js"></script>
+<link rel="stylesheet" href="${path}/resources/public/css/hs/profile_small_info.css">
 </head>
 <body>
 	<div class="profile_small_info_container">
 		<div class="profile_small_info_wrap">
 			<div class="profile_img">
-				<img id="member_img" class="userImage2" alt="프로필" src="/resources/images/user2.png">
+				<img id="member_img" class="member_img" alt="프로필" src="/resources/images/user2.png">
 			</div>
 			<div class="top_info">
 				<div>
@@ -24,9 +23,8 @@
 				</div>
 				<div class="gray_font"><span id="member_age"></span> / <span id="member_gender"></span></div>
 				<div>
-					<input type="button" value="채팅"> <input type="button"
-						value="신고"
-						onclick="location.href='report_write.do?member_idx=${k.member_idx}'">
+<!-- 					<input id="chat_go" class="chat" onclick="openChat()" type="button" value="채팅">  -->
+					<input id="report_go" type="button" value="신고">
 				</div>
 			</div>
 			<hr>

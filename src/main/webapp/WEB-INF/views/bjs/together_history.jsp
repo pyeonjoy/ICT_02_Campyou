@@ -18,6 +18,8 @@
 <%@ include file="../hs/mypage_menu.jsp"%>
 <script type="text/javascript">
 $(function() {
+	let pro_status = '';
+	
 	let cpage = document.getElementById("cPage").value;
 	let proStatus = document.getElementById("promiseStatus").value;
 	if(cpage != ''){
@@ -30,36 +32,36 @@ $(function() {
 	}else{
 		promiseApplyList();
 	}
-});
+
+
 
 $('.thwrapper').on('click', '.acceptButton', function() {
 	let pmIdx = $(this).closest('.thul2').find("#pm_idx").val();
 	let promiseText = $(this).closest('.thul2').find(".compare").text();
     let promiseCount = promiseText.split('/')[0];
     let totalNumPeople = promiseText.split('/')[1];
+    let tStartdate = $(this).closest('.thul2').find("#t_startDate").val();
+    	
+    let currentDate = new Date();
+    let startDate = new Date(tStartdate);
+	console.log(startDate);
+	console.log(currentDate);
+    if (startDate <= currentDate) {
+        alert("동행이 시작되어 수락하실 수 없습니다.");
+        return;
+    }
     
-//     let endDateStr = $thul2.find("#t_endDate").attr("value");
-//     let endDateStr = $(this).closest('.thul2').find("#t_endDate").val();
-//     let endDate = new Date(endDateStr);
-//     console.log(endDateStr);
-//     console.log(endDate);
-//     let currentDate = new Date();
-//     console.log(currentDate);
-//     if (currentDate > endDate) {
-//         alert("마감된 동행입니다.");
-//         return;
-//     }else{
-	    if (parseInt(promiseCount) >= parseInt(totalNumPeople)) {
-	        alert("정원이 초과되었습니다.");
-	        return;
-	    }
-   		updatePromiseStatus(pmIdx, '수락');
-//     }
+    if (parseInt(promiseCount) >= parseInt(totalNumPeople)) {
+        alert("정원이 초과되었습니다.");
+        return;
+    }
+    console.log("수락오나");
+	updatePromiseStatus(pmIdx, "수락");
 });
 
 $('.thwrapper').on('click', '.rejectButton', function() {
 	let pmIdx = $(this).closest('.thul2').find("#pm_idx").val();
-    updatePromiseStatus(pmIdx, '거절');
+    updatePromiseStatus(pmIdx, "거절");
 });
 
 function updatePromiseStatus(pmIdx, status) {
@@ -85,7 +87,10 @@ function updatePromiseStatus(pmIdx, status) {
     });
 }
 
-let pro_status = '';
+
+
+
+});
 
 function promiseApplyList(page) {
 	pro_status = "apply";
@@ -128,11 +133,10 @@ function promiseApplyList(page) {
 
 	                if (promise.pm_state === "신청중") {
 	                    html2 += '<div class="thul2Div">';
-	                    html2 += '<button type="button" class="thul2DivButton acceptButton" onclick="">수락</button>';
-	                    html2 += '<button type="button" class="thul2DivButton rejectButton" onclick="">거절</button>';
+	                    html2 += '<button type="button" class="thul2DivButton acceptButton">수락</button>';
+	                    html2 += '<button type="button" class="thul2DivButton rejectButton">거절</button>';
 	                    html2 += '<input type="hidden" id="pm_idx" value="' + promise.pm_idx + '">';
-	                    console.log(promise.t_enddate);
-	                    html2 += '<input type="hidden" id="t_endDate" value="' + promise.t_enddate + '">';
+	                    html2 += '<input type="hidden" id="t_startDate" value="' + promise.t_startdate + '">';
 	                    html2 += '</div>';
 	                } else {
 	                    html2 += '<ul><li class="th1">' + promise.pm_state + '</li></ul>';
@@ -176,6 +180,7 @@ function promiseApplyList(page) {
             }
             // 페이지번호들
             for (let k = paging.beginBlock; k <= paging.endBlock; k++) {
+            	console.log(k);
                 if (k === paging.nowPage) {
                 	pagingHtml += '<li class="nowpagecolor">' + k + '</li>';
                 } else {

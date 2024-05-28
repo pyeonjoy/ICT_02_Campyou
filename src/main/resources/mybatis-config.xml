@@ -30,6 +30,7 @@
 		<typeAlias type="com.ict.campyou.bjs.dao.PromiseVO" alias="pvo"/>
 		<typeAlias type="com.ict.campyou.bjs.dao.TogetherCommentVO" alias="tcvo"/>
 		<typeAlias type="com.ict.campyou.jun.dao.Admin2VO" alias="a2vo"/>
+		<typeAlias type="com.ict.campyou.bjs.dao.StarRatingVO" alias="srvo"/>
 		
 	</typeAliases>
 	<mappers>

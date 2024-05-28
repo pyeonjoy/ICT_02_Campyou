@@ -23,6 +23,16 @@ $(document).ready(function() {
 $(document).on('click', '.btn-accept', function() {
 	let $accompanyList = $(this).closest('.accompany_list');
 	let promiseIdx = $accompanyList.data('pm-idx');
+	let tStartdate = document.getElementById('t_startdate').value;
+	
+	let currentDate = new Date();
+    let startDate = new Date(tStartdate);
+	
+    if (startDate <= currentDate) {
+        alert("동행이 시작되어 수락하실 수 없습니다.");
+        return;
+    }
+    
     $.ajax({
         url: 'acceptPromise.do',
         type: 'post',
@@ -80,7 +90,7 @@ function promiseApplyList() {
 	                html += '<div class="list_header">';
 	                html += '<img src="' + imgSrc + '" alt="user_img" class="otheruser_img">';
 	                html += '<div class="list_summery">';
-	                html += '<p class="list_nickname">' + promise.member_nickname + '<img src="${path}/resources/images/' + promise.member_grade + '" class="member_gradeImg" ></p>';
+	                html += '<p class="list_nickname profile_show" data-memberidx="' + promise.member_idx + '">' + promise.member_nickname + '<img src="${path}/resources/images/' + promise.member_grade + '" class="member_gradeImg" ></p>';
 	                html += '<p class="list_go">' + promise.member_dob + ' ' + promise.member_gender + '</p>';
 	                html += '<p class="list_go">동행횟수 ' + promise.promise_count + '</p>';
 	                html += '</div>';
@@ -91,6 +101,7 @@ function promiseApplyList() {
 	                html += '<div class="list_text_overlay">';
 	                html += '<p class="list_content">' + promise.t_campname + '</p>';
 	                html += '<h4 class="list_title">' + promise.t_startdate + ' - ' + promise.t_enddate + '</h4>';
+	                html += '<input type="hidden" id="t_startdate" value="' + promise.t_startdate + '"';
 	                html += '</div>';
 	                html += '</div>';
 	                html += '</div>';
@@ -126,7 +137,7 @@ function promiseApplyList() {
 		<div class="welcome">		
 				<c:choose>
 					<c:when test="${empty mvo.member_img}">
-						<img src="${path}/resources/img/cat.png" alt="user_img"
+						<img src="${path}/resources/images/${mvo.member_img}.png" alt="user_img"
 							class="user_img">
 					</c:when>
 					<c:otherwise>
@@ -150,8 +161,10 @@ function promiseApplyList() {
 					<span class="hidden-text">내가 작성한 글 보러가기 👉</span>
 					</p>
 					<p class="lineHeight rank"> 매너점수 : ${mvo.member_grade}점</p>
+					
+					<p class="grade" id="${mvo.member_grade}"> <span class="lineHeight"> 멤버등급:</span> <img src="${path}/resources/images/grade${mvo.member_grade+1}.png" alt="level" style="width:40px;"> </p>						
+					
 				</div>						
-					<p class="grade" id="${mvo.member_grade}" ><img src="${path}/resources/images/grade${mvo.member_grade+1}.png" alt="level"> </p>						
 				</div>
 			</div>
 		<div class="my_list my_review_list">
@@ -178,5 +191,6 @@ function promiseApplyList() {
 	<footer class="footer">
 	  <%@ include file="../hs/footer.jsp"%>
 	</footer>
+	<%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>

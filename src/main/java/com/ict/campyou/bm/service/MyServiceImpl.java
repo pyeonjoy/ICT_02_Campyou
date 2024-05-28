@@ -135,5 +135,9 @@ public class MyServiceImpl implements MyService{
 	public List<ReviewVO> getReviewList(String member_idx) {
 		return myDao.getReviewList(member_idx);
 	}
+	@Override
+	public QnaVO getQnaReply(String qna_idx) {
+		return myDao.getQnaReply(qna_idx);
+	}
 
 }

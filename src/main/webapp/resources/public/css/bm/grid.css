@@ -26,6 +26,7 @@ text-align: center;
   display: grid;
   justify-content: center;
   align-items: center;
+  height: 50vh;
 }
 .grid_table{
 height: 40vh;

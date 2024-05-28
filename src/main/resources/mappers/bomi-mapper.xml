@@ -44,6 +44,10 @@ update members set member_pwd = #{member_pwd} where member_idx = #{member_idx}
 select * from qna where qna_idx=#{qna_idx}
 </select>
 
+<select id="getReply" resultType="qvo" parameterType="String">
+select * from qna_re where qna_idx=#{qna_idx}
+</select>
+
 <update id="modiQna" parameterType="qvo" >
 update qna set qna_title=#{qna_title}, qna_content=#{qna_content} where qna_idx=#{qna_idx}
 </update>

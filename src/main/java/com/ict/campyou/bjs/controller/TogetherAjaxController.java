@@ -1,10 +1,5 @@
 package com.ict.campyou.bjs.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.HashMap;
@@ -24,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.ict.campyou.bjs.dao.PromiseVO;
+import com.ict.campyou.bjs.dao.StarRatingVO;
 import com.ict.campyou.bjs.dao.TogetherCommentVO;
 import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
@@ -190,7 +186,8 @@ public class TogetherAjaxController {
 				case "2": list.setMember_grade("grade2.png"); break;
 				case "3": list.setMember_grade("grade3.png"); break;
 				case "4": list.setMember_grade("grade4.png"); break;
-				case "5": list.setMember_grade("grade5.png"); break;
+				default: list.setMember_grade("grade5.png"); break;
+//				case "5": list.setMember_grade("grade5.png"); break;
 				}
 			}
 		}
@@ -279,7 +276,8 @@ public class TogetherAjaxController {
 				case "2": pvo.setMember_grade("grade2.png"); break;
 				case "3": pvo.setMember_grade("grade3.png"); break;
 				case "4": pvo.setMember_grade("grade4.png"); break;
-				case "5": pvo.setMember_grade("grade5.png"); break;
+				default: pvo.setMember_grade("grade5.png"); break;
+//				case "5": pvo.setMember_grade("grade5.png"); break;
 				}
 				
 				int promiseCount = togetherService.getPomiseCount(pvo.getT_idx());
@@ -357,7 +355,8 @@ public class TogetherAjaxController {
 			case "2": k.setMember_grade("grade2.png"); break;
 			case "3": k.setMember_grade("grade3.png"); break;
 			case "4": k.setMember_grade("grade4.png"); break;
-			case "5": k.setMember_grade("grade5.png"); break;
+			default: k.setMember_grade("grade5.png"); break;
+//			case "5": k.setMember_grade("grade5.png"); break;
 			}
 		}
 		Map<String, Object> response = new HashMap<>();
@@ -375,6 +374,7 @@ public class TogetherAjaxController {
 			int wc_groups = Integer.parseInt(tcvo.getWc_groups());
 			int wc_step = Integer.parseInt(tcvo.getWc_step());
 			int wc_lev = Integer.parseInt(tcvo.getWc_lev());
+			int t_idx = Integer.parseInt(tcvo.getT_idx());
 			
 			wc_step++;
 			wc_lev++;
@@ -382,6 +382,7 @@ public class TogetherAjaxController {
 			map.put("wc_groups", wc_groups);
 			map.put("wc_step", wc_step);
 			map.put("wc_lev", wc_lev);
+			map.put("t_idx", t_idx);
 			int same = togetherService.getToCommentSame(map);
 			if(same > 0) {
 				if(wc_step == 1 && wc_lev == 1) {
@@ -391,22 +392,22 @@ public class TogetherAjaxController {
 					int groupStep = 0;
 					boolean found = false;
 					List<TogetherCommentVO> groupList = togetherService.getGroupList(map);
-					for (TogetherCommentVO k : groupList) {
-						if(wc_lev > Integer.parseInt(k.getWc_lev())) {
-							groupStep = Integer.parseInt(k.getWc_step());
-							found = true;
-							break;
+						for (TogetherCommentVO k : groupList) {
+							if(wc_step != Integer.parseInt(k.getWc_step()) && wc_lev > Integer.parseInt(k.getWc_lev())) {
+								groupStep = Integer.parseInt(k.getWc_step());
+								found = true;
+								break;
+							}
 						}
-					}
-					// 반복문이 끝난 후 작은 값을 찾지 못한 경우
-					if (!found && !groupList.isEmpty()) {
-					    TogetherCommentVO lastElement = groupList.get(groupList.size() - 1);
-					    groupStep = Integer.parseInt(lastElement.getWc_step()) + 1;
-					}
-					wc_step = groupStep;
-					map.put("wc_groups", wc_groups);
-					map.put("wc_step", wc_step);
-					int GSUpdate = togetherService.getToCommentGSUpdate(map);
+						// 반복문이 끝난 후 step이 같지않으면서 lev이 작은 값을 찾지 못한경우 같은 step lev에 있는 step 가져오기
+						if (!found && !groupList.isEmpty()) {
+						    TogetherCommentVO lastElement = groupList.get(groupList.size() - 1);
+						    groupStep = Integer.parseInt(lastElement.getWc_step()) + 1;
+						}
+						wc_step = groupStep;
+						map.put("wc_groups", wc_groups);
+						map.put("wc_step", wc_step);
+						int GSUpdate = togetherService.getToCommentGSUpdate(map);
 				}
 			}else {
 				int GSUpdate = togetherService.getToCommentGSUpdate(map);
@@ -515,7 +516,8 @@ public class TogetherAjaxController {
 				case "2": pvo.setMember_grade("grade2.png"); break;
 				case "3": pvo.setMember_grade("grade3.png"); break;
 				case "4": pvo.setMember_grade("grade4.png"); break;
-				case "5": pvo.setMember_grade("grade5.png"); break;
+				default: pvo.setMember_grade("grade5.png"); break;
+//				case "5": pvo.setMember_grade("grade5.png"); break;
 				}
 				
 				int proOKCount = togetherService.getPromiseMyCount(pvo.getMember_idx());
@@ -524,6 +526,15 @@ public class TogetherAjaxController {
 		}
 		return proPeopleDetail;
 	}
+	
+	@RequestMapping(value = "star_rating_check.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getStarRatingCheck(StarRatingVO srvo) throws Exception {
+		int result = togetherService.getStarRatingCheck(srvo);
+		return result;
+	}
+	
+	
 	
 	@RequestMapping(value = "promise_banish_member.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody

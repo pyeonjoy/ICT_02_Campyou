@@ -13,11 +13,7 @@ xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 xhttp.send("contentid=" + contentid);
 window.location.reload();
 }
-//function delHeart(contentid) {
-//
-//window.location.href="delHeart.do?contentid="+contentid
-//window.location.reload();
-//}
+
 
 if(data.length===0) {
 	const html = `<h4 class="nolist">관심 캠핑장이 없습니다. </h4>`;

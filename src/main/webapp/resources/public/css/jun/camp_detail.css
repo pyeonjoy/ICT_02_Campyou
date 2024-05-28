@@ -55,10 +55,11 @@
 }
 
 #detail_button {
-	position: relative;
-	left: 1268px;
-	top: -35px;
+    position: absolute;
+    left: 1349px;
+    top: 870px;
 }
+
 
 .camp_intro {
 	width: 90%;
@@ -178,6 +179,7 @@
 	height: 40px;
 	padding-left: 30px;
 	padding-right: 30px;
+	margin-right: 20px;
 }
 .review_submit{
 	height: 40px;
@@ -215,4 +217,7 @@
     max-height: 80%;
     height: auto;
     margin-top: 50px;
+}
+.heart-button{
+    width: 30px;
 }

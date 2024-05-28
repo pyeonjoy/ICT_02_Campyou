@@ -53,6 +53,8 @@ public class AdminController {
 			mv.addObject("board", admin_board);
 			mv.addObject("qna", admin_qna);
 			mv.addObject("report", admin_report);
+			mv.addObject("match", admin_match);
+			System.out.println(admin_match);
 			return mv;
 		}
 		return new ModelAndView("board/error");

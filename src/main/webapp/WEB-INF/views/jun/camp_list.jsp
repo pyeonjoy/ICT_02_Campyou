@@ -1,17 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="/resources/public/js/jun/camp_list.js"></script>
-<link rel="stylesheet" href="resources/public/css/bjs/together_list.css">
+<script src="${path}/resources/public/js/jun/camp_list.js"></script>
+<link rel="stylesheet" href="${path}/resources/public/css/bjs/together_list.css">
 <script src="https://kit.fontawesome.com/80123590ac.js" crossorigin="anonymous"></script>
 <%@ include file="../hs/profile_small_info.jsp" %>
 <title>캠핑장리스트</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <style type="text/css">
 .camp_list_container {
 	display: flex;
@@ -81,6 +83,7 @@
 }
 .page_button2 ul{
 	display: flex;
+	cursor: pointer;
 }
 .search_nowpagecolor{
 	padding: 0 0.5rem;
@@ -177,7 +180,7 @@
 		</div>
 		<div id="camp_list_show"></div>
 		<div class="page_button">
-			<ul class="to_paging camp_list_page">
+			<ul class="to_paging camp_list_page" style="cursor: pointer;">
 			</ul>
 		</div>
 	</div>

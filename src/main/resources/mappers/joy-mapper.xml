@@ -361,12 +361,16 @@ JOIN
 			SET member_active = -1
 			WHERE member_idx = #{member_idx}
 	</update>
-	<update id="addStar" parameterType="mvo">
-	UPDATE members
-	SET member_rating = (member_rating_all + #{new_rating}) / (rating_count + 1),
-	    rating_count = rating_count + 1,
-	    member_rating_all = member_rating_all + #{new_rating}
-	WHERE member_idx = #{member_idx}
-</update>
+	<insert id="addStar" parameterType="srvo">
+		insert into star_rating(t_idx, take_member_idx, give_member_idx, new_rating, sr_regdate)
+		values(#{t_idx}, #{take_member_idx}, #{give_member_idx}, #{new_rating}, sysdate())
+	</insert>
+	<update id="member_star_update" parameterType="srvo">
+		UPDATE members
+		SET member_rating = (member_rating_all + #{new_rating}) / (rating_count + 1),
+		    rating_count = rating_count + 1,
+		    member_rating_all = member_rating_all + #{new_rating}
+		WHERE member_idx = #{take_member_idx}
+	</update>
 
 </mapper>

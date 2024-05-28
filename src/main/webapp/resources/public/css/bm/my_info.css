@@ -115,6 +115,11 @@ white-space:nowrap;
   bottom: 0;
   right: -16rem;
 }
+#passwordError{
+	color: red;
+	font-size: 0.8rem;
+	transform: translateX(8rem);
+}
 .hidden {
   opacity: 0;
 }

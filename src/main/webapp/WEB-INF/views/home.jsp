@@ -41,7 +41,7 @@
 }
 
 body {
-	background-image: url(${path}/resources/images/back.png);
+	background-image: url(${path}/resources/images/bg.png);
 	width: 100%
 }
 
@@ -223,10 +223,10 @@ background-color: #FFBA34;
         }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<!-- <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script>
+<!--  <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb"></script> -->
 
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6ho1djyfzb&submodules=geocoder"></script>
- --><script  type="text/javascript" src="resources/js/MarkerClustering.js"></script>
+<script  type="text/javascript" src="resources/js/MarkerClustering.js"></script>
 
 <!-- 이펙트  -->
 <script type="text/javascript">
@@ -342,7 +342,8 @@ $(document).ready(function() {
 
 	                for (var i = 0, ii = markers.length; i < ii; i++) {
 //	                    console.log(markers[i], getClickHandler(i));
-	                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm)); // 클릭한 마커 핸들러
+	                    naver.maps.Event.addListener(markers[i], 'click', 
+	                    getClickHandler(i, campList[i].addr1, campList[i].firstimageurl, campList[i].facltnm));
 	                }
 	            }
 	            

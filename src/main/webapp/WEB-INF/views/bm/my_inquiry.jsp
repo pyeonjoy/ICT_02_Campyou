@@ -42,7 +42,24 @@
             </button>
        		 <button class="btn btn-cancel" onclick="history.back()">취소</button>
     		</div>
+    		<c:choose>
+    		<c:when test="${empty qvo2}">
+    		<div class="reply-container"><img src="${path}/resources/img/admin.png" alt="admin_img" class="admin_img"> <p class="reply">답변을 곧 드릴게요. </p></div>
+    		</c:when>
+    		<c:otherwise>
+	    		<div class="reply">
+	    			<p>
+	    		${qvo2.qna_content}
+	    			</p>
+	    			<span>
+	    			${qvo2.qna_date}
+	    			</span>
+	    		
+	    		</div>
+    		</c:otherwise>
+    		</c:choose>
   </div>
+  
   </div>
     <%@ include file="../hs/footer.jsp"%>
 </body>
