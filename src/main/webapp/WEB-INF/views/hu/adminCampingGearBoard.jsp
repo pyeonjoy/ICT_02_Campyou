@@ -143,13 +143,6 @@ body{
 										    </c:choose>
 										 </form>					
 						      		  </td>
-							        
-							        
-							        
-							        
-							        
-							        
-							        
 							            <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>
 							            <td>
 							                <!-- <td style="text-align: left; " /> -->
@@ -170,7 +163,7 @@ body{
 							                        <a href="camping_gear_detail.do?cp_idx=${k.cp_idx}&cPage=${paging.nowPage}">${k.member_nickname} ${k.member_name} ${k.kakao_nickname}</a> --%>
 							                        <span class="profile_show" data-memberidx="${k.admin_idx}">${k.admin_nickname}</span>						                         						                         	  
 							                        <span class="profile_show" data-memberidx="${k.member_idx}">${k.member_nickname}</span>
-							                        <span class="profile_show" data-memberidx="${k.member_idx}">${k.kakao_nickname}</span>
+							                        <span class="profile_show" data-memberidx="${k.member_idx}"></span>
 							                       
 							                        <c:if test="${k.member_grade == 1}">
 														<img class="member-grade" alt="a" src="resources/images/grade1.png" style="width: 17px; height: 17px;">
@@ -196,7 +189,7 @@ body{
 							                                
 							                                <span class="profile_show" data-memberidx="${k.admin_idx}">${k.admin_nickname}</span>						                         						                         	  
 							                         	    <span class="profile_show" data-memberidx="${k.member_idx}">${k.member_nickname}</span>
-							                                ${k.member_name} ${k.kakao_nickname}
+							                                ${k.member_name}
 							                                
 							                                <c:if test="${k.member_grade == 1}">
 																<img class="member-grade" alt="a" src="resources/images/grade1.png" style="width: 17px; height: 17px;">
@@ -218,7 +211,6 @@ body{
 							                            	${k.admin_nickname}
 							                                <span class="profile_show" data-memberidx="${k.member_idx}">${k.member_nickname}</span>
 								                            <span class="profile_show" data-memberidx="${k.member_name}">${k.member_name}</span>
-								                            <span class="profile_show" data-memberidx="${k.kakao_nickname}">${k.kakao_nickname}</span>
 							                                <c:if test="${k.member_grade == 1}">
 																<img class="member-grade" alt="a" src="resources/images/grade1.png" style="width: 17px; height: 17px;">
 														    </c:if>
