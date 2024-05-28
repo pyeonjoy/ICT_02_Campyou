@@ -89,7 +89,7 @@ $(document).ready(function() {
 	
 	
 	function report_go(member_idx) {
-        let form = $('<form action="session_check.do" method="POST">' +
+        let form = $('<form action="report_write.do" method="POST">' +
                 '<input type="hidden" name="member_idx" value="' + member_idx + '">' +
                 '</form>');
         $('body').append(form);

@@ -1,8 +1,11 @@
 package com.ict.campyou.joy.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,20 +62,33 @@ public class MainController {
 		}
 	
 	@RequestMapping("report_writeok.do")
-	public ModelAndView reportwriteOK(AdminVO avo, HttpServletRequest request,String member_idx) {
-		try {
-			ModelAndView mv = new ModelAndView("bjs/together_list");
-			HttpSession session = request.getSession();
-			MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-			avo.setMember_idx(mvo.getMember_idx());
-			int result = mainService.getReportWrite(avo);
-			if (result > 0) {
-				return mv;
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return new ModelAndView("board/error");
+	public ModelAndView reportwriteOK(AdminVO avo, String member_idx,HttpServletResponse response, HttpServletRequest request) throws IOException {
+	    try {
+	    	 ModelAndView mv = new ModelAndView();
+	        HttpSession session = request.getSession();
+	        MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
+
+	        if (mvo == null) {
+	        	response.setCharacterEncoding("UTF-8");
+		        response.setContentType("text/html; charset=utf-8");
+		        PrintWriter out = response.getWriter();
+	        	out.println("<script> alert('로그인 후 이용해주세요.'); window.location.href='login_form.do';</script>");
+	        	out.close();
+	        	mv.setViewName("hu/loginForm");
+	        	return mv;
+	        }
+
+	        avo.setMember_idx(mvo.getMember_idx());
+	        int result = mainService.getReportWrite(avo);
+	        System.out.println(result);
+	        if (result > 0) {
+	        	mv.setViewName("joy/report_write_close");
+	            return mv;
+	        }
+	    } catch (Exception e) {
+	        System.out.println(e);
+	    }
+	    return new ModelAndView("board/error");
 	}
 	
 	@RequestMapping("addstar.do")
