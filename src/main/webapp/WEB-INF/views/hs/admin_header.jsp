@@ -14,7 +14,7 @@
 <div class="header" id="header">
     <div class="header_wrap">
         <div class="header_left">
-            <a href="/"> 
+            <a href="admin_main.do"> 
                 <img class="logo-03" src="/resources/img/logo-03.png" alt="CampYou" >
             </a>
             <ul>
@@ -23,9 +23,9 @@
         </div>
         <div class="header_right">
             <ul>
-            <c:if test="${admin != null}">
+           <%--  <c:if test="${admin != null}">
 								<li><a href="admin_main.do"><img class="icon admin" src="resources/img/icon_admin.png" alt="management"></a></li>
-			</c:if>
+			</c:if> --%>
             <c:choose>
                 <c:when test="${admin != null}">
 				<li><a href="logout_form.do">로그아웃</a></li>
