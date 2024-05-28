@@ -47,11 +47,20 @@
 				<c:forEach var="chat" items="${chatList}">
 					<c:if test="${chat.send_idx != my_idx }">
 						<div class="li-msg li-msg--1">
-							<img src="${path}/resources/img/cat.png" alt="user_img"
-								class="img_for_user1" /> <span
-								class="user-message user--1-message">${chat.msg_content}</span>
+							<c:choose>
+								<c:when test="${my_idx eq opener.member_idx}">
+									<img src="${path}/resources/images/${joiner.member_img}"
+										alt="user_img" class="img_for_user1" />
+									<span class="user-message user--1-message">${chat.msg_content}</span>
+								</c:when>
+								<c:otherwise>
+									<img src="${path}/resources/images/${opener.member_img}"
+										alt="user_img" class="img_for_user1" />
+									<span class="user-message user--1-message">${chat.msg_content}</span>
+								</c:otherwise>
+							</c:choose>
 						</div>
-					</c:if>
+					</c:if>					
 					<c:if test="${chat.send_idx == my_idx}">
 						<div class="li-msg li-msg--2">
 							<span class="user-message user--2-message">${chat.msg_content}</span>
