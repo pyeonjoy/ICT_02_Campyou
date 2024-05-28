@@ -56,6 +56,8 @@ public class MainController {
 		ModelAndView mv = new ModelAndView("joy/report_write");
 		HttpSession session = request.getSession();
 		String reportmember_idx = member_idx; 
+		System.out.println(member_idx);
+		System.out.println(reportmember_idx);
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
 		mv.addObject("reportmember_idx",reportmember_idx);
 		return mv;
@@ -72,7 +74,7 @@ public class MainController {
 	        	response.setCharacterEncoding("UTF-8");
 		        response.setContentType("text/html; charset=utf-8");
 		        PrintWriter out = response.getWriter();
-	        	out.println("<script> alert('로그인 후 이용해주세요.'); window.location.href='login_form.do';</script>");
+		        out.println("<script> alert('로그인 후 이용해주세요.'); window.close();</script>");
 	        	out.close();
 	        	mv.setViewName("hu/loginForm");
 	        	return mv;

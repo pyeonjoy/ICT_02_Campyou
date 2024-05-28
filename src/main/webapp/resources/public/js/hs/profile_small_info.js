@@ -88,17 +88,9 @@ $(document).ready(function() {
     });
 	
 	
-	function report_go(member_idx) {
-        let form = $('<form method="POST">' +
-                '<input type="hidden" name="member_idx" value="' + member_idx + '">' +
-                '</form>');
-        $('body').append(form);
-        let goForm = window.open('report_write.do', '_blank','width=580,height=600,scrollbars=no,resizable=no,status=yes,menubar=no,toolbar=no,top=50,left=50');
-        form.target = '_blank';
-        form.action = 'report_write.do';
-        form.submit();
+function report_go(member_idx) {
+        window.open('report_write.do?member_idx=' + member_idx, '_blank','width=580,height=600,scrollbars=no,resizable=no,status=yes,menubar=no,toolbar=no,top=50,left=50');
 
-        form.submit();
     }
 		
 	$(document).on('click', '#report_go', function() {
