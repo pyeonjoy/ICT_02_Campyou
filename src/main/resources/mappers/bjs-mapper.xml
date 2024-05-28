@@ -4,11 +4,11 @@
  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bjs">
 	<select id="count" resultType="int">
-		select count(*) from board_with
+		select count(*) from board_with where t_active = 0
 	</select>
 	<select id="count2" parameterType="Map" resultType="int">
 		select count(*) from board_with b 
-		where 
+		where b.t_active = 0 and 
 	    <choose>
 	        <when test="searchType == '제목'">
 	            b.t_subject like concat('%', #{searchKeyword}, '%')
@@ -193,20 +193,23 @@
 		update board_with_comment set wc_content = #{wc_content} where wc_idx = #{wc_idx}
 	</update>
 	<select id="my_board_with_count" parameterType="String" resultType="int">
-		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate > now()
+		select count(*)
+	    from board_with bw
+	    join with_promise wp on bw.t_idx = wp.t_idx
+	    where wp.member_idx = #{member_idx} and bw.t_active = 0 and bw.t_startdate > now() and wp.pm_state = 1
 	</select>
 	<select id="promise_ing" parameterType="Map" resultType="tvo">
 	    select bw.*, wp.pm_state, wp.pm_master
 	    from board_with bw
 	    join with_promise wp on bw.t_idx = wp.t_idx
-	    where wp.member_idx = #{member_idx} and wp.pm_state = 1 and bw.t_active = 0 and bw.t_startdate > now()
+	    where wp.member_idx = #{member_idx} and bw.t_active = 0 and bw.t_startdate > now() and wp.pm_state = 1
 	    order by bw.t_startdate desc limit #{limit} offset #{offset}
 	</select>
 	<select id="promise_people_detail" parameterType="String" resultType="pvo">
 	    select wp.*, m.member_img, m.member_dob, m.member_nickname, m.member_grade, m.member_gender
 	    from with_promise wp 
 	    join members m on wp.member_idx = m.member_idx
-	    where wp.t_idx = #{t_idx} and wp.pm_state in (1, 2)
+	    where wp.t_idx = #{t_idx} and wp.pm_state in (1, 2, 4)
 	    order by wp.pm_master desc
 	</select>
 	<select id="star_rating_check" parameterType="srvo" resultType="int">
@@ -216,30 +219,63 @@
 		update with_promise set pm_state = 3 where member_idx = #{member_idx} and t_idx = #{t_idx}
 	</update>
 	<select id="my_board_with_ready_count" parameterType="String" resultType="int">
-		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0 and t_startdate &lt;= now() and t_enddate >= now()
+		select count(*)
+	    from board_with bw
+	    join with_promise wp on bw.t_idx = wp.t_idx
+	    where wp.member_idx = #{member_idx} and bw.t_active = 0 and wp.pm_state = 4
 	</select>
 	<select id="promise_ready" parameterType="Map" resultType="tvo">
 		select bw.*, wp.pm_state, wp.pm_master
 	    from board_with bw
 	    join with_promise wp on bw.t_idx = wp.t_idx
-	    where wp.member_idx = #{member_idx} and wp.pm_state = 1 and bw.t_active = 0 and bw.t_startdate &lt;= now() and bw.t_enddate >= now()
+	    where wp.member_idx = #{member_idx} and bw.t_active = 0 and wp.pm_state = 4
 	    order by bw.t_startdate desc limit #{limit} offset #{offset}
 	</select>
 	<select id="my_board_with_end_count" parameterType="String" resultType="int">
-		select count(*) from board_with where member_idx = #{member_idx} and t_active = 0 and t_enddate &lt; now()
+		select count(*)
+	    from board_with bw
+	    join with_promise wp on bw.t_idx = wp.t_idx
+	    where wp.member_idx = #{member_idx} and bw.t_active = 0 and wp.pm_state = 2
 	</select>
 	<select id="promise_End" parameterType="Map" resultType="tvo">
 		select bw.*, wp.pm_state, wp.pm_master
 	    from board_with bw
 	    join with_promise wp on bw.t_idx = wp.t_idx
-	    where wp.member_idx = #{member_idx} and wp.pm_state = 1 and bw.t_active = 0 and bw.t_enddate &lt; now()
+	    where wp.member_idx = #{member_idx} and bw.t_active = 0 and wp.pm_state = 2
 	    order by bw.t_startdate desc limit #{limit} offset #{offset}
 	</select>
+	<update id="startdate_update" parameterType="String">
+		update board_with set t_startdate = sysdate() where t_idx = #{t_idx}
+	</update>
 	<update id="enddate_update" parameterType="String">
 		update board_with set t_enddate = sysdate() where t_idx = #{t_idx}
+	</update>
+	<update id="promise_comfirm" parameterType="pvo">
+		update with_promise set pm_state = 4 where t_idx = #{t_idx} and member_idx = #{member_idx}
 	</update>
 	<update id="confirm_partner" parameterType="pvo">
 		update with_promise set pm_state = 2, pm_regdate_ok = sysdate() where t_idx = #{t_idx} and member_idx = #{member_idx}
 	</update>
-	
+	<select id="start_camp_chk" parameterType="String" resultType="pvo">
+		SELECT wp.t_idx
+		FROM with_promise wp
+		JOIN board_with bw ON wp.t_idx = bw.t_idx
+		WHERE wp.member_idx = #{member_idx}
+		AND wp.pm_state = 1
+		AND bw.t_startdate &lt;= NOW()
+	</select>	
+	<select id="end_camp_chk" parameterType="String" resultType="pvo">
+		SELECT wp.t_idx
+		FROM with_promise wp
+		JOIN board_with bw ON wp.t_idx = bw.t_idx
+		WHERE wp.member_idx = #{member_idx}
+		AND wp.pm_state = 1
+		AND DATE_ADD(bw.t_enddate, INTERVAL 2 DAY) &lt;= NOW()
+	</select>	
+	<update id="start_wp_state_update" parameterType="String">
+		update with_promise set pm_state = 4 where t_idx = #{t_idx} and pm_state = 1
+	</update>
+	<update id="end_wp_state_update" parameterType="String">
+		update with_promise set pm_state = 2 where t_idx = #{t_idx} and pm_state = 1
+	</update>
 </mapper>

@@ -6,8 +6,8 @@
 
 	<!-- Create Account & Login & find ID and Pwd -->
 	<insert id="insert" parameterType="mvo">
-		insert into members(member_id, member_name, member_pwd, member_nickname, kakao_nickname, member_dob, member_phone, member_email, member_gender, member_regdate)
-			values(#{member_id}, #{member_name},#{member_pwd},#{member_nickname}, #{kakao_nickname}, #{member_dob}, #{member_phone},#{member_email}, #{member_gender}, sysdate())
+		insert into members(member_id, member_name, member_pwd, member_nickname, member_dob, member_phone, member_email, member_gender, member_regdate)
+			values(#{member_id}, #{member_name},#{member_pwd},#{member_nickname}, #{member_dob}, #{member_phone},#{member_email}, #{member_gender}, sysdate())
 	</insert>
 	
 	<!-- 카카오 로그인 -->
@@ -189,8 +189,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM board_free
  		</selectKey>
- 		insert into board_free(member_idx, admin_idx, b_type, b_subject, member_name,  member_nickname, kakao_nickname, admin_nickname, member_grade, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name)
- 			values(#{member_idx}, #{admin_idx}, #{b_type}, #{b_subject}, #{member_name}, #{member_nickname}, #{kakao_nickname}, #{admin_nickname}, #{member_grade}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{bf_name})
+ 		insert into board_free(member_idx, admin_idx, b_type, b_subject, member_name,  member_nickname, admin_nickname, member_grade, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name)
+ 			values(#{member_idx}, #{admin_idx}, #{b_type}, #{b_subject}, #{member_name}, #{member_nickname}, #{admin_nickname}, #{member_grade}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{bf_name})
  	</insert>
  	
  	<select id="comm_board_detail" parameterType="String" resultType="cbvo">
@@ -243,8 +243,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM f_comment
  		</selectKey>
- 		insert into f_comment(member_nickname, kakao_nickname, member_name, admin_nickname, content, write_date, b_idx, groups, step, lev)
- 			values(#{member_nickname}, #{kakao_nickname}, #{member_name}, #{admin_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, 0, 0)
+ 		insert into f_comment(member_nickname, member_name, admin_nickname, content, write_date, b_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{member_name}, #{admin_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, 0, 0)
  	</insert>
  	
  	<delete id="comment_delete" parameterType="String">
@@ -338,8 +338,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(cp_idx),0)+1) as groups FROM board_camp
  		</selectKey>
- 		insert into board_camp(member_idx, admin_idx, cp_subject, member_name, member_nickname, kakao_nickname, admin_nickname, member_grade, cp_content, cp_pwd, cpf_name, cp_regdate, cp_hit, cp_active, cp_notice, groups, step, lev)
- 			values(#{member_idx}, #{admin_idx}, #{cp_subject}, #{member_name}, #{member_nickname}, #{kakao_nickname}, #{admin_nickname}, #{member_grade}, #{cp_content},#{cp_pwd},#{cpf_name}, sysdate(), 0, 1, 0, #{groups}, 0, 0)
+ 		insert into board_camp(member_idx, admin_idx, cp_subject, member_name, member_nickname, admin_nickname, member_grade, cp_content, cp_pwd, cpf_name, cp_regdate, cp_hit, cp_active, cp_notice, groups, step, lev)
+ 			values(#{member_idx}, #{admin_idx}, #{cp_subject}, #{member_name}, #{member_nickname}, #{admin_nickname}, #{member_grade}, #{cp_content},#{cp_pwd},#{cpf_name}, sysdate(), 0, 1, 0, #{groups}, 0, 0)
  	</insert>
  	
  	
@@ -382,8 +382,8 @@
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(cp_idx),0)+1) as groups FROM c_comment
  		</selectKey>
- 		insert into c_comment(member_nickname, kakao_nickname, member_name, admin_nickname, content, write_date, cp_idx, groups, step, lev)
- 			values(#{member_nickname}, #{kakao_nickname}, #{member_name}, #{admin_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, 0, 0)
+ 		insert into c_comment(member_nickname, member_name, admin_nickname, content, write_date, cp_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{member_name}, #{admin_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, 0, 0)
  	</insert>
  	
  	<!-- 댓글 삭제 -->
@@ -410,8 +410,8 @@
  	 
  	 <!-- 댓글댓글 -->
  	 <insert id="camping_gear_ans_insert" parameterType="cgbcvo">
- 	 	insert into c_comment(member_nickname, kakao_nickname, member_name, admin_nickname, content, write_date, cp_idx, groups, step, lev)
- 			values(#{member_nickname}, #{kakao_nickname}, #{member_name}, #{admin_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, #{step}, #{lev})
+ 	 	insert into c_comment(member_nickname, member_name, admin_nickname, content, write_date, cp_idx, groups, step, lev)
+ 			values(#{member_nickname}, #{member_name}, #{admin_nickname}, #{content}, sysdate(), #{cp_idx}, #{groups}, #{step}, #{lev})
  	 </insert>
  	 
  	 <!-- 댓글댓글 목록 디테일 가져오기 -->
@@ -486,7 +486,7 @@
  	 
  	 <!-- 자유 게시판 최대 권한 구하기 --> 
  	 <select id="getGread" parameterType="String" resultType="int">
- 	 	SELECT max(member_grade) FROM board_free 	where member_idx = #{member_idx}
+ 	 	SELECT max(member_grade) FROM board_free where member_idx = #{member_idx}
  	 </select>
  	 
  	 <!-- 자유 게시판 쵀대 권한으로 업데이트 하기 -->
@@ -498,7 +498,7 @@
  	 
  	 <!-- 캠핑보드 게시판 최대 권한 구하기 --> 
  	 <select id="get_Gear_Grade" parameterType="String" resultType="int">
- 	 	SELECT max(member_grade) FROM board_camp 	where member_idx = #{member_idx}
+ 	 	SELECT max(member_grade) FROM board_camp where member_idx = #{member_idx}
  	 </select>
  	 
  	 <!-- 캠핑보드 게시판 쵀대 권한으로 업데이트 하기 -->

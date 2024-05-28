@@ -92,9 +92,9 @@ public class TogetherController {
 		        case 2: ageGroup = "20대"; break;
 		        case 3: ageGroup = "30대"; break;
 		        case 4: ageGroup = "40대"; break;
-		        case 5: ageGroup = "50대 이상"; break;
-		        case 6: ageGroup = "60대 이상"; break;
-		        case 7: ageGroup = "70대 이상"; break;
+		        case 5: ageGroup = "50대"; break;
+		        case 6: ageGroup = "60대"; break;
+		        case 7: ageGroup = "70대"; break;
 		        default: ageGroup = "80대 이상"; break;
 		    }
 		    tvo.setMember_dob(ageGroup);
@@ -121,13 +121,13 @@ public class TogetherController {
 	@RequestMapping("together_Write.do")
 	public ModelAndView getTogetherWrite(TogetherVO tvo, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo"); 
-		if(memberUser != null) {
-			mv.setViewName("bjs/together_write");
-		}else {
-			session.setAttribute("requestPage", "together_Write.do");
-            mv.setViewName("redirect:login_form.do");
-		}
+//		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo"); 
+//		if(memberUser != null) {
+		mv.setViewName("bjs/together_write");
+//		}else {
+//			session.setAttribute("requestPage", "together_Write.do");
+//            mv.setViewName("redirect:login_form.do");
+//		}
 		return mv;
 	}
 	
@@ -151,9 +151,9 @@ public class TogetherController {
 	        case 2: ageGroup = "20대"; break;
 	        case 3: ageGroup = "30대"; break;
 	        case 4: ageGroup = "40대"; break;
-	        case 5: ageGroup = "50대 이상"; break;
-	        case 6: ageGroup = "60대 이상"; break;
-	        case 7: ageGroup = "70대 이상"; break;
+	        case 5: ageGroup = "50대"; break;
+	        case 6: ageGroup = "60대"; break;
+	        case 7: ageGroup = "70대"; break;
 	        default: ageGroup = "80대 이상"; break;
 	    }
 	    tvo.setMember_dob(ageGroup);
@@ -238,6 +238,7 @@ public class TogetherController {
 		mv.addObject("cPage", cPage);
 		return mv;
 	}
+	
 	
 	
 }

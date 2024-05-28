@@ -34,11 +34,10 @@
 
 	
 	<!-- 로그인 인테셉트 -->
-	<!-- 만들어진놈 -->
-	<!-- <beans:bean id="log_inter" class="com.ict.common.LoginInterceptor"/> -->
-<!-- 	<interceptors>
+	<beans:bean id="log_inter" class="com.ict.campyou.common.LoginInterseptor" />
+	<interceptors>
 		<interceptor>
-			//조이			
+<!-- 			조이			 -->
 			<mapping path="/member_search.do"/>
 			<mapping path="/admin_member_list.do"/>
 			<mapping path="/admin_member_detail.do"/>
@@ -62,28 +61,20 @@
 			<mapping path="/popup_delete.do"/>
 			<mapping path="/popup_update.do"/>
 			
-			준수
-			<mapping path="/popup_update.do"/>
+<!-- 			준수 -->
+			<mapping path="/together_Write.do"/>
 			
-			보미
-			<mapping path="/popup_update.do"/>
+<!-- 			보미 -->
+			<mapping path="/my_main.do"/>
 			
-			해성
-			<mapping path="/popup_update.do"/>
+<!-- 			해성 -->
 			
-			한욱
-			<mapping path="/popup_update.do"/>
+<!-- 			한욱 -->
 			
-			준형
-			<mapping path="/popup_update.do"/>
+<!-- 			준형 -->
 			
-			
-			
-			
-			
-			
-			위에 만들어진놈을 참조하는 놈
-			<beans:ref bean="log_inter"/>
+			<beans:ref bean="log_inter" />
 		</interceptor>
-	</interceptors> -->
+	</interceptors>
+			
 </beans:beans>

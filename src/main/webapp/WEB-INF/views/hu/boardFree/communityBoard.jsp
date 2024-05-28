@@ -78,13 +78,13 @@
 							                <c:choose>
 							                    <c:when test="${not empty adminInfo}">
 							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.admin_nickname}</a> 
-							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname} ${k.member_name} ${k.kakao_nickname}</a>
+							                        <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname} ${k.member_name}</a>
 							                    </c:when>
 							                    <c:otherwise>
 							                        <c:choose>
 							                            <c:when test="${memberInfo.member_nickname == k.member_nickname}">
 							                            	<a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${adminInfo.admin_nickname}</a>
-							                                <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname} ${k.kakao_nickname}</a>             
+							                                <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}" style="color: black;">${k.member_nickname}</a>             
 							                            </c:when>
 							                            <c:otherwise>
 							                            	<span style="color: black;">${k.admin_nickname}</span> 
@@ -119,7 +119,7 @@
 							                       <a href="commBoard_detail.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.member_nickname} ${k.member_name} ${k.kakao_nickname}</a> --%>
 							                       <span class="profile_show" data-memberidx="${k.admin_idx}">${k.admin_nickname}</span>						                         						                         	  
 							                       <span class="profile_show" data-memberidx="${k.member_idx}">${k.member_nickname}</span>
-							                       <span class="profile_show" data-memberidx="${k.member_idx}">${k.kakao_nickname}</span>
+							                       <span class="profile_show" data-memberidx="${k.member_idx}"></span>
 							                       
 							                       <c:if test="${k.member_grade == 1}">
 													    <img class="member-grade" alt="a" src="resources/images/grade1.png" style="width: 17px; height: 17px;">
@@ -145,7 +145,7 @@
 							                         	  
 							                         	  <span class="profile_show" data-memberidx="${k.admin_idx}">${k.admin_nickname}</span>						                         						                         	  
 							                         	  <span class="profile_show" data-memberidx="${k.member_idx}">${k.member_nickname}</span>
-							                         	  ${k.member_name} ${k.kakao_nickname}
+							                         	  ${k.member_name}
 							                         	  
 							                         	  <c:if test="${k.member_grade == 1}">
 															    <img class="member-grade" alt="a" src="resources/images/grade1.png" style="width: 17px; height: 17px;">
@@ -167,7 +167,7 @@
 							                            	${k.admin_nickname}						     
 								                            <span class="profile_show" data-memberidx="${k.member_idx}">${k.member_nickname}</span>
 								                            <span class="profile_show" data-memberidx="${k.member_name}">${k.member_name}</span>
-								                            <span class="profile_show" data-memberidx="${k.kakao_nickname}">${k.kakao_nickname}</span>
+								                            <span class="profile_show" data-memberidx="${k.kakao_nickname}"></span>
 							                            	<%-- ${k.member_nickname}
 							                            		 ${k.member_name}
 							                            	     ${k.kakao_nickname} --%>

@@ -16,9 +16,27 @@
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <script>
 $(document).ready(function() {
-    promiseApplyList();
+//     promiseApplyList();
+    with_promise_state_update();
 //     setInterval(promiseApplyList, 5000);
 });
+
+function with_promise_state_update() {
+	let memberIdx = document.getElementById("memberIdx").value;
+	$.ajax({
+        url: 'with_promise_state_update.do',
+        type: 'post',
+        data: {
+            member_idx: memberIdx
+        },
+        success: function(data) {
+        	promiseApplyList();
+        },
+        error: function(xhr, status, error) {
+        	console.error(error);
+        }
+    });
+}
 
 $(document).on('click', '.btn-accept', function() {
 	let $accompanyList = $(this).closest('.accompany_list');
@@ -114,7 +132,7 @@ function promiseApplyList() {
 	            }
         	} else {
         		let html = '<div class="no-data-message">';
-        		html += '<p class="no-data-messageP">동행신청이 없습니다.</p>';
+        		html += '<h4 class="no-data-messageP">동행신청이 없습니다.</h4>';
         		html += '</div>';
                 $('.accompany_container').replaceWith(html);
             }
@@ -127,8 +145,9 @@ function promiseApplyList() {
         error: function(xhr, status, error) {
         	console.error(error);
         }
-    });4
+    });
 };
+
 </script>
 </head>
 <body class="body">
