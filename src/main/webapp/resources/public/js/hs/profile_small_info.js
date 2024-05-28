@@ -44,8 +44,10 @@ $(document).ready(function() {
     	         age--;
     	     }
     	     
-			 if (age >= 70) {
-				 ageGroup = "70대 이상";
+    	     if (age >= 80) {
+    	    	 ageGroup = "80대 이상";
+    	     } else if (age >= 70) {
+				 ageGroup = "70대";
 			 } else if (age >= 60) {
 				 ageGroup = "60대";
 			 } else if (age >= 50) {

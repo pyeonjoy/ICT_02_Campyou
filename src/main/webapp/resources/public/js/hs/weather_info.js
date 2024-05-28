@@ -1,9 +1,9 @@
-let daylabel = "";
-let daydate = "";
-let dayweek = "";
-let timeonly = 0;
-let tmFc = "";
 $(document).ready(function () {
+	let daydate = "";
+	let dayweek = "";
+	let timeonly = 0;
+	let tmFc = "";
+	let daylabel = "";
     const regions = [
         { city: "서울", taRegId: "11B10101", wfRegId: "11B00000" },
         { city: "춘천", taRegId: "11D10301", wfRegId: "11D10000" },
@@ -16,7 +16,6 @@ $(document).ready(function () {
         { city: "부산", taRegId: "11H20201", wfRegId: "11H20000" },
         { city: "제주", taRegId: "11G00201", wfRegId: "11H20000" }
     ];
-
 
     regions.forEach(region => {
         let taRegId = region.taRegId;
@@ -145,9 +144,14 @@ $(document).ready(function () {
 
             },
             error: function () {
-                console.log("읽기 실패");
+                weatherfail();
             }
         });
+    }
+    
+    function weatherfail() {
+    	$("#weather_info_list").append("불러오기 실패");
+    	console.log("읽기 실패");
     }
 
     function getWeather3after(announceTime, taRegId, wfRegId) {
@@ -190,7 +194,7 @@ $(document).ready(function () {
                 creatItemReady(c_date, taRegId);
             },
             error: function () {
-                console.log("읽기 실패");
+                weatherfail();
             }
         });
 
@@ -220,7 +224,7 @@ $(document).ready(function () {
                 creatItemReady(c_date, taRegId);
             },
             error: function () {
-                console.log("읽기 실패");
+                weatherfail();
             }
         });
         
@@ -229,8 +233,13 @@ $(document).ready(function () {
             if (tempDataReady && wfDataReady) {
                 for (let i = 0; i < tempArr.length; i += 2) {
                 	let uDate = new Date();
+                	let d7Date = new Date();
+                	
                     uDate.setDate(c_date.getDate() + (i / 2) + 3);
                     daydate = uDate.toLocaleDateString().slice(5, 11);
+                    
+                    d7Date.setDate(c_date.getDate() + 7);
+                    let d7after = d7Date.toLocaleDateString().slice(5, 11);
                     
                     /* 중복 처리 */
                     let dateExists = false;
@@ -260,6 +269,9 @@ $(document).ready(function () {
                     weatherItem += "<li class='day_item'>";
                     weatherItem += "<div class='day_date_week'>";
                     weatherItem += "<span class='daydate'>" + daydate + "</span><span class='dayweek'>(" + dayweek + ")</span>";
+                    if (daydate == d7after){
+                    	weatherItem += "<span class='dayweek'> 일주일 뒤 </span>";
+                    }
                     weatherItem += "</div>";
 
                     weatherItem += "<div class='temperatures'>";
@@ -326,7 +338,6 @@ $(document).ready(function () {
     $(document).ready(function() {
         $('.weather-btn-box').click(function() {
             $('.weather_info_container').toggle();
-            console.log("1");
         });
     });
     
