@@ -108,7 +108,7 @@
 						<tr align="center">
 							<td colspan="2">
 								<input type="hidden" name="b_idx" value="${cbvo.b_idx}">
-								<input type="hidden" name="cPage" value="${cPage}">
+								<%-- <input type="hidden" name="cPage" value="${cPage}"> --%>
 								<input id="listId" type="button" value="목록" onclick="comm_board_list(this.form)" /> 
 								<input id="inputId" type="button" value="수정" onclick="comm_board_update_ok(this.form)" /> 
 								<input id="cancelId" type="reset" value="취소" />

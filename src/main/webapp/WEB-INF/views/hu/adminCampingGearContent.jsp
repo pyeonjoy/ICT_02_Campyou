@@ -7,8 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 게시글 내용</title>
+<%@ include file="../hs/header.jsp" %> 
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardContent.css">
 <script type="text/javascript">
 	function camping_gear_board_list(f) {
@@ -25,6 +26,7 @@
 		f.submit()
 	} */
 	function camping_gear_admin_delete(f) {
+		alert("정말 삭제하시겠습니까?");
 		f.action="admin_camping_gear_admin_delete.do";
 		f.submit();
 	}
@@ -53,6 +55,7 @@
 	    const updateBtn = document.createElement('input');
 	    updateBtn.type = 'button';
 	    updateBtn.value = '수정완료';
+	    updateBtn.className = 'btn-color';
 	    updateBtn.onclick = function() {
 	        // 수정된 내용을 서버로 전송
 	        f.action="admin_cgb_comment_update.do";
@@ -148,9 +151,9 @@ textarea {
 </style>
 </head>
 <body>
+<h2>관리자: 캠핑추천 게시글</h2>
+<hr>
 <div>
-	<h2>관리자: 캠핑추천 게시글</h2>
-	<hr>
 	<form method="post">
 	<table>
 	<tbody>
@@ -190,7 +193,7 @@ textarea {
      <c:choose>
      		<c:when test="${not empty adminInfo}">
      				<input type="hidden" value="${cgbvo.cp_idx}" name="cp_idx"> 
-	     			<input type="hidden" value="${cPage}" name="cPage">
+	     			<%-- <input type="hidden" value="${cPage}" name="cPage"> --%>
 	        		<input class="contentBtn" type="button" value="목록" onclick="camping_gear_board_list(this.form)" />
 	        		<input class="contentBtn" type="button" value="수정" onclick="camping_gear_update(this.form)" />
 	        		<!-- <input class="contentBtn" type="button" value="삭제" onclick="camping_gear_delete(this.form)" /> -->
@@ -365,5 +368,6 @@ textarea {
 		</c:choose>	
 	</c:otherwise>
 </c:choose>
+<%@ include file="../hs/footer.jsp" %>
 </body>
 </html>

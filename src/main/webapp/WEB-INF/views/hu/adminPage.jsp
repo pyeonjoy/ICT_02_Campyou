@@ -72,9 +72,9 @@ body{
 								<form method="post">
 								    <c:choose>
 								        <c:when test="${k.admin_id == 'admin'}">
-								        <td class="admin-write-color" style="background-color: #F1912C;">슈퍼관리자</td>
+								        <td class="admin-write-color" style="background-color: #C0C0C0;">슈퍼관리자</td>
 								         <%--  <td class="admin-write-color" style="background-color: lightyellow;">${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td> --%>
-								            <td class="admin-write-color" style="background-color: #F1912C;">${k.admin_id} <br>
+								            <td class="admin-write-color" style="background-color: #C0C0C0;">${k.admin_id} <br>
 								            	
 								            	<c:choose>
 								            		<c:when test="${adminInfo.admin_id eq 'admin'}">
@@ -86,10 +86,10 @@ body{
 								            		</c:otherwise>
 								            	</c:choose> 
 								            </td>
-								            <td class="admin-write-color" style="background-color: #F1912C;">${k.admin_name}</td>
-								            <td class="admin-write-color" style="background-color: #F1912C;">${k.admin_nickname}</td>
-								            <td class="admin-write-color" style="background-color: #F1912C;">${k.admin_phone}</td>
-								            <td class="admin-write-color" style="background-color: #F1912C;">${k.admin_email}</td>
+								            <td class="admin-write-color" style="background-color: #C0C0C0;">${k.admin_name}</td>
+								            <td class="admin-write-color" style="background-color: #C0C0C0;">${k.admin_nickname}</td>
+								            <td class="admin-write-color" style="background-color: #C0C0C0;">${k.admin_phone}</td>
+								            <td class="admin-write-color" style="background-color: #C0C0C0;">${k.admin_email}</td>
 								        </c:when>						        
 								        <c:otherwise>
 								            <td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>

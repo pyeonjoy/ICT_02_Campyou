@@ -7,8 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글 내용</title>
+<%@ include file="../../hs/header.jsp" %> 
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardContent.css">
 <script type="text/javascript">
 	function comm_board_list(f) {
@@ -38,6 +39,7 @@
 		f.submit();
 	}
 	function comm_board_admin_delete(f) {
+		alert("정말 삭제하시겠습니까?");
 		f.action="comm_board_admin_delete.do";
 		f.submit();
 	}
@@ -52,6 +54,7 @@
 	    const updateBtn = document.createElement('input');
 	    updateBtn.type = 'button';
 	    updateBtn.value = '수정완료';
+	    updateBtn.className = 'btn-color';
 	    updateBtn.onclick = function() {
 	        // 수정된 내용을 서버로 전송
 	        f.action="comment_update.do";
@@ -134,12 +137,23 @@ textarea {
 #textarea2{
 	resize: none;
 }
+.btn-color {
+	margin: 0 5px; /* 각 버튼 사이의 여백 */
+    padding: 4px 8px;
+    background-color: #003300;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+	
+}
 </style>
 </head>
 <body>
+<h2>게시글</h2>
+<hr>
 <div>
-	<h2>게시글</h2>
-	<hr>
 	<form method="post">
 	<table>
 	<tbody>
@@ -198,8 +212,6 @@ textarea {
      					<c:choose>
      						<c:when test="${memberInfo.member_nickname eq null}">
      							<input class="contentBtn" type="button" value="목록" onclick="comm_board_list(this.form)" />
-     							<input type="hidden" name="b_idx" value="${cbvo.b_idx}">
-     							<input type="hidden" value="${cPage}" name="cPage">
      						</c:when>
      						<c:otherwise>
      							<input type="hidden" name="b_idx" value="${cbvo.b_idx}">
@@ -264,7 +276,9 @@ textarea {
 					<c:otherwise>
 						<span>별명 : ${k.admin_nickname} ${k.member_nickname} ${k.kakao_nickname} ${k.member_name}</span>&nbsp;&nbsp;&nbsp;&nbsp;
 		                <span>날짜 : ${k.write_date.substring(0,10)}</span>
-		                <p>${k.content}</p>
+		                <br><br>
+						<p>${k.content}</p>	
+						<br>
 		                <textarea rows="3" cols="40" name="content" placeholder="답글을 입력하세요!"></textarea>
 		                <input class="btn-color" type="button" value="댓글삭제" onclick="comment_delete(this.form)">
 		                <input class="btn-color" type="button" id="updateGo" value="댓글수정" onclick="comment_update(this.form)">
@@ -304,10 +318,11 @@ textarea {
 					<c:forEach var="k" items="${commBoard_list2}">
 						<div class="reply-output2" >
 							<form method="post">
-								<span>별명 : ${k.member_nickname} ${k.admin_nickname} ${k.member_name} ${k.kakao_nickname}</span> &nbsp;&nbsp;&nbsp;&nbsp;
+								<span>별명 : ${k.member_nickname} ${k.admin_nickname} ${k.member_name} ${k.kakao_nickname}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<span>날짜 : ${k.write_date.substring(0,10)}</span>
-								<p>${k.content}</p>
-								
+								<br><br>
+								<p>${k.content}</p>	
+								<br>			
 								  <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach>
 								<c:choose>
 									<c:when test="${memberInfo.member_nickname == k.member_nickname}">	 
@@ -349,5 +364,6 @@ textarea {
 		</c:choose>	
 	</c:otherwise>
 </c:choose>
+<%@ include file="../../hs/footer.jsp" %>
 </body>
 </html>

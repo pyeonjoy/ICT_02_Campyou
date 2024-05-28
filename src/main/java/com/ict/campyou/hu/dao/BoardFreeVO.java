@@ -1,7 +1,15 @@
 package com.ict.campyou.hu.dao;
 
 public class BoardFreeVO {
-	private String bf_no, b_subject, member_nickname, b_content, b_regdate;
+	private String bf_no, b_idx, b_subject, member_nickname, b_content, b_regdate;
+
+	public String getB_idx() {
+		return b_idx;
+	}
+
+	public void setB_idx(String b_idx) {
+		this.b_idx = b_idx;
+	}
 
 	public String getBf_no() {
 		return bf_no;

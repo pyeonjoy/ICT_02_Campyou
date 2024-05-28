@@ -6,9 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 검색</title>
+<title>자유게시판 검색</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <%-- <%@ include file="../../hs/header.jsp" %> --%>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/boardFreeSearchlist.css">
 <script type="text/javascript">
@@ -28,9 +28,9 @@
         prevButton.textContent = "이전";
         prevButton.onclick = prevPage;
         paginationDiv.appendChild(prevButton);
-
-        //페이지버튼
-        let startPage = Math.max(1, currentPage - 1);
+		
+        //페이지버튼 (이것으로 페이지 조정하기)
+        let startPage = Math.max(1, currentPage );
         let endPage = Math.min(totalPages, startPage + 2);
         for (let i = startPage; i <= endPage; i++) {
             const button = document.createElement("button");
@@ -74,7 +74,7 @@
     }
 
     // 2개글당 한 페이지
-    const pageSize = 2; 
+    const pageSize = 3; 
     let currentPage = 1;
     let totalPages;
     window.onload = function() {
@@ -124,9 +124,10 @@
                         <c:forEach items="${searchlist}" var="k">
                             <tr>
                                 <td>${k.member_nickname}</td>
-                                <td>${k.b_subject}</td>
+                                <td><a href="commBoard_content.do?b_idx=${k.b_idx}" style="color: black;">${k.b_subject}</a></td>
                                 <td>${k.b_content}</td>
                                 <td>${k.b_regdate.substring(0,10)}</td>
+                                
                             </tr>
                         </c:forEach>
                     </c:otherwise>

@@ -69,7 +69,7 @@ body {
     padding: 8px 20px;
 }
 
-/* Á¦ÀÏ ¹ØÁÙ ¾ø¾Ö±â */
+/* ì œì¼ ë°‘ì¤„ ì—†ì• ê¸° */
 #board-free table #foot-tr:last-child td {
     border-bottom: none;
 }
@@ -110,7 +110,7 @@ body {
 /* paging */
 table tfoot ol.paging {
     list-style: none;
-    /* ÆäÀÌÁö ¿Å±â±â ¹öÆ° */
+    /* í˜ì´ì§€ ì˜®ê¸°ê¸° ë²„íŠ¼ */
     margin-left: 100px;
 }
 

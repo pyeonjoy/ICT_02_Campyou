@@ -27,7 +27,7 @@
         prevButton.onclick = prevPage;
         paginationDiv.appendChild(prevButton);
         //현재버튼
-        let startPage = Math.max(1, currentPage - 1);
+        let startPage = Math.max(1, currentPage);
         let endPage = Math.min(totalPages, startPage + 2);
         for (let i = startPage; i <= endPage; i++) {
             const button = document.createElement("button");
@@ -126,7 +126,7 @@
                             <c:forEach items="${searchlist}" var="k">
                                 <tr>
                                     <td>${k.member_nickname}</td>
-                                    <td>${k.cp_subject}</td>
+                                    <td><a href="admin_camping_gear_content.do?cp_idx=${k.cp_idx}" style="color: black;">${k.cp_subject}</a></td>
                                     <td>${k.cp_content}</td>
                                     <td>${k.cp_regdate.substring(0,10)}</td>
                                 </tr>

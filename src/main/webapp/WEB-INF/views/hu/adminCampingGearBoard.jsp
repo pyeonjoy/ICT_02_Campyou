@@ -86,12 +86,12 @@ body{
 										        <c:when test="${k.cp_active == 0}">
 										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글숨김" onclick="controlMemberContent1(this.form)">
 										            <input type="hidden" value="${k.cp_idx}" name="cp_idx">
-										            <input type="hidden" name="cPage" value="${cPage}">
+										            <input type="hidden" name="cPage" value="${paging.nowPage}">
 										        </c:when>
 										        <c:otherwise>
 										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글보임" onclick="controlMemberContent1(this.form)">
 										            <input type="hidden" value="${k.cp_idx}" name="cp_idx">
-										            <input type="hidden" name="cPage" value="${cPage}">
+										            <input type="hidden" name="cPage" value="${paging.nowPage}">
 										        </c:otherwise>
 										    </c:choose>
 										 </form>					
@@ -126,18 +126,19 @@ body{
 							        <c:otherwise>
 							        
 							        
+							        
 							        <td>			     
 									    <form method="post">
 										    <c:choose>
 										        <c:when test="${k.cp_active == 0}">
 										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글숨김" onclick="controlMemberContent1(this.form)">
 										            <input type="hidden" value="${k.cp_idx}" name="cp_idx">
-										            <input type="hidden" name="cPage" value="${cPage}">
+										            <input type="hidden" name="cPage" value="${paging.nowPage}">
 										        </c:when>
 										        <c:otherwise>
 										            <input type="button" id="hideMemberContent" name="hideMemberContent" value="글보임" onclick="controlMemberContent1(this.form)">
 										            <input type="hidden" value="${k.cp_idx}" name="cp_idx">
-										            <input type="hidden" name="cPage" value="${cPage}">
+										            <input type="hidden" name="cPage" value="${paging.nowPage}">
 										        </c:otherwise>
 										    </c:choose>
 										 </form>					

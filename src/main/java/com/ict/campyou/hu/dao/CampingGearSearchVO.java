@@ -1,10 +1,18 @@
 package com.ict.campyou.hu.dao;
 
 public class CampingGearSearchVO {
-	private String bf_no, cp_subject, member_nickname, cp_content, cp_regdate;
+	private String bf_no, cp_idx, cp_subject, member_nickname, cp_content, cp_regdate;
 
 	public String getBf_no() {
 		return bf_no;
+	}
+
+	public String getCp_idx() {
+		return cp_idx;
+	}
+
+	public void setCp_idx(String cp_idx) {
+		this.cp_idx = cp_idx;
 	}
 
 	public void setBf_no(String bf_no) {

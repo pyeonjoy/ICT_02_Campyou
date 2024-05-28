@@ -25,6 +25,7 @@
         return dobPattern.test(dob);
 	}
 	function admin_save_go(f) {
+		event.preventDefault();
 		const admin_id = f.admin_id.value.trim();
 		const admin_pwd = f.admin_pwd.value.trim();
 		const admin_pwdCheck = f.admin_pwdCheck.value.trim();
@@ -128,7 +129,7 @@ $(document).ready(function() {
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
           <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">관리자 가입</h2>
+              <h2 class="text-uppercase text-center mb-5">관리자 생성</h2>
 	              <form>
 		               	<div class="form-outline mb-2">
 		               	  <label class="form-label" for="admin_id">아이디<sup>*</sup></label> &nbsp; <span id="idSpan"></span>
@@ -159,7 +160,7 @@ $(document).ready(function() {
 		                  <input type="email" id="admin_email" name="admin_email" class="form-control form-control-lg"/>
 		                </div>   
 		                <div class="d-flex justify-content-center">
-		                  <button type="submit" id="m_id" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onclick="admin_save_go(this.form)" >가입</button>
+		                  <button type="submit" id="m_id" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onclick="admin_save_go(this.form)" >생성</button>
 		                </div>
 		                <p class="text-center text-muted mt-5 mb-0"><a href="admin_login_form.do"class="fw-bold text-body"><u>로그인</u></a></p>
 	              </form>

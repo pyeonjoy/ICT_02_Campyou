@@ -25,6 +25,6 @@ public class BoardFreeDAO {
 		map.put("searchType", searchType);
 		map.put("searchValue", searchValue);
 		
-		return sqlSessionTemplate.selectList("member.board_free_search_list", map);
+	return sqlSessionTemplate.selectList("member.board_free_search_list", map);
 	}
 }
