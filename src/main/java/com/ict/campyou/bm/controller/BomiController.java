@@ -24,6 +24,7 @@ import com.ict.campyou.bjs.dao.TogetherVO;
 import com.ict.campyou.bjs.service.TogetherService;
 import com.ict.campyou.bm.dao.BoardsVO;
 import com.ict.campyou.bm.dao.ChatVO;
+import com.ict.campyou.bm.dao.ChatWithImage;
 import com.ict.campyou.bm.dao.FaqVO;
 import com.ict.campyou.bm.dao.PasswordCheckRequest;
 import com.ict.campyou.bm.dao.QnaVO;
@@ -61,8 +62,9 @@ public class BomiController {
 	@GetMapping("my_main.do")
 	public ModelAndView gotoMypage(HttpSession session) {
 		ModelAndView mv = new ModelAndView("bm/my_main");
-		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
-		String member_idx = mvo.getMember_idx();
+		MemberVO user = (MemberVO) session.getAttribute("memberInfo");
+		String member_idx = user.getMember_idx();
+		MemberVO mvo = myService.getMember(member_idx);
 		List<CommBoardVO> board1 = myService.getBoard1(member_idx);
 		List<CampingGearBoardVO> board2 = myService.getBoard2(member_idx);
 		int count = board1.size() + board2.size();
@@ -134,9 +136,17 @@ public class BomiController {
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo"); // 내정보
 		String member_idx = mvo.getMember_idx(); // 내 idx
 		List<ChatVO> list = myService.getChatList(member_idx);
-		mv.setViewName("bm/chat_list");
-		mv.addObject("list", list);
+		List<ChatWithImage> chatWithImageList = new ArrayList<>();
+		for (ChatVO li : list) {
+			String[] array = li.getMsg_room().split("-");
+			String your_idx = array[0].equals(member_idx) ? array[1] : array[0];
+			MemberVO you = myService.getMember(your_idx);
+			String img = you.getMember_img();
+			chatWithImageList.add(new ChatWithImage(li, img));
+		}
 		mv.addObject("member_idx", member_idx);
+		mv.addObject("chatWithImageList", chatWithImageList);
+		mv.setViewName("bm/chat_list");
 		return mv;
 	}
 
@@ -153,9 +163,9 @@ public class BomiController {
 		MemberVO opener = myService.getMember(open_idx); // 상대방
 		// 0 = read 1 = unread
 		for (ChatVO chat : chatList) {
-			  if (!chat.getSend_idx().equals(my_idx) && chat.getMsg_read() == "1") {
-		            int res = myService.updateMsgRead(chat.getMsg_idx());		            
-		        }
+			if (!chat.getSend_idx().equals(my_idx) && chat.getMsg_read() == "1") {
+				int res = myService.updateMsgRead(chat.getMsg_idx());
+			}
 		}
 		mv.addObject("chatList", chatList);
 		mv.addObject("msg_room", msg_room);
@@ -228,7 +238,7 @@ public class BomiController {
 	public ModelAndView changeUserInfo(MemberVO mvo, HttpServletRequest req) {
 		try {
 			ModelAndView mv = new ModelAndView("redirect:my_info.do");
-			String path = req.getSession().getServletContext().getRealPath("/resources/uploadUser_img");
+			String path = req.getSession().getServletContext().getRealPath("/resources/images");
 
 			MultipartFile file = mvo.getFile();
 
@@ -395,8 +405,8 @@ public class BomiController {
 		ModelAndView mv = new ModelAndView("bm/my_board");
 		List<CommBoardVO> board1 = myService.getBoard1(member_idx);
 		List<CampingGearBoardVO> board2 = myService.getBoard2(member_idx);
-		List<BoardsVO>boardsList = new ArrayList<BoardsVO>();
-		
+		List<BoardsVO> boardsList = new ArrayList<BoardsVO>();
+
 		for (CommBoardVO board : board1) {
 			BoardsVO boardsVO = new BoardsVO();
 			boardsVO.setBoard_idx(board.getB_idx());
@@ -421,26 +431,25 @@ public class BomiController {
 		int totalRecord = boardsList.size();
 		paging.setTotalRecord(totalRecord);
 
-		int totalPage = (int) Math.ceil((double)totalRecord / paging.getNumPerPage());
+		int totalPage = (int) Math.ceil((double) totalRecord / paging.getNumPerPage());
 		paging.setTotalPage(totalPage);
-		
+
 		String cPage = req.getParameter("cPage");
-		int nowPage = (cPage == null) ? 1: Integer.parseInt(cPage);
+		int nowPage = (cPage == null) ? 1 : Integer.parseInt(cPage);
 		paging.setNowPage(nowPage);
-		
-		int offset = (nowPage -1) * paging.getNumPerPage();
+
+		int offset = (nowPage - 1) * paging.getNumPerPage();
 		paging.setOffset(offset);
 
-		paging.setBeginBlock((int) ((nowPage - 1) / paging.getPagePerBlock()) 
-				* paging.getPagePerBlock() + 1);
+		paging.setBeginBlock((int) ((nowPage - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
 
 		paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
 
 		if (paging.getEndBlock() > totalPage) {
 			paging.setEndBlock(totalPage);
 		}
-	List<BoardsVO> list = boardsList.stream().skip(offset).limit(paging.getNumPerPage())
-			.collect(Collectors.toList());
+		List<BoardsVO> list = boardsList.stream().skip(offset).limit(paging.getNumPerPage())
+				.collect(Collectors.toList());
 		mv.addObject("paging", paging);
 		mv.addObject("list", list);
 		return mv;

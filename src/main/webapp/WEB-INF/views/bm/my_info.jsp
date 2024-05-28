@@ -1,20 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>회원 정보</title>
-<link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="${path}/resources/public/css/bm/my_info.css">
-  <link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
-  <script defer src="${path}/resources/public/js/bm/my_info.js"></script>
-    <script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
- <script>
+<link rel="shortcut icon" href="${path}/resources/images/favicon.ico"
+	type="image/x-icon">
+<link rel="icon" href="${path}/resources/images/favicon.ico"
+	type="image/x-icon">
+<link rel="stylesheet"
+	href="${path}/resources/public/css/bm/my_info.css">
+<link rel="stylesheet" href="${path}/resources/css/menu_aside.css" />
+<script defer src="${path}/resources/public/js/bm/my_info.js"></script>
+<script defer src="${path}/resources/public/js/bm/my_menu.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+	crossorigin="anonymous"></script>
+<script>
       function setThumbnail(input, e) {
 	  if (input.files && input.files[0]) {
 	   const reader = new FileReader();
