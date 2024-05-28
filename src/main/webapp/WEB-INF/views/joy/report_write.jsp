@@ -8,6 +8,7 @@
 <title>신고하기</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="resources/css/reset.css">
 <style>
 .head{
     text-align: center;
@@ -30,7 +31,6 @@ button{
     padding-right: 10px;
 }
 </style>
-<%@ include file="../hs/header.jsp"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </script>
 </head>
