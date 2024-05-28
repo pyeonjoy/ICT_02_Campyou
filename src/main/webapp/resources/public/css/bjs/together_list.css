@@ -110,12 +110,20 @@
         color: black;
         text-decoration: none;
     }
-    .toContentOne3 span {
+    .toContentOne3 span:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+    .toContentOne3 span:last-child {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
+        max-height: 30px;
     }
     .toContentOne2img{
 /*         max-width: 100%; */
