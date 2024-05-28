@@ -89,10 +89,15 @@ $(document).ready(function() {
 	
 	
 	function report_go(member_idx) {
-        let form = $('<form action="report_write.do" method="POST">' +
+        let form = $('<form method="POST">' +
                 '<input type="hidden" name="member_idx" value="' + member_idx + '">' +
                 '</form>');
         $('body').append(form);
+        let goForm = window.open('report_write.do', '_blank','width=580,height=600,scrollbars=no,resizable=no,status=yes,menubar=no,toolbar=no,top=50,left=50');
+        form.target = '_blank';
+        form.action = 'report_write.do';
+        form.submit();
+
         form.submit();
     }
 		
