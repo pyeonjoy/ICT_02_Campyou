@@ -156,11 +156,11 @@ function promiseApplyList() {
 		<div class="welcome">
 				<c:choose>
 					<c:when test="${empty mvo.member_img}">
-						<img src="${path}/resources/images/${mvo.member_img}.png" alt="user_img"
+						<img src="${path}/resources/images/${mvo.member_img}" alt="user_img"
 							class="user_img">
 					</c:when>
 					<c:otherwise>
-						<img src="${path}/resources/uploadUser_img/${mvo.member_img}"
+						<img src="${path}/resources/images/${mvo.member_img}"
 							alt="user_img" class="user_fullImg">
 					</c:otherwise>
 				</c:choose>			
