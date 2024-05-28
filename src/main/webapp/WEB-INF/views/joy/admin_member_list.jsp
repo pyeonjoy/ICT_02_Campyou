@@ -164,15 +164,7 @@ width: 2.7rem;
 							    <td>${k.member_phone }</td>
 							    <td>${k.member_email }</td>
 							    <td class="subject">${k.member_regdate }</td>
-							    <c:if test="${k.member_grade== 0}">
-							    <td class="subject">일반회원</td>
-							    </c:if>
-							    <c:if test="${k.member_grade== 1}">
-							    <td class="subject">열심회원</td>
-							    </c:if>
-							    <c:if test="${k.member_grade== 2}">
-							    <td class="subject">우수회원</td>
-							    </c:if>
+							    <td>${k.member_grade}</td>
 							    <c:if test="${k.member_active== 0}">
 							    <td class="subject">일반회원</td>
 							    </c:if>
