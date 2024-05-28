@@ -72,19 +72,14 @@ public class BomiController {
 		List<ReVO> reviews = new ArrayList<>();
 
 		for (ReviewVO review : reviewList) {
-			if (count < 10) {
-				ReVO rvo = new ReVO();
-				CampVO cvo = myService.getMyFavoriteCamp(review.getContentid());
-				rvo.setCamp_site(cvo.getFacltnm());
-				rvo.setReview_comment(review.getR_comment());
-				rvo.setReview_idx(review.getReview_idx());
-				rvo.setRating(review.getRating());
-				rvo.setContentid(review.getContentid());
-				reviews.add(rvo);
-				count++;
-			} else {
-				break;
-			}
+			ReVO rvo = new ReVO();
+			CampVO cvo = myService.getMyFavoriteCamp(review.getContentid());
+			rvo.setCamp_site(cvo.getFacltnm());
+			rvo.setReview_comment(review.getR_comment());
+			rvo.setReview_idx(review.getReview_idx());
+			rvo.setRating(review.getRating());
+			rvo.setContentid(review.getContentid());
+			reviews.add(rvo);
 		}
 		mv.addObject("reviews", reviews);
 		mv.addObject("mvo", mvo);
@@ -274,10 +269,11 @@ public class BomiController {
 
 	// password change
 	@RequestMapping("pwd_change.do")
-	public ModelAndView changeUserPw(@RequestParam("member_idx") String member_idx, PasswordCheckRequest pwdcheck) {
+	public ModelAndView changeUserPw(HttpSession session,PasswordCheckRequest pwdcheck) {
 		ModelAndView mv = new ModelAndView("redirect:my_info.do");
 		String newPassword = pwdcheck.getPassword();
-
+		MemberVO user = (MemberVO) session.getAttribute("memberInfo");
+		String member_idx = user.getMember_idx();
 		MemberVO mvo = myService.getMember(member_idx);
 		mvo.setMember_pwd(passwordEncoder.encode(newPassword));
 		int res = myService.changeUserPW(mvo);
