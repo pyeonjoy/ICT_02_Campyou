@@ -241,19 +241,37 @@ public class TogetherDAO {
 		return sqlSessionTemplate.selectList("bjs.promise_End", map);
 	}
 	
+	public int getStartdateUpdate(String t_idx) throws Exception {
+		return sqlSessionTemplate.update("bjs.startdate_update", t_idx);
+	}
+	
 	public int getEnddateUpdate(String t_idx) throws Exception {
 		return sqlSessionTemplate.update("bjs.enddate_update", t_idx);
+	}
+	
+	public int getPromiseConfirm(PromiseVO pvo) throws Exception {
+		return sqlSessionTemplate.update("bjs.promise_comfirm", pvo);
 	}
 	
 	public int getConfirmPartner(PromiseVO pvo) throws Exception {
 		return sqlSessionTemplate.update("bjs.confirm_partner", pvo);
 	}
 	
-	public int getEndCampChk(String member_idx) throws Exception {
-		return sqlSessionTemplate.selectOne("bjs.end_camp_chk", member_idx);
+	public List<PromiseVO> getStartCampChk(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectList("bjs.start_camp_chk", member_idx);
 	}
 	
-	public int getWPStateUpdate(String member_idx) throws Exception {
-		return sqlSessionTemplate.update("bjs.wp_state_update", member_idx);
+	public List<PromiseVO> getEndCampChk(String member_idx) throws Exception {
+		return sqlSessionTemplate.selectList("bjs.end_camp_chk", member_idx);
+	}
+	
+	public int getWPStateUpdate(String t_idx, int num) throws Exception {
+		int res = 0;
+		if(num == 1) {
+			res = sqlSessionTemplate.update("bjs.start_wp_state_update", t_idx);
+		}else if(num == 2) {
+			res = sqlSessionTemplate.update("bjs.end_wp_state_update", t_idx);
+		}
+		return res;
 	}
 }

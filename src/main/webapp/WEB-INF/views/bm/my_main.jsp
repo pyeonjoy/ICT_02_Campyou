@@ -16,10 +16,27 @@
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <script>
 $(document).ready(function() {
-    promiseApplyList();
+//     promiseApplyList();
     with_promise_state_update();
 //     setInterval(promiseApplyList, 5000);
 });
+
+function with_promise_state_update() {
+	let memberIdx = document.getElementById("memberIdx").value;
+	$.ajax({
+        url: 'with_promise_state_update.do',
+        type: 'post',
+        data: {
+            member_idx: memberIdx
+        },
+        success: function(data) {
+        	promiseApplyList();
+        },
+        error: function(xhr, status, error) {
+        	console.error(error);
+        }
+    });
+}
 
 $(document).on('click', '.btn-accept', function() {
 	let $accompanyList = $(this).closest('.accompany_list');
@@ -131,16 +148,12 @@ function promiseApplyList() {
     });
 };
 
-function with_promise_state_update() {
-	let memberIdx = document.getElementById("memberIdx").value;
-	location.href="with_promise_state_update.do?member_idx=" + memberIdx;
-}
 </script>
 </head>
 <body class="body">
 		<%@ include file="../hs/mypage_menu.jsp"%>
 	<div class="mypage">
-		<div class="welcome">		
+		<div class="welcome">
 				<c:choose>
 					<c:when test="${empty mvo.member_img}">
 						<img src="${path}/resources/images/${mvo.member_img}.png" alt="user_img"

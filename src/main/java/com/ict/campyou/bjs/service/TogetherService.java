@@ -52,8 +52,11 @@ public interface TogetherService {
 	public List<TogetherVO> getPromiseReady(String member_idx, int offset, int limit) throws Exception;
 	public int getBoardWithCountEnd(String member_idx) throws Exception;
 	public List<TogetherVO> getPromiseEnd(String member_idx, int offset, int limit) throws Exception;
+	public int getStartdateUpdate(String t_idx) throws Exception;
 	public int getEnddateUpdate(String t_idx) throws Exception;
+	public int getPromiseConfirm(PromiseVO pvo) throws Exception;
 	public int getConfirmPartner(PromiseVO pvo) throws Exception;
-	public int getEndCampChk(String member_idx) throws Exception;
-	public int getWPStateUpdate(String member_idx) throws Exception;
+	public List<PromiseVO> getStartCampChk(String member_idx) throws Exception;
+	public List<PromiseVO> getEndCampChk(String member_idx) throws Exception;
+	public int getWPStateUpdate(String t_idx, int num) throws Exception;
 }

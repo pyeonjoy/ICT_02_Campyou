@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -129,7 +128,6 @@ public class MemberController {
 	          
 	          MemberVO vo2 = memberService.getLogInOK(vo);
 	          
-	          
 	          if(vo2 == null || !passwordEncoder.matches(vo.getMember_pwd(), vo2.getMember_pwd()) && (vo.getMember_id() != vo2.getMember_id()) ) {
 	        	  //mv.setViewName("redirect:login_form.do");
 	        	  //mv.setViewName("hu/loginForm");
@@ -138,9 +136,15 @@ public class MemberController {
 	          }else {
 	        	  if(vo2 != null && vo2.getMember_active().equals("1")){
 	        		  session.setAttribute("admin", "ok"); 
-				  }		 
-				  session.setAttribute("memberInfo", vo2);
-				  mv.setViewName("redirect:/");
+				  }	
+	        	  session.setAttribute("memberInfo", vo2);
+	        	  String requestPage = (String) session.getAttribute("requestPage");
+	        	  System.out.println("컨트롤러 requestPage : " + requestPage);
+	        	  if(requestPage != null && !requestPage.isEmpty()) {
+	        		  mv.setViewName("redirect:" + requestPage);
+	        	  }else {
+	        		  mv.setViewName("redirect:/");
+	        	  }
 				  mv.addObject("member_idx", vo2.getMember_idx());
 				  return mv;  
 	          }
@@ -313,6 +317,7 @@ public class MemberController {
 			   session.removeAttribute("admin");
 			   session.removeAttribute("kakaoMemberInfo");
 			   session.removeAttribute("naverMemberInfo");
+			   session.removeAttribute("requestPage");
 			   return mv;
 		    } catch (Exception e) {
 		  	   System.out.println(e);

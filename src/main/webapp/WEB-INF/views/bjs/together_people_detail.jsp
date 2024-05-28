@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.time.LocalDate" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -141,6 +142,15 @@ h1 {
 			<div class="thDiv">
 				<p>${tvo.t_startdate } - ${tvo.t_enddate }</p>
 				<p>${tvo.t_induty }</p>
+				<c:if test="${tvo.promise_status == 'ready' }">
+					<c:set var="currentDate" value="<%= LocalDate.now() %>"/>
+					<c:if test="${tvo.t_enddate <= currentDate}">
+						<p style="color: red;">** 동행이 완료되셨으면 동행완료 버튼을 클릭해주세요 **</p>
+					</c:if>
+				</c:if>
+<%-- 				<c:if test="${tvo.promise_status == 'ing' }"> --%>
+<!-- 					<p style="color: blue;">** 예정보다 여정이 빨리 시작할시 게시글에서 날짜를 수정해주세요 **</p> -->
+<%-- 				</c:if> --%>
 			</div>
 			<ul class="thul1">
 				<li class="thli th1">이미지</li>
@@ -362,6 +372,7 @@ function promisePeopleDetail() {
 	let tIdx = document.getElementById("t_idx").value;
 	let memberIdx = document.getElementById("member_idx").value;
 	let page = document.getElementById("cPage").value;
+	let tStartdate = document.getElementById("t_startdate").value;
 	let tEnddate = document.getElementById("t_enddate").value;
    	$('.thul2').empty();
    	$('.thul3').empty();
@@ -429,6 +440,9 @@ function promisePeopleDetail() {
          		let html2 = '';
                 html2 += '<div class="partnerListButtonDiv">';
                 for (let j = 0; j < data.length; j++) {
+                	if (promiseStatus == "ing" && data[j].pm_master == 1 && data[j].member_idx == memberIdx) {
+                        html2 += '<button type="button" class="thul2DivButton" onclick="promise_confirm(' + tIdx + ',' + memberIdx + ',\'' + tStartdate + '\', \'' + JSON.stringify(memberIdxArray).replace(/"/g, '&quot;') + '\')" style="margin-right: 3rem;">동행 확정</button>';
+                    }
                     if (promiseStatus == "ready" && data[j].pm_master == 1 && data[j].member_idx == memberIdx) {
                         html2 += '<button type="button" class="thul2DivButton" onclick="confirm_partner(' + tIdx + ',' + memberIdx + ',\'' + tEnddate + '\', \'' + JSON.stringify(memberIdxArray).replace(/"/g, '&quot;') + '\')" style="margin-right: 3rem;">동행 완료</button>';
                     }
@@ -500,13 +514,44 @@ function banishMember(memberIdx) {
 function partner_list(page, memberIdx, promiseStatus) {
 	location.href = "together_partner.do?cPage=" + page + "&promise_status=" + promiseStatus;
 }
+function promise_confirm(tIdx, memberIdx, tStartdate, memberIdxArray) {
+	let currentDate = new Date();
+	let t_startdate = new Date(tStartdate);
+	
+	let message = '';
+	if (currentDate < t_startdate) {
+		message = '*주의* 동행 날짜가 맞지 않습니다. 동행 확정하시겠습니까?\n동행의 시작 날짜가 변경됩니다.';
+	}
+	if(confirm(message)){
+		let parseMemberIdxArray = JSON.parse(memberIdxArray);
+		$.ajax({
+	        url: 'promise_confirm.do',
+	        type: 'post',
+	        data: {
+	            t_idx: tIdx,
+	            member_idx: parseMemberIdxArray,
+	            t_startdate: t_startdate
+	        },
+	        traditional: true, // 배열 데이터를 전송할 때 사용
+	        success: function(response) {
+	        	partner_list(1, memberIdx, 'ready');
+	        },
+	        error: function(xhr, status, error) {
+	            console.error(error);
+	        }
+	    });
+	}else{
+		return;
+	}
+}
+
 function confirm_partner(tIdx, memberIdx, tEnddate, memberIdxArray) {
 	let currentDate = new Date();
 	let endDate = new Date(tEnddate);
 	
 	let message = '';
 	if (currentDate < endDate) {
-		message = '*주의* 동행 날짜가 맞지 않습니다. 동행 완료하시겠습니까?';
+		message = '*주의* 동행 날짜가 맞지 않습니다. 동행 완료하시겠습니까?\n동행의 마지막 날짜가 변경됩니다.';
 	} else {
 		message = '동행 완료하시겠습니까?';
 	}

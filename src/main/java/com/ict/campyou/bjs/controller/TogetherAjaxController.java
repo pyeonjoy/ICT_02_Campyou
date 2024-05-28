@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.ict.campyou.bjs.dao.PromiseVO;
@@ -172,9 +173,9 @@ public class TogetherAjaxController {
 				case 2: ageGroup = "20대"; break;
 				case 3: ageGroup = "30대"; break;
 				case 4: ageGroup = "40대"; break;
-				case 5: ageGroup = "50대 이상"; break;
-				case 6: ageGroup = "60대 이상"; break;
-				case 7: ageGroup = "70대 이상"; break;
+				case 5: ageGroup = "50대"; break;
+				case 6: ageGroup = "60대"; break;
+				case 7: ageGroup = "70대"; break;
 				default: ageGroup = "80대 이상"; break;
 				}
 				list.setMember_dob(ageGroup);
@@ -257,9 +258,9 @@ public class TogetherAjaxController {
 				case 2: ageGroup = "20대"; break;
 				case 3: ageGroup = "30대"; break;
 				case 4: ageGroup = "40대"; break;
-				case 5: ageGroup = "50대 이상"; break;
-				case 6: ageGroup = "60대 이상"; break;
-				case 7: ageGroup = "70대 이상"; break;
+				case 5: ageGroup = "50대"; break;
+				case 6: ageGroup = "60대"; break;
+				case 7: ageGroup = "70대"; break;
 				default: ageGroup = "80대 이상"; break;
 				}
 				pvo.setMember_dob(ageGroup);
@@ -504,9 +505,9 @@ public class TogetherAjaxController {
 				case 2: ageGroup = "20대"; break;
 				case 3: ageGroup = "30대"; break;
 				case 4: ageGroup = "40대"; break;
-				case 5: ageGroup = "50대 이상"; break;
-				case 6: ageGroup = "60대 이상"; break;
-				case 7: ageGroup = "70대 이상"; break;
+				case 5: ageGroup = "50대"; break;
+				case 6: ageGroup = "60대"; break;
+				case 7: ageGroup = "70대"; break;
 				default: ageGroup = "80대 이상"; break;
 				}
 				pvo.setMember_dob(ageGroup);
@@ -628,6 +629,23 @@ public class TogetherAjaxController {
 		return response;
 	}
 	
+	@RequestMapping(value = "promise_confirm.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getPromiseConfirm(PromiseVO pvo, @RequestParam("member_idx")List<String> memberIdxArray) throws Exception {
+		if(pvo.getT_startdate() != null) {
+			int res = togetherService.getStartdateUpdate(pvo.getT_idx());
+		}
+		int totalUpdated = 0;
+		for (String memberIdx : memberIdxArray) {
+			pvo.setMember_idx(memberIdx);
+			int result = togetherService.getPromiseConfirm(pvo);
+			if(result > 0) {
+				totalUpdated += result;
+			}
+		}
+		return totalUpdated;
+	}
+	
 	@RequestMapping(value = "confirm_partner.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
 	public int getConfirmPartner(PromiseVO pvo, @RequestParam("member_idx")List<String> memberIdxArray) throws Exception {
@@ -644,6 +662,29 @@ public class TogetherAjaxController {
 	    }
 		return totalUpdated;
 	}
+	
+	@RequestMapping(value = "with_promise_state_update.do", produces = "application/plain; charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public int getConfirmPartner(@RequestParam("member_idx")String member_idx) throws Exception {
+		int num = 0;
+		int res= 0;
+		List<PromiseVO> startCampChk = togetherService.getStartCampChk(member_idx);
+		if(startCampChk != null) {
+			for (PromiseVO k : startCampChk) {
+				num = 1; 
+				res = togetherService.getWPStateUpdate(k.getT_idx(), num);
+			}
+		}
+		List<PromiseVO> endCampChk = togetherService.getEndCampChk(member_idx);
+		if(endCampChk != null) {
+			for (PromiseVO k : endCampChk) {
+				num = 2; 
+				res = togetherService.getWPStateUpdate(k.getT_idx(), num);
+			}
+		}
+		return res;
+	}
+	
 	
 //	@RequestMapping(value = "weather_search.do", produces = "application/json; charset=utf-8")
 //	@ResponseBody
