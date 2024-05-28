@@ -336,7 +336,7 @@ function loadHeart() {
             let detailButton = "<div>";
             detailButton += "<input type='button' name='page' value='홈페이지' onclick=\"window.open('${info.homepage}')\">";
             detailButton += "<input type='button' name='page' value='예약페이지' onclick='resvego()'>";
-            detailButton += emptyHeartHtml(contentid);
+            detailButton += emptyHeartHtml(contentId);
             detailButton += "</div>";
             $("#detail_button").append(detailButton);
         }
