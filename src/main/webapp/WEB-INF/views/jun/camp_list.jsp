@@ -13,7 +13,7 @@
 <%@ include file="../hs/profile_small_info.jsp" %>
 <title>캠핑장리스트</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <style type="text/css">
 .camp_list_container {
 	display: flex;
@@ -83,6 +83,7 @@
 }
 .page_button2 ul{
 	display: flex;
+	cursor: pointer;
 }
 .search_nowpagecolor{
 	padding: 0 0.5rem;
@@ -179,7 +180,7 @@
 		</div>
 		<div id="camp_list_show"></div>
 		<div class="page_button">
-			<ul class="to_paging camp_list_page">
+			<ul class="to_paging camp_list_page" style="cursor: pointer;">
 			</ul>
 		</div>
 	</div>

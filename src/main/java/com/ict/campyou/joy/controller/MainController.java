@@ -1,29 +1,19 @@
 package com.ict.campyou.joy.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ict.campyou.joy.dao.AdminVO;
 import com.ict.campyou.bjs.service.TogetherService;
 import com.ict.campyou.common.Paging3;
-import com.ict.campyou.hu.dao.AdminMembVO;
 import com.ict.campyou.hu.dao.MemberVO;
-import com.ict.campyou.joy.dao.AdminMemberVO;
+import com.ict.campyou.joy.dao.AdminVO;
 import com.ict.campyou.joy.service.AdminService;
 import com.ict.campyou.joy.service.MainService;
 import com.ict.campyou.jun.dao.CampVO;

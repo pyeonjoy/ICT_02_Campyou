@@ -1,19 +1,18 @@
 package com.ict.campyou.hu.service;
 
 import java.io.BufferedReader;
-
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.google.gson.Gson;
-import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberDAO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.hu.sns.kakao.KakaoUserVO;
@@ -233,7 +232,6 @@ public class MemberServiceImpl implements MemberService {
                 //네이버에서 제공하지 하는데 필요없는 정보
                 map.put("member_nickname", "Naver: Not Provided");
                 map.put("member_pwd", "Naver: Not Provided");
-                map.put("member_dob", " Naver: Not Provided");
                 map.put("member_phone", "Naver: Not Provided");
                 
                //네이버 맴버 데이터베이스에 존재하나 체크
@@ -297,7 +295,6 @@ public class MemberServiceImpl implements MemberService {
                 //네이버에서 제공하지 하는데 필요없는 정보
                 map.put("member_nickname", "Naver: Not Provided");
                 map.put("member_pwd", "Naver: Not Provided");
-                map.put("member_dob", " Naver: Not Provided");
                 map.put("member_phone", "Naver: Not Provided");
 		
                 //네이버 로그인
@@ -354,6 +351,21 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO getMemeberDetail(String member_idx) {
 		
 		return memberDAO.getMemeberDetail(member_idx);
+	}
+
+	@Override
+	public int setUpdateSnsInfo(MemberVO vo) {
+		return memberDAO.setUpdateSnsInfo(vo);
+	}
+
+	@Override
+	public MemberVO getinfo(MemberVO vo) {
+		return memberDAO.getinfo(vo);
+	}
+
+	@Override
+	public int setUpdateSnsInfo_naver(MemberVO vo) {
+		return memberDAO.setUpdateSnsInfo_naver(vo);
 	}
 
 	

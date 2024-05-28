@@ -1,8 +1,10 @@
 $(document).ready(function() {
 	let ageGroup = "";
+	let member_idx;
+	
 	
     $(document).on('click', '.profile_show', function(event) {
-    	let member_idx = $(this).data('memberidx');
+    	member_idx = $(this).data('memberidx');
     	$.ajax({
 		    url: 'getProfile.do',
 		    method: 'post',
@@ -84,4 +86,18 @@ $(document).ready(function() {
             return;
         }
     });
+	
+	
+	function report_go(member_idx) {
+        let form = $('<form action="session_check.do" method="POST">' +
+                '<input type="hidden" name="member_idx" value="' + member_idx + '">' +
+                '</form>');
+        $('body').append(form);
+        form.submit();
+    }
+		
+	$(document).on('click', '#report_go', function() {
+		report_go(member_idx);
+    });
+
 });
