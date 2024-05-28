@@ -89,8 +89,7 @@ $(document).ready(function() {
 	
 	
 function report_go(member_idx) {
-        window.open('report_write.do?member_idx=' + member_idx, '_blank','width=580,height=600,scrollbars=no,resizable=no,status=yes,menubar=no,toolbar=no,top=50,left=50');
-
+    window.open('report_write.do?member_idx=' + member_idx, '_blank','location=no, menubar=no, width=580,height=600,scrollbars=no,resizable=no,status=yes,menubar=no,toolbar=no,top=50%,left=50%').focus();
     }
 		
 	$(document).on('click', '#report_go', function() {
