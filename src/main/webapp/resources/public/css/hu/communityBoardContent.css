@@ -1,19 +1,19 @@
 @charset "UTF-8";
 
 .header_right {
-    margin-left: 1100px;
+    margin-left: 0px;
 }
-
-
 
 table {
     width: 800px;
     margin: 0px auto; 
     margin-top: 50px; 
-    margin-left: 550px;
+    /* margin-left: 550px; */
     padding-bottom: 300px;
     border-collapse: collapse;
     text-align: center;
+  
+	border-spacing: 0;
 }
 
 table, th, td {
@@ -39,9 +39,9 @@ hr{
 }
 
 div {
-    width: 800px;
+/*     width: 800px;
     margin: auto;
-    padding-top: 20px;
+    padding-top: 20px; */
     text-align: center;
 }
 
@@ -118,7 +118,6 @@ input[type="button"]:hover, input[type="reset"]:hover {
 .reply-output2 {
     background-color: #f2f2f2;
     width: 780px;
-    margin-left: 1100px;
     padding: 25px;
     margin-top: 15px;
 }
