@@ -476,7 +476,7 @@ public class AdministratorController {
 		  }
 	  	 
 	  	 
-	  	 //관리자 강제삭제
+	  	  //관리자 직권삭제 (비밀번호 입력 없음)
 		  @RequestMapping("admin_comm_board_admin_delete.do")
 		  public ModelAndView getCommBoardAdminDelete(String c_idx, String cPage, @ModelAttribute("b_idx") String b_idx) {
 			  ModelAndView mv =  new ModelAndView("redirect:admin_community_board.do");
