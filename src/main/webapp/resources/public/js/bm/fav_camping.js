@@ -24,6 +24,7 @@ if (data.length === 0) {
 } else {
   data.forEach(c => {
     let induty = "", induty2 = "";
+    if(c.induty.length < 2) { induty= ""}
     if (c.induty.length === 3) {
       induty = c.induty;
     }
