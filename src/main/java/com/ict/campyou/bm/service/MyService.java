@@ -44,6 +44,8 @@ public interface MyService {
 	public List<TogetherVO> getMyAcc_List(String member_idx, int offset, int limit);
 
 	public int addChatMsg(ChatVO chvo);
+	
+	public int changeChatStatus(String msg_room);
 
 	public List<ChatVO> getChatList(String member_idx);
 

@@ -1,7 +1,66 @@
 const cancel = document.querySelector(".cancel");
 const lists = document.querySelectorAll(".chat_list");
+const icons = document.querySelectorAll(".hamburgerIcon");
 
-let stompClient = null;
+let stompClient, activeHideContainer;
+
+function goToRoom(room, event) {
+	if (event.target.closest('.hamburgerIcon')) return;
+    window.location.href = `selectOneRoom.do?msg_room=${room}`;
+}
+function splitContent() {
+    const elements = document.querySelectorAll('.room_name');
+    elements.forEach(element => {
+        const originalString = element.textContent;
+        const index = originalString.indexOf('2');
+        if (index !== -1) {
+            const part1 = '⛺'+originalString.substring(0, index);
+            const part2 = originalString.substring(index);
+
+            element.textContent = '';
+          
+            const p1 = document.createElement('p');
+            p1.textContent = part1;
+            p1.className = 'part1';
+            element.appendChild(p1);
+
+            const p2 = document.createElement('p');
+            p2.textContent = part2;
+            p2.className = 'part2';
+            element.appendChild(p2);
+        } 
+    });
+}
+
+function showDelete(event) {
+    event.preventDefault(); 
+    const clicked = event.target.closest(".chat_list");
+    const hideContainer = clicked.querySelector('.hide-container');
+
+    if (activeHideContainer) {
+        activeHideContainer.classList.remove('active');
+    }
+
+    hideContainer.classList.add('active');
+    activeHideContainer = hideContainer;
+}
+
+function callHide(event) {
+	event.preventDefault(); 
+	event.stopPropagation();
+	const clicked = event.target.closest(".chat_list");
+    const hideContainer = clicked.querySelector('.hide-container');
+
+    hideContainer.classList.remove('active');
+    }
+
+function handleReport(event, msgRoom, oppositeIdx) {
+	    event.preventDefault();
+	    event.stopPropagation();
+	    const reportUrl =`report_write.do?member_idx=${oppositeIdx}`;
+	    window.open(reportUrl, '_blank', 'width=' + window.innerWidth + ', height=' + window.innerHeight);
+	    window.addEventListener('beforeunload', reportAndLeave);
+}
 
 function connect() {
   const socket = new SockJS('chat-ws2.do');
@@ -32,12 +91,6 @@ function onMessageReceived(msgRoom) {
   showNewMessageIndicator(msgRoom);
 }
 
-connect();
-
-cancel.addEventListener("click", function() {
-  window.close();
-});
-
 function updateMessageReadStatus(msgIdx) {
 	  fetch(`updateReadStatus.do?msg_idx=${msgIdx}`, {
 	    method: 'POST',
@@ -56,11 +109,23 @@ function updateMessageReadStatus(msgIdx) {
 	  });
 	}
 
+
+
+splitContent();
+connect();
+
+
 lists.forEach(list => list.addEventListener("click", function() {
-	  const msgIdx = this.dataset.msgIdx; 
-	  const newIndicator = this.querySelector('.new');
-	  if (newIndicator) {
-	    newIndicator.remove(); 
-	    updateMessageReadStatus(msgIdx); 
-	  }
-	}));
+	const msgIdx = this.dataset.msgIdx; 
+	const newIndicator = this.querySelector('.new');
+	if (newIndicator) {
+		newIndicator.remove(); 
+		updateMessageReadStatus(msgIdx); 
+	}
+}));
+
+icons.forEach(icon => icon.addEventListener("click", showDelete));
+
+cancel.addEventListener("click", function() {
+  window.close();
+});
