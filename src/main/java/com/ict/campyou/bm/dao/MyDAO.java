@@ -172,7 +172,16 @@ public class MyDAO {
 		}
 		return 0;
 	}
-
+	public int changeChatStatus(String msg_room) {
+		try {
+			return sqlSessionTemplate.update("bomi.chatStatus", msg_room);
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return 0;
+	}
+	
 	public List<ChatVO> getChatList(String member_idx) {
 	    try {
 	        List<ChatVO> chatList = new ArrayList<>();

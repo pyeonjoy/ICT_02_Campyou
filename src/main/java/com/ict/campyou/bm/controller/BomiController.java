@@ -136,14 +136,19 @@ public class BomiController {
 			String your_idx = array[0].equals(member_idx) ? array[1] : array[0];
 			MemberVO you = myService.getMember(your_idx);
 			String img = you.getMember_img();
-			chatWithImageList.add(new ChatWithImage(li, img));
+			chatWithImageList.add(new ChatWithImage(li, img, your_idx));
 		}
 		mv.addObject("member_idx", member_idx);
 		mv.addObject("chatWithImageList", chatWithImageList);
 		mv.setViewName("bm/chat_list");
 		return mv;
 	}
-
+	@GetMapping("chatStatus.do")
+	public ModelAndView chatStatus(@RequestParam("msg_room") String msg_room) {
+		ModelAndView mv = new ModelAndView("redirect:chat-list.do");
+		myService.changeChatStatus(msg_room);
+		return mv;
+	}
 	@GetMapping("selectOneRoom.do")
 	public ModelAndView selectOneRoom(@RequestParam("msg_room") String msg_room, HttpSession session) {
 		ModelAndView mv = new ModelAndView("bm/chatroom2");

@@ -139,5 +139,9 @@ public class MyServiceImpl implements MyService{
 	public QnaVO getQnaReply(String qna_idx) {
 		return myDao.getQnaReply(qna_idx);
 	}
+	@Override
+	public int changeChatStatus(String msg_room) {
+		return myDao.changeChatStatus(msg_room);
+	}
 
 }

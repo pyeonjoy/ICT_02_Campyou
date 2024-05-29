@@ -38,22 +38,29 @@ text-decoration:none;
   position: relative;
   padding: 0.5rem 0;
   margin: 1rem auto;
-  overflow-y: auto;
+  overflow-x:hidden;
+ overflow-y: clip;
 }
-
+.chatLists{
+	overflow-y: auto;
+}
 .nolist{
 	white-space:nowrap;
 }
 .form-header {
   width: 100%;
+  height: 4rem;
   border-bottom: 1px solid var(--text-black);
   padding: 5px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
+  justify-content: space-between;
+  align-items: center;
+
 }
-.chatroom {
+
+.chatroom{
+	height: 2rem;
+	line-height:1.5rem;
   border: none;
   border-radius: 3rem;
   font-size: 0.9rem;
@@ -63,9 +70,37 @@ text-decoration:none;
   margin-bottom: 0.4rem;
   cursor: pointer;
 }
-
-.cancel,
-.back {
+#cancelHam {
+  position: absolute;
+   top: 2%;
+    left: 92%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    background-color: var(--primary-color-light);
+    border-radius: 50%;
+    width: 20px; 
+    height: 20px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     will-change: transform, opacity;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+#cancelHam::before,
+#cancelHam::after {
+    content: "";
+    position: absolute;
+   top: 10%;
+    left: 50%;
+    width: 2px;
+    height: 15px; 
+    background-color: var(--primary-color);
+}
+#cancelHam:hover{
+	transform: scale(1.2);
+}
+.cancel{
   width: 2rem;
   height: 2rem;
   border: none;
@@ -95,19 +130,22 @@ text-decoration:none;
 	 background-color: transparent;
 }
 .chat_list {
+position:relative;
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 1fr 4fr 1fr;
   border-bottom: 1px solid var(--text-black);
   padding-top: 1rem;
   padding-bottom: 0.9rem;
   margin: 0 0.7rem;
   transition: all 0.2s ease-in-out;
   overflow-x: hidden;
+   cursor: pointer;
 }
 .chat_list:hover {
   background-color: var(--primary-color-light);
   box-shadow: 0 4px 8px 4px rgba(88, 87, 87, 0.09);
 }
+
 .chat-imgs {
   position: relative;
 }
@@ -134,9 +172,16 @@ text-decoration:none;
 .chat_detail {
   margin-left: 1rem;
 }
-.nick_name {
-  font-weight: 700;
+.part1 {
+  font-weight: 800;
+  font-size:.9rem;
   padding-bottom: 3px;
+  color:var(--primary-color);
+}
+.part2{
+	font-weight: 600;
+	font-size:.8rem;
+	color:var(--primary-color);	
 }
 .chat_content {
   font-size: 0.9rem;
@@ -199,7 +244,6 @@ text-decoration:none;
   background-color: var(--text-white);
   margin: 0;
   overflow: auto;
-  overflow-y: scroll;
   padding: 0 20px 0px 20px;
   height: 80%;
   width: 100%;
@@ -248,6 +292,7 @@ text-decoration:none;
 .input-group {
   display: flex;
 }
+
 .btn-send {
   width: 2rem;
   cursor: pointer;
@@ -257,11 +302,53 @@ text-decoration:none;
 }
 .img-send {
   width: 2rem;
+   cursor: pointer;
 }
 .left-arrow {
   width: 1.5rem;
-  transform: rotateY(180deg);
-  top: 0.5rem;
-  left: 2px;
-  position: absolute;
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.hamburgerIcon{
+	width:1.5rem;
+	height:1.5rem;
+	cursor: pointer;
+}
+.hide-container {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color-yellow);
+    transition: left 0.3s ease; 
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    z-index:1000;
+}
+
+.hide-container.hidden {
+    left: 100%; 
+}
+.hide-container.active {
+    left: 0; 
+}
+.leave{
+	display: block;
+	width: 8rem;
+	height: 2rem;
+    margin: 0 auto;
+    line-height: 2rem;
+    text-align: center;
+    border-radius: 5px;
+    font-size: .9rem;
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    cursor: pointer;
+    margin: 3px;
+}
+.leave:hover{
+	transform: translateY(3px);
 }

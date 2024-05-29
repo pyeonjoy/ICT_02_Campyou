@@ -51,11 +51,7 @@ select * from qna_re where qna_idx=#{qna_idx}
 <update id="modiQna" parameterType="qvo" >
 update qna set qna_title=#{qna_title}, qna_content=#{qna_content} where qna_idx=#{qna_idx}
 </update>
-<!--  
-<select id="getlist" resultType="tvo" parameterType="Map">
-select * from board_with where member_idx=#{member_idx} order by t_idx desc LIMIT 4
-</select>
--->
+
 <insert id="upQna" parameterType="qvo">
 insert into qna(member_idx, qna_title, qna_content, qna_date, qna_status)
 values(#{member_idx},#{qna_title},#{qna_content}, sysdate(), 0)
@@ -70,12 +66,16 @@ select count(*) from qna where member_idx=#{member_idx}
 </select>
 
 <insert id="addChat" parameterType="chvo">
-insert into m_chat(msg_room, room_name, send_idx,send_nick, reci_nick, send_date, msg_content, msg_read)
-values(#{msg_room},#{room_name},#{send_idx}, #{send_nick},#{reci_nick}, #{send_date},#{msg_content}, 1)
+insert into m_chat(msg_room, room_name, send_idx,send_nick, reci_nick, send_date, msg_content, msg_read,room_status)
+values(#{msg_room},#{room_name},#{send_idx}, #{send_nick},#{reci_nick}, #{send_date},#{msg_content}, 1,0)
 </insert>
 
+<update id="chatStatus" parameterType="String">
+update m_chat set room_status=-1 where msg_room=#{msg_room}
+</update>
+
 <select id="getRooms" resultType="chvo">
-SELECT * FROM m_chat WHERE msg_room REGEXP CONCAT('^', #{member_idx}, '-|-', #{member_idx}, '$')
+SELECT * FROM m_chat WHERE msg_room REGEXP CONCAT('^', #{member_idx}, '-|-', #{member_idx}, '$') and room_status=0
 </select>
 
 <select id="getMaxMsgIdxRoom" resultMap="ChatVOResultMap">

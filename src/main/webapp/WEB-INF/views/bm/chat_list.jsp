@@ -19,7 +19,6 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </head>
 <body>
 	<div class="chat-container chatLists">
@@ -36,8 +35,7 @@
 				</c:when>
 				<c:otherwise>
 					<c:forEach var="chatWithImage" items="${chatWithImageList}">
-						<a href="selectOneRoom.do?msg_room=${chatWithImage.chat.msg_room}">
-							<div class="chat_list"
+							<div class="chat_list" onclick="goToRoom('${chatWithImage.chat.msg_room}',event)"
 								data-msg-room="${chatWithImage.chat.msg_room}"
 								data-msg-idx="${chatWithImage.chat.msg_idx}">
 								<div class="chat-imgs">
@@ -49,16 +47,20 @@
 									</c:if>
 								</div>
 								<div class="chat_detail">
-									<p class="nick_name">${chatWithImage.chat.room_name}</p>
+									<p class="room_name">${chatWithImage.chat.room_name}</p>
 									<p class="chat_content">${chatWithImage.chat.msg_content}</p>
 								</div>
+									<img src="${path}/resources/img/hamburger-menu.png" alt="icon-to-move-to-page-to-delete-chat" class="hamburgerIcon">			
+								<div class="hide-container">
+									<button class="cancel" id="cancelHam" onclick="callHide(event)"></button>
+									<a href="chatStatus.do?msg_room=${chatWithImage.chat.msg_room}" class="leave">채팅방나가기</a>
+									<a href="#" onclick="handleReport(event, '${chatWithImage.chat.msg_room}', '${chatWithImage.opposite_idx}')" class=leave>신고하기</a>
+								</div>
 							</div>
-						</a>
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
 		</div>
 	</div>
-
 </body>
 </html>
