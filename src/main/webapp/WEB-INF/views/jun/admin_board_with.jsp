@@ -188,8 +188,7 @@ body {
 	}
 
 	function w_board_load(page) {
-		$
-				.ajax({
+		$.ajax({
 					url : "w_board_load.do",
 					method : "get",
 					dataType : "json",
@@ -202,31 +201,15 @@ body {
 						$('.warpper_title').show();
 						let list = '<div class="table_inquiry"><table>';
 						list += "<thead><tr><th>번호</th><th>닉네임</th><th>제목</th><th>내용</th><th>날짜</th><th>상태</th></tr></thead><tbody>";
-						$
-								.each(
-										data.res,
-										function(index, item) {
-											list += '<tr onclick="w_board_detail('
-													+ item.t_idx + ')">';
-											list += '<td>' + item.t_idx
-													+ '</td>';
-											list += '<td>'
-													+ item.member_nickname
-													+ '</td>';
-											list += '<td>' + item.t_subject
-													+ '</td>';
-											let onlyText = item.t_content ? item.t_content
-													.replace(/<\/?[^>]+(>|$)/g,
-															"")
-													: '';
-											let shortenedContent = onlyText.length > 20 ? onlyText
-													.substring(0, 20)
-													+ '...'
-													: onlyText;
-											list += '<td>' + shortenedContent
-													+ '</td>';
-											list += '<td>' + item.t_regdate
-													+ '</td>';
+						$.each(data.res,function(index, item) {
+											list += '<tr onclick="w_board_detail('+ item.t_idx + ')">';
+											list += '<td>' + item.t_idx+ '</td>';
+											list += '<td>'+ item.member_nickname+ '</td>';
+											list += '<td>' + item.t_subject+ '</td>';
+											let onlyText = item.t_content ? item.t_content.replace(/<\/?[^>]+(>|$)/g,""): '';
+											let shortenedContent = onlyText.length > 20 ? onlyText.substring(0, 20)+ '...': onlyText;
+											list += '<td>' + shortenedContent+ '</td>';
+											list += '<td>' + item.t_regdate+ '</td>';
 											if (item.t_active === 0) {
 												list += '<td>게시중</td>';
 											} else if (item.t_active === 1) {
@@ -300,8 +283,6 @@ body {
 	            $('.search_th_paging').empty();
 	            $('.search').hide();
 	            $('.warpper_title').hide();
-
-	            console.log(data);
 
 	            let list = '';
 	            list += '<div class="detail_info">';
