@@ -142,7 +142,7 @@ function to_apply() {
         },
         success: function(response) {
         	if(response === "ban"){
-				alert("재신청 불가합니다.");  			
+				alert("재신청 불가합니다.");
         	}else{
 	        	if (response > 0) {
 	                alert("신청이 완료되었습니다.");
