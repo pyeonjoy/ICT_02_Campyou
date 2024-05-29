@@ -9,12 +9,15 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ict.campyou.hs.dao.WrapperVO;
 import com.ict.campyou.hs.service.HsService;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.jun.dao.CampVO;
@@ -203,7 +206,6 @@ public class HsAjaxController {
 			while ((line = rd.readLine()) != null) {
 				sb.append(line);
 			}	
-			
 			return sb.toString();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -309,14 +311,22 @@ public class HsAjaxController {
 
 	@RequestMapping(value = "getProfile.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public MemberVO getProfile(@RequestParam String member_idx) {
+	public WrapperVO getProfile(@RequestParam String member_idx, HttpSession session) {
 		try {
-			MemberVO mvo = hsService.getMember(member_idx);
-			return mvo;
+			boolean sameMember = false;
+			MemberVO r_mvo = hsService.getMember(member_idx);
+			if ((MemberVO) session.getAttribute("memberInfo") != null) {
+				MemberVO loginMvo = (MemberVO) session.getAttribute("memberInfo");
+				if(r_mvo.getMember_idx().equals(loginMvo.getMember_idx())) {
+					sameMember = true;
+				}
+			}
+			return new WrapperVO(r_mvo, sameMember);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return null;
 	}
+	
 
 }
