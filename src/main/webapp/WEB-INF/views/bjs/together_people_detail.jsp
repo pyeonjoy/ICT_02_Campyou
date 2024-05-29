@@ -137,7 +137,17 @@ h1 {
         <input type="hidden" id="t_numpeople" value="${tvo.t_numpeople }">
         <input type="hidden" id="promise_status" value="${tvo.promise_status }">
 		<div class="thwrapper">
-			<h3>${tvo.t_campname } 동행 모집현황</h3>
+			<c:choose>
+				<c:when test="${tvo.promise_status == 'ing' }">
+					<h3>${tvo.t_campname } 동행 모집중</h3>
+				</c:when>
+				<c:when test="${tvo.promise_status == 'ready' }">
+					<h3>${tvo.t_campname } 동행 진행중</h3>
+				</c:when>
+				<c:when test="${tvo.promise_status == 'end' }">
+					<h3>${tvo.t_campname } 동행 완료</h3>
+				</c:when>
+			</c:choose>
 			<h4>${tvo.promise_count } / ${tvo.t_numpeople } 명</h4>
 			<div class="thDiv">
 				<p>${tvo.t_startdate } - ${tvo.t_enddate }</p>
@@ -149,7 +159,7 @@ h1 {
 					</c:if>
 				</c:if>
 <%-- 				<c:if test="${tvo.promise_status == 'ing' }"> --%>
-<!-- 					<p style="color: blue;">** 예정보다 여정이 빨리 시작할시 게시글에서 날짜를 수정해주세요 **</p> -->
+<!-- 					<p style="color: blue;">**  **</p> -->
 <%-- 				</c:if> --%>
 			</div>
 			<ul class="thul1">
@@ -392,7 +402,11 @@ function promisePeopleDetail() {
                     let proPeopleDetail = data[i];
                     console.log(proPeopleDetail.pm_master);
                     memberIdxArray.push(proPeopleDetail.member_idx);
-	                html += '<div class="thliImage3"><img src="${path}/resources/images/' + proPeopleDetail.member_img + '" class="thliImage2 profile_show" data-memberidx="'+proPeopleDetail.member_idx+'"></div>';
+                    if(proPeopleDetail.member_img == 'user2.png'){
+                    	html += '<div class="thliImage3"><img src="${path}/resources/images/' + proPeopleDetail.member_img + '" class="thliImage2 profile_show" data-memberidx="'+proPeopleDetail.member_idx+'"></div>';
+                    }else{
+		                html += '<div class="thliImage3"><img src="${path}/resources/uploadUser_img/' + proPeopleDetail.member_img + '" class="thliImage2 profile_show" data-memberidx="'+proPeopleDetail.member_idx+'"></div>';
+                    }
 	                html += '<ul><li class="th1 member_gradeLi profile_show" data-memberidx="' + proPeopleDetail.member_idx + '">';
 	                html += proPeopleDetail.member_nickname;
 	                html += '<img src="${path}/resources/images/' + proPeopleDetail.member_grade + '" class="member_gradeImg">';

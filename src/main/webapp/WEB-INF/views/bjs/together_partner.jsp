@@ -94,7 +94,7 @@ function toPromiseIng(page) {
                     html += '<div>';
                     html += '<div class="toContentOne3">';
                     html += '<p>조회수 : ' + PromiseIng.t_hit + '</p>';
-                    html += '<p>모집 : ' + PromiseIng.promise_count + ' / ' + PromiseIng.t_numpeople + '명' + '</p>';
+                    html += '<p>모집중 : ' + PromiseIng.promise_count + ' / ' + PromiseIng.t_numpeople + '명' + '</p>';
                     html += '</div>';
                     html += '<form method="post" class="toContentOne4">';
                     html += '<button type="button" class="toContentOne2" onclick="to_detail(' + PromiseIng.t_idx + ',' + data.paging.nowPage + ',\'' + pro_status + '\')">상세 보기<button>';
@@ -203,7 +203,7 @@ function toPromiseReady(page) {
                     html += '<div>';
                     html += '<div class="toContentOne3">';
                     html += '<p>조회수 : ' + promiseReady.t_hit + '</p>';
-                    html += '<p>모집 : ' + promiseReady.promise_count + ' / ' + promiseReady.t_numpeople + '명' + '</p>';
+                    html += '<p>진행중 : ' + promiseReady.promise_count + ' / ' + promiseReady.t_numpeople + '명' + '</p>';
                     html += '</div>';
                     html += '<form method="post" class="toContentOne4">';
                     html += '<button type="button" class="toContentOne2" onclick="to_detail(' + promiseReady.t_idx + ',' + data.paging.nowPage + ',\'' + pro_status + '\')">상세 보기<button>';
@@ -312,7 +312,7 @@ function toPromiseEnd(page) {
                     html += '<div>';
                     html += '<div class="toContentOne3">';
                     html += '<p>조회수 : ' + promiseEnd.t_hit + '</p>';
-                    html += '<p>모집 : ' + promiseEnd.promise_count + ' / ' + promiseEnd.t_numpeople + '명' + '</p>';
+                    html += '<p>동행 완료 : ' + promiseEnd.promise_count + ' / ' + promiseEnd.t_numpeople + '명' + '</p>';
                     html += '</div>';
                     html += '<form method="post" class="toContentOne4">';
                     html += '<button type="button" class="toContentOne2" onclick="to_detail(' + promiseEnd.t_idx + ',' + data.paging.nowPage + ',\'' + pro_status + '\')">상세 보기<button>';

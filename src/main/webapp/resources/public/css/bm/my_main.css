@@ -71,8 +71,8 @@
 	display: flex;
 	align-items: center;
 	position: absolute;
-	bottom: 8rem;
 	right: 14.5rem;
+	top: 12rem;
 }
 
 .together_list {
