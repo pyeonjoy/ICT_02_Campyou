@@ -114,21 +114,16 @@ public class TogetherAjaxController {
 	@RequestMapping(value = "to_promise.do", produces = "application/plain; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
 	public String getToPomise(PromiseVO pvo, HttpSession session) throws Exception{
-		MemberVO memberUser = (MemberVO) session.getAttribute("memberInfo");
-        if (memberUser == null) {
-            return "로그인 후 가능합니다.";
-        } else {
-        	int pmStateChk = togetherService.getPmStateChk(pvo);
-        	if(pmStateChk > 0) {
-        		return "ban";
-        	}else {
-        		int result = togetherService.getToPomise(pvo);
-        		if(result > 0) {
-        			int pvo2 = togetherService.getPomiseCount(pvo.getT_idx());
-        			return String.valueOf(pvo2);
-        		}
-        	}
-        }
+    	int pmStateChk = togetherService.getPmStateChk(pvo);
+    	if(pmStateChk > 0) {
+    		return "ban";
+    	}else {
+    		int result = togetherService.getToPomise(pvo);
+    		if(result > 0) {
+    			int pvo2 = togetherService.getPomiseCount(pvo.getT_idx());
+    			return String.valueOf(pvo2);
+    		}
+    	}
 		return "error";
     }
 	
