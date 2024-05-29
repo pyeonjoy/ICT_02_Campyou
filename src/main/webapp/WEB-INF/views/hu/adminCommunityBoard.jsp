@@ -77,7 +77,6 @@ body{
 						<c:forEach var="k" items="${commBoard_list}" varStatus="vs">
 							<tr>
 							    <c:choose>
-							       <%--  <c:when test="${k.b_type == '공지사항'}"> --%>
 							       <c:when test="${k.admin_nickname == '관리자'}">
 							       	  <td class="admin-write-color" style="background-color: lightyellow;">			     
 									    <form method="post">
@@ -96,11 +95,8 @@ body{
 										 </form>
 						      		  </td>
 							        <td class="admin-write-color" style="background-color: lightyellow;">공지</td>
-							          <%--   <td class="admin-write-color" style="background-color: lightyellow;">${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td> --%>
 							            <td class="admin-write-color" style="background-color: lightyellow;">${k.b_type}</td>
 							            <td class="admin-write-color" style="background-color: lightyellow;">
-							                <!-- <td style="text-align: left; " /> -->
-							                <%-- <c:forEach begin="1" end="${k.step}">&nbsp;[Re]</c:forEach> --%>
 							                <c:choose>
 							                    <c:when test="${k.b_active == 3}">
 							                        <span style="color:lightgray">삭제된 게시물입니다</span>

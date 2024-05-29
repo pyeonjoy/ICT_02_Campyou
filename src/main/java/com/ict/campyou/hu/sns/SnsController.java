@@ -23,7 +23,6 @@ public class SnsController {
    @RequestMapping("kakaologin.do")
    public ModelAndView getKakaoAccessToken(String code, HttpSession session) {
 	  ModelAndView mv = new ModelAndView("redirect:kakaologinok.do");
-	  
 	  String reqURL = "https://kauth.kakao.com/oauth/token";
 	  try {
 		URL url = new URL(reqURL);
@@ -43,7 +42,6 @@ public class SnsController {
 		bw.flush();
 			
 		int responseCode = conn.getResponseCode();
-
 		if (responseCode == HttpURLConnection.HTTP_OK) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -53,13 +51,10 @@ public class SnsController {
 				sb2.append(line);
 			}
 			String result = sb2.toString();
-			// System.out.println(result);
 
 			Gson gson = new Gson();
 			KakaoVO kvo = gson.fromJson(result, KakaoVO.class);
 			String access_token = kvo.getAccess_token();
-			//String refresh_token = kvo.getRefresh_token();
-			//String token_type = kvo.getToken_type();
 			
 			if(access_token != null) {
 				session.setAttribute("access_token", access_token);
@@ -76,8 +71,7 @@ public class SnsController {
    //네이버 로그인 access token 받아오기
    @RequestMapping("naverlogin.do")
  	public ModelAndView getNaverAccessToken(String code, HttpSession session) {
- 		String reqURL = "https://nid.naver.com/oauth2.0/token";
- 		
+ 		String reqURL = "https://nid.naver.com/oauth2.0/token";	
  		ModelAndView mv = new ModelAndView("redirect:naverloginok.do");
  		
  		try {
@@ -112,9 +106,7 @@ public class SnsController {
  				Gson gson = new Gson();
  				NaverVO nvo = gson.fromJson(result, NaverVO.class);
  				String access_token = nvo.getAccess_token();
- 				//String refresh_token = nvo.getRefresh_token();
- 				//String token_type = nvo.getToken_type();
-
+ 				
  				if(access_token != null) {
  					session.setAttribute("access_token", access_token);
  					mv.addObject("access_token", access_token);

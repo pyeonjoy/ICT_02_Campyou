@@ -63,7 +63,6 @@
 									<option value="날씨정보">날씨정보</option>
 									<option value="주의사항">주의사항</option>
 								</select>
-							<!-- <td align="left"><input type="hidden" name="b_type"></td>  -->
 							</td>
 						</c:when>
 						<c:otherwise>
@@ -76,7 +75,6 @@
 									<option value="후기">후기</option>
 									<option value="불평">불평</option>
 								</select>
-							<!-- <td align="left"><input type="hidden" name="b_type"></td>  -->
 							</td>		
 						</c:otherwise>
 					</c:choose>
@@ -94,9 +92,7 @@
 									<option value="${adminInfo.admin_nickname}">${adminInfo.admin_nickname}</option>
 									<option value="관리자">관리자</option>
 							</select>
-							<%-- <input type="hidden" name="admin_nickname" value="${adminInfo.admin_nickname}"> --%>
 							<input type="hidden" name="member_nickname" value="${memberInfo.member_nickname}">
-							<%-- <input type="hidden" name="member_nickname" value="${kakaoMemberInfo.member_nickname}"> --%>
 						</c:when>
 						<c:otherwise>
 							<td align="left">${memberInfo.member_nickname} ${naverMemberInfo.member_name}

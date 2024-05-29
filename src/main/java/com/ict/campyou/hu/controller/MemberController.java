@@ -576,7 +576,6 @@ public class MemberController {
 			  //일반회원 글쓰기
 			  if(memberInfo != null) {
 				  cbvo.setMember_idx(memberInfo.getMember_idx());
-				  //cbvo.setMember_idx(kakaoMemberInfo.getMember_idx());
 				  cbvo.setMember_grade(memberInfo.getMember_grade());
 			   
 				  if(file.isEmpty()) {
@@ -594,7 +593,6 @@ public class MemberController {
 				  
 				  if(true) {				  
 					  //자유 게시판에 글쓸때 마다 member_free 등급 올리기
-					  //String member_idx = cbvo.getMember_idx();
 					  String member_idx = cbvo.getMember_idx();
 					  int result2 = memberService.getMemberFreeUpdate(member_idx);
 					  
@@ -1191,6 +1189,8 @@ public class MemberController {
 			}
 		   return new ModelAndView("hu/boardFree/error");
 	   }
+	   
+	   
 	   @RequestMapping("sns_update_form.do")
 		   public ModelAndView sns_update_form() {
 			   return new ModelAndView("hu/snsInfo");
