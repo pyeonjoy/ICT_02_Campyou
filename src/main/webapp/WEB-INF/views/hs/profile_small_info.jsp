@@ -22,8 +22,7 @@
 					<strong id="member_nickname"></strong> <span><img id="member_grade" alt="" src=""> </span>
 				</div>
 				<div class="gray_font"><span id="member_age"></span> / <span id="member_gender"></span></div>
-				<div>
-<!-- 					<input id="chat_go" class="chat" onclick="openChat()" type="button" value="채팅">  -->
+				<div class="report_go_btn">
 					<input id="report_go" type="button" value="신고">
 				</div>
 			</div>
