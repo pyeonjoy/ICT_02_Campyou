@@ -663,7 +663,7 @@ public class TogetherAjaxController {
 		return totalUpdated;
 	}
 	
-	@RequestMapping(value = "with_promise_state_update.do", produces = "application/plain; charset=utf-8", method = RequestMethod.POST)
+	@RequestMapping(value = "with_promise_state_update.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
 	public int getConfirmPartner(@RequestParam("member_idx")String member_idx) throws Exception {
 		int num = 0;
