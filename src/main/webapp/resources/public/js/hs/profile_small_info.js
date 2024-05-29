@@ -30,7 +30,7 @@ $(document).ready(function() {
 	    	    	 $('.report_go_btn').show();
 	    	     }
 	    	     
-	    	     getAgeGroup(data.member_dob);
+	    	     getAgeGroup(data.member.member_dob);
 	    	     
 	    	     $(".rating").css("width", starWidth + "%");
 		    },
