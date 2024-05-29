@@ -4,11 +4,13 @@
     margin-left: 1100px;
 }
 
+
+
 table {
     width: 800px;
     margin: 0px auto; 
     margin-top: 50px; 
-    margin-left: 655px;
+    margin-left: 550px;
     padding-bottom: 300px;
     border-collapse: collapse;
     text-align: center;
@@ -116,7 +118,7 @@ input[type="button"]:hover, input[type="reset"]:hover {
 .reply-output2 {
     background-color: #f2f2f2;
     width: 780px;
-    margin-left: 1315px;
+    margin-left: 1100px;
     padding: 25px;
     margin-top: 15px;
 }

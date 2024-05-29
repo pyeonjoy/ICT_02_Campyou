@@ -102,7 +102,6 @@ public class MyDAO {
 	
 	public int uploadQna(QnaVO qvo) {
 		try {
-			System.out.println("dao: " + qvo.getMember_idx());
 			return sqlSessionTemplate.insert("bomi.upQna", qvo);
 		} catch (Exception e) {
 			System.out.println(e);

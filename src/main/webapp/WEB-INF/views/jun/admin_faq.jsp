@@ -241,7 +241,6 @@ body {
 	});
 
 	function promise_go(page) {
-		console.log("찍히냐 동행"+page);
 		$.ajax({
 			url : "promise_faqload.do",
 			method : "get",
@@ -306,7 +305,6 @@ body {
 	}
 
 	function user_go(page) {
-		console.log("찍히냐유저"+page);
 		$.ajax({
 			url : "use_faqload.do",
 			method : "get",
@@ -386,7 +384,6 @@ body {
     	promise_go();
     });
 	function user_faq_write() {
-		console.log("버튼정상작동?");
 		$("#faq_list").hide();
 		$('.page_button').empty();
 		$('.page_button2').empty();
@@ -394,7 +391,6 @@ body {
 	}
 
 	function promise_faq_write() {
-		console.log("동행정상작동?");
 		$("#faq_list").hide();
 		$('.page_button').empty();
 		$('.page_button2').empty();
@@ -479,7 +475,6 @@ body {
 	    $('.status_checkbox:checked').each(function() {
 	    	selectBox.push($(this).data('faqidx'));
 	    });
-		console.log(selectBox);
 		
 		if(selectBox.length === 0){
 			alert("선택 항목이 없음.");

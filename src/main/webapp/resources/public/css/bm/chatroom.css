@@ -219,10 +219,12 @@ text-decoration:none;
 
 .img_for_user1 {
   border-radius: 50%;
+  border: 1px solid var(--primary-color);
   position: absolute;
   top: -1rem;
   left: -1rem;
   width: 20px;
+  height: 20px;
 }
 
 .li-msg--2 {

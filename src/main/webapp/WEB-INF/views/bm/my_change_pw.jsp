@@ -19,40 +19,23 @@
         const pwd = document.getElementById("pwd").value.trim();
         const pwd_checkInput = document.getElementById("pwd_check");
         const pwd_check = pwd_checkInput.value.trim();
+        if (pwd.length < 4 || pwd_check.length < 4) {
+            alert("비밀번호는 4자 이상이어야 합니다.");
+            return;
+        }
 
         if (pwd !== pwd_check) {
           alert("비밀번호가 일치하지 않습니다.");
           pwd_checkInput.focus();
           return;
-        }
-        
+        }       
         form.submit();
-        console.log('form-sent');
         form.action="pwd_change.do";
       }
-      
-
-   function handlePwChange(e, form) {
-	    e.preventDefault();
-	    const pwd = document.getElementById("pwd").value.trim();
-	    const pwd_checkInput = document.getElementById("pwd_check");
-	    const pwd_check = pwd_checkInput.value.trim();
-
-	    if (pwd !== pwd_check) {
-	        alert("비밀번호가 일치하지 않습니다.");
-	        pwd_checkInput.focus();
-	        return;
-	    }
-
-	    form.action = "pwd_change.do?member_idx=" + form.member_idx.value;	
-	    form.submit();
-	}
-
-	function goBack() {
-	    window.history.back();
-	}
-
-
+      function goBack(event) {
+    	    event.preventDefault();
+    	    window.history.back();
+    	}
     </script>
 </head>
 <body>
@@ -80,7 +63,7 @@
         <button class="btn btn_change" onclick="handlePwChange(event,this.form)">
           변경
         </button>
-        <button class="btn btn_back" onclick="history.back()">뒤로가기</button>
+        <button class="btn btn_back" onclick="goBack(event)">취소</button>
 
       </div>
     </form>

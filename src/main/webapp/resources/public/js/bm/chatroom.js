@@ -77,8 +77,11 @@ function sendMessage(form, e) {
 function showMessageOutput(chvo) {
   const isOwnMessage = chvo.send_idx === my_idx;
   const messageClass = isOwnMessage ? "user--2-message" : "user--1-message";
+const imageHTML = !isOwnMessage ? `<img src="resources/images/${reci_img}" alt="user_img" class="img_for_user1" />` : "";
+  
   const messageHTML = `
     <div class="li-msg ${isOwnMessage ? 'li-msg--2' : 'li-msg--1'}">
+      ${imageHTML}
       <span class="user-message ${messageClass}">${chvo.msg_content}</span>
     </div>
   `;
