@@ -367,14 +367,13 @@ public class MemberController {
 	   @RequestMapping("logout_form.do")
 	   public ModelAndView getLogOut(HttpSession session) {
 		   try {
-			   ModelAndView mv = new ModelAndView("home");
 			   //session.invalidate();
 			   session.removeAttribute("memberInfo");
 			   session.removeAttribute("admin");
 			   session.removeAttribute("kakaoMemberInfo");
 			   session.removeAttribute("naverMemberInfo");
 			   session.removeAttribute("requestPage");
-			   return mv;
+			   return new ModelAndView("redirect:/");
 		    } catch (Exception e) {
 		  	   System.out.println(e);
 		   }
