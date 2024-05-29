@@ -317,7 +317,6 @@ body{
 		</table>
 		</form>
 	</div>
-<%@ include file="../hs/footer.jsp" %>
 <%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>

@@ -6,51 +6,51 @@
 */
 
 *{
-    box-sizing: border-box;
-    outline:none;
+	box-sizing: border-box;
+	outline:none;
 }
 
-html, body, div, span, applet, object, iframe, p, blockquote, pre,
+html, div, span, applet, object, iframe, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
+dl, dt, dd,
+form, label, legend,
+caption,
 article, aside, canvas, details, embed, 
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    text-decoration:none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	text-decoration:none;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
-    display: block;
+	display: block;
 }
 body {
-    line-height: 1;
+	line-height: 1;
 }
 ol, ul {
-    list-style: none;
+	list-style: none;
 }
 blockquote, q {
-    quotes: none;
+	quotes: none;
 }
 blockquote:before, blockquote:after,
 q:before, q:after {
-    content: '';
-    content: none;
+	content: '';
+	content: none;
 }
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 p, h1, h2, h3, h4, h5, button{
@@ -77,50 +77,50 @@ h3 {
     font-weight: 900;
 }
 h4{
-    font-size: 20px;
+	font-size: 20px;
     margin: 0 auto;
 }
 
 h5 {
-    margin: 0;
+	margin: 0;
 }
 
 p {
-    font-size: 15px;
+	font-size: 15px;
     margin: 0 auto;
     line-height: 15px;
 }
 
 a, a:visited, a:hover {
-    color: black;
+	color: black;
 }
 @charset "UTF-8";
 
 input[type="button"], input[type="submit"], input[type="reset"], button {
-    font-weight: bold;
-    border-radius: 5px;
-    background-color: #FFFBB9;
-    color: black;
-    text-align: center;
-    border: 0px solid #FAAB12;
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: #FFFBB9;
+	color: black;
+	text-align: center;
+	border: 0px solid #FAAB12;
 }
 
 input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover,
-    button:hover {
-    border: 0px solid #FFFDDE;
-    border-radius: 5px;
-    background-color: #032805;
-    color: white;
-    text-align: center;
-    cursor: pointer;
+	button:hover {
+	border: 0px solid #FFFDDE;
+	border-radius: 5px;
+	background-color: #032805;
+	color: white;
+	text-align: center;
+	cursor: pointer;
 
 }
 
 .buttonAtype {
-    font-size: 15px;
-    background: 053610;
-    font-weight: bold;
-    border-radius: 5px;
+	font-size: 15px;
+	background: 053610;
+	font-weight: bold;
+	border-radius: 5px;
 }
 @font-face {
     font-family: 'JalnanGothic';

@@ -1,0 +1,59 @@
+@charset "UTF-8";
+@import url("reset2.css");
+
+.header a,
+.header a:visited,
+.header a:hover,
+.header_wrap {
+    color: #FFFDDE
+}
+.header {
+    width: 100%;
+    z-index: 99999999999;
+    position: fixed;
+    background-color: #053610;
+    height: 90px;
+}
+
+.header_wrap {
+    width: 100%;
+    display: flex;
+    position: absolute;
+    justify-content: space-between;
+}
+
+.header_left,
+.header_right {
+    display: flex;
+    text-align: center;
+}
+
+.header_wrap ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.header_left li {
+    padding: 15px;
+    white-space: nowrap;
+}
+
+.logo-03 {
+    width: 300px;
+    padding: 20px 20px 0px;
+}
+
+.header_right {
+	margin-right: 20px;
+}
+
+.header_right li {
+    padding: 10px;
+    white-space: nowrap;
+}
+
+.header_right .icon {
+    width: 25px;
+}
+
