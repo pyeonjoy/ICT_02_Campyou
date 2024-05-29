@@ -66,7 +66,6 @@ body{
 									<option value="날씨정보">날씨정보</option>
 									<option value="주의사항">주의사항</option>
 								</select>
-							<!-- <td align="left"><input type="hidden" name="b_type"></td>  -->
 							</td>
 						</c:when>
 						<c:otherwise>

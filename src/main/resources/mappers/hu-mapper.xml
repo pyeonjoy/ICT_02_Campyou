@@ -166,9 +166,8 @@
 	    limit #{limit} offset #{offset}
 	</select> 
 	
-	<!-- 관리자 리스트 -->
+	<!-- 관리자 공지사항 -->
 	<select id="admin_list" parameterType="Map" resultType="admvo">
- 		<!-- select * from admin order by groups desc, lev asc  limit #{limit} offset #{offset} --> 
  		select * from admin 
 	    where admin_id = 'admin'
 	    union 
@@ -279,8 +278,6 @@
  	<select id="board_free_search_list" parameterType="Map" resultType="bfvo">
  		select * from board_free where 
  		<choose>
- 			<!-- <when test="searchType == 1"> Lower(b_title) = Lower(#{searchValue})</when> -->
- 			
  			<when test="searchType == 1"> Lower(b_subject) like concat('%', Lower(#{searchValue}),'%')</when>
  			<when test="searchType == 2"> Lower(b_content) like concat('%', Lower(#{searchValue}), '%')</when>
  			<when test="searchType == 3"> Lower(member_nickname) = Lower(#{searchValue})</when>
