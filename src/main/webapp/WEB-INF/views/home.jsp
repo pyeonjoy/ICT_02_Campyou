@@ -419,8 +419,8 @@ $(document).ready(function() {
     left: 30px;
     width: 83.5%;
     height: 89%; background-color: rgba(4, 22, 1, 0.3);"></div>
-			            <h4 style="position: absolute; bottom: 105px; left: 50px; color: white; padding: 5px; text-align: left;">${c.facltnm}</h4>
-			            <p style="position: absolute; bottom: 73px; left: 50px; color: white; padding: 5px; text-align: left; width: 250px; line-height: 24px;">${c.addr1}</p>
+			            <h4 style="position: absolute; bottom: 118px; left: 50px; color: white; padding: 5px; text-align: left;">${c.facltnm}</h4>
+			            <p style="position: absolute; top:437px; left: 50px; color: white; padding: 5px; text-align: left; width: 250px; line-height: 24px;">${c.addr1}</p>
 			        </div>
 			    </div>
 			</c:forEach>
