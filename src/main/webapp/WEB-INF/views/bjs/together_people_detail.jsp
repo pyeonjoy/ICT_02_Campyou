@@ -399,7 +399,7 @@ function promisePeopleDetail() {
                     if(proPeopleDetail.member_img == 'user2.png'){
                     	html += '<div class="thliImage3"><img src="${path}/resources/images/' + proPeopleDetail.member_img + '" class="thliImage2 profile_show" data-memberidx="'+proPeopleDetail.member_idx+'"></div>';
                     }else{
-		                html += '<div class="thliImage3"><img src="${path}/resources/uploadUser_img/' + proPeopleDetail.member_img + '" class="thliImage2 profile_show" data-memberidx="'+proPeopleDetail.member_idx+'"></div>';
+		                html += '<div class="thliImage3"><img src="${path}/resources/images/' + proPeopleDetail.member_img + '" class="thliImage2 profile_show" data-memberidx="'+proPeopleDetail.member_idx+'"></div>';
                     }
 	                html += '<ul><li class="th1 member_gradeLi profile_show" data-memberidx="' + proPeopleDetail.member_idx + '">';
 	                html += proPeopleDetail.member_nickname;

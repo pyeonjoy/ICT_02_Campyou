@@ -494,7 +494,7 @@ $(document).on("click", ".toDetailContent4Sub2Sub2ButtonX", function() {
 							<img src="${path}/resources/images/${tvo.member_img}" class="deataiUserImage2">
 						</c:when>
 						<c:otherwise>
-							<img src="${path}/resources/uploadUser_img/${tvo.member_img}" class="deataiUserImage2">
+							<img src="${path}/resources/images/${tvo.member_img}" class="deataiUserImage2">
 						</c:otherwise>
 					</c:choose>
 				</div>

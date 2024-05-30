@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ import com.ict.campyou.common.Paging;
 import com.ict.campyou.hu.dao.CampingGearBoardVO;
 import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
+import com.ict.campyou.joy.dao.AdminMemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.ReviewVO;
 
@@ -187,12 +189,21 @@ public class BomiController {
 			MemberVO opener = myService.getMember(opener_idx); // 상대방정보
 			String msg_room = opener_idx + '-' + my_idx; // 동행구하는사람의 idx-채팅보내는사람의 idx
 			List<ChatVO> chatList = myService.getOneRoom(msg_room);
-
+			List<AdminMemberVO> reports = myService.getUserReports(opener_idx, my_idx);
 			mv.addObject("chatList", chatList);
 			mv.addObject("msg_room", msg_room);
 			mv.addObject("joiner", joiner);
 			mv.addObject("opener", opener);
 			mv.addObject("my_idx", my_idx); // 내 idx가져가기
+			
+			 for (ChatVO chat : chatList) {
+		            if (chat.getRoom_status().equals("-1")) {
+		                mv.addObject("room_name", room_name);
+		                mv.setViewName("bm/chatroom");
+		                return mv; 
+		            }
+		        }
+			
 			if (chatList.isEmpty()) {
 				mv.addObject("room_name", room_name);
 				mv.setViewName("bm/chatroom");

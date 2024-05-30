@@ -93,7 +93,7 @@
 					                        <img src="${path}/resources/images/${k.member_img }" class="userImage2">
 			                    		</c:when>
 			                    		<c:otherwise>
-											<img src="${path}/resources/uploadUser_img/${k.member_img}" class="userImage2">	                    			
+											<img src="${path}/resources/images/${k.member_img}" class="userImage2">	                    			
 			                    		</c:otherwise>
 			                    	</c:choose>
 			                        <div>

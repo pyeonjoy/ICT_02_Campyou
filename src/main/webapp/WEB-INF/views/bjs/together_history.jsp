@@ -124,7 +124,7 @@ function promiseApplyList(page) {
 	                if(promise.member_img == 'user2.png'){
 	                	html2 += '<ul class="thliImage3 profile_show" data-memberidx="' + promise.member_idx + '"><li class="th1 thliImage"><img src="${path}/resources/images/' + promise.member_img + '" class="qa11 thliImage2"></a></li></ul>';
                     }else{
-	                  	html2 += '<ul class="thliImage3 profile_show" data-memberidx="' + promise.member_idx + '"><li class="th1 thliImage"><img src="${path}/resources/uploadUser_img/' + promise.member_img + '" class="qa11 thliImage2"></a></li></ul>';
+	                  	html2 += '<ul class="thliImage3 profile_show" data-memberidx="' + promise.member_idx + '"><li class="th1 thliImage"><img src="${path}/resources/images/' + promise.member_img + '" class="qa11 thliImage2"></a></li></ul>';
                     }
 	                html2 += '<ul><li class="th1 member_gradeLi profile_show" data-memberidx="' + promise.member_idx + '">' + promise.member_nickname + '<img src="${path}/resources/images/' + promise.member_grade + '" class="member_gradeImg" >(' + promise.member_dob + ')(' + promise.promise_my_count + ')</li></ul>';
 	                html2 += '<ul><li class="th1"><a href="together_detail.do?t_idx=' + promise.t_idx + '&cPage=' + data.paging.nowPage + '&promise_status=' + pro_status + '" class="qa11">' + promise.t_campname + '</a></li></ul>';
