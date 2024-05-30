@@ -33,9 +33,7 @@
 			<div class="hide-container">
 				<button class="cancel" id="cancelHam" onclick="callHide(event)"></button>
 				<a href="chatStatus.do?msg_room=${msg_room}" class="leave">채팅방나가기</a>
-				<a href="#" class=leave id="reportLeave">신고하기</a>
-				
-				
+				<a href="#" class=leave id="reportLeave">신고하기</a>				
 			</div>
 			<div class="form-header">
 					<img src="${path}/resources/img/right.png" alt="back-button"
@@ -43,10 +41,10 @@
 					<img src="${path}/resources/img/hamburger-menu.png" alt="icon-to-move-to-page-to-delete-chat" class="hamburgerIcon">			
 				<c:choose>
 					<c:when test="${my_idx eq opener.member_idx}">
-						<span class="chatroom">${joiner.member_nickname}</span>
+						<span class="chatroom profile_show" data-memberidx="${joiner.member_idx}"> ${joiner.member_nickname}</span>
 					</c:when>
 					<c:otherwise>
-						<span class="chatroom">${opener.member_nickname}</span>
+						<span class="chatroom profile_show" data-memberidx="${opener.member_idx}"> ${opener.member_nickname}</span>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -66,5 +64,6 @@
 			</form>
 		</div>
 	</div>
+	<%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>
