@@ -622,10 +622,10 @@ public class MemberController {
 					  int result = commBoardService.getCommBoardInsert(cbvo);
 					  
 					  if(result > 0) {
-						 // 최대 권한 구하기 
-						 int res = commBoardService.getGread(member_idx2);
+						 // 회원 최대 등급 구하기 
+						 int res = commBoardService.getMemberGrade(member_idx2);
 						 
-						 // 쵀대 권한으로 업데이트 하기 
+						 // 쵀대 등급으로 업데이트 하기 
 						 int res2 = commBoardService.getGreadUpdate(member_idx2, res);
 					  }
 					  return mv;
@@ -684,7 +684,7 @@ public class MemberController {
 					  
 					  if(result > 0) {
 						 // 최대 권한 구하기 
-						 int res = commBoardService.getGread(member_idx2);
+						 int res = commBoardService.getMemberGrade(member_idx2);
 						 
 						 // 쵀대 권한으로 업데이트 하기 
 						 int res2 = commBoardService.getGreadUpdate(member_idx2, res);
@@ -746,7 +746,7 @@ public class MemberController {
 					  
 					  if(result > 0) {
 						 // 최대 권한 구하기 
-						 int res = commBoardService.getGread(member_idx2);
+						 int res = commBoardService.getMemberGrade(member_idx2);
 						 
 						 // 쵀대 권한으로 업데이트 하기 
 						 int res2 = commBoardService.getGreadUpdate(member_idx2, res);

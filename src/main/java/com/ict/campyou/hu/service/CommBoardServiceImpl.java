@@ -107,28 +107,18 @@ public class CommBoardServiceImpl implements CommBoardService {
 		return commBoardDAO.getCommentReplyDetail(c_idx);
 	}
 	
-	// 최대 권한 구하기
+	// 회원 최대 등급 구하기
 	@Override
-	public int getGread(String member_idx2) {
-		return commBoardDAO.getGread(member_idx2);
+	public int getMemberGrade(String member_idx2) {
+		return commBoardDAO.getMemberGrade(member_idx2);
 	}
 	
-	// 쵀대 권한으로 업데이트 하기
+	// 쵀대 등급으로 업데이트 하기 
 	@Override
 	public int getGreadUpdate(String member_idx2, int res) {
 		return commBoardDAO.getGreadUpdate(member_idx2, res);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	@Override
 	public int getCommunityBoardContentHideUpdate(String b_idx) {
 		// TODO Auto-generated method stub

@@ -24,6 +24,11 @@
 		const dobPattern = /^\d{4}-\d{2}-\d{2}$/;
         return dobPattern.test(dob);
 	}
+	//비밀번호 정규식
+	function isValidPassword(pwd) {
+	    const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+	    return passwordPattern.test(pwd);
+	}
 	function admin_save_go(f) {
 		event.preventDefault();
 		const admin_id = f.admin_id.value.trim();
@@ -40,6 +45,11 @@
         }
         if (admin_id.length < 4) {
             alert("최소 4자 이상이어야 합니다.");
+            return false;
+        }
+      	//비밀번호 정규식
+        if (!isValidPassword(admin_pwd)) {
+            alert("비밀번호는 최소 6자 이상, 숫자 1개, 대문자 1개, 특수문자 1개를 포함해야 합니다.");
             return false;
         }
         if (admin_pwd !== admin_pwdCheck) {
@@ -85,30 +95,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-	/* $("#member_nickname").keyup(function() {
-		$.ajax({
-			url: "getNickNameChk.do",
-			data : "member_nickname="+$("#member_nickname").val(),
-			method : "post", 
-			dataType: "text",
-			success : function(data) {
-				if(data == '1'){
-					// 사용가능
-					$("#m_id").removeAttr("disabled");
-					$("#nickNameSpan").text("(사용가능한 별명 입니다)");
-				}else if(data == '0'){
-					// 사용불가능
-					$("#m_id").attr("disabled","disabled");
-					$("#nickNameSpan").text("(중복된 별명 입니다)");
-				}
-				//중복된 이름과 별명이 하나라도 있으면 회원가입 비활성화 코드!
-				checkSignUpButton();
-			},
-			error : function() {
-				alert("읽기실패");
-			}
-		});
-	}); */
 	//중복된 이름과 별명이 하나라도 있으면 회원가입 비활성화 코드
 	function checkSignUpButton() {
        if ($("#idSpan").text() === "(중복된 아이디 입니다)" || $("#nickNameSpan").text() === "(중복된 별명 입니다)") {
@@ -162,7 +148,7 @@ $(document).ready(function() {
 		                <div class="d-flex justify-content-center">
 		                  <button type="submit" id="m_id" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onclick="admin_save_go(this.form)" >생성</button>
 		                </div>
-		                <p class="text-center text-muted mt-5 mb-0"><a href="admin_login_form.do"class="fw-bold text-body"><u>로그인</u></a></p>
+		                <p class="text-center text-muted mt-5 mb-0"><a href="admin_login_form.do"class="fw-bold text-body"><u>관리자 로그인</u></a></p>
 	              </form>
             </div>
           </div>

@@ -180,17 +180,17 @@ public class CommBoardDAO {
 		return null;
 	}
 	
-	// 최대 권한 구하기 
-	public int getGread(String member_idx) {
-		return sqlSessionTemplate.selectOne("member.getGread", member_idx);
+	// 회원 최대 등급 구하기
+	public int getMemberGrade(String member_idx) {
+		return sqlSessionTemplate.selectOne("member.get_member_grade", member_idx);
 	}
 
-	// 쵀대 권한으로 업데이트 하기
+	// 쵀대 등급으로 업데이트 하기 
 	public int getGreadUpdate(String member_idx2, int res) {
 		Map<String,String> map = new HashMap<>();
 		map.put("member_idx", member_idx2);
 		map.put("res", String.valueOf(res));
-		return sqlSessionTemplate.update("member.MemberGradeUpdate", map);
+		return sqlSessionTemplate.update("member.get_member_grade_update", map);
 	}
 	
 	

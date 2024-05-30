@@ -224,20 +224,6 @@
  		select * from f_comment where b_idx = #{b_idx}
  	</select>
  	
- 	<!-- <insert id="comment_insert" parameterType="covo">
- 		insert into comment_t(member_nickname, content, write_date, b_idx)
- 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx})
- 	</insert> -->
- 	
- <!-- 	<insert id="comment_insert" parameterType="covo">
- 		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
- 			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM board_free
- 		</selectKey>
- 		insert into board_free(member_idx, b_type, b_subject, member_nickname, b_content, b_pwd, b_hit, groups, step, lev, b_regdate, bf_name)
- 			values(#{member_idx}, #{b_type}, #{b_subject}, #{member_nickname}, #{b_content},#{b_pwd}, 0, #{groups}, 0, 0, sysdate(), #{bf_name})
- 	</insert>
- 	 -->
- 	 
  	<insert id="comment_insert" parameterType="covo">
  		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
  			SELECT (IFNULL(MAX(b_idx),0)+1) as groups FROM f_comment
@@ -289,23 +275,14 @@
  		select * from f_comment where b_idx=#{b_idx}
  	</select>
  		
- 	
  	 <insert id="ans_insert1" parameterType="covo">
  	 	insert into f_comment(member_nickname, admin_nickname, content, write_date, b_idx, groups, step, lev)
  			values(#{member_nickname}, #{admin_nickname}, #{content}, sysdate(), #{b_idx}, #{groups}, #{step}, #{lev})
  	 </insert>
- 	 
- 	<!--  <insert id="ans_insert" parameterType="covo">
- 	 	insert into comment_t(member_nickname, content, write_date, b_idx, step, lev)
- 			values(#{member_nickname}, #{content}, sysdate(), #{b_idx}, #{step}, #{lev})
- 	 </insert> -->
- 	
- 	
  	
  	<select id="commet_reply_detail" parameterType="String" resultType="covo">
  		select * from f_comment where c_idx = #{c_idx}
  	</select>
- 	
  	
  	<!-- 캠핑제품추천게시판  -->
  	
@@ -313,11 +290,6 @@
  	<select id="cgb_count" resultType="int">
  		select count(*) from board_camp
  	</select>
- 	
- 	<!-- 리스트 -->
- 	<!-- <select id="cgb_list" parameterType="Map" resultType="cgbvo">
- 		select * from board_camp order by groups desc, lev asc  limit #{limit} offset #{offset} 
- 	</select> -->
  	
  	<!-- 캠핑게시판 공지사항 위로 올리는 코드  -->
  	<select id="cgb_list" parameterType="Map" resultType="cgbvo">
@@ -481,13 +453,13 @@
  		select * from members where member_idx = #{member_idx}
  	 </select>
  	 
- 	 <!-- 자유 게시판 최대 권한 구하기 --> 
- 	 <select id="getGread" parameterType="String" resultType="int">
+ 	 <!-- 자유 게시판 회원 최대 등급 구하기 --> 
+ 	 <select id="get_member_grade" parameterType="String" resultType="int">
  	 	SELECT max(member_grade) FROM board_free where member_idx = #{member_idx}
  	 </select>
  	 
- 	 <!-- 자유 게시판 쵀대 권한으로 업데이트 하기 -->
- 	 <update id="MemberGradeUpdate" parameterType="Map">
+ 	 <!-- 자유 게시판 쵀대 등급으로 업데이트 하기  -->
+ 	 <update id="get_member_grade_update" parameterType="Map">
  	 	update board_free 
  	 	set member_grade = #{res}
  	 	where member_idx = #{member_idx}

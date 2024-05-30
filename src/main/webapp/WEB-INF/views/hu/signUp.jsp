@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>회원가입</title>
-<%@ include file="../hs/header.jsp" %>
+<%@ include file="../hs/header3.jsp" %>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -25,6 +25,11 @@
 		const dobPattern = /^\d{4}-\d{2}-\d{2}$/;
         return dobPattern.test(dob);
 	}
+	//비밀번호 정규식
+	function isValidPassword(pwd) {
+	    const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+	    return passwordPattern.test(pwd);
+	}
 	function save_go(f) {
 		event.preventDefault();
 		const member_id = f.member_id.value.trim();
@@ -42,6 +47,11 @@
         }
         if (member_id.length < 4) {
             alert("아이디는 최소 4자 이상이어야 합니다.");
+            return false;
+        }
+        //비밀번호 정규식
+        if (!isValidPassword(member_pwd)) {
+            alert("비밀번호는 최소 6자 이상, 숫자 1개, 대문자 1개, 특수문자 1개를 포함해야 합니다.");
             return false;
         }
         if (member_pwd !== member_pwdCheck) {
