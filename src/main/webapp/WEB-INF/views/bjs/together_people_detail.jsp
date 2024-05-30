@@ -241,11 +241,7 @@ h1 {
 $(document).ready(function() {
 	$(document).on('click', '.modal_btn', function() {
 		let memberIdx = $(this).siblings('#memberIdx').val();
-// 		let giveMemberIdx = $(this).siblings('#give_memberIdx').val();
-// 		let tIdx = document.getElementById("t_idx").value;
 	    $('#star_form').data('memberIdx', memberIdx);
-// 	    $('#star_form').data('giveMemberIdx', giveMemberIdx);
-// 	    $('#star_form').data('tIdx', tIdx);
 	    $('.modal').css('display', 'block');
 	});
 	
@@ -254,7 +250,6 @@ $(document).ready(function() {
         let tIdx = document.getElementById("t_idx").value;
         let giveMemberIdx = document.getElementById("member_idx").value;
         let member_idx = $(this).data('memberIdx');
-//         let give_member_idx = $(this).data('giveMemberIdx');
         let new_rating = $("input[name='new_rating']:checked").val();
         let requestData = {
             new_rating: new_rating,
@@ -273,7 +268,7 @@ $(document).ready(function() {
                     alert("별점이 등록되었습니다.");
                     $("input[name='new_rating']").prop('checked', false);
                     $('.modal').css('display', 'none');
-                    location.reload();
+                    promisePeopleDetail()
                 } else {
                     alert("오류가 발생하였습니다.");
                 }
@@ -397,7 +392,6 @@ function promisePeopleDetail() {
 			let html = '';
 			let memberIdxArray = [];
         	if (data != null && data.length > 0) {
-//                 let imgSrc = data.member_img === null || data.member_img === '' || data.member_img === 'user2.png' ? '${path}/resources/images/user2.png' : '${path}/resources/images/' + data.member_img;
                 for (let i = 0; i < data.length; i++) {
                     let proPeopleDetail = data[i];
                     console.log(proPeopleDetail.pm_master);
@@ -422,17 +416,13 @@ function promisePeopleDetail() {
                     html += '<div class="thul2Div">';
                    	if(promiseStatus == "end"){
                    		if (proPeopleDetail.member_idx != memberIdx) {
-	                   		console.log("체크하러?");
 	                   		checkRating(proPeopleDetail.member_idx, tIdx, memberIdx, function(result) {
-	                   			console.log("체크결과", result);
 	                   			let htmlStar = '';
 	                            if(result > 0){
-	                                console.log("결과도착");
 	                                htmlStar += '<ul><li class="th1">별점 완료</li></ul>';
 	                            } else {
 	                            	htmlStar += '<button type="button" class="thul2DivButton modal_btn" id="modal_btn">별 점</button>';
 	                            	htmlStar += '<input type="hidden" id="memberIdx" value="' + proPeopleDetail.member_idx + '">';
-// 		                    		html += '<input type="hidden" id="give_memberIdx" value="' + memberIdx + '">';
 	                            }
 	                            $('.thul2').find('.thul2Div').eq(i).append(htmlStar);
 	                   		});
@@ -483,7 +473,6 @@ function promisePeopleDetail() {
 };
 
 function checkRating(proPeopleDetailMemberIdx, tIdx, memberIdx, callback) {
-	console.log("체크왔다");
     $.ajax({
         url: "star_rating_check.do",
         type: "POST",
@@ -493,7 +482,6 @@ function checkRating(proPeopleDetailMemberIdx, tIdx, memberIdx, callback) {
             give_member_idx: memberIdx
         },
         success: function(response) {
-        	console.log("체크끝났다");
             callback(response);
         },
         error: function(xhr, status, error) {
