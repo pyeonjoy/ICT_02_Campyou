@@ -41,7 +41,7 @@
 					<img src="${path}/resources/img/hamburger-menu.png" alt="icon-to-move-to-page-to-delete-chat" class="hamburgerIcon">			
 				<c:choose>
 					<c:when test="${my_idx eq opener.member_idx}">
-						<span class="chatroom profile_show" data-memberidx="${my_idx}"> ${joiner.member_nickname}</span>
+						<span class="chatroom profile_show" data-memberidx="${joiner.member_idx}"> ${joiner.member_nickname}</span>
 					</c:when>
 					<c:otherwise>
 						<span class="chatroom profile_show" data-memberidx="${opener.member_idx}"> ${opener.member_nickname}</span>
