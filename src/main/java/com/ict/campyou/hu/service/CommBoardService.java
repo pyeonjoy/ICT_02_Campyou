@@ -45,16 +45,14 @@ public interface CommBoardService {
 	
 	public CommentVO getCommentReplyDetail(String c_idx);
 	
-	// 최대 권한 구하기
-	public int getGread(String member_idx2);
+	// 회원 최대 등급 구하기
+	public int getMemberGrade(String member_idx2);
 	
-	// 쵀대 권한으로 업데이트 하기 
+	// 쵀대 등급으로 업데이트 하기  
 	public  int getGreadUpdate(String member_idx2, int res);
 	
-	
-	
-	
 	public int getCommunityBoardContentHideUpdate(String b_idx);
+	
 	public int getCommunityBoardContentShowUpdate(String b_idx);
 	
 	 

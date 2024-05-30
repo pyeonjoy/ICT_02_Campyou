@@ -8,75 +8,9 @@
 <title>관리자 로그인</title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-<%@ include file="../hs/header.jsp" %>
+<%@ include file="../hs/header3.jsp" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/member.css">
-<!-- <script type="text/javascript">
-$(document).ready(function() {
-    $("#member_id").keyup(function() {
-        $.ajax({
-            url: "getLogInIdChk.do",
-            data : "member_id="+$("#member_id").val(),
-            method : "post", 
-            dataType: "text",
-            success : function(data) {
-                if(data == '0'){
-                    // 존재하는 아이디
-                    $("#m_id").removeAttr("disabled");
-                    $("#idSpanLogIn").text("");
-                    // 버튼 색상 변경
-                    $("#m_id").removeClass("btn-secondary").addClass("btn-primary");
-                } else if(data == '1'){
-                    // 존재하지 않는 아이디
-                    $("#m_id").attr("disabled","disabled");
-                    $("#idSpanLogIn").text("");
-                    // 버튼 색상 변경
-                    $("#m_id").removeClass("btn-primary").addClass("btn-primary");
-                }
-            },
-            error : function() {
-                alert("읽기실패");
-            }
-        });
-    });
-});
-</script>  -->
-
-<!-- <script type="text/javascript">
-	$(document).ready(function() {
-		let pwdchk = "${pwdchk}";
-		if(pwdchk.trim() === 'fail'){
-			console.log("Password check failed.");
-			alert("비밀번호틀림");
-			return;
-		}
-	});
-</script>  -->
-
-
-<!-- <script type="text/javascript">
-$(document).ready(function() {
-    $("#member_id").keyup(function() {
-        $.ajax({
-            url: "login_go_ok.do",
-            data : "member_id="+$("#member_id").val(),
-            method : "post", 
-            dataType: "text",
-            success : function(data) {
-            
-                  if ($("#member_id").val() == "admin") {
-                      $("#member_id").attr("name", "admin_id");
-                      $("#member_pwd").attr("name", "admin_pwd");
-                  }
-              } 
-          },
-          error : function() {
-              alert("읽기실패");
-          }
-      });
-  });
-});
-</script>  -->
 <script type="text/javascript">
 function adminLogIn(f) {
 	if(f.admin_id.value === ""){

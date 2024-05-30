@@ -6,9 +6,9 @@
 <html>
 <head>
 <title>로그인</title>
+<%@ include file="../hs/header3.jsp" %>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-<%@ include file="../hs/header.jsp" %>
 <link rel="stylesheet" href="${path}/resources/public/css/hu/member.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -58,7 +58,7 @@ function logIn(f) {
           <div class="card-body p-5 text-center">
             <h3 class="mb-5">로그인</h3>
 			<form>
-				<div data-mdb-input-init class="form-outline mb-4">
+				<div data-mdb-input-init class="form-outline mb-1">
 	              <input type="text" id="member_id" name="member_id" class="form-control form-control-lg" /><br>
 	              <label class="form-label" for="member_id"><b>아이디</b></label>&nbsp;<span id="idSpanLogIn"></span>
 	            </div>
@@ -68,9 +68,9 @@ function logIn(f) {
 	            </div>
 	            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit" id="m_id" onclick="logIn(this.form)">로그인</button>
 	            <br><br>
-	            <p class="small mb-5 pb-lg-2"><a class="text-muted" href="find_pwd_go.do">비밀번호 찾기</a> &nbsp;
+	            <p class="small mb-5 pb-lg-1"><a class="text-muted" href="find_pwd_go.do">비밀번호 찾기</a> &nbsp;
 	           	<a class="text-muted" href="find_id_go.do">아이디 찾기</a></p>
-	           	<p class="text-center text-muted mt-5 mb-1">회원이 아니신가요?&nbsp;<a href="sign_up_page_go.do"class="fw-bold text-body">회원가입</a></p><br>
+	           	<p class="text-center text-muted mt-3 mb-1">회원이 아니신가요?&nbsp;<a href="sign_up_page_go.do"class="fw-bold text-body">회원가입</a></p><br>
 	            <a class="text-muted" href="admin_login_form.do">관리자 로그인</a>
 	            <hr class="my-4">  
 			</form>

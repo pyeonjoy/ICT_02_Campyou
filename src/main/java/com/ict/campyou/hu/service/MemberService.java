@@ -50,14 +50,16 @@ public interface MemberService {
 	 public int getUpdateMemberGrade(String member_idx);
 	 
 	 public int getUpdateMemberGrade2(String member_idx);
+	 
 	 public int getUpdateMemberGrade3(String member_idx);
+	 
 	 public int getUpdateMemberGrade4(String member_idx);
+	
 	 public int getUpdateMemberGrade5(String member_idx);
 
+	 public int setUpdateSnsInfo(MemberVO vo);
 
-	public int setUpdateSnsInfo(MemberVO vo);
+	 public MemberVO getinfo(MemberVO vo);
 
-	public MemberVO getinfo(MemberVO vo);
-
-	public int setUpdateSnsInfo_naver(MemberVO vo); 
+	 public int setUpdateSnsInfo_naver(MemberVO vo); 
 }
