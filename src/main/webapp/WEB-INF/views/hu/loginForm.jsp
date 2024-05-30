@@ -74,10 +74,10 @@ function logIn(f) {
 	            <a class="text-muted" href="admin_login_form.do">관리자 로그인</a>
 	            <hr class="my-4">  
 			</form>
-				<a id="a-color" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=4a601447a1662d2919cfc432b342bc38&redirect_uri=http://localhost:8090/kakaologin.do">
+				<a id="a-color" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=4a601447a1662d2919cfc432b342bc38&redirect_uri=http://192.168.0.39:8090/kakaologin.do">
 					<img src="resources/images/kakao_login_medium_narrow.png" width="160px">
 				</a>
-				<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=Yg5gbW0JV9cs8cbMiejA&redirect_uri=http://localhost:8090/naverlogin.do&state=test">
+				<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=Yg5gbW0JV9cs8cbMiejA&redirect_uri=http://192.168.0.39:8090/naverlogin.do&state=test">
 				 	<img src="resources/images/btnG.png" width="160px">
 				</a> 
           </div>

@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class SnsController {
 		StringBuffer sb = new StringBuffer();
 		sb.append("grant_type=authorization_code");
 		sb.append("&client_id=4a601447a1662d2919cfc432b342bc38");
-		sb.append("&redirect_uri=http://localhost:8090/kakaologin.do");
+		sb.append("&redirect_uri=http://192.168.0.39:8090/kakaologin.do");
 		sb.append("&code="+code);
 		bw.write(sb.toString());
 		bw.flush();
