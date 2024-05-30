@@ -137,8 +137,10 @@
     from qna q
     join members m ON q.member_idx = m.member_idx
     where q.member_idx = m.member_idx
+    order by q.qna_status ASC
     limit #{limit} offset #{offset}
 </select>
+
 <select id ="SearchInquiryCount" parameterType="Map" resultType="int">
     select count(*)
     from qna q
