@@ -11,20 +11,26 @@ $(document).ready(function() {
 		    dataType: 'json',
 		    data: { member_idx:member_idx },
 		    success: function(data) {
-		    	 $('#member_nickname').text(data.member_nickname);
-		    	 $('#member_grade').attr('src', '/resources/images/grade' + data.member_grade + '.png');
-		    	 $('#member_grade').attr('alt',	data.member_grade);
-		    	 $('#member_img').attr('src', '/resources/images/' + data.member_img);
-		    	 $('#member_age').text(data.member_age);
-		    	 $('#member_gender').text(data.member_gender);
-		    	 let member_rating_f1 = Math.floor(data.member_rating / 2 * 10) / 10
+		    	 $('#member_nickname').text(data.member.member_nickname);
+		    	 $('#member_grade').attr('src', '/resources/images/grade' + data.member.member_grade + '.png');
+		    	 $('#member_grade').attr('alt',	data.member.member_grade);
+		    	 $('#member_img').attr('src', '/resources/images/' + data.member.member_img);
+		    	 $('#member_age').text(data.member.member_age);
+		    	 $('#member_gender').text(data.member.member_gender);
+		    	 let member_rating_f1 = Math.floor(data.member.member_rating / 2 * 10) / 10
 		    	 $('#member_rating').text(member_rating_f1);
 		    	 
-	    	     const member_rating = data.member_rating; 
+	    	     const member_rating = data.member.member_rating; 
 	    	     const full_rating = 10;
 	    	     const starWidth = member_rating / full_rating * 100;
 	    	     
-	    	     getAgeGroup(data.member_dob);
+	    	     if(data.sameMember) {
+	    	    	 $('.report_go_btn').hide();
+	    	     } else {
+	    	    	 $('.report_go_btn').show();
+	    	     }
+	    	     
+	    	     getAgeGroup(data.member.member_dob);
 	    	     
 	    	     $(".rating").css("width", starWidth + "%");
 		    },

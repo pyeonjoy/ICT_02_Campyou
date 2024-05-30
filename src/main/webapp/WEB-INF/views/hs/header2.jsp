@@ -9,7 +9,7 @@
 <title></title>
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
-<link href="${path}/resources/css/header.css" rel="stylesheet" />
+<link href="${path}/resources/css/header2.css" rel="stylesheet" />
 <link rel="stylesheet" href="${path}/resources/public/css/bm/chatroom.css" />
 <script defer src="${path}/resources/public/js/bm/header_chat.js"></script>
 </head>
@@ -65,6 +65,5 @@
 			</div>
 		</div>
 	</div>
-	<jsp:include page="/WEB-INF/views/hs/weather_info.jsp" />
 </body>
 </html>

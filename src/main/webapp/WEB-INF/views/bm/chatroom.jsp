@@ -30,11 +30,17 @@
 	<input type="hidden" id="opposite_idx" value="${opener.member_idx}" />
 	<div id="chat-page" class="chatPage">
 		<div class="chat-container">
+			<div class="hide-container">
+				<button class="cancel" id="cancelHam" onclick="callHide(event)"></button>
+				<a href="chatStatus.do?msg_room=${msg_room}" class="leave">채팅방나가기</a>
+				<a href="#" class=leave id="reportLeave">신고하기</a>
+				
+				
+			</div>
 			<div class="form-header">
-				<button class="back" onclick="redirectToChatList()">
 					<img src="${path}/resources/img/right.png" alt="back-button"
-						class="left-arrow">
-				</button>
+						class="left-arrow" onclick="redirectToChatList()">
+					<img src="${path}/resources/img/hamburger-menu.png" alt="icon-to-move-to-page-to-delete-chat" class="hamburgerIcon">			
 				<c:choose>
 					<c:when test="${my_idx eq opener.member_idx}">
 						<span class="chatroom">${joiner.member_nickname}</span>

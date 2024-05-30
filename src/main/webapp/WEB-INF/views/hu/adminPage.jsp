@@ -186,6 +186,5 @@ body{
 			</tfoot>	
 		</table>
 	</div>
-<%@ include file="../hs/footer.jsp" %>
 </body>
 </html>

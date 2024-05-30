@@ -30,6 +30,7 @@ function with_promise_state_update() {
             member_idx: memberIdx
         },
         success: function(data) {
+        	console.log(data);
         	promiseApplyList();
         },
         error: function(xhr, status, error) {
@@ -102,7 +103,7 @@ function promiseApplyList() {
         	if (data != null && data.length > 0) {
 	            for (let i = 0; i < Math.min(data.length, 4); i++) {
 	            	let promise = data[i];
-	            	let imgSrc = promise.member_img === null || promise.member_img === '' || promise.member_img === 'user2.png' ? '${path}/resources/images/' + promise.member_img : promise.member_img;
+	            	let imgSrc = promise.member_img === null || promise.member_img === '' || promise.member_img === 'user2.png' ? '${path}/resources/images/' + promise.member_img : '${path}/resources/uploadUser_img/' + promise.member_img;
 	            	let tf_name = promise.tf_name === null || promise.tf_name === '' ? '${path}/resources/images/to_camp2.jpg' : promise.tf_name;
 	            	let html = '<div class="accompany_list" data-pm-idx="' + promise.pm_idx + '">';
 	                html += '<div class="list_header">';
@@ -160,6 +161,7 @@ function promiseApplyList() {
 		</div>
 
 		<input type="hidden" id="memberIdx" value="${mvo.member_idx }">
+		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
 		<div class="accompany_container">
 		
 		</div>
@@ -197,10 +199,6 @@ function promiseApplyList() {
 				</div>
 			</div>
 		</div>		
-		<a href="together_history.do?member_idx=${mvo.member_idx }" class="together_listA"><span class="together_list">+</span><span>더보기</span></a>
-		<div class="accompany_container">
-		</div>
-		
 	</div>
 	<footer class="footer">
 	  <%@ include file="../hs/footer.jsp"%>

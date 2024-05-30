@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 게시글 내용</title>
-<%@ include file="../hs/header.jsp" %> 
+<%@ include file="../hs/header2.jsp" %> 
 <link rel="shortcut icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="icon" href="${path}/resources/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${path}/resources/public/css/hu/communityBoardContent.css">

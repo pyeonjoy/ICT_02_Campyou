@@ -90,10 +90,10 @@
 			                    <div class="toContentOne1">
 			                    	<c:choose>
 			                    		<c:when test="${k.member_img == 'user2.png'}">
-					                        <img src="${path}/resources/images/user2.png" class="userImage2">
+					                        <img src="${path}/resources/images/${k.member_img }" class="userImage2">
 			                    		</c:when>
 			                    		<c:otherwise>
-											<img src="${path }/resources/uploadUser_img/${k.member_img }" class="userImage2">			                    			
+											<img src="${path}/resources/images/${k.member_img}" class="userImage2">	                    			
 			                    		</c:otherwise>
 			                    	</c:choose>
 			                        <div>

@@ -5,8 +5,9 @@ const path = "${path}";
 const chatPage = document.querySelector(".chatPage");
 const messageForm = document.querySelector("#messageForm");
 const msgContainer = document.querySelector(".message-container");
+const hideContainer = document.querySelector('.hide-container');
 //btn
-const back = document.querySelector(".back");
+const ham = document.getElementById("ham");
 
 let stompClient = null;
 
@@ -21,7 +22,7 @@ const my_idx = document.getElementById("my_idx").value;
 const joiner_img = document.getElementById("joiner_img").value;
 const opener_img = document.getElementById("opener_img").value;
 const queueName = '/user/queue/' + msg_room;
-
+const reportLeave = document.getElementById("reportLeave");
 const send_nick = my_idx === opposite_idx ? opener_nick : joiner_nick;
 const reci_nick = my_idx === opposite_idx ? joiner_nick : opener_nick;
 const reci_img = my_idx === opposite_idx ? joiner_img : opener_img;
@@ -93,6 +94,22 @@ function redirectToChatList(){
  window.location.href = "chat-list.do";
 }
 
-back.addEventListener("click", function() {
-	  window.location.href = "chat-list.do";
-	});
+function showDelete(event) {
+    event.preventDefault(); 
+    hideContainer.classList.add('active');
+}
+function callHide(event) {
+	event.preventDefault(); 
+	event.stopPropagation();
+    hideContainer.classList.remove('active');
+    }
+
+function report(e) {
+    e.preventDefault();
+    const reportUrl = `report_write.do?member_idx=${opposite_idx}`;
+    window.open(reportUrl, '_blank', 'width=' + window.innerWidth + ', height=' + window.innerHeight);
+    window.addEventListener('beforeunload', reportAndLeave);
+}
+
+reportLeave.addEventListener("click",report);
+ham.addEventListener("click", showDelete);

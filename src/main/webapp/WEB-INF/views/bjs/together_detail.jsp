@@ -122,17 +122,18 @@ function to_apply() {
 	
 	let currentDate = new Date();
     let startDate = new Date(tStartdate);
-	
+    if(!memberIdx){
+    	alert("로그인 해야 신청 가능합니다.");
+    	return;
+    }
     if (startDate <= currentDate) {
         alert("동행이 시작되어 신청하실 수 없습니다.");
         return;
     }
-	
 	if (applyNumPeople >= totalNumPeople) {
         alert("동행 인원이 초과되었습니다.");
         return;
 	}
-	
 	$.ajax({
         type: "POST",
         url: "to_promise.do",
@@ -493,7 +494,17 @@ $(document).on("click", ".toDetailContent4Sub2Sub2ButtonX", function() {
         </div>
         <form class="toDetailContent" method="post">
             <div class="toDetailContent1">
-                <div class="deatailUserImage"><img src="${path}/resources/images/${tvo.member_img }" class="deataiUserImage2 profile_show" data-memberidx="${tvo.member_idx }"></div>
+                <div class="deatailUserImage">
+<%--                 	<img src="${path}/resources/images/${tvo.member_img }" class="deataiUserImage2 profile_show" data-memberidx="${tvo.member_idx }"> --%>
+	            	<c:choose>
+						<c:when test="${tvo.member_img == 'user2.png'}">
+							<img src="${path}/resources/images/${tvo.member_img}" class="deataiUserImage2">
+						</c:when>
+						<c:otherwise>
+							<img src="${path}/resources/images/${tvo.member_img}" class="deataiUserImage2">
+						</c:otherwise>
+					</c:choose>
+				</div>
                 <div class="toDetailContentOne1span">
                     <span class="to_member_nickname profile_show" data-memberidx="${tvo.member_idx }">${tvo.member_nickname }</span>
                     <img src="${path}/resources/images/${tvo.member_grade}" class="member_gradeImg" >

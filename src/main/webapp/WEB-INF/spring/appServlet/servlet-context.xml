@@ -38,7 +38,11 @@
 	<interceptors>
 		<interceptor>
 <!-- 			조이			 -->
+<<<<<<< HEAD
 		<!-- 	<mapping path="/member_search.do"/>
+=======
+<!-- 			<mapping path="/member_search.do"/>
+>>>>>>> 4faf649f0ce2cdbeeb71f7ecce08bbc8dcf36f40
 			<mapping path="/admin_member_list.do"/>
 			<mapping path="/admin_member_detail.do"/>
 			<mapping path="/member_edit.do"/>
