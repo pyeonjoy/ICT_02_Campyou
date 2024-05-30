@@ -39,6 +39,7 @@
 		<interceptor>
 <!-- 			조이			 -->
 <!-- 			<mapping path="/member_search.do"/>
+>>>>>>> 4faf649f0ce2cdbeeb71f7ecce08bbc8dcf36f40
 			<mapping path="/admin_member_list.do"/>
 			<mapping path="/admin_member_detail.do"/>
 			<mapping path="/member_edit.do"/>
@@ -48,14 +49,14 @@
 			<mapping path="/member_upgrade.do"/>
 			<mapping path="/removeimg.do"/>
 			<mapping path="/report_search.do"/>
-			<mapping path="/report_list.do"/>
+			<mapping path="/report_list.do"/> 
 			<mapping path="/admin_report.do"/>
 			<mapping path="/report_write2.do"/>
 			<mapping path="/report_writeok2.do"/>
 			<mapping path="/report_write.do"/>
 			<mapping path="/report_writeok.do"/>
 			<mapping path="/report_search.do"/>
-			<mapping path="/popup.do"/>
+		 	<mapping path="/popup.do"/>
 			<mapping path="/popup_write.do"/>
 			<mapping path="/popup_write_ok.do"/>
 			<mapping path="/popup_delete.do"/>
