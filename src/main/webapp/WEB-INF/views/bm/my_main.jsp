@@ -154,17 +154,9 @@ function promiseApplyList() {
 <body class="body">
 		<%@ include file="../hs/mypage_menu.jsp"%>
 	<div class="mypage">
-		<div class="welcome">
-				<c:choose>
-					<c:when test="${mvo.member_img == 'user2.png'}">
+		<div class="welcome">		
 						<img src="${path}/resources/images/${mvo.member_img}" alt="user_img"
-							class="user_img">
-					</c:when>
-					<c:otherwise>
-						<img src="${path}/resources/uploadUser_img/${mvo.member_img}"
-							alt="user_img" class="user_fullImg">
-					</c:otherwise>
-				</c:choose>			
+							class="user_fullImg">		
 			<h2 class="welcome_user">${mvo.member_name}님, 환영합니다.</h2>
 		</div>
 
