@@ -109,7 +109,6 @@ public class MemberServiceImpl implements MemberService {
 	                map.put("member_name", "Kakao: Not Provided");
 	                map.put("member_pwd", "Kakao: Not Provided");
 	                map.put("member_nickname", "Kakao: Not Provided");
-	                map.put("member_dob", "Kakao: Not Provided");
 	                map.put("member_phone", "Kakao: Not Provided");   
 	                
 	                
@@ -172,7 +171,6 @@ public class MemberServiceImpl implements MemberService {
 	                map.put("member_name", "Kakao: Not Provided");
 	                map.put("member_pwd", "Kakao: Not Provided");
 	                map.put("member_nickname", "Kakao: Not Provided");
-	                map.put("member_dob", "Kakao: Not Provided");
 	                map.put("member_phone", "Kakao: Not Provided");   
 	                
 	                //카카오 로그인
