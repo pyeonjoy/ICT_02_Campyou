@@ -10,6 +10,7 @@ import com.ict.campyou.bm.dao.QnaVO;
 import com.ict.campyou.hu.dao.CampingGearBoardVO;
 import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
+import com.ict.campyou.joy.dao.AdminMemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.HeartVO;
 import com.ict.campyou.jun.dao.ReviewVO;
@@ -70,6 +71,8 @@ public interface MyService {
 	public List<ReviewVO> getReviewList(String member_idx);
 	
 	public QnaVO getQnaReply(String qna_idx);
+	
+	public List<AdminMemberVO> getUserReports(String opener_idx, String my_idx);
 }
 
 	

@@ -64,6 +64,9 @@ select * from qna where member_idx=#{member_idx} order by qna_idx desc limit #{l
 <select id="count" resultType="int" parameterType="String">
 select count(*) from qna where member_idx=#{member_idx}
 </select>
+<select id="getReports" resultType="avo" parameterType="String">
+select * from admin_report where reportmember_idx=#{opener_idx} and member_idx=#{my_idx} or reportmember_idx=#{my_idx} and member_idx=#{opener_idx}
+</select>
 
 <insert id="addChat" parameterType="chvo">
 insert into m_chat(msg_room, room_name, send_idx,send_nick, reci_nick, send_date, msg_content, msg_read,room_status)
