@@ -226,9 +226,9 @@ function initializeSummernote() {
 							list += '<td>' + item.qna_idx + '</td>';
 							list += '<td>' + item.member_nickname + '</td>';
 							list += '<td>' + item.qna_title + '</td>';
-							let onlycontext = item.qna_content.replace(
-									/<img[^>]*>/g, '');
-							list += '<td>' + onlycontext + '</td>';
+							let onlyText = item.qna_content ? item.qna_content.replace(/<\/?[^>]+(>|$)/g,""): '';
+							let shortenedContent = onlyText.length > 30 ? onlyText.substring(0, 20)+ '...': onlyText;
+							list += '<td>' + shortenedContent+ '</td>';
 							list += '<td>' + item.qna_date + '</td>';
 							if (item.qna_status === 0) {
 								list += '<td>처리중</td>';
