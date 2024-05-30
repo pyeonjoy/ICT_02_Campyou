@@ -2,7 +2,6 @@ package com.ict.campyou.joy.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,16 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ict.campyou.joy.dao.AdminVO;
 import com.ict.campyou.common.Paging;
-import com.ict.campyou.common.Paging2;
-import com.ict.campyou.common.Paging3;
 import com.ict.campyou.hu.dao.AdminMembVO;
-import com.ict.campyou.hu.dao.CampingGearSearchVO;
 import com.ict.campyou.hu.dao.MemberVO;
 import com.ict.campyou.joy.dao.AdminMemberVO;
+import com.ict.campyou.joy.dao.AdminVO;
 import com.ict.campyou.joy.service.AdminService;
-import com.jcraft.jsch.Logger;
 
 @Controller
 public class AdminController {
@@ -54,7 +49,6 @@ public class AdminController {
 			mv.addObject("qna", admin_qna);
 			mv.addObject("report", admin_report);
 			mv.addObject("match", admin_match);
-			System.out.println(admin_match);
 			return mv;
 		}
 		return new ModelAndView("board/error");
@@ -70,10 +64,6 @@ public class AdminController {
 				admin.setAdmin_idx(admin.getAdmin_idx());
 				int count = adminService.getTotalCount2();
 				paging.setTotalRecord(count);
-				System.out.println("count"+count);
-				System.out.println("전체게시글"+paging.getTotalRecord());
-				System.out.println("paging.getBeginBlock()"+paging.getBeginBlock());
-				System.out.println("paging.getPagePerBlock()"+paging.getPagePerBlock());
 				
 				if (paging.getTotalRecord() <= paging.getNumPerPage()) {
 					paging.setTotalPage(1);
@@ -85,7 +75,6 @@ public class AdminController {
 				}
 
 				String cPage = request.getParameter("cPage");
-				System.out.println("cpage"+cPage);
 				if (cPage == null) {
 					paging.setNowPage(1);
 				} else {
@@ -123,9 +112,6 @@ public class AdminController {
 					// 전체 게시물의 수
 					int count = adminService.getTotalCount2();
 					paging.setTotalRecord(count);
-					System.out.println("전체게시글"+paging.getTotalRecord());
-					System.out.println("paging.getBeginBlock()"+paging.getBeginBlock());
-					System.out.println("paging.getPagePerBlock()"+paging.getPagePerBlock());
 					
 					// 전체 페이지의 수
 					if (paging.getTotalRecord() <= paging.getNumPerPage()) {
@@ -139,7 +125,6 @@ public class AdminController {
 
 					// 현재 페이지 구함
 					String cPage = request.getParameter("cPage");
-					System.out.println("cpage"+cPage);
 					if (cPage == null) {
 						paging.setNowPage(1);
 					} else {
@@ -161,7 +146,6 @@ public class AdminController {
 					}
 						List<MemberVO> member = adminService.allmember(paging.getOffset(), paging.getNumPerPage());
 						int statusupdate = adminService.getstatusupdate();
-						System.out.println("statusupdate"+statusupdate);
 						if (member != null) {
 							mv.addObject("member", member);
 							mv.addObject("paging", paging);
@@ -185,7 +169,6 @@ public class AdminController {
 		List<AdminMemberVO> reporteach = adminService.getradmineporteach(member_idx);
 		List<AdminMemberVO> stop = adminService.getradminstop(member_idx);
 		if (board_all != null) {
-			System.out.println("report_all"+report_all);
 			mv.addObject("stop", stop);
 			mv.addObject("reporteach", reporteach);
 			mv.addObject("report", report_all);
@@ -319,7 +302,6 @@ public class AdminController {
 
 				// 현재 페이지 구함
 				String cPage = request.getParameter("cPage");
-				System.out.println("cpage"+cPage);
 				if (cPage == null) {
 					paging.setNowPage(1);
 				} else {
@@ -358,50 +340,49 @@ public class AdminController {
 			AdminMembVO admin = (AdminMembVO) session.getAttribute("admin");
 			admin.setAdmin_idx(admin.getAdmin_idx());
 			// 페이징 기법
-					// 전체 게시물의 수
-					int count = adminService.getTotalCount3();
-					paging.setTotalRecord(count);
-					
-					// 전체 페이지의 수
-					if (paging.getTotalRecord() <= paging.getNumPerPage()) {
-						paging.setTotalPage(1);
-					} else {
-						paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
-						if (paging.getTotalRecord() % paging.getNumPerPage() != 0) {
-							paging.setTotalPage(paging.getTotalPage() + 1);
-						}
-					}
+			// 전체 게시물의 수
+			int count = adminService.getTotalCount3();
+			paging.setTotalRecord(count);
 
-					// 현재 페이지 구함
-					String cPage = request.getParameter("cPage");
-					System.out.println("cpage"+cPage);
-					if (cPage == null) {
-						paging.setNowPage(1);
-					} else {
-						paging.setNowPage(Integer.parseInt(cPage));
-					}
+			// 전체 페이지의 수
+			if (paging.getTotalRecord() <= paging.getNumPerPage()) {
+				paging.setTotalPage(1);
+			} else {
+				paging.setTotalPage(paging.getTotalRecord() / paging.getNumPerPage());
+				if (paging.getTotalRecord() % paging.getNumPerPage() != 0) {
+					paging.setTotalPage(paging.getTotalPage() + 1);
+				}
+			}
 
-					// begin, end 구하기 (Oracle)
-					// offset 구하기
-					// offset = limit * (현재페이지-1);
-					paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
+			// 현재 페이지 구함
+			String cPage = request.getParameter("cPage");
+			if (cPage == null) {
+				paging.setNowPage(1);
+			} else {
+				paging.setNowPage(Integer.parseInt(cPage));
+			}
 
-					// 시작 블록 // 끝블록
-					paging.setBeginBlock(
-							(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
-					paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+			// begin, end 구하기 (Oracle)
+			// offset 구하기
+			// offset = limit * (현재페이지-1);
+			paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
 
-					if (paging.getEndBlock() > paging.getTotalPage()) {
-						paging.setEndBlock(paging.getTotalPage());
-					}
-						List<AdminMemberVO> report = adminService.allreport(paging.getOffset(), paging.getNumPerPage());
-						
-						if (report != null) {
-							mv.addObject("report", report);
-							mv.addObject("paging", paging);
-							return mv;
-						}
-						return new ModelAndView("board/error");
+			// 시작 블록 // 끝블록
+			paging.setBeginBlock(
+					(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
+			paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);
+
+			if (paging.getEndBlock() > paging.getTotalPage()) {
+				paging.setEndBlock(paging.getTotalPage());
+			}
+			List<AdminMemberVO> report = adminService.allreport(paging.getOffset(), paging.getNumPerPage());
+
+			if (report != null) {
+				mv.addObject("report", report);
+				mv.addObject("paging", paging);
+				return mv;
+			}
+			return new ModelAndView("board/error");
 		}
 		
 	
@@ -409,13 +390,12 @@ public class AdminController {
 	public ModelAndView adminReport(@RequestParam("report_idx") String report_idx,
 	                                 @RequestParam("reportmember_idx") String reportmember_idx,
 	                                 @RequestParam("report_day") String report_day,
-	                                 HttpServletRequest request, String admin_idx) {
+	                                 HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		AdminMembVO admin = (AdminMembVO) session.getAttribute("admin");
 		admin.setAdmin_idx(admin.getAdmin_idx());
 	    ModelAndView mv = new ModelAndView();
-	    System.out.println("reportmember_idx" + reportmember_idx);
-	    int result = adminService.getadminreport(report_day, report_idx,admin_idx,reportmember_idx);
+	    int result = adminService.getadminreport(report_day, report_idx, admin.getAdmin_idx() ,reportmember_idx);
 	    if (result > 0) {
 	        mv.setViewName("redirect:admin_member_detail.do?member_idx=" + reportmember_idx);
 	        return mv;
@@ -433,7 +413,6 @@ public class AdminController {
 			admin.setAdmin_idx(admin.getAdmin_idx());
 			List<AdminMemberVO> member = adminService.getadminmemberreport(member_idx);
 			if (member != null) {
-				System.out.println(member.get(0).getMember_idx());
 				mv.addObject("member", member);
 				return mv;
 			}

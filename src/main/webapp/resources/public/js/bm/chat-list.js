@@ -69,13 +69,14 @@ function connect() {
   stompClient.connect({}, function () {
     stompClient.subscribe('/user/queue/new-message', function (messageOutput) {
       const chvo = JSON.parse(messageOutput.body);
-      onMessageReceived(chvo.msg_room);
+      onMessageReceived(chvo.msg_room, chvo.msg_content);
     });
   });
 }
 
-function showNewMessageIndicator(msgRoom) {
+function showNewMessageIndicator(msgRoom, newMsg) {
   const listElement = document.querySelector(`.chat_list[data-msg-room="${msgRoom}"]`);
+    
   if (listElement) {
     let newIndicator = listElement.querySelector('.new');
     if (!newIndicator) {
@@ -84,11 +85,13 @@ function showNewMessageIndicator(msgRoom) {
       newIndicator.textContent = 'N';
       listElement.querySelector('.chat-imgs').appendChild(newIndicator);
     }
+    const msg = listElement.querySelector('.chat_content');
+    msg.textContent = newMsg;
   }
 }
 
-function onMessageReceived(msgRoom) {
-  showNewMessageIndicator(msgRoom);
+function onMessageReceived(msgRoom, newMsg) {
+  showNewMessageIndicator(msgRoom, newMsg);
 }
 
 function updateMessageReadStatus(msgIdx) {

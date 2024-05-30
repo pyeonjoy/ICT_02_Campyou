@@ -240,8 +240,8 @@ public class AdminAjaxController {
 		
 		@RequestMapping(value = "redirect_qna.do", produces = "application/json; charset=utf-8")
 		@ResponseBody
-		public int redirect_qna(@RequestParam()String qna_idx,@RequestParam()String qna_title,@RequestParam()String qna_content){
-			int res = adminService.redirect_qna(qna_idx,qna_title,qna_content);
+		public int redirect_qna(@RequestParam()String qna_idx,@RequestParam()String qna_content){
+			int res = adminService.redirect_qna(qna_idx,qna_content);
 			if (res > 0) {
 				int res2 = adminService.updateStatus(qna_idx);
 				return res;

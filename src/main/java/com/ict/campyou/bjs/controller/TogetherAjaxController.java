@@ -266,6 +266,7 @@ public class TogetherAjaxController {
 				case "-1": pvo.setPm_state("거절"); break;
 				case "2": pvo.setPm_state("동행완료"); break;
 				case "3": pvo.setPm_state("추방"); break;
+				case "4": pvo.setPm_state("동행진행중"); break;
 				}
 				switch (pvo.getMember_grade()) {
 				case "1": pvo.setMember_grade("grade1.png"); break;

@@ -1,0 +1,3310 @@
+[33mcommit e63c7bbe1807782299c1ccbb20bca24282917392[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbomi3[m[33m, [m[1;31morigin/bomi3[m[33m)[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 30 09:44:12 2024 +0900
+
+    new branch
+
+[33mcommit 2f652fbd420ad0b84a9b123b3b85dd0573493860[m[33m ([m[1;31morigin/bomi2[m[33m, [m[1;32mbomi2[m[33m)[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Wed May 29 17:56:43 2024 +0900
+
+    somechanges
+
+[33mcommit b185c783887f3602385216d434d6e0055f55073a[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Wed May 29 16:33:43 2024 +0900
+
+    implement leaver room and report
+
+[33mcommit 2afc4c790af92f54fbf129de80d7ff2a69652aee[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue May 28 18:29:52 2024 +0900
+
+    password change error fixed
+
+[33mcommit e2f6b36a8d9a37a80be1c4f226eacd8e3ce4094c[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue May 28 17:36:25 2024 +0900
+
+    fav-camping refresh
+
+[33mcommit 32fdc06f9491e9f5d550e26a5d4d423a4f11e6c9[m
+Merge: fd1ff94 d35b7f1
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 28 17:03:25 2024 +0900
+
+    Merge pull request #137 from ict1jo/joy
+    
+    Joy
+
+[33mcommit d35b7f1c9f6e49a52a8dcbdd09ef2e034bf063b3[m
+Merge: 74f0641 fd1ff94
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 28 17:03:18 2024 +0900
+
+    Merge branch 'main' into joy
+
+[33mcommit fd1ff94544319bf1fe8ff6c2d7f72062bcaa225c[m
+Merge: 487186e d65d7e7
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 28 17:00:14 2024 +0900
+
+    Merge pull request #136 from ict1jo/jun
+    
+    Jun
+
+[33mcommit d65d7e73cdbafce1197b6320dc52afdfb2374ce7[m
+Merge: 37dae0c 487186e
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 28 17:00:02 2024 +0900
+
+    Merge branch 'main' into jun
+
+[33mcommit 74f0641a90e0a5ce3ab0c06afe18c1e6e919ba95[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 28 16:59:17 2024 +0900
+
+    동행리스트 css 자잘수정
+
+[33mcommit 9fbb12b58ea792b4556d58c3705a6d91f8ecb02b[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 28 16:43:34 2024 +0900
+
+    마이페이제 회원정보수정 이미지 경로 수정
+
+[33mcommit 487186e8493cb1fb79bf4337fe70bbae527ec750[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue May 28 16:28:15 2024 +0900
+
+    img path correction for chat
+
+[33mcommit 86faf5281047641fa63290f1353abdcdd1143de7[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 28 16:25:57 2024 +0900
+
+    마이페이지 메인 이미지 경로 변경
+
+[33mcommit 2a2ed8bb4cfc80c915be1c2a5679e3b3e74740ad[m
+Merge: 98d84c7 b7d9b24
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Tue May 28 15:57:11 2024 +0900
+
+    콘솔 제거
+    
+    콘솔 제거
+
+[33mcommit b7d9b24456bcbc1ae1914f9e90d28e7effc5c5ce[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Tue May 28 15:56:01 2024 +0900
+
+    콘솔 제거
+
+[33mcommit 98d84c72cd45e041f863e6f6427720bd0ed9ff8d[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Tue May 28 15:54:51 2024 +0900
+
+    1:1 답변 안되는 증상 매퍼 수정
+
+[33mcommit 37dae0c3a721ad0f2def4b0932b7216322889a9f[m
+Merge: ac14ff9 5f05161
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 28 15:43:50 2024 +0900
+
+    0528-1
+    
+    0528-1
+
+[33mcommit 5f05161d42d0eccb8621a68f08193cdbac9c122c[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Tue May 28 15:42:14 2024 +0900
+
+    0528
+
+[33mcommit ac14ff9bf76d82f05f80084700fa13f3bd515956[m
+Merge: 85842c7 972fc5c
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 28 15:34:42 2024 +0900
+
+    Merge pull request #131 from ict1jo/jun
+    
+    13
+
+[33mcommit 972fc5cc0d38ea962af7cc8542ad61dabfa52915[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Tue May 28 15:34:28 2024 +0900
+
+    13
+
+[33mcommit 85842c711a517f947a77fbf0bd330122cfca8410[m
+Merge: 2e25f2c 015edc6
+Author: JS <158027817+Developer120000@users.noreply.github.com>
+Date:   Tue May 28 15:16:09 2024 +0900
+
+    Merge pull request #130 from ict1jo/bjs
+    
+    Bjs 최종?병합
+
+[33mcommit 015edc6842fe7ec9fc150b032ce85a7f86782fab[m[33m ([m[1;31morigin/bjs[m[33m)[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Tue May 28 15:15:14 2024 +0900
+
+    0528s
+
+[33mcommit 2e25f2c5be875318962e1cbeb43630c501f89e27[m
+Merge: 21addf4 63649cb
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 28 15:10:44 2024 +0900
+
+    Merge pull request #129 from ict1jo/hs1
+    
+    Hs1
+
+[33mcommit 63649cb3c9081000ba3b4ead57947b0911efa5c2[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Tue May 28 15:07:00 2024 +0900
+
+    날씨 css 수정
+
+[33mcommit 21addf41ec7015d68d423a4ddbfbe20e0dca87ef[m
+Merge: 972e4bb e0ef4ee
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 28 14:46:12 2024 +0900
+
+    modi some css
+    
+    modi some css
+
+[33mcommit 98932ab93e599bca0fb71a3ed8f43c39cdd213d7[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Tue May 28 14:40:04 2024 +0900
+
+    나이대 추가
+
+[33mcommit 109e79f4b2c8635774b629bcae552089346aa634[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Tue May 28 14:38:16 2024 +0900
+
+    날씨 버튼 헤더에
+
+[33mcommit 972e4bb7999398372492db38e394a3f9f0a5f298[m
+Merge: e9c19ac c85784d
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 28 14:36:20 2024 +0900
+
+    0528
+    
+    0528
+
+[33mcommit c85784d82707217b0adbf387b89b1322ed4bf00e[m
+Merge: 4c80ec2 e9c19ac
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 28 14:36:14 2024 +0900
+
+    Merge branch 'main' into hu
+
+[33mcommit 4c80ec2df26b47ce2c8182ae7459fd9ba3f2e213[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Tue May 28 14:34:43 2024 +0900
+
+    0528
+
+[33mcommit e9c19ace672b31d29315583d1bac1cc9ae82d4b3[m
+Merge: 2e13cff 7a53eed
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Tue May 28 14:24:22 2024 +0900
+
+    주소창 검색 막아둠
+    
+    주소창 검색 막아둠
+
+[33mcommit 7a53eedf0e6f460d35b138287040cfcad54c33a1[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Tue May 28 14:23:47 2024 +0900
+
+    주소창 검색 막아둠
+
+[33mcommit 2e13cff3311340f3015598255fe7ce2245dae45c[m
+Merge: bd0d5a9 ae5b787
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 28 12:58:44 2024 +0900
+
+    오류수정
+    
+    오류수정
+
+[33mcommit ae5b7871dd1fb13a867c5224c49ae598b67265a2[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Tue May 28 12:58:21 2024 +0900
+
+    오류수정
+
+[33mcommit bd0d5a9e46f429f01f496e8e74cd07281b4dd3e0[m
+Merge: 696b59d 08ade24
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Tue May 28 12:55:03 2024 +0900
+
+    신고하기 완료
+    
+    신고하기 완료
+
+[33mcommit 08ade242d73b6a13405547717f82563ba3f391c3[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 28 12:54:29 2024 +0900
+
+    신고하기 완료
+
+[33mcommit 696b59da2b11cfae7a41fbd2c63141c7d0c5a579[m
+Merge: 8cef61c dd44206
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Tue May 28 12:30:34 2024 +0900
+
+    Joy
+    
+    Joy
+
+[33mcommit dd44206f948688ad3eee905054e996f3fab3d75f[m
+Merge: 16c624c 8cef61c
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 28 12:29:54 2024 +0900
+
+    Merge branch 'main' of https://github.com/ict1jo/CampYou into joy
+
+[33mcommit 8cef61c662e9e52ab794c61bf27e779d4f6adac1[m
+Merge: d913dec 83dae45
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Tue May 28 12:29:37 2024 +0900
+
+    새창 띄우기
+    
+    새창 띄우기
+
+[33mcommit 83dae4584a34b66c8f206d92c77efd01354a924e[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Tue May 28 12:29:08 2024 +0900
+
+    새창 띄우기
+
+[33mcommit 16c624ca4174a30572e507652865fe68626308ba[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 28 12:09:35 2024 +0900
+
+    회원등급 수정
+
+[33mcommit 16ec5741215bd78c61c1f0bc0b4d9dfe9fe32409[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 28 12:03:37 2024 +0900
+
+    관리자 헤더 톱니바퀴 삭제
+
+[33mcommit 37bbec0c5bc232c65581a93590f948b06d322cfe[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 28 11:50:08 2024 +0900
+
+    배경 변경
+
+[33mcommit d913dec096d43b2990286a384569e878eeb2ca5a[m
+Merge: 8e068ed 9f26dec
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Tue May 28 11:16:36 2024 +0900
+
+    신고하기닫기 신고로그인안되면 보내버리기
+    
+    신고하기닫기 신고로그인안되면 보내버리기
+
+[33mcommit 9f26dec79527a253376340ec2096f5255e5e6e9c[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 28 11:15:58 2024 +0900
+
+    신고하기 닫기
+
+[33mcommit 8e068edc098be207e9d20d96c441ee7569e75d93[m
+Merge: 2724551 3cae7b1
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 28 09:42:50 2024 +0900
+
+    SNS정보입력칸 헤더 푸터 제거.
+    
+    SNS정보입력칸 헤더 푸터 제거.
+
+[33mcommit 3cae7b10386306295d96223d044d951fa46d5e9f[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Tue May 28 09:35:01 2024 +0900
+
+    SNS정보입력칸 헤더 푸터 제거.
+
+[33mcommit cb7e834b21e5f19b3f2fc15d123e9f71eb3bf0de[m
+Merge: 313e7f9 2724551
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 28 09:27:19 2024 +0900
+
+    Merge branch 'main' of https://github.com/ict1jo/CampYou into joy
+
+[33mcommit 27245519bf0ea2d1ae466a0b881a70b7f659ddde[m
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 27 23:47:00 2024 +0900
+
+    Update jdbc.properties
+
+[33mcommit 0d7ef43fa8b37546b3c3a90f13af169ec6a47a43[m
+Merge: 340b4ee 795dad6
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 27 23:46:02 2024 +0900
+
+    SNS 로그인 추가정보 수정
+    
+    SNS 로그인 추가정보 수정
+
+[33mcommit 795dad6f0bd992f54a370835b751706c037ab4ed[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Mon May 27 23:45:03 2024 +0900
+
+    SNS 로그인 추가정보 수정
+
+[33mcommit 340b4ee414d75e2e3ce912e6596c4f418a85aeeb[m
+Merge: 562a957 4edb5e9
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Mon May 27 22:39:56 2024 +0900
+
+    신고 받는 사람 idx값 넘기기
+    
+    신고 받는 사람 idx값 넘기기
+
+[33mcommit 4edb5e9e72a33827591bb63e550f9045a42cae24[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Mon May 27 22:38:50 2024 +0900
+
+    신고 값 넘기기
+
+[33mcommit 562a957057fe3e15e7d4d1d26eec232d6b50ae98[m
+Merge: a8deb88 7680df3
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Mon May 27 21:32:42 2024 +0900
+
+    캠프리스트 지도 검색 커서 버튼 포인터css 추가
+    
+    캠프리스트 지도 검색 커서 버튼 포인터css 추가
+
+[33mcommit 7680df3f17ba5d6fb8fb60230b096f5971ff7a6e[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Mon May 27 21:31:45 2024 +0900
+
+    캠프리스트 지도 검색 커서 버튼 포인터css 추가
+
+[33mcommit 68378fddb97452c8e29adf6bd853e8d011dbd2de[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Mon May 27 18:19:18 2024 +0900
+
+    0527s
+
+[33mcommit a8deb8847d9d79a3a2e619face0c7dacd968290e[m
+Merge: 21aeeb0 4f5cfcf
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 27 18:08:07 2024 +0900
+
+    Merge pull request #116 from ict1jo/jun
+    
+    Jun
+
+[33mcommit 4f5cfcfe5220d22c5f3f10c0578666b8d634f02f[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Mon May 27 18:07:39 2024 +0900
+
+    해성준형 수정
+
+[33mcommit da1fa964a979438f8894ab79cad57eba35b4b352[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Mon May 27 17:49:03 2024 +0900
+
+    준형수정완료
+
+[33mcommit e0ef4eebea0880e79ff8023cfeadf4baeb400a0c[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon May 27 17:40:12 2024 +0900
+
+    modi some css
+
+[33mcommit 313e7f917d7d426e3ddd7f5120a70f0c797c4752[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon May 27 17:15:04 2024 +0900
+
+    매칭 수정
+
+[33mcommit 1ce936b98cf482ced3c4e1a5747ee4f49876e0a7[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon May 27 16:50:27 2024 +0900
+
+    동행 매칭
+
+[33mcommit edb37dc027fa4da35c4b3fb6d3b1cda895751e43[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon May 27 16:19:31 2024 +0900
+
+    회원정보수정 수정
+
+[33mcommit 737c7c984df100da7933630bf7f3c2ca4bb06712[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon May 27 16:13:01 2024 +0900
+
+    목록으로 수정
+
+[33mcommit 21aeeb0841622b555b1beb8f194cf7424aec5b6f[m
+Merge: 5f31a86 dcd2c0f
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Mon May 27 15:55:15 2024 +0900
+
+    프로필 모달 수정
+    
+    프로필 모달 수정
+
+[33mcommit dcd2c0fbf62c27f280d140f13432d59b9b9b9ad6[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Mon May 27 15:54:44 2024 +0900
+
+    프로필 모달 수정
+
+[33mcommit 5f31a86451bf16258bfc00f41a6605dcdf86b3b6[m
+Merge: 51a0a0a a62b7ae
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Mon May 27 15:48:39 2024 +0900
+
+    헤더 커뮤니티빼기, 관리자 푸터빼기
+    
+    헤더 커뮤니티빼기, 관리자 푸터빼기
+
+[33mcommit a62b7ae3d17d4175b8a0ffd7ef3d8525b459c29e[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon May 27 15:47:45 2024 +0900
+
+    헤더 커뮤니티 뺌
+
+[33mcommit 6366d9bdb5eecfd01dfd73141fc7c863addfc9a8[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon May 27 15:43:19 2024 +0900
+
+    조이 관리자페이지 푸터 뺌
+
+[33mcommit 51a0a0acd56ff7dbc5c38279944ad132f19ec356[m
+Merge: 3e840b3 3939f6b
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Mon May 27 15:40:55 2024 +0900
+
+    조이 자잘수정
+    
+    조이 자잘수정
+
+[33mcommit 3939f6bf8feb96aabb785343facb4003e053c6bd[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon May 27 15:40:28 2024 +0900
+
+    조이 자잘수정
+
+[33mcommit 3e840b3c5f93e933a8ab86f31804bd5066f2d186[m
+Merge: 3ea026b 653a892
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 27 15:00:22 2024 +0900
+
+    Merge pull request #111 from ict1jo/jun
+    
+    123
+
+[33mcommit 653a892179d6f98556bd758f4ec88ae686dde98a[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Mon May 27 15:00:06 2024 +0900
+
+    123
+
+[33mcommit 3ea026b97d5973acb8c643e96adf4291c22d8b6f[m
+Merge: 0d6231c bb362da
+Author: JS <158027817+Developer120000@users.noreply.github.com>
+Date:   Mon May 27 14:43:48 2024 +0900
+
+    Merge pull request #110 from ict1jo/js
+    
+    Js
+
+[33mcommit bb362da3044e86826efb047d18c8e952c131cdfa[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Mon May 27 14:43:14 2024 +0900
+
+    0527s
+
+[33mcommit 0d6231cdac7332645cf2d251aecae9ba4922d01b[m
+Merge: 1300162 7f004ce
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon May 27 10:17:32 2024 +0900
+
+    Merge pull request #109 from ict1jo/bomi2
+    
+    Bomi2
+
+[33mcommit 7f004ce4661455628c99e5a8912a6f9a58532ea2[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon May 27 10:15:27 2024 +0900
+
+    no change
+
+[33mcommit 1300162dd98c7f13c0b173476dffa0c253906541[m
+Merge: 3fda01e dedf250
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Sun May 26 23:35:39 2024 +0900
+
+    날씨
+    
+    날씨
+
+[33mcommit dedf25030a4e2b6b86bf073768e957ce77184a84[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Sun May 26 23:27:37 2024 +0900
+
+    날씨
+
+[33mcommit 5a43088261fbe470e150ab6b7661f2827824c097[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Sun May 26 21:46:05 2024 +0900
+
+    0526s
+
+[33mcommit 3fda01e0095afea9d6d3d7cff01df3873653c721[m
+Merge: f89378f 75a8909
+Author: JS <158027817+Developer120000@users.noreply.github.com>
+Date:   Sun May 26 20:25:51 2024 +0900
+
+    Merge pull request #107 from ict1jo/bjs
+    
+    Bjs
+
+[33mcommit 75a89097671cb3930f6e40281f13d2461d052605[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Sun May 26 20:24:20 2024 +0900
+
+    0526s
+
+[33mcommit f89378f5244f49a2326fef06677bb8f42abaf7d4[m
+Merge: a2a36dc dea9b06
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Sun May 26 17:07:43 2024 +0900
+
+    Merge pull request #106 from ict1jo/hu
+    
+    0526 Sun
+
+[33mcommit dea9b06638e1e6a99677da965e492c20f38a4a8a[m
+Merge: 3354462 a2a36dc
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Sun May 26 17:07:35 2024 +0900
+
+    Merge branch 'main' into hu
+
+[33mcommit 33544629491139ea852e26443ff9e2bdc47f06f6[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Sun May 26 17:02:58 2024 +0900
+
+    0526 Sun
+
+[33mcommit a2a36dcb5e5dc465e892a91ba7203abc752a6213[m
+Merge: 1e9ad7a 93921ec
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Sun May 26 13:28:59 2024 +0900
+
+    0526
+    
+    0526
+
+[33mcommit 93921ec3bc32b4d7930d36313310dfad234e0bec[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Sun May 26 13:15:58 2024 +0900
+
+    0526
+
+[33mcommit 1e9ad7abff6f83a54f6cec9c4729ed443fba71b5[m
+Merge: fb3708e 79d4bc0
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Sun May 26 01:21:26 2024 +0900
+
+    해치웠나!?!?!?
+    
+    해치웠나!?!?!?
+
+[33mcommit 79d4bc08b562f583bfb897c2b42a39a33d9ef054[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Sun May 26 01:20:55 2024 +0900
+
+    해치웠나?
+
+[33mcommit 3ac8eb77a836a2c3f3a9ea90e2c51a2fff636780[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Sat May 25 23:14:53 2024 +0900
+
+    대댓글어케하ㅐㅐㅐㅐㅏㅏ어아아ㅜ아ㅜ아ㅜㅡㅏ어ㅏㅡ아ㅓㅜㅡ어우ㅜ아ㅜㅇ
+
+[33mcommit f0d596acac01cc0402810876d5190d46dae5d41c[m
+Merge: fb3708e 10b4a5c
+Author: Haeseongl <has46840@naver.com>
+Date:   Sat May 25 19:42:18 2024 +0900
+
+    Merge branch 'hs1' of https://github.com/ict1jo/CampYou into hs1
+
+[33mcommit d2d0cf1ecca604de411d45407c1389eb6faaead8[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Fri May 24 19:40:10 2024 +0900
+
+    하는즁
+
+[33mcommit 10b4a5cbc1465bb5dacc87805cf6fff5ab49148b[m
+Author: has <has46840@naver.com>
+Date:   Fri May 24 18:58:59 2024 +0900
+
+    날씨 값 받아옴
+
+[33mcommit ba4c979065c04b6e879a1cb945031a7d84206bc9[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 24 18:30:49 2024 +0900
+
+    my info page error 405 fixed
+
+[33mcommit e986cff31700c18d4387d9afd76ae5f4c43a80ff[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Fri May 24 18:26:59 2024 +0900
+
+    0524s
+
+[33mcommit fb3708e2c9207213d4eef1c4e7396cc5badb2613[m
+Merge: e79c3a8 6f3e90a
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Fri May 24 18:06:40 2024 +0900
+
+    Merge pull request #103 from ict1jo/jun
+    
+    준형 찐찐 끝 (관리자게시판만 하면끝)
+
+[33mcommit 6f3e90a43d907ed4924ab997e4155331df054a4a[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Fri May 24 18:05:49 2024 +0900
+
+    준형 찐찐 끝 (관리자게시판만 하면끝)
+
+[33mcommit 11f9b02c6795e3a80450a8a08e4993478adaf3b0[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 24 17:26:44 2024 +0900
+
+    duplicate class name fixed
+
+[33mcommit b7ed3cf17ea33f95e804c938c1d48d13d4b638c2[m
+Merge: f968f14 741a957
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 24 16:36:11 2024 +0900
+
+    Merge branch 'bomi2' of https://github.com/ict1jo/CampYou into bomi2
+    lkldsnflldslk
+    especially if it merges an updated upstream into a topic branch.
+
+[33mcommit f968f1412eeeaf555ab88559be1227f1584250ab[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 24 16:34:55 2024 +0900
+
+    my inquiry admin reply added
+
+[33mcommit e79c3a876763409975e2d03b949ee03bfc73d51e[m
+Merge: 8241a01 00bb4a6
+Author: JS <158027817+Developer120000@users.noreply.github.com>
+Date:   Fri May 24 15:09:04 2024 +0900
+
+    Merge pull request #102 from ict1jo/js
+    
+    준수병합
+
+[33mcommit 00bb4a6cf9e2ec43fa62bac88cc3608706e87aa1[m
+Merge: 5c7b317 8241a01
+Author: JS <158027817+Developer120000@users.noreply.github.com>
+Date:   Fri May 24 15:08:51 2024 +0900
+
+    Merge branch 'main' into js
+
+[33mcommit 5c7b317e797135f0aeec1512e6b12fb8fec7d178[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Fri May 24 15:04:17 2024 +0900
+
+    0524s
+
+[33mcommit 8241a017740285ea3ce75cae41b1de1d43e6a1ae[m
+Merge: d2dca17 6d0af46
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Fri May 24 14:44:55 2024 +0900
+
+    Merge pull request #101 from ict1jo/hu
+    
+    Hu
+
+[33mcommit 6d0af4647ced6030acf1b9f5162fea3ee607cda4[m
+Merge: d232610 d2dca17
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Fri May 24 14:44:49 2024 +0900
+
+    Merge branch 'main' into hu
+
+[33mcommit d232610bb4849b86110f78fec02313ae01e79c9b[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Fri May 24 14:39:25 2024 +0900
+
+    0524
+
+[33mcommit d2dca17267de77ee535a5787c562f6331ed628e2[m
+Merge: a4de770 741a957
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Fri May 24 12:05:28 2024 +0900
+
+    Merge pull request #100 from ict1jo/bomi2
+    
+    Bomi2
+
+[33mcommit 741a957a71f3262b8b0f11258d969ddb9a24c6d7[m
+Merge: 0c88ad3 a4de770
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Fri May 24 12:05:22 2024 +0900
+
+    Merge branch 'main' into bomi2
+
+[33mcommit a4de770ed02c7bccfe9e2ae7f2a645c430ec9243[m
+Merge: 937fd64 2ba90ec
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Fri May 24 11:59:54 2024 +0900
+
+    Merge pull request #99 from ict1jo/jun
+    
+    Jun
+
+[33mcommit 2ba90ec170bcd36f065a7dde012c5013c222e0a9[m
+Merge: a2b3690 937fd64
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Fri May 24 11:59:47 2024 +0900
+
+    Merge branch 'main' into jun
+
+[33mcommit a2b3690d0ce9ae402f4f70f86c9a3f9ea7210e43[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Thu May 23 23:35:07 2024 +0900
+
+    준형 다함
+
+[33mcommit eb54e1600b3ff4158c2359d1c8f60ec8b4de8fd6[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Thu May 23 22:31:46 2024 +0900
+
+    관리자페이지 완료
+
+[33mcommit ec1480836d3c02c94f9462788499eef7e6777717[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Thu May 23 19:02:21 2024 +0900
+
+    썸머노트 하고 값넘어가는지 확인 후 css 해야함 + 캠핑장리스트 카운트 해야함
+
+[33mcommit 9c9ba29347094437f40df82b106671b8150ee949[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Thu May 23 18:21:11 2024 +0900
+
+    0523s
+
+[33mcommit 937fd642dd234d252544d5e04c8f438e0ef33c99[m
+Merge: e173b74 e16c15f
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Thu May 23 18:02:06 2024 +0900
+
+    프로필 모달창
+    
+    프로필 모달창
+
+[33mcommit e16c15f7647452617aa52ac2f640fa45789a7963[m
+Author: has <has46840@naver.com>
+Date:   Thu May 23 17:59:57 2024 +0900
+
+    프로필 모달창
+
+[33mcommit 0c88ad3bdc07921cfdea052606674c586b347b8a[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 23 17:43:36 2024 +0900
+
+    done with chat
+
+[33mcommit 2eb4517c6405a55f81bc065534c9faee7246db37[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 23 17:10:34 2024 +0900
+
+    chat alarm done
+
+[33mcommit 51acd904f10e51abf81c0208d2a4e1a1b04ba720[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 23 15:16:36 2024 +0900
+
+    disappear new element for chatmsg when user read
+
+[33mcommit a0e1fac6b0dec0dfe0b525c7e707a3da99dd635b[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Thu May 23 12:09:16 2024 +0900
+
+    0523
+
+[33mcommit e173b747e0814d40251c0a9359dea4a22f3851c3[m
+Merge: 13d9e7a ef261e3
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Wed May 22 18:44:22 2024 +0900
+
+    별 이미지 이름 변경, 모달창 하는 중
+    
+    별 이미지 이름 변경, 모달창 하는 중
+
+[33mcommit ef261e3f4cd3e1f44de498b11866b6f5e474901f[m
+Author: has <has46840@naver.com>
+Date:   Wed May 22 18:43:37 2024 +0900
+
+    별 이미지 이름 변경, 모달창 하는 중
+
+[33mcommit a0f645b3fa9804de5e787733b9523e181c9d9f31[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Wed May 22 18:20:18 2024 +0900
+
+    0522s
+
+[33mcommit 31bde0fb97c8ae023c9ef04acf480c17a414b846[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Wed May 22 18:11:47 2024 +0900
+
+    관리자FAQ완료
+
+[33mcommit 13d9e7a9c454293010d8d127b508439c1046b055[m
+Merge: 7665380 e6e8362
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Wed May 22 17:11:44 2024 +0900
+
+    준형이가 시킨거 수정함
+    
+    준형이가 시킨거 수정함
+
+[33mcommit e6e83622dcaa6b8691c313d12ed0e6903bee4d10[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Wed May 22 17:11:13 2024 +0900
+
+    준형이가 시킨거 수정함
+
+[33mcommit ab257067f2b767d81fc70c49ae0b0a56529e5e44[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Wed May 22 14:57:11 2024 +0900
+
+    grade img
+
+[33mcommit 7665380a7ad18405cd209a083da43c6ea7fc6fd1[m
+Merge: 040ad78 723486b
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Wed May 22 14:41:17 2024 +0900
+
+    Merge pull request #94 from ict1jo/bomi2
+    
+    delete member active-2
+
+[33mcommit 040ad78ab4854df13d74f685ea9f86ff5dffcf38[m
+Merge: 0dbe8bd 6dc10ca
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Wed May 22 14:39:28 2024 +0900
+
+    수정
+
+[33mcommit 0dbe8bd56df0dc8dc70b98333cb9a6d0658fbb27[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Wed May 22 14:36:32 2024 +0900
+
+    중복 매핑 수정
+
+[33mcommit ddbfa074ea3caa5d0a4c7c915c9e42cc487709f2[m
+Merge: dfea924 c52b6fc
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Wed May 22 14:30:33 2024 +0900
+
+    Merge branch 'bomi2'
+    
+    # Conflicts:
+    #       src/main/webapp/WEB-INF/views/bm/my_main.jsp
+    #       src/main/webapp/WEB-INF/views/bm/my_main2.jsp
+    #       src/main/webapp/resources/public/css/bm/my_main.css
+
+[33mcommit 723486bfbbcd2db7e7e978a91393c732e09f1158[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Wed May 22 12:07:08 2024 +0900
+
+    delete member active-2
+
+[33mcommit 6dc10cac61bc2196ba86415e2f1711dc4de238bd[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Wed May 22 11:09:34 2024 +0900
+
+    faq_status added
+
+[33mcommit 02c0bcea5bc535dc0117518f4ab64cae6bc9c8e8[m
+Merge: dfea924 3a5b907
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Wed May 22 10:40:23 2024 +0900
+
+    conflict resolved
+
+[33mcommit 3a5b90796527358dfd346a5342a2ce6122c82f25[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Wed May 22 10:34:46 2024 +0900
+
+    my page campinglist css modified
+
+[33mcommit dfea924c452120ef31d0afd918aae371e9da2fb1[m
+Merge: f8a99b8 5a52edb
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Wed May 22 09:30:16 2024 +0900
+
+    Merge pull request #92 from ict1jo/jun
+    
+    앵그리
+
+[33mcommit f8a99b83711537dbbee10d45925574bd9d35f4ac[m
+Merge: d3dda4a cdda995
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Wed May 22 09:30:01 2024 +0900
+
+    Merge pull request #91 from ict1jo/js
+    
+    Js
+
+[33mcommit d3dda4a9caefc6ea1b230c5dd436bd3156053f64[m
+Merge: c1e8f7e 737e2bf
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Wed May 22 09:29:42 2024 +0900
+
+    Merge pull request #90 from ict1jo/hu
+    
+    2024-05-21
+
+[33mcommit 5a52edb6c23aec5395c647598c3c6b67832a8768[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Wed May 22 00:30:09 2024 +0900
+
+    앵그리
+
+[33mcommit cdda995bcab8ca4381e676cc40ecd13890332751[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Tue May 21 23:23:18 2024 +0900
+
+    0521s
+
+[33mcommit 737e2bf2f2ce28e240b60b713a187016a1755163[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Tue May 21 20:08:12 2024 +0900
+
+    2024-05-21
+
+[33mcommit 5514263a09e9c3aef5d7116295739dcb7c269a89[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Tue May 21 18:21:36 2024 +0900
+
+    0521s
+
+[33mcommit c1e8f7ed2325462d061c2fc031ea181cc0345e2f[m
+Merge: 858b86b 9a8b3e9
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 21 18:17:05 2024 +0900
+
+    관리자 페이지 제작중
+    
+    관리자 페이지 제작중
+
+[33mcommit 9a8b3e9d109716aa76fb82c63df90e5c9a7d8806[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Tue May 21 18:16:35 2024 +0900
+
+    관리자 페이지 제작중
+
+[33mcommit 858b86bfe8d5f1e408cf2d57c10b87a9728c74bb[m
+Merge: 88ca7e3 f38bbc4
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Tue May 21 18:11:53 2024 +0900
+
+    하트png, 검색 이미지 없을 때 처리, 하트 검색 때 처리
+    
+    하트png, 검색 이미지 없을 때 처리, 하트 검색 때 처리
+
+[33mcommit f38bbc4e06f1a675581243d1defba5e7194df843[m
+Author: has <has46840@naver.com>
+Date:   Tue May 21 18:11:22 2024 +0900
+
+    하트png, 검색 이미지 없을 때 처리, 하트 검색 때 처리
+
+[33mcommit 88ca7e323cec291bf927d329245757baaf5d4817[m
+Merge: 0416155 3b8ce49
+Author: JS <158027817+Developer120000@users.noreply.github.com>
+Date:   Tue May 21 17:36:52 2024 +0900
+
+    Merge pull request #87 from ict1jo/bjs
+    
+    Bjs
+
+[33mcommit 3b8ce49c93b5f0885109128f65afe45e8c542628[m
+Merge: faa01af 0416155
+Author: JS <158027817+Developer120000@users.noreply.github.com>
+Date:   Tue May 21 17:36:45 2024 +0900
+
+    Merge branch 'main' into bjs
+
+[33mcommit faa01af78927508fb6c0340d7cd76c7e1dee7ed2[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Tue May 21 17:33:59 2024 +0900
+
+    0521s
+
+[33mcommit c52b6fcf22d27d765cb6d9bd6f76040daa8a46f5[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue May 21 17:17:40 2024 +0900
+
+    fav camping list css style fixed, side bar href location fixed
+
+[33mcommit 0416155ac875660690ff21bf8785a599c82c63d8[m
+Merge: d423ad5 4fc9f8a
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Tue May 21 15:40:57 2024 +0900
+
+    파비콘
+    
+    파비콘
+
+[33mcommit 4fc9f8ab9fffeb54860a5d0bee9783bb575cf927[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 21 15:40:13 2024 +0900
+
+    파비콘
+
+[33mcommit a779beaa7cba7f5123b67fc095d6427ec364824a[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue May 21 15:38:50 2024 +0900
+
+    when user clicking count, user can move to board lists
+
+[33mcommit d423ad56dc7fa81125bdee0213abc629835ced0c[m
+Merge: 0f3a4ba 70140aa
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Tue May 21 15:12:31 2024 +0900
+
+    css 수정
+    
+    css 수정
+
+[33mcommit 70140aa575410a17c72d2469b82e094f00925407[m
+Merge: 658b00a 0f3a4ba
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Tue May 21 15:12:18 2024 +0900
+
+    Merge branch 'main' into joy
+
+[33mcommit 658b00af417516c1969193c0b99d494e98dfe77b[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 21 15:11:19 2024 +0900
+
+    css 수정
+
+[33mcommit 0f3a4bae5a4c8daba3134b263cea34392da6eb9c[m
+Merge: df18d68 c109f32
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue May 21 14:42:10 2024 +0900
+
+    Merge pull request #84 from ict1jo/bomi2
+    
+    Bomi2
+
+[33mcommit c109f3231712c70a632bff4c5f80221802c01773[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue May 21 14:40:41 2024 +0900
+
+    review part added into mypage
+
+[33mcommit eaea635e10ac84b45187e8497f6720e1a3518373[m
+Merge: 6bdeab5 1fd8c81
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue May 21 09:55:22 2024 +0900
+
+    resolved merge conflict my-main.css
+
+[33mcommit 935f990cee129ca161a164e3c88457c57ac781cc[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Mon May 20 23:39:21 2024 +0900
+
+    0520s
+
+[33mcommit df18d68777b8616a6a7e0682a16c576ceccb29d8[m
+Merge: 534fb6c 8709174
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Mon May 20 23:35:37 2024 +0900
+
+    검색 결과 없을 때 처리
+    
+    검색 결과 없을 때 처리, 컨트롤러 메서드 및 url 명칭 수정
+
+[33mcommit 8709174e58d35427855b7a29dee115d70ee73af8[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Mon May 20 23:34:37 2024 +0900
+
+    검색 결과 없을 때 처리, 컨트롤러 메서드 및 url 명칭 수정
+
+[33mcommit 534fb6ced3206d8407225542dfcc560c7805709f[m
+Merge: 48ae498 ff6cd0f
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 20 21:27:00 2024 +0900
+
+    Merge pull request #82 from ict1jo/hu
+    
+    5020-(night)
+
+[33mcommit ff6cd0f6965d5c3f92ca83fa2b0dd1ce121a9dc6[m
+Merge: b90a681 48ae498
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 20 21:26:54 2024 +0900
+
+    Merge branch 'main' into hu
+
+[33mcommit b90a681ea557c6f75b34a3cf279b3544f82bf450[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Mon May 20 21:17:13 2024 +0900
+
+    5020-(night)
+
+[33mcommit 48ae49872b4e63f05b99b799eba748afce87f926[m
+Merge: 0032c5e 2c83599
+Author: JS <158027817+Developer120000@users.noreply.github.com>
+Date:   Mon May 20 18:20:49 2024 +0900
+
+    Merge pull request #81 from ict1jo/bjs
+    
+    0520s
+
+[33mcommit 2c83599fb8714ae796fff28a0503a19c71662db9[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Mon May 20 18:20:18 2024 +0900
+
+    0520s
+
+[33mcommit 0032c5e7fa41df8fab70980bc4337b190414fa5b[m
+Merge: ed4e714 5e7b145
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 20 18:20:07 2024 +0900
+
+    Merge pull request #80 from ict1jo/jun
+    
+    어사이드 경로 추가 + 새 페이지 추가
+
+[33mcommit 5e7b145a82d76388f15dade2d201a6c004702658[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Mon May 20 18:19:48 2024 +0900
+
+    어사이드 경로 추가 + 새 페이지 추가
+
+[33mcommit 6bdeab5583b2f4904a0388d8c4491d989206e23f[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon May 20 18:18:54 2024 +0900
+
+    member_grade added in mypage
+
+[33mcommit ed4e71495c48760ab2f18d0c7133e7d8eb1ae7f5[m
+Merge: b7aa591 206ba45
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Mon May 20 18:05:05 2024 +0900
+
+    잔잔바리 css수정
+    
+    잔잔바리 css수정
+
+[33mcommit b7aa5919210051f0308c48de7b775acb244b8faf[m
+Merge: 8b7bf9f 5d468e3
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Mon May 20 18:03:41 2024 +0900
+
+    페이징 오류 수정
+    
+    페이징 오류 수정
+
+[33mcommit 206ba450675f1cdbc93212debcb8eb40090f2dd0[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon May 20 18:02:16 2024 +0900
+
+    잔잔바리 css수정
+
+[33mcommit 8b7bf9fdf9a620f6ebe10d048027b75185b862c8[m
+Merge: c793b35 8a2a1fc
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 20 18:00:56 2024 +0900
+
+    Merge pull request #77 from ict1jo/jun
+    
+    캠핑 완료 찐찐완료
+
+[33mcommit 8a2a1fc8b6d7cf928411fc125708dc3e6edd1699[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Mon May 20 18:00:37 2024 +0900
+
+    캠핑 완료 찐찐완료
+
+[33mcommit 5d468e3f9b11ce32b00e4955905af7e05cb25017[m
+Author: has <has46840@naver.com>
+Date:   Mon May 20 18:00:15 2024 +0900
+
+    페이징 오류 수정
+
+[33mcommit c793b35f2609211ff215d205b7f22b0cb83d1926[m
+Merge: 60d6aa7 1fd8c81
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon May 20 17:17:22 2024 +0900
+
+    Merge pull request #76 from ict1jo/bomi2
+    
+    main page reorgainzed
+
+[33mcommit 1fd8c8151234c1c835adbe8fc7729976b3b8f8ad[m
+Merge: d1378cd 60d6aa7
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon May 20 17:17:12 2024 +0900
+
+    Merge branch 'main' into bomi2
+
+[33mcommit d1378cdb3fd2d86a4ce6580095fda4a147d9e3a9[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon May 20 17:14:31 2024 +0900
+
+    main page reorgainzed
+
+[33mcommit 60d6aa7fbe1b32fb0b81b41d64f276d3828129d0[m
+Merge: df7006f c59786d
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Mon May 20 17:03:20 2024 +0900
+
+    하트 리스트에만 추가
+    
+    하트 리스트에만 추가
+
+[33mcommit c59786de3ab270e59b8f0e2f00ea3108d9fb081b[m
+Author: has <has46840@naver.com>
+Date:   Mon May 20 17:02:43 2024 +0900
+
+    하트 리스트에만 추가
+
+[33mcommit df7006ff5e3fad7ca3de1b78c4770086ed596c02[m
+Merge: 1096f81 c0605f7
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Mon May 20 16:52:12 2024 +0900
+
+    별점, 회원리스트 신고리스트 들어가짐!
+    
+    별점, 회원리스트 신고리스트 들어가짐!
+
+[33mcommit c0605f752a5dfa913e97bdf6a6fa19dea28c890d[m
+Merge: f6245c6 1096f81
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Mon May 20 16:52:02 2024 +0900
+
+    Merge branch 'main' into joy
+
+[33mcommit f6245c6500bb9f7143a00b68e75e2e23cb867a7c[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon May 20 16:51:12 2024 +0900
+
+    별점완룡~
+
+[33mcommit 1096f81a173be45e42850a66737a5b9177ddb285[m
+Merge: 5ac98a8 ceb9fa9
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 20 15:56:18 2024 +0900
+
+    Merge pull request #73 from ict1jo/hu
+    
+    0520-2
+
+[33mcommit ceb9fa96300a45657ccdc0ba948d7244401c8f2c[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Mon May 20 15:55:23 2024 +0900
+
+    0520-2
+
+[33mcommit 5ac98a808c48d653ebadc6d4af150e343611876d[m
+Merge: 870d282 d3dfde9
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 20 14:31:44 2024 +0900
+
+    Merge pull request #72 from ict1jo/hu
+    
+    Hu
+
+[33mcommit d3dfde98ae64fd281bfbdd29c9161fd1136c2520[m
+Merge: a65fb08 870d282
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 20 14:31:38 2024 +0900
+
+    Merge branch 'main' into hu
+
+[33mcommit a65fb08198c6e31b45a39ca7102510eaea5b3f80[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Mon May 20 14:30:16 2024 +0900
+
+    0520
+
+[33mcommit 870d282864c3409f120c74f3ab6f305dd3587f62[m
+Merge: 6c255a1 49e9ca5
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 20 14:25:42 2024 +0900
+
+    Merge pull request #71 from ict1jo/hs1
+    
+    Hs1
+
+[33mcommit 6c255a10c3fe9a7b83f1ea9ffd2cd13ce489cb66[m
+Merge: 01a9333 f51dbf6
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 20 14:25:17 2024 +0900
+
+    Merge pull request #70 from ict1jo/bomi2
+    
+    my page, my inquiry fixed
+
+[33mcommit d2358c44eb81f4a61ef2904dbc0758ee761a8265[m
+Merge: 9767255 01a9333
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon May 20 14:23:32 2024 +0900
+
+    Merge branch 'main' of https://github.com/ict1jo/CampYou into joy
+
+[33mcommit 97672559c9067c570642dc5726e3a353e96ec1d0[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon May 20 14:20:20 2024 +0900
+
+    자잘수정
+
+[33mcommit 01a9333bcdf64d6469b3aff3324c84f7aa5d45bd[m
+Merge: fb66327 ed9f459
+Author: JS <158027817+Developer120000@users.noreply.github.com>
+Date:   Mon May 20 12:05:35 2024 +0900
+
+    Merge pull request #69 from ict1jo/js
+    
+    Js
+
+[33mcommit ed9f4596b5577e408b1873ceb89bbdf783c78f01[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Mon May 20 12:03:05 2024 +0900
+
+    0520s
+
+[33mcommit fb66327dbc0f52b1e499d2ea1dd89846fd55f762[m
+Merge: e8165ee 0965d4f
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 20 10:55:50 2024 +0900
+
+    Merge pull request #68 from ict1jo/jun
+    
+    Jun
+
+[33mcommit 5e99cf443690fc384a95e84a6d2a7d01a6d2ef45[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Sun May 19 23:16:21 2024 +0900
+
+    0519h
+
+[33mcommit 5150590a7150d011beffa278c0f9d2ff3e95d380[m
+Merge: eb04506 e8165ee
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Sun May 19 18:55:40 2024 +0900
+
+    Merge pull request #67 from ict1jo/main
+    
+    실행안됨
+
+[33mcommit eb04506790ad552776821be62b6996a64b9e963e[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Sun May 19 18:54:57 2024 +0900
+
+    실행안됨
+
+[33mcommit e8165eece388e6253cdd4b0f54c14065ff0afe8e[m
+Merge: b79a90d d89bce8
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Sun May 19 18:52:26 2024 +0900
+
+    Bjs병합
+    
+    Bjs
+
+[33mcommit d89bce820735b16dd08056859a35305f1292be5c[m
+Merge: aa40900 b79a90d
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Sun May 19 18:52:09 2024 +0900
+
+    Merge branch 'main' into bjs
+
+[33mcommit aa40900c3b3273f3108d0e63ecb20db7c750e045[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Sun May 19 18:45:00 2024 +0900
+
+    0519s
+
+[33mcommit 49e9ca51ca30907e8e9134402c25db936808bf41[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Sat May 18 23:15:31 2024 +0900
+
+    하트 위치 지정
+
+[33mcommit a36824c2f98f9d74247fae9a76067d17061e5376[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Fri May 17 18:22:26 2024 +0900
+
+    0517s
+
+[33mcommit f51dbf64a6e75542c7c21168fe83f13a68561e96[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 17 18:19:39 2024 +0900
+
+    my page, my inquiry fixed
+
+[33mcommit d16e7c7544824ecfdfe6845d5d6f71faad687a49[m
+Author: has <has46840@naver.com>
+Date:   Fri May 17 18:13:54 2024 +0900
+
+    자잘한 거 수정 찍힌 마커 중앙으로, 하트 준비 중
+
+[33mcommit 0965d4f4493bbacd8bc3ce2993c4422456302011[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Fri May 17 18:09:07 2024 +0900
+
+    css 마무리단계 + 페이징 완료
+
+[33mcommit 7cb93f81153a055d385ae9d26bc12d736f51b968[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Fri May 17 18:09:03 2024 +0900
+
+    0517
+
+[33mcommit b79a90d1b997ae25a1378a0227e141a17bbc50ba[m
+Merge: 4de8f38 1f9ff39
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 17 17:00:52 2024 +0900
+
+    Merge pull request #65 from ict1jo/bomi2
+    
+    chatroom error fixed
+
+[33mcommit 1f9ff391ac040babc5fd00146cbaa1ed6a2217cd[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 17 16:59:46 2024 +0900
+
+    chatroom error fixed
+
+[33mcommit 4de8f3818624d7b380f94dac9ce7c1b8c254fd27[m
+Merge: 80547c3 a705a34
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 17 14:51:18 2024 +0900
+
+    Merge pull request #64 from ict1jo/bomi2
+    
+    main page part fixed
+
+[33mcommit a705a34d11a64a4149f5577e1255eb01091b62ea[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 17 14:50:13 2024 +0900
+
+    main page part fixed
+
+[33mcommit b3a412c813f18da008649fd0cd1e42e5344a80f0[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Thu May 16 18:57:58 2024 +0900
+
+    0516s
+
+[33mcommit 80547c3100fa69ee1cb71f0ab7e375e2ab0c0ffe[m
+Merge: 06ac555 7d201af
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Thu May 16 18:20:52 2024 +0900
+
+    페이징, 검색 결과 수, 리스트로 가기
+    
+    페이징, 검색 결과 수, 리스트로 가기
+
+[33mcommit 7d201afdb715023b721fbf14d6baac5a80bc62f2[m
+Author: has <has46840@naver.com>
+Date:   Thu May 16 18:19:13 2024 +0900
+
+    페이징, 검색 결과 수, 리스트로 가기
+
+[33mcommit ecd4288a2fb4c65cf7938be9a9cdc02568c57802[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Thu May 16 17:47:59 2024 +0900
+
+    세부검색
+
+[33mcommit 06ac555ce0971fe236dcfe5c20ca6f1ec7569864[m
+Merge: ccd2a59 9f71995
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Thu May 16 17:46:41 2024 +0900
+
+    메인수정
+    
+    메인수정
+
+[33mcommit 9f719958b782168c9a76a2adbf4c8be827a7b744[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Thu May 16 17:45:34 2024 +0900
+
+    메인수정
+
+[33mcommit ccd2a597b037ffe840393dc7b39fb20c1fcc95f3[m
+Merge: b2b3721 ae44621
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 16 17:35:42 2024 +0900
+
+    Merge pull request #61 from ict1jo/bomi2
+    
+    Bomi2
+
+[33mcommit ae4462177924701a4b849d8dbfbc89ed923db7cf[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 16 17:20:49 2024 +0900
+
+    footer added
+
+[33mcommit e7c58b5dfb81f3a7cef81b166feadd1b4a94ebae[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 16 15:32:18 2024 +0900
+
+    my-page camping list updated
+
+[33mcommit c171c6431bbb514438b49333312aaa935edad63b[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Thu May 16 14:38:01 2024 +0900
+
+    추가
+
+[33mcommit 284602d4e9184af5a7728e11f8e44b21fccb56a9[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Thu May 16 12:54:32 2024 +0900
+
+    신고하기
+
+[33mcommit 3fa2a34bc4bf016b2b6c6e8a474aba52f81a2ede[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Thu May 16 12:51:04 2024 +0900
+
+    메인 화면 텍스트 수정
+
+[33mcommit b2b3721d72cd11ee9e0d17797d5e0ff1ecd0f4ee[m
+Merge: a06a24e 6a7c2d9
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 16 11:52:19 2024 +0900
+
+    Merge pull request #60 from ict1jo/bomi2
+    
+    my page
+
+[33mcommit 6a7c2d9850c4909e00725f2cf1be9f440e64dee1[m
+Merge: fc6933b a06a24e
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 16 11:52:14 2024 +0900
+
+    Merge branch 'main' into bomi2
+
+[33mcommit fc6933b1ff59f5c82c4d538e119cff855bb9d3a3[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 16 11:47:09 2024 +0900
+
+    my page
+
+[33mcommit a06a24e7388728f98092efa563d59ef473d9d282[m
+Merge: 8d1fbcb 6e1ec6f
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Thu May 16 11:45:02 2024 +0900
+
+    검색기능
+    
+    검색기능
+
+[33mcommit 6e1ec6f6792d6fe5158a1dd48b7404c09bc87f7a[m
+Author: has <has46840@naver.com>
+Date:   Thu May 16 11:44:10 2024 +0900
+
+    검색기능
+
+[33mcommit 8d1fbcb8fb65ff42290e0a50cebe987c107236fe[m
+Merge: 8d0f761 98f7166
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Thu May 16 10:04:51 2024 +0900
+
+    Merge pull request #58 from ict1jo/hs1
+    
+    해성쓰
+
+[33mcommit 8d0f761a3d19f28e965157a1c790af63642dca4d[m
+Merge: 502c2d3 e706d49
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Thu May 16 10:04:04 2024 +0900
+
+    Bjs
+    
+    Bjs
+
+[33mcommit 98f71667b353f9cc7387e373f45cc3af34ba68f6[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Thu May 16 01:54:50 2024 +0900
+
+    지도 검색 후 10개씩 자르기
+    몇몇 개 함수, 변수 이름 변경함
+
+[33mcommit e706d4996c9cf4e6fdd71bbe1c2c0f3506db1e96[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Wed May 15 23:14:44 2024 +0900
+
+    0515h
+
+[33mcommit 502c2d3b783690da099dab5cd152d9db4c171167[m
+Merge: f9c5762 2bb6b16
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Wed May 15 17:47:39 2024 +0900
+
+    Merge pull request #56 from ict1jo/joy
+    
+    신고 페이징
+
+[33mcommit 2bb6b16f7bd76a32833fd449342bfd8e930b6f47[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Wed May 15 17:47:04 2024 +0900
+
+    신고페이징남음
+
+[33mcommit 020dc619ddace19d72dbfd258ebc4fa394600dad[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Wed May 15 17:46:48 2024 +0900
+
+    신고 페이징빼고 끄ㅡㅌ
+
+[33mcommit fc78158c0830201cc3944f197ca58c6aaacde398[m
+Author: joy <ppee1220@naver.com>
+Date:   Wed May 15 15:24:00 2024 +0900
+
+    신고게시판초안
+
+[33mcommit 65556de37001532dbf4b305ab965326f93c69c40[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Tue May 14 18:18:21 2024 +0900
+
+    0514s
+
+[33mcommit f9c57621b358e7c123896b7084af889190786e31[m
+Merge: 9a406e3 1f73356
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Tue May 14 18:02:12 2024 +0900
+
+    Hs1
+    
+    Hs1
+
+[33mcommit 1f733566164edbc47b923e1677d8189beaaf0332[m
+Author: has <has46840@naver.com>
+Date:   Tue May 14 17:59:58 2024 +0900
+
+    검색 개선
+
+[33mcommit 9a406e351321f2d9ae64335feb4036b9674a1ac5[m
+Merge: 6e2ccfd 1f4d921
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 14 17:17:54 2024 +0900
+
+    Jun
+    
+    Jun
+
+[33mcommit 1f4d921b4cd577777307e5e16024c44af8a69ee2[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Tue May 14 17:15:47 2024 +0900
+
+    상세검색 끝
+
+[33mcommit 6e2ccfd8813de75d255786455b7cf3e7660c60bb[m
+Merge: b15d973 f209750
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Tue May 14 16:18:47 2024 +0900
+
+    Merge pull request #53 from ict1jo/joy
+    
+    reset
+
+[33mcommit f20975019791654716ffc732d83e0e00e90af81b[m
+Merge: 71d7d3e b15d973
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Tue May 14 16:18:37 2024 +0900
+
+    Merge branch 'main' into joy
+
+[33mcommit 71d7d3e5ae874b54730692f83913d3be19b573a0[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 14 16:11:23 2024 +0900
+
+    resetcss폰트
+
+[33mcommit 93d97dc25350eff38f66e395f2774fb3cbf21405[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 14 15:52:31 2024 +0900
+
+    resetcss
+
+[33mcommit b15d9739f734a66a4653852536fdbf1a76aa9f9b[m
+Merge: 0721fa7 bfce2d6
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 14 15:08:08 2024 +0900
+
+    Merge pull request #52 from ict1jo/hu
+    
+    0514
+
+[33mcommit bfce2d65ecfdc092155e1b5e34389357f4d6a7b9[m
+Merge: d2d9b56 0721fa7
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 14 15:08:02 2024 +0900
+
+    Merge branch 'main' into hu
+
+[33mcommit d2d9b565d3084b7ad23df506f5fe8309cb0f95c9[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Tue May 14 15:06:03 2024 +0900
+
+    0514
+
+[33mcommit 5a930fd5c239b15aefd6cc25ea468bbc763b3ca6[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Tue May 14 00:02:34 2024 +0900
+
+    옵션으로만 검색 추가
+
+[33mcommit dddb993a9e507d0f655acf77ee26c7f25ce4b207[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon May 13 21:16:49 2024 +0900
+
+    회원정지
+
+[33mcommit 38a075157ebb43efaecd783a0b5cb47d0f690eec[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Mon May 13 18:22:51 2024 +0900
+
+    0513s
+
+[33mcommit 7a12448b1cc4b0aac3df13199e8b2d3049586c42[m
+Author: has <has46840@naver.com>
+Date:   Mon May 13 18:17:41 2024 +0900
+
+    상세검색 미완
+
+[33mcommit 5455674bdd6ee6a1619d29e5f45976ee02dd4699[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Mon May 13 18:17:39 2024 +0900
+
+    디테일 검색 후 페이징 처리 하는중
+
+[33mcommit 0721fa76a476c3cebb58977c04e651bc85ab4284[m
+Merge: 1591aec 88930bd
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon May 13 16:34:53 2024 +0900
+
+    Merge pull request #51 from ict1jo/bomi2
+    
+    2nd today
+
+[33mcommit 88930bd702d0821ed2fbe7a4006445fcccdf74d8[m
+Merge: 443e64e 1591aec
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon May 13 16:34:45 2024 +0900
+
+    Merge branch 'main' into bomi2
+
+[33mcommit 443e64edf3426965b11cfa75130ded14ef2a533a[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon May 13 16:28:36 2024 +0900
+
+    2nd today
+
+[33mcommit 1591aecab121b0233e3e920a49eda4a2a1065577[m
+Merge: 0c8a1de 9d7370b
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 13 16:26:31 2024 +0900
+
+    Merge pull request #50 from ict1jo/jun
+    
+    ㅋㅁ
+
+[33mcommit 9d7370bf1d304d526997910077aa2121e9d10408[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Mon May 13 16:26:09 2024 +0900
+
+    ㅋㅁ
+
+[33mcommit 0c8a1def075c6ada0007967dfa8ea2a2f1316880[m
+Merge: dfac84d 9ddf18a
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 13 16:17:59 2024 +0900
+
+    Merge pull request #49 from ict1jo/bjs
+    
+    Bjs
+
+[33mcommit 9ddf18a22e1e9fc7b02cd65c7faed3377a3536e7[m
+Merge: 165970d dfac84d
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 13 16:17:52 2024 +0900
+
+    Merge branch 'main' into bjs
+
+[33mcommit dfac84d3056b2860224bec589b0e266d4250b94c[m
+Merge: 6ec8ae5 0771f77
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 13 16:16:37 2024 +0900
+
+    Merge pull request #48 from ict1jo/bomi2
+    
+    Bomi2
+
+[33mcommit 6ec8ae5f2ba256fedce84f6933f3742c0ada21c8[m
+Merge: faac1d5 2afa61e
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon May 13 16:16:09 2024 +0900
+
+    Merge pull request #47 from ict1jo/jun
+    
+    병합테스트
+
+[33mcommit 165970dbaacb5aa38d968abe8e51013cf3fb479e[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Mon May 13 16:16:01 2024 +0900
+
+    0513s
+
+[33mcommit 2afa61e66ff830c1463251d131ce2941bec9ae49[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Mon May 13 16:15:54 2024 +0900
+
+    병합테스트
+
+[33mcommit 0771f776a52989d6b889742dbef1cecbe2c75272[m
+Merge: 8d024ea 0a6d79c
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon May 13 15:56:23 2024 +0900
+
+    Merge branch 'bomi2' of https://github.com/ict1jo/CampYou into bomi2
+
+[33mcommit 8d024ea39de54ba1675b2ed1531f291162e93d93[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon May 13 15:56:18 2024 +0900
+
+     fixed chatroom
+
+[33mcommit a1f533b43c5a3fdf733663f78360cbcb942f5d5b[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Mon May 13 09:32:04 2024 +0900
+
+    0513s
+
+[33mcommit 16fa33bfd9924042d24f46abf50d5f5a35b33a29[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Sun May 12 23:04:40 2024 +0900
+
+    0512h
+
+[33mcommit faac1d5081112ab9df95dec2e0c1eec646dda933[m
+Merge: b4a4292 0a6d79c
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Sun May 12 21:35:36 2024 +0900
+
+    Bomi2 병합
+    
+    Bomi2
+
+[33mcommit 0a6d79c346903626695aa19d5eb782b0ad543b90[m
+Merge: f1c0d99 b4a4292
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Sun May 12 21:35:26 2024 +0900
+
+    Merge branch 'main' into bomi2
+
+[33mcommit b4a4292bb92a87ce4460c11d28e99ad01ff6c8a3[m
+Merge: beab1e6 77a4868
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Sun May 12 21:13:16 2024 +0900
+
+    세부검색 얼추 완료 (페이징기법 추가 + css 수정해야함)
+    
+    세부검색 얼추 완료 (페이징기법 추가 + css 수정해야함)
+
+[33mcommit 77a4868d26c478f3bf2aef38209cb2e9c1bfb1c8[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Sun May 12 21:12:20 2024 +0900
+
+    세부검색 얼추 완료 (페이징기법 추가 + css 수정해야함)
+
+[33mcommit 3a7f7696b15c5675779e876868f6f65ea7e252ec[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Sun May 12 19:12:59 2024 +0900
+
+    세부검색 90프로 한듯?
+
+[33mcommit a16d4700f6d8a5e895ac9189f57b58ad747b1c2e[m
+Merge: beab1e6 38a6cb3
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Sun May 12 08:59:49 2024 +0900
+
+    Merge branch 'bjs' of https://github.com/ict1jo/CampYou into joy
+
+[33mcommit 38a6cb37c9133cd5a2acd2c6be262a3f1f6365ab[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Sat May 11 16:08:50 2024 +0900
+
+    0511h
+
+[33mcommit ef11a6e8d4ecfd15c25778b15902c86442492138[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Sat May 11 15:09:43 2024 +0900
+
+     폐기
+
+[33mcommit 00d0ce1114e985b505a70e0a72230e1ebde2488a[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Sat May 11 13:41:52 2024 +0900
+
+    집에서작업하던거
+
+[33mcommit beab1e6b31bdf0914110739680bb158ae421a43e[m
+Merge: aeda6bd a6091d2
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Sat May 11 11:58:16 2024 +0900
+
+    회원정보
+    
+    회원정보
+
+[33mcommit a6091d2d680b9d27e70bd112e3963af105e32f61[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Sat May 11 11:57:39 2024 +0900
+
+    회원정보
+
+[33mcommit f8a624b732eea40c80ab16187e137978f9a077f8[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Fri May 10 19:30:21 2024 +0900
+
+    신고하기
+
+[33mcommit aeda6bdd0f5394aeec28f3681b3def1c689bdc3c[m
+Merge: 99c6d62 4418800
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Fri May 10 19:11:29 2024 +0900
+
+    Merge pull request #44 from ict1jo/jun
+    
+    0510
+
+[33mcommit 44188007d3266734ded88ae70eea50e76aa8faa5[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Fri May 10 19:10:36 2024 +0900
+
+    0510
+
+[33mcommit 99c6d6259a64c06723b6de1518e2063ad2460d03[m
+Merge: b31da5f 5a220b9
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Fri May 10 18:48:06 2024 +0900
+
+    맵 마커 클릭, 지역 오류 수정
+    
+    맵 마커 클릭, 지역 오류 수정
+
+[33mcommit 5a220b916ccdf1ce829f9d00fef54a0e71ff0335[m
+Author: has <has46840@naver.com>
+Date:   Fri May 10 18:46:52 2024 +0900
+
+    맵 마커 클릭, 지역 오류 수정
+
+[33mcommit 2b069445da670a202a85cee5c19fd7d7011e5784[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Fri May 10 18:35:21 2024 +0900
+
+    0510s
+
+[33mcommit f1c0d995c4b74800f2652fbea1cbe100f22de9f2[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 10 18:07:19 2024 +0900
+
+    chatting working well
+
+[33mcommit b31da5fb4e4b6e32c55657d5d5c5ba6640388647[m
+Merge: 54236a0 49eba90
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Fri May 10 14:34:08 2024 +0900
+
+    Merge pull request #42 from ict1jo/joy
+    
+    Joy
+
+[33mcommit 4fe9bb93e41ebc7eca245cc97eae5ea250960f74[m
+Merge: 2227203 5c8c58c
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 10 14:29:37 2024 +0900
+
+    Resolved merge conflicts
+
+[33mcommit 49eba905157f79e83d37a3ece43171bf8f785d26[m
+Merge: 0b3473e 54236a0
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Fri May 10 14:29:02 2024 +0900
+
+    Merge branch 'main' of https://github.com/ict1jo/CampYou into joy
+
+[33mcommit c9abc011697240050a0873cbb9f83c3a6c27a0c3[m
+Author: has <has46840@naver.com>
+Date:   Fri May 10 14:27:49 2024 +0900
+
+    vv
+
+[33mcommit 2227203cb0b7624c1c3fa19bf0b56ff47186f9fb[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 10 14:23:08 2024 +0900
+
+    working on chatting room
+
+[33mcommit 54236a0c17f379740db3d3b4a8ad707d56c11601[m
+Merge: 7ec9966 a7a5d33
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Fri May 10 09:33:19 2024 +0900
+
+    Merge pull request #40 from ict1jo/hu
+    
+    한욱병합
+
+[33mcommit a7a5d33f4d1034350c84a5ce4b9206cb1a85a2a3[m
+Merge: e800906 7ec9966
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Fri May 10 09:33:12 2024 +0900
+
+    Merge branch 'main' into hu
+
+[33mcommit 7ec99668dfcf32c10d5896d2483ed1d29d9f1616[m
+Merge: f5bec48 bc1f7f3
+Author: JS <158027817+Developer120000@users.noreply.github.com>
+Date:   Fri May 10 09:20:54 2024 +0900
+
+    Merge pull request #39 from ict1jo/bjs
+    
+    Bjs
+
+[33mcommit bc1f7f3189ae3792bdc7c79fb35ba0acf5777bdd[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Fri May 10 09:20:25 2024 +0900
+
+    0510s
+
+[33mcommit e800906de9c73daab1b27908b737a33a97db9d59[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Fri May 10 09:19:18 2024 +0900
+
+    0510
+
+[33mcommit 3dd7eb7281ab501d1e2b3fd0907c375cf3de187b[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Thu May 9 22:50:50 2024 +0900
+
+    0509h
+
+[33mcommit 0b3473e8b8fff7109627b0a333618e99853140a0[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Thu May 9 18:56:04 2024 +0900
+
+    신고하기
+
+[33mcommit f3236e67609f85e1b13cd3df5b43603bc08cd10f[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Thu May 9 18:23:34 2024 +0900
+
+    0509s
+
+[33mcommit f5bec48670473ac7458023c7bc2c4f38740195fb[m
+Merge: ee23dd0 f5fc1e1
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Thu May 9 18:19:07 2024 +0900
+
+    이전 이후 버튼만
+    
+    이전 이후 버튼만
+
+[33mcommit f5fc1e100dd82c8d5f0fe655bd96145f4c37920c[m
+Author: has <has46840@naver.com>
+Date:   Thu May 9 18:18:23 2024 +0900
+
+    이전 이후 버튼만
+
+[33mcommit 6df316d9e3f60c0781a45537e383868592dd118a[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Thu May 9 18:05:03 2024 +0900
+
+    0509
+
+[33mcommit 2668045ee69428077f910b4373803dba3d9aa645[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Wed May 8 23:37:33 2024 +0900
+
+    0508h
+
+[33mcommit ee23dd06073acd881017ae5435bccd064fdaf8f6[m
+Merge: eb9b16b b00bfa5
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Wed May 8 23:25:51 2024 +0900
+
+    팝업, 회원 신고 수정
+    
+    팝업, 회원 신고 수정
+
+[33mcommit b00bfa5da3a54426d7997661497e44b9fe97f1b9[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Wed May 8 23:25:21 2024 +0900
+
+    팝업, 회원 신고 수정
+
+[33mcommit da7945b4d32c7bfc8bd1bddf628aa76c15a94037[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Wed May 8 20:03:58 2024 +0900
+
+    0508
+
+[33mcommit f24285c0ec56d58930de31735ab86b8f9162311e[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Wed May 8 18:19:02 2024 +0900
+
+    0508s
+
+[33mcommit eb9b16b93e8656f7d645f2705162130ec5eb1ad4[m
+Merge: b6df63c d23d451
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Wed May 8 18:17:13 2024 +0900
+
+    예외 처리, 지도 검색 마커
+    
+    예외 처리, 지도 검색 마커
+
+[33mcommit b6df63c8b7028c621457e18216b4db5305aa3eae[m
+Merge: 6ca2635 8b94222
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Wed May 8 18:15:52 2024 +0900
+
+    Merge pull request #35 from ict1jo/joy
+    
+    Joy
+
+[33mcommit d23d451114f11fbd31bd88c247a0177843d1f865[m
+Author: has <has46840@naver.com>
+Date:   Wed May 8 18:15:17 2024 +0900
+
+    예외 처리, 지도 검색 마커
+
+[33mcommit 8b94222e34e17dede3353d396d997726e547a212[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Wed May 8 18:14:56 2024 +0900
+
+    에효
+
+[33mcommit 602b92ef7745870df783a9d4e31ac6f94790d0be[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Wed May 8 18:11:18 2024 +0900
+
+    0508 / 디테일 거의찐마무리
+
+[33mcommit 2c73fea8c71de7d7e6164160c3a146e0f393e7ae[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Wed May 8 16:00:23 2024 +0900
+
+    메인화면끝
+
+[33mcommit 6ca26351a5985b2118cf46e9838ec7d7f2718727[m
+Merge: fbe86bc 912f0e0
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Tue May 7 23:04:39 2024 +0900
+
+    hs js, css 분리
+    
+    hs js, css 분리
+
+[33mcommit 912f0e081b04c104ebd7008d6146524b7e47de97[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Tue May 7 23:03:47 2024 +0900
+
+    js, css 분리
+
+[33mcommit 3aa570a773297cf52f4d3bf920cec759c30f3ab6[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Tue May 7 19:55:08 2024 +0900
+
+    0507s
+
+[33mcommit f98b69eb8f96dc08789d056c42280b139fea42d1[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue May 7 19:53:35 2024 +0900
+
+    chat... can connect websocket
+
+[33mcommit 132aa4184c2cd8130f76d3a1c065f6bdaa57b15b[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 7 18:19:07 2024 +0900
+
+    마커변경중
+
+[33mcommit fbe86bcd67adfab3013b3363e90b3a3665e63168[m
+Merge: 124e838 e90e39b
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 15:25:16 2024 +0900
+
+    Merge pull request #33 from ict1jo/jun
+    
+    경로수정
+
+[33mcommit e90e39ba0c0c5bd9d6a4a8070de1d5f163f68592[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Tue May 7 15:24:53 2024 +0900
+
+    경로수정
+
+[33mcommit 124e8384d011cf620639f4551f51043d1b6a86f7[m
+Merge: 05d1ad3 93bff7d
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 14:58:23 2024 +0900
+
+    배준수짱!
+    
+    배준수짱!
+
+[33mcommit 93bff7d209512fe02de79c1f6daa925845ea1197[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 7 14:58:08 2024 +0900
+
+    배준수짱!
+
+[33mcommit 05d1ad3a98d6beb6f9d503fef7f19bd40845836c[m
+Merge: 79d0b61 bc21b67
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 14:56:56 2024 +0900
+
+    충돌수정
+    
+    충돌수정
+
+[33mcommit bc21b67162c401cbf9e073d237f285eb07a09ec5[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Tue May 7 14:56:39 2024 +0900
+
+    충돌수정
+
+[33mcommit 79d0b6177099ea70f3e21386cb3058fc6b23ca9d[m
+Merge: e544aad 5c8c58c
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 14:40:46 2024 +0900
+
+    Bomi2
+    
+    Bomi2
+
+[33mcommit 5c8c58cd3f88390a148308e75df9fca170eb1580[m
+Merge: da45ce4 e544aad
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 14:40:39 2024 +0900
+
+    Merge branch 'main' into bomi2
+
+[33mcommit e544aad0f605e5125429217134c194b156c54492[m
+Merge: db78228 4b15205
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 14:39:01 2024 +0900
+
+    Hu
+    
+    Hu
+
+[33mcommit 4b15205660292b6e6d637af52d62d787fef4317b[m
+Merge: f44c2c1 db78228
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 14:37:57 2024 +0900
+
+    Merge branch 'main' into hu
+
+[33mcommit da45ce41bc2666da35bd7982c64a17253f4c5964[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue May 7 14:36:52 2024 +0900
+
+    my-page part fixed
+
+[33mcommit f44c2c1a3af55f204d6bb5515b28a556efdc83a9[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Tue May 7 14:35:46 2024 +0900
+
+    0507-(2)
+
+[33mcommit db782283c52304f4b427b60b96e8d6b6206569d5[m
+Merge: 73fcb03 0d659b0
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 14:34:26 2024 +0900
+
+    Hs1
+    
+    Hs1
+
+[33mcommit 0d659b0a8b51df1eba361553d68d2b669de9627f[m
+Merge: db0bce8 73fcb03
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 14:34:19 2024 +0900
+
+    Merge branch 'main' into hs1
+
+[33mcommit 73fcb03ccff42e7a47f9accd2d944796c14a58fc[m
+Merge: 1df6761 9813510
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 14:33:11 2024 +0900
+
+    Jun
+    
+    Jun
+
+[33mcommit 9813510f625452b2e6d8cc6c1aa2fe284605a2df[m
+Merge: 21a65ee 1df6761
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 14:33:03 2024 +0900
+
+    Merge branch 'main' into jun
+
+[33mcommit 1df676141c2218fb7ed5d19d718069104060a190[m
+Merge: 0b9f510 2deecf1
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 14:32:04 2024 +0900
+
+    Bjs
+    
+    Bjs
+
+[33mcommit 0b9f51058aa416ce74f26be2f7f1b90977d4c7d7[m
+Merge: 7c9026d 9a41c0f
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue May 7 14:31:30 2024 +0900
+
+    Joy
+    
+    Joy
+
+[33mcommit 9a41c0f0c8ba0690c09f939e3547db67f2f2da60[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue May 7 14:31:03 2024 +0900
+
+    작업한게없지롱
+
+[33mcommit 1c31c064fb29ecbd3e593989f9c0334a1afebaf2[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Tue May 7 09:24:57 2024 +0900
+
+    0507
+
+[33mcommit db0bce8a425991eee4ecd1326b296bbacf0411bc[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Mon May 6 22:25:44 2024 +0900
+
+    파일 생성, 이동 지역 검색 수정.....
+
+[33mcommit 1f436099906c5a9ab29f32a4f9b50c01adef822d[m
+Author: joy <ppee1220@naver.com>
+Date:   Mon May 6 19:12:01 2024 +0900
+
+    마커변경
+
+[33mcommit 8f413eba8f9a60e9793aa0496c508b827e22884f[m
+Author: joy <ppee1220@naver.com>
+Date:   Mon May 6 19:06:09 2024 +0900
+
+    홈화면 하단 끝ㅌ
+
+[33mcommit 2deecf174b05ae9f3406818bd92e56e556fd0da2[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Mon May 6 18:42:16 2024 +0900
+
+    0506h
+
+[33mcommit fbe5b0127a43d004eef9b97db97ad46612403ecf[m
+Author: joy <ppee1220@naver.com>
+Date:   Mon May 6 16:47:12 2024 +0900
+
+    메인푸터고침
+
+[33mcommit 95aa2572a31bfb2b13f63cbb03baea53b01b37ab[m
+Author: joy <ppee1220@naver.com>
+Date:   Mon May 6 16:41:11 2024 +0900
+
+    페이징빼고 끝
+
+[33mcommit 5ea85e12643332623f2986a63b1007b726ed31e1[m
+Author: joy <ppee1220@naver.com>
+Date:   Mon May 6 11:21:15 2024 +0900
+
+    중간저장
+
+[33mcommit c67e74d9f2485e4db7afd83703df5b571d1ea04e[m
+Merge: 7c9026d 9f1c211
+Author: Haeseongl <has46840@naver.com>
+Date:   Mon May 6 05:04:29 2024 +0900
+
+    Merge branch 'hs1' of https://github.com/ict1jo/CampYou into hs1
+
+[33mcommit d162956483e6dd32c74e9b5330782c0c70508c67[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Sun May 5 19:43:55 2024 +0900
+
+    0505
+
+[33mcommit 964bda55d7cd71d2400836e324750fd07422f175[m
+Merge: c9627d1 86204bc
+Author: bomimee <jinewholic@gmail.com>
+Date:   Sun May 5 18:57:27 2024 +0900
+
+    Merge branch 'bomi' into bomi2
+    
+    i
+
+[33mcommit c9627d1d4c2ad1844f90906451ce490c4918dd02[m
+Author: bomimee <jinewholic@gmail.com>
+Date:   Sun May 5 18:22:39 2024 +0900
+
+    test
+
+[33mcommit 21a65eeb9394e24adf1a79a043ef549e1f65b8b9[m
+Author: JUN-HYEONG-98 <union735@gmail.com>
+Date:   Sun May 5 16:07:45 2024 +0900
+
+    찜 버튼 구현완료
+
+[33mcommit 86204bc0a77a51f4489a45e1944db8508ed56444[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Sun May 5 15:39:04 2024 +0900
+
+    Update my_inquiry.jsp
+
+[33mcommit ab59a76155b6a045cf43155343e8697c5a1754e4[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Sun May 5 14:22:40 2024 +0900
+
+    Update my_inquiry_form.jsp
+
+[33mcommit 98a4ee16609e3ef15496fd853bd3a1f79703a131[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Sat May 4 22:51:34 2024 +0900
+
+    0504h
+
+[33mcommit 24e5e8631ef60181f326e47f0b013923887ddb47[m
+Author: joy <ppee1220@naver.com>
+Date:   Sat May 4 11:29:06 2024 +0900
+
+    페이징성공!
+
+[33mcommit 39460dc6d5cab206277b901ed64b64207dd1b58c[m
+Merge: 7c9026d 9d305a5
+Author: joy <ppee1220@naver.com>
+Date:   Sat May 4 09:50:04 2024 +0900
+
+    Merge branch 'joy' of https://github.com/ict1jo/CampYou into joy
+    
+    * 'joy' of https://github.com/ict1jo/CampYou:
+      안고쳤는데 괜찮음
+      하이디안대서 개짱나
+    
+    # Conflicts:
+    #       src/main/java/com/ict/campyou/hu/controller/MemberController.java
+    #       src/main/webapp/WEB-INF/views/home.jsp
+
+[33mcommit 44299ac2e8a71971fef7cbffc13e7c0d35629396[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Fri May 3 18:18:31 2024 +0900
+
+    0503s
+
+[33mcommit f067f909d26c3a37000edca4693c3792479cb930[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Fri May 3 18:17:55 2024 +0900
+
+    my page complete
+
+[33mcommit 9d305a57f4969c3a3b4b8980926df500e98e4d2d[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Fri May 3 18:16:06 2024 +0900
+
+    안고쳤는데 괜찮음
+
+[33mcommit 9f1c2115d1cdbb9ae6c463370181fb589087e3ac[m
+Author: has <has46840@naver.com>
+Date:   Fri May 3 18:13:36 2024 +0900
+
+    camp_list js 분리(지도로 검색에서 사용하기 위해)
+
+[33mcommit 19c754f37381dd0d7d51211d0f2adcea1b7a5f8d[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Fri May 3 18:12:53 2024 +0900
+
+    찜추가 상태변환ajax 하는중
+
+[33mcommit 7c9026da76337c0a8c112270da1cb91152b55001[m
+Merge: 97d6498 ef80bb0
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Fri May 3 17:20:10 2024 +0900
+
+    2024-05-03
+    
+    2024-05-03
+
+[33mcommit ef80bb0ea6302bb2f866d6808a8be22b7e520b43[m
+Merge: b99e198 97d6498
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Fri May 3 17:20:04 2024 +0900
+
+    Merge branch 'main' into hu
+
+[33mcommit b99e19893278971fd9a1e34f5010a10d445daae7[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Fri May 3 17:14:30 2024 +0900
+
+    2024-05-03
+
+[33mcommit 53b062e4062661c90b134a4aecbc56422cbd173c[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Thu May 2 23:38:47 2024 +0900
+
+    찜 추가
+
+[33mcommit 2c723e6d685198658cffd1b27d7679003af07511[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Thu May 2 20:38:47 2024 +0900
+
+    0502h
+
+[33mcommit a310aa4a1a3018c1ceea4da0f0319303c9787e96[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 2 18:59:39 2024 +0900
+
+    qna controller added
+
+[33mcommit 5e0d163891a05ebd738e6983b573de35c557fc65[m
+Author: has <has46840@naver.com>
+Date:   Thu May 2 18:50:53 2024 +0900
+
+    검색 지역
+
+[33mcommit 97d64986611f1369ae54ebe310d82467ac2a67fb[m
+Author: has <has46840@naver.com>
+Date:   Thu May 2 18:23:36 2024 +0900
+
+    Revert "지역 검색 option 값 가져오기"
+    
+    This reverts commit 8fae410daf592a9aa77c6388586f566aa3099311.
+
+[33mcommit 8fae410daf592a9aa77c6388586f566aa3099311[m
+Author: has <has46840@naver.com>
+Date:   Thu May 2 18:23:29 2024 +0900
+
+    지역 검색 option 값 가져오기
+
+[33mcommit 8d95bfea236d7f04b9a5c9dfa10581a3be776e49[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Thu May 2 18:19:26 2024 +0900
+
+    찜추가중
+
+[33mcommit 77ab7e0e8eb8c87ad3112b9cb2bae31e2ca0c593[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Thu May 2 18:18:31 2024 +0900
+
+    453줄 돌파
+
+[33mcommit 76ad5fac02bad034b2b2e74e432a8352b25a6b44[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Thu May 2 17:59:06 2024 +0900
+
+    하이디안대서 개짱나
+
+[33mcommit ee7a5642c6faed58fbd5548cddc18b2e6737665a[m
+Merge: 5901762 1d50c86
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Thu May 2 14:32:45 2024 +0900
+
+    Bomi 병합
+    
+    Bomi 병합
+
+[33mcommit 59017627f4b354502879c03a62f29af46856f2e8[m
+Merge: e85dd2a 14bed31
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Thu May 2 14:32:20 2024 +0900
+
+    Js 병합
+    
+    Js 병합
+
+[33mcommit 14bed314f1ab177106b964d9afcba8f9e1e8c354[m
+Merge: 8db983a e85dd2a
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Thu May 2 14:32:12 2024 +0900
+
+    Merge branch 'main' into js
+
+[33mcommit e85dd2aa6348fb6a43f4ef50846829c33156c000[m
+Merge: 368b7f8 be59fdb
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Thu May 2 14:30:50 2024 +0900
+
+    hs 병합
+    
+    hs 병합
+
+[33mcommit 368b7f8064afa9e9a24865ecd5fce3de411eb467[m
+Merge: 9f875a3 216a00c
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Thu May 2 14:30:24 2024 +0900
+
+    Jun 병합
+    
+    Jun 병합
+
+[33mcommit 8db983a8cdb9604a1132bb692675d6f6cac0b2bc[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Thu May 2 14:30:18 2024 +0900
+
+    0502bin 삭제
+
+[33mcommit 216a00cf6b1d0e64f41bdc35ea04b1f6705de65a[m
+Merge: c1843b5 9f875a3
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Thu May 2 14:30:17 2024 +0900
+
+    Merge branch 'main' into jun
+
+[33mcommit 3cdcb03b4e592c20e5627167c790c752e22c9208[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Thu May 2 14:29:17 2024 +0900
+
+    0502s
+
+[33mcommit 1d50c862d6bb8de472098961b8c3e81c87129c3e[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 2 13:33:32 2024 +0900
+
+    my info, pwd fixed
+
+[33mcommit 3051a2afaeb72b805a1369879216a4a41e8c04ce[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Thu May 2 11:29:51 2024 +0900
+
+    0502
+
+[33mcommit 403ad7bc035adf5c9ddbb8b44f84befadc1757cc[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Thu May 2 11:14:40 2024 +0900
+
+    my-info modifying complete
+
+[33mcommit c1843b5a5e2a872118e16816d5068f5f4c33b9c3[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Thu May 2 09:29:16 2024 +0900
+
+    깃 이그노어 bin폴더 추가
+
+[33mcommit 2b3009512ad69d28627f103a5d609e482743d797[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Thu May 2 07:24:24 2024 +0900
+
+    0502ha
+
+[33mcommit f6fbe49d08b20c87fcccb264cf08f3d5389f1348[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Thu May 2 00:43:59 2024 +0900
+
+    camp_detail 에 리뷰 남기는거 구현완료(Ajax)  / 댓글리스트 css 다듬어야함.
+
+[33mcommit 6af0d0c35625ebfb3c75484df26b45578b24437e[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Wed May 1 20:10:21 2024 +0900
+
+    0501s
+
+[33mcommit 1579832902932e3227fd4fb6cfcb93084845ed88[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Wed May 1 19:44:08 2024 +0900
+
+    Update chatroom.js
+
+[33mcommit 888aba8e4c07517f55b8a7fe44036994c2819fec[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Wed May 1 19:40:35 2024 +0900
+
+    Update WebSocketConfig.java
+
+[33mcommit be59fdb2bb8fb387adfb96b8f224ba6f5a2f8718[m
+Author: has <has46840@naver.com>
+Date:   Wed May 1 18:56:46 2024 +0900
+
+    검색바 분리
+
+[33mcommit 36ac26f789ebf877c84eca6c126c497568d55d9c[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Wed May 1 18:17:17 2024 +0900
+
+    이미지 추가 + VO수정 + 디테일수정
+
+[33mcommit 9f875a3a5144b491c7e4dbac36119d13c75e775a[m
+Merge: 0e0835d 59eaa6b
+Author: Haeseongl <158027520+Haeseongl@users.noreply.github.com>
+Date:   Wed May 1 17:20:08 2024 +0900
+
+    Merge pull request #18 from ict1jo/hs
+    
+    프로필 작은 팝업 추가
+
+[33mcommit 59eaa6bf8e540c8f9dcb8a24eeb492217ac8fece[m
+Merge: 7b3d576 0e0835d
+Author: has <has46840@naver.com>
+Date:   Wed May 1 17:11:28 2024 +0900
+
+    Merge branch 'main' of https://github.com/ict1jo/CampYou into hs
+
+[33mcommit 0e0835de0d8ce2b76cc86f13e01be9affc873af8[m
+Merge: 3922d6a 5e6de17
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Wed May 1 17:04:39 2024 +0900
+
+    Merge pull request #17 from ict1jo/joy
+    
+    홈화면에 버튼 만듬
+
+[33mcommit 5e6de17f66c1b9906b9d0cb232b83c477fa39281[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Wed May 1 17:04:04 2024 +0900
+
+    홈화면에 버튼 만듬
+
+[33mcommit 7b3d576d519dafeba9efe476ade95983fa4821c9[m
+Author: has <has46840@naver.com>
+Date:   Wed May 1 16:47:06 2024 +0900
+
+    이미지 클릭시 위치 조정 완료
+
+[33mcommit 4dcd126c304d378d66d3291641236d3a06824591[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Wed May 1 00:28:06 2024 +0900
+
+    이미지 최대 9개까지 불러오게 수정 +  CSS 수정
+
+[33mcommit 1ffa0fe8861890d7b8ab9374b414095903f63956[m
+Author: Haeseongl <has46840@naver.com>
+Date:   Tue Apr 30 23:34:24 2024 +0900
+
+    프로필 클릭시 나오는 팝업 css
+
+[33mcommit 6130cfa2ad16b67025d8fab00b9a642c2e0926b2[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Tue Apr 30 23:18:41 2024 +0900
+
+    0430h
+
+[33mcommit 3922d6aba0feaf36ae8b4c8c7438fd2323f19c1f[m
+Merge: 32c57a9 4efeea6
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue Apr 30 21:40:06 2024 +0900
+
+    실행불가능한 현상 수정
+    
+    실행불가능한 현상 수정
+
+[33mcommit 4efeea64de1a783f53b17f044fdff442786029f7[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Tue Apr 30 21:39:23 2024 +0900
+
+    실행불가능한 현상 수정
+
+[33mcommit 32c57a9dfff4ba3182be6b6d3f47e2828a28c67c[m
+Merge: fb31a51 dc4339f
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue Apr 30 21:14:48 2024 +0900
+
+    Bjs
+    
+    Bjs
+
+[33mcommit dc4339f671068439fc319776dbd76c5c1575d883[m
+Merge: 2e1ecca fb31a51
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue Apr 30 21:14:41 2024 +0900
+
+    Merge branch 'main' into bjs
+
+[33mcommit fb31a51208e5b6abc595efb00e43ffc53271b216[m
+Merge: 4720b72 56ae528
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue Apr 30 21:12:15 2024 +0900
+
+    Bomi
+    
+    Bomi
+
+[33mcommit 56ae528c6f5501095459d4e4eace940496739274[m
+Merge: cca32da 4720b72
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue Apr 30 21:12:05 2024 +0900
+
+    Merge branch 'main' into bomi
+
+[33mcommit 4720b7295a310364f8c76c38643794927884d334[m
+Merge: f446f92 f80b900
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue Apr 30 21:10:27 2024 +0900
+
+    Merge pull request #13 from ict1jo/hs
+    
+    Hs
+
+[33mcommit f446f921b288a2b3fb242661b80bc4a409bccb85[m
+Merge: 9258bfe a0a4e27
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue Apr 30 21:09:42 2024 +0900
+
+    Merge pull request #12 from ict1jo/jun
+    
+    Jun
+
+[33mcommit a0a4e27557017606abc91e61d60134c754418bc6[m
+Merge: 5463278 9258bfe
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue Apr 30 21:09:36 2024 +0900
+
+    Merge branch 'main' into jun
+
+[33mcommit 9258bfe485532ed451d17ea31efa9298d36f93e8[m
+Merge: 36cc4c8 a84c09e
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Tue Apr 30 21:08:41 2024 +0900
+
+    이제 실행만 해보면 됨...
+    
+    이제 실행만 해보면 됨...
+
+[33mcommit 54632783eb03986158a0020147415354fc6652be[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Tue Apr 30 21:08:22 2024 +0900
+
+    지도구현완료
+
+[33mcommit d95c02595e8a06a179f5990fad80268dc842deae[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Tue Apr 30 18:19:31 2024 +0900
+
+    한게없다
+
+[33mcommit 2e1ecca11a80c226a3af1a2d6e54dd554bed651b[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Tue Apr 30 18:19:16 2024 +0900
+
+    0430s
+
+[33mcommit a84c09e56f5d69b8f6bdb01abc29b689a27390b1[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Tue Apr 30 18:18:06 2024 +0900
+
+    이제 실행만 해보면 됨...
+
+[33mcommit f80b90092f8cadaee9c54ff76c686b056f3069dc[m
+Author: has <has46840@naver.com>
+Date:   Tue Apr 30 18:17:39 2024 +0900
+
+    상세검색 옵션css
+
+[33mcommit cca32da3c931468a39b5225eb7b31185f772ba59[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue Apr 30 18:09:07 2024 +0900
+
+    my_info changed components/css
+
+[33mcommit cb753c8f0f3783b3e1770364044f113aca6db184[m
+Merge: 0bbe705 36cc4c8
+Author: has <has46840@naver.com>
+Date:   Tue Apr 30 14:18:06 2024 +0900
+
+    Merge branch 'main' of https://github.com/ict1jo/CampYou into hs
+
+[33mcommit 720de0fa63198cf1a4cb978a667360991e9d4e8b[m
+Merge: 259af88 3466687
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue Apr 30 11:23:07 2024 +0900
+
+    test
+
+[33mcommit 259af88727dfa6921c05f9046f90586536853d9a[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Tue Apr 30 11:21:15 2024 +0900
+
+    commit
+
+[33mcommit 17da4bea382160f58e23ccb162d50db803e8efc5[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Mon Apr 29 23:40:58 2024 +0900
+
+    아 왜안되는겨 짜증나게에
+
+[33mcommit 34666877002463d506047ba34adbbe45a5270551[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon Apr 29 20:37:31 2024 +0900
+
+    Update my_change_pw.jsp
+
+[33mcommit 36cc4c839a00bbcf6cac6fba2372312b414dbb96[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon Apr 29 20:34:16 2024 +0900
+
+    Update my_info.js
+
+[33mcommit 7383adcb6e71b572abc93140955f54ee5ff496cb[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Mon Apr 29 19:12:20 2024 +0900
+
+    상세페이지 제작중
+
+[33mcommit a11b0efb8a23e2337fdd4ce4be566d91defac476[m
+Merge: 2f4d8c7 7d48faa
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon Apr 29 18:41:37 2024 +0900
+
+    Merge pull request #10 from ict1jo/bomi
+    
+    Bomi
+
+[33mcommit 7d48faaa33f1ed8085b3f8c19dcc1b83b8d668bb[m
+Merge: d41d0a9 23dad5d
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon Apr 29 18:30:04 2024 +0900
+
+    Merge branch 'bomi' of https://github.com/ict1jo/CampYou into bomi
+
+[33mcommit d41d0a95b8fb2949d62e81b08af2ba552c7b242e[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon Apr 29 18:28:21 2024 +0900
+
+    second
+
+[33mcommit 0bbe705dc96fc35d3a6779e3ddef1774dffaa84a[m
+Author: has <has46840@naver.com>
+Date:   Mon Apr 29 18:22:00 2024 +0900
+
+    상세조건 버튼만 추가
+
+[33mcommit bdfa44653f000090d816cae03d1f984a2337c87d[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Mon Apr 29 18:18:29 2024 +0900
+
+    0429s
+
+[33mcommit 3591c4c86f95bd57b025055f9dc7a7c129f3497c[m
+Merge: fd7fe3f 2f4d8c7
+Author: has <has46840@naver.com>
+Date:   Mon Apr 29 16:06:55 2024 +0900
+
+    Merge branch 'main' of https://github.com/ict1jo/CampYou into hs
+
+[33mcommit 2f4d8c72567f4f75d63d958d652608046afd6f11[m
+Merge: f43842e 772b192
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Mon Apr 29 16:06:29 2024 +0900
+
+    Merge pull request #9 from ict1jo/joy
+    
+    컨피그안바꿈
+
+[33mcommit 772b1926af4e190653bc46b590d82ac15bf66cc6[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon Apr 29 16:04:58 2024 +0900
+
+    컨피그안바꿈
+
+[33mcommit fd7fe3f726cee4a9c5d786028bca6adf32b7d146[m
+Merge: 7e7f104 f43842e
+Author: has <has46840@naver.com>
+Date:   Mon Apr 29 16:01:12 2024 +0900
+
+    Merge branch 'main' of https://github.com/ict1jo/CampYou into hs
+
+[33mcommit f43842eeaee4384c7105666d8abb8d66bc163fd1[m
+Merge: 0588af1 d0c59c9
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Mon Apr 29 15:59:41 2024 +0900
+
+    Merge pull request #8 from ict1jo/joy
+    
+    Joy
+
+[33mcommit d0c59c975c41d3119d6d84485424b8538b617fac[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon Apr 29 15:58:57 2024 +0900
+
+    resetcss수정
+
+[33mcommit fa08bd14943c1fe4968888510527833ea1dbd06a[m
+Merge: 1efc26a 0588af1
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon Apr 29 14:48:47 2024 +0900
+
+    Merge branch 'main' of https://github.com/ict1jo/CampYou into joy
+
+[33mcommit 7e7f1046c3367062942b0df41b99e1ea166e9e4d[m
+Merge: 9989656 0588af1
+Author: has <has46840@naver.com>
+Date:   Mon Apr 29 14:24:03 2024 +0900
+
+    Merge branch 'main' of https://github.com/ict1jo/CampYou into hs
+
+[33mcommit 0588af1c34c98b263435bf2fa760fb1decb0a717[m
+Merge: dd6d1a9 23dad5d
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon Apr 29 14:21:54 2024 +0900
+
+    보미메인병합
+    
+    보미메인병합
+
+[33mcommit 23dad5d7cc1dae2dfa43482e96e27fb9b5643de9[m
+Merge: f8550e5 dd6d1a9
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon Apr 29 14:21:47 2024 +0900
+
+    Merge branch 'main' into bomi
+
+[33mcommit f8550e56ba7286ff5f540b442b298862c059d016[m
+Author: bomimee <158027966+bomimee@users.noreply.github.com>
+Date:   Mon Apr 29 14:11:34 2024 +0900
+
+    first commit
+
+[33mcommit 1efc26a22860fa008aa3a5433e7e9a712369ab04[m
+Merge: dd6d1a9 2482e3a
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon Apr 29 10:14:01 2024 +0900
+
+    Merge branch 'joy' of https://github.com/ict1jo/CampYou into joy
+
+[33mcommit dd6d1a9a7b9facd0d6d47396131a91a15935d319[m
+Merge: fb4282a 174e1e3
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon Apr 29 09:31:15 2024 +0900
+
+    한욱님메인병합
+    
+    한욱님메인병합
+
+[33mcommit 174e1e32f78a97d5f9cba22d865faa9a7eecb340[m
+Merge: 11ccc78 fb4282a
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon Apr 29 09:31:09 2024 +0900
+
+    Merge branch 'main' into hu
+
+[33mcommit 11ccc784fd3b19d12b3b42c89f0defc40af6fae5[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Mon Apr 29 09:29:09 2024 +0900
+
+    2024-04-29
+
+[33mcommit 2482e3a8d49a4f8e4c7aac8bf64c1c510c6889b1[m
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon Apr 29 09:27:54 2024 +0900
+
+    Delete .vscode directory
+    
+    Delete .vscode directory
+
+[33mcommit fb4282a6c64490b35da5cd9330971b1159ebb002[m
+Merge: 2e21c73 9ee469a
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon Apr 29 09:25:58 2024 +0900
+
+    Bjs메인병합
+    
+    Bjs메인병합
+
+[33mcommit 9ee469a83698bdc732f8efa317d855d5cf1cb01c[m
+Merge: bdccbf4 2e21c73
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon Apr 29 09:25:51 2024 +0900
+
+    Merge branch 'main' into bjs
+
+[33mcommit 2e21c730d170c657617ab9e7c5eac92e7ddb4fc0[m
+Merge: e47a02b ec80db4
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Mon Apr 29 09:24:17 2024 +0900
+
+    캠핑장리스트+검색(메인병합)
+    
+    캠핑장리스트+검색(메인병합)
+
+[33mcommit 99896567329309d98a4f61617fe4be8f699c0a0e[m
+Merge: 6d97d2f e47a02b
+Author: has <has46840@naver.com>
+Date:   Mon Apr 29 09:23:54 2024 +0900
+
+    Merge branch 'main' of https://github.com/ict1jo/CampYou into hs
+
+[33mcommit e47a02bcc8b01319fca6cf9067c27138d954d9fa[m
+Merge: f5a9655 430831d
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Mon Apr 29 09:23:04 2024 +0900
+
+    Merge pull request #3 from ict1jo/joy
+    
+    사용자관리페이지
+
+[33mcommit 430831d87af4611eb286982fa475ec14f9686676[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Mon Apr 29 09:22:04 2024 +0900
+
+    사용자관리페이지
+
+[33mcommit ec80db48265c2b36f619b8a003b356ff24b32b36[m
+Author: Jun Hyeong Roh <union735@gmail.com>
+Date:   Sun Apr 28 23:56:20 2024 +0900
+
+    헤더푸터 경로수정 + 검색기능추가
+
+[33mcommit bdccbf450ad30cc9132779e282bbf7a796e799f4[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Sun Apr 28 23:18:32 2024 +0900
+
+    0428h
+
+[33mcommit d887c54a4f0f4bd872f7ddc17486417f6b55d860[m
+Merge: 61af86d 6d97d2f
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Sun Apr 28 22:05:23 2024 +0900
+
+    해더 푸터 가져오기
+    
+    해더 푸터 가져오기
+
+[33mcommit 6d97d2fe04ce8f3ca7f24e0b91332d59b2524164[m
+Merge: 355d2cf 61af86d
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Sun Apr 28 22:05:15 2024 +0900
+
+    Merge branch 'jun' into hs
+
+[33mcommit 61af86def37a699a34f671be41388f2a8516af4d[m
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Sun Apr 28 20:15:56 2024 +0900
+
+    Delete .vscode directory
+
+[33mcommit 14b70e65672cd13c9e8af93629c7cbced4516002[m
+Author: Jun Hyeong Roh <105684321+Jun-Hyeong-98@users.noreply.github.com>
+Date:   Sun Apr 28 20:15:39 2024 +0900
+
+    Update .gitignore
+    
+    Update .gitignore
+
+[33mcommit 31421e29a1c08465815f5b9cf9eda13ce37d9d1e[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Sun Apr 28 20:15:06 2024 +0900
+
+    0428 작업중(캠핑장리스트)
+
+[33mcommit e7ded3833858e8e74fcdd6bb31f93b1701c30bb7[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Sat Apr 27 21:51:32 2024 +0900
+
+    0427s
+
+[33mcommit 6128dfadbcda0a033f165a8c75ce9b0c239c5bf9[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Sat Apr 27 21:18:13 2024 +0900
+
+    2024-04-27
+
+[33mcommit f5a96556d5263cd1f93dfe6a6156242056c947dc[m
+Merge: ee9877d 4698f15
+Author: pyeonjoy <158027229+pyeonjoy@users.noreply.github.com>
+Date:   Sat Apr 27 19:15:37 2024 +0900
+
+    Merge pull request #1 from ict1jo/joy
+    
+    Joy
+
+[33mcommit 4698f15670c1215829f66eba80a5f5e0cce3dbf4[m
+Author: pyeonjoy <ppee1220@naver.com>
+Date:   Sat Apr 27 19:14:42 2024 +0900
+
+    전체 css+홈
+
+[33mcommit d41be402b6d8ec1cef8ec3352d3a1f50e9a0c410[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Fri Apr 26 18:15:06 2024 +0900
+
+    0426
+
+[33mcommit 355d2cf14e254aaa1db450d06c0b95013af160bd[m
+Author: has <has46840@naver.com>
+Date:   Fri Apr 26 18:14:50 2024 +0900
+
+    헤더 페이지 이동
+
+[33mcommit 155a944c5a6fb9479ebf1a1e36808a681a466b04[m
+Author: has <has46840@naver.com>
+Date:   Fri Apr 26 18:02:11 2024 +0900
+
+    css 분리 및 수정
+
+[33mcommit 2544c640b2a00e4ce0aecf3bc72466acc4a78468[m
+Author: has <has46840@naver.com>
+Date:   Fri Apr 26 17:33:54 2024 +0900
+
+    hs 헤더, 푸터, 사이드, css파일 생성/ reset.css 추가
+
+[33mcommit f7028d1157693bae55da94428d4c38889541e96c[m
+Author: joy <ppee1220@naver.com>
+Date:   Fri Apr 26 12:33:45 2024 +0900
+
+    html,css
+
+[33mcommit 3eb02d8050209d8a7e47967bbbd2942ce1a2e70d[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Fri Apr 26 11:19:00 2024 +0900
+
+    2024-04-26 (2)
+
+[33mcommit 1dc29e9d65670d08b71002cac1a24c0912149793[m
+Author: Hanuk <12fdamb@gmail.com>
+Date:   Fri Apr 26 11:12:47 2024 +0900
+
+    2024-04-26
+
+[33mcommit 5c8611e20373e8e501e72ac540d872db1e28112c[m
+Author: JS <gozldqwe1@naver.com>
+Date:   Fri Apr 26 00:25:41 2024 +0900
+
+    0426
+
+[33mcommit a86e975dda5e93bb8df71b6e93ad21667e0d3865[m
+Author: joy <ppee1220@naver.com>
+Date:   Fri Apr 26 00:09:09 2024 +0900
+
+    관리자메인 팝업 비밀버노변경 htmlcss
+
+[33mcommit 8553894933931058509d90d439653df895166349[m
+Author: joy <ppee1220@naver.com>
+Date:   Thu Apr 25 23:06:26 2024 +0900
+
+    조이 연습
+
+[33mcommit ee9877dabd8c9d6c42b470d7f1bb688d5038db6d[m
+Author: Jun-Hyeong-98 <union735@gmail.com>
+Date:   Thu Apr 25 18:15:46 2024 +0900
+
+    start

@@ -23,7 +23,6 @@ $(function() {
 	let cpage = document.getElementById("cPage").value;
 	let proStatus = document.getElementById("promiseStatus").value;
 	if(cpage != ''){
-		console.log(15);
 		if(proStatus === "apply"){
 			promiseApplyList(cpage);
 		}else if(proStatus === "send"){
@@ -44,8 +43,6 @@ $('.thwrapper').on('click', '.acceptButton', function() {
     	
     let currentDate = new Date();
     let startDate = new Date(tStartdate);
-	console.log(startDate);
-	console.log(currentDate);
     if (startDate <= currentDate) {
         alert("동행이 시작되어 수락하실 수 없습니다.");
         return;
@@ -55,7 +52,6 @@ $('.thwrapper').on('click', '.acceptButton', function() {
         alert("정원이 초과되었습니다.");
         return;
     }
-    console.log("수락오나");
 	updatePromiseStatus(pmIdx, "수락");
 });
 

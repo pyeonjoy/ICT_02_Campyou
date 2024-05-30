@@ -23,7 +23,7 @@ body {
 }
 .grid_col{
   display: grid;
-  grid-template-columns: 1fr 2fr 2fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 3fr 2fr 1fr 1fr;
   margin-bottom: .6rem;
   text-align: center;
 }
@@ -34,13 +34,16 @@ body {
   padding:3rem;
 }
 .grid_header{
-  padding: .8rem 1rem;
   background-color: #032805;
   color: white;
   width: 1200px;
 }
 .grid_title{
   display: block;
+}
+.grid_row{
+	padding: .8rem 0.5rem;
+	
 }
 .grid_row_content{
 padding: .5rem;
@@ -100,7 +103,7 @@ width: 100%;
 }
 .toPagingContainer{
 	display: grid;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(6, 1fr);
     align-items: center;
 }
 .togetherWriteButton{
@@ -118,7 +121,7 @@ width: 2.7rem;
     text-align: center;
 }
 </style>
-<title>신고게시</title>
+<title>신고게시판</title>
 </head>
 <body>
 	<%@ include file="../hs/admin_menu.jsp"%>
@@ -127,10 +130,11 @@ width: 2.7rem;
 		<h3 class="grid_title" style="margin-bottom:100px;">신고게시판</h3>
 		<div class="grid_col grid_header">
 			<div class="grid_row grid_row1">번호</div>
-			<div class="grid_row grid_row2">신고내용</div>
-			<div class="grid_row grid_row3">신고자</div>
-			<div class="grid_row grid_row4">신고대상자</div>
-			<div class="grid_row grid_row5">상태</div>
+			<div class="grid_row grid_row2">신고날짜</div>
+			<div class="grid_row grid_row3">신고내용</div>
+			<div class="grid_row grid_row4">신고자</div>
+			<div class="grid_row grid_row5">신고대상자</div>
+			<div class="grid_row grid_row6">상태</div>
 		</div>
 		<div class="grid_col grid_content">
 			<c:choose>
@@ -138,8 +142,9 @@ width: 2.7rem;
 					<h3 class="nolist">문의 내역이 없습니다.</h3>
 				</c:when>
 				<c:otherwise>
-					<c:forEach var="k" items="${report }" varStatus="vs" begin="1">
+					<c:forEach var="k" items="${report }" varStatus="vs" begin="0">
 						<div class="grid_row grid_row_content">${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage+ vs.index)}</div>
+						<div class="grid_row grid_row_content">${k.report_date.toString().substring(0, 19)}</div>
 						<div class="grid_row grid_row_content">
 							<a href="admin_member_detail.do?member_idx=${k.reportmember_idx}">${k.report_content }</a>
 						</div>
@@ -161,7 +166,7 @@ width: 2.7rem;
 			<div class="paging">
 				<c:choose>
 					<c:when test="${paging.beginBlock <= paging.pagePerBlock }">
-						<li class="to_disable"><</li>
+						<li class="to_disable"></li>
 					</c:when>
 					<c:otherwise>
 						<li><a
@@ -187,7 +192,7 @@ width: 2.7rem;
 				<!-- 이후 버튼 -->
 				<c:choose>
 					<c:when test="${paging.endBlock >= paging.totalPage }">
-						<li class="to_disable">></li>
+						<li class="to_disable"></li>
 					</c:when>
 					<c:otherwise>
 						<li><a

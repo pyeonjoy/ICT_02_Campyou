@@ -80,7 +80,6 @@ public class MainController {
 
 	        avo.setMember_idx(mvo.getMember_idx());
 	        int result = mainService.getReportWrite(avo);
-	        System.out.println(result);
 	        if (result > 0) {
 	        	mv.setViewName("joy/report_write_close");
 	            return mv;
