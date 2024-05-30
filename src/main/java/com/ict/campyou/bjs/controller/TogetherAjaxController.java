@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.ict.campyou.bjs.dao.PromiseVO;
@@ -366,6 +365,17 @@ public class TogetherAjaxController {
 	@RequestMapping(value = "to_comment_write.do", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
 	public int getToCommentWrite(TogetherCommentVO tcvo) throws Exception {
+		/*
+		1. 댓글인지 대댓글인지 구분
+		2. 댓글은 맥스그룹의 + 1 해주고 대댓글은 그룹,스텝,레벨이 같은게 있는지 체크
+		 2-1. 있다면 스텝,레벨이 1인경우인지 아닌지 체크
+		   2-1-1. 그룹이 같은 댓글의 max스텝을 가져와서 + 1
+		   2-1-2. 스텝, 레벨이 1이 아닌경우엔 그룹이 같고 스텝이 같거나 큰 댓글리스트를 step 오름차순으로 가져와서 스텝이 나랑 같지 않으면서 레벨이 큰 요소를 만날때까지 for문 돌리다 찾으면 해당 스텝을 저장하고 for문 종료
+		    	  이 때 레벨이 큰 요소를 만나지 못한 경우에는 같은 스텝, 레벨에 있는 스텝을 가져와 +1 해준다
+		   이 후 그룹이 같으면서 스텝이 나보다 같고 큰 댓글들의 스텝을 + 1 업데이트 해주기
+		   마지막에 댓글 insert를 해준다.
+		 2-2. 그룹,스텝,레벨이 같은게 없다면 그룹이 같으면서 스텝이 나보다 같고 큰 댓글들의 스텝을 + 1 업데이트 해주기
+		*/
 		// 대댓글인 경우만
 		if(!tcvo.getWc_idx().isEmpty()) {
 			int wc_groups = Integer.parseInt(tcvo.getWc_groups());
