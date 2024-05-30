@@ -56,8 +56,6 @@ public class MainController {
 		ModelAndView mv = new ModelAndView("joy/report_write");
 		HttpSession session = request.getSession();
 		String reportmember_idx = member_idx; 
-		System.out.println(member_idx);
-		System.out.println(reportmember_idx);
 		MemberVO mvo = (MemberVO) session.getAttribute("memberInfo");
 		mv.addObject("reportmember_idx",reportmember_idx);
 		return mv;
@@ -82,7 +80,6 @@ public class MainController {
 
 	        avo.setMember_idx(mvo.getMember_idx());
 	        int result = mainService.getReportWrite(avo);
-	        System.out.println(result);
 	        if (result > 0) {
 	        	mv.setViewName("joy/report_write_close");
 	            return mv;
