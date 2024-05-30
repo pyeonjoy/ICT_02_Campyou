@@ -80,8 +80,8 @@ public class Admin2ServiceImpl implements Admin2Service {
 	}
 
 	@Override
-	public int redirect_qna(String qna_idx, String qna_title, String qna_content) {
-		return admin2DAO.redirect_qna(qna_idx, qna_title, qna_content);
+	public int redirect_qna(String qna_idx, String qna_content) {
+		return admin2DAO.redirect_qna(qna_idx, qna_content);
 	}
 
 	@Override
