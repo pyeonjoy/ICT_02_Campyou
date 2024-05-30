@@ -33,7 +33,7 @@
 		select * from camp_list
 	</select>
 	<select id="promise_people_count" resultType="int">
-		select count(*) from with_promise where t_idx = #{t_idx} and pm_state in(1, 4)
+		select count(*) from with_promise where t_idx = #{t_idx} and pm_state in(1, 2, 4)
 	</select>
 	<select id="to_detail" parameterType="String" resultType="tvo">
 		select b.*, m.member_nickname, m.member_dob, m.member_img, m.member_grade, m.member_gender

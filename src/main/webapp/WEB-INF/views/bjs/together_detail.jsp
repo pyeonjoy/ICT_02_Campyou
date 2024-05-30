@@ -290,10 +290,6 @@ function to_comment() {
            	        commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32"></div>';
            	        commentHTML += '<input type="text" value="' + comment.wc_content + '" id="" class="toDetailInputBox2">';
            	        commentHTML += '<input type="button" value="수정하기" id="" class="toCommentUpdate">';
-//            	        commentHTML += '<input type="hidden" value="' + comment.wc_idx + '" id="wc_idx" >';
-//            	        commentHTML += '<input type="hidden" value="' + comment.wc_groups + '" id="wc_groups" >';
-//            	        commentHTML += '<input type="hidden" value="' + comment.wc_step + '" id="wc_step" >';
-//            	        commentHTML += '<input type="hidden" value="' + comment.wc_lev + '" id="wc_lev" >';
 					commentHTML += '<input type="hidden" value="' + comment.wc_idx + '" id="wc_idx" >';
            	        commentHTML += '<input type="hidden" value="' + comment.wc_content + '" id="beforeContent" >';
            	        commentHTML += '</div>';
@@ -369,9 +365,6 @@ function saveComment(element) {
         alert("댓글을 입력해주세요.");
         return;
     }
-    console.log("wcGroups : ", wcGroups);
-    console.log("wcStep : ", wcStep);
-    console.log("wcLev : ", wcLev);
     $.ajax({
         type: "POST",
         url: "to_comment_write.do",
