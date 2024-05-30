@@ -25,6 +25,11 @@
 		const dobPattern = /^\d{4}-\d{2}-\d{2}$/;
         return dobPattern.test(dob);
 	}
+	//비밀번호 정규식
+	function isValidPassword(pwd) {
+	    const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+	    return passwordPattern.test(pwd);
+	}
 	function save_go(f) {
 		event.preventDefault();
 		const member_id = f.member_id.value.trim();
@@ -42,6 +47,11 @@
         }
         if (member_id.length < 4) {
             alert("아이디는 최소 4자 이상이어야 합니다.");
+            return false;
+        }
+        //비밀번호 정규식
+        if (!isValidPassword(member_pwd)) {
+            alert("비밀번호는 최소 6자 이상, 숫자 1개, 대문자 1개, 특수문자 1개를 포함해야 합니다.");
             return false;
         }
         if (member_pwd !== member_pwdCheck) {
