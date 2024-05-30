@@ -39,10 +39,10 @@
 						class="left-arrow" onclick="redirectToChatList()">				
 				<c:choose>
 					<c:when test="${my_idx eq opener.member_idx}">
-						<span class="chatroom">${joiner.member_nickname}</span>
+						<span class="chatroom profile_show" data-memberidx="${my_idx}"> ${joiner.member_nickname}</span>
 					</c:when>
 					<c:otherwise>
-						<span class="chatroom">${opener.member_nickname}</span>
+						<span class="chatroom profile_show" data-memberidx="${opener.member_idx}"> ${opener.member_nickname}</span>
 					</c:otherwise>
 				</c:choose>
 					<img src="${path}/resources/img/hamburger-menu.png" alt="icon-to-move-to-page-to-delete-chat" class="hamburgerIcon" id="ham">			
@@ -88,5 +88,6 @@
 			</form>
 		</div>
 	</div>
+	<%@ include file="../hs/profile_small_info.jsp" %>
 </body>
 </html>
