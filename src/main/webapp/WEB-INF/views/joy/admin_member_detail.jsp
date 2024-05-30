@@ -191,7 +191,7 @@
 						<td>${r.report_date }</td>
 						<td>${r.report_now_date }</td>
 						<td>${r.report_ok_date }</td>
-						<td>${r.admin_idx }</td>
+						<td>${r.admin_name }</td>
 						<c:if test="${r.report_status == 0}">
 						<td>처리 대기</td>
 						</c:if>
