@@ -19,6 +19,10 @@
       function handleModi(qna_idx) {
     	  window.location.href = "QnaUpdateForm.do?qna_idx=" + qna_idx;
       }
+      function handleList() {
+    	  window.location.href = "my_inquiry_list.do";
+      }
+      
     </script>
 </head>
 <body>
@@ -36,7 +40,7 @@
 
 				<button class="btn btn-modi" onclick="handleModi(${qvo.qna_idx})">
 					수정</button>
-				<button class="btn btn-cancel" onclick="history.back()">취소</button>
+				<button class="btn btn-cancel" onclick="handleList()">목록</button>
 			</div>
 					<div class="reply-container">
 			<c:choose>
