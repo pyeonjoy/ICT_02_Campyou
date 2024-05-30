@@ -68,8 +68,6 @@ public class AdminController {
 				HttpSession session = request.getSession();
 				AdminMembVO admin = (AdminMembVO) session.getAttribute("admin");
 				admin.setAdmin_idx(admin.getAdmin_idx());
-				// 페이징 기법
-				// 전체 게시물의 수
 				int count = adminService.getTotalCount2();
 				paging.setTotalRecord(count);
 				System.out.println("count"+count);
@@ -77,7 +75,6 @@ public class AdminController {
 				System.out.println("paging.getBeginBlock()"+paging.getBeginBlock());
 				System.out.println("paging.getPagePerBlock()"+paging.getPagePerBlock());
 				
-				// 전체 페이지의 수
 				if (paging.getTotalRecord() <= paging.getNumPerPage()) {
 					paging.setTotalPage(1);
 				} else {
@@ -87,7 +84,6 @@ public class AdminController {
 					}
 				}
 
-				// 현재 페이지 구함
 				String cPage = request.getParameter("cPage");
 				System.out.println("cpage"+cPage);
 				if (cPage == null) {
@@ -96,12 +92,8 @@ public class AdminController {
 					paging.setNowPage(Integer.parseInt(cPage));
 				}
 
-				// begin, end 구하기 (Oracle)
-				// offset 구하기
-				// offset = limit * (현재페이지-1);
 				paging.setOffset(paging.getNumPerPage() * (paging.getNowPage() - 1));
 
-				// 시작 블록 // 끝블록
 				paging.setBeginBlock(
 						(int) ((paging.getNowPage() - 1) / paging.getPagePerBlock()) * paging.getPagePerBlock() + 1);
 				paging.setEndBlock(paging.getBeginBlock() + paging.getPagePerBlock() - 1);

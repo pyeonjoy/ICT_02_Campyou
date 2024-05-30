@@ -16,7 +16,7 @@
 	</div>
 	<div class="mypage_menu" id="mypage_menu">
 		<div class="mypage_menu_wrap">
-			<h4>마이페이지</h4>
+			<h4><a href="my_main.do">마이페이지</a></h4>
 			<ul>
 
 			 <li><a id="myInfoLink" href="my_info.do">회원 정보</a></li>

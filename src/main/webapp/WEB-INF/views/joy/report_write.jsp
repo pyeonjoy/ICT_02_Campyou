@@ -33,18 +33,21 @@ button{
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </script>
+<script type="">
+
+</script>
 </head>
 <body>
 <h3 class="head">신고 글 작성하기</h3>
 <div class="wrap">
-    <form action="report_writeok.do" method="post">
+    <form action="report_writeok" method="post">
         <input type="hidden" name="reportmember_idx" value="${reportmember_idx}" />
         <div>
             <p class="text">신고 내용</p>
             <textarea rows="10" cols="60" name="report_content" maxlength="100"></textarea>
         </div>
         <div class="wbtn">
-            <button type="submit">입력</button> 
+            <button type="button">입력</button> 
             <button type="button" onclick="history.go(-1)">취소</button>
         </div>
     </form>
