@@ -189,6 +189,8 @@ JOIN
     members m1 ON ar.member_idx = m1.member_idx
 JOIN 
     members m2 ON ar.reportmember_idx = m2.member_idx
+    ORDER BY 
+    	ar.report_date DESC
      limit #{limit} offset #{offset}
 	</select>
 	
@@ -263,6 +265,7 @@ JOIN
 	<select id="getradmineporteach" resultType="amvo" parameterType="String">
 		SELECT *
 		FROM admin_report
+		LEFT JOIN admin ON  admin.admin_idx = admin_report.admin_idx
 		where reportmember_idx =#{member_idx}
 	</select>
 	

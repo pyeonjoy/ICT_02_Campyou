@@ -3,7 +3,15 @@ package com.ict.campyou.joy.dao;
 public class AdminMemberVO {
  private String  member_idx, report_content,report_date,report_now_date,admin_idx, report_ok_date, report_status, report_idx, report_day, reportmember_idx;
  private String  stop_content,stop_date,stop_now_date, stop_ok_date, stop_status, stop_idx, stop_day, nickname1, nickname2;
- public String getNickname1() {
+ private String  admin_name;
+ 
+ public String getAdmin_name() {
+	return admin_name;
+}
+public void setAdmin_name(String admin_name) {
+	this.admin_name = admin_name;
+}
+public String getNickname1() {
 	return nickname1;
 }
 public void setNickname1(String nickname1) {
