@@ -144,14 +144,9 @@ $(document).ready(function () {
 
             },
             error: function () {
-                weatherfail();
+            	getWeather(city, taRegId, wfRegId);
             }
         });
-    }
-    
-    function weatherfail() {
-    	$("#weather_info_list").append("불러오기 실패");
-    	console.log("읽기 실패");
     }
 
     function getWeather3after(announceTime, taRegId, wfRegId) {
@@ -194,7 +189,7 @@ $(document).ready(function () {
                 creatItemReady(c_date, taRegId);
             },
             error: function () {
-                weatherfail();
+            	getWeather3after(announceTime, taRegId, wfRegId);
             }
         });
 
@@ -224,7 +219,7 @@ $(document).ready(function () {
                 creatItemReady(c_date, taRegId);
             },
             error: function () {
-                weatherfail();
+            	getWeather3after(announceTime, taRegId, wfRegId);
             }
         });
         
