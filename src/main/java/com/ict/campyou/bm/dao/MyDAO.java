@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,6 +16,7 @@ import com.ict.campyou.hu.dao.BoardFreeVO;
 import com.ict.campyou.hu.dao.CampingGearBoardVO;
 import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
+import com.ict.campyou.joy.dao.AdminMemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.HeartVO;
 import com.ict.campyou.jun.dao.ReviewVO;
@@ -293,5 +295,19 @@ public class MyDAO {
 			System.out.println(e);
 		}
 		return null;
+	}
+	
+	public List<AdminMemberVO> getUserReports(String opener_idx, String my_idx) {
+	    try {
+	        Map<String, String> params = new HashMap<>();
+	        params.put("opener_idx", opener_idx);
+	        params.put("my_idx", my_idx);
+
+	        return sqlSessionTemplate.selectList("bomi.getReports", params);
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 }

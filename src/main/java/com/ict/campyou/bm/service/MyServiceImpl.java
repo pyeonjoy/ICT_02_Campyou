@@ -17,6 +17,7 @@ import com.ict.campyou.hu.dao.BoardFreeVO;
 import com.ict.campyou.hu.dao.CampingGearBoardVO;
 import com.ict.campyou.hu.dao.CommBoardVO;
 import com.ict.campyou.hu.dao.MemberVO;
+import com.ict.campyou.joy.dao.AdminMemberVO;
 import com.ict.campyou.jun.dao.CampVO;
 import com.ict.campyou.jun.dao.HeartVO;
 import com.ict.campyou.jun.dao.ReviewVO;
@@ -142,6 +143,10 @@ public class MyServiceImpl implements MyService{
 	@Override
 	public int changeChatStatus(String msg_room) {
 		return myDao.changeChatStatus(msg_room);
+	}
+	@Override
+	public List<AdminMemberVO> getUserReports(String opener_idx, String my_idx) {
+		return myDao.getUserReports(opener_idx, my_idx);
 	}
 
 }
