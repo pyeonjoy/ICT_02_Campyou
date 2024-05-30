@@ -225,7 +225,7 @@ function to_comment() {
             		commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/user2.png" class="userImage32 profile_show" data-memberidx="' + data.memberUser.member_idx + '"></div>';
             		commentHTML += '<input type="text" value="" id="" class="toDetailInputBox" placeholder="로그인 후 작성가능합니다" readonly>';
             	}
-            	commentHTML += '<input type="button" value="입력" id="" class="toDetailInputSubmit" onclick="submitComment()">';
+            	commentHTML += '<input type="button" value="입력" id="" class="toDetailInputSubmit">';
             	commentHTML += '</div>';
             	commentHTML += '</form>';
             	for (let i = 0; i < data.toCommentList.length; i++) {
@@ -277,7 +277,7 @@ function to_comment() {
            	        commentHTML += '<div class="toDetailInput">';
            	        commentHTML += '<div class="userImageDiv2"><img src="${path}/resources/images/' + data.memberUser.member_img + '" class="userImage32"></div>';
            	        commentHTML += '<input type="text" value="" id="" class="toDetailInputBox">';
-           	        commentHTML += '<input type="button" value="입 력" id="" class="toDetailInputSubmit" onclick="submitComment()">';
+           	        commentHTML += '<input type="button" value="입 력" id="" class="toDetailInputSubmit">';
            	        commentHTML += '<input type="hidden" value="' + comment.wc_idx + '" id="wc_idx" >';
            	        commentHTML += '<input type="hidden" value="' + comment.wc_groups + '" id="wc_groups" >';
            	        commentHTML += '<input type="hidden" value="' + comment.wc_step + '" id="wc_step" >';
@@ -332,7 +332,7 @@ function hasBadWords(comment) {
 }
 
 $(document).on("click", ".toDetailInputSubmit", function() {
-    saveComment();
+    saveComment($(this));
 });
 
 $(document).on("keypress", ".toDetailInputBox", function(e) {

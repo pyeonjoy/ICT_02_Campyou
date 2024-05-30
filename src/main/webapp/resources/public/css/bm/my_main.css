@@ -72,7 +72,7 @@
 	align-items: center;
 	position: absolute;
 	right: 14.5rem;
-	top: 12rem;
+	top: 10rem;
 }
 
 .together_list {
@@ -96,6 +96,7 @@
 .my_list{
 	width: 400px;
 	height: 80px;
+	margin-bottom: 100px;
 }
 .list_image_container {
 	position: relative;
